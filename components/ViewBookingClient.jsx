@@ -34,8 +34,7 @@ export default function ViewBookingClient() {
       }
 
       try {
-        const bookings = await entities.Booking.list();
-        const found = bookings.find((b) => b.id === bookingId);
+        const found = await entities.Booking.get(bookingId);
 
         if (found) {
           setBooking(found);

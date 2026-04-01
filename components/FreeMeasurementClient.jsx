@@ -139,15 +139,22 @@ export default function FreeMeasurementClient() {
     }
 
     try {
-      await fetch('/api/contact', {
+      // Create a booking record (shows in admin calendar) + sends confirmation emails
+      await fetch('/api/booking/confirm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.customer_name,
-          email: formData.customer_email,
-          phone: formData.customer_phone,
-          message: `FREE MEASUREMENT REQUEST — Address: ${formData.customer_address} | Postal: ${postalCode} | Project: ${projectType} | Date: ${formData.preferred_date} | Time: ${formData.preferred_time}`,
-          source: 'free-measurement',
+          booking: {
+            customer_name: formData.customer_name,
+            customer_email: formData.customer_email,
+            customer_phone: formData.customer_phone,
+            customer_address: formData.customer_address,
+            postal_code: postalCode,
+            preferred_date: formData.preferred_date,
+            preferred_time: formData.preferred_time,
+            flooring_type: projectType,
+            notes: `Project Type: ${projectType}`,
+          },
         }),
       });
       setSubmitted(true);

@@ -416,7 +416,7 @@ export default function QuoteCalculatorClient() {
       await fetch('/api/quotes/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quote: quoteData, product: selectedProduct })
+        body: JSON.stringify({ quote: quoteData, is_member: quoteData.is_member })
       });
       toast.success('Quote sent! We\'ll follow up within 24 hours. Check your email for details.');
     } catch (error) {
