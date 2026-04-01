@@ -112,6 +112,60 @@ export default function BlogPostClient({ slug }) {
           dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
 
+      {/* Category-Contextual Internal Links */}
+      {post.category && (() => {
+        const linkMap = {
+          flooring_tips: [
+            { href: '/products', label: 'Browse 794+ Flooring Products', icon: '🏠' },
+            { href: '/quote-calculator', label: 'Get an Instant Quote', icon: '💰' },
+            { href: '/compare', label: 'Compare Flooring Types', icon: '⚖️' },
+          ],
+          installation_guide: [
+            { href: '/installation', label: 'Professional Installation Services', icon: '🔨' },
+            { href: '/free-measurement', label: 'Book a Free Measurement', icon: '📏' },
+            { href: '/flooring-installation-cost', label: 'Installation Cost Calculator', icon: '💰' },
+          ],
+          design_trends: [
+            { href: '/gallery', label: 'Project Gallery & Inspiration', icon: '📸' },
+            { href: '/vinyl', label: 'Shop Vinyl Flooring', icon: '🏠' },
+            { href: '/engineered-hardwood', label: 'Shop Engineered Hardwood', icon: '🪵' },
+          ],
+          product_reviews: [
+            { href: '/products', label: 'Browse All Products', icon: '🛒' },
+            { href: '/vidar-flooring', label: 'Vidar Collection', icon: '🌳' },
+            { href: '/quote-calculator', label: 'Get Your Quote', icon: '💰' },
+          ],
+          maintenance: [
+            { href: '/hardwood-refinishing', label: 'Hardwood Refinishing Service', icon: '✨' },
+            { href: '/products', label: 'Shop Replacement Flooring', icon: '🏠' },
+            { href: '/contact', label: 'Ask an Expert', icon: '💬' },
+          ],
+          company_news: [
+            { href: '/about', label: 'About BBS Flooring', icon: '📖' },
+            { href: '/flooring-showroom-markham', label: 'Visit Our Showroom', icon: '📍' },
+            { href: '/free-measurement', label: 'Book a Free Measurement', icon: '📏' },
+          ],
+        };
+        const links = linkMap[post.category] || linkMap.flooring_tips;
+        return (
+          <div className="mt-10 bg-slate-50 rounded-xl p-6 border border-slate-200">
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Related Products & Services</h3>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-100 hover:border-amber-300 hover:shadow-sm transition-all group"
+                >
+                  <span className="text-xl">{link.icon}</span>
+                  <span className="text-sm font-medium text-slate-700 group-hover:text-amber-600 transition-colors">{link.label}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Blog Post CTA Block */}
       <div className="mt-12 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 md:p-10 text-white">
         <h2 className="text-2xl md:text-3xl font-bold mb-3">Ready to Transform Your Floors?</h2>

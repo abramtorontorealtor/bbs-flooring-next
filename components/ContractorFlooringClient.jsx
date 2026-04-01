@@ -1,8 +1,14 @@
 'use client';
 
-import AdLandingTemplate from '@/components/AdLandingTemplate';
+import AdLandingTemplate from './AdLandingTemplate';
 import { contractorFlooringData } from '@/data/landingPages';
+import ContractorRegistrationForm from './ContractorRegistrationForm';
 
 export default function ContractorFlooringClient() {
-  return <AdLandingTemplate {...contractorFlooringData} />;
+  return (
+    <>
+      <AdLandingTemplate {...contractorFlooringData} />
+      <ContractorRegistrationForm />
+    </>
+  );
 }

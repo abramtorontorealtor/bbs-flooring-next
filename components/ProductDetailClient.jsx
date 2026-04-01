@@ -42,6 +42,7 @@ export default function ProductDetailClient({ slug }) {
   const [selectedJsonVariant, setSelectedJsonVariant] = useState(null);
   const [buyMode, setBuyMode] = useState('material');
   const [stickyCartVisible, setStickyCartVisible] = useState(false);
+  const [variantSort, setVariantSort] = useState({ key: null, asc: true });
   const buyBoxRef = useRef(null);
 
   const { data: product, isLoading } = useQuery({
@@ -412,14 +413,32 @@ export default function ProductDetailClient({ slug }) {
                 <table className="w-full">
                   <thead className="bg-slate-100">
                     <tr>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Dimensions &amp; Pattern</th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Grade</th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Price</th>
+                      {[
+                        { key: 'dimensions', label: 'Dimensions & Pattern' },
+                        { key: 'grade', label: 'Grade' },
+                        { key: 'price', label: 'Price' },
+                      ].map((col) => (
+                        <th
+                          key={col.key}
+                          className="px-4 py-3 text-left text-sm font-semibold text-slate-700 cursor-pointer hover:text-amber-600 transition-colors select-none"
+                          onClick={() => setVariantSort(prev => ({ key: col.key, asc: prev.key === col.key ? !prev.asc : true }))}
+                        >
+                          {col.label}
+                          {variantSort.key === col.key && <span className="ml-1">{variantSort.asc ? '↑' : '↓'}</span>}
+                        </th>
+                      ))}
                       <th className="px-4 py-3 text-center text-sm font-semibold text-slate-700">Select</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-200">
-                    {productVariants.map((variant) => {
+                    {[...productVariants].sort((a, b) => {
+                      if (!variantSort.key) return 0;
+                      const dir = variantSort.asc ? 1 : -1;
+                      if (variantSort.key === 'price') return ((a.sale_price_per_sqft || a.price_per_sqft || 0) - (b.sale_price_per_sqft || b.price_per_sqft || 0)) * dir;
+                      const av = (variantSort.key === 'dimensions' ? a.dimensions : a.grade) || '';
+                      const bv = (variantSort.key === 'dimensions' ? b.dimensions : b.grade) || '';
+                      return av.localeCompare(bv) * dir;
+                    }).map((variant) => {
                       let patternType = '';
                       if (variant.name?.toLowerCase().includes('herringbone')) patternType = ' Herringbone';
                       else if (variant.name?.toLowerCase().includes('chevron')) patternType = ' Chevron';
@@ -585,6 +604,18 @@ export default function ProductDetailClient({ slug }) {
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.519 5.834L.052 23.579a.5.5 0 00.612.612l5.746-1.467A11.948 11.948 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.903 0-3.72-.504-5.32-1.459l-.382-.227-3.951 1.009 1.009-3.951-.227-.382A9.786 9.786 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818S21.818 6.582 21.818 12s-4.4 9.818-9.818 9.818z"/></svg>
             Quick Question? WhatsApp Us
+          </a>
+
+          {/* Request Free Sample CTA */}
+          <a
+            href={`https://wa.me/message/CQQRGZKI3U2VH1?text=${encodeURIComponent(`Hi! I'd like to request a free sample of ${product.name} (SKU: ${product.sku || 'N/A'}). Can you arrange that?`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-white hover:bg-slate-50 text-slate-800 font-semibold rounded-xl transition-colors border-2 border-slate-200 hover:border-amber-300"
+            onClick={() => Analytics.trackEvent('request_sample_click', 'engagement', product.name)}
+          >
+            <Package className="w-5 h-5 text-amber-500" />
+            Request Free Sample
           </a>
 
           {/* Trust Badges */}

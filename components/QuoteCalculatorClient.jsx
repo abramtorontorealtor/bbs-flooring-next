@@ -21,6 +21,7 @@ import { createPageUrl } from '@/lib/routes';
 import { useAuth } from '@/lib/auth-context';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
 import { Analytics } from '@/components/analytics';
+import { validatePhone } from '@/lib/validations';
 
 export default function QuoteCalculatorClient() {
   const searchParams = useSearchParams();
@@ -330,6 +331,11 @@ export default function QuoteCalculatorClient() {
       return;
     }
 
+    if (!validatePhone(formData.customer_phone)) {
+      toast.error('Please enter a valid phone number (e.g. 647-428-1111)');
+      return;
+    }
+
     const quoteData = {
       product_id: selectedProduct.id,
       product_name: selectedProduct.name,
@@ -404,7 +410,7 @@ export default function QuoteCalculatorClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quote: quoteData, product: selectedProduct })
       });
-      toast.success('Quote sent! Check your email.');
+      toast.success('Quote sent! We\'ll follow up within 24 hours. Check your email for details.');
     } catch (error) {
       console.error('Error sending quote emails:', error);
       toast.error('Quote saved, but email failed to send.');
