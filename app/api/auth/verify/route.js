@@ -30,7 +30,7 @@ export async function POST(request) {
       }
     }
 
-    // Mark user as verified
+    // Mark user as verified in public.users
     const { error: updateError } = await supabase
       .from('users')
       .update({
@@ -42,6 +42,16 @@ export async function POST(request) {
       .eq('id', user.id);
 
     if (updateError) throw updateError;
+
+    // Also confirm email in auth.users so signInWithPassword works
+    const { error: authUpdateError } = await supabase.auth.admin.updateUserById(user.id, {
+      email_confirm: true,
+    });
+
+    if (authUpdateError) {
+      console.error('[Verify] Failed to confirm auth email:', authUpdateError);
+      // Don't fail — public.users is already verified, they can contact support
+    }
 
     return NextResponse.json({
       success: true,

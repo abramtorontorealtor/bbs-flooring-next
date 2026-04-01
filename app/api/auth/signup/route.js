@@ -40,13 +40,14 @@ export async function POST(request) {
 
     const supabase = getSupabaseAdminClient();
 
-    // Create user with admin API — auto-confirms email in Supabase Auth
-    // so Supabase does NOT send its default "Confirm your signup" email.
-    // We handle verification ourselves with a branded SendGrid email.
+    // Create user with admin API — email_confirm: false so the user must
+    // verify via our branded SendGrid email before they can sign in.
+    // admin.createUser does NOT trigger Supabase's default confirmation email
+    // regardless of email_confirm value — only client signUp() does that.
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email,
       password,
-      email_confirm: true, // Auto-confirm so Supabase skips its default email
+      email_confirm: false, // User must verify via our branded email
       user_metadata: { full_name, phone },
     });
 

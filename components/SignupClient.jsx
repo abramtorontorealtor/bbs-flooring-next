@@ -70,27 +70,8 @@ export default function SignupClient() {
       return;
     }
 
-    // Sign in immediately so the session is active
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email: form.email,
-      password: form.password,
-    });
-
-    const data = signupData;
-    const authError = signInError;
-
-    if (authError) {
-      if (authError.message.includes('already registered')) {
-        setError('An account with this email already exists. Try logging in instead.');
-      } else {
-        setError(authError.message);
-      }
-      setLoading(false);
-      return;
-    }
-
-    // Users table insert + branded verification email handled by /api/auth/signup
-
+    // Don't sign in — user must verify email first.
+    // Show the "Check Your Email" screen.
     setLoading(false);
     setSuccess(true);
   }
