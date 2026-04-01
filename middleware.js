@@ -56,8 +56,10 @@ export async function middleware(request) {
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (error || !user) {
-      // Not authenticated → redirect to login
-      return NextResponse.redirect(new URL('/login', request.url));
+      // Not authenticated → redirect to login with return URL
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
     }
 
     // Check admin role via service role key (bypasses RLS)

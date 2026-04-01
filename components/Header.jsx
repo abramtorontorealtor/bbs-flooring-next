@@ -160,9 +160,14 @@ export default function Header({ cartCount = 0 }) {
                     <Link href="/account" className="cursor-pointer">My Account</Link>
                   </DropdownMenuItem>
                   {user.role === 'admin' && (
-                    <DropdownMenuItem asChild>
-                      <Link href="/admin/customers" className="cursor-pointer">CRM Dashboard</Link>
-                    </DropdownMenuItem>
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link href="/admin" className="cursor-pointer font-medium">Admin Dashboard</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="/admin/crm" className="cursor-pointer">CRM</Link>
+                      </DropdownMenuItem>
+                    </>
                   )}
                   <DropdownMenuItem onClick={() => logout()} className="cursor-pointer text-red-600">
                     Sign Out
