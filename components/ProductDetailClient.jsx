@@ -25,6 +25,7 @@ import { generateProductSchema, generateProductMetaTags } from '@/lib/seo';
 import { Analytics } from '@/components/analytics';
 import QuoteProductCTA from '@/components/QuoteProductCTA';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
+import TransitionPieces from '@/components/TransitionPieces';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
@@ -43,6 +44,7 @@ export default function ProductDetailClient({ slug }) {
   const [buyMode, setBuyMode] = useState('material');
   const [stickyCartVisible, setStickyCartVisible] = useState(false);
   const [variantSort, setVariantSort] = useState({ key: null, asc: true });
+  const [pdpSessionId, setPdpSessionId] = useState(null);
   const buyBoxRef = useRef(null);
 
   const { data: product, isLoading } = useQuery({
@@ -81,6 +83,10 @@ export default function ProductDetailClient({ slug }) {
   useEffect(() => {
     if (variants && !selectedVariant) setSelectedVariant(variants[0]);
   }, [variants, selectedVariant]);
+
+  useEffect(() => {
+    setPdpSessionId(localStorage.getItem('bbs_session_id'));
+  }, []);
 
   const isClearance = product?.is_clearance;
   const resolvePrice = (p) => {
@@ -669,6 +675,17 @@ export default function ProductDetailClient({ slug }) {
         </div>
         <Link href="/free-measurement"><Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white rounded-full px-8 whitespace-nowrap">📏 Book Free Measurement</Button></Link>
       </div>
+
+      {/* Transition Pieces — for vinyl and laminate products */}
+      {product && ['vinyl', 'laminate'].includes(product.category?.toLowerCase()) && (
+        <div className="mt-12" id="transition-pieces">
+          <TransitionPieces
+            product={product}
+            sessionId={pdpSessionId}
+            onTransitionAdded={() => window.dispatchEvent(new Event('cartUpdated'))}
+          />
+        </div>
+      )}
 
       {/* Complete Your Project */}
       <div className="mt-12">

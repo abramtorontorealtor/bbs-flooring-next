@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X } from 'lucide-react';
+import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function CartClient() {
@@ -366,9 +366,10 @@ export default function CartClient() {
 
               <Separator />
 
-              {!isVerified && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800">
-                  Prices shown are <strong>retail prices</strong>. Verified trade members see wholesale pricing.
+              {isVerified && (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 flex-shrink-0" />
+                  <span><strong>Trade pricing applied</strong> — you&apos;re seeing wholesale rates.</span>
                 </div>
               )}
 
