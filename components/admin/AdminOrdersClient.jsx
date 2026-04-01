@@ -87,11 +87,11 @@ export default function AdminOrdersClient() {
   });
 
   const cancelOrderMutation = useMutation({
-    mutationFn: async (orderId) => {
-      const response = await fetch('/api/stripe/cancel', {
+    mutationFn: async ({ orderId, reason }) => {
+      const response = await fetch('/api/orders/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId }),
+        body: JSON.stringify({ orderId, reason }),
       });
       if (!response.ok) {
         const err = await response.json().catch(() => ({}));
@@ -101,7 +101,7 @@ export default function AdminOrdersClient() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['admin-orders']);
-      toast.success('Order cancelled successfully');
+      toast.success('Order cancelled — customer notified via email');
       setSelectedOrder(null);
     },
     onError: (error) => {
@@ -120,12 +120,18 @@ export default function AdminOrdersClient() {
   };
 
   const handleCancelOrder = async (orderId) => {
+    const reason = prompt(
+      'Cancel reason?\n\n1 = Out of stock\n2 = Customer requested\n3 = Other\n\nEnter 1, 2, or 3:'
+    );
+    if (!reason) return; // user hit Cancel
+    const reasonMap = { '1': 'out_of_stock', '2': 'customer_request', '3': 'other' };
+    const cancelReason = reasonMap[reason.trim()] || 'other';
     if (
       confirm(
-        'Are you sure you want to cancel this order? This will release any authorized funds and notify the customer.'
+        `Cancel this order (${cancelReason.replace(/_/g, ' ')})?\n\nThis will release any authorized funds and email the customer a cancellation notice.`
       )
     ) {
-      cancelOrderMutation.mutate(orderId);
+      cancelOrderMutation.mutate({ orderId, reason: cancelReason });
     }
   };
 
