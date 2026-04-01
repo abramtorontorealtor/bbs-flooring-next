@@ -21,11 +21,20 @@ function useFadeInView() {
   return { ref, visible };
 }
 
+// Map DB category values to dedicated category page routes
+const CATEGORY_ROUTES = {
+  solid_hardwood: '/solid-hardwood',
+  engineered_hardwood: '/engineered-hardwood',
+  laminate: '/laminate',
+  vinyl: '/vinyl',
+};
+
 export default function CategoryCard({ category, image, imageAlt, title, description }) {
   const { ref, visible } = useFadeInView();
+  const href = CATEGORY_ROUTES[category] || `/products?category=${category}`;
   return (
     <div ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(30px)', transition: 'opacity 0.5s ease-out, transform 0.5s ease-out' }}>
-      <Link href={createPageUrl(`Products?category=${category}`)}>
+      <Link href={href}>
         <div className="group relative h-[500px] rounded-3xl overflow-hidden">
           <img src={image} alt={imageAlt || title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
