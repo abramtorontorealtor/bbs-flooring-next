@@ -861,6 +861,24 @@ export default function ProductsClient() {
               )}
             </div>
           )}
+
+          {/* General SEO Content Block (no brand filter) */}
+          {filters.brand === 'all' && filters.category === 'all' && (
+            <div className="mt-16 bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+              <h2 className="text-2xl font-bold text-slate-800 mb-4">Premium Flooring in Markham &amp; the GTA</h2>
+              <div className="space-y-3 text-slate-600 leading-relaxed">
+                <p>
+                  BBS Flooring stocks over 794 products across <a href="/solid-hardwood" className="text-amber-600 hover:underline">solid hardwood</a>, <a href="/engineered-hardwood" className="text-amber-600 hover:underline">engineered hardwood</a>, <a href="/vinyl" className="text-amber-600 hover:underline">luxury vinyl plank</a>, <a href="/laminate" className="text-amber-600 hover:underline">laminate</a>, and <a href="/waterproof-flooring" className="text-amber-600 hover:underline">waterproof flooring</a> — all available from our showroom at 6061 Highway 7, Unit B, Markham.
+                </p>
+                <p>
+                  Every product includes transparent per-sqft pricing and a built-in cost calculator so you know your total before you commit. Need help choosing? <a href="/free-measurement" className="text-amber-600 hover:underline">Book a free in-home measurement</a> and our team will recommend the best option for your space, budget, and lifestyle.
+                </p>
+                <p>
+                  We also offer full-service <a href="/installation" className="text-amber-600 hover:underline">professional installation</a>, <a href="/stairs" className="text-amber-600 hover:underline">stair renovation</a>, <a href="/hardwood-refinishing" className="text-amber-600 hover:underline">hardwood refinishing</a>, and <a href="/carpet-removal" className="text-amber-600 hover:underline">carpet removal</a> — one team from selection to completion.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

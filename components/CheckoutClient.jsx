@@ -826,6 +826,13 @@ export default function CheckoutClient() {
                   </label>
                 </div>
 
+                {/* Trust signals above submit */}
+                <div className="flex flex-wrap items-center justify-center gap-4 py-3 px-4 bg-slate-50 rounded-lg border border-slate-200 text-xs text-slate-600">
+                  <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-600" /> Secure Checkout</span>
+                  <span className="flex items-center gap-1.5"><Phone className="w-4 h-4 text-amber-500" /> Questions? <a href="tel:6474281111" className="text-amber-600 font-medium hover:underline">(647) 428-1111</a></span>
+                  <span className="flex items-center gap-1.5"><MessageSquare className="w-4 h-4 text-green-500" /> <a href="https://wa.me/message/CQQRGZKI3U2VH1" target="_blank" rel="noopener noreferrer" className="text-green-600 font-medium hover:underline">WhatsApp Us</a></span>
+                </div>
+
                 <Button
                   type="submit"
                   size="lg"
