@@ -74,7 +74,7 @@ export function LocalBusinessJsonLd() {
     },
     sameAs: [
       'https://www.facebook.com/bbsflooring',
-      'https://www.instagram.com/bbsfloors'
+      'https://www.instagram.com/bbsflooring'
     ]
   };
 
