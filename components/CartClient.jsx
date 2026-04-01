@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone } from 'lucide-react';
+import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function CartClient() {
@@ -52,7 +52,7 @@ export default function CartClient() {
       const sqftPerBox = product.sqft_per_box || 20;
       const boxesRequired = Math.ceil(newSqft / sqftPerBox);
       const actualSqft = boxesRequired * sqftPerBox;
-      const lineTotal = actualSqft * product.price_per_sqft;
+      const lineTotal = actualSqft * (product.price_per_sqft || 0);
 
       return entities.CartItem.update(itemId, {
         sqft_needed: newSqft,
@@ -63,6 +63,7 @@ export default function CartClient() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
+      window.dispatchEvent(new Event('cartUpdated'));
     },
   });
 
@@ -170,8 +171,46 @@ export default function CartClient() {
 
                         <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
-                            <span className="text-slate-500 block">Sq.ft needed</span>
-                            <span className="font-medium">{item.sqft_needed}</span>
+                            <span className="text-slate-500 block mb-1">Sq.ft needed</span>
+                            <div className="flex items-center gap-1">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  const newSqft = Math.max(1, (item.sqft_needed || 0) - (item.sqft_per_box || 20));
+                                  updateMutation.mutate({ itemId: item.id, newSqft, product: item });
+                                }}
+                                disabled={updateMutation.isPending}
+                              >
+                                <Minus className="w-3 h-3" />
+                              </Button>
+                              <Input
+                                type="number"
+                                value={item.sqft_needed || ''}
+                                onChange={(e) => {
+                                  const val = parseInt(e.target.value) || 1;
+                                  if (val > 0 && val <= 10000) {
+                                    updateMutation.mutate({ itemId: item.id, newSqft: val, product: item });
+                                  }
+                                }}
+                                className="h-7 w-16 text-center text-sm px-1"
+                                min="1"
+                                max="10000"
+                              />
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  const newSqft = (item.sqft_needed || 0) + (item.sqft_per_box || 20);
+                                  updateMutation.mutate({ itemId: item.id, newSqft, product: item });
+                                }}
+                                disabled={updateMutation.isPending}
+                              >
+                                <Plus className="w-3 h-3" />
+                              </Button>
+                            </div>
                           </div>
                           <div>
                             <span className="text-slate-500 block">Boxes required</span>
@@ -200,6 +239,38 @@ export default function CartClient() {
               </div>
             ))}
           </div>
+
+          {/* Upsell: Installation CTA */}
+          {productItems.length > 0 && (
+            <div className="bg-gradient-to-r from-amber-50 to-slate-50 rounded-2xl border border-amber-200 p-5 flex items-center gap-4">
+              <div className="text-3xl flex-shrink-0">🔨</div>
+              <div className="flex-1">
+                <h3 className="font-bold text-slate-800">Need professional installation?</h3>
+                <p className="text-sm text-slate-600">Get a complete quote including materials, labour, and removal — all in one number.</p>
+              </div>
+              <Link href="/quote-calculator" className="shrink-0">
+                <Button variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-100 whitespace-nowrap">
+                  Get Install Quote
+                </Button>
+              </Link>
+            </div>
+          )}
+
+          {/* Upsell: Transition pieces for vinyl/laminate */}
+          {vinylLaminateProducts.length > 0 && transitionItems.length === 0 && (
+            <div className="bg-blue-50 rounded-2xl border border-blue-200 p-5 flex items-center gap-4">
+              <div className="text-3xl flex-shrink-0">📐</div>
+              <div className="flex-1">
+                <h3 className="font-bold text-slate-800">Don&apos;t forget transition pieces</h3>
+                <p className="text-sm text-slate-600">Your {vinylLaminateProducts.length > 1 ? `${vinylLaminateProducts.length} vinyl/laminate products` : 'vinyl/laminate product'} will need T-mouldings, reducers, or end caps at doorways and room transitions.</p>
+              </div>
+              <Link href={`/products/${vinylLaminateProducts[0]?.product_id}`} className="shrink-0">
+                <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100 whitespace-nowrap">
+                  Add Transitions
+                </Button>
+              </Link>
+            </div>
+          )}
 
           {/* Transition Items */}
           {transitionItems.length > 0 && (

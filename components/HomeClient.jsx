@@ -99,11 +99,21 @@ export default function Home() {
     },
   ];
 
+  // Dynamic product count
+  const { data: productCount } = useQuery({
+    queryKey: ['productCountHome'],
+    queryFn: async () => {
+      const all = await entities.Product.filter({}, { limit: 1000 });
+      return all.length;
+    },
+    staleTime: 60 * 60 * 1000, // 1 hour
+  });
+
   const features = [
     { icon: Truck, title: 'GTA Delivery', description: 'Fast delivery across the Greater Toronto Area' },
-    { icon: Shield, title: 'Quality Guaranteed', description: 'Premium products with manufacturer warranties' },
+    { icon: Shield, title: `${productCount || '700'}+ Products`, description: 'Hardwood, vinyl, laminate — all in stock' },
     { icon: Calendar, title: 'Free Measurements', description: 'Book your free in-home measurement today' },
-    { icon: Star, title: 'Expert Service', description: 'Professional installation by local experts' },
+    { icon: Star, title: 'Member Pricing', description: 'Exclusive savings for registered members', href: '/account' },
   ];
 
   return (
