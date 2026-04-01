@@ -1,6 +1,25 @@
 import { getSupabaseServerClient } from '@/lib/supabase';
 import BlogPostClient from '@/components/BlogPostClient';
 
+// ISR: revalidate blog posts every hour
+export const revalidate = 3600;
+
+// Pre-generate published blog posts at build time
+export async function generateStaticParams() {
+  try {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return [];
+    const { data: posts } = await supabase
+      .from('blog_posts')
+      .select('slug')
+      .eq('status', 'published')
+      .not('slug', 'is', null);
+    return (posts || []).map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const supabase = getSupabaseServerClient();
