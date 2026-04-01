@@ -14,6 +14,7 @@ export default function VerifyEmailClient() {
   const [status, setStatus] = useState('loading');
   const [message, setMessage] = useState('');
   const [signedIn, setSignedIn] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   useEffect(() => {
     const token = searchParams.get('token');
@@ -51,15 +52,7 @@ export default function VerifyEmailClient() {
           setSignedIn(didSignIn);
           setStatus('success');
           
-          // If signed in and there's a return URL, redirect after a brief delay
-          if (didSignIn) {
-            const returnUrl = typeof window !== 'undefined' && localStorage.getItem('bbs_return_url');
-            if (returnUrl) {
-              localStorage.removeItem('bbs_return_url');
-              setTimeout(() => { window.location.href = returnUrl; }, 2000);
-            }
-          }
-          // Send welcome email
+          // Fire welcome email (don't await — not critical for UX)
           if (res.userEmail) {
             fetch('/api/auth/welcome', {
               method: 'POST',
@@ -70,6 +63,18 @@ export default function VerifyEmailClient() {
                 userName: res.userName || '',
               }),
             }).catch(() => {});
+          }
+
+          // If signed in and there's a return URL, redirect via full page load
+          // (avoids stale React state / glitchy re-renders)
+          if (didSignIn) {
+            const returnUrl = typeof window !== 'undefined' && localStorage.getItem('bbs_return_url');
+            if (returnUrl) {
+              localStorage.removeItem('bbs_return_url');
+              setRedirecting(true);
+              // Brief flash of success screen, then full navigation
+              setTimeout(() => { window.location.replace(returnUrl); }, 1500);
+            }
           }
         } else {
           const errMsg = res.error || 'Verification failed.';
@@ -100,18 +105,24 @@ export default function VerifyEmailClient() {
             <h1 className="text-2xl font-bold text-slate-800 mb-2">You&apos;re verified!</h1>
             {signedIn ? (
               <>
-                <p className="text-slate-600 mb-8">
+                <p className="text-slate-600 mb-4">
                   Your member account is now active. You&apos;re signed in and ready to shop
                   with exclusive member pricing.
                 </p>
-                <Link href={createPageUrl('Products')}>
-                  <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
-                    Shop Member Pricing →
-                  </Button>
-                </Link>
-                <Link href="/account" className="block mt-4 text-sm text-slate-500 hover:text-amber-600">
-                  Go to My Account
-                </Link>
+                {redirecting ? (
+                  <p className="text-amber-600 font-medium animate-pulse">Taking you back…</p>
+                ) : (
+                  <>
+                    <Link href={createPageUrl('Products')}>
+                      <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
+                        Shop Member Pricing →
+                      </Button>
+                    </Link>
+                    <Link href="/account" className="block mt-4 text-sm text-slate-500 hover:text-amber-600">
+                      Go to My Account
+                    </Link>
+                  </>
+                )}
               </>
             ) : (
               <>
