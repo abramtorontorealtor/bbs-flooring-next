@@ -1,6 +1,9 @@
 import { getSupabaseServerClient } from '@/lib/supabase';
 import { locationData } from '@/data/locationData';
 
+// Force dynamic rendering so Supabase queries run at request time (not build time)
+export const dynamic = 'force-dynamic';
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://shop.bbsflooring.ca';
 
 export default async function sitemap() {

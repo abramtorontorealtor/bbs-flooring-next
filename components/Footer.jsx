@@ -169,7 +169,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {['Markham', 'Stouffville', 'Richmond Hill', 'Pickering', 'Ajax', 'Whitby', 'Vaughan', 'Woodbridge', 'Newmarket', 'Aurora', 'Scarborough', 'Oshawa'].map(city => (
                 <li key={city}>
-                  <Link href={`/flooring-in-${city.toLowerCase().replace(/\s+/g, '-')}`} className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  <Link href={`/flooring-in/${city.toLowerCase().replace(/\s+/g, '-')}`} className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
                     {city}
                   </Link>
                 </li>
