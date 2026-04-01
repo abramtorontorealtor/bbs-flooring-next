@@ -1,19 +1,10 @@
 import { NextResponse } from 'next/server';
+import { createServerClient } from '@supabase/ssr';
 
 /**
- * Next.js Middleware — handles legacy URL patterns for cutover compatibility.
- *
- * Pattern coverage:
- * 1. /ProductDetail?slug=X  → /products/X   (Base44 product URLs → new slug URLs)
- * 2. /BlogPost?slug=X       → /blog/X       (Base44 blog URLs → new blog URLs)
- * 3. /Location?city=X       → /flooring-in/X (Base44 location URLs)
- * 4. /Gallery?project=X     → /gallery/X    (Base44 gallery URLs)
- * 5. Single-word PascalCase  → lowercase     (e.g. /Vinyl → /vinyl, /Blog → /blog)
- *
- * NOTE: Case-only redirects (e.g. /Vinyl → /vinyl) CANNOT go in next.config.mjs
- * because Next.js 16 / Vercel matches redirect sources case-insensitively,
- * which causes /vinyl to match /Vinyl and loop forever. Middleware gives us
- * exact control over matching.
+ * Next.js Middleware — handles:
+ * 1. Admin route protection (server-side auth + role check)
+ * 2. Legacy URL patterns for cutover compatibility
  */
 
 // Single-word PascalCase pages that need lowercase redirects.
@@ -34,8 +25,67 @@ const CASE_REDIRECTS = new Map([
   ['/Cart', '/cart'],
 ]);
 
-export function middleware(request) {
+export async function middleware(request) {
   const { pathname, searchParams } = request.nextUrl;
+
+  // ── Admin route protection ──────────────────────────────────────────
+  if (pathname.startsWith('/admin')) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      // Can't verify auth — block access
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+
+    // Create a response we can modify (cookies)
+    let response = NextResponse.next();
+
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        getAll: () => request.cookies.getAll(),
+        setAll: (cookiesToSet) => {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            request.cookies.set(name, value);
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
+    });
+
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (error || !user) {
+      // Not authenticated → redirect to login
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+
+    // Check admin role via service role key (bypasses RLS)
+    // We use a direct fetch to avoid importing the admin client in middleware
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (serviceRoleKey) {
+      try {
+        const res = await fetch(
+          `${supabaseUrl}/rest/v1/users?id=eq.${user.id}&select=role`,
+          {
+            headers: {
+              apikey: serviceRoleKey,
+              Authorization: `Bearer ${serviceRoleKey}`,
+            },
+          }
+        );
+        const rows = await res.json();
+        if (!rows?.[0] || rows[0].role !== 'admin') {
+          return NextResponse.redirect(new URL('/', request.url));
+        }
+      } catch {
+        // Can't verify role — block access
+        return NextResponse.redirect(new URL('/', request.url));
+      }
+    }
+
+    return response;
+  }
 
   // Single-word PascalCase → lowercase (exact match, case-sensitive)
   const caseRedirect = CASE_REDIRECTS.get(pathname);
@@ -84,8 +134,10 @@ export function middleware(request) {
 }
 
 export const config = {
-  // Match legacy paths + PascalCase single-word pages
   matcher: [
+    // Admin routes (server-side auth guard)
+    '/admin/:path*',
+    // Legacy redirects + PascalCase pages
     '/ProductDetail',
     '/BlogPost',
     '/Location',

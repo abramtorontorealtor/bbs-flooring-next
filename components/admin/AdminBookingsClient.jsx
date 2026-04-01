@@ -31,27 +31,64 @@ export default function AdminBookingsClient() {
   });
 
   const updateBookingMutation = useMutation({
-    mutationFn: ({ id, status }) => entities.Booking.update(id, { status }),
+    mutationFn: async ({ id, status }) => {
+      await entities.Booking.update(id, { status });
+      // Auto-send email notification on status change
+      const booking = bookings.find(b => b.id === id);
+      if (booking?.customer_email) {
+        await fetch('/api/admin/sendBookingConfirmation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: { ...booking, status }, email_type: 'confirmation' }),
+        }).catch(() => {}); // Non-blocking
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });
       setEditingBooking(null);
-      toast.success('Booking updated');
+      toast.success('Booking updated & email sent');
     },
     onError: () => toast.error('Failed to update booking'),
   });
 
   const sendEmailMutation = useMutation({
-    mutationFn: async (data) => {
-      const res = await fetch('/api/booking/confirm', {
+    mutationFn: async (booking) => {
+      const res = await fetch('/api/admin/sendBookingConfirmation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ data: booking, email_type: 'confirmation' }),
       });
       if (!res.ok) throw new Error('Failed to send email');
       return res.json();
     },
-    onSuccess: () => toast.success('Email sent successfully'),
+    onSuccess: () => toast.success('Confirmation email sent'),
     onError: () => toast.error('Failed to send email'),
+  });
+
+  const rescheduleMutation = useMutation({
+    mutationFn: async ({ bookingId, newDate }) => {
+      const res = await fetch('/api/booking/reschedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId, preferred_date: newDate }),
+      });
+      if (!res.ok) throw new Error('Reschedule failed');
+      return res.json();
+    },
+    onSuccess: (_, { bookingId, newDate }) => {
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      toast.success('Booking rescheduled');
+      // Send reschedule email
+      const booking = bookings.find(b => b.id === bookingId);
+      if (booking?.customer_email) {
+        fetch('/api/admin/sendBookingConfirmation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: { ...booking, preferred_date: newDate }, email_type: 'reschedule' }),
+        }).catch(() => {});
+      }
+    },
+    onError: () => toast.error('Failed to reschedule booking'),
   });
 
   const filteredBookings = useMemo(() => {
@@ -114,7 +151,12 @@ export default function AdminBookingsClient() {
 
         {viewMode === 'calendar' && (
           <div className="mb-6">
-            <BookingCalendar bookings={filteredBookings} />
+            <BookingCalendar
+              bookings={filteredBookings}
+              onReschedule={(bookingId, newDate) =>
+                rescheduleMutation.mutate({ bookingId, newDate })
+              }
+            />
           </div>
         )}
 
@@ -294,7 +336,7 @@ export default function AdminBookingsClient() {
                                     >
                                       {updateBookingMutation.isPending
                                         ? 'Updating...'
-                                        : 'Update Status'}
+                                        : 'Update & Send Email'}
                                     </Button>
                                   </div>
                                 </DialogContent>
@@ -303,12 +345,8 @@ export default function AdminBookingsClient() {
                               <Button
                                 size="sm"
                                 variant="outline"
-                                onClick={() =>
-                                  sendEmailMutation.mutate({
-                                    booking_id: booking.id,
-                                    email_type: 'confirmation',
-                                  })
-                                }
+                                title="Send confirmation email"
+                                onClick={() => sendEmailMutation.mutate(booking)}
                                 disabled={sendEmailMutation.isPending}
                               >
                                 <Send className="w-4 h-4" />

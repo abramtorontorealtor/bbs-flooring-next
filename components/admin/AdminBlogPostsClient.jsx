@@ -10,8 +10,9 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Edit, Trash2, Eye, Search } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, Search, Upload, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import RichTextEditor from './RichTextEditor';
 
 export default function AdminBlogPostsClient() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -183,21 +184,31 @@ export default function AdminBlogPostsClient() {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <Label>Content *</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsHtmlMode(!isHtmlMode)}
-                  >
-                    {isHtmlMode ? 'Visual Mode' : 'HTML Mode'}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsHtmlMode(!isHtmlMode)}
+                    >
+                      {isHtmlMode ? 'Rich Editor' : 'Raw HTML'}
+                    </Button>
+                  </div>
                 </div>
-                <textarea
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="w-full min-h-[300px] p-3 border border-slate-300 rounded-md font-mono text-sm"
-                  placeholder={isHtmlMode ? 'Paste your HTML here...' : 'Write your content...'}
-                />
+                {isHtmlMode ? (
+                  <textarea
+                    value={formData.content}
+                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                    className="w-full min-h-[400px] p-3 border border-slate-300 rounded-md font-mono text-sm"
+                    placeholder="Paste your HTML here..."
+                  />
+                ) : (
+                  <RichTextEditor
+                    value={formData.content}
+                    onChange={(content) => setFormData({ ...formData, content })}
+                    placeholder="Write your blog post content..."
+                  />
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -231,13 +242,48 @@ export default function AdminBlogPostsClient() {
               </div>
 
               <div>
-                <Label>Featured Image URL</Label>
-                <Input
-                  value={formData.featured_image}
-                  onChange={(e) => setFormData({ ...formData, featured_image: e.target.value })}
-                />
+                <Label>Featured Image</Label>
+                <div className="flex gap-2 mt-1">
+                  <Input
+                    value={formData.featured_image}
+                    onChange={(e) => setFormData({ ...formData, featured_image: e.target.value })}
+                    placeholder="Image URL or upload below"
+                    className="flex-1"
+                  />
+                  <label className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium border rounded-md cursor-pointer hover:bg-slate-50 transition">
+                    <Upload className="w-4 h-4" />
+                    Upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        try {
+                          toast.info('Uploading image...');
+                          const { getSupabaseBrowserClient } = await import('@/lib/supabase');
+                          const supabase = getSupabaseBrowserClient();
+                          const ext = file.name.split('.').pop();
+                          const path = `blog/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+                          const { error: uploadErr } = await supabase.storage
+                            .from('blog-images')
+                            .upload(path, file, { contentType: file.type });
+                          if (uploadErr) throw uploadErr;
+                          const { data: urlData } = supabase.storage
+                            .from('blog-images')
+                            .getPublicUrl(path);
+                          setFormData((prev) => ({ ...prev, featured_image: urlData.publicUrl }));
+                          toast.success('Image uploaded!');
+                        } catch (err) {
+                          toast.error('Upload failed: ' + err.message);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
                 {formData.featured_image && (
-                  <img src={formData.featured_image} alt="Preview" className="mt-2 h-32 rounded" />
+                  <img src={formData.featured_image} alt="Preview" className="mt-2 h-32 rounded object-cover" />
                 )}
               </div>
 

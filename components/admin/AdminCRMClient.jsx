@@ -147,7 +147,7 @@ export default function AdminCRMClient() {
   // ─── ORDER MUTATIONS ───────────────────────────────────────────────────
   const capturePaymentMutation = useMutation({
     mutationFn: async (orderId) => {
-      return fetch('/api/admin/captureStripePayment', {
+      return fetch('/api/stripe/capture', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId }),
@@ -159,7 +159,7 @@ export default function AdminCRMClient() {
 
   const cancelOrderMutation = useMutation({
     mutationFn: async (orderId) => {
-      return fetch('/api/admin/cancelStripeOrder', {
+      return fetch('/api/stripe/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId }),
