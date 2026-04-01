@@ -51,7 +51,7 @@ export async function POST(request) {
         total,
         payment_method: paymentMethod,
         payment_status: paymentMethod === 'credit_card' ? 'pending_capture' : 'pending',
-        status: isCustomZone ? 'quote_requested' : 'pending',
+        status: isCustomZone ? 'quote_requested' : 'pending_payment',
         terms_accepted_at: termsAcceptedAt,
       })
       .select()

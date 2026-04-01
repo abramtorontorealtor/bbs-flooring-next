@@ -63,6 +63,29 @@ export default function AdminOrdersClient() {
     },
   });
 
+  const confirmEtransferMutation = useMutation({
+    mutationFn: async (orderId) => {
+      const response = await fetch('/api/orders/confirm-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId }),
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || 'Failed to confirm payment');
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['admin-orders']);
+      toast.success('E-Transfer confirmed! Customer notified via email.');
+      setSelectedOrder(null);
+    },
+    onError: (error) => {
+      toast.error('Failed to confirm payment: ' + error.message);
+    },
+  });
+
   const cancelOrderMutation = useMutation({
     mutationFn: async (orderId) => {
       const response = await fetch('/api/stripe/cancel', {
@@ -318,6 +341,23 @@ export default function AdminOrdersClient() {
                             Capture
                           </Button>
                         )}
+                      {order.payment_method !== 'credit_card' &&
+                        order.payment_status === 'pending' &&
+                        order.status !== 'cancelled' && (
+                          <Button
+                            variant="default"
+                            size="sm"
+                            onClick={() => {
+                              if (confirm('Confirm e-Transfer received? This will mark the order as paid and email the customer.')) {
+                                confirmEtransferMutation.mutate(order.id);
+                              }
+                            }}
+                            disabled={confirmEtransferMutation.isPending}
+                            className="bg-blue-600 hover:bg-blue-700"
+                          >
+                            🏦 {confirmEtransferMutation.isPending ? 'Confirming...' : 'Confirm E-Transfer'}
+                          </Button>
+                        )}
                       <Button
                         size="sm"
                         variant="outline"
@@ -547,18 +587,19 @@ export default function AdminOrdersClient() {
                       </Button>
                     </>
                   )}
-                {selectedOrder.payment_method === 'etransfer' &&
-                  selectedOrder.payment_status === 'pending' && (
+                {selectedOrder.payment_method !== 'credit_card' &&
+                  selectedOrder.payment_status === 'pending' &&
+                  selectedOrder.status !== 'cancelled' && (
                     <Button
-                      onClick={() =>
-                        updateOrderMutation.mutate({
-                          orderId: selectedOrder.id,
-                          updates: { payment_status: 'completed', status: 'paid' },
-                        })
-                      }
-                      className="flex-1 bg-green-600 hover:bg-green-700"
+                      onClick={() => {
+                        if (confirm('Confirm e-Transfer received? This will mark the order as paid and email the customer a confirmation.')) {
+                          confirmEtransferMutation.mutate(selectedOrder.id);
+                        }
+                      }}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700"
+                      disabled={confirmEtransferMutation.isPending}
                     >
-                      ✅ Mark as Paid (E-Transfer Received)
+                      {confirmEtransferMutation.isPending ? 'Confirming...' : '🏦 Confirm E-Transfer — Notify Customer'}
                     </Button>
                   )}
               </div>
