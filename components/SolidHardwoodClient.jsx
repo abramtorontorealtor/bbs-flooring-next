@@ -11,7 +11,7 @@ import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 
-const categoryFilter = (p) => p.category && p.category.toLowerCase().includes('solid');
+// Server-side filtered via `category` prop — no client-side filter needed
 
 const SPOKE_LINKS = [
   {
@@ -144,7 +144,7 @@ export default function SolidHardwoodClient() {
       <CategoryProductGrid
         sessionKey="solid-hardwood"
         queryKey="products-solid-hardwood"
-        categoryFilter={categoryFilter}
+        category="solid_hardwood"
       />
 
       <FinancingBanner monthlyFrom={142} />

@@ -11,7 +11,7 @@ import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 
-const categoryFilter = (p) => p.category && p.category.toLowerCase().includes('engineered');
+// Server-side filtered via `category` prop — no client-side filter needed
 
 const SPOKE_LINKS = [
   {
@@ -139,7 +139,7 @@ export default function EngineeredHardwoodClient() {
       <CategoryProductGrid
         sessionKey="engineered-hardwood"
         queryKey="products-engineered-hardwood"
-        categoryFilter={categoryFilter}
+        category="engineered_hardwood"
       />
 
       <FinancingBanner monthlyFrom={122} />

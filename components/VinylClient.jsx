@@ -11,7 +11,7 @@ import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 
-const categoryFilter = (p) => p.category && p.category.toLowerCase().includes('vinyl');
+// Server-side filtered via `category` prop — no client-side filter needed
 
 const SPOKE_LINKS = [
   {
@@ -147,7 +147,7 @@ export default function VinylClient() {
       <CategoryProductGrid
         sessionKey="vinyl"
         queryKey="products-vinyl"
-        categoryFilter={categoryFilter}
+        category="vinyl"
       />
 
       <FinancingBanner monthlyFrom={89} />

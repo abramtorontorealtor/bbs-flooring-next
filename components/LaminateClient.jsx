@@ -11,7 +11,7 @@ import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 
-const categoryFilter = (p) => p.category && p.category.toLowerCase().includes('laminate');
+// Server-side filtered via `category` prop — no client-side filter needed
 
 const SPOKE_LINKS = [
   {
@@ -146,7 +146,7 @@ export default function LaminateClient() {
       <CategoryProductGrid
         sessionKey="laminate"
         queryKey="products-laminate"
-        categoryFilter={categoryFilter}
+        category="laminate"
       />
 
       <FinancingBanner monthlyFrom={68} />

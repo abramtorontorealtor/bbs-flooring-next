@@ -54,11 +54,14 @@ const DEFAULT_FILTERS = {
  *
  * @param {string}   sessionKey      — sessionStorage key prefix (e.g. 'vinyl')
  * @param {string}   queryKey        — react-query cache key (e.g. 'products-vinyl')
- * @param {function} categoryFilter  — predicate to filter all products to this category
+ * @param {string}   [category]      — exact Supabase category value (e.g. 'vinyl', 'solid_hardwood')
+ *                                     When provided, products are filtered SERVER-SIDE (fast).
+ * @param {function} [categoryFilter] — JS predicate for client-side filtering (fallback for complex filters).
+ *                                     Only used when `category` is NOT provided.
  */
 const PRODUCTS_PER_PAGE = 48;
 
-export default function CategoryProductGrid({ sessionKey, queryKey, categoryFilter }) {
+export default function CategoryProductGrid({ sessionKey, queryKey, category, categoryFilter }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -159,7 +162,9 @@ export default function CategoryProductGrid({ sessionKey, queryKey, categoryFilt
   const { data: allProducts = [], isLoading } = useQuery({
     queryKey: [queryKey],
     queryFn: async () => {
-      const results = await entities.Product.filter({}, { limit: 1000, order: '-created_date' });
+      // When `category` prop is provided, filter server-side (Supabase) — much faster
+      const filters = category ? { category } : {};
+      const results = await entities.Product.filter(filters, { limit: 1000, order: '-created_date' });
       if (!results || results.length === 0) throw new Error('EMPTY_CATALOG');
       return results;
     },
@@ -170,11 +175,15 @@ export default function CategoryProductGrid({ sessionKey, queryKey, categoryFilt
   });
 
   const baseProducts = useMemo(() =>
-    allProducts.filter(p =>
-      p.image_url && !p.is_variant &&
-      categoryFilter(p) &&
-      !(p.name && (p.name.toLowerCase().includes('installation') || p.name.toLowerCase().includes('removal')))
-    ), [allProducts, categoryFilter]
+    allProducts.filter(p => {
+      // Basic quality gate: must have image, not be a variant, not be a service item
+      if (!p.image_url || p.is_variant) return false;
+      if (p.name && (p.name.toLowerCase().includes('installation') || p.name.toLowerCase().includes('removal'))) return false;
+      // If server-side category filter was used, no client filter needed
+      if (category) return true;
+      // Fallback: client-side filter for complex cases (landing pages)
+      return categoryFilter ? categoryFilter(p) : true;
+    }), [allProducts, category, categoryFilter]
   );
 
   // Derived filter options from current category products
