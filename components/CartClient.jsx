@@ -9,12 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus } from 'lucide-react';
+import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function CartClient() {
   const queryClient = useQueryClient();
   const [sessionId, setSessionId] = useState(null);
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState('');
   const { user } = useAuth();
   const isVerified = user?.is_verified === true;
 
@@ -69,16 +72,43 @@ export default function CartClient() {
 
   const pricingLabel = isVerified ? 'Trade Price' : 'Retail Price';
 
+  // Coupon apply handler
+  const handleApplyCoupon = () => {
+    setCouponError('');
+    const code = couponCode.trim().toUpperCase();
+    if (!code) return;
+    // Hardcoded promo codes — move to Supabase table when scaling
+    const PROMO_CODES = {
+      'WELCOME10': { type: 'percent', value: 10, label: '10% Off' },
+      'SAVE50': { type: 'fixed', value: 50, label: '$50 Off' },
+    };
+    const promo = PROMO_CODES[code];
+    if (promo) {
+      setAppliedCoupon({ code, ...promo });
+      setCouponCode('');
+      toast.success(`Coupon "${code}" applied! ${promo.label}`);
+    } else {
+      setCouponError('Invalid coupon code');
+    }
+  };
+
   const totals = useMemo(() => {
     const subtotal = cartItems.reduce((sum, item) => sum + (item.line_total || 0), 0);
+    let discount = 0;
+    if (appliedCoupon) {
+      discount = appliedCoupon.type === 'percent'
+        ? subtotal * (appliedCoupon.value / 100)
+        : Math.min(appliedCoupon.value, subtotal);
+    }
+    const discountedSubtotal = subtotal - discount;
     const taxRate = 0.13; // Ontario HST
-    const tax = subtotal * taxRate;
-    const total = subtotal + tax;
+    const tax = discountedSubtotal * taxRate;
+    const total = discountedSubtotal + tax;
     const totalBoxes = productItems.reduce((sum, item) => sum + (item.boxes_required || 0), 0);
     const totalSqft = productItems.reduce((sum, item) => sum + (item.actual_sqft || 0), 0);
 
-    return { subtotal, tax, total, totalBoxes, totalSqft };
-  }, [cartItems, productItems]);
+    return { subtotal, discount, tax, total, totalBoxes, totalSqft };
+  }, [cartItems, productItems, appliedCoupon]);
 
   if (isLoading) {
     return (
@@ -342,11 +372,51 @@ export default function CartClient() {
                 </div>
               )}
 
+              {/* Coupon Code */}
+              <div className="space-y-2">
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                    <div className="flex items-center gap-2">
+                      <Tag className="w-4 h-4 text-green-600" />
+                      <span className="text-sm font-medium text-green-700">{appliedCoupon.code}</span>
+                      <span className="text-xs text-green-600">({appliedCoupon.label})</span>
+                    </div>
+                    <button onClick={() => setAppliedCoupon(null)} className="text-green-500 hover:text-red-500 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Promo code"
+                        value={couponCode}
+                        onChange={(e) => { setCouponCode(e.target.value); setCouponError(''); }}
+                        onKeyDown={(e) => e.key === 'Enter' && handleApplyCoupon()}
+                        className="text-sm h-9"
+                      />
+                      <Button variant="outline" size="sm" onClick={handleApplyCoupon} className="h-9 px-4 whitespace-nowrap">
+                        Apply
+                      </Button>
+                    </div>
+                    {couponError && <p className="text-xs text-red-500 mt-1">{couponError}</p>}
+                  </div>
+                )}
+              </div>
+
+              <Separator />
+
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-slate-600">Subtotal</span>
                   <span className="font-medium">C${totals.subtotal.toFixed(2)}</span>
                 </div>
+                {totals.discount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Discount</span>
+                    <span className="font-medium">−C${totals.discount.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-slate-600">HST (13%)</span>
                   <span className="font-medium">C${totals.tax.toFixed(2)}</span>

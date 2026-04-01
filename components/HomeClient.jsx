@@ -507,28 +507,18 @@ export default function Home() {
                 delay={idx * 100}
                 className="aspect-square rounded-lg overflow-hidden group"
               >
-                {idx === 0 ? (
-                  <Link
-                    href={createPageUrl('ProjectDetail?slug=heritage-home-renovation-unionville')}
-                    className="block w-full h-full cursor-pointer"
-                  >
-                    <img
-                      src={image.url}
-                      alt={idx === 0 ? "Premium flooring installation project by BBS Flooring" : idx === 1 ? "Custom hardwood flooring in Toronto home" : idx === 2 ? "Modern vinyl plank flooring installation in GTA" : idx === 3 ? "Professional staircase flooring project in Markham" : image.alt}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </Link>
-                ) : (
+                <Link
+                  href={createPageUrl('Gallery')}
+                  className="block w-full h-full cursor-pointer"
+                >
                   <img
                     src={image.url}
-                    alt={idx === 0 ? "Premium flooring installation project by BBS Flooring" : idx === 1 ? "Custom hardwood flooring in Toronto home" : idx === 2 ? "Modern vinyl plank flooring installation in GTA" : idx === 3 ? "Professional staircase flooring project in Markham" : image.alt}
+                    alt={image.alt_text || image.alt || `BBS Flooring project ${idx + 1}`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                     decoding="async"
                   />
-                )}
+                </Link>
               </AnimDiv>
             ))}
           </div>

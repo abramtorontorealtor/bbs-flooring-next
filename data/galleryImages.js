@@ -94,5 +94,9 @@ export const recentProjectsShowcase = [
   flooringImages[0],
   stairsImages[0],
   flooringImages[5],
-  stairsImages[2]
+  stairsImages[2],
+  flooringImages[3],
+  stairsImages[4],
+  commercialImages[0],
+  flooringImages[8],
 ];

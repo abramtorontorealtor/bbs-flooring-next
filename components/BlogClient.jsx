@@ -21,6 +21,7 @@ export default function BlogClient() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
+  const [activeTag, setActiveTag] = useState(null);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -34,9 +35,32 @@ export default function BlogClient() {
     fetchPosts();
   }, []);
 
+  // Extract popular tags from all posts
+  const popularTags = (() => {
+    const tagCount = {};
+    posts.forEach(p => {
+      const tags = Array.isArray(p.tags) ? p.tags : [];
+      tags.forEach(t => {
+        if (t && typeof t === 'string' && t.length > 1) {
+          // Normalize: trim, title case
+          const normalized = t.replace(/_/g, ' ').trim();
+          tagCount[normalized] = (tagCount[normalized] || 0) + 1;
+        }
+      });
+    });
+    return Object.entries(tagCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12)
+      .map(([tag]) => tag);
+  })();
+
   const filtered = posts.filter(p => {
     if (category !== 'all' && p.category !== category) return false;
     if (search && !p.title?.toLowerCase().includes(search.toLowerCase()) && !p.excerpt?.toLowerCase().includes(search.toLowerCase())) return false;
+    if (activeTag) {
+      const tags = Array.isArray(p.tags) ? p.tags.map(t => t.replace(/_/g, ' ').trim().toLowerCase()) : [];
+      if (!tags.includes(activeTag.toLowerCase())) return false;
+    }
     return true;
   });
 
@@ -74,6 +98,28 @@ export default function BlogClient() {
           {CATEGORIES.map(cat => <option key={cat.value} value={cat.value}>{cat.label}</option>)}
         </select>
       </div>
+
+      {/* Tag Pills */}
+      {popularTags.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-8">
+          {activeTag && (
+            <button onClick={() => setActiveTag(null)}
+              className="text-xs font-medium px-3 py-1.5 rounded-full bg-slate-800 text-white hover:bg-slate-700 transition-colors">
+              ✕ Clear tag
+            </button>
+          )}
+          {popularTags.map(tag => (
+            <button key={tag} onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
+                activeTag === tag
+                  ? 'bg-amber-500 text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-amber-100 hover:text-amber-700'
+              }`}>
+              {tag}
+            </button>
+          ))}
+        </div>
+      )}
 
       {filtered.length === 0 && (
         <div className="text-center py-20 text-slate-500">
@@ -121,15 +167,23 @@ export default function BlogClient() {
                   </div>
                 )}
                 <div className="p-5 flex flex-col flex-1">
-                  {post.category && (
-                    <span className="inline-block bg-slate-100 text-slate-600 text-xs font-semibold px-2 py-0.5 rounded mb-2 w-fit">
-                      {post.category.replace(/_/g, ' ')}
-                    </span>
-                  )}
+                  <div className="flex flex-wrap items-center gap-1.5 mb-2">
+                    {post.category && (
+                      <span className="inline-block bg-slate-100 text-slate-600 text-xs font-semibold px-2 py-0.5 rounded">
+                        {post.category.replace(/_/g, ' ')}
+                      </span>
+                    )}
+                    {Array.isArray(post.tags) && post.tags.slice(0, 2).map((tag, i) => (
+                      <button key={i} onClick={(e) => { e.preventDefault(); setActiveTag(tag.replace(/_/g, ' ').trim()); }}
+                        className="inline-block bg-amber-50 text-amber-700 text-[10px] font-medium px-1.5 py-0.5 rounded hover:bg-amber-100 transition-colors">
+                        {tag.replace(/_/g, ' ').trim()}
+                      </button>
+                    ))}
+                  </div>
                   <h3 className="font-bold text-slate-800 mb-2 group-hover:text-amber-600 transition-colors line-clamp-2">{post.title}</h3>
                   <p className="text-slate-600 text-sm line-clamp-2 flex-1">{post.excerpt}</p>
                   <div className="flex items-center gap-2 text-xs text-slate-500 mt-3">
-                    {post.published_date && <span>{new Date(post.published_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
+                    {(post.published_date || post.published_at) && <span>{new Date(post.published_date || post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
                     {post.read_time && <span>· {post.read_time} min</span>}
                   </div>
                 </div>
