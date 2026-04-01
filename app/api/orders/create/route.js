@@ -13,6 +13,13 @@ export async function POST(request) {
   try {
     const { orderData, paymentMethod, isCustomZone, termsAcceptedAt } = await request.json();
 
+    if (!orderData || !orderData.customer_email || !orderData.items?.length) {
+      return NextResponse.json(
+        { success: false, error: 'Missing required order data (customer_email, items)' },
+        { status: 400 }
+      );
+    }
+
     const supabase = getSupabaseAdminClient();
     const orderNumber = generateOrderNumber();
 

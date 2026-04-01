@@ -7,6 +7,13 @@ export async function POST(request) {
     const body = await request.json();
     const { name, email, phone, message, source } = body;
 
+    if (!name || !email) {
+      return NextResponse.json(
+        { success: false, error: 'Name and email are required' },
+        { status: 400 }
+      );
+    }
+
     const supabase = getSupabaseAdminClient();
 
     // Save to contact_leads table

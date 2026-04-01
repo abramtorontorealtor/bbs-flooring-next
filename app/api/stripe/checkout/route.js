@@ -6,6 +6,13 @@ export async function POST(request) {
   try {
     const { orderId, amount, customerEmail, orderNumber } = await request.json();
 
+    if (!orderId || !amount || !customerEmail || !orderNumber) {
+      return NextResponse.json(
+        { error: 'Missing required fields (orderId, amount, customerEmail, orderNumber)' },
+        { status: 400 }
+      );
+    }
+
     // Stripe requires STRIPE_SECRET_KEY env var
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     if (!stripeKey) {
