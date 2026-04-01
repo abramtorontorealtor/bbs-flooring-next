@@ -69,10 +69,18 @@ export default function QuoteCalculatorClient() {
   const quoteRef = useRef(null);
   const formRef = useRef(null);
 
-  const { data: products = [] } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => entities.Product.list({ limit: 1000, order: '-created_date' }),
-    initialData: []
+  const { data: products = [], isLoading: productsLoading, error: productsError } = useQuery({
+    queryKey: ['all-products-quote'],
+    queryFn: async () => {
+      const results = await entities.Product.list({ limit: 1000 });
+      if (!results || results.length === 0) {
+        console.warn('[QuoteCalc] Product list returned empty — Supabase client may not be initialized');
+      }
+      return results;
+    },
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: 1000,
   });
 
   const selectedProduct = products.find(p => p.id === formData.product_id);
@@ -491,7 +499,7 @@ export default function QuoteCalculatorClient() {
                           whiteSpace: 'nowrap'
                         }}
                       >
-                        {formData.product_id ? products.find(p => p.id === formData.product_id)?.name : "Choose a product..."}
+                        {formData.product_id ? products.find(p => p.id === formData.product_id)?.name : productsLoading ? "Loading products..." : productsError ? "Error loading products" : "Choose a product..."}
                       </span>
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -499,7 +507,7 @@ export default function QuoteCalculatorClient() {
                   <PopoverContent className="w-full p-0" align="start" style={{ maxHeight: '60vh' }}>
                     <Command className="flex flex-col max-h-[60vh]">
                       <CommandInput placeholder="Search products..." />
-                      <CommandEmpty>No product found.</CommandEmpty>
+                      <CommandEmpty>{productsLoading ? 'Loading products...' : productsError ? 'Failed to load products. Please refresh the page.' : 'No product found.'}</CommandEmpty>
                       <div className="overflow-auto flex-1">
                         {groupedProducts.map(([groupName, groupProducts]) => (
                           <CommandGroup key={groupName} heading={groupName}>
