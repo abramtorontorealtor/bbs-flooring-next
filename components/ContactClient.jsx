@@ -27,10 +27,22 @@ export default function ContactClient() {
     }));
   };
 
+  const validatePhone = (phone) => {
+    if (!phone) return true; // optional field
+    const digits = phone.replace(/\D/g, '');
+    return digits.length === 10 || digits.length === 11;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    if (!validatePhone(formData.phone)) {
+      setError('Please enter a valid 10-digit phone number (e.g. 647-428-1111).');
+      setLoading(false);
+      return;
+    }
 
     try {
       await fetch('/api/contact', {
@@ -73,8 +85,12 @@ export default function ContactClient() {
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
                   <h3 className="text-xl font-bold text-slate-900 mb-2">Message Sent!</h3>
-                  <p className="text-slate-500 mb-6">
-                    Thanks for reaching out. We'll get back to you shortly.
+                  <p className="text-slate-500 mb-4">
+                    Thanks for reaching out! We typically respond within 2 business hours.
+                  </p>
+                  <p className="text-slate-400 text-sm mb-6">
+                    Need an answer sooner? Call us directly at{' '}
+                    <a href="tel:6474281111" className="text-amber-600 font-medium hover:underline">(647) 428-1111</a>
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}

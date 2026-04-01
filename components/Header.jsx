@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Menu, Phone, ChevronDown, Search, X } from 'lucide-react';
+import { ShoppingCart, Menu, Phone, ChevronDown, Search, X, Ruler } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import AdvancedSearchBar from './AdvancedSearchBar';
@@ -121,6 +121,16 @@ export default function Header({ cartCount = 0 }) {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
+            {/* Free Measurement CTA — Desktop */}
+            <Link
+              href="/free-measurement"
+              className="hidden lg:flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+              onClick={() => Analytics.trackEvent('cta_click', 'lead', 'free_measurement_header')}
+            >
+              <Ruler className="w-4 h-4" />
+              Free Measure
+            </Link>
+
             {/* Desktop Search */}
             <div className="hidden md:block w-56 lg:w-72">
               <AdvancedSearchBar />
@@ -191,6 +201,15 @@ export default function Header({ cartCount = 0 }) {
               </SheetTrigger>
               <SheetContent side="right" className="w-80">
                 <div className="flex flex-col gap-6 mt-8 overflow-y-auto max-h-[calc(100vh-120px)] pb-8">
+                  {/* Free Measurement — Mobile Prominent CTA */}
+                  <Link
+                    href="/free-measurement"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3.5 rounded-xl transition-colors text-base"
+                  >
+                    <Ruler className="w-5 h-5" />
+                    Book Free Measurement
+                  </Link>
                   {navItems.map((item) => (
                     item.submenu ? (
                       <div key={item.name} className="py-2 border-b border-slate-100">
@@ -232,6 +251,26 @@ export default function Header({ cartCount = 0 }) {
           <AdvancedSearchBar onClose={() => setMobileSearchOpen(false)} />
         </div>
       )}
+
+      {/* Sticky Mobile Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-white border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] px-4 py-2.5 flex gap-3">
+        <a
+          href="tel:+16474281111"
+          className="flex-1 flex items-center justify-center gap-2 bg-slate-800 text-white font-semibold py-3 rounded-xl text-sm transition-colors"
+          onClick={() => Analytics.trackPhoneClick('sticky_mobile')}
+        >
+          <Phone className="w-4 h-4" />
+          Call Now
+        </a>
+        <Link
+          href="/free-measurement"
+          className="flex-1 flex items-center justify-center gap-2 bg-amber-500 text-white font-semibold py-3 rounded-xl text-sm transition-colors"
+          onClick={() => Analytics.trackEvent('cta_click', 'lead', 'free_measurement_sticky_mobile')}
+        >
+          <Ruler className="w-4 h-4" />
+          Free Measure
+        </Link>
+      </div>
     </header>
   );
 }

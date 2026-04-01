@@ -1,4 +1,5 @@
 import ContactClient from '@/components/ContactClient';
+import { JsonLd, localBusinessSchema } from '@/lib/schemas';
 
 export const metadata = {
   title: 'Contact BBS Flooring | Free Consultation | Markham',
@@ -6,5 +7,10 @@ export const metadata = {
 };
 
 export default function ContactPage() {
-  return <ContactClient />;
+  return (
+    <>
+      <JsonLd data={localBusinessSchema()} />
+      <ContactClient />
+    </>
+  );
 }

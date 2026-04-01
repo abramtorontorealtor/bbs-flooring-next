@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import CategoryProductGrid from '@/components/CategoryProductGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Phone, MapPin, Clock, Star, Shield, Truck, ChevronDown } from 'lucide-react';
+import { Analytics } from './analytics';
 
 const PHONE = '(647) 428-1111';
 const ADDRESS = '6061 Highway 7, Unit B, Markham, ON';
@@ -33,6 +34,15 @@ export default function AdLandingTemplate({
   ctaText = 'Get a Free Quote',
 }) {
   const [openFaq, setOpenFaq] = useState(null);
+
+  // GA4 landing page view
+  useEffect(() => {
+    Analytics.trackEvent('view_landing_page', 'engagement', h1);
+  }, [h1]);
+
+  const handleCtaClick = (location) => {
+    Analytics.trackEvent('generate_lead', 'conversion', `${h1}_${location}`);
+  };
 
   // Build breadcrumb items
   const breadcrumbs = [
@@ -63,6 +73,7 @@ export default function AdLandingTemplate({
             <a
               href={`tel:+16474281111`}
               className="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-xl text-base transition-colors"
+              onClick={() => { Analytics.trackPhoneClick('landing_hero'); handleCtaClick('hero_call'); }}
             >
               <Phone className="w-5 h-5" />
               Call {PHONE}
@@ -70,6 +81,7 @@ export default function AdLandingTemplate({
             <Link
               href={createPageUrl('FreeMeasurement')}
               className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl text-base transition-colors"
+              onClick={() => handleCtaClick('hero_cta')}
             >
               {ctaText} →
             </Link>
@@ -185,6 +197,7 @@ export default function AdLandingTemplate({
             <a
               href="tel:+16474281111"
               className="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-8 py-3 rounded-xl text-base transition-colors"
+              onClick={() => { Analytics.trackPhoneClick('landing_bottom'); handleCtaClick('bottom_call'); }}
             >
               <Phone className="w-5 h-5" />
               {PHONE}
@@ -192,6 +205,7 @@ export default function AdLandingTemplate({
             <Link
               href={createPageUrl('FreeMeasurement')}
               className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-8 py-3 rounded-xl text-base transition-colors"
+              onClick={() => handleCtaClick('bottom_cta')}
             >
               {ctaText}
             </Link>

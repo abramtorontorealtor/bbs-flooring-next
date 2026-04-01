@@ -93,3 +93,10 @@
     overflow-x: clip;
   }
 }
+
+/* Bottom padding for sticky mobile CTA bar */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: 72px;
+  }
+}
