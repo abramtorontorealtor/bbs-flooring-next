@@ -96,21 +96,38 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
               })()
             ) : (
               <>
-                {/* Was/Now pricing for sale items */}
-                {product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft && !product.is_clearance ? (
-                  <div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-sm text-slate-400 line-through">C${product.price_per_sqft.toFixed(2)}</span>
-                      <span className="text-xl font-bold text-red-600">C${product.sale_price_per_sqft.toFixed(2)}</span>
-                      <span className="text-xs text-slate-500">/sqft</span>
+                {/* Was/Now pricing for sale items — auth-aware */}
+                {(() => {
+                  const hasSale = product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft && !product.is_clearance;
+                  if (!hasSale) return <MemberPriceBadge product={product} user={user} isVerified={isVerified} compact={true} />;
+                  // Guests see public_price (or fall back to sale_price); members see member_price (or sale_price)
+                  const displaySalePrice = isVerified
+                    ? (product.member_price ?? product.sale_price_per_sqft)
+                    : (product.public_price ?? product.sale_price_per_sqft);
+                  const savings = Math.round((1 - displaySalePrice / product.price_per_sqft) * 100);
+                  return (
+                    <div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm text-slate-400 line-through">C${product.price_per_sqft.toFixed(2)}</span>
+                        <span className={`text-xl font-bold ${isVerified ? 'text-amber-600' : 'text-red-600'}`}>C${displaySalePrice.toFixed(2)}</span>
+                        <span className="text-xs text-slate-500">/sqft</span>
+                      </div>
+                      {savings > 0 && (
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${isVerified ? 'text-amber-700 bg-amber-50' : 'text-red-600 bg-red-50'}`}>
+                          Save {savings}%{isVerified ? ' · Member' : ''}
+                        </span>
+                      )}
+                      {!isVerified && product.member_price && product.member_price < displaySalePrice && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); e.preventDefault(); localStorage.setItem('bbs_return_url', window.location.pathname + window.location.search); window.location.href = '/login'; }}
+                          className="mt-1 flex items-center gap-1 text-xs text-amber-700 hover:text-amber-800 font-semibold transition-colors group"
+                        >
+                          <span className="group-hover:underline">🔒 Sign in for even lower pricing</span>
+                        </button>
+                      )}
                     </div>
-                    <span className="text-xs font-semibold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">
-                      Save {Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100)}%
-                    </span>
-                  </div>
-                ) : (
-                  <MemberPriceBadge product={product} user={user} isVerified={isVerified} compact={true} />
-                )}
+                  );
+                })()}
               </>
             )}
           </div>
