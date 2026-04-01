@@ -56,7 +56,15 @@ export default function AccountDashboardClient() {
 
         // For verified users, send welcome email if not sent
         if (user.is_verified && !user.welcome_email_sent) {
-          fetch('/api/auth/welcome', { method: 'POST' }).catch(() => {});
+          fetch('/api/auth/welcome', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId: user.id,
+              userEmail: user.email,
+              userName: user.full_name || '',
+            }),
+          }).catch(() => {});
         }
 
         const [items, quotes] = await Promise.all([

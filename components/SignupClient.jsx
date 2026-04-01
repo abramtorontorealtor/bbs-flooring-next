@@ -77,6 +77,18 @@ export default function SignupClient() {
         phone: form.phone,
         role: 'member',
       }, { onConflict: 'id' });
+
+      // Send branded BBS verification email (in addition to Supabase's default).
+      // This gives users a professional, branded link to verify their email.
+      fetch('/api/auth/send-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: data.user.id,
+          userEmail: form.email,
+          userName: form.full_name,
+        }),
+      }).catch(() => {});
     }
 
     setLoading(false);

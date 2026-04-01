@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
+import { getSupabaseBrowserClient } from '@/lib/supabase';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -27,10 +28,27 @@ export default function VerifyEmailClient() {
       body: JSON.stringify({ token }),
     })
       .then((r) => r.json())
-      .then((res) => {
+      .then(async (res) => {
         if (res.success) {
           setStatus('success');
-          fetch('/api/auth/welcome', { method: 'POST' }).catch(() => {});
+          // Send welcome email — try to get current user from session, fall back to token lookup
+          try {
+            const supabase = getSupabaseBrowserClient();
+            const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: {} };
+            if (user) {
+              fetch('/api/auth/welcome', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  userId: user.id,
+                  userEmail: user.email,
+                  userName: user.user_metadata?.full_name || '',
+                }),
+              }).catch(() => {});
+            }
+          } catch {
+            // Welcome email is best-effort — verification still succeeded
+          }
         } else {
           const errMsg = res.error || 'Verification failed.';
           setStatus(errMsg.includes('expired') ? 'expired' : 'error');

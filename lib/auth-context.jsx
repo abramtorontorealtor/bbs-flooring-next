@@ -54,8 +54,23 @@ export function AuthProvider({ children }) {
         .eq('id', userId)
         .single();
 
-      // Also get the auth user for email
+      // Also get the auth user for email + confirmation status
       const { data: { user: authUser } } = await supabase.auth.getUser();
+
+      // Auto-sync: if Supabase Auth confirmed the email but users.is_verified
+      // is still false, update it. This bridges Supabase's built-in confirmation
+      // with the BBS custom verification system so either link works.
+      const supabaseConfirmed = !!authUser?.email_confirmed_at;
+      const profileVerified = profile?.is_verified === true;
+
+      if (supabaseConfirmed && !profileVerified && profile?.id) {
+        supabase
+          .from('users')
+          .update({ is_verified: true, verified_at: new Date().toISOString() })
+          .eq('id', userId)
+          .then(() => {})
+          .catch(() => {});
+      }
 
       setUser({
         ...profile,
@@ -63,6 +78,7 @@ export function AuthProvider({ children }) {
         email: authUser?.email,
         full_name: profile?.full_name || authUser?.user_metadata?.full_name,
         role: profile?.role || 'member',
+        is_verified: profileVerified || supabaseConfirmed,
       });
       setIsAuthenticated(true);
     } catch (err) {
@@ -73,6 +89,7 @@ export function AuthProvider({ children }) {
         id: userId,
         email: authUser?.email,
         role: 'member',
+        is_verified: !!authUser?.email_confirmed_at,
       });
       setIsAuthenticated(true);
     } finally {
