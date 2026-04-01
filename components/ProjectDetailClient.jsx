@@ -4,11 +4,12 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Calendar, Ruler, ArrowRight } from 'lucide-react';
-import { getWixSrcSet } from '@/lib/image-helpers';
+
 
 export default function ProjectDetailClient({ slug }) {
   const { data: projects = [], isLoading: projectsLoading } = useQuery({
@@ -82,14 +83,15 @@ export default function ProjectDetailClient({ slug }) {
 
       {/* Featured Image */}
       {project.featured_image && (
-        <div className="mb-12 rounded-2xl overflow-hidden shadow-2xl">
-          <img 
-            src={project.featured_image}
-            srcSet={getWixSrcSet(project.featured_image)}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+        <div className="mb-12 rounded-2xl overflow-hidden shadow-2xl relative h-[500px]">
+          <Image 
+            src={project.featured_image.split('?')[0]}
             alt={project.title}
-            className="w-full h-[500px] object-cover"
-            loading="eager"
+            className="object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+            priority
+            quality={80}
           />
         </div>
       )}
@@ -115,15 +117,16 @@ export default function ProjectDetailClient({ slug }) {
                 {project.gallery_images.map((img, idx) => (
                   <div 
                     key={idx}
-                    className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow"
+                    className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow relative h-64"
                   >
-                    <img 
-                      src={img.url}
-                      srcSet={getWixSrcSet(img.url)}
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                    <Image 
+                      src={(img.url || '').split('?')[0]}
                       alt={img.alt || `${project.title} - Photo ${idx + 1}`}
-                      className="w-full h-64 object-cover"
+                      className="object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       loading="lazy"
+                      quality={75}
                     />
                   </div>
                 ))}
@@ -140,14 +143,15 @@ export default function ProjectDetailClient({ slug }) {
               <h3 className="text-lg font-bold text-slate-800 mb-4">Shop the Look</h3>
               <Link href={createPageUrl(`ProductDetail?slug=${product.slug || product.id}`)}>
                 <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group">
-                  <div className="aspect-square overflow-hidden bg-slate-50">
-                    <img 
-                      src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop'}
-                      srcSet={getWixSrcSet(product.image_url)}
-                      sizes="(max-width: 768px) 100vw, 400px"
+                  <div className="aspect-square overflow-hidden bg-slate-50 relative">
+                    <Image 
+                      src={(product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop').split('?')[0]}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
                       loading="lazy"
+                      quality={75}
                     />
                   </div>
                   <div className="p-4">

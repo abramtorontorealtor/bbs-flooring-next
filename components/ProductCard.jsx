@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
 import { MapPin } from 'lucide-react';
 import MemberPriceBadge from './MemberPriceBadge';
@@ -39,11 +40,9 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
     sessionStorage.setItem('product_referrer', window.location.pathname + window.location.search);
   };
 
-  const getOptimizedImageUrl = (url, width = 400, height = 400) => {
+  const getImageUrl = (url) => {
     if (!url) return 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop';
-    const clean = url.split('?')[0];
-    if (url.startsWith('http')) return `https://wsrv.nl/?url=${encodeURIComponent(clean)}&w=${width}&h=${height}&fit=cover&q=60&output=webp`;
-    return url;
+    return url.split('?')[0];
   };
 
   return (
@@ -51,7 +50,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
       <div className={`group h-full flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 ${isOutOfStock ? 'opacity-75' : ''}`}>
         <Link href={createPageUrl(`ProductDetail?slug=${product.slug || product.sku || product.id}`)} onClick={handleClick} className="block">
           <div className="relative aspect-square overflow-hidden bg-slate-50">
-            <img src={getOptimizedImageUrl(product.image_url)} alt={product.image_alt_text || product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" fetchpriority="low" width="400" height="400" />
+            <Image src={getImageUrl(product.image_url)} alt={product.image_alt_text || product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width={400} height={400} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" quality={75} />
             {autoBadges.length > 0 && (
               <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                 {autoBadges.map(badge => <span key={badge.key} className={`text-xs font-semibold px-2 py-1 rounded-full shadow-sm ${badge.className}`}>{badge.label}</span>)}

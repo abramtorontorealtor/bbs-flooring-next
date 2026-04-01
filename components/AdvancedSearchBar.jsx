@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 // AdvancedSearchBar.jsx — Client-Side Search (Next.js port)
 // Uses frontend SDK entities.Product.filter() + client-side scoring.
 // Backend getAdvancedSearchResults is NOT called.
@@ -287,7 +289,7 @@ export default function AdvancedSearchBar({ onClose }) {
                     >
                       <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-200">
                         {product.image_url ? (
-                          <img src={product.image_url} alt="" className="w-full h-full object-cover" />
+                          <Image src={product.image_url.split('?')[0]} alt="" className="w-full h-full object-cover" width={48} height={48} quality={60} unoptimized />
                         ) : (
                           <div className="w-full h-full bg-slate-200" />
                         )}

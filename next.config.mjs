@@ -22,6 +22,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'static.wixstatic.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.wixstatic.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'vidarflooring.com',
+      },
     ],
   },
   // Redirect old Base44 PascalCase URLs to new kebab-case paths.

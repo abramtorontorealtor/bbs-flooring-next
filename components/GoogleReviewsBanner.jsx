@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Star } from 'lucide-react';
 import { GOOGLE_REVIEWS, GOOGLE_REVIEW_STATS } from '@/data/googleReviews';
 
@@ -34,9 +35,7 @@ function Avatar({ name, photoUrl, size = 40 }) {
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2);
   if (photoUrl) {
     return (
-      <img src={photoUrl} alt={name} width={size} height={size} className="rounded-full object-cover flex-shrink-0" loading="lazy" referrerPolicy="no-referrer"
-        onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-      />
+      <Image src={photoUrl} alt={name} width={size} height={size} className="rounded-full object-cover flex-shrink-0" loading="lazy" referrerPolicy="no-referrer" unoptimized />
     );
   }
   return (
