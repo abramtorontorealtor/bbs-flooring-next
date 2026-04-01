@@ -130,21 +130,11 @@ export default function Home() {
     },
   ];
 
-  // Dynamic product count
-  const { data: productCount } = useQuery({
-    queryKey: ['productCountHome'],
-    queryFn: async () => {
-      const all = await entities.Product.filter({}, { limit: 1000 });
-      return all.length;
-    },
-    staleTime: 60 * 60 * 1000, // 1 hour
-  });
-
   const features = [
     { icon: Truck, title: 'GTA Delivery', description: 'Fast delivery across the Greater Toronto Area' },
-    { icon: Shield, title: `${productCount || '700'}+ Products`, description: 'Hardwood, vinyl, laminate — all in stock' },
+    { icon: Shield, title: 'Quality Guaranteed', description: 'Premium products with manufacturer warranties' },
     { icon: Calendar, title: 'Free Measurements', description: 'Book your free in-home measurement today' },
-    { icon: Star, title: 'Member Pricing', description: 'Exclusive savings for registered members', href: '/account' },
+    { icon: Star, title: 'Expert Service', description: 'Professional installation by local experts' },
   ];
 
   return (
@@ -435,14 +425,14 @@ export default function Home() {
             </AnimDiv>
 
             <AnimDiv className="relative overflow-hidden">
-              <img
+              <Image
                 src="https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/gallery/flooring-project-1.webp"
                 alt="Real BBS Flooring hardwood installation project in Markham home"
                 className="rounded-3xl shadow-2xl"
-                width="800"
-                height="600"
+                width={800}
+                height={600}
                 loading="lazy"
-                decoding="async"
+                quality={80}
               />
               <div className="mt-6 inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-5 py-3">
                 <span className="text-amber-400 font-bold">13+ Years in Markham</span>
@@ -501,26 +491,35 @@ export default function Home() {
           </AnimDiv>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {recentProjectsShowcase.map((image, idx) => (
-              <AnimDiv
-                key={idx}
-                delay={idx * 100}
-                className="aspect-square rounded-lg overflow-hidden group"
-              >
-                <Link
-                  href={createPageUrl('Gallery')}
-                  className="block w-full h-full cursor-pointer"
+            {recentProjectsShowcase.map((image, idx) => {
+              const altTexts = [
+                'Premium flooring installation project by BBS Flooring',
+                'Custom hardwood flooring in Toronto home',
+                'Modern vinyl plank flooring installation in GTA',
+                'Professional staircase flooring project in Markham',
+              ];
+              const alt = altTexts[idx] || image.alt_text || image.alt || `BBS Flooring project ${idx + 1}`;
+              const href = idx === 0 ? '/gallery/heritage-home-renovation-unionville' : createPageUrl('Gallery');
+              return (
+                <AnimDiv
+                  key={idx}
+                  delay={idx * 100}
+                  className="aspect-square rounded-lg overflow-hidden group"
                 >
-                  <img
-                    src={image.url}
-                    alt={image.alt_text || image.alt || `BBS Flooring project ${idx + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </Link>
-              </AnimDiv>
-            ))}
+                  <Link href={href} className="block w-full h-full cursor-pointer relative">
+                    <Image
+                      src={image.url}
+                      alt={alt}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      loading="lazy"
+                      quality={75}
+                    />
+                  </Link>
+                </AnimDiv>
+              );
+            })}
           </div>
 
           <div className="text-center">
