@@ -16,19 +16,17 @@ const nextConfig = {
       },
     ],
   },
-  // Redirect old Base44 URLs to new paths
+  // Redirect old Base44 PascalCase URLs to new kebab-case paths.
+  // IMPORTANT: Do NOT add redirects where source and destination differ only by
+  // capitalisation (e.g. /Vinyl → /vinyl). Next.js 16 / Vercel matches redirects
+  // case-insensitively, so /vinyl would match the /Vinyl source and loop forever.
+  // Case-only redirects are handled by the Cloudflare worker bbs-redirects-v1.
   async redirects() {
     return [
-      // Category pages
-      { source: '/Vinyl', destination: '/vinyl', permanent: true },
-      { source: '/Laminate', destination: '/laminate', permanent: true },
+      // Category pages (multi-word only — single-word handled by Cloudflare)
       { source: '/SolidHardwood', destination: '/solid-hardwood', permanent: true },
       { source: '/EngineeredHardwood', destination: '/engineered-hardwood', permanent: true },
-      { source: '/Products', destination: '/products', permanent: true },
-      { source: '/Clearance', destination: '/clearance', permanent: true },
       // Service pages
-      { source: '/Stairs', destination: '/stairs', permanent: true },
-      { source: '/Installation', destination: '/installation', permanent: true },
       { source: '/StairRefinishing', destination: '/stair-refinishing', permanent: true },
       { source: '/HardwoodRefinishing', destination: '/hardwood-refinishing', permanent: true },
       { source: '/CarpetRemoval', destination: '/carpet-removal', permanent: true },
@@ -40,13 +38,6 @@ const nextConfig = {
       { source: '/FlooringClearanceSale', destination: '/flooring-clearance-sale', permanent: true },
       { source: '/QuoteCalculator', destination: '/quote-calculator', permanent: true },
       { source: '/RoomVisualizer', destination: '/room-visualizer', permanent: true },
-      { source: '/Compare', destination: '/compare', permanent: true },
-      { source: '/Financing', destination: '/financing', permanent: true },
-      { source: '/About', destination: '/about', permanent: true },
-      { source: '/Contact', destination: '/contact', permanent: true },
-      { source: '/Gallery', destination: '/gallery', permanent: true },
-      { source: '/Blog', destination: '/blog', permanent: true },
-      { source: '/Cart', destination: '/cart', permanent: true },
       // Brand/specialty pages
       { source: '/VidarFlooring', destination: '/vidar-flooring', permanent: true },
       { source: '/WickhamFlooring', destination: '/wickham-flooring', permanent: true },
