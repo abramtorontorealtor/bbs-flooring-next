@@ -6,6 +6,7 @@ import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
 export const metadata = {
   title: hardwoodRefinishingData.title,
   description: hardwoodRefinishingData.description,
+  alternates: { canonical: '/hardwood-refinishing' },
 };
 
 export default function HardwoodRefinishingPage() {

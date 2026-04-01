@@ -4,6 +4,13 @@ import { JsonLd } from '@/lib/schemas';
 export const metadata = {
   title: 'Flooring Blog - Expert Tips & Trends | BBS Flooring',
   description: 'Expert flooring advice, installation guides, design trends, and maintenance tips from BBS Flooring.',
+  alternates: { canonical: '/blog' },
+  openGraph: {
+    title: 'Flooring Blog - Expert Tips & Trends | BBS Flooring',
+    description: 'Expert flooring advice, installation guides, design trends, and maintenance tips from BBS Flooring.',
+    url: '/blog',
+    type: 'website',
+  },
 };
 
 export default function BlogPage() {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
 import { Calendar, Clock, Tag, ArrowLeft, Share2, Phone, Ruler, Star } from 'lucide-react';
 
@@ -83,8 +84,8 @@ export default function BlogPostClient({ slug }) {
       </Link>
 
       {post.featured_image && (
-        <div className="rounded-2xl overflow-hidden mb-8">
-          <img src={post.featured_image} alt={post.image_alt_text || post.title} className="w-full h-96 object-cover" />
+        <div className="relative rounded-2xl overflow-hidden mb-8 h-96">
+          <Image src={post.featured_image} alt={post.image_alt_text || post.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 896px" priority />
         </div>
       )}
 
@@ -143,8 +144,8 @@ export default function BlogPostClient({ slug }) {
               <Link key={rp.id} href={`/blog/${rp.slug}`}>
                 <article className="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-lg transition-all">
                   {rp.featured_image && (
-                    <div className="h-40 overflow-hidden">
-                      <img src={rp.featured_image} alt={rp.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="relative h-40 overflow-hidden">
+                      <Image src={rp.featured_image} alt={rp.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 33vw" />
                     </div>
                   )}
                   <div className="p-4">

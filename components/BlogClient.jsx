@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
 import { Search } from 'lucide-react';
 
@@ -87,8 +88,8 @@ export default function BlogClient() {
         <Link href={`/blog/${featured.slug}`} className="block mb-12 group">
           <div className="grid md:grid-cols-2 gap-6 bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
             {featured.featured_image && (
-              <div className="aspect-video md:aspect-auto overflow-hidden">
-                <img src={featured.featured_image} alt={featured.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <div className="relative aspect-video md:aspect-auto min-h-[240px] overflow-hidden">
+                <Image src={featured.featured_image} alt={featured.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="(max-width: 768px) 100vw, 50vw" priority />
               </div>
             )}
             <div className="p-6 md:p-8 flex flex-col justify-center">
@@ -115,8 +116,8 @@ export default function BlogClient() {
             <Link key={post.id || post.slug} href={`/blog/${post.slug}`} className="group">
               <div className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
                 {post.featured_image && (
-                  <div className="aspect-video overflow-hidden">
-                    <img src={post.featured_image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  <div className="relative aspect-video overflow-hidden">
+                    <Image src={post.featured_image} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                   </div>
                 )}
                 <div className="p-5 flex flex-col flex-1">

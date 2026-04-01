@@ -4,6 +4,7 @@ import QuoteBookingClient from '@/components/QuoteBookingClient';
 export const metadata = {
   title: 'Book Your Free Measurement — BBS Flooring',
   description: 'Schedule a free in-home measurement with BBS Flooring. Our team will come to you.',
+  alternates: { canonical: '/quote-booking' },
 };
 
 export default function QuoteBookingPage() {

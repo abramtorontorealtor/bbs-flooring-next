@@ -6,6 +6,7 @@ import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
 export const metadata = {
   title: contractorFlooringData.title,
   description: contractorFlooringData.description,
+  alternates: { canonical: '/contractor-flooring' },
 };
 
 export default function ContractorFlooringPage() {
