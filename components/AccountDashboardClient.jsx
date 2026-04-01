@@ -8,7 +8,7 @@ import { entities } from '@/lib/base44-compat';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, Clock, Heart, ShoppingCart, User, Phone, Building2, Mail, RefreshCw, Calculator, ChevronDown, ChevronUp, ExternalLink, Trash2 } from 'lucide-react';
+import { CheckCircle2, Clock, Heart, ShoppingCart, User, Phone, Building2, Mail, RefreshCw, Calculator, ChevronDown, ChevronUp, ExternalLink, Trash2, Package, Truck, MapPin, CreditCard, Ban } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AccountDashboardClient() {
@@ -16,7 +16,9 @@ export default function AccountDashboardClient() {
   const { user, isAuthenticated, isLoadingAuth, logout } = useAuth();
   const [savedItems, setSavedItems] = useState([]);
   const [savedQuotes, setSavedQuotes] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [expandedQuote, setExpandedQuote] = useState(null);
+  const [expandedOrder, setExpandedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [resending, setResending] = useState(false);
   const [verificationEmailSent, setVerificationEmailSent] = useState(false);
@@ -67,12 +69,14 @@ export default function AccountDashboardClient() {
           }).catch(() => {});
         }
 
-        const [items, quotes] = await Promise.all([
+        const [items, quotes, ordersRes] = await Promise.all([
           entities.SavedItem.filter({ user_email: user.email }, { order: '-created_date', limit: 50 }),
           entities.SavedQuote.filter({ user_email: user.email }, { order: '-created_date', limit: 20 }),
+          fetch('/api/orders/mine').then(r => r.ok ? r.json() : { orders: [] }).catch(() => ({ orders: [] })),
         ]);
         setSavedItems(items);
         setSavedQuotes(quotes);
+        setOrders(ordersRes.orders || []);
 
         // Retroactively save any pending quote from localStorage
         const pendingQuote = localStorage.getItem('bbs_pending_quote');
@@ -333,6 +337,178 @@ export default function AccountDashboardClient() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* My Orders */}
+        <div className="mt-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+          <h2 className="font-bold text-slate-800 text-lg flex items-center gap-2 mb-4">
+            <Package className="w-5 h-5 text-amber-500" /> My Orders ({orders.length})
+          </h2>
+
+          {orders.length === 0 ? (
+            <div className="text-center py-12 text-slate-400">
+              <Package className="w-12 h-12 mx-auto mb-3 text-slate-200" />
+              <p className="font-medium">No orders yet</p>
+              <p className="text-sm mt-1">Your order history will appear here after your first purchase</p>
+              <Link href="/products">
+                <Button className="mt-4 bg-amber-500 hover:bg-amber-600 text-white">
+                  Browse Products
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {orders.map(order => {
+                const statusConfig = {
+                  pending_payment: { label: 'Awaiting Payment', color: 'bg-yellow-100 text-yellow-800', icon: Clock, step: 1 },
+                  confirmed: { label: 'Confirmed', color: 'bg-blue-100 text-blue-800', icon: CheckCircle2, step: 2 },
+                  paid: { label: 'Paid', color: 'bg-green-100 text-green-800', icon: CreditCard, step: 2 },
+                  processing: { label: 'Preparing', color: 'bg-purple-100 text-purple-800', icon: Package, step: 3 },
+                  shipped: { label: order.delivery_preference === 'pickup' ? 'Ready for Pickup' : 'Shipped', color: 'bg-indigo-100 text-indigo-800', icon: Truck, step: 4 },
+                  delivered: { label: order.delivery_preference === 'pickup' ? 'Picked Up' : 'Delivered', color: 'bg-emerald-100 text-emerald-800', icon: MapPin, step: 5 },
+                  cancelled: { label: 'Cancelled', color: 'bg-red-100 text-red-800', icon: Ban, step: 0 },
+                  quote_requested: { label: 'Quote Requested', color: 'bg-sky-100 text-sky-800', icon: Clock, step: 1 },
+                };
+                const sc = statusConfig[order.status] || statusConfig.pending_payment;
+                const StatusIcon = sc.icon;
+                const items = order.items || [];
+                const isExpanded = expandedOrder === order.id;
+                const isCancelled = order.status === 'cancelled';
+                const steps = [
+                  { label: 'Received', num: 1 },
+                  { label: 'Confirmed', num: 2 },
+                  { label: 'Preparing', num: 3 },
+                  { label: order.delivery_preference === 'pickup' ? 'Ready' : 'Shipped', num: 4 },
+                  { label: order.delivery_preference === 'pickup' ? 'Picked Up' : 'Delivered', num: 5 },
+                ];
+
+                return (
+                  <div key={order.id} className="border border-slate-100 rounded-xl overflow-hidden hover:border-amber-200 transition-colors">
+                    <div
+                      className="flex items-center gap-4 p-4 cursor-pointer"
+                      onClick={() => setExpandedOrder(isExpanded ? null : order.id)}
+                    >
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${isCancelled ? 'bg-red-50' : 'bg-amber-50'}`}>
+                        <StatusIcon className={`w-5 h-5 ${isCancelled ? 'text-red-400' : 'text-amber-500'}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-semibold text-slate-800 text-sm">{order.order_number}</span>
+                          <Badge className={`${sc.color} border-0 text-xs`}>{sc.label}</Badge>
+                          {order.payment_method === 'credit_card' ? (
+                            <Badge className="bg-slate-100 text-slate-500 border-0 text-xs">💳 Card</Badge>
+                          ) : (
+                            <Badge className="bg-slate-100 text-slate-500 border-0 text-xs">🏦 E-Transfer</Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          {items.length} item{items.length !== 1 ? 's' : ''} · {new Date(order.created_at).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })}
+                        </p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="font-bold text-amber-600">C${order.total?.toFixed(2)}</p>
+                      </div>
+                      <div className="text-slate-400 flex-shrink-0">
+                        {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                      </div>
+                    </div>
+
+                    {isExpanded && (
+                      <div className="border-t border-slate-100 bg-slate-50 px-4 py-4 space-y-4">
+                        {/* Status Timeline */}
+                        {!isCancelled && (
+                          <div className="flex items-center justify-between gap-1 px-2">
+                            {steps.map((step, i) => {
+                              const active = sc.step >= step.num;
+                              const current = sc.step === step.num;
+                              return (
+                                <React.Fragment key={step.num}>
+                                  <div className="flex flex-col items-center gap-1 min-w-0">
+                                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                                      current ? 'bg-amber-500 text-white ring-4 ring-amber-100' :
+                                      active ? 'bg-emerald-500 text-white' :
+                                      'bg-slate-200 text-slate-400'
+                                    }`}>
+                                      {active && !current ? '✓' : step.num}
+                                    </div>
+                                    <span className={`text-[10px] leading-tight text-center ${active ? 'text-slate-700 font-medium' : 'text-slate-400'}`}>
+                                      {step.label}
+                                    </span>
+                                  </div>
+                                  {i < steps.length - 1 && (
+                                    <div className={`flex-1 h-0.5 mt-[-14px] ${sc.step > step.num ? 'bg-emerald-400' : 'bg-slate-200'}`} />
+                                  )}
+                                </React.Fragment>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {isCancelled && (
+                          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                            This order was cancelled. If you have questions, please contact us.
+                          </div>
+                        )}
+
+                        {/* Items */}
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Items</h4>
+                          {items.map((item, idx) => (
+                            <div key={idx} className="flex items-center gap-3 text-sm">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-slate-700 font-medium truncate">{item.product_name || 'Product'}</p>
+                                {item.sku && <p className="text-xs text-slate-400">SKU: {item.sku}</p>}
+                              </div>
+                              <div className="text-right text-xs text-slate-500 flex-shrink-0">
+                                <p>{item.boxes_required || '—'} box{(item.boxes_required || 0) !== 1 ? 'es' : ''}</p>
+                                <p>{item.actual_sqft ? Number(item.actual_sqft).toFixed(1) : '—'} sqft</p>
+                              </div>
+                              <div className="text-right flex-shrink-0">
+                                <p className="font-semibold text-slate-700 text-sm">C${(item.line_total || 0).toFixed(2)}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Totals */}
+                        <div className="space-y-1 border-t border-slate-200 pt-3 text-sm">
+                          <div className="flex justify-between"><span className="text-slate-500">Subtotal</span><span>C${order.subtotal?.toFixed(2)}</span></div>
+                          <div className="flex justify-between"><span className="text-slate-500">Tax (HST)</span><span>C${order.tax?.toFixed(2)}</span></div>
+                          {order.delivery_fee > 0 && <div className="flex justify-between"><span className="text-slate-500">Delivery</span><span>C${order.delivery_fee?.toFixed(2)}</span></div>}
+                          {order.processing_fee > 0 && <div className="flex justify-between"><span className="text-slate-500">Processing fee</span><span>C${order.processing_fee?.toFixed(2)}</span></div>}
+                          <div className="flex justify-between border-t border-slate-200 pt-2 font-bold"><span>Total</span><span className="text-amber-600">C${order.total?.toFixed(2)}</span></div>
+                        </div>
+
+                        {/* Delivery info */}
+                        <div className="flex items-center gap-2 text-sm text-slate-500">
+                          {order.delivery_preference === 'pickup' ? (
+                            <>
+                              <MapPin className="w-4 h-4" />
+                              <span>Pickup at 6061 Highway 7, Unit B, Markham ON L3P 3B2</span>
+                            </>
+                          ) : (
+                            <>
+                              <Truck className="w-4 h-4" />
+                              <span>Delivery{order.shipping_city ? ` to ${order.shipping_city}` : ''}</span>
+                            </>
+                          )}
+                        </div>
+
+                        {/* Action */}
+                        <div className="flex gap-2 pt-1">
+                          <a href="tel:+16474281111" className="flex-1">
+                            <Button size="sm" variant="outline" className="w-full text-xs gap-1">
+                              <Phone className="w-3 h-3" /> Questions? Call Us
+                            </Button>
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* My Quotes */}
