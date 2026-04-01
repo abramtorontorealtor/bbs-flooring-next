@@ -17,10 +17,14 @@ export default function LoginClient() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const redirect = searchParams.get('redirect') || '/account';
+  const redirect = searchParams.get('redirect') 
+    || (typeof window !== 'undefined' && localStorage.getItem('bbs_return_url')) 
+    || '/account';
 
   useEffect(() => {
     if (!isLoadingAuth && isAuthenticated) {
+      // Clear stored return URL after using it
+      if (typeof window !== 'undefined') localStorage.removeItem('bbs_return_url');
       router.replace(redirect);
     }
   }, [isAuthenticated, isLoadingAuth, redirect, router]);

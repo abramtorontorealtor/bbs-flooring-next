@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
@@ -10,8 +10,10 @@ import { Button } from '@/components/ui/button';
 
 export default function VerifyEmailClient() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [status, setStatus] = useState('loading');
   const [message, setMessage] = useState('');
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     const token = searchParams.get('token');
@@ -31,21 +33,32 @@ export default function VerifyEmailClient() {
       .then(async (res) => {
         if (res.success) {
           // Auto-sign-in with magic link token if available
+          let didSignIn = false;
           if (res.tokenHash) {
             try {
               const supabase = getSupabaseBrowserClient();
               if (supabase) {
-                await supabase.auth.verifyOtp({
+                const { error: otpError } = await supabase.auth.verifyOtp({
                   token_hash: res.tokenHash,
                   type: 'magiclink',
                 });
+                if (!otpError) didSignIn = true;
               }
             } catch (e) {
               console.warn('[Verify] Auto sign-in failed:', e);
-              // Not critical — user can still sign in manually
             }
           }
+          setSignedIn(didSignIn);
           setStatus('success');
+          
+          // If signed in and there's a return URL, redirect after a brief delay
+          if (didSignIn) {
+            const returnUrl = typeof window !== 'undefined' && localStorage.getItem('bbs_return_url');
+            if (returnUrl) {
+              localStorage.removeItem('bbs_return_url');
+              setTimeout(() => { window.location.href = returnUrl; }, 2000);
+            }
+          }
           // Send welcome email
           if (res.userEmail) {
             fetch('/api/auth/welcome', {
@@ -85,21 +98,34 @@ export default function VerifyEmailClient() {
           <>
             <CheckCircle2 className="w-14 h-14 text-green-500 mx-auto mb-6" />
             <h1 className="text-2xl font-bold text-slate-800 mb-2">You&apos;re verified!</h1>
-            <p className="text-slate-600 mb-8">
-              Your member account is now active. You&apos;re signed in and ready to shop
-              with exclusive member pricing.
-            </p>
-            <Link href={createPageUrl('Products')}>
-              <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
-                Shop Member Pricing →
-              </Button>
-            </Link>
-            <Link
-              href="/account"
-              className="block mt-4 text-sm text-slate-500 hover:text-amber-600"
-            >
-              Go to My Account
-            </Link>
+            {signedIn ? (
+              <>
+                <p className="text-slate-600 mb-8">
+                  Your member account is now active. You&apos;re signed in and ready to shop
+                  with exclusive member pricing.
+                </p>
+                <Link href={createPageUrl('Products')}>
+                  <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
+                    Shop Member Pricing →
+                  </Button>
+                </Link>
+                <Link href="/account" className="block mt-4 text-sm text-slate-500 hover:text-amber-600">
+                  Go to My Account
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="text-slate-600 mb-8">
+                  Your member account is now active. Sign in to access exclusive trade
+                  pricing across our full catalogue.
+                </p>
+                <Link href="/login">
+                  <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
+                    Sign In to Shop Member Pricing
+                  </Button>
+                </Link>
+              </>
+            )}
           </>
         )}
 
