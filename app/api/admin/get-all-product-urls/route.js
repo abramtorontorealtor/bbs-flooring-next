@@ -19,7 +19,7 @@ export async function GET() {
 
     if (dbError) throw dbError;
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shop.bbsflooring.ca';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca';
     const urls = (products || []).map(p => ({
       id: p.id,
       name: p.name,

@@ -41,8 +41,8 @@ export async function POST(request) {
         },
         quantity: 1,
       }],
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://shop.bbsflooring.ca'}/checkout?payment_success=true&order_number=${encodeURIComponent(orderNumber)}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://shop.bbsflooring.ca'}/checkout`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca'}/checkout?payment_success=true&order_number=${encodeURIComponent(orderNumber)}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca'}/checkout`,
       metadata: {
         order_id: orderId,
         order_number: orderNumber,

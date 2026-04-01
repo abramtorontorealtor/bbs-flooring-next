@@ -55,7 +55,7 @@ export async function POST(request) {
 
     if (error) throw error;
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shop.bbsflooring.ca';
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca';
     const verifyUrl = `${siteUrl}/verify-email?token=${token}`;
 
     const html = `

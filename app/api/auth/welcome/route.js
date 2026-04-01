@@ -75,7 +75,7 @@ export async function POST(request) {
         <li><strong>Order history</strong> — track all your purchases in one place</li>
       </ul>
       <div style="text-align:center;margin:32px 0;">
-        <a href="https://shop.bbsflooring.ca/products" style="display:inline-block;background:#f59e0b;color:#1e293b;font-weight:700;padding:14px 32px;border-radius:12px;text-decoration:none;font-size:16px;">Browse Products →</a>
+        <a href="https://bbsflooring.ca/products" style="display:inline-block;background:#f59e0b;color:#1e293b;font-weight:700;padding:14px 32px;border-radius:12px;text-decoration:none;font-size:16px;">Browse Products →</a>
       </div>
       <p style="font-size:14px;color:#64748b;">Questions? Call us at <a href="tel:+16474281111" style="color:#f59e0b;">(647) 428-1111</a> or visit our showroom at 6061 Highway 7, Unit B, Markham.</p>
     </div>
