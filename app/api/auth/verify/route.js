@@ -1,15 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-
-function getSupabaseServer() {
-  const cookieStore = cookies();
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  );
-}
+import { getSupabaseAdminClient } from '@/lib/supabase';
 
 export async function POST(request) {
   try {
@@ -19,7 +9,7 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'No token provided' }, { status: 400 });
     }
 
-    const supabase = getSupabaseServer();
+    const supabase = getSupabaseAdminClient();
 
     // Find user by verification token
     const { data: user, error: findError } = await supabase

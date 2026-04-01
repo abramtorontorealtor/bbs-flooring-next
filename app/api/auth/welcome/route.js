@@ -1,20 +1,10 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { getSupabaseAdminClient } from '@/lib/supabase';
 
 const SENDGRID_API_URL = 'https://api.sendgrid.com/v3/mail/send';
 const FROM_EMAIL = 'info@bbsflooring.ca';
 const FROM_NAME = 'BBS Flooring';
 const ADMIN_EMAIL = 'info@bbsflooring.ca';
-
-function getSupabaseServer() {
-  const cookieStore = cookies();
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  );
-}
 
 async function sendEmail({ to, subject, html, replyTo }) {
   const apiKey = process.env.SENDGRID_API_KEY;
@@ -50,7 +40,7 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'Missing user details' }, { status: 400 });
     }
 
-    const supabase = getSupabaseServer();
+    const supabase = getSupabaseAdminClient();
 
     // Check if welcome email already sent
     const { data: user } = await supabase

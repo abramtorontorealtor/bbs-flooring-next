@@ -1,20 +1,10 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { getSupabaseAdminClient } from '@/lib/supabase';
 import crypto from 'crypto';
 
 const SENDGRID_API_URL = 'https://api.sendgrid.com/v3/mail/send';
 const FROM_EMAIL = 'info@bbsflooring.ca';
 const FROM_NAME = 'BBS Flooring';
-
-function getSupabaseServer() {
-  const cookieStore = cookies();
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  );
-}
 
 async function sendEmail({ to, subject, html }) {
   const apiKey = process.env.SENDGRID_API_KEY;
@@ -48,7 +38,7 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'Missing user details' }, { status: 400 });
     }
 
-    const supabase = getSupabaseServer();
+    const supabase = getSupabaseAdminClient();
 
     // Generate verification token
     const token = crypto.randomBytes(32).toString('hex');

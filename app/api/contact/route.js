@@ -1,23 +1,13 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendContactAdminNotification, sendContactCustomerConfirmation } from '@/lib/email';
-
-function getSupabaseServer() {
-  const cookieStore = cookies();
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  );
-}
 
 export async function POST(request) {
   try {
     const body = await request.json();
     const { name, email, phone, message, source } = body;
 
-    const supabase = getSupabaseServer();
+    const supabase = getSupabaseAdminClient();
 
     // Save to contact_leads table
     const { error } = await supabase

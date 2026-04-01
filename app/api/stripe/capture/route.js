@@ -1,15 +1,13 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-function getSupabaseAdmin() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-  );
-}
+import { getSupabaseAdminClient } from '@/lib/supabase';
+import { requireAdmin } from '@/lib/api-auth';
 
 export async function POST(request) {
   try {
+    // Admin-only: verify caller is admin
+    const { error: authError } = await requireAdmin();
+    if (authError) return authError;
+
     const { paymentIntentId, orderId } = await request.json();
 
     const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -22,7 +20,7 @@ export async function POST(request) {
 
     // If orderId is provided instead of paymentIntentId, look it up
     if (!piId && orderId) {
-      const supabase = getSupabaseAdmin();
+      const supabase = getSupabaseAdminClient();
       const { data: order, error } = await supabase
         .from('orders')
         .select('stripe_payment_intent_id')
@@ -46,7 +44,7 @@ export async function POST(request) {
 
     // Update order status in Supabase
     if (orderId) {
-      const supabase = getSupabaseAdmin();
+      const supabase = getSupabaseAdminClient();
       await supabase
         .from('orders')
         .update({ payment_status: 'captured', status: 'paid' })

@@ -1,16 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib/email';
-
-function getSupabaseServer() {
-  const cookieStore = cookies();
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  );
-}
 
 function generateOrderNumber() {
   const prefix = 'BBS';
@@ -23,7 +13,7 @@ export async function POST(request) {
   try {
     const { orderData, paymentMethod, isCustomZone, termsAcceptedAt } = await request.json();
 
-    const supabase = getSupabaseServer();
+    const supabase = getSupabaseAdminClient();
     const orderNumber = generateOrderNumber();
 
     // Calculate total

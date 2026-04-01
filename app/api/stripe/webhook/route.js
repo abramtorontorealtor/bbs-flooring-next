@@ -1,15 +1,8 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseAdminClient } from '@/lib/supabase';
 
 // Stripe webhook handler — receives events after checkout completion.
 // Critical: stores payment_intent ID so admin can capture pre-authed payments.
-
-function getSupabaseAdmin() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-  );
-}
 
 export async function POST(request) {
   const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -43,7 +36,7 @@ export async function POST(request) {
     }
   }
 
-  const supabase = getSupabaseAdmin();
+  const supabase = getSupabaseAdminClient();
 
   switch (event.type) {
     case 'checkout.session.completed': {

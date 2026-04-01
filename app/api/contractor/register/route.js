@@ -1,16 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendContactAdminNotification } from '@/lib/email';
-
-function getSupabaseServer() {
-  const cookieStore = cookies();
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-    { cookies: { getAll: () => cookieStore.getAll() } }
-  );
-}
 
 export async function POST(request) {
   try {
@@ -21,7 +11,7 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 });
     }
 
-    const supabase = getSupabaseServer();
+    const supabase = getSupabaseAdminClient();
 
     const { error } = await supabase
       .from('contact_leads')
