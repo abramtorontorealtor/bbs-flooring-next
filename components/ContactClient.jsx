@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar, MessageCircle } from 'lucide-react';
 import { createPageUrl } from '@/lib/routes';
+import { Analytics } from '@/components/analytics';
 
 const initialFormData = {
   name: '',
@@ -50,6 +51,22 @@ export default function ContactClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      // GA4 — generate_lead event
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'contact',
+          event_label: 'contact_form',
+          value: 0,
+          currency: 'CAD',
+        });
+      }
+      // Meta Pixel — Lead event
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'Contact Form' });
+      }
+      // Internal analytics
+      Analytics.trackPhoneClick('contact_form');
+
       setSubmitted(true);
       setFormData(initialFormData);
     } catch (err) {
@@ -179,7 +196,7 @@ export default function ContactClient() {
                       className="mt-1 h-4 w-4 rounded border-slate-300 text-amber-500 focus:ring-amber-500 cursor-pointer"
                     />
                     <label htmlFor="smsConsent" className="text-sm text-slate-500 cursor-pointer">
-                      I agree to receive SMS updates about my inquiry. Message &amp; data rates may apply. Reply STOP to opt out.
+                      I agree to receive text messages from BBS Flooring at the phone number provided above. By opting in, I consent to receive recurring text messages from BBS Flooring (647-428-1111) related to service updates, appointment confirmations, and customer support messages. We do not send promotional or marketing messages via SMS. Message frequency varies. Message and data rates may apply. Opt-out at any time by replying STOP. For assistance, reply HELP or contact info@bbsflooring.ca or call (647) 428-1111.
                     </label>
                   </div>
 

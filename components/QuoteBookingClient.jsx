@@ -191,6 +191,10 @@ export default function QuoteBookingClient() {
           quote_value: quoteData.total
         });
       }
+      // Meta Pixel — Schedule event
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Schedule', { content_name: 'Quote Booking', value: quoteData?.total || 0, currency: 'CAD' });
+      }
 
       setSubmitted(true);
       toast.success('Booking saved! We\'ll contact you soon to confirm.');

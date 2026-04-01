@@ -133,6 +133,10 @@ export default function FreeMeasurementClient() {
         currency: 'CAD',
       });
     }
+    // Meta Pixel — Schedule event
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq('track', 'Schedule', { content_name: 'Free Measurement' });
+    }
 
     try {
       await fetch('/api/contact', {

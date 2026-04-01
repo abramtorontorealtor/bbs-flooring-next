@@ -66,6 +66,17 @@ export default function ContractorRegistrationForm() {
       if (!data.success) throw new Error(data.error || 'Submission failed');
 
       Analytics.trackEvent('contractor_registration', 'lead', form.trade_type || 'unknown');
+      // GA4 — generate_lead event
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'contractor',
+          event_label: form.trade_type || 'contractor_registration',
+        });
+      }
+      // Meta Pixel — Lead event
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'Contractor Registration' });
+      }
       setSubmitted(true);
     } catch (err) {
       toast.error('Something went wrong. Please call us at (647) 428-1111.');
