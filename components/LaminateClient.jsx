@@ -15,34 +15,29 @@ import QuoteContextBanner from '@/components/QuoteContextBanner';
 
 const SPOKE_LINKS = [
   {
-    route: 'Vinyl',
-    label: 'Vinyl & LVP Flooring',
-    description: '100% waterproof upgrade from laminate — ideal for kitchens and basements.',
-  },
-  {
-    route: 'EngineeredHardwood',
-    label: 'Engineered Hardwood',
-    description: 'Real wood for living rooms — add value, refinish when needed.',
-  },
-  {
     route: 'WaterproofFlooring',
-    label: 'Waterproof Flooring',
-    description: 'SPC vinyl for areas where laminate can\'t go.',
+    label: 'Waterproof Laminate & Vinyl Flooring',
+    description: 'Shop waterproof laminate and SPC vinyl — ideal for kitchens, basements & bathrooms.',
+  },
+  {
+    route: 'FlooringClearanceSale',
+    label: 'Laminate Flooring Clearance Sale',
+    description: 'Save big on discontinued and overstocked laminate flooring — limited quantities.',
   },
   {
     route: 'FlooringInstallationCost',
-    label: 'Flooring Installation Cost',
-    description: 'Laminate from $3.49/sqft all-in — the best value hard floor.',
+    label: 'Laminate Installation Cost Guide',
+    description: 'Laminate installation from $2.00/sqft — full cost breakdown and what to expect.',
   },
   {
-    route: 'Clearance',
-    label: 'Laminate on Clearance',
-    description: 'In-stock 12mm laminate at 30–60% off. Limited quantities.',
+    route: 'BasementFlooring',
+    label: 'Basement Flooring Options',
+    description: 'Best waterproof flooring for basements — vinyl and waterproof laminate compared.',
   },
   {
-    route: 'ContractorFlooring',
-    label: 'Contractor Pricing',
-    description: 'Trade accounts with volume discounts on laminate and vinyl.',
+    route: 'FlooringShowroomMarkham',
+    label: 'Visit Our Markham Showroom',
+    description: 'See and feel laminate samples in person — 6061 Highway 7, Unit B, Markham.',
   },
 ];
 

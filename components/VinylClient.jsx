@@ -16,33 +16,28 @@ import QuoteContextBanner from '@/components/QuoteContextBanner';
 const SPOKE_LINKS = [
   {
     route: 'BasementFlooring',
-    label: 'Basement Flooring',
-    description: '100% waterproof SPC vinyl — the best choice for below-grade installations.',
+    label: 'Best Vinyl Flooring for Basements',
+    description: 'Waterproof SPC vinyl is the #1 choice for basement floors — see why.',
   },
   {
     route: 'WaterproofFlooring',
-    label: 'Waterproof Flooring',
-    description: 'SPC vinyl and water-resistant laminate for any wet area.',
+    label: 'Waterproof Flooring Collection',
+    description: 'Shop all waterproof vinyl plank and waterproof laminate options.',
   },
   {
-    route: 'EngineeredHardwood',
-    label: 'Engineered Hardwood',
-    description: 'Real wood beauty for living rooms and main floors.',
-  },
-  {
-    route: 'Laminate',
-    label: 'Laminate Flooring',
-    description: 'Budget-friendly hard-surface flooring from $1.49/sqft.',
+    route: 'FlooringClearanceSale',
+    label: 'Vinyl Flooring on Sale',
+    description: 'Clearance deals on premium vinyl — limited stock, first-quality product.',
   },
   {
     route: 'FlooringInstallationCost',
-    label: 'Flooring Installation Cost',
-    description: 'Transparent GTA pricing — vinyl install from $2.00/sqft.',
+    label: 'Vinyl Installation Cost Guide',
+    description: 'Vinyl installation from $2.00–$2.25/sqft — includes click-lock and glue-down options.',
   },
   {
-    route: 'Clearance',
-    label: 'Clearance Flooring',
-    description: 'In-stock vinyl at 30–60% off. Limited quantities.',
+    route: 'FlooringShowroomMarkham',
+    label: 'See Vinyl Samples in Person',
+    description: 'Visit our Markham showroom to feel the texture and compare vinyl options.',
   },
 ];
 

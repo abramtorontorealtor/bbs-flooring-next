@@ -264,11 +264,14 @@ export default function StairsClient() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {stairsImages.slice(0, 12).map((image, idx) => (
               <div key={idx} className="aspect-square bg-slate-100 rounded-lg overflow-hidden group cursor-pointer">
-                <img
+                <Image
                   src={image.url}
                   alt={image.alt || image.alt_text || `Staircase renovation project ${idx + 1} by BBS Flooring in Markham`}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
+                  width={400}
+                  height={400}
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
               </div>
             ))}

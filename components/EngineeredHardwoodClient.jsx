@@ -17,32 +17,32 @@ const SPOKE_LINKS = [
   {
     route: 'VidarFlooring',
     label: 'Vidar Engineered Hardwood',
-    description: 'Premium European oak — wide plank, click-lock, radiant heat compatible.',
+    description: 'Shop Vidar Design Flooring — premium European oak engineered hardwood.',
+  },
+  {
+    route: 'WhiteOakFlooring',
+    label: 'White Oak Flooring Collection',
+    description: 'Browse all white oak engineered hardwood — the most popular species in 2025.',
   },
   {
     route: 'WickhamFlooring',
     label: 'Wickham Hardwood Flooring',
-    description: 'Canadian-made hardwood from Wickham, Quebec since 1997.',
+    description: 'Canadian-made Wickham engineered and solid hardwood — built for our climate.',
   },
   {
-    route: 'WhiteOakFlooring',
-    label: 'White Oak Flooring',
-    description: 'The #1 hardwood species — engineered and solid options in stock.',
-  },
-  {
-    route: 'WaterproofFlooring',
-    label: 'Waterproof Flooring',
-    description: 'SPC vinyl and water-resistant laminate for kitchens and basements.',
-  },
-  {
-    route: 'BasementFlooring',
-    label: 'Basement Flooring',
-    description: '100% waterproof SPC vinyl built for below-grade installs.',
+    route: 'HardwoodRefinishing',
+    label: 'Hardwood Floor Refinishing',
+    description: 'Restore your existing hardwood floors with professional sand & stain service.',
   },
   {
     route: 'FlooringInstallationCost',
-    label: 'Flooring Installation Cost',
-    description: 'Transparent GTA pricing guide — no hidden fees.',
+    label: 'Hardwood Installation Cost Guide',
+    description: 'Installation from $2.25/sqft (nail-down) to $4.25/sqft (herringbone) — full breakdown.',
+  },
+  {
+    route: 'ContractorFlooring',
+    label: 'Contractor & Trade Pricing',
+    description: 'Exclusive member pricing on engineered hardwood for contractors and builders.',
   },
 ];
 

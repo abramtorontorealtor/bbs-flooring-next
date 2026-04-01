@@ -16,27 +16,27 @@ import QuoteContextBanner from '@/components/QuoteContextBanner';
 const SPOKE_LINKS = [
   {
     route: 'EngineeredHardwood',
-    label: 'Engineered Hardwood',
-    description: 'Real wood stability — better for concrete, radiant heat, and condos.',
+    label: 'Engineered vs Solid Hardwood',
+    description: 'Compare engineered hardwood — better for concrete, radiant heat, and condos.',
   },
   {
     route: 'WhiteOakFlooring',
-    label: 'White Oak Flooring',
-    description: 'The #1 species in Canadian homes — solid and engineered options.',
+    label: 'White Oak Flooring Collection',
+    description: 'The #1 hardwood species in Canadian homes — solid and engineered options.',
   },
   {
     route: 'WickhamFlooring',
-    label: 'Wickham Hardwood Flooring',
-    description: 'Canadian-made solid hardwood from Wickham, Quebec.',
+    label: 'Wickham Canadian-Made Hardwood',
+    description: 'Premium solid hardwood made in Wickham, Quebec since 1997.',
   },
   {
     route: 'HardwoodRefinishing',
-    label: 'Hardwood Refinishing',
-    description: 'Restore existing floors to like-new condition — from $5.25/sqft.',
+    label: 'Hardwood Floor Refinishing',
+    description: 'Restore existing hardwood floors to like-new condition — from $5.25/sqft.',
   },
   {
     route: 'Stairs',
-    label: 'Stair Renovation',
+    label: 'Hardwood Stair Renovation',
     description: 'Match your new hardwood floors with custom-stained stair treads.',
   },
   {
