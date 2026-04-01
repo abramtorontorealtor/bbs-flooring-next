@@ -194,11 +194,21 @@ export default function AccountDashboardClient() {
         )}
 
         {isVerified && (
-          <div className="mb-6 bg-green-50 border border-green-200 rounded-2xl p-4 flex items-center gap-3">
-            <CheckCircle2 className="w-6 h-6 text-green-500" />
-            <div>
-              <span className="font-bold text-green-800">Verified Wholesale Member</span>
-              <span className="text-green-600 text-sm ml-2">— Trade pricing is active on all products</span>
+          <div className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-5">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-xl shadow-md">
+                ⭐
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-green-800 text-lg">Trade Member</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Active</span>
+                </div>
+                <p className="text-green-700 text-sm mt-0.5">
+                  You save <strong>$0.50/sqft</strong> on every clearance product. Trade pricing is active site-wide.
+                </p>
+              </div>
+              <CheckCircle2 className="w-6 h-6 text-green-500 flex-shrink-0 hidden sm:block" />
             </div>
           </div>
         )}

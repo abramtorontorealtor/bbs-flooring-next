@@ -38,11 +38,42 @@ const AnimDiv = forwardRef(function AnimDiv({ delay = 0, className, children, ..
 });
 
 export default function Home() {
+  const [showcaseTab, setShowcaseTab] = useState('new');
+
   const { data: featuredProducts = [] } = useQuery({
     queryKey: ['featuredProductsOptimized'],
     queryFn: async () => {
       const newArrivals = await entities.Product.filter({}, { limit: 8, order: '-created_date' });
       return newArrivals.filter(p => p.image_url);
+    },
+  });
+
+  // Best sellers — products with highest public_price (proxy for popular, since no sales data)
+  const { data: popularProducts = [] } = useQuery({
+    queryKey: ['popularProductsHome'],
+    queryFn: async () => {
+      const items = await entities.Product.filter({ in_stock: true }, { limit: 50, order: '-public_price' });
+      // Filter to ones with images, diverse categories
+      const withImages = items.filter(p => p.image_url && p.public_price > 0);
+      // Pick top 8 but try to diversify by category
+      const seen = {};
+      const result = [];
+      for (const p of withImages) {
+        const cat = p.category || 'other';
+        if (!seen[cat]) seen[cat] = 0;
+        if (seen[cat] < 3) { result.push(p); seen[cat]++; }
+        if (result.length >= 8) break;
+      }
+      return result;
+    },
+  });
+
+  // On-sale products
+  const { data: saleProducts = [] } = useQuery({
+    queryKey: ['saleProductsHome'],
+    queryFn: async () => {
+      const items = await entities.Product.filter({ is_on_sale: true }, { limit: 16 });
+      return items.filter(p => p.image_url).slice(0, 8);
     },
   });
 
@@ -257,37 +288,73 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Products */}
+      {/* Product Showcase — Multi-Tab */}
       {featuredProducts.length > 0 && (
         <section className="py-20 px-4 bg-white">
           <div className="max-w-7xl mx-auto">
-            <AnimDiv className="flex justify-between items-end mb-12">
+            <AnimDiv className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12">
               <div>
-                <h2 className="text-4xl font-bold text-slate-800 mb-2">New Arrivals</h2>
-                <p className="text-slate-600">Check out our latest flooring options</p>
+                <h2 className="text-4xl font-bold text-slate-800 mb-2">Shop Our Flooring</h2>
+                <p className="text-slate-600">Handpicked selections from our 700+ product showroom</p>
               </div>
-              <Link href={createPageUrl('Products') + '?sort=newest'}>
+              <Link href={createPageUrl('Products')}>
                 <Button variant="outline" className="hidden sm:flex">
                   View All Products <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
             </AnimDiv>
 
-            <div className="grid grid-cols-2 md:hidden gap-4">
-              {featuredProducts.slice(0, 4).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-            <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+            {/* Tab Switcher */}
+            <div className="flex gap-1 mb-8 bg-slate-100 rounded-xl p-1 w-fit">
+              {[
+                { key: 'new', label: 'New Arrivals', icon: '✨' },
+                { key: 'popular', label: 'Best Sellers', icon: '🔥' },
+                { key: 'sale', label: 'On Sale', icon: '💰' },
+              ].map(tab => (
+                <button
+                  key={tab.key}
+                  onClick={() => setShowcaseTab(tab.key)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    showcaseTab === tab.key
+                      ? 'bg-white text-slate-800 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  <span className="mr-1.5">{tab.icon}</span>
+                  {tab.label}
+                </button>
               ))}
             </div>
 
+            {/* Tab Content */}
+            {(() => {
+              const tabProducts = showcaseTab === 'popular' ? popularProducts
+                : showcaseTab === 'sale' ? saleProducts
+                : featuredProducts;
+              const emptyMsg = showcaseTab === 'sale' ? 'No sale items right now — check back soon!' : null;
+              if (tabProducts.length === 0 && emptyMsg) {
+                return <p className="text-slate-500 text-center py-8">{emptyMsg}</p>;
+              }
+              return (
+                <>
+                  <div className="grid grid-cols-2 md:hidden gap-4">
+                    {tabProducts.slice(0, 4).map(product => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                  <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {tabProducts.slice(0, 8).map(product => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                </>
+              );
+            })()}
+
             <div className="mt-8 text-center md:hidden">
-              <Link href={createPageUrl('Products') + '?sort=newest'}>
+              <Link href={createPageUrl('Products') + (showcaseTab === 'new' ? '?sort=newest' : '')}>
                 <Button variant="outline" size="lg" className="w-full">
-                  View All New Arrivals <ArrowRight className="ml-2 w-4 h-4" />
+                  View All Products <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
             </div>

@@ -24,6 +24,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { generateProductSchema, generateProductMetaTags } from '@/lib/seo';
 import { Analytics } from '@/components/analytics';
 import QuoteProductCTA from '@/components/QuoteProductCTA';
+import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
@@ -134,14 +135,43 @@ export default function ProductDetailClient({ slug }) {
 
   const { data: allRelatedProducts = [] } = useQuery({
     queryKey: ['relatedProducts', product?.category],
-    queryFn: () => entities.Product.filter({ category: product.category }, { limit: 20, order: '-created_date' }),
+    queryFn: () => entities.Product.filter({ category: product.category }, { limit: 30, order: '-created_date' }),
     enabled: !!product?.category,
   });
 
+  // Smart related products — scored by species, brand, price proximity
   const relatedProducts = useMemo(() => {
     if (!product || allRelatedProducts.length === 0) return [];
-    return allRelatedProducts.filter(p => p.image_url && p.id !== product.id).slice(0, 4);
+    const candidates = allRelatedProducts.filter(p => p.image_url && p.id !== product.id);
+    if (candidates.length === 0) return [];
+    const basePrice = product.public_price || product.price_per_sqft || 0;
+    const scored = candidates.map(p => {
+      let score = 0;
+      // Same species = strong match
+      if (product.species && p.species && p.species.toLowerCase() === product.species.toLowerCase()) score += 3;
+      // Same brand = good match
+      if (product.brand && p.brand && p.brand.toLowerCase() === product.brand.toLowerCase()) score += 2;
+      // Price within 30% = relevant
+      const pPrice = p.public_price || p.price_per_sqft || 0;
+      if (basePrice > 0 && pPrice > 0) {
+        const diff = Math.abs(pPrice - basePrice) / basePrice;
+        if (diff <= 0.15) score += 2;
+        else if (diff <= 0.30) score += 1;
+      }
+      // Same subcategory
+      if (product.subcategory && p.subcategory && p.subcategory === product.subcategory) score += 1;
+      // Has image and price = quality listing
+      if (p.image_url && pPrice > 0) score += 1;
+      return { ...p, _score: score };
+    });
+    scored.sort((a, b) => b._score - a._score);
+    return scored.slice(0, 4);
   }, [product, allRelatedProducts]);
+
+  // Record product view for "Recently Viewed"
+  useEffect(() => {
+    if (product?.id) recordProductView(product);
+  }, [product?.id]);
 
   // Sticky CTA after buy box scrolls out
   useEffect(() => {
@@ -644,6 +674,9 @@ export default function ProductDetailClient({ slug }) {
       )}
 
       {product.category && <FAQSection category={product.category} />}
+
+      {/* Recently Viewed */}
+      <RecentlyViewed excludeProductId={product.id} limit={4} />
 
       {/* Zoomed Image Modal */}
       {isImageZoomed && (
