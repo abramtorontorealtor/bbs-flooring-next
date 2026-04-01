@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
-import { Calendar, Clock, Tag, ArrowLeft, Share2 } from 'lucide-react';
+import { Calendar, Clock, Tag, ArrowLeft, Share2, Phone, Ruler, Star } from 'lucide-react';
 
 const categories = [
   { value: 'flooring_tips', label: 'Flooring Tips' },
@@ -110,6 +110,30 @@ export default function BlogPostClient({ slug }) {
         <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-a:text-amber-600 hover:prose-a:text-amber-700 prose-img:rounded-xl prose-strong:text-slate-800"
           dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
+
+      {/* Blog Post CTA Block */}
+      <div className="mt-12 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 md:p-10 text-white">
+        <h2 className="text-2xl md:text-3xl font-bold mb-3">Ready to Transform Your Floors?</h2>
+        <p className="text-slate-300 mb-6 max-w-2xl">
+          Get expert advice and a free in-home measurement from BBS Flooring. 794+ products in stock, professional installation, and the best prices in the GTA.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/free-measurement" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors">
+            <Ruler className="w-4 h-4" /> Free Measurement
+          </Link>
+          <a href="tel:6474281111" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-lg transition-colors border border-white/20">
+            <Phone className="w-4 h-4" /> (647) 428-1111
+          </a>
+          <Link href="/products" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-lg transition-colors border border-white/20">
+            Browse Products
+          </Link>
+        </div>
+        <div className="flex flex-wrap items-center gap-4 mt-5 text-sm text-slate-400">
+          <span className="flex items-center gap-1"><Star className="w-4 h-4 text-amber-400" /> 4.7★ from 41 Google Reviews</span>
+          <span>•</span>
+          <span>Serving Markham, Toronto & Durham</span>
+        </div>
+      </div>
 
       {relatedPosts.length > 0 && (
         <div className="mt-16 pt-16 border-t border-slate-200">

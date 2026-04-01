@@ -87,7 +87,7 @@ export default function Header({ cartCount = 0 }) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               item.submenu ? (
                 <DropdownMenu key={item.name}>

@@ -35,6 +35,16 @@ export default function CompareClient() {
         >
           Browse Products
         </a>
+        <div className="mt-10">
+          <p className="text-slate-500 text-sm mb-4">Browse popular categories:</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="/vinyl" className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 transition-colors text-sm">Vinyl Flooring</a>
+            <a href="/solid-hardwood" className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 transition-colors text-sm">Solid Hardwood</a>
+            <a href="/engineered-hardwood" className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 transition-colors text-sm">Engineered Hardwood</a>
+            <a href="/laminate" className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 transition-colors text-sm">Laminate</a>
+            <a href="/products" className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 transition-colors text-sm">All Products</a>
+          </div>
+        </div>
       </div>
     );
   }
