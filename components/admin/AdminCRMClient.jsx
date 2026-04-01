@@ -147,11 +147,13 @@ export default function AdminCRMClient() {
   // ─── ORDER MUTATIONS ───────────────────────────────────────────────────
   const capturePaymentMutation = useMutation({
     mutationFn: async (orderId) => {
-      return fetch('/api/stripe/capture', {
+      const r = await fetch('/api/stripe/capture', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId }),
-      }).then(r => r.json());
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Capture failed'); }
+      return r.json();
     },
     onSuccess: () => { refreshAll(); toast.success('💰 Payment captured!'); setSelectedLead(null); },
     onError: (err) => toast.error('Capture failed: ' + err.message),
@@ -159,11 +161,13 @@ export default function AdminCRMClient() {
 
   const cancelOrderMutation = useMutation({
     mutationFn: async (orderId) => {
-      return fetch('/api/stripe/cancel', {
+      const r = await fetch('/api/stripe/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId }),
-      }).then(r => r.json());
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Cancel failed'); }
+      return r.json();
     },
     onSuccess: () => { refreshAll(); toast.success('Order cancelled'); setSelectedLead(null); },
     onError: (err) => toast.error('Cancel failed: ' + err.message),
