@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -335,10 +336,14 @@ export default function ProductDetailClient({ slug }) {
               className="aspect-square rounded-3xl overflow-hidden bg-slate-50 shadow-lg cursor-zoom-in relative group"
               onClick={() => setIsImageZoomed(true)}
             >
-              <img
+              <Image
                 src={product.image_url ? `https://wsrv.nl/?url=${encodeURIComponent(product.image_url.split('?')[0])}&w=1200&q=80&output=webp` : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop'}
                 alt={product.image_alt_text || product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                width={1200}
+                height={1200}
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
                 <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">Click to zoom</span>
@@ -533,7 +538,7 @@ export default function ProductDetailClient({ slug }) {
                 )}
                 <div className="grid grid-cols-3 gap-3 mt-4">
                   <div className="text-center p-3 bg-emerald-50 rounded-lg border border-emerald-100"><Award className="w-5 h-5 text-emerald-600 mx-auto mb-1" /><span className="text-xs text-emerald-800 font-medium block">Authorized Dealer</span></div>
-                  <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-100"><Shield className="w-5 h-5 text-blue-600 mx-auto mb-1" /><span className="text-xs text-blue-800 font-medium block">25-Year Warranty</span></div>
+                  <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-100"><Shield className="w-5 h-5 text-blue-600 mx-auto mb-1" /><span className="text-xs text-blue-800 font-medium block">25+ Year Warranty</span></div>
                   <div className="text-center p-3 bg-amber-50 rounded-lg border border-amber-100"><Check className="w-5 h-5 text-amber-600 mx-auto mb-1" /><span className="text-xs text-amber-800 font-medium block">GTA Climate Approved</span></div>
                 </div>
               </div>
@@ -631,7 +636,7 @@ export default function ProductDetailClient({ slug }) {
       {/* Zoomed Image Modal */}
       {isImageZoomed && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-zoom-out animate-fade-in" onClick={() => setIsImageZoomed(false)}>
-          <img src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=1200&fit=crop'} alt={product.image_alt_text || product.name} className="max-h-[90vh] object-contain animate-scale-in" style={{ maxWidth: 'min(896px, calc(100vw - 2rem))' }} />
+          <Image src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=1200&fit=crop'} alt={product.image_alt_text || product.name} className="max-h-[90vh] object-contain animate-scale-in" style={{ maxWidth: 'min(896px, calc(100vw - 2rem))' }} width={1200} height={1200} />
           <button className="absolute top-4 right-4 text-white text-3xl hover:opacity-70" onClick={() => setIsImageZoomed(false)}>✕</button>
         </div>
       )}

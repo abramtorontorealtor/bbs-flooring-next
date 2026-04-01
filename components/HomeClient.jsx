@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef, forwardRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { Button } from "@/components/ui/button";
@@ -110,15 +111,14 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative" style={{ height: '85vh', minHeight: '600px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
         <div className="absolute inset-0">
-          <img
+          <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
             alt="Luxury hardwood flooring installation in modern Markham home living room"
             className="w-full h-full object-cover"
-            width="1920"
-            height="1080"
-            loading="eager"
-            fetchPriority="high"
-            decoding="sync"
+            width={1920}
+            height={1080}
+            priority
+            sizes="100vw"
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,23,42,0.9), rgba(15,23,42,0.7), transparent)' }} />
         </div>
