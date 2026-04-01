@@ -16,7 +16,10 @@ export default function CartClient() {
   const queryClient = useQueryClient();
   const [sessionId, setSessionId] = useState(null);
   const [couponCode, setCouponCode] = useState('');
-  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [appliedCoupon, setAppliedCoupon] = useState(() => {
+    if (typeof window === 'undefined') return null;
+    try { return JSON.parse(localStorage.getItem('bbs_applied_coupon')); } catch { return null; }
+  });
   const [couponError, setCouponError] = useState('');
   const { user } = useAuth();
   const isVerified = user?.is_verified === true;
@@ -84,8 +87,11 @@ export default function CartClient() {
     };
     const promo = PROMO_CODES[code];
     if (promo) {
-      setAppliedCoupon({ code, ...promo });
+      const coupon = { code, ...promo };
+      setAppliedCoupon(coupon);
       setCouponCode('');
+      // Persist coupon so Checkout page can read it
+      try { localStorage.setItem('bbs_applied_coupon', JSON.stringify(coupon)); } catch {}
       toast.success(`Coupon "${code}" applied! ${promo.label}`);
     } else {
       setCouponError('Invalid coupon code');

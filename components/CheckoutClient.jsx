@@ -40,11 +40,17 @@ export default function CheckoutClient() {
   const [isStripeSuccess, setIsStripeSuccess] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [copiedField, setCopiedField] = useState(null);
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   const isCustomZone = formData.shipping_postal_code && !['M', 'L'].includes(formData.shipping_postal_code.toUpperCase()[0]);
 
   useEffect(() => {
     setSessionId(localStorage.getItem('bbs_session_id'));
+    // Load coupon applied in Cart page
+    try {
+      const saved = localStorage.getItem('bbs_applied_coupon');
+      if (saved) setAppliedCoupon(JSON.parse(saved));
+    } catch {}
   }, []);
 
   // ─── Abandoned Cart Tracking ───
@@ -128,6 +134,8 @@ export default function CheckoutClient() {
   useEffect(() => {
     if (orderComplete) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Clear coupon after successful order
+      try { localStorage.removeItem('bbs_applied_coupon'); } catch {}
     }
   }, [orderComplete]);
 
@@ -138,7 +146,17 @@ export default function CheckoutClient() {
   });
 
   const totals = useMemo(() => {
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.line_total || 0), 0);
+    const rawSubtotal = cartItems.reduce((sum, item) => sum + (item.line_total || 0), 0);
+
+    // Apply coupon discount from Cart page
+    let discount = 0;
+    if (appliedCoupon) {
+      discount = appliedCoupon.type === 'percent'
+        ? rawSubtotal * (appliedCoupon.value / 100)
+        : Math.min(appliedCoupon.value, rawSubtotal);
+    }
+    const subtotal = rawSubtotal - discount;
+
     const taxRate = 0.13;
     const tax = subtotal * taxRate;
     const totalBoxes = cartItems.reduce((sum, item) => sum + (item.boxes_required || 0), 0);
@@ -157,8 +175,8 @@ export default function CheckoutClient() {
     
     const processingFee = formData.payment_method === 'credit_card' ? (subtotal + tax + deliveryFee) * 0.029 : 0;
     const total = subtotal + tax + deliveryFee + processingFee;
-    return { subtotal, tax, deliveryFee, processingFee, total, totalBoxes, totalSqft };
-  }, [cartItems, formData.delivery_preference, formData.payment_method, formData.shipping_postal_code]);
+    return { subtotal, rawSubtotal, discount, tax, deliveryFee, processingFee, total, totalBoxes, totalSqft };
+  }, [cartItems, appliedCoupon, formData.delivery_preference, formData.payment_method, formData.shipping_postal_code]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -217,6 +235,10 @@ export default function CheckoutClient() {
         subtotal: totals.subtotal,
         tax: totals.tax,
         delivery_fee: totals.deliveryFee,
+        ...(appliedCoupon ? {
+          coupon_code: appliedCoupon.code,
+          discount: totals.discount,
+        } : {}),
       };
 
       // Create order via API route
@@ -774,8 +796,14 @@ export default function CheckoutClient() {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-slate-600">Subtotal</span>
-                    <span className="font-medium">C${totals.subtotal.toFixed(2)}</span>
+                    <span className="font-medium">C${(totals.discount > 0 ? totals.rawSubtotal : totals.subtotal).toFixed(2)}</span>
                   </div>
+                  {totals.discount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Coupon ({appliedCoupon?.code})</span>
+                      <span className="font-medium">−C${totals.discount.toFixed(2)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between">
                     <span className="text-slate-600">HST (13%)</span>
                     <span className="font-medium">C${totals.tax.toFixed(2)}</span>
