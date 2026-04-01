@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { whiteOakFlooringData } from '@/data/landingPages';
 import WhiteOakFlooringClient from '@/components/WhiteOakFlooringClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: whiteOakFlooringData.title,
@@ -8,5 +9,10 @@ export const metadata = {
 };
 
 export default function WhiteOakFlooringPage() {
-  return <Suspense><WhiteOakFlooringClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(whiteOakFlooringData.faqItems)} />
+      <Suspense><WhiteOakFlooringClient /></Suspense>
+    </>
+  );
 }

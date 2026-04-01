@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { contractorFlooringData } from '@/data/landingPages';
 import ContractorFlooringClient from '@/components/ContractorFlooringClient';
+import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: contractorFlooringData.title,
@@ -8,5 +9,15 @@ export const metadata = {
 };
 
 export default function ContractorFlooringPage() {
-  return <Suspense><ContractorFlooringClient /></Suspense>;
+  const schemas = [
+    faqSchema(contractorFlooringData.faqItems),
+    contractorFlooringData.schemaType !== 'product' && localBusinessSchema(),
+  ].filter(Boolean);
+
+  return (
+    <>
+      <JsonLd data={schemas} />
+      <Suspense><ContractorFlooringClient /></Suspense>
+    </>
+  );
 }

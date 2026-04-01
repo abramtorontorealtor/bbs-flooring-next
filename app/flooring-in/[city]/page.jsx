@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import LocationClient from '@/components/LocationClient';
 import { locationData } from '@/data/locationData';
+import { cityLocalBusinessSchema, JsonLd } from '@/lib/schemas';
 
 // Generate static params for all cities
 export function generateStaticParams() {
@@ -19,5 +20,11 @@ export function generateMetadata({ params }) {
 }
 
 export default function LocationPage({ params }) {
-  return <Suspense><LocationClient citySlug={params.city} /></Suspense>;
+  const data = locationData[params.city] || locationData['markham'];
+  return (
+    <>
+      <JsonLd data={cityLocalBusinessSchema(data.city, data.content)} />
+      <Suspense><LocationClient citySlug={params.city} /></Suspense>
+    </>
+  );
 }

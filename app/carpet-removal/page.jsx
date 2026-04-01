@@ -1,4 +1,5 @@
 import CarpetRemovalClient from '@/components/CarpetRemovalClient';
+import { carpetRemovalSchemas, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: 'Fast Carpet Removal Service | Markham, Toronto & Durham',
@@ -6,5 +7,10 @@ export const metadata = {
 };
 
 export default function CarpetRemovalPage() {
-  return <CarpetRemovalClient />;
+  return (
+    <>
+      <JsonLd data={carpetRemovalSchemas()} />
+      <CarpetRemovalClient />
+    </>
+  );
 }

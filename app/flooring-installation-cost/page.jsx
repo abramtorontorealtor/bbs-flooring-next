@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { flooringInstallationCostData } from '@/data/landingPages';
 import FlooringInstallationCostClient from '@/components/FlooringInstallationCostClient';
+import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: flooringInstallationCostData.title,
@@ -8,5 +9,15 @@ export const metadata = {
 };
 
 export default function FlooringInstallationCostPage() {
-  return <Suspense><FlooringInstallationCostClient /></Suspense>;
+  const schemas = [
+    faqSchema(flooringInstallationCostData.faqItems),
+    flooringInstallationCostData.schemaType !== 'product' && localBusinessSchema(),
+  ].filter(Boolean);
+
+  return (
+    <>
+      <JsonLd data={schemas} />
+      <Suspense><FlooringInstallationCostClient /></Suspense>
+    </>
+  );
 }

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { vidarFlooringData } from '@/data/landingPages';
 import VidarFlooringClient from '@/components/VidarFlooringClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: vidarFlooringData.title,
@@ -8,5 +9,10 @@ export const metadata = {
 };
 
 export default function VidarFlooringPage() {
-  return <Suspense><VidarFlooringClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(vidarFlooringData.faqItems)} />
+      <Suspense><VidarFlooringClient /></Suspense>
+    </>
+  );
 }

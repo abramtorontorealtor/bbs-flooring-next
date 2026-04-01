@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { carpetToHardwoodStairsData } from '@/data/landingPages';
 import CarpetToHardwoodStairsClient from '@/components/CarpetToHardwoodStairsClient';
+import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: carpetToHardwoodStairsData.title,
@@ -8,5 +9,15 @@ export const metadata = {
 };
 
 export default function CarpetToHardwoodStairsPage() {
-  return <Suspense><CarpetToHardwoodStairsClient /></Suspense>;
+  const schemas = [
+    faqSchema(carpetToHardwoodStairsData.faqItems),
+    carpetToHardwoodStairsData.schemaType !== 'product' && localBusinessSchema(),
+  ].filter(Boolean);
+
+  return (
+    <>
+      <JsonLd data={schemas} />
+      <Suspense><CarpetToHardwoodStairsClient /></Suspense>
+    </>
+  );
 }

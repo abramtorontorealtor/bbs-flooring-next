@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { CheckCircle, Clock, Shield, DollarSign, Users, Wrench, Star } from 'lucide-react';
@@ -57,6 +58,12 @@ const REMOVAL_PRICING = {
 };
 
 export default function InstallationClient() {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'view_item_list', { item_list_name: 'Installation' });
+    }
+  }, []);
+
   const installServices = [
     { title: 'Solid/Eng Hardwood (Nail Down)', price: `$${INSTALLATION_PRICING.hardwood.toFixed(2)}/Sqft` },
     { title: 'Engineered Hardwood (Glue-Down)', price: `$${INSTALLATION_PRICING.gluedown.toFixed(2)}/Sqft` },

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import Link from 'next/link';
@@ -11,6 +11,12 @@ import { locationData } from '@/data/locationData';
 
 export default function LocationClient({ citySlug }) {
   const data = locationData[citySlug] || locationData['markham'];
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'view_item_list', { item_list_name: data.city });
+    }
+  }, [data.city]);
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],

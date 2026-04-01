@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { stairRefinishingData } from '@/data/landingPages';
 import StairRefinishingClient from '@/components/StairRefinishingClient';
+import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: stairRefinishingData.title,
@@ -8,5 +9,15 @@ export const metadata = {
 };
 
 export default function StairRefinishingPage() {
-  return <Suspense><StairRefinishingClient /></Suspense>;
+  const schemas = [
+    faqSchema(stairRefinishingData.faqItems),
+    stairRefinishingData.schemaType !== 'product' && localBusinessSchema(),
+  ].filter(Boolean);
+
+  return (
+    <>
+      <JsonLd data={schemas} />
+      <Suspense><StairRefinishingClient /></Suspense>
+    </>
+  );
 }

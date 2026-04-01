@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { basementFlooringData } from '@/data/landingPages';
 import BasementFlooringClient from '@/components/BasementFlooringClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: basementFlooringData.title,
@@ -9,5 +10,10 @@ export const metadata = {
 };
 
 export default function BasementFlooringPage() {
-  return <Suspense><BasementFlooringClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(basementFlooringData.faqItems)} />
+      <Suspense><BasementFlooringClient /></Suspense>
+    </>
+  );
 }

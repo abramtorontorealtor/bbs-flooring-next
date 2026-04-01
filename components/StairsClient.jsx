@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
 import { CheckCircle, Star, ArrowRight, DollarSign, Shield } from 'lucide-react';
 import { stairsImages } from '@/data/galleryImages';
@@ -41,6 +43,12 @@ const STAIRS_SPOKE_LINKS = [
 ];
 
 export default function StairsClient() {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'view_item_list', { item_list_name: 'Stairs' });
+    }
+  }, []);
+
   const services = [
     'Staircase refinishing & sanding',
     'Hardwood stair tread installation',

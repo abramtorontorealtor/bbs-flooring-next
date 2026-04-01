@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { wickhamFlooringData } from '@/data/landingPages';
 import WickhamFlooringClient from '@/components/WickhamFlooringClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: wickhamFlooringData.title,
@@ -8,5 +9,10 @@ export const metadata = {
 };
 
 export default function WickhamFlooringPage() {
-  return <Suspense><WickhamFlooringClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(wickhamFlooringData.faqItems)} />
+      <Suspense><WickhamFlooringClient /></Suspense>
+    </>
+  );
 }

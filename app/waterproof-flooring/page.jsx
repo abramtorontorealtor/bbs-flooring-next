@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { waterproofFlooringData } from '@/data/landingPages';
 import WaterproofFlooringClient from '@/components/WaterproofFlooringClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: waterproofFlooringData.title,
@@ -9,5 +10,10 @@ export const metadata = {
 };
 
 export default function WaterproofFlooringPage() {
-  return <Suspense><WaterproofFlooringClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(waterproofFlooringData.faqItems)} />
+      <Suspense><WaterproofFlooringClient /></Suspense>
+    </>
+  );
 }

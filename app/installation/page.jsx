@@ -1,4 +1,5 @@
 import InstallationClient from '@/components/InstallationClient';
+import { installationSchemas, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: 'Professional Flooring Installation | Markham, Toronto & Durham | BBS',
@@ -6,5 +7,10 @@ export const metadata = {
 };
 
 export default function InstallationPage() {
-  return <InstallationClient />;
+  return (
+    <>
+      <JsonLd data={installationSchemas()} />
+      <InstallationClient />
+    </>
+  );
 }

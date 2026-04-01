@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { flooringClearanceSaleData } from '@/data/landingPages';
 import FlooringClearanceSaleClient from '@/components/FlooringClearanceSaleClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: flooringClearanceSaleData.title,
@@ -9,5 +10,10 @@ export const metadata = {
 };
 
 export default function FlooringClearanceSalePage() {
-  return <Suspense><FlooringClearanceSaleClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(flooringClearanceSaleData.faqItems)} />
+      <Suspense><FlooringClearanceSaleClient /></Suspense>
+    </>
+  );
 }
