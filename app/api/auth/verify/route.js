@@ -43,14 +43,27 @@ export async function POST(request) {
 
     if (updateError) throw updateError;
 
-    // Also confirm email in auth.users so signInWithPassword works
+    // Confirm email in auth.users so signInWithPassword works
     const { error: authUpdateError } = await supabase.auth.admin.updateUserById(user.id, {
       email_confirm: true,
     });
 
     if (authUpdateError) {
       console.error('[Verify] Failed to confirm auth email:', authUpdateError);
-      // Don't fail — public.users is already verified, they can contact support
+    }
+
+    // Generate a magic link token so the client can auto-sign-in
+    let tokenHash = null;
+    try {
+      const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
+        type: 'magiclink',
+        email: user.email,
+      });
+      if (!linkError && linkData?.properties?.hashed_token) {
+        tokenHash = linkData.properties.hashed_token;
+      }
+    } catch (e) {
+      console.error('[Verify] Failed to generate sign-in token:', e);
     }
 
     return NextResponse.json({
@@ -58,6 +71,7 @@ export async function POST(request) {
       userId: user.id,
       userEmail: user.email,
       userName: user.full_name,
+      tokenHash,
     });
   } catch (error) {
     console.error('Email verification error:', error);

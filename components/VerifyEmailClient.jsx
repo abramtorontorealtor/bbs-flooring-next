@@ -30,6 +30,21 @@ export default function VerifyEmailClient() {
       .then((r) => r.json())
       .then(async (res) => {
         if (res.success) {
+          // Auto-sign-in with magic link token if available
+          if (res.tokenHash) {
+            try {
+              const supabase = getSupabaseBrowserClient();
+              if (supabase) {
+                await supabase.auth.verifyOtp({
+                  token_hash: res.tokenHash,
+                  type: 'magiclink',
+                });
+              }
+            } catch (e) {
+              console.warn('[Verify] Auto sign-in failed:', e);
+              // Not critical — user can still sign in manually
+            }
+          }
           setStatus('success');
           // Send welcome email
           if (res.userEmail) {
@@ -71,19 +86,19 @@ export default function VerifyEmailClient() {
             <CheckCircle2 className="w-14 h-14 text-green-500 mx-auto mb-6" />
             <h1 className="text-2xl font-bold text-slate-800 mb-2">You&apos;re verified!</h1>
             <p className="text-slate-600 mb-8">
-              Your member account is now active. Sign in to access exclusive trade
-              pricing across our full catalogue.
+              Your member account is now active. You&apos;re signed in and ready to shop
+              with exclusive member pricing.
             </p>
-            <Link href="/login">
+            <Link href={createPageUrl('Products')}>
               <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
-                Sign In to Shop Member Pricing
+                Shop Member Pricing →
               </Button>
             </Link>
             <Link
-              href={createPageUrl('Products')}
+              href="/account"
               className="block mt-4 text-sm text-slate-500 hover:text-amber-600"
             >
-              Browse Products →
+              Go to My Account
             </Link>
           </>
         )}
