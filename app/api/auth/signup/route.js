@@ -111,13 +111,7 @@ export async function POST(request) {
 
     sendEmail({ to: email, subject: 'Verify your email — BBS Flooring', html }).catch(() => {});
 
-    // Also notify admin
-    sendEmail({
-      to: 'info@bbsflooring.ca',
-      subject: `New signup: ${full_name || email}`,
-      html: `<p>New BBS Flooring account created:</p><ul><li>Name: ${full_name}</li><li>Email: ${email}</li><li>Phone: ${phone || 'N/A'}</li></ul>`,
-    }).catch(() => {});
-
+    // Admin notification sent by /api/auth/welcome after email verification
     return NextResponse.json({ user: { id: userId } });
   } catch (error) {
     console.error('[Signup] Error:', error);

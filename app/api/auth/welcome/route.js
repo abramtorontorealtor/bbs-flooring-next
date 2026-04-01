@@ -45,7 +45,7 @@ export async function POST(request) {
     // Check if welcome email already sent
     const { data: user } = await supabase
       .from('users')
-      .select('welcome_email_sent')
+      .select('welcome_email_sent, phone')
       .eq('id', userId)
       .single();
 
@@ -93,6 +93,7 @@ export async function POST(request) {
   <table style="border-collapse:collapse;">
     <tr><td style="padding:6px 12px 6px 0;color:#64748b;">Name</td><td style="padding:6px 0;font-weight:600;">${esc(userName) || '—'}</td></tr>
     <tr><td style="padding:6px 12px 6px 0;color:#64748b;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(userEmail)}" style="color:#f59e0b;">${esc(userEmail)}</a></td></tr>
+    ${user?.phone ? `<tr><td style="padding:6px 12px 6px 0;color:#64748b;">Phone</td><td style="padding:6px 0;">${esc(user.phone)}</td></tr>` : ''}
   </table>
 </div>`;
 
