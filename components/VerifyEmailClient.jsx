@@ -31,23 +31,17 @@ export default function VerifyEmailClient() {
       .then(async (res) => {
         if (res.success) {
           setStatus('success');
-          // Send welcome email — try to get current user from session, fall back to token lookup
-          try {
-            const supabase = getSupabaseBrowserClient();
-            const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: {} };
-            if (user) {
-              fetch('/api/auth/welcome', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  userId: user.id,
-                  userEmail: user.email,
-                  userName: user.user_metadata?.full_name || '',
-                }),
-              }).catch(() => {});
-            }
-          } catch {
-            // Welcome email is best-effort — verification still succeeded
+          // Send welcome email
+          if (res.userEmail) {
+            fetch('/api/auth/welcome', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                userId: res.userId,
+                userEmail: res.userEmail,
+                userName: res.userName || '',
+              }),
+            }).catch(() => {});
           }
         } else {
           const errMsg = res.error || 'Verification failed.';
@@ -77,19 +71,19 @@ export default function VerifyEmailClient() {
             <CheckCircle2 className="w-14 h-14 text-green-500 mx-auto mb-6" />
             <h1 className="text-2xl font-bold text-slate-800 mb-2">You&apos;re verified!</h1>
             <p className="text-slate-600 mb-8">
-              Your wholesale member account is now active. You have access to exclusive trade
+              Your member account is now active. Sign in to access exclusive trade
               pricing across our full catalogue.
             </p>
-            <Link href={createPageUrl('Products')}>
+            <Link href="/login">
               <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
-                Shop Member Pricing Now
+                Sign In to Shop Member Pricing
               </Button>
             </Link>
             <Link
-              href={createPageUrl('AccountDashboard')}
+              href={createPageUrl('Products')}
               className="block mt-4 text-sm text-slate-500 hover:text-amber-600"
             >
-              Go to My Account →
+              Browse Products →
             </Link>
           </>
         )}

@@ -49,14 +49,35 @@ export default function SignupClient() {
     }
 
     // Sign up with Supabase Auth
-    const { data, error: authError } = await supabase.auth.signUp({
+    // We handle email verification ourselves via SendGrid (branded email),
+    // so we call the server-side signup route which auto-confirms in Supabase
+    // and sends only our branded verification email.
+    const signupRes = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: form.email,
+        password: form.password,
+        full_name: form.full_name,
+        phone: form.phone,
+      }),
+    });
+    const signupData = await signupRes.json();
+
+    if (!signupRes.ok || signupData.error) {
+      setError(signupData.error || 'Signup failed. Please try again.');
+      setLoading(false);
+      return;
+    }
+
+    // Sign in immediately so the session is active
+    const { error: signInError } = await supabase.auth.signInWithPassword({
       email: form.email,
       password: form.password,
-      options: {
-        data: { full_name: form.full_name, phone: form.phone },
-        emailRedirectTo: `${window.location.origin}/account`,
-      },
     });
+
+    const data = signupData;
+    const authError = signInError;
 
     if (authError) {
       if (authError.message.includes('already registered')) {
@@ -68,28 +89,7 @@ export default function SignupClient() {
       return;
     }
 
-    // Insert into users table (role = 'member')
-    if (data?.user?.id) {
-      await supabase.from('users').upsert({
-        id: data.user.id,
-        email: form.email,
-        full_name: form.full_name,
-        phone: form.phone,
-        role: 'member',
-      }, { onConflict: 'id' });
-
-      // Send branded BBS verification email (in addition to Supabase's default).
-      // This gives users a professional, branded link to verify their email.
-      fetch('/api/auth/send-verification', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: data.user.id,
-          userEmail: form.email,
-          userName: form.full_name,
-        }),
-      }).catch(() => {});
-    }
+    // Users table insert + branded verification email handled by /api/auth/signup
 
     setLoading(false);
     setSuccess(true);

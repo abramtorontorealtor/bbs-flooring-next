@@ -43,7 +43,12 @@ export async function POST(request) {
 
     if (updateError) throw updateError;
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({
+      success: true,
+      userId: user.id,
+      userEmail: user.email,
+      userName: user.full_name,
+    });
   } catch (error) {
     console.error('Email verification error:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
