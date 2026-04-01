@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib/email';
 
 function getSupabaseServer() {
   const cookieStore = cookies();
@@ -61,7 +62,12 @@ export async function POST(request) {
 
     if (error) throw error;
 
-    // TODO: Send order confirmation email via SendGrid
+    // Send order confirmation emails (non-blocking)
+    const emailOrder = { ...order, order_number: orderNumber };
+    sendOrderCustomerConfirmation({ order: emailOrder })
+      .catch(err => console.warn('[Order] Customer email failed:', err));
+    sendOrderAdminNotification({ order: emailOrder })
+      .catch(err => console.warn('[Order] Admin email failed:', err));
 
     return NextResponse.json({
       success: true,

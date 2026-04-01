@@ -102,7 +102,7 @@ async function buildClientCache() {
       };
     });
     lastCacheTime = Date.now();
-    console.log('[Search] Client cache built: ' + productCache.length + ' products');
+    // cache built silently — productCache.length products indexed
   } catch (err) {
     console.error('[Search] Cache build failed:', err);
     productCache = null;

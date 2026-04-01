@@ -11,7 +11,7 @@ export default function NotFound() {
     { label: 'All Products', href: '/products', icon: '🏠' },
     { label: 'Vinyl Flooring', href: '/vinyl', icon: '💧' },
     { label: 'Hardwood', href: '/solid-hardwood', icon: '🌳' },
-    { label: 'Clearance Sale', href: '/flooring-clearance-sale', icon: '🔥' },
+    { label: 'Clearance Sale', href: '/clearance', icon: '🔥' },
     { label: 'Installation', href: '/installation', icon: '🔨' },
     { label: 'Free Measurement', href: '/free-measurement', icon: '📐' },
     { label: 'Quote Calculator', href: '/quote-calculator', icon: '💰' },

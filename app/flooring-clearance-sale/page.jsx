@@ -6,7 +6,7 @@ import { faqSchema, JsonLd } from '@/lib/schemas';
 export const metadata = {
   title: flooringClearanceSaleData.title,
   description: flooringClearanceSaleData.description,
-  alternates: { canonical: '/flooring-clearance-sale' },
+  alternates: { canonical: '/clearance' },
 };
 
 export default function FlooringClearanceSalePage() {
