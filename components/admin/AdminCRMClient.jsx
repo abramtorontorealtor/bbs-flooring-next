@@ -199,11 +199,11 @@ export default function AdminCRMClient() {
 
   const rescheduleMutation = useMutation({
     mutationFn: ({ booking_id, new_date }) =>
-      fetch('/api/admin/updateBookingDate', {
+      fetch('/api/booking/reschedule', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ booking_id, new_date }),
-      }).then(r => r.json()),
+        body: JSON.stringify({ bookingId: booking_id, preferred_date: new_date }),
+      }).then(r => { if (!r.ok) throw new Error('Reschedule failed'); return r.json(); }),
     onSuccess: (_, { booking_id, new_date }) => {
       refreshAll();
       toast.success('Booking rescheduled');
