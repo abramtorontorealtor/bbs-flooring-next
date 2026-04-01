@@ -5,6 +5,7 @@ import WaterproofFlooringClient from '@/components/WaterproofFlooringClient';
 export const metadata = {
   title: waterproofFlooringData.title,
   description: waterproofFlooringData.description,
+  alternates: { canonical: '/waterproof-flooring' },
 };
 
 export default function WaterproofFlooringPage() {

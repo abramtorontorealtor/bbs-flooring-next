@@ -8,7 +8,7 @@
 
 export const GOOGLE_REVIEW_STATS = {
   averageRating: 4.7,
-  totalReviews: 39,
+  totalReviews: 41,
   googleMapsUrl: 'https://www.google.com/maps/place/BBS+Flooring/@43.8561,-79.3372,17z/data=!4m8!3m7!1s0x89d4d5ea9cb856cb:0xd76bc69a2c9e3c3b!8m2!3d43.856092!4d-79.334618!9m1!1b1!16s%2Fg%2F11c1jn5n06',
 };
 

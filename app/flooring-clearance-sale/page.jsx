@@ -5,6 +5,7 @@ import FlooringClearanceSaleClient from '@/components/FlooringClearanceSaleClien
 export const metadata = {
   title: flooringClearanceSaleData.title,
   description: flooringClearanceSaleData.description,
+  alternates: { canonical: '/flooring-clearance-sale' },
 };
 
 export default function FlooringClearanceSalePage() {

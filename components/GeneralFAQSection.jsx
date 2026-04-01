@@ -25,6 +25,7 @@ export default function GeneralFAQSection() {
     <div className="mt-16">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(GENERAL_FAQS)) }} />
       <div className="max-w-4xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-8 text-center">Frequently Asked Questions About Flooring</h2>
         <Accordion type="single" collapsible className="bg-white rounded-2xl border border-slate-200 shadow-sm">
           {GENERAL_FAQS.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`} className="border-b last:border-b-0">

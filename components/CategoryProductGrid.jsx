@@ -290,6 +290,14 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
     return () => { cleanup.forEach(fn => fn()); removeExisting('prev'); removeExisting('next'); };
   }, [currentPage, filteredProducts.length, pathname, searchParams]);
 
+  // GA4: view_item_list event for Smart Bidding data
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      const listName = category ? category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'All Products';
+      window.gtag('event', 'view_item_list', { item_list_name: listName });
+    }
+  }, [category]);
+
   const clearFilters = () => { setFilters(DEFAULT_FILTERS); setCurrentPage(1); };
   const set = (key, val) => { setFilters(f => ({ ...f, [key]: val })); setCurrentPage(1); };
 

@@ -1,4 +1,5 @@
 import './globals.css';
+import { LocalBusinessJsonLd } from '@/components/LocalBusinessJsonLd';
 import { ClientProviders } from './providers';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://cdn.bbsflooring.ca" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <LocalBusinessJsonLd />
       </head>
       <body>
         <ClientProviders>
