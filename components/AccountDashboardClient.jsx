@@ -248,6 +248,16 @@ export default function AccountDashboardClient() {
                 {isVerified ? '✅ Verified Member' : '⏳ Pending Verification'}
               </Badge>
             </div>
+            {user.role === 'admin' && (
+              <Link href="/admin">
+                <Button
+                  size="sm"
+                  className="w-full mt-2 bg-slate-800 hover:bg-slate-900 text-white"
+                >
+                  🔧 Admin Dashboard
+                </Button>
+              </Link>
+            )}
             <Button
               variant="outline"
               size="sm"
