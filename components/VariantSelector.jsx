@@ -76,11 +76,10 @@ export default function VariantSelector({ product, isVerifiedMember, onVariantCh
 
   if (variants.length === 0) return null;
 
-  const isClearance = product.is_clearance;
-  // Regular products: always show member price. Clearance: only for verified members.
-  const displayPrice = (!isClearance || isVerifiedMember)
+  // Verified members see member price; guests see public price
+  const displayPrice = isVerifiedMember
     ? (selectedVariant?.member_price ?? selectedVariant?.public_price)
-    : selectedVariant?.public_price;
+    : (selectedVariant?.public_price ?? selectedVariant?.member_price);
 
   const originalPrice = selectedVariant?.price_per_sqft;
   const showStrikethrough = selectedVariant?.on_sale && originalPrice && originalPrice > displayPrice;

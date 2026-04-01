@@ -85,13 +85,14 @@ export default function ProductDetailClient({ slug }) {
   const isClearance = product?.is_clearance;
   const resolvePrice = (p) => {
     if (!p) return null;
-    if (isVerified || !isClearance) return p.member_price ?? p.sale_price_per_sqft ?? p.price_per_sqft;
-    return p.public_price ?? p.price_per_sqft;
+    // Verified members see member_price; guests see public_price
+    if (isVerified) return p.member_price ?? p.sale_price_per_sqft ?? p.price_per_sqft;
+    return p.public_price ?? p.sale_price_per_sqft ?? p.price_per_sqft;
   };
 
   const currentPricing = useMemo(() => {
     if (product?.has_variants && selectedJsonVariant) {
-      const price = (!isClearance || isVerified) ? selectedJsonVariant.member_price : selectedJsonVariant.public_price;
+      const price = isVerified ? selectedJsonVariant.member_price : (selectedJsonVariant.public_price || selectedJsonVariant.member_price);
       return {
         price_per_sqft: price,
         sale_price_per_sqft: selectedJsonVariant.on_sale ? selectedJsonVariant.sale_price : null,
@@ -260,7 +261,7 @@ export default function ProductDetailClient({ slug }) {
           variant_label: selectedJsonVariant.label || null, sku: selectedJsonVariant.sku,
           sqft_needed: calculation.sqftNeeded, sqft_per_box: selectedJsonVariant.sqft_box,
           boxes_required: calculation.boxesRequired, actual_sqft: calculation.actualSqft,
-          price_per_sqft: (!isClearance || isVerified) ? selectedJsonVariant.member_price : selectedJsonVariant.public_price,
+          price_per_sqft: isVerified ? selectedJsonVariant.member_price : (selectedJsonVariant.public_price || selectedJsonVariant.member_price),
           line_total: calculation.lineTotal, image_url: product.image_url,
         });
         window.dispatchEvent(new Event('cartUpdated'));

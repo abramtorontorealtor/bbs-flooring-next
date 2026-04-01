@@ -84,7 +84,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
             {product.has_variants && product.starting_price ? (
               (() => {
                 const isClearance = product.is_clearance;
-                const showMemberPrice = !isClearance || isVerified;
+                const showMemberPrice = isVerified;
                 const displayStartPrice = showMemberPrice && product.starting_member_price ? product.starting_member_price : product.starting_price;
                 return (
                   <div className="flex items-baseline gap-0.5">
