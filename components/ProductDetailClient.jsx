@@ -359,7 +359,7 @@ export default function ProductDetailClient({ slug }) {
           {product.review_count > 0 && (
             <div className="flex items-center gap-2">
               <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
-              <span className="font-semibold text-slate-800">{product.review_rating?.toFixed(1) || '5.0'}</span>
+              <span className="font-semibold text-slate-800">{product.review_rating?.toFixed(1)}</span>
               <span className="text-slate-500 text-sm">({product.review_count} reviews)</span>
             </div>
           )}
