@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { requireAdmin } from '@/lib/api-auth';
+import { sendOrderPaymentConfirmed } from '@/lib/email';
 
 export async function POST(request) {
   try {
@@ -42,13 +43,28 @@ export async function POST(request) {
 
     const paymentIntent = await stripe.paymentIntents.capture(piId);
 
-    // Update order status in Supabase
+    // Update order status in Supabase + send customer confirmation
     if (orderId) {
       const supabase = getSupabaseAdminClient();
       await supabase
         .from('orders')
-        .update({ payment_status: 'captured', status: 'paid' })
+        .update({ payment_status: 'captured', status: 'confirmed' })
         .eq('id', orderId);
+
+      // Fetch full order to send confirmation email
+      const { data: fullOrder } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', orderId)
+        .single();
+
+      if (fullOrder) {
+        try {
+          await sendOrderPaymentConfirmed({ order: { ...fullOrder, status: 'confirmed', payment_status: 'captured' } });
+        } catch (emailErr) {
+          console.warn('[Capture] Confirmation email failed (non-fatal):', emailErr);
+        }
+      }
     }
 
     return NextResponse.json({

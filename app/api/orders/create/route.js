@@ -59,12 +59,16 @@ export async function POST(request) {
 
     if (error) throw error;
 
-    // Send order confirmation emails (non-blocking)
+    // Send order emails — MUST await on Vercel (fire-and-forget dies mid-flight)
     const emailOrder = { ...order, order_number: orderNumber };
-    sendOrderCustomerConfirmation({ order: emailOrder })
-      .catch(err => console.warn('[Order] Customer email failed:', err));
-    sendOrderAdminNotification({ order: emailOrder })
-      .catch(err => console.warn('[Order] Admin email failed:', err));
+    try {
+      await Promise.all([
+        sendOrderCustomerConfirmation({ order: emailOrder }),
+        sendOrderAdminNotification({ order: emailOrder }),
+      ]);
+    } catch (err) {
+      console.warn('[Order] Email send error (non-fatal):', err);
+    }
 
     return NextResponse.json({
       success: true,
