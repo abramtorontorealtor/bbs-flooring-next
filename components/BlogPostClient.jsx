@@ -34,7 +34,7 @@ export default function BlogPostClient({ slug }) {
       const p = posts?.[0] || null;
       setPost(p);
       if (p?.category) {
-        const { data: related } = await supabase.from('blog_posts').select('id,slug,title,excerpt,featured_image,published_date,read_time').eq('category', p.category).eq('status', 'published').neq('id', p.id).limit(3);
+        const { data: related } = await supabase.from('blog_posts').select('id,slug,title,excerpt,featured_image,published_at,read_time').eq('category', p.category).eq('status', 'published').neq('id', p.id).limit(3);
         setRelatedPosts(related || []);
       }
       setIsLoading(false);
@@ -95,7 +95,7 @@ export default function BlogPostClient({ slug }) {
 
         <div className="flex flex-wrap items-center gap-4 text-slate-600 mb-8 not-prose">
           {post.author_name && <span className="font-medium">By {post.author_name}</span>}
-          {post.published_date && <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{formatDate(post.published_date, true)}</span>}
+          {post.published_at && <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{formatDate(post.published_at, true)}</span>}
           {post.read_time && <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{post.read_time} min read</span>}
           <button onClick={handleShare} className="ml-auto inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors">
             <Share2 className="w-4 h-4" /> Share

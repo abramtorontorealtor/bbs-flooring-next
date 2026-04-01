@@ -103,7 +103,7 @@ export default async function sitemap() {
         .select('slug, updated_at')
         .eq('status', 'published')
         .not('slug', 'is', null)
-        .order('published_date', { ascending: false });
+        .order('published_at', { ascending: false });
 
       if (posts) {
         for (const post of posts) {

@@ -27,7 +27,7 @@ export default function BlogClient() {
     async function fetchPosts() {
       const supabase = getSupabaseBrowserClient();
       if (!supabase) { setLoading(false); return; }
-      let query = supabase.from('blog_posts').select('*').eq('status', 'published').order('published_date', { ascending: false });
+      let query = supabase.from('blog_posts').select('*').eq('status', 'published').order('published_at', { ascending: false });
       const { data } = await query;
       setPosts(data || []);
       setLoading(false);
@@ -147,7 +147,7 @@ export default function BlogClient() {
               <h2 className="text-2xl font-bold text-slate-800 mb-3 group-hover:text-amber-600 transition-colors">{featured.title}</h2>
               <p className="text-slate-600 text-sm line-clamp-3 mb-4">{featured.excerpt}</p>
               <div className="flex items-center gap-3 text-xs text-slate-500">
-                {featured.published_date && <span>{new Date(featured.published_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
+                {featured.published_at && <span>{new Date(featured.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
                 {featured.read_time && <span>· {featured.read_time} min read</span>}
               </div>
             </div>
@@ -183,7 +183,7 @@ export default function BlogClient() {
                   <h3 className="font-bold text-slate-800 mb-2 group-hover:text-amber-600 transition-colors line-clamp-2">{post.title}</h3>
                   <p className="text-slate-600 text-sm line-clamp-2 flex-1">{post.excerpt}</p>
                   <div className="flex items-center gap-2 text-xs text-slate-500 mt-3">
-                    {(post.published_date || post.published_at) && <span>{new Date(post.published_date || post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
+                    {(post.published_at || post.published_at) && <span>{new Date(post.published_at || post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
                     {post.read_time && <span>· {post.read_time} min</span>}
                   </div>
                 </div>

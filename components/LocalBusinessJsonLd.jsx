@@ -73,7 +73,7 @@ export function LocalBusinessJsonLd() {
       availableLanguage: 'English'
     },
     sameAs: [
-      'https://www.facebook.com/bbsfloorsto',
+      'https://www.facebook.com/bbsflooring',
       'https://www.instagram.com/bbsfloors'
     ]
   };
