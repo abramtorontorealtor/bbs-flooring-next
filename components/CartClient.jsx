@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import TransitionPieces from '@/components/TransitionPieces';
 
 export default function CartClient() {
   const queryClient = useQueryClient();
@@ -292,19 +293,17 @@ export default function CartClient() {
             </div>
           )}
 
-          {/* Upsell: Transition pieces for vinyl/laminate */}
+          {/* Inline transition pieces for vinyl/laminate products */}
           {vinylLaminateProducts.length > 0 && transitionItems.length === 0 && (
-            <div className="bg-blue-50 rounded-2xl border border-blue-200 p-5 flex items-center gap-4">
-              <div className="text-3xl flex-shrink-0">📐</div>
-              <div className="flex-1">
-                <h3 className="font-bold text-slate-800">Don&apos;t forget transition pieces</h3>
-                <p className="text-sm text-slate-600">Your {vinylLaminateProducts.length > 1 ? `${vinylLaminateProducts.length} vinyl/laminate products` : 'vinyl/laminate product'} will need T-mouldings, reducers, or end caps at doorways and room transitions.</p>
-              </div>
-              <Link href={`/products/${vinylLaminateProducts[0]?.product_id}`} className="shrink-0">
-                <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100 whitespace-nowrap">
-                  Add Transitions
-                </Button>
-              </Link>
+            <div className="space-y-4">
+              {vinylLaminateProducts.map((item) => (
+                <TransitionPieces
+                  key={`trans-${item.id}`}
+                  product={item}
+                  sessionId={sessionId}
+                  onTransitionAdded={() => queryClient.invalidateQueries({ queryKey: ['cart'] })}
+                />
+              ))}
             </div>
           )}
 
