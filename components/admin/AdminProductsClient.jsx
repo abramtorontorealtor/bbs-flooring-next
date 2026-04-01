@@ -93,7 +93,7 @@ export default function AdminProductsClient() {
   const handleSetAllInStock = async () => {
     setSettingInStock(true);
     try {
-      // TODO: replace with fetch('/api/admin/set-all-in-stock', { method: 'POST' })
+      
       const response = await fetch('/api/admin/set-all-in-stock', { method: 'POST' });
       const data = await response.json();
       const { updated, total } = data;
@@ -110,7 +110,7 @@ export default function AdminProductsClient() {
   const handleDownloadUrls = async () => {
     setDownloadingUrls(true);
     try {
-      // TODO: replace with fetch('/api/admin/get-all-product-urls')
+      
       const response = await fetch('/api/admin/get-all-product-urls');
       const data = await response.json();
       const { products: urlProducts } = data;
@@ -156,7 +156,7 @@ export default function AdminProductsClient() {
     setAutoFillStatus('Starting auto-fill process...');
 
     try {
-      // TODO: replace with fetch('/api/admin/fill-product-details', { method: 'POST' })
+      
       const response = await fetch('/api/admin/fill-product-details', { method: 'POST' });
       const data = await response.json();
 
