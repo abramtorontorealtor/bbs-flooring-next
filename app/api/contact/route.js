@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { sendContactAdminNotification, sendContactCustomerConfirmation } from '@/lib/email';
 
 function getSupabaseServer() {
   const cookieStore = cookies();
@@ -32,7 +33,17 @@ export async function POST(request) {
 
     if (error) throw error;
 
-    // TODO: Send email notification via SendGrid
+    // Send email notifications (non-blocking — don't fail the form if email fails)
+    Promise.allSettled([
+      sendContactAdminNotification({ name, email, phone, message, source }),
+      sendContactCustomerConfirmation({ name, email }),
+    ]).then(results => {
+      results.forEach((r, i) => {
+        if (r.status === 'rejected' || (r.value && !r.value.success)) {
+          console.warn(`[Contact] Email ${i} failed:`, r.reason || r.value);
+        }
+      });
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {
