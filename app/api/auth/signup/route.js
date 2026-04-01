@@ -109,7 +109,11 @@ export async function POST(request) {
 </body>
 </html>`;
 
-    sendEmail({ to: email, subject: 'Verify your email — BBS Flooring', html }).catch(() => {});
+    // Must await — Vercel kills the process after response if not awaited
+    const emailResult = await sendEmail({ to: email, subject: 'Verify your email — BBS Flooring', html });
+    if (!emailResult.success) {
+      console.error('[Signup] Verification email failed:', emailResult);
+    }
 
     // Admin notification sent by /api/auth/welcome after email verification
     return NextResponse.json({ user: { id: userId } });
