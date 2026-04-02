@@ -9,9 +9,11 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Package, DollarSign, Clock, CheckCircle, Eye,
-  Phone, Mail, MapPin, CreditCard, AlertTriangle
+  Phone, Mail, MapPin, CreditCard, AlertTriangle, Warehouse, Save
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -20,6 +22,7 @@ export default function AdminOrdersClient() {
   const queryClient = useQueryClient();
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
+  const [pickupAddress, setPickupAddress] = useState('');
 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ['admin-orders'],
@@ -83,6 +86,28 @@ export default function AdminOrdersClient() {
     },
     onError: (error) => {
       toast.error('Failed to confirm payment: ' + error.message);
+    },
+  });
+
+  const updatePickupAddressMutation = useMutation({
+    mutationFn: async ({ orderId, pickupAddress }) => {
+      const response = await fetch('/api/orders/pickup-address', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, pickupAddress }),
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error || 'Failed to update pickup address');
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['admin-orders']);
+      toast.success('Pickup address saved');
+    },
+    onError: (error) => {
+      toast.error('Failed to save pickup address: ' + error.message);
     },
   });
 
@@ -367,7 +392,10 @@ export default function AdminOrdersClient() {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => setSelectedOrder(order)}
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setPickupAddress(order.pickup_address || '');
+                        }}
                       >
                         <Eye className="w-4 h-4" />
                       </Button>
@@ -491,6 +519,54 @@ export default function AdminOrdersClient() {
                   )}
                 </CardContent>
               </Card>
+
+              {/* Pickup Address (only for pickup orders) */}
+              {selectedOrder.delivery_preference === 'pickup' && (
+                <Card className="border-amber-200 bg-amber-50/30">
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Warehouse className="w-5 h-5 text-amber-600" />
+                      Pickup Address
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div>
+                        <Label htmlFor="pickup-address" className="text-sm text-slate-600">
+                          Warehouse / pickup location (visible to customer)
+                        </Label>
+                        <Input
+                          id="pickup-address"
+                          value={pickupAddress}
+                          onChange={(e) => setPickupAddress(e.target.value)}
+                          placeholder="e.g. 123 Warehouse Rd, Unit 5, Markham ON L3R 1A1"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="sm"
+                          onClick={() => updatePickupAddressMutation.mutate({
+                            orderId: selectedOrder.id,
+                            pickupAddress: pickupAddress.trim(),
+                          })}
+                          disabled={updatePickupAddressMutation.isPending}
+                          className="bg-amber-600 hover:bg-amber-700"
+                        >
+                          <Save className="w-4 h-4 mr-1" />
+                          {updatePickupAddressMutation.isPending ? 'Saving...' : 'Save Pickup Address'}
+                        </Button>
+                        {selectedOrder.pickup_address && (
+                          <span className="text-xs text-green-600">✅ Address set — visible to customer</span>
+                        )}
+                        {!selectedOrder.pickup_address && (
+                          <span className="text-xs text-amber-600">⏳ Not set — customer sees &quot;will be confirmed&quot;</span>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Order Items */}
               <Card>

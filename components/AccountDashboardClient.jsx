@@ -484,7 +484,7 @@ export default function AccountDashboardClient() {
                           {order.delivery_preference === 'pickup' ? (
                             <>
                               <MapPin className="w-4 h-4" />
-                              <span>Pickup at 6061 Highway 7, Unit B, Markham ON L3P 3B2</span>
+                              <span>{order.pickup_address ? `Pickup at ${order.pickup_address}` : 'Pickup location will be confirmed after payment'}</span>
                             </>
                           ) : (
                             <>
