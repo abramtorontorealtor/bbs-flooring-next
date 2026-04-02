@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { randomUUID } from 'crypto';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendQuoteToCustomer, sendQuoteAdminNotification } from '@/lib/email';
 
@@ -12,6 +13,9 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
+    // Generate a resume token so the customer can view/resume this quote via email link
+    const resumeToken = randomUUID();
 
     // Persist quote to database
     const supabase = getSupabaseAdminClient();
@@ -41,6 +45,7 @@ export async function POST(request) {
         subtotal: quote.subtotal,
         tax: quote.tax,
         total: quote.total,
+        resume_token: resumeToken,
         status: 'sent',
       })
       .select()

@@ -26,6 +26,7 @@ import { validatePhone } from '@/lib/validations';
 export default function QuoteCalculatorClient() {
   const searchParams = useSearchParams();
   const preselectedProductId = searchParams.get('product_id');
+  const resumeToken = searchParams.get('resume');
 
   const savedProject = (() => {
     if (typeof window === 'undefined') return null;
@@ -43,6 +44,7 @@ export default function QuoteCalculatorClient() {
   const preselectedRemoval = searchParams.get('removal_type') || savedProject?.removal_type || 'none';
   const preselectedBaseboards = searchParams.get('needs_baseboards') === 'true' || savedProject?.needs_baseboards || false;
   const preselectedShoeMoulding = searchParams.get('needs_shoe_moulding') === 'true' || savedProject?.needs_shoe_moulding || false;
+  const [resumedQuote, setResumedQuote] = useState(null);
 
   const [formData, setFormData] = useState({
     square_footage: preselectedSqft,
@@ -87,6 +89,30 @@ export default function QuoteCalculatorClient() {
   });
 
   const selectedProduct = products.find(p => p.id === formData.product_id);
+
+  // Resume a saved quote via magic link (?resume=<token>)
+  useEffect(() => {
+    if (!resumeToken || products.length === 0 || resumedQuote) return;
+    fetch(`/api/quotes/resume?token=${encodeURIComponent(resumeToken)}`)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.success || !data.quote) return;
+        const q = data.quote;
+        setResumedQuote(q);
+        // Find the product by name (quote stores name, not ID)
+        const match = products.find(p => p.name === q.product_name);
+        setFormData(prev => ({
+          ...prev,
+          product_id: match?.id || prev.product_id,
+          square_footage: q.square_footage?.toString() || prev.square_footage,
+          removal_type: q.removal_type || prev.removal_type,
+          needs_baseboards: q.needs_baseboards ?? prev.needs_baseboards,
+          needs_shoe_moulding: q.needs_shoe_moulding ?? prev.needs_shoe_moulding,
+        }));
+        toast.success('Your saved quote has been loaded!');
+      })
+      .catch(() => {});
+  }, [resumeToken, products, resumedQuote]);
 
   useEffect(() => {
     if (selectedProduct && selectedCategory === 'all') {
@@ -442,6 +468,18 @@ export default function QuoteCalculatorClient() {
           ✅ We beat any written quote from a competitor by 5%.
         </div>
       </div>
+
+      {/* Resumed quote banner */}
+      {resumedQuote && (
+        <div className="mb-6 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 flex items-start gap-3">
+          <span className="text-blue-500 text-lg flex-shrink-0">📋</span>
+          <div className="text-sm text-blue-900">
+            <span className="font-semibold">Welcome back!</span> Your saved quote for <strong>{resumedQuote.product_name}</strong> ({resumedQuote.square_footage} sq ft) has been loaded.
+            {' '}Adjust the details below and recalculate, or{' '}
+            <a href="/free-measurement" className="font-semibold underline underline-offset-2 hover:text-blue-700">book your free measurement →</a>
+          </div>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-8 min-w-0">
         {/* Form Section */}
