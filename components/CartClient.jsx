@@ -74,6 +74,19 @@ export default function CartClient() {
     },
   });
 
+  const updateTransitionMutation = useMutation({
+    mutationFn: ({ itemId, newQty, pricePerPiece }) => {
+      return entities.CartItem.update(itemId, {
+        transition_quantity: newQty,
+        line_total: newQty * pricePerPiece,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      window.dispatchEvent(new Event('cartUpdated'));
+    },
+  });
+
   const pricingLabel = isVerified ? 'Trade Price' : 'Retail Price';
 
   // Coupon apply handler
@@ -314,17 +327,59 @@ export default function CartClient() {
                 <Wrench className="w-5 h-5 text-amber-600" />
                 Transition Pieces
               </h2>
-              {transitionItems.map((item) => (
+              {transitionItems.map((item) => {
+                const pricePerPiece = item.transition_quantity > 0 ? item.line_total / item.transition_quantity : 25;
+                return (
                 <div key={item.id}>
                   <Card className="border-amber-200">
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="font-semibold text-slate-800">{item.product_name}</div>
-                          <p className="text-sm text-slate-500 mt-1">
-                            {item.transition_quantity}x 8ft pieces @ C${(item.line_total / item.transition_quantity).toFixed(2)}/piece
-                          </p>
                           <p className="text-xs text-slate-500 mt-1">Matches: {item.parent_product_name}</p>
+                          <div className="mt-3 flex items-center gap-3">
+                            <span className="text-sm text-slate-500">Qty:</span>
+                            <div className="flex items-center gap-1">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  const newQty = Math.max(1, (item.transition_quantity || 1) - 1);
+                                  updateTransitionMutation.mutate({ itemId: item.id, newQty, pricePerPiece });
+                                }}
+                                disabled={updateTransitionMutation.isPending || (item.transition_quantity || 1) <= 1}
+                              >
+                                <Minus className="w-3 h-3" />
+                              </Button>
+                              <Input
+                                type="number"
+                                value={item.transition_quantity || 1}
+                                onChange={(e) => {
+                                  const val = Math.max(1, parseInt(e.target.value) || 1);
+                                  if (val <= 50) {
+                                    updateTransitionMutation.mutate({ itemId: item.id, newQty: val, pricePerPiece });
+                                  }
+                                }}
+                                className="h-7 w-14 text-center text-sm px-1"
+                                min="1"
+                                max="50"
+                              />
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={() => {
+                                  const newQty = (item.transition_quantity || 1) + 1;
+                                  updateTransitionMutation.mutate({ itemId: item.id, newQty, pricePerPiece });
+                                }}
+                                disabled={updateTransitionMutation.isPending}
+                              >
+                                <Plus className="w-3 h-3" />
+                              </Button>
+                            </div>
+                            <span className="text-sm text-slate-500">× C${pricePerPiece.toFixed(2)}/piece</span>
+                          </div>
                         </div>
                         <div className="flex items-center gap-4">
                           <div className="text-right">
@@ -343,7 +398,8 @@ export default function CartClient() {
                     </CardContent>
                   </Card>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

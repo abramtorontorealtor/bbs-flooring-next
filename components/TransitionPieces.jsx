@@ -20,12 +20,22 @@ const TRANSITION_LABELS = {
   stair_nosing: 'Stair Nosing',
 };
 
-export default function TransitionPieces({ product, sessionId, onTransitionAdded }) {
+export default function TransitionPieces({ product, sessionId: initialSessionId, onTransitionAdded }) {
   const [quantities, setQuantities] = useState({
     t_moulding: 0,
     reducer: 0,
     stair_nosing: 0,
   });
+
+  // Ensure we always have a session ID (create one lazily if needed)
+  const getSessionId = () => {
+    let sid = initialSessionId || (typeof window !== 'undefined' && localStorage.getItem('bbs_session_id'));
+    if (!sid) {
+      sid = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('bbs_session_id', sid);
+    }
+    return sid;
+  };
 
   const handleQuantityChange = (type, value) => {
     const qty = Math.max(0, parseInt(value) || 0);
@@ -39,8 +49,9 @@ export default function TransitionPieces({ product, sessionId, onTransitionAdded
       return;
     }
 
+    const sid = getSessionId();
     const transitionData = {
-      session_id: sessionId,
+      session_id: sid,
       item_type: 'transition',
       transition_type: type,
       transition_quantity: qty,
