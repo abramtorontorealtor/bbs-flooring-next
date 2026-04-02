@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
-import { sendBookingCustomerConfirmation, sendBookingAdminNotification } from '@/lib/email';
+import { sendBookingRequestReceived, sendBookingAdminNotification } from '@/lib/email';
 
 export async function POST(request) {
   try {
@@ -13,7 +13,7 @@ export async function POST(request) {
       );
     }
 
-    // Persist booking to database
+    // Persist booking as PENDING (not confirmed — admin confirms later)
     const supabase = getSupabaseAdminClient();
     const { data: savedBooking, error: dbError } = await supabase
       .from('bookings')
@@ -28,22 +28,20 @@ export async function POST(request) {
         flooring_type: booking.flooring_type,
         square_footage: booking.square_footage || booking.sqft,
         notes: booking.notes,
-        status: 'confirmed',
+        status: 'pending',
       })
       .select()
       .single();
 
     if (dbError) {
       console.error('[Booking] DB insert failed:', dbError);
-      // Don't fail the request — still send emails
     }
 
-    // Use saved booking with DB-generated ID for emails
     const emailBooking = savedBooking || booking;
 
-    // Send emails in parallel (non-blocking)
+    // Send "Request Received" email to customer + admin notification
     const results = await Promise.allSettled([
-      sendBookingCustomerConfirmation({ booking: emailBooking }),
+      sendBookingRequestReceived({ booking: emailBooking }),
       sendBookingAdminNotification({ booking: emailBooking }),
     ]);
 
@@ -60,7 +58,7 @@ export async function POST(request) {
       bookingId: savedBooking?.id || null,
     });
   } catch (error) {
-    console.error('Booking confirmation error:', error);
+    console.error('Booking creation error:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

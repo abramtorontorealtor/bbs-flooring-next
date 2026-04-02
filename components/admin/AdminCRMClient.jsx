@@ -182,41 +182,30 @@ export default function AdminCRMClient() {
   });
 
   // ─── BOOKING MUTATIONS ─────────────────────────────────────────────────
-  const updateBookingMutation = useMutation({
-    mutationFn: ({ id, status }) => entities.Booking.update(id, { status }),
-    onSuccess: () => { refreshAll(); toast.success('Booking updated'); },
-    onError: (err) => toast.error('Update failed: ' + err.message),
-  });
+  const [bookingRescheduleDate, setBookingRescheduleDate] = useState('');
+  const [bookingRescheduleTime, setBookingRescheduleTime] = useState('');
+  const [bookingCancelReason, setBookingCancelReason] = useState('');
 
-  const sendBookingEmailMutation = useMutation({
-    mutationFn: (bookingData) => {
-      const { __email_type, ...data } = bookingData;
-      return fetch('/api/admin/sendBookingConfirmation', {
+  const bookingAdminAction = useMutation({
+    mutationFn: async ({ bookingId, action, preferred_date, preferred_time, cancel_reason }) => {
+      const res = await fetch('/api/booking/admin-action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data, email_type: __email_type || 'confirmation' }),
-      }).then(r => r.json());
+        body: JSON.stringify({ bookingId, action, preferred_date, preferred_time, cancel_reason }),
+      });
+      if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || `${action} failed`); }
+      return res.json();
     },
-    onSuccess: () => toast.success('Confirmation email sent'),
-    onError: (err) => toast.error('Email failed: ' + err.message),
-  });
-
-  const rescheduleMutation = useMutation({
-    mutationFn: ({ booking_id, new_date }) =>
-      fetch('/api/booking/reschedule', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bookingId: booking_id, preferred_date: new_date }),
-      }).then(r => { if (!r.ok) throw new Error('Reschedule failed'); return r.json(); }),
-    onSuccess: (_, { booking_id, new_date }) => {
+    onSuccess: (data, { action }) => {
       refreshAll();
-      toast.success('Booking rescheduled');
-      const booking = bookings.find(b => b.id === booking_id);
-      if (booking?.customer_email) {
-        sendBookingEmailMutation.mutate({ ...booking, preferred_date: new_date, __email_type: 'reschedule' });
-      }
+      const msgs = { confirm: '✅ Booking confirmed & email sent', reschedule: '📅 Rescheduled & email sent', cancel: '❌ Cancelled & email sent' };
+      toast.success(msgs[action] || 'Done');
+      setSelectedLead(null);
+      setBookingRescheduleDate('');
+      setBookingRescheduleTime('');
+      setBookingCancelReason('');
     },
-    onError: (err) => toast.error('Reschedule failed: ' + err.message),
+    onError: (err) => toast.error(err.message),
   });
 
   // ─── UNIFIED LEAD LIST ──────────────────────────────────────────────────
@@ -704,12 +693,12 @@ export default function AdminCRMClient() {
                                   <X className="w-3 h-3 mr-1" /> Cancel
                                 </Button>
                               )}
-                              {/* Booking: Send confirmation */}
-                              {lead.source === 'booking' && (
-                                <Button variant="outline" size="sm" className="h-7 text-xs"
-                                  disabled={sendBookingEmailMutation.isPending}
-                                  onClick={() => sendBookingEmailMutation.mutate(lead.raw)}>
-                                  <Send className="w-3 h-3 mr-1" /> Email
+                              {/* Booking: Confirm (pending only) */}
+                              {lead.source === 'booking' && (o.status === 'pending' || o.status === 'new') && (
+                                <Button size="sm" className="h-7 text-xs bg-green-600 hover:bg-green-700 text-white"
+                                  disabled={bookingAdminAction.isPending}
+                                  onClick={() => bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'confirm' })}>
+                                  <CheckCircle className="w-3 h-3 mr-1" /> Confirm
                                 </Button>
                               )}
                             </div>
@@ -955,27 +944,79 @@ export default function AdminCRMClient() {
 
                       {/* BOOKING ACTIONS */}
                       {lead.source === 'booking' && (
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                           <Label className="text-sm font-semibold">Booking Actions</Label>
-                          <div className="flex gap-2 flex-wrap">
-                            <Button variant="outline" size="sm"
-                              disabled={sendBookingEmailMutation.isPending}
-                              onClick={() => sendBookingEmailMutation.mutate(lead.raw)}>
-                              <Send className="w-4 h-4 mr-2" /> Send Confirmation Email
+
+                          {/* Confirm button — only for pending bookings */}
+                          {(o.status === 'pending' || o.status === 'new') && (
+                            <Button className="w-full bg-green-600 hover:bg-green-700 text-white"
+                              disabled={bookingAdminAction.isPending}
+                              onClick={() => bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'confirm' })}>
+                              {bookingAdminAction.isPending ? '⏳ Confirming...' : '✅ Confirm Booking (sends email)'}
                             </Button>
-                          </div>
-                          <div className="flex gap-2 items-center">
-                            <Label className="text-xs text-slate-500 whitespace-nowrap">Status:</Label>
-                            <Select value={o.status || 'pending'} onValueChange={(val) => updateBookingMutation.mutate({ id: lead.entityId, status: val })}>
-                              <SelectTrigger className="h-8 text-sm"><SelectValue /></SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="pending">Pending</SelectItem>
-                                <SelectItem value="confirmed">Confirmed</SelectItem>
-                                <SelectItem value="completed">Completed</SelectItem>
-                                <SelectItem value="cancelled">Cancelled</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
+                          )}
+
+                          {/* Reschedule — available for pending/confirmed */}
+                          {!['completed', 'cancelled'].includes(o.status) && (
+                            <div className="bg-slate-50 rounded-lg p-3 space-y-2">
+                              <Label className="text-xs font-semibold text-slate-600">Reschedule</Label>
+                              <div className="flex gap-2">
+                                <Input type="date" value={bookingRescheduleDate}
+                                  onChange={(e) => setBookingRescheduleDate(e.target.value)}
+                                  className="h-8 text-sm flex-1"
+                                  min={new Date(Date.now() + 86400000).toISOString().split('T')[0]} />
+                                <select value={bookingRescheduleTime}
+                                  onChange={(e) => setBookingRescheduleTime(e.target.value)}
+                                  className="h-8 rounded-md border border-input bg-background px-2 text-sm">
+                                  <option value="">Time...</option>
+                                  <option value="11:00 AM">11:00 AM</option>
+                                  <option value="11:30 AM">11:30 AM</option>
+                                  <option value="12:00 PM">12:00 PM</option>
+                                  <option value="12:30 PM">12:30 PM</option>
+                                  <option value="1:00 PM">1:00 PM</option>
+                                  <option value="1:30 PM">1:30 PM</option>
+                                  <option value="5:00 PM">5:00 PM</option>
+                                </select>
+                              </div>
+                              <Button size="sm" variant="outline" className="w-full"
+                                disabled={!bookingRescheduleDate || bookingAdminAction.isPending}
+                                onClick={() => bookingAdminAction.mutate({
+                                  bookingId: lead.entityId,
+                                  action: 'reschedule',
+                                  preferred_date: bookingRescheduleDate,
+                                  preferred_time: bookingRescheduleTime,
+                                })}>
+                                📅 Reschedule (sends email)
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Cancel — available for pending/confirmed */}
+                          {!['completed', 'cancelled'].includes(o.status) && (
+                            <div className="bg-red-50 rounded-lg p-3 space-y-2">
+                              <Label className="text-xs font-semibold text-red-600">Cancel Booking</Label>
+                              <Input placeholder="Reason (optional)" value={bookingCancelReason}
+                                onChange={(e) => setBookingCancelReason(e.target.value)}
+                                className="h-8 text-sm" />
+                              <Button size="sm" variant="destructive" className="w-full"
+                                disabled={bookingAdminAction.isPending}
+                                onClick={() => {
+                                  if (confirm('Cancel this booking? The customer will be emailed.')) {
+                                    bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'cancel', cancel_reason: bookingCancelReason });
+                                  }
+                                }}>
+                                ❌ Cancel Booking (sends email)
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Mark complete — for confirmed bookings after the visit */}
+                          {o.status === 'confirmed' && (
+                            <Button size="sm" variant="outline" className="w-full border-emerald-300 text-emerald-800 hover:bg-emerald-50"
+                              onClick={() => entities.Booking.update(lead.entityId, { status: 'completed' }).then(() => { refreshAll(); toast.success('Marked complete'); setSelectedLead(null); })}>
+                              ✅ Mark as Completed
+                            </Button>
+                          )}
                         </div>
                       )}
 

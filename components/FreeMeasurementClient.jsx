@@ -187,9 +187,9 @@ export default function FreeMeasurementClient() {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-10 h-10 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-800 mb-3">Booking Confirmed!</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-3">Booking Request Received!</h2>
             <p className="text-slate-600 mb-6">
-              Thank you! We&apos;ll contact you within 24 hours to confirm your free measurement appointment.
+              Thank you! We&apos;ll review your request and confirm your appointment within a few hours. Check your email for details.
             </p>
             <button
               onClick={() => { setSubmitted(false); setStep(1); setPostalCode(''); setProjectType(''); setFormData({ customer_name: '', customer_email: '', customer_phone: '', customer_address: '', preferred_date: '', preferred_time: '' }); }}

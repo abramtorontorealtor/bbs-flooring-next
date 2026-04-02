@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { requireAdmin } from '@/lib/api-auth';
 
+// Legacy admin reschedule route — kept for backward compat.
+// Prefer /api/booking/admin-action with action='reschedule' instead.
 export async function POST(request) {
   try {
     const { error: authError } = await requireAdmin();
@@ -23,7 +25,7 @@ export async function POST(request) {
       .update({
         preferred_date,
         preferred_time: preferred_time || null,
-        status: 'rescheduled',
+        status: 'confirmed',
       })
       .eq('id', bookingId)
       .select()
