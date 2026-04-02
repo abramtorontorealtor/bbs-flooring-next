@@ -174,6 +174,8 @@ export default function AdminOrdersClient() {
 
   const getStatusBadge = (status) => {
     const variants = {
+      awaiting_payment: { label: 'Awaiting Payment', className: 'bg-orange-100 text-orange-800' },
+      abandoned: { label: 'Abandoned', className: 'bg-slate-100 text-slate-600' },
       pending_payment: { label: 'Pending Payment', className: 'bg-yellow-100 text-yellow-800' },
       paid: { label: 'Paid', className: 'bg-green-100 text-green-800' },
       confirmed: { label: 'Confirmed', className: 'bg-blue-100 text-blue-800' },
@@ -181,6 +183,8 @@ export default function AdminOrdersClient() {
       shipped: { label: 'Shipped', className: 'bg-indigo-100 text-indigo-800' },
       delivered: { label: 'Delivered', className: 'bg-emerald-100 text-emerald-800' },
       cancelled: { label: 'Cancelled', className: 'bg-red-100 text-red-800' },
+      quote_requested: { label: 'Quote Requested', className: 'bg-cyan-100 text-cyan-800' },
+      refunded: { label: 'Refunded', className: 'bg-rose-100 text-rose-800' },
     };
     const variant = variants[status] || variants.pending_payment;
     return <Badge className={`${variant.className} border-0`}>{variant.label}</Badge>;

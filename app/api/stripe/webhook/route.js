@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
+import { sendOrderCustomerConfirmation, sendOrderAdminNotification, sendAbandonedCartRecovery } from '@/lib/email';
 
 // Stripe webhook handler — receives events after checkout completion.
 // Critical: stores payment_intent ID so admin can capture pre-authed payments.
+// Also triggers order confirmation emails (moved from orders/create to avoid
+// premature emails when customers abandon at the Stripe checkout screen).
 
 export async function POST(request) {
   const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -52,7 +55,7 @@ export async function POST(request) {
 
       // Find and update the order with the payment intent ID
       const filter = orderId ? { id: orderId } : { order_number: orderNumber };
-      const { error } = await supabase
+      const { data: updatedOrder, error } = await supabase
         .from('orders')
         .update({
           stripe_payment_intent_id: paymentIntentId,
@@ -60,12 +63,60 @@ export async function POST(request) {
           payment_status: 'authorized', // manual capture — authorized but not yet captured
           status: 'pending', // awaiting stock verification + capture
         })
-        .match(filter);
+        .match(filter)
+        .select()
+        .single();
 
       if (error) {
         console.error('[Stripe Webhook] Failed to update order:', error);
       } else {
         console.log(`[Stripe Webhook] Order ${orderNumber || orderId} updated with payment_intent ${paymentIntentId}`);
+
+        // NOW send confirmation emails — payment is actually authorized
+        try {
+          const emailOrder = { ...updatedOrder, order_number: updatedOrder.order_number || orderNumber };
+          await Promise.all([
+            sendOrderCustomerConfirmation({ order: emailOrder }),
+            sendOrderAdminNotification({ order: emailOrder }),
+          ]);
+          console.log(`[Stripe Webhook] Confirmation emails sent for ${orderNumber || orderId}`);
+        } catch (emailErr) {
+          console.error('[Stripe Webhook] Email send error (non-fatal):', emailErr);
+        }
+      }
+      break;
+    }
+
+    case 'checkout.session.expired': {
+      // Customer started checkout but never completed payment (Stripe sessions expire after 24h by default).
+      // Send abandoned cart recovery email with a link to resume the order.
+      const session = event.data.object;
+      const orderId = session.metadata?.order_id;
+      const orderNumber = session.metadata?.order_number;
+
+      if (!orderId && !orderNumber) break;
+
+      const filter = orderId ? { id: orderId } : { order_number: orderNumber };
+      const { data: order } = await supabase
+        .from('orders')
+        .select('*')
+        .match(filter)
+        .single();
+
+      if (order && order.status === 'awaiting_payment') {
+        // Update status to abandoned
+        await supabase
+          .from('orders')
+          .update({ status: 'abandoned', payment_status: 'expired' })
+          .match(filter);
+
+        // Send recovery email
+        try {
+          await sendAbandonedCartRecovery({ order });
+          console.log(`[Stripe Webhook] Abandoned cart recovery email sent for ${orderNumber || orderId}`);
+        } catch (emailErr) {
+          console.error('[Stripe Webhook] Recovery email error:', emailErr);
+        }
       }
       break;
     }

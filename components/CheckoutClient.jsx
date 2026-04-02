@@ -41,6 +41,8 @@ export default function CheckoutClient() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [copiedField, setCopiedField] = useState(null);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [resumeOrder, setResumeOrder] = useState(null);
+  const [isResuming, setIsResuming] = useState(false);
 
   const isCustomZone = formData.shipping_postal_code && !['M', 'L'].includes(formData.shipping_postal_code.toUpperCase()[0]);
 
@@ -104,10 +106,11 @@ export default function CheckoutClient() {
     });
   };
 
-  // Check for Stripe payment success on mount
+  // Check for Stripe payment success or abandoned order resume on mount
   useEffect(() => {
     const paymentSuccess = searchParams.get('payment_success');
     const orderNum = searchParams.get('order_number');
+    const resumeOrderNum = searchParams.get('resume_order');
     
     if (paymentSuccess === 'true' && orderNum) {
       setIsStripeSuccess(true);
@@ -128,6 +131,9 @@ export default function CheckoutClient() {
           window.dispatchEvent(new Event('cartUpdated'));
         });
       }
+    } else if (resumeOrderNum) {
+      // Customer returned from abandoned Stripe checkout or clicked recovery email
+      setResumeOrder(decodeURIComponent(resumeOrderNum));
     }
   }, [searchParams]);
 
@@ -181,6 +187,29 @@ export default function CheckoutClient() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleResumeOrder = async () => {
+    if (!resumeOrder) return;
+    setIsResuming(true);
+    try {
+      const res = await fetch('/api/orders/resume', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderNumber: resumeOrder }),
+      });
+      const result = await res.json();
+      if (result.checkoutUrl) {
+        window.location.href = result.checkoutUrl;
+      } else {
+        toast.error(result.error || 'Unable to resume this order. Please call us or start a new order.');
+        setResumeOrder(null);
+        setIsResuming(false);
+      }
+    } catch (err) {
+      toast.error('Something went wrong. Please try again or call us.');
+      setIsResuming(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -323,6 +352,49 @@ export default function CheckoutClient() {
       setIsSubmitting(false);
     }
   };
+
+  // ─── Resume Abandoned Order UI ───
+  if (resumeOrder) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-20 text-center">
+        <div className="w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-8">
+          <Clock className="w-12 h-12 text-amber-600" />
+        </div>
+        <h1 className="text-3xl font-bold text-slate-800 mb-4">Complete Your Order</h1>
+        <p className="text-lg text-slate-600 mb-2">
+          Your order <span className="font-semibold text-amber-600">{resumeOrder}</span> is waiting for payment.
+        </p>
+        <p className="text-slate-500 mb-8">
+          Your items are reserved — click below to complete checkout securely via Stripe.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button
+            onClick={handleResumeOrder}
+            disabled={isResuming}
+            className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold text-lg px-8 py-6 rounded-xl"
+          >
+            {isResuming ? (
+              <><Loader className="w-5 h-5 mr-2 animate-spin" /> Redirecting to Payment...</>
+            ) : (
+              <>Complete Payment →</>
+            )}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setResumeOrder(null)}
+            className="text-slate-600 px-8 py-6 rounded-xl"
+          >
+            Start a New Order Instead
+          </Button>
+        </div>
+
+        <p className="text-sm text-slate-400 mt-8">
+          Prefer to pay by e-Transfer? <a href="tel:+16474281111" className="text-amber-600 font-semibold hover:underline">Call (647) 428-1111</a>
+        </p>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

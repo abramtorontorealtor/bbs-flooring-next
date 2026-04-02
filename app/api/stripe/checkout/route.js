@@ -31,6 +31,7 @@ export async function POST(request) {
         capture_method: 'manual', // Authorize only — capture after stock verification
       },
       customer_email: customerEmail,
+      expires_at: Math.floor(Date.now() / 1000) + 1800, // 30 minutes — triggers checkout.session.expired webhook
       line_items: [{
         price_data: {
           currency: 'cad',
@@ -42,7 +43,7 @@ export async function POST(request) {
         quantity: 1,
       }],
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca'}/checkout?payment_success=true&order_number=${encodeURIComponent(orderNumber)}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca'}/checkout`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca'}/checkout?resume_order=${encodeURIComponent(orderNumber)}`,
       metadata: {
         order_id: orderId,
         order_number: orderNumber,

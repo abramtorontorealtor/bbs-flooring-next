@@ -30,6 +30,11 @@ export async function POST(request) {
     const processingFee = paymentMethod === 'credit_card' ? (subtotal + tax + deliveryFee) * 0.029 : 0;
     const total = subtotal + tax + deliveryFee + processingFee;
 
+    // Credit card orders start as 'awaiting_payment' — emails fire ONLY after
+    // Stripe webhook confirms authorization (checkout.session.completed).
+    // E-transfer/quote orders get emails immediately (no Stripe involvement).
+    const isCreditCard = paymentMethod === 'credit_card';
+
     const { data: order, error } = await supabase
       .from('orders')
       .insert({
@@ -50,8 +55,8 @@ export async function POST(request) {
         processing_fee: processingFee,
         total,
         payment_method: paymentMethod,
-        payment_status: paymentMethod === 'credit_card' ? 'pending_capture' : 'pending',
-        status: isCustomZone ? 'quote_requested' : 'pending_payment',
+        payment_status: isCreditCard ? 'awaiting_payment' : 'pending',
+        status: isCustomZone ? 'quote_requested' : (isCreditCard ? 'awaiting_payment' : 'pending_payment'),
         terms_accepted_at: termsAcceptedAt,
       })
       .select()
@@ -59,15 +64,18 @@ export async function POST(request) {
 
     if (error) throw error;
 
-    // Send order emails — MUST await on Vercel (fire-and-forget dies mid-flight)
-    const emailOrder = { ...order, order_number: orderNumber };
-    try {
-      await Promise.all([
-        sendOrderCustomerConfirmation({ order: emailOrder }),
-        sendOrderAdminNotification({ order: emailOrder }),
-      ]);
-    } catch (err) {
-      console.warn('[Order] Email send error (non-fatal):', err);
+    // Only send emails for non-credit-card orders.
+    // CC orders: emails sent by Stripe webhook after successful authorization.
+    if (!isCreditCard) {
+      const emailOrder = { ...order, order_number: orderNumber };
+      try {
+        await Promise.all([
+          sendOrderCustomerConfirmation({ order: emailOrder }),
+          sendOrderAdminNotification({ order: emailOrder }),
+        ]);
+      } catch (err) {
+        console.warn('[Order] Email send error (non-fatal):', err);
+      }
     }
 
     return NextResponse.json({

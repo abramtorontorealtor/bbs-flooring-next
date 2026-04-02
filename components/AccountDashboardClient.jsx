@@ -360,7 +360,10 @@ export default function AccountDashboardClient() {
             <div className="space-y-3">
               {orders.map(order => {
                 const statusConfig = {
+                  awaiting_payment: { label: 'Awaiting Payment', color: 'bg-orange-100 text-orange-800', icon: Clock, step: 0 },
+                  abandoned: { label: 'Payment Incomplete', color: 'bg-slate-100 text-slate-600', icon: Clock, step: 0 },
                   pending_payment: { label: 'Awaiting Payment', color: 'bg-yellow-100 text-yellow-800', icon: Clock, step: 1 },
+                  pending: { label: 'Order Received', color: 'bg-amber-100 text-amber-800', icon: CheckCircle2, step: 1 },
                   confirmed: { label: 'Confirmed', color: 'bg-blue-100 text-blue-800', icon: CheckCircle2, step: 2 },
                   paid: { label: 'Paid', color: 'bg-green-100 text-green-800', icon: CreditCard, step: 2 },
                   processing: { label: 'Preparing', color: 'bg-purple-100 text-purple-800', icon: Package, step: 3 },
@@ -368,6 +371,7 @@ export default function AccountDashboardClient() {
                   delivered: { label: order.delivery_preference === 'pickup' ? 'Picked Up' : 'Delivered', color: 'bg-emerald-100 text-emerald-800', icon: MapPin, step: 5 },
                   cancelled: { label: 'Cancelled', color: 'bg-red-100 text-red-800', icon: Ban, step: 0 },
                   quote_requested: { label: 'Quote Requested', color: 'bg-sky-100 text-sky-800', icon: Clock, step: 1 },
+                  refunded: { label: 'Refunded', color: 'bg-rose-100 text-rose-800', icon: Ban, step: 0 },
                 };
                 const sc = statusConfig[order.status] || statusConfig.pending_payment;
                 const StatusIcon = sc.icon;
@@ -447,6 +451,18 @@ export default function AccountDashboardClient() {
                         {isCancelled && (
                           <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
                             This order was cancelled. If you have questions, please contact us.
+                          </div>
+                        )}
+
+                        {(order.status === 'awaiting_payment' || order.status === 'abandoned') && order.payment_method === 'credit_card' && (
+                          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                            <p className="text-sm text-amber-800 mb-2">Your payment wasn't completed. Click below to finish checking out.</p>
+                            <a
+                              href={`/checkout?resume_order=${encodeURIComponent(order.order_number)}`}
+                              className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold text-sm px-4 py-2 rounded-lg transition-colors"
+                            >
+                              Complete Payment →
+                            </a>
                           </div>
                         )}
 
