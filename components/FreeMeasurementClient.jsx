@@ -4,8 +4,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import BookingCalendar from '@/components/BookingCalendar';
 import { CheckCircle, Clock, Users, FileText, Phone, Star, ArrowRight, Calendar as CalendarIcon, Loader2, MapPin } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
@@ -323,57 +322,48 @@ export default function FreeMeasurementClient() {
                     <Clock className="w-4 h-4 flex-shrink-0" />
                     <span><strong>Next Available:</strong> {nextAvailableDate}</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <Label className="font-semibold">Preferred Date</Label>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button variant="outline" className="w-full justify-start text-left font-normal mt-1">
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {formData.preferred_date ? (() => { const [y, m, d] = formData.preferred_date.split('-').map(Number); return formatDate(new Date(y, m - 1, d), 'MMM d, yyyy'); })() : 'Select date...'}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={formData.preferred_date ? (() => { const [y, m, d] = formData.preferred_date.split('-').map(Number); return new Date(y, m - 1, d); })() : undefined}
-                            onSelect={(date) => {
-                              if (!date) return;
-                              setError('');
-                              const y = date.getFullYear();
-                              const m = String(date.getMonth() + 1).padStart(2, '0');
-                              const d = String(date.getDate()).padStart(2, '0');
-                              setFormData({ ...formData, preferred_date: `${y}-${m}-${d}`, preferred_time: '' });
-                            }}
-                            disabled={(date) => {
-                              const now = new Date();
-                              const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                              const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-                              const maxDate = new Date(todayStart.getTime() + 60 * 24 * 60 * 60 * 1000);
-                              // Past dates
-                              if (date < todayStart) return true;
-                              // Sundays — no availability
-                              if (date.getDay() === 0) return true;
-                              // Too far out (60 days)
-                              if (date > maxDate) return true;
-                              // Within 24 hours — check if latest slot (5 PM) is still >= 24h away
-                              const lastSlotOnDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
-                              if (lastSlotOnDate < minDateTime) return true;
-                              return false;
-                            }}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                    <div>
-                      <Label className="font-semibold">Preferred Time</Label>
-                      <select value={formData.preferred_time} onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
-                        className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm mt-1" disabled={!formData.preferred_date}>
-                        <option value="">{!formData.preferred_date ? 'Pick date first' : 'Select time...'}</option>
-                        {availableTimeSlots.map(t => <option key={t} value={t}>{t}</option>)}
-                      </select>
-                    </div>
+                  <div>
+                    <Label className="font-semibold mb-2 block">Preferred Date & Time</Label>
+                    <BookingCalendar
+                      selected={formData.preferred_date}
+                      onSelect={(dateStr) => {
+                        setError('');
+                        setFormData({ ...formData, preferred_date: dateStr, preferred_time: '' });
+                      }}
+                      isDateDisabled={(date) => {
+                        const now = new Date();
+                        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                        const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+                        const maxDate = new Date(todayStart.getTime() + 60 * 24 * 60 * 60 * 1000);
+                        if (date < todayStart) return true;
+                        if (date.getDay() === 0) return true;
+                        if (date > maxDate) return true;
+                        const lastSlotOnDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
+                        if (lastSlotOnDate < minDateTime) return true;
+                        return false;
+                      }}
+                    />
+                    {formData.preferred_date && (
+                      <div className="mt-3">
+                        <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5 block">Select a Time</Label>
+                        <div className="grid grid-cols-4 gap-1.5">
+                          {availableTimeSlots.map(t => (
+                            <button
+                              key={t}
+                              type="button"
+                              onClick={() => setFormData({ ...formData, preferred_time: t })}
+                              className={`py-2 px-1 rounded-lg text-xs font-medium transition-all ${
+                                formData.preferred_time === t
+                                  ? 'bg-amber-500 text-white shadow-md shadow-amber-200'
+                                  : 'bg-slate-50 text-slate-600 hover:bg-amber-50 hover:text-amber-700 border border-slate-200'
+                              }`}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <p className="text-xs text-red-600 font-medium text-center">⚡ Limited spots available this week.</p>
                   <Button type="submit" disabled={isSubmitting || !formData.customer_name || !formData.customer_phone || !formData.customer_email || !formData.customer_address}
