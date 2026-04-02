@@ -27,7 +27,7 @@ export default function StickyMobileCTA() {
     }
 
     const onScroll = () => {
-      setVisible(window.scrollY > 300);
+      setVisible(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });

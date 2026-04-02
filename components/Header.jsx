@@ -257,25 +257,7 @@ export default function Header({ cartCount = 0 }) {
         </div>
       )}
 
-      {/* Sticky Mobile Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-white border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] px-4 py-2.5 flex gap-3">
-        <a
-          href="tel:+16474281111"
-          className="flex-1 flex items-center justify-center gap-2 bg-slate-800 text-white font-semibold py-3 rounded-xl text-sm transition-colors"
-          onClick={() => Analytics.trackPhoneClick('sticky_mobile')}
-        >
-          <Phone className="w-4 h-4" />
-          Call Now
-        </a>
-        <Link
-          href="/free-measurement"
-          className="flex-1 flex items-center justify-center gap-2 bg-amber-500 text-white font-semibold py-3 rounded-xl text-sm transition-colors"
-          onClick={() => Analytics.trackEvent('cta_click', 'lead', 'free_measurement_sticky_mobile')}
-        >
-          <Ruler className="w-4 h-4" />
-          Free Measure
-        </Link>
-      </div>
+      {/* Sticky Mobile Bottom Bar — handled by StickyMobileCTA component */}
     </header>
   );
 }

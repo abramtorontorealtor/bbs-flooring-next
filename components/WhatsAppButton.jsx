@@ -7,7 +7,6 @@ const HIDDEN_PATHS = ['/cart', '/checkout', '/view-booking', '/quote-booking'];
 
 export default function WhatsAppButton() {
   const [visible, setVisible] = useState(false);
-  const [stickyMobileCTAVisible, setStickyMobileCTAVisible] = useState(false);
   const pathname = usePathname();
 
   const isHiddenPage = HIDDEN_PATHS.some((p) => pathname.startsWith(p));
@@ -20,15 +19,6 @@ export default function WhatsAppButton() {
     const timer = setTimeout(() => setVisible(true), 500);
     return () => clearTimeout(timer);
   }, [isHiddenPage, pathname]);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setStickyMobileCTAVisible(window.scrollY > 300);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   if (!visible || isHiddenPage) return null;
 
@@ -53,12 +43,11 @@ export default function WhatsAppButton() {
       onClick={handleClick}
       aria-label="Chat on WhatsApp"
       className={`
-        fixed z-40 rounded-full shadow-lg
+        fixed z-50 rounded-full shadow-lg
         bg-[#25D366] hover:bg-[#20BD5A] active:scale-95
         transition-all duration-200
-        right-4 bottom-20
-        lg:right-6 lg:bottom-6
-        ${stickyMobileCTAVisible ? 'max-lg:bottom-[76px]' : 'max-lg:bottom-5'}
+        hidden lg:flex
+        right-6 bottom-6
       `}
       style={{ width: 56, height: 56 }}
     >

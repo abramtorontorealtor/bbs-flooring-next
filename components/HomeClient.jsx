@@ -140,7 +140,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative" style={{ height: '85vh', minHeight: '600px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+      <section className="relative" style={{ height: '100svh', minHeight: '600px', maxHeight: '900px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
         <div className="absolute inset-0">
           <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
@@ -153,7 +153,7 @@ export default function Home() {
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,23,42,0.9), rgba(15,23,42,0.7), transparent)' }} />
         </div>
-        <div className="relative max-w-5xl mx-auto px-4 w-full">
+        <div className="relative max-w-5xl mx-auto px-4 w-full pt-28 md:pt-24 pb-16">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
@@ -172,15 +172,12 @@ export default function Home() {
                   Get Free In-Home Quote <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-              <Link href={createPageUrl('QuoteCalculator')}>
-                <Button size="lg" className="bg-white text-amber-600 hover:bg-slate-100 px-8 py-6 text-base rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all">
-                  Estimate Your Cost
+              <Link href={createPageUrl('Products')}>
+                <Button size="lg" variant="outline" className="border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-8 py-6 text-base rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all">
+                  Browse All Flooring <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
             </div>
-            <Link href={createPageUrl('Products')} className="inline-flex items-center gap-1 text-slate-300 hover:text-amber-400 text-sm mt-5 transition-colors">
-              Or browse all flooring <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
       </section>
