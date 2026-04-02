@@ -23,6 +23,8 @@ export default function AdminOrdersClient() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
   const [pickupAddress, setPickupAddress] = useState('');
+  const [scheduleDate, setScheduleDate] = useState('');
+  const [scheduleNote, setScheduleNote] = useState('');
 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ['admin-orders'],
@@ -100,6 +102,23 @@ export default function AdminOrdersClient() {
       toast.success('Pickup address saved — visible to customer');
     },
     onError: (e) => toast.error('Failed: ' + e.message),
+  });
+
+  const scheduleDateMutation = useMutation({
+    mutationFn: async ({ orderId, scheduledDate, scheduledNote }) => {
+      const res = await fetch('/api/orders/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, scheduledDate, scheduledNote }),
+      });
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Failed');
+      return res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['admin-orders']);
+      toast.success(data.emailSent ? 'Date scheduled — customer notified via email!' : 'Date saved (email failed — follow up manually)');
+    },
+    onError: (e) => toast.error('Schedule failed: ' + e.message),
   });
 
   const cancelOrderMutation = useMutation({
@@ -203,6 +222,8 @@ export default function AdminOrdersClient() {
   const openOrder = (order) => {
     setSelectedOrder(order);
     setPickupAddress(order.pickup_address || '');
+    setScheduleDate(order.scheduled_date || '');
+    setScheduleNote(order.scheduled_note || '');
   };
 
   // Determine what actions are available for the current order
@@ -458,6 +479,60 @@ export default function AdminOrdersClient() {
                     </div>
                     {selectedOrder.pickup_address && <p className="text-xs text-green-600 mt-2">✅ Visible to customer on their order page</p>}
                     {!selectedOrder.pickup_address && <p className="text-xs text-amber-600 mt-2">Customer sees "Pickup location will be confirmed after payment"</p>}
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* ─── Schedule Delivery/Pickup Date ─── */}
+              {selectedOrder.status !== 'cancelled' && selectedOrder.status !== 'refunded' && selectedOrder.status !== 'delivered' && (
+                <Card className="border-blue-200 bg-blue-50/30">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Truck className="w-5 h-5 text-blue-600" />
+                      {selectedOrder.delivery_preference === 'pickup' ? 'Schedule Pickup Date' : 'Schedule Delivery Date'}
+                      {selectedOrder.scheduled_date && <Badge className="bg-green-200 text-green-800 border-0 text-xs ml-2">SCHEDULED</Badge>}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {selectedOrder.scheduled_date && (
+                      <p className="text-sm text-green-700 mb-3">
+                        ✅ Currently scheduled: <strong>{format(new Date(selectedOrder.scheduled_date + 'T12:00:00'), 'EEEE, MMMM d, yyyy')}</strong>
+                        {selectedOrder.scheduled_note && <span className="text-slate-500"> — {selectedOrder.scheduled_note}</span>}
+                      </p>
+                    )}
+                    <div className="flex gap-2 items-end">
+                      <div className="flex-1">
+                        <Label className="text-xs text-slate-500 mb-1">Date</Label>
+                        <Input
+                          type="date"
+                          value={scheduleDate}
+                          onChange={(e) => setScheduleDate(e.target.value)}
+                          min={new Date().toISOString().split('T')[0]}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <Label className="text-xs text-slate-500 mb-1">Note (optional)</Label>
+                        <Input
+                          value={scheduleNote}
+                          onChange={(e) => setScheduleNote(e.target.value)}
+                          placeholder="e.g. Between 9am-12pm"
+                        />
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => {
+                          if (!scheduleDate) { toast.error('Pick a date'); return; }
+                          if (confirm(`Schedule ${selectedOrder.delivery_preference === 'pickup' ? 'pickup' : 'delivery'} for ${scheduleDate}? Customer will be emailed.`)) {
+                            scheduleDateMutation.mutate({ orderId: selectedOrder.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
+                          }
+                        }}
+                        disabled={scheduleDateMutation.isPending || !scheduleDate}
+                        className="bg-blue-600 hover:bg-blue-700"
+                      >
+                        <Mail className="w-4 h-4 mr-1" />
+                        {scheduleDateMutation.isPending ? 'Sending...' : 'Send'}
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               )}

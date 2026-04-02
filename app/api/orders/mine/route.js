@@ -39,7 +39,7 @@ export async function GET() {
 
     const { data: orders, error } = await admin
       .from('orders')
-      .select('id, order_number, status, payment_status, payment_method, items, subtotal, tax, delivery_fee, processing_fee, total, delivery_preference, shipping_city, pickup_address, created_at, updated_at')
+      .select('id, order_number, status, payment_status, payment_method, items, subtotal, tax, delivery_fee, processing_fee, total, delivery_preference, shipping_city, pickup_address, scheduled_date, scheduled_note, created_at, updated_at')
       .eq('customer_email', email)
       .order('created_at', { ascending: false })
       .limit(50);

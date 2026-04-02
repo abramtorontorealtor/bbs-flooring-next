@@ -2,11 +2,24 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib/email';
 
-function generateOrderNumber() {
-  const prefix = 'BBS';
-  const timestamp = Date.now().toString(36).toUpperCase();
-  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
-  return `${prefix}-${timestamp}-${random}`;
+async function generateOrderNumber(supabase) {
+  // Sequential: BBS-10001, BBS-10002, etc. via Postgres sequence
+  const { data, error } = await supabase.rpc('next_order_number');
+  if (!error && data) return data;
+  
+  // Fallback: find highest existing and increment
+  const { data: latest } = await supabase
+    .from('orders')
+    .select('order_number')
+    .like('order_number', 'BBS-%')
+    .order('created_at', { ascending: false })
+    .limit(1);
+  
+  if (latest?.[0]?.order_number) {
+    const match = latest[0].order_number.match(/BBS-(\d+)/);
+    if (match) return `BBS-${parseInt(match[1]) + 1}`;
+  }
+  return `BBS-10001`;
 }
 
 export async function POST(request) {
@@ -21,7 +34,7 @@ export async function POST(request) {
     }
 
     const supabase = getSupabaseAdminClient();
-    const orderNumber = generateOrderNumber();
+    const orderNumber = await generateOrderNumber(supabase);
 
     // Calculate total
     const subtotal = orderData.subtotal || 0;

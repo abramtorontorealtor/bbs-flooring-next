@@ -43,6 +43,7 @@ export default function CheckoutClient() {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [resumeOrder, setResumeOrder] = useState(null);
   const [isResuming, setIsResuming] = useState(false);
+  const [confirmedDeliveryPref, setConfirmedDeliveryPref] = useState(null);
 
   const isCustomZone = formData.shipping_postal_code && !['M', 'L'].includes(formData.shipping_postal_code.toUpperCase()[0]);
 
@@ -113,9 +114,20 @@ export default function CheckoutClient() {
     const resumeOrderNum = searchParams.get('resume_order');
     
     if (paymentSuccess === 'true' && orderNum) {
+      const decodedOrderNum = decodeURIComponent(orderNum);
       setIsStripeSuccess(true);
       setOrderComplete(true);
-      setOrderNumber(decodeURIComponent(orderNum));
+      setOrderNumber(decodedOrderNum);
+      
+      // Fetch order details to get delivery_preference
+      fetch(`/api/orders/lookup?order_number=${encodeURIComponent(decodedOrderNum)}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.order?.delivery_preference) {
+            setConfirmedDeliveryPref(data.order.delivery_preference);
+          }
+        })
+        .catch(() => {}); // Non-critical — falls back to formData
       
       // Clear cart
       const sid = localStorage.getItem('bbs_session_id');
@@ -404,6 +416,10 @@ export default function CheckoutClient() {
     );
   }
 
+  // Use confirmed delivery preference from DB (Stripe return) or form state
+  const effectiveDeliveryPref = confirmedDeliveryPref || formData.delivery_preference;
+  const isPickupOrder = effectiveDeliveryPref === 'pickup';
+
   if (orderComplete) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
@@ -456,7 +472,7 @@ export default function CheckoutClient() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0 text-xs font-bold">4</span>
-                      <span>{formData.delivery_preference === 'pickup' ? "We'll contact you shortly with the Warehouse Pickup Address and Pickup #." : "We'll contact you to arrange delivery."}</span>
+                      <span>{isPickupOrder ? "We'll email you the Warehouse Pickup Address and your Pickup #." : "We'll contact you to schedule your delivery date."}</span>
                     </li>
                   </>
                 ) : (
@@ -501,7 +517,7 @@ export default function CheckoutClient() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0 text-xs font-bold">4</span>
-                      <span><strong>We&apos;ll confirm receipt</strong> and {formData.delivery_preference === 'pickup' ? "send you the Warehouse Pickup Address and Pickup #." : "arrange your delivery."}</span>
+                      <span><strong>We&apos;ll confirm receipt</strong> and {isPickupOrder ? "email you the Warehouse Pickup Address and Pickup #." : "contact you to schedule your delivery date."}</span>
                     </li>
                   </>
                 )}
@@ -829,7 +845,7 @@ export default function CheckoutClient() {
                       </li>
                       <li className="flex items-start gap-2.5 break-words w-full">
                         <span className="w-5 h-5 rounded-full bg-amber-200 text-amber-800 flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5">3</span>
-                        <span>Include your Order ID in the memo — we&apos;ll confirm receipt and arrange {formData.delivery_preference === 'pickup' ? 'pickup' : 'delivery'}</span>
+                        <span>Include your Order ID in the memo — we&apos;ll confirm receipt and arrange {isPickupOrder ? 'pickup' : 'delivery'}</span>
                       </li>
                     </ol>
                     <div className="mt-3 pt-3 border-t border-amber-200 text-xs text-amber-700">
