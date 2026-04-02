@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import BookingCalendar from '@/components/BookingCalendar';
 import { MapPin, Calendar as CalendarIcon, Clock, Phone, Mail, AlertCircle, CheckCircle, Search, Loader2, ArrowLeft, X } from 'lucide-react';
 
 const STATUS_CONFIG = {
@@ -349,54 +348,46 @@ export default function ViewBookingClient() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+              <BookingCalendar
+                selected={rescheduleDate}
+                onSelect={(dateStr) => {
+                  setRescheduleDate(dateStr);
+                  setRescheduleTime('');
+                }}
+                isDateDisabled={(date) => {
+                  const now = new Date();
+                  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                  const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+                  const maxDate = new Date(todayStart.getTime() + 60 * 24 * 60 * 60 * 1000);
+                  if (date < todayStart) return true;
+                  if (date.getDay() === 0) return true;
+                  if (date > maxDate) return true;
+                  const lastSlotOnDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
+                  if (lastSlotOnDate < minDateTime) return true;
+                  return false;
+                }}
+              />
+              {rescheduleDate && (
                 <div>
-                  <Label className="font-semibold">New Date</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline" className="w-full justify-start text-left font-normal mt-1">
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {rescheduleDate ? formatDate(rescheduleDate) : 'Select date...'}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={rescheduleDate ? (() => { const [y, m, d] = rescheduleDate.split('-').map(Number); return new Date(y, m - 1, d); })() : undefined}
-                        onSelect={(date) => {
-                          if (!date) return;
-                          const y = date.getFullYear();
-                          const m = String(date.getMonth() + 1).padStart(2, '0');
-                          const d = String(date.getDate()).padStart(2, '0');
-                          setRescheduleDate(`${y}-${m}-${d}`);
-                          setRescheduleTime('');
-                        }}
-                        disabled={(date) => {
-                          const now = new Date();
-                          const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                          const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-                          const maxDate = new Date(todayStart.getTime() + 60 * 24 * 60 * 60 * 1000);
-                          if (date < todayStart) return true;
-                          if (date.getDay() === 0) return true;
-                          if (date > maxDate) return true;
-                          const lastSlotOnDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
-                          if (lastSlotOnDate < minDateTime) return true;
-                          return false;
-                        }}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5 block">Select a Time</Label>
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {availableTimeSlots.map(t => (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => setRescheduleTime(t)}
+                        className={`py-2 px-1 rounded-lg text-xs font-medium transition-all ${
+                          rescheduleTime === t
+                            ? 'bg-amber-500 text-white shadow-md shadow-amber-200'
+                            : 'bg-slate-50 text-slate-600 hover:bg-amber-50 hover:text-amber-700 border border-slate-200'
+                        }`}
+                      >
+                        {t}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <Label className="font-semibold">New Time</Label>
-                  <select value={rescheduleTime} onChange={(e) => setRescheduleTime(e.target.value)}
-                    className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm mt-1" disabled={!rescheduleDate}>
-                    <option value="">{!rescheduleDate ? 'Pick date first' : 'Select time...'}</option>
-                    {availableTimeSlots.map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                </div>
-              </div>
+              )}
               <div className="flex gap-3">
                 <Button onClick={handleReschedule} disabled={!rescheduleDate || actionLoading}
                   className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-semibold">
