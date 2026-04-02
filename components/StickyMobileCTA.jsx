@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Phone, MessageCircle, FileText } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -15,27 +15,11 @@ const HIDDEN_PATHS = [
 ];
 
 export default function StickyMobileCTA() {
-  const [visible, setVisible] = useState(false);
   const pathname = usePathname();
 
   const isHiddenPage = HIDDEN_PATHS.some((p) => pathname.startsWith(p));
 
-  useEffect(() => {
-    if (isHiddenPage) {
-      setVisible(false);
-      return;
-    }
-
-    const onScroll = () => {
-      setVisible(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [isHiddenPage, pathname]);
-
-  if (!visible || isHiddenPage) return null;
+  if (isHiddenPage) return null;
 
   const handleWhatsAppClick = () => {
     if (typeof window.gtag === 'function') {
