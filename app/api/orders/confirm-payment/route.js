@@ -40,10 +40,16 @@ export async function POST(request) {
 
     if (updateError) throw updateError;
 
-    // Send confirmation email to customer
-    await sendOrderPaymentConfirmed({ order: { ...order, status: 'confirmed', payment_status: 'paid' } });
+    // Send confirmation email to customer — don't let email failure tank the response
+    let emailSent = false;
+    try {
+      await sendOrderPaymentConfirmed({ order: { ...order, status: 'confirmed', payment_status: 'paid' } });
+      emailSent = true;
+    } catch (emailErr) {
+      console.error('[ConfirmPayment] Email send failed (order still confirmed):', emailErr);
+    }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, emailSent });
   } catch (error) {
     console.error('Confirm payment error:', error);
     return NextResponse.json(
