@@ -198,8 +198,13 @@ export default function AdminCRMClient() {
     },
     onSuccess: (data, { action }) => {
       refreshAll();
-      const msgs = { confirm: '✅ Booking confirmed & email sent', reschedule: '📅 Rescheduled & email sent', cancel: '❌ Cancelled & email sent' };
-      toast.success(msgs[action] || 'Done');
+      const actionLabels = { confirm: 'Booking confirmed', reschedule: 'Rescheduled', cancel: 'Cancelled' };
+      const label = actionLabels[action] || 'Done';
+      if (data.emailSent) {
+        toast.success(`✅ ${label} — customer emailed`);
+      } else {
+        toast.warning(`⚠️ ${label} — but email failed to send. Call the customer.`);
+      }
       setSelectedLead(null);
       setBookingRescheduleDate('');
       setBookingRescheduleTime('');

@@ -48,7 +48,9 @@ export async function POST(request) {
           .single();
         if (error) throw error;
         updatedBooking = data;
+        console.log('[Booking Confirm] Sending email to:', updatedBooking.customer_email);
         emailResult = await sendBookingCustomerConfirmation({ booking: updatedBooking });
+        console.log('[Booking Confirm] Email result:', JSON.stringify(emailResult));
         break;
       }
 
