@@ -53,16 +53,24 @@ export async function POST(request) {
         break;
       }
 
-      // Find and update the order with the payment intent ID
+      // ── Extract billing address from Stripe for fraud detection ──
+      const billing = session.customer_details?.address || {};
+      const billingUpdate = {
+        stripe_payment_intent_id: paymentIntentId,
+        stripe_session_id: session.id,
+        payment_status: 'authorized', // manual capture — authorized but not yet captured
+        status: 'pending', // awaiting stock verification + capture
+        billing_address: [billing.line1, billing.line2].filter(Boolean).join(', ') || null,
+        billing_city: billing.city || null,
+        billing_postal_code: billing.postal_code || null,
+        billing_country: billing.country || null,
+      };
+
+      // Find and update the order
       const filter = orderId ? { id: orderId } : { order_number: orderNumber };
       const { data: updatedOrder, error } = await supabase
         .from('orders')
-        .update({
-          stripe_payment_intent_id: paymentIntentId,
-          stripe_session_id: session.id,
-          payment_status: 'authorized', // manual capture — authorized but not yet captured
-          status: 'pending', // awaiting stock verification + capture
-        })
+        .update(billingUpdate)
         .match(filter)
         .select()
         .single();
@@ -72,9 +80,29 @@ export async function POST(request) {
       } else {
         console.log(`[Stripe Webhook] Order ${orderNumber || orderId} updated with payment_intent ${paymentIntentId}`);
 
+        // ── Fraud: Check billing vs shipping address mismatch ──
+        let fraudFlag = false;
+        if (updatedOrder.shipping_postal_code && billingUpdate.billing_postal_code) {
+          const shipPC = (updatedOrder.shipping_postal_code || '').toUpperCase().replace(/\s/g, '');
+          const billPC = (billingUpdate.billing_postal_code || '').toUpperCase().replace(/\s/g, '');
+          // Flag if postal codes don't share the same FSA (first 3 chars) OR billing is outside Canada
+          const postalMismatch = shipPC.substring(0, 3) !== billPC.substring(0, 3);
+          const foreignCard = billingUpdate.billing_country && billingUpdate.billing_country !== 'CA';
+          
+          if (postalMismatch || foreignCard) {
+            fraudFlag = true;
+            await supabase.from('orders').update({ fraud_flag: true }).match(filter);
+            console.warn(`[Stripe Webhook] ⚠️ FRAUD FLAG on ${orderNumber}: billing ${billPC} (${billingUpdate.billing_country}) vs shipping ${shipPC}`);
+          }
+        }
+
         // NOW send confirmation emails — payment is actually authorized
         try {
-          const emailOrder = { ...updatedOrder, order_number: updatedOrder.order_number || orderNumber };
+          const emailOrder = { 
+            ...updatedOrder, 
+            order_number: updatedOrder.order_number || orderNumber,
+            fraud_flag: fraudFlag,
+          };
           await Promise.all([
             sendOrderCustomerConfirmation({ order: emailOrder }),
             sendOrderAdminNotification({ order: emailOrder }),

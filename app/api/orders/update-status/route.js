@@ -46,6 +46,11 @@ export async function POST(request) {
       updates.payment_status = order.payment_status === 'authorized' ? 'cancelled' : order.payment_status;
     }
 
+    // Record delivery timestamp for review follow-up scheduling
+    if (newStatus === 'delivered') {
+      updates.delivered_at = new Date().toISOString();
+    }
+
     const { error: updateError } = await supabase
       .from('orders')
       .update(updates)

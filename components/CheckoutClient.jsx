@@ -330,6 +330,9 @@ export default function CheckoutClient() {
               orderId: order.id,
               amount: order.total,
               customerEmail: formData.customer_email,
+              customerName: formData.customer_name,
+              shippingCity: formData.shipping_city,
+              shippingPostalCode: formData.shipping_postal_code,
               orderNumber: createdOrderNumber
             }),
           });
