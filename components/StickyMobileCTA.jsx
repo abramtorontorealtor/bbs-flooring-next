@@ -57,11 +57,11 @@ export default function StickyMobileCTA() {
         </a>
 
         <Link
-          href="/free-measurement"
+          href="/quote-calculator"
           className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-amber-500 text-white active:bg-amber-600 transition-colors"
         >
           <FileText className="w-4 h-4" />
-          <span className="text-sm font-bold">Free Quote</span>
+          <span className="text-sm font-bold">Instant Quote</span>
         </Link>
       </div>
     </div>
