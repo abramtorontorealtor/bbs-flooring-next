@@ -203,10 +203,9 @@ export default function ClearanceClient() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const data = await entities.Product.filter(
-          {},
-          { limit: 1000, order: '-created_date' }
-        );
+        const res = await fetch('/api/products/grid?clearance=true');
+        if (!res.ok) throw new Error(`Grid API ${res.status}`);
+        const data = await res.json();
         setAllProducts(data || []);
       } catch (err) {
         console.error('Error loading products:', err);

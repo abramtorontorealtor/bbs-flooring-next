@@ -19,7 +19,7 @@ const WIDTH_BUCKETS = [
 ];
 
 const getProductWidth = (product) => {
-  const text = (product.name || '') + ' ' + (product.dimensions || '') + ' ' + (product.product_description || '');
+  const text = (product.name || '') + ' ' + (product.dimensions || '');
   const match = text.match(/(\d+)\s+(\d+)\/(\d+)\s*["']?|(\d+(?:\.\d+)?)\s*["']?\s*(?:inch|in\b|wide\b)/i);
   let width = null;
   if (match) {
@@ -162,11 +162,14 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
   const { data: allProducts = [], isLoading } = useQuery({
     queryKey: [queryKey],
     queryFn: async () => {
-      // When `category` prop is provided, filter server-side (Supabase) — much faster
-      const filters = category ? { category } : {};
-      const results = await entities.Product.filter(filters, { limit: 1000, order: '-created_date' });
-      if (!results || results.length === 0) throw new Error('EMPTY_CATALOG');
-      return results;
+      // Lean grid API — card-level fields only (~50% smaller payload)
+      const params = new URLSearchParams();
+      if (category) params.set('category', category);
+      const res = await fetch(`/api/products/grid?${params}`);
+      if (!res.ok) throw new Error(`Products grid API ${res.status}`);
+      const data = await res.json();
+      if (!data || data.length === 0) throw new Error('EMPTY_CATALOG');
+      return data;
     },
     staleTime: 5 * 60 * 1000,
     retry: 4,
@@ -222,8 +225,8 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
         p.brand?.toLowerCase().includes(s) ||
         p.species?.toLowerCase().includes(s) ||
         p.colour?.toLowerCase().includes(s) ||
-        p.product_description?.toLowerCase().includes(s) ||
-        p.finish?.toLowerCase().includes(s)
+        p.finish?.toLowerCase().includes(s) ||
+        p.subcategory?.toLowerCase().includes(s)
       );
     }
     if (filters.isOnSale) r = r.filter(p => p.is_on_sale);

@@ -77,9 +77,9 @@ async function buildClientCache() {
   if (cacheBuilding) return;
   cacheBuilding = true;
   try {
-    // Single fetch — compat layer supports limit up to 1000, covers all products
-    const batch = await Product.filter({}, { limit: 1000, order: 'name' });
-    const all = batch || [];
+    // Lean grid API — card-level fields only
+    const res = await fetch('/api/products/grid?limit=1000');
+    const all = res.ok ? await res.json() : [];
 
     productCache = all.filter(p => p.name && !p.is_archived_variant && !p.parent_product_id).map(p => {
       return {

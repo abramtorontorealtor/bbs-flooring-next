@@ -43,8 +43,10 @@ export default function Home() {
   const { data: featuredProducts = [] } = useQuery({
     queryKey: ['featuredProductsOptimized'],
     queryFn: async () => {
-      const newArrivals = await entities.Product.filter({}, { limit: 8, order: '-created_date' });
-      return newArrivals.filter(p => p.image_url);
+      const res = await fetch('/api/products/grid?limit=8');
+      if (!res.ok) return [];
+      const data = await res.json();
+      return data.filter(p => p.image_url).slice(0, 8);
     },
   });
 
@@ -52,10 +54,11 @@ export default function Home() {
   const { data: popularProducts = [] } = useQuery({
     queryKey: ['popularProductsHome'],
     queryFn: async () => {
-      const items = await entities.Product.filter({ in_stock: true }, { limit: 50, order: '-public_price' });
-      // Filter to ones with images, diverse categories
+      const res = await fetch('/api/products/grid?limit=50');
+      if (!res.ok) return [];
+      const items = await res.json();
       const withImages = items.filter(p => p.image_url && p.public_price > 0);
-      // Pick top 8 but try to diversify by category
+      withImages.sort((a, b) => (b.public_price || 0) - (a.public_price || 0));
       const seen = {};
       const result = [];
       for (const p of withImages) {
@@ -72,7 +75,9 @@ export default function Home() {
   const { data: saleProducts = [] } = useQuery({
     queryKey: ['saleProductsHome'],
     queryFn: async () => {
-      const items = await entities.Product.filter({ is_on_sale: true }, { limit: 16 });
+      const res = await fetch('/api/products/grid?sale=true&limit=16');
+      if (!res.ok) return [];
+      const items = await res.json();
       return items.filter(p => p.image_url).slice(0, 8);
     },
   });
@@ -80,7 +85,9 @@ export default function Home() {
   const { data: clearanceProducts = [] } = useQuery({
     queryKey: ['clearanceProductsHome'],
     queryFn: async () => {
-      const items = await entities.Product.filter({ is_clearance: true }, { limit: 4, order: '-created_date' });
+      const res = await fetch('/api/products/grid?clearance=true&limit=4');
+      if (!res.ok) return [];
+      const items = await res.json();
       return items.filter(p => p.image_url);
     },
   });

@@ -450,7 +450,12 @@ export default function RoomVisualizerClient() {
 
   const { data: products = [] } = useQuery({
     queryKey: ['products-visualizer'],
-    queryFn: () => entities.Product.filter({ in_stock: true }, { limit: 100, order: '-created_date' }),
+    queryFn: async () => {
+      const res = await fetch('/api/products/grid?limit=100');
+      if (!res.ok) return [];
+      const data = await res.json();
+      return data.filter(p => p.in_stock !== false);
+    },
   });
 
   useEffect(() => {

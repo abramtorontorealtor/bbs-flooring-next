@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { entities } from '@/lib/base44-compat';
+// entities import removed — products now fetched via lean grid API
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { MapPin, Calculator, Phone } from 'lucide-react';
@@ -19,8 +19,12 @@ export default function LocationClient({ citySlug }) {
   }, [data.city]);
 
   const { data: products = [], isLoading } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => entities.Product.list({ limit: 500, order: '-created_date' }),
+    queryKey: ['products-grid-location'],
+    queryFn: async () => {
+      const res = await fetch('/api/products/grid?limit=500');
+      if (!res.ok) return [];
+      return res.json();
+    },
   });
 
   const trendingProducts = useMemo(() => {

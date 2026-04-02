@@ -141,15 +141,15 @@ export default function ProductsClient() {
     }
   }, [isSearchMode]);
 
-  // Always load full catalog (no backend search — use local filtering for search mode)
+  // Always load full catalog via lean grid API (card-level fields only — ~890KB vs 1.8MB)
   const { data: allProducts = [], isLoading } = useQuery({
-    queryKey: ['products-v2'],
+    queryKey: ['products-grid'],
     queryFn: async () => {
-      const results = await entities.Product.filter({}, { limit: 1000, order: '-created_date' });
-      if (!results || results.length === 0) {
-        throw new Error('EMPTY_CATALOG');
-      }
-      return results;
+      const res = await fetch('/api/products/grid');
+      if (!res.ok) throw new Error(`Products grid API ${res.status}`);
+      const data = await res.json();
+      if (!data || data.length === 0) throw new Error('EMPTY_CATALOG');
+      return data;
     },
     staleTime: 5 * 60 * 1000,
     retry: 4,
@@ -248,8 +248,8 @@ export default function ProductsClient() {
         p.brand?.toLowerCase().includes(searchLower) ||
         p.species?.toLowerCase().includes(searchLower) ||
         p.colour?.toLowerCase().includes(searchLower) ||
-        p.product_description?.toLowerCase().includes(searchLower) ||
-        p.finish?.toLowerCase().includes(searchLower)
+        p.finish?.toLowerCase().includes(searchLower) ||
+        p.subcategory?.toLowerCase().includes(searchLower)
       );
     }
 
