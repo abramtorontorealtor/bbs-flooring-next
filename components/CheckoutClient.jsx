@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Package, Truck, Store, CheckCircle, AlertCircle, Phone, Loader, Copy, Check, Clock, ShieldCheck, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Package, Truck, Store, CheckCircle, AlertCircle, Phone, Loader, Copy, Check, Clock, ShieldCheck, MessageSquare, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
 
@@ -530,13 +530,41 @@ export default function CheckoutClient() {
             </CardContent>
           </Card>
 
+          {/* Post-purchase installation upsell */}
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 mb-8 text-left">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <Wrench className="w-6 h-6 text-amber-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-slate-800 text-lg">Need professional installation?</h3>
+                <p className="text-sm text-slate-600 mt-1">
+                  We install everything we sell — materials, labour, and old floor removal, all in one quote. 
+                  Most jobs completed in 1-2 days.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                  <Link href="/free-measurement">
+                    <Button className="bg-amber-500 hover:bg-amber-600 text-white">
+                      Book Free In-Home Measurement
+                    </Button>
+                  </Link>
+                  <a href="tel:6474281111">
+                    <Button variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-100">
+                      <Phone className="mr-2 w-4 h-4" />
+                      Call: 647-428-1111
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:6474281111">
+            <Link href="/products">
               <Button variant="outline" size="lg">
-                <Phone className="mr-2 w-5 h-5" />
-                Call Us: 647-428-1111
+                Continue Shopping
               </Button>
-            </a>
+            </Link>
             <Link href="/">
               <Button size="lg" className="bg-amber-500 hover:bg-amber-600">
                 Return to Home

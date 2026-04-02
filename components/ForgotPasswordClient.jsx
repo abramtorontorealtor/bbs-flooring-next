@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { getSupabaseBrowserClient } from '@/lib/supabase';
 import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
 
 export default function ForgotPasswordClient() {
@@ -16,25 +15,24 @@ export default function ForgotPasswordClient() {
     setError('');
     setLoading(true);
 
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase) {
-      setError('Service temporarily unavailable.');
+    try {
+      const res = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      setSent(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
-
-    if (resetError) {
-      setError(resetError.message);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(false);
-    setSent(true);
   }
 
   return (
@@ -56,6 +54,9 @@ export default function ForgotPasswordClient() {
               <h2 className="text-xl font-bold text-slate-800 mb-2">Check Your Email</h2>
               <p className="text-slate-600 mb-6">
                 If an account exists for <strong>{email}</strong>, we&apos;ve sent password reset instructions.
+              </p>
+              <p className="text-sm text-slate-500 mb-6">
+                Don&apos;t see it? Check your spam folder. The link expires in 2 hours.
               </p>
               <Link href="/login"
                 className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold text-sm">

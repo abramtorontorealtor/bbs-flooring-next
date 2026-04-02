@@ -1,42 +1,44 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { getSupabaseBrowserClient } from '@/lib/supabase';
-import { Lock, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
+import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 
 export default function ResetPasswordClient() {
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [verifying, setVerifying] = useState(true);
+  const [tokenValid, setTokenValid] = useState(false);
+  const [tokenError, setTokenError] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [ready, setReady] = useState(false);
 
+  // Verify token on mount
   useEffect(() => {
-    // Supabase recovery flow: after clicking the reset link, Supabase
-    // exchanges the token in the URL hash and fires a PASSWORD_RECOVERY event.
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase) return;
+    if (!token) {
+      setVerifying(false);
+      setTokenError('No reset token found. Please request a new password reset link.');
+      return;
+    }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') {
-        setReady(true);
-      }
-    });
-
-    // Also check if already in a recovery session (page refresh after token exchange)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setReady(true);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+    fetch(`/api/auth/reset-password-confirm?token=${encodeURIComponent(token)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.valid) {
+          setTokenValid(true);
+        } else {
+          setTokenError(data.error || 'Invalid or expired reset link.');
+        }
+      })
+      .catch(() => setTokenError('Could not verify reset link.'))
+      .finally(() => setVerifying(false));
+  }, [token]);
 
   async function handleReset(e) {
     e.preventDefault();
@@ -52,41 +54,50 @@ export default function ResetPasswordClient() {
     }
 
     setLoading(true);
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase) {
-      setError('Service temporarily unavailable.');
+
+    try {
+      const res = await fetch('/api/auth/reset-password-confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to reset password');
+      }
+
+      setSuccess(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    const { error: updateError } = await supabase.auth.updateUser({ password });
-
-    if (updateError) {
-      setError(updateError.message);
-      setLoading(false);
-      return;
-    }
-
-    setSuccess(true);
-    setLoading(false);
-
-    // Redirect to account after a short delay
-    setTimeout(() => router.push('/account'), 3000);
   }
 
-  if (!ready && !success) {
+  if (verifying) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-16">
+        <div className="w-full max-w-md text-center">
+          <Loader className="w-8 h-8 text-amber-500 animate-spin mx-auto mb-4" />
+          <p className="text-slate-500">Verifying reset link…</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!tokenValid && !success) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md text-center">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
-            <AlertCircle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-slate-800 mb-2">Processing Reset Link…</h2>
-            <p className="text-slate-500 text-sm mb-4">
-              If nothing happens, the link may have expired or already been used.
-            </p>
+            <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-slate-800 mb-2">Invalid Reset Link</h2>
+            <p className="text-slate-500 text-sm mb-6">{tokenError}</p>
             <Link href="/forgot-password"
-              className="text-amber-600 hover:text-amber-700 font-semibold text-sm">
-              Request a new reset link
+              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors">
+              Request New Reset Link
             </Link>
           </div>
         </div>
@@ -101,12 +112,10 @@ export default function ResetPasswordClient() {
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-slate-800 mb-2">Password Updated!</h2>
-            <p className="text-slate-600 mb-6">
-              Your password has been reset. Redirecting to your account…
-            </p>
-            <Link href="/account"
+            <p className="text-slate-600 mb-6">Your password has been reset successfully.</p>
+            <Link href="/login"
               className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors">
-              Go to Account
+              Log In
             </Link>
           </div>
         </div>

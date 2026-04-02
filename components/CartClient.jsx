@@ -290,21 +290,8 @@ export default function CartClient() {
             ))}
           </div>
 
-          {/* Upsell: Installation CTA */}
-          {productItems.length > 0 && (
-            <div className="bg-gradient-to-r from-amber-50 to-slate-50 rounded-2xl border border-amber-200 p-5 flex items-center gap-4">
-              <div className="text-3xl flex-shrink-0">🔨</div>
-              <div className="flex-1">
-                <h3 className="font-bold text-slate-800">Need professional installation?</h3>
-                <p className="text-sm text-slate-600">Get a complete quote including materials, labour, and removal — all in one number.</p>
-              </div>
-              <Link href="/quote-calculator" className="shrink-0">
-                <Button variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-100 whitespace-nowrap">
-                  Get Install Quote
-                </Button>
-              </Link>
-            </div>
-          )}
+          {/* Installation upsell removed — was an exit ramp mid-checkout funnel.
+             Moved to order confirmation page instead (post-purchase upsell). */}
 
           {/* Inline transition pieces for vinyl/laminate products */}
           {vinylLaminateProducts.length > 0 && transitionItems.length === 0 && (
