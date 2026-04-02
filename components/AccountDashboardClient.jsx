@@ -8,7 +8,7 @@ import { entities } from '@/lib/base44-compat';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, Clock, Heart, ShoppingCart, User, Phone, Building2, Mail, RefreshCw, Calculator, ChevronDown, ChevronUp, ExternalLink, Trash2, Package, Truck, MapPin, CreditCard, Ban } from 'lucide-react';
+import { CheckCircle2, Clock, Heart, ShoppingCart, User, Phone, Building2, Mail, RefreshCw, Calculator, ChevronDown, ChevronUp, ExternalLink, Trash2, Package, Truck, MapPin, CreditCard, Ban, CalendarCheck, Calendar as CalendarIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AccountDashboardClient() {
@@ -17,6 +17,7 @@ export default function AccountDashboardClient() {
   const [savedItems, setSavedItems] = useState([]);
   const [savedQuotes, setSavedQuotes] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [expandedQuote, setExpandedQuote] = useState(null);
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -69,14 +70,16 @@ export default function AccountDashboardClient() {
           }).catch(() => {});
         }
 
-        const [items, quotes, ordersRes] = await Promise.all([
+        const [items, quotes, ordersRes, bookingsRes] = await Promise.all([
           entities.SavedItem.filter({ user_email: user.email }, { order: '-created_date', limit: 50 }),
           entities.SavedQuote.filter({ user_email: user.email }, { order: '-created_date', limit: 20 }),
           fetch('/api/orders/mine').then(r => r.ok ? r.json() : { orders: [] }).catch(() => ({ orders: [] })),
+          fetch('/api/booking/mine').then(r => r.ok ? r.json() : { bookings: [] }).catch(() => ({ bookings: [] })),
         ]);
         setSavedItems(items);
         setSavedQuotes(quotes);
         setOrders(ordersRes.orders || []);
+        setBookings(bookingsRes.bookings || []);
 
         // Retroactively save any pending quote from localStorage
         const pendingQuote = localStorage.getItem('bbs_pending_quote');
@@ -520,6 +523,90 @@ export default function AccountDashboardClient() {
                         </div>
                       </div>
                     )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* My Bookings */}
+        <div className="mt-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-bold text-slate-800 text-lg flex items-center gap-2">
+              <CalendarCheck className="w-5 h-5 text-amber-500" /> My Bookings ({bookings.length})
+            </h2>
+            <Link href="/free-measurement">
+              <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-white text-xs">
+                + Book Measurement
+              </Button>
+            </Link>
+          </div>
+
+          {bookings.length === 0 ? (
+            <div className="text-center py-10 text-slate-400">
+              <CalendarIcon className="w-12 h-12 mx-auto mb-3 text-slate-200" />
+              <p className="font-medium">No bookings yet</p>
+              <p className="text-sm mt-1">Book a free in-home measurement to get started</p>
+              <Link href="/free-measurement">
+                <Button className="mt-4 bg-amber-500 hover:bg-amber-600 text-white">
+                  Book Free Measurement
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {bookings.map(b => {
+                const dateStr = b.preferred_date
+                  ? new Date(b.preferred_date + 'T12:00:00').toLocaleDateString('en-CA', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })
+                  : 'TBD';
+                const statusColors = {
+                  pending: 'bg-yellow-100 text-yellow-800',
+                  confirmed: 'bg-green-100 text-green-800',
+                  completed: 'bg-blue-100 text-blue-800',
+                  cancelled: 'bg-red-100 text-red-800',
+                };
+                const statusLabel = {
+                  pending: '⏳ Pending',
+                  confirmed: '✅ Confirmed',
+                  completed: '✔️ Completed',
+                  cancelled: '❌ Cancelled',
+                };
+                return (
+                  <div key={b.id} className="border border-slate-100 rounded-xl p-4 hover:border-amber-200 transition-colors">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="font-semibold text-slate-800 text-sm">
+                            {b.service_type === 'quote_estimate' ? 'Quote Estimate Visit' : 'Free Measurement'}
+                          </p>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[b.status] || 'bg-slate-100 text-slate-600'}`}>
+                            {statusLabel[b.status] || b.status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-1">
+                          {dateStr}{b.preferred_time ? ` at ${b.preferred_time}` : ''}
+                          {b.customer_address ? ` · ${b.customer_address}` : ''}
+                        </p>
+                        {b.product_name && (
+                          <p className="text-xs text-amber-600 mt-0.5 font-medium">
+                            {b.product_name}{b.quote_total ? ` · Est. C$${Number(b.quote_total).toLocaleString('en-CA', { minimumFractionDigits: 2 })}` : ''}
+                          </p>
+                        )}
+                        {b.flooring_type && b.flooring_type !== 'quote_estimate' && (
+                          <p className="text-xs text-slate-400 mt-0.5">Project: {b.flooring_type}</p>
+                        )}
+                      </div>
+                      <div className="flex-shrink-0">
+                        {b.lookup_token && b.status !== 'cancelled' && (
+                          <Link href={`/view-booking?token=${b.lookup_token}`}>
+                            <Button size="sm" variant="outline" className="text-xs gap-1">
+                              <ExternalLink className="w-3 h-3" /> Manage
+                            </Button>
+                          </Link>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 );
               })}

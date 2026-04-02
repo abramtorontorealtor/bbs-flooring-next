@@ -164,7 +164,11 @@ export default function QuoteBookingClient() {
           postal_code: postalCode,
           preferred_date: formData.preferred_date,
           preferred_time: formData.preferred_time,
-          flooring_type: productName ? 'quote_estimate' : undefined,
+          flooring_type: productName || 'quote_estimate',
+          service_type: 'quote_estimate',
+          product_name: productName || undefined,
+          quote_total: estimate ? parseFloat(estimate) : undefined,
+          square_footage: sqft || undefined,
           notes: [
             productName && `Product: ${productName}`,
             sqft && `${sqft} sq ft`,

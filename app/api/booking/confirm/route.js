@@ -27,6 +27,9 @@ export async function POST(request) {
         preferred_time: booking.preferred_time || booking.time,
         flooring_type: booking.flooring_type,
         square_footage: booking.square_footage || booking.sqft,
+        service_type: booking.service_type || 'free_measurement',
+        product_name: booking.product_name,
+        quote_total: booking.quote_total,
         notes: booking.notes,
         status: 'pending',
       })
