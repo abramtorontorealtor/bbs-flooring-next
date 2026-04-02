@@ -38,8 +38,16 @@ function formatDate(date, fmt) {
 }
 
 function getNextAvailableDate() {
+  const now = new Date();
+  const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
   let d = addDays(new Date(), 1);
-  while (d.getDay() === 0) d = addDays(d, 1);
+  while (true) {
+    if (d.getDay() === 0) { d = addDays(d, 1); continue; }
+    // Check if at least the latest slot (5 PM) is >= 24h from now
+    const lastSlot = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 17, 0, 0);
+    if (lastSlot >= minDateTime) break;
+    d = addDays(d, 1);
+  }
   return formatDate(d, 'EEEE, MMM d');
 }
 
@@ -76,7 +84,8 @@ export default function FreeMeasurementClient() {
     return () => { if (el) observer.unobserve(el); };
   }, [submitted, step]);
 
-  const allTimeSlots = ['11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '5:00 PM'];
+  // Availability: Mon-Sat 11am–2pm & 5pm (last appointment starts 1:30, window closes at 2)
+  const allTimeSlots = ['11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '5:00 PM'];
 
   const availableTimeSlots = useMemo(() => {
     if (!formData.preferred_date) return allTimeSlots;
@@ -330,7 +339,6 @@ export default function FreeMeasurementClient() {
                             selected={formData.preferred_date ? (() => { const [y, m, d] = formData.preferred_date.split('-').map(Number); return new Date(y, m - 1, d); })() : undefined}
                             onSelect={(date) => {
                               if (!date) return;
-                              if (date.getDay() === 0) { setError('Sundays are not available.'); return; }
                               setError('');
                               const y = date.getFullYear();
                               const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -340,8 +348,18 @@ export default function FreeMeasurementClient() {
                             disabled={(date) => {
                               const now = new Date();
                               const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                              const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
                               const maxDate = new Date(todayStart.getTime() + 60 * 24 * 60 * 60 * 1000);
-                              return date < todayStart || date.getDay() === 0 || date > maxDate;
+                              // Past dates
+                              if (date < todayStart) return true;
+                              // Sundays — no availability
+                              if (date.getDay() === 0) return true;
+                              // Too far out (60 days)
+                              if (date > maxDate) return true;
+                              // Within 24 hours — check if latest slot (5 PM) is still >= 24h away
+                              const lastSlotOnDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
+                              if (lastSlotOnDate < minDateTime) return true;
+                              return false;
                             }}
                             initialFocus
                           />
