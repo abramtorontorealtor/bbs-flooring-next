@@ -70,13 +70,16 @@ export default function QuoteCalculatorClient() {
   const formRef = useRef(null);
 
   const { data: products = [], isLoading: productsLoading, error: productsError } = useQuery({
-    queryKey: ['all-products-quote'],
+    queryKey: ['calculator-products'],
     queryFn: async () => {
-      const results = await entities.Product.list({ limit: 1000 });
-      if (!results || results.length === 0) {
-        console.warn('[QuoteCalc] Product list returned empty — Supabase client may not be initialized');
+      // Lean API: only fields needed for selection + pricing (~50KB vs 1.8MB)
+      const res = await fetch('/api/products/calculator');
+      if (!res.ok) throw new Error(`Products API ${res.status}`);
+      const data = await res.json();
+      if (!data || data.length === 0) {
+        console.warn('[QuoteCalc] Product list returned empty');
       }
-      return results;
+      return data;
     },
     staleTime: 5 * 60 * 1000,
     retry: 3,
