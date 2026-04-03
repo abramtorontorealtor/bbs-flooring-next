@@ -116,7 +116,7 @@ export default function AdminOrdersClient() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['admin-orders']);
-      toast.success('Date saved. Customer will be notified when you mark "Ready for Pickup".');
+      toast.success('Date saved. Customer will be notified when you advance the order status.');
     },
     onError: (e) => toast.error('Schedule failed: ' + e.message),
   });
@@ -256,19 +256,20 @@ export default function AdminOrdersClient() {
       });
     }
     if (s === 'processing') {
-      const pickupMissing = isPickup && (!order.pickup_address || !order.scheduled_date);
+      const missingParts = [];
+      if (isPickup && !order.pickup_address) missingParts.push('pickup address');
+      if (!order.scheduled_date) missingParts.push(isPickup ? 'pickup date' : 'delivery date');
+      const blocked = missingParts.length > 0;
       actions.push({
         key: 'shipped',
         label: isPickup ? '🏪 Mark Ready for Pickup' : '🚚 Mark as Shipped',
         variant: 'default',
-        cls: pickupMissing ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700',
-        disabled: pickupMissing,
-        disabledReason: pickupMissing
-          ? `Set ${!order.pickup_address ? 'pickup address' : ''}${!order.pickup_address && !order.scheduled_date ? ' + ' : ''}${!order.scheduled_date ? 'pickup date' : ''} first`
-          : null,
+        cls: blocked ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700',
+        disabled: blocked,
+        disabledReason: blocked ? `Set ${missingParts.join(' + ')} first` : null,
         action: () => {
-          if (pickupMissing) {
-            toast.error(`Fill in ${!order.pickup_address ? 'pickup address' : ''}${!order.pickup_address && !order.scheduled_date ? ' and ' : ''}${!order.scheduled_date ? 'pickup date' : ''} before marking ready.`);
+          if (blocked) {
+            toast.error(`Fill in ${missingParts.join(' and ')} before proceeding.`);
             return;
           }
           handleStatusAdvance(order.id, 'shipped');
@@ -535,7 +536,7 @@ export default function AdminOrdersClient() {
                         size="sm"
                         onClick={() => {
                           if (!scheduleDate) { toast.error('Pick a date'); return; }
-                          if (confirm(`Save ${selectedOrder.delivery_preference === 'pickup' ? 'pickup' : 'delivery'} date: ${scheduleDate}? (No email yet — sent when you mark Ready for Pickup)`)) {
+                          if (confirm(`Save ${selectedOrder.delivery_preference === 'pickup' ? 'pickup' : 'delivery'} date: ${scheduleDate}? (No email yet — sent when you mark Ready/Shipped)`)) {
                             scheduleDateMutation.mutate({ orderId: selectedOrder.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
                           }
                         }}
