@@ -342,7 +342,8 @@ export default function CheckoutClient() {
           if (checkoutResult.checkoutUrl) {
             window.location.href = checkoutResult.checkoutUrl;
           } else {
-            toast.error('Failed to create payment session. Please try again or contact support.');
+            console.error('Stripe checkout failed:', checkoutResult);
+            toast.error(checkoutResult.error || 'Failed to create payment session. Please try again or contact support.');
             setIsSubmitting(false);
           }
         } catch (stripeError) {
