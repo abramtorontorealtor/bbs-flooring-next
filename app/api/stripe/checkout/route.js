@@ -3,9 +3,9 @@ import { getSupabaseAdminClient } from '@/lib/supabase';
 
 // ── Fraud: Velocity limiting ────────────────────────────────────
 // Max orders per email within a time window (prevents card testing)
-const MAX_ORDERS_PER_EMAIL = 100; // TEMPORARILY raised for testing — was 3
+const MAX_ORDERS_PER_EMAIL = 3;
 const VELOCITY_WINDOW_HOURS = 1;
-const MIN_CC_AMOUNT = 0; // TEMPORARILY DISABLED for testing — was $10 (card testing protection)
+const MIN_CC_AMOUNT = 10;
 
 async function checkVelocity(supabase, email) {
   const windowStart = new Date(Date.now() - VELOCITY_WINDOW_HOURS * 60 * 60 * 1000).toISOString();
