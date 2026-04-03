@@ -107,6 +107,7 @@ export default function AdminCRMClient() {
   const [noteText, setNoteText] = useState('');
   const [lostReason, setLostReason] = useState('');
   const [pickupAddress, setPickupAddress] = useState('');
+  const [pickupReference, setPickupReference] = useState('');
   const [scheduleDate, setScheduleDate] = useState('');
   const [scheduleNote, setScheduleNote] = useState('');
 
@@ -213,21 +214,21 @@ export default function AdminCRMClient() {
       if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
       return r.json();
     },
-    onSuccess: (data) => { refreshAll(); toast.success(`Status: ${data.oldStatus} → ${data.newStatus} — customer emailed`); },
+    onSuccess: (data) => { refreshAll(); toast.success(`Status: ${data.oldStatus} → ${data.newStatus}${data.newStatus === 'processing' ? '' : ' — customer emailed'}`); },
     onError: (err) => toast.error('Status update failed: ' + err.message),
   });
 
   const updatePickupAddressMutation = useMutation({
-    mutationFn: async ({ orderId, pickupAddress: addr }) => {
+    mutationFn: async ({ orderId, pickupAddress: addr, pickupReference: ref }) => {
       const r = await fetch('/api/orders/pickup-address', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId, pickupAddress: addr }),
+        body: JSON.stringify({ orderId, pickupAddress: addr, pickupReference: ref }),
       });
       if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
       return r.json();
     },
-    onSuccess: () => { refreshAll(); toast.success('Pickup address saved ✅'); },
+    onSuccess: () => { refreshAll(); toast.success('Pickup details saved ✅'); },
     onError: (err) => toast.error('Save failed: ' + err.message),
   });
 
@@ -293,7 +294,7 @@ export default function AdminCRMClient() {
   const handleStatusAdvance = (orderId, newStatus, deliveryPref) => {
     const isPickup = deliveryPref === 'pickup';
     const labels = {
-      processing: 'Mark as "Preparing"? Customer will be emailed.',
+      processing: 'Mark as "Preparing"? (Status update only — no customer email)',
       shipped: isPickup ? 'Mark as "Ready for Pickup"? Customer will be emailed.' : 'Mark as "Shipped"? Customer will be emailed.',
       delivered: isPickup ? 'Mark as "Picked Up / Complete"? Customer will get a thank-you.' : 'Mark as "Delivered"? Customer will get a thank-you.',
     };
@@ -372,6 +373,7 @@ export default function AdminCRMClient() {
     setSelectedLead(lead);
     const o = lead.raw;
     setPickupAddress(o.pickup_address || '');
+    setPickupReference(o.pickup_reference || '');
     setScheduleDate(o.scheduled_date || '');
     setScheduleNote(o.scheduled_note || '');
   };
@@ -951,28 +953,52 @@ export default function AdminCRMClient() {
                             </Card>
                           )}
 
-                          {/* Pickup Address */}
-                          {o.delivery_preference === 'pickup' && (
-                            <Card className="border-amber-200 bg-amber-50/30">
+                          {/* Pickup Details */}
+                          {o.delivery_preference === 'pickup' && (() => {
+                            const isPaid = o.payment_status === 'captured' || o.payment_status === 'completed' || o.payment_status === 'paid';
+                            return (
+                            <Card className={`border-amber-200 ${isPaid ? 'bg-amber-50/30' : 'bg-slate-50 opacity-75'}`}>
                               <CardHeader className="pb-3">
                                 <CardTitle className="text-base flex items-center gap-2">
-                                  <Warehouse className="w-5 h-5 text-amber-600" /> Pickup Address
+                                  <Warehouse className="w-5 h-5 text-amber-600" /> Pickup Details
                                   {!o.pickup_address && <Badge className="bg-amber-200 text-amber-800 border-0 text-xs ml-2">NOT SET</Badge>}
+                                  {!isPaid && <Badge className="bg-red-200 text-red-800 border-0 text-xs ml-2">🔒 CAPTURE FIRST</Badge>}
                                 </CardTitle>
                               </CardHeader>
-                              <CardContent>
-                                <div className="flex gap-2">
+                              <CardContent className="space-y-3">
+                                {!isPaid && (
+                                  <p className="text-sm text-red-600 font-medium">⚠️ Capture payment before setting pickup details. Warehouse address is not revealed until payment is secured.</p>
+                                )}
+                                <div>
+                                  <Label className="text-xs text-slate-500">Warehouse Address</Label>
                                   <Input value={pickupAddress} onChange={(e) => setPickupAddress(e.target.value)}
-                                    placeholder="e.g. 6061 Highway 7, Unit B, Markham ON L3P 3B2" className="flex-1" />
-                                  <Button size="sm" onClick={() => updatePickupAddressMutation.mutate({ orderId: o.id, pickupAddress: pickupAddress.trim() })}
-                                    disabled={updatePickupAddressMutation.isPending || !pickupAddress.trim()} className="bg-amber-600 hover:bg-amber-700">
-                                    <Save className="w-4 h-4 mr-1" /> Save
-                                  </Button>
+                                    placeholder="e.g. 123 Warehouse Blvd, Unit 5, Vaughan ON" className="mt-1"
+                                    disabled={!isPaid} />
                                 </div>
-                                {o.pickup_address ? <p className="text-xs text-green-600 mt-2">✅ Visible to customer</p> : <p className="text-xs text-amber-600 mt-2">Customer sees "Pickup location will be confirmed after payment"</p>}
+                                <div>
+                                  <Label className="text-xs text-slate-500">Pickup Reference # (customer shows this to warehouse)</Label>
+                                  <Input value={pickupReference} onChange={(e) => setPickupReference(e.target.value)}
+                                    placeholder="e.g. PO-12345 or INV-67890" className="mt-1"
+                                    disabled={!isPaid} />
+                                </div>
+                                <Button size="sm" onClick={() => updatePickupAddressMutation.mutate({ orderId: o.id, pickupAddress: pickupAddress.trim(), pickupReference: pickupReference.trim() })}
+                                  disabled={updatePickupAddressMutation.isPending || !pickupAddress.trim() || !isPaid} className="bg-amber-600 hover:bg-amber-700 w-full">
+                                  <Save className="w-4 h-4 mr-1" /> Save Pickup Details
+                                </Button>
+                                {o.pickup_address ? (
+                                  <div className="text-xs space-y-1">
+                                    <p className="text-green-600">✅ Address visible to customer</p>
+                                    {o.pickup_reference && <p className="text-green-600">🔖 Reference: {o.pickup_reference}</p>}
+                                  </div>
+                                ) : isPaid ? (
+                                  <p className="text-xs text-amber-600">Customer sees &quot;We&apos;ll confirm the pickup location shortly&quot;</p>
+                                ) : (
+                                  <p className="text-xs text-slate-400">Customer sees &quot;Pickup location will be confirmed after payment&quot;</p>
+                                )}
                               </CardContent>
                             </Card>
-                          )}
+                            );
+                          })()}
 
                           {/* Schedule Date */}
                           {o.status !== 'cancelled' && o.status !== 'refunded' && o.status !== 'delivered' && (

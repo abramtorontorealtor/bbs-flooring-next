@@ -59,7 +59,8 @@ export async function POST(request) {
     if (updateError) throw updateError;
 
     // Send email notification for meaningful transitions
-    const emailTransitions = ['processing', 'shipped', 'delivered'];
+    // "processing" (Preparing) is silent — only update account page, no customer email
+    const emailTransitions = ['shipped', 'delivered'];
     if (emailTransitions.includes(newStatus) && order.customer_email) {
       try {
         await sendOrderStatusUpdate({
