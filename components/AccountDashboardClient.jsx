@@ -499,17 +499,35 @@ export default function AccountDashboardClient() {
                         </div>
 
                         {/* Delivery info */}
-                        <div className="flex items-center gap-2 text-sm text-slate-500">
-                          {order.delivery_preference === 'pickup' ? (
-                            <>
-                              <MapPin className="w-4 h-4" />
-                              <span>{order.pickup_address ? `Pickup at ${order.pickup_address}` : 'Pickup location will be confirmed after payment'}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Truck className="w-4 h-4" />
-                              <span>Delivery{order.shipping_city ? ` to ${order.shipping_city}` : ''}</span>
-                            </>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-sm text-slate-500">
+                            {order.delivery_preference === 'pickup' ? (
+                              <>
+                                <MapPin className="w-4 h-4" />
+                                <span>{order.pickup_address ? `Pickup at ${order.pickup_address}` : 'Pickup location will be confirmed after payment'}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Truck className="w-4 h-4" />
+                                <span>Delivery{order.shipping_city ? ` to ${order.shipping_city}` : ''}</span>
+                              </>
+                            )}
+                          </div>
+                          {order.pickup_reference && (
+                            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                              <p className="text-xs text-amber-700 font-medium">🔖 Pickup Reference</p>
+                              <p className="text-lg font-bold text-slate-800 tracking-wide">{order.pickup_reference}</p>
+                              <p className="text-xs text-slate-500 mt-0.5">Show this to warehouse staff on arrival</p>
+                            </div>
+                          )}
+                          {order.scheduled_date && (
+                            <div className="flex items-center gap-2 text-sm text-slate-600">
+                              <CalendarCheck className="w-4 h-4 text-amber-500" />
+                              <span className="font-medium">
+                                {order.delivery_preference === 'pickup' ? 'Pickup' : 'Delivery'}: {new Date(order.scheduled_date + 'T12:00:00').toLocaleDateString('en-CA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                {order.scheduled_note ? ` · ${order.scheduled_note}` : ''}
+                              </span>
+                            </div>
                           )}
                         </div>
 
