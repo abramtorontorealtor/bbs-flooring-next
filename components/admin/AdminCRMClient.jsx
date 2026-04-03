@@ -981,17 +981,54 @@ export default function AdminCRMClient() {
                                     placeholder="e.g. PO-12345 or INV-67890" className="mt-1"
                                     disabled={!isPaid} />
                                 </div>
-                                <Button size="sm" onClick={() => updatePickupAddressMutation.mutate({ orderId: o.id, pickupAddress: pickupAddress.trim(), pickupReference: pickupReference.trim() })}
-                                  disabled={updatePickupAddressMutation.isPending || !pickupAddress.trim() || !isPaid} className="bg-amber-600 hover:bg-amber-700 w-full">
-                                  <Save className="w-4 h-4 mr-1" /> Save Pickup Details
+                                {/* Pickup Date + Note (merged into one card for pickup orders) */}
+                                <div className="border-t border-amber-200 pt-3 mt-1">
+                                  <Label className="text-xs text-slate-500 font-semibold">Pickup Date</Label>
+                                  {o.scheduled_date && (
+                                    <p className="text-sm text-green-700 my-2">
+                                      ✅ Scheduled: <strong>{format(new Date(o.scheduled_date + 'T12:00:00'), 'EEEE, MMMM d, yyyy')}</strong>
+                                      {o.scheduled_note && <span className="text-slate-500"> — {o.scheduled_note}</span>}
+                                    </p>
+                                  )}
+                                  <div className="flex gap-2 mt-1">
+                                    <div className="flex-1">
+                                      <Input type="date" value={scheduleDate} onChange={(e) => setScheduleDate(e.target.value)}
+                                        min={new Date().toISOString().split('T')[0]} disabled={!isPaid} />
+                                    </div>
+                                    <div className="flex-1">
+                                      <Input value={scheduleNote} onChange={(e) => setScheduleNote(e.target.value)}
+                                        placeholder="e.g. 9am-5pm" disabled={!isPaid} />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* One combined button — saves address+ref AND schedules date, sends ONE email */}
+                                <Button size="sm" onClick={() => {
+                                  if (!pickupAddress.trim()) { toast.error('Enter warehouse address'); return; }
+                                  if (!scheduleDate) { toast.error('Pick a date'); return; }
+                                  if (confirm(`Send pickup confirmation to customer?\n\n📍 ${pickupAddress.trim()}\n🔖 ${pickupReference.trim() || '(none)'}\n📅 ${scheduleDate} ${scheduleNote.trim()}`)) {
+                                    // Save pickup details first, then schedule (which sends the email)
+                                    updatePickupAddressMutation.mutate(
+                                      { orderId: o.id, pickupAddress: pickupAddress.trim(), pickupReference: pickupReference.trim() },
+                                      { onSuccess: () => {
+                                        scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
+                                      }}
+                                    );
+                                  }
+                                }}
+                                  disabled={updatePickupAddressMutation.isPending || scheduleDateMutation.isPending || !pickupAddress.trim() || !scheduleDate || !isPaid}
+                                  className="bg-amber-600 hover:bg-amber-700 w-full text-base py-5">
+                                  <Mail className="w-4 h-4 mr-2" /> {(updatePickupAddressMutation.isPending || scheduleDateMutation.isPending) ? 'Sending...' : 'Send Pickup Confirmation'}
                                 </Button>
-                                {o.pickup_address ? (
+                                <p className="text-xs text-slate-500 text-center">Saves address + reference + date and emails the customer ONE confirmation</p>
+
+                                {o.pickup_address && o.scheduled_date ? (
                                   <div className="text-xs space-y-1">
-                                    <p className="text-green-600">✅ Address visible to customer</p>
+                                    <p className="text-green-600">✅ Pickup confirmation sent</p>
                                     {o.pickup_reference && <p className="text-green-600">🔖 Reference: {o.pickup_reference}</p>}
                                   </div>
                                 ) : isPaid ? (
-                                  <p className="text-xs text-amber-600">Customer sees &quot;We&apos;ll confirm the pickup location shortly&quot;</p>
+                                  <p className="text-xs text-amber-600">Fill in all fields above to send pickup confirmation</p>
                                 ) : (
                                   <p className="text-xs text-slate-400">Customer sees &quot;Pickup location will be confirmed after payment&quot;</p>
                                 )}
@@ -1000,13 +1037,13 @@ export default function AdminCRMClient() {
                             );
                           })()}
 
-                          {/* Schedule Date */}
-                          {o.status !== 'cancelled' && o.status !== 'refunded' && o.status !== 'delivered' && (
+                          {/* Schedule Date — only for DELIVERY orders (pickup date is merged above) */}
+                          {o.delivery_preference !== 'pickup' && o.status !== 'cancelled' && o.status !== 'refunded' && o.status !== 'delivered' && (
                             <Card className="border-blue-200 bg-blue-50/30">
                               <CardHeader className="pb-3">
                                 <CardTitle className="text-base flex items-center gap-2">
                                   <Truck className="w-5 h-5 text-blue-600" />
-                                  {o.delivery_preference === 'pickup' ? 'Schedule Pickup Date' : 'Schedule Delivery Date'}
+                                  Schedule Delivery Date
                                   {o.scheduled_date && <Badge className="bg-green-200 text-green-800 border-0 text-xs ml-2">SCHEDULED</Badge>}
                                 </CardTitle>
                               </CardHeader>
@@ -1029,7 +1066,7 @@ export default function AdminCRMClient() {
                                   </div>
                                   <Button size="sm" onClick={() => {
                                     if (!scheduleDate) { toast.error('Pick a date'); return; }
-                                    if (confirm(`Schedule ${o.delivery_preference === 'pickup' ? 'pickup' : 'delivery'} for ${scheduleDate}? Customer will be emailed.`)) {
+                                    if (confirm(`Schedule delivery for ${scheduleDate}? Customer will be emailed.`)) {
                                       scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
                                     }
                                   }} disabled={scheduleDateMutation.isPending || !scheduleDate} className="bg-blue-600 hover:bg-blue-700">
