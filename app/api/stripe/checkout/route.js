@@ -71,7 +71,7 @@ export async function POST(request) {
         
         // ── Fraud: Statement descriptor — clear name on card statements ──
         statement_descriptor: 'BBS FLOORING',
-        statement_descriptor_suffix: orderNumber.replace('BBS-', ''),
+        statement_descriptor_suffix: orderNumber, // e.g. "BBS-10001" — Stripe needs at least one letter
         
         // ── Fraud: Metadata for Stripe Radar rules ──
         metadata: {
