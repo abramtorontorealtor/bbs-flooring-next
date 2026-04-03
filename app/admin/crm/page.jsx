@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import AdminCRMClient from '@/components/admin/AdminCRMClient';
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function AdminCRMPage() {
-  return <AdminCRMClient />;
+  return (
+    <Suspense fallback={<div className="max-w-7xl mx-auto px-4 py-8"><div className="h-96 bg-slate-100 rounded-2xl animate-pulse" /></div>}>
+      <AdminCRMClient />
+    </Suspense>
+  );
 }

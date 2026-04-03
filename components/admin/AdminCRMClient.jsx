@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,9 +17,11 @@ import {
   Phone, Mail, Clock, DollarSign, Users, TrendingUp, Calendar,
   MessageSquare, ShoppingCart, Calculator, Ruler, Filter,
   ChevronDown, ChevronUp, RefreshCw, StickyNote, X, CheckCircle,
-  CreditCard, MapPin, Package, AlertTriangle, Send, Eye
+  CreditCard, MapPin, Package, AlertTriangle, Send, Eye,
+  Warehouse, Save, Truck, ArrowRight, Ban, ChevronRight
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { format } from 'date-fns';
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
 
@@ -93,7 +96,9 @@ const LOST_REASONS = [
 
 export default function AdminCRMClient() {
   const queryClient = useQueryClient();
-  const [filterSource, setFilterSource] = useState('all');
+  const urlParams = useSearchParams();
+  const initialSource = urlParams.get('source') || 'all';
+  const [filterSource, setFilterSource] = useState(initialSource);
   const [filterStatus, setFilterStatus] = useState('active');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState('date');
@@ -101,6 +106,9 @@ export default function AdminCRMClient() {
   const [selectedLead, setSelectedLead] = useState(null);
   const [noteText, setNoteText] = useState('');
   const [lostReason, setLostReason] = useState('');
+  const [pickupAddress, setPickupAddress] = useState('');
+  const [scheduleDate, setScheduleDate] = useState('');
+  const [scheduleNote, setScheduleNote] = useState('');
 
   // ─── DATA QUERIES ───────────────────────────────────────────────────────
   const { data: quotes = [], isLoading: loadingQuotes } = useQuery({
@@ -181,6 +189,62 @@ export default function AdminCRMClient() {
     onError: (err) => toast.error('Update failed: ' + err.message),
   });
 
+  const confirmEtransferMutation = useMutation({
+    mutationFn: async (orderId) => {
+      const r = await fetch('/api/orders/confirm-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId }),
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || err.message || 'Failed'); }
+      return r.json();
+    },
+    onSuccess: () => { refreshAll(); toast.success('💰 E-Transfer confirmed — customer emailed!'); },
+    onError: (err) => toast.error('Confirm failed: ' + err.message),
+  });
+
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ orderId, newStatus }) => {
+      const r = await fetch('/api/orders/update-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, newStatus }),
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
+      return r.json();
+    },
+    onSuccess: (data) => { refreshAll(); toast.success(`Status: ${data.oldStatus} → ${data.newStatus} — customer emailed`); },
+    onError: (err) => toast.error('Status update failed: ' + err.message),
+  });
+
+  const updatePickupAddressMutation = useMutation({
+    mutationFn: async ({ orderId, pickupAddress: addr }) => {
+      const r = await fetch('/api/orders/pickup-address', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, pickupAddress: addr }),
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
+      return r.json();
+    },
+    onSuccess: () => { refreshAll(); toast.success('Pickup address saved ✅'); },
+    onError: (err) => toast.error('Save failed: ' + err.message),
+  });
+
+  const scheduleDateMutation = useMutation({
+    mutationFn: async ({ orderId, scheduledDate, scheduledNote: note }) => {
+      const r = await fetch('/api/orders/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, scheduledDate, scheduledNote: note }),
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
+      return r.json();
+    },
+    onSuccess: (data) => { refreshAll(); toast.success(data.emailSent ? '📅 Scheduled — customer emailed!' : '📅 Date saved (email failed — follow up manually)'); },
+    onError: (err) => toast.error('Schedule failed: ' + err.message),
+  });
+
   // ─── BOOKING MUTATIONS ─────────────────────────────────────────────────
   const [bookingRescheduleDate, setBookingRescheduleDate] = useState('');
   const [bookingRescheduleTime, setBookingRescheduleTime] = useState('');
@@ -212,6 +276,105 @@ export default function AdminCRMClient() {
     },
     onError: (err) => toast.error(err.message),
   });
+
+  // ─── ORDER ACTION HELPERS ────────────────────────────────────────────────
+  const handleCapturePayment = (orderId) => {
+    if (confirm('Capture this payment? The customer\'s card will be charged. This cannot be undone.')) {
+      capturePaymentMutation.mutate(orderId);
+    }
+  };
+
+  const handleConfirmEtransfer = (orderId) => {
+    if (confirm('Confirm e-Transfer received? This marks the order as paid and emails the customer.')) {
+      confirmEtransferMutation.mutate(orderId);
+    }
+  };
+
+  const handleStatusAdvance = (orderId, newStatus, deliveryPref) => {
+    const isPickup = deliveryPref === 'pickup';
+    const labels = {
+      processing: 'Mark as "Preparing"? Customer will be emailed.',
+      shipped: isPickup ? 'Mark as "Ready for Pickup"? Customer will be emailed.' : 'Mark as "Shipped"? Customer will be emailed.',
+      delivered: isPickup ? 'Mark as "Picked Up / Complete"? Customer will get a thank-you.' : 'Mark as "Delivered"? Customer will get a thank-you.',
+    };
+    if (confirm(labels[newStatus] || `Change status to ${newStatus}?`)) {
+      updateStatusMutation.mutate({ orderId, newStatus });
+    }
+  };
+
+  const handleCancelOrder = (orderId) => {
+    const reason = prompt('Cancel reason?\n\n1 = Out of stock\n2 = Customer requested\n3 = Other');
+    if (!reason) return;
+    const reasonMap = { '1': 'out_of_stock', '2': 'customer_request', '3': 'other' };
+    if (confirm('Cancel this order? Customer will be notified.')) {
+      cancelOrderMutation.mutate(orderId);
+    }
+  };
+
+  const getOrderActions = (o) => {
+    if (!o) return [];
+    const actions = [];
+    const s = o.status;
+    const ps = o.payment_status;
+    const isCC = o.payment_method === 'credit_card';
+    const isEt = o.payment_method !== 'credit_card';
+    const isPickup = o.delivery_preference === 'pickup';
+    const active = s !== 'cancelled' && s !== 'refunded';
+
+    if (isCC && ps === 'authorized' && active) {
+      actions.push({ key: 'capture', label: '✅ Capture Payment (Charge Card)', cls: 'bg-green-600 hover:bg-green-700 text-white', action: () => handleCapturePayment(o.id) });
+    }
+    if (isEt && (ps === 'pending' || s === 'pending_payment') && active) {
+      actions.push({ key: 'confirm-et', label: '🏦 Confirm E-Transfer Received', cls: 'bg-blue-600 hover:bg-blue-700 text-white', action: () => handleConfirmEtransfer(o.id) });
+    }
+    if (['pending', 'confirmed', 'paid'].includes(s)) {
+      actions.push({ key: 'processing', label: '📦 Mark as Preparing', cls: 'bg-purple-600 hover:bg-purple-700 text-white', action: () => handleStatusAdvance(o.id, 'processing', o.delivery_preference) });
+    }
+    if (s === 'processing') {
+      actions.push({ key: 'shipped', label: isPickup ? '🏪 Mark Ready for Pickup' : '🚚 Mark as Shipped', cls: 'bg-indigo-600 hover:bg-indigo-700 text-white', action: () => handleStatusAdvance(o.id, 'shipped', o.delivery_preference) });
+    }
+    if (s === 'shipped') {
+      actions.push({ key: 'delivered', label: isPickup ? '✅ Mark as Picked Up' : '✅ Mark as Delivered', cls: 'bg-emerald-600 hover:bg-emerald-700 text-white', action: () => handleStatusAdvance(o.id, 'delivered', o.delivery_preference) });
+    }
+    if (active && s !== 'delivered') {
+      actions.push({ key: 'cancel', label: '❌ Cancel Order', cls: 'bg-red-600 hover:bg-red-700 text-white', action: () => handleCancelOrder(o.id) });
+    }
+    return actions;
+  };
+
+  const getStatusBadge = (status) => {
+    const v = {
+      awaiting_payment: { label: 'Awaiting Payment', cls: 'bg-orange-100 text-orange-800' },
+      abandoned: { label: 'Abandoned', cls: 'bg-slate-100 text-slate-500' },
+      pending_payment: { label: 'Pending Payment', cls: 'bg-yellow-100 text-yellow-800' },
+      pending: { label: 'Order Received', cls: 'bg-amber-100 text-amber-800' },
+      confirmed: { label: 'Confirmed', cls: 'bg-blue-100 text-blue-800' },
+      paid: { label: 'Paid', cls: 'bg-green-100 text-green-800' },
+      processing: { label: 'Preparing', cls: 'bg-purple-100 text-purple-800' },
+      shipped: { label: 'Shipped / Ready', cls: 'bg-indigo-100 text-indigo-800' },
+      delivered: { label: 'Complete', cls: 'bg-emerald-100 text-emerald-800' },
+      cancelled: { label: 'Cancelled', cls: 'bg-red-100 text-red-800' },
+      quote_requested: { label: 'Quote Requested', cls: 'bg-cyan-100 text-cyan-800' },
+    }[status] || { label: status, cls: 'bg-slate-100 text-slate-600' };
+    return <Badge className={`${v.cls} border-0`}>{v.label}</Badge>;
+  };
+
+  const getPaymentBadge = (method, status) => {
+    if (method === 'credit_card') {
+      const label = status === 'authorized' ? 'CC — Authorized' : status === 'captured' ? 'CC — Captured' : `CC — ${status}`;
+      return <Badge className="bg-blue-100 text-blue-800 border-0 text-xs">{label}</Badge>;
+    }
+    if (method === 'quote_request') return <Badge className="bg-cyan-100 text-cyan-800 border-0 text-xs">Quote</Badge>;
+    return <Badge className="bg-emerald-100 text-emerald-800 border-0 text-xs">E-Transfer</Badge>;
+  };
+
+  const openOrderLead = (lead) => {
+    setSelectedLead(lead);
+    const o = lead.raw;
+    setPickupAddress(o.pickup_address || '');
+    setScheduleDate(o.scheduled_date || '');
+    setScheduleNote(o.scheduled_note || '');
+  };
 
   // ─── UNIFIED LEAD LIST ──────────────────────────────────────────────────
   const allLeads = useMemo(() => {
@@ -533,7 +696,7 @@ export default function AdminCRMClient() {
                 const o = lead.raw;
                 return (
                   <Card key={lead.id} className="cursor-pointer active:bg-slate-50"
-                    onClick={() => setSelectedLead(lead)}>
+                    onClick={() => lead.source === 'order' ? openOrderLead(lead) : setSelectedLead(lead)}>
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
@@ -604,7 +767,7 @@ export default function AdminCRMClient() {
                       return (
                         <TableRow key={lead.id}
                           className={`hover:bg-slate-50 cursor-pointer ${lead.source === 'order' && o.fraud_flag ? 'bg-red-50 hover:bg-red-100' : ''}`}
-                          onClick={() => setSelectedLead(lead)}>
+                          onClick={() => lead.source === 'order' ? openOrderLead(lead) : setSelectedLead(lead)}>
                           <TableCell>
                             <div className="space-y-1">
                               <Badge className={`${cfg.color} text-xs border whitespace-nowrap`}>{cfg.label}</Badge>
@@ -730,154 +893,257 @@ export default function AdminCRMClient() {
                 <>
                   <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-xl flex-wrap">
-                      {lead.name}
-                      <Badge className={`${cfg.color} text-xs border`}>{cfg.label}</Badge>
-                      {lead.source === 'order' && o.fraud_flag && (
-                        <Badge className="bg-red-200 text-red-900 text-xs border border-red-300">🚨 FRAUD FLAG</Badge>
+                      {lead.source === 'order' ? (
+                        <>
+                          <span>{o.order_number}</span>
+                          {getStatusBadge(o.status)}
+                          {getPaymentBadge(o.payment_method, o.payment_status)}
+                          {o.fraud_flag && <Badge className="bg-red-200 text-red-900 text-xs border border-red-300">🚨 FRAUD</Badge>}
+                        </>
+                      ) : (
+                        <>
+                          {lead.name}
+                          <Badge className={`${cfg.color} text-xs border`}>{cfg.label}</Badge>
+                        </>
                       )}
                     </DialogTitle>
                   </DialogHeader>
 
                   <div className="space-y-4">
 
-                    {/* ── FRAUD WARNING (Orders) ──────────────────── */}
-                    {lead.source === 'order' && o.fraud_flag && (
-                      <Card className="border-2 border-red-500 bg-red-50">
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-3">
-                            <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-1" />
-                            <div>
-                              <p className="font-bold text-red-900 mb-2">ADDRESS MISMATCH — VERIFY BEFORE CAPTURE</p>
-                              <div className="grid grid-cols-2 gap-3 text-sm">
-                                <div className="bg-white p-2 rounded">
-                                  <p className="font-semibold text-red-900 text-xs">Billing (Stripe):</p>
-                                  <p className="text-slate-700">{o.billing_address || 'N/A'}</p>
-                                  <p className="text-slate-700">{o.billing_city} {o.billing_postal_code}</p>
-                                </div>
-                                <div className="bg-white p-2 rounded">
-                                  <p className="font-semibold text-red-900 text-xs">Shipping:</p>
-                                  <p className="text-slate-700">{o.shipping_address || 'N/A'}</p>
-                                  <p className="text-slate-700">{o.shipping_city} {o.shipping_postal_code}</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )}
-
-                    {/* ── CONTACT BUTTONS ─────────────────────────── */}
-                    <div className="flex flex-wrap gap-2">
-                      {lead.phone && (
-                        <a href={`tel:${lead.phone}`}>
-                          <Button className="bg-green-600 hover:bg-green-700 text-white">
-                            <Phone className="w-4 h-4 mr-2" /> {lead.phone}
-                          </Button>
-                        </a>
-                      )}
-                      {lead.email && (
-                        <a href={`mailto:${lead.email}`}>
-                          <Button variant="outline"><Mail className="w-4 h-4 mr-2" /> {lead.email}</Button>
-                        </a>
-                      )}
-                    </div>
-
-                    {/* ── INFO CARD ────────────────────────────────── */}
-                    <div className="bg-slate-50 rounded-lg p-3 space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-slate-500">Source</span>
-                        <span className="font-medium capitalize">{lead.source}</span>
-                      </div>
-                      {lead.value > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Value</span>
-                          <span className="font-bold text-amber-600">${lead.value.toLocaleString()}</span>
-                        </div>
-                      )}
-                      <div className="flex justify-between">
-                        <span className="text-slate-500">Received</span>
-                        <span>{new Date(lead.date).toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-500">Age</span>
-                        <span className={lead.displayStatus === 'urgent' ? 'text-red-600 font-bold' : ''}>{timeAgo(lead.date)}</span>
-                      </div>
-                      <div className="pt-1 border-t">
-                        <span className="text-slate-500">Details</span>
-                        <p className="mt-1">{lead.details}</p>
-                      </div>
-
-                      {/* Order-specific info */}
-                      {lead.source === 'order' && (
+                    {/* ── ORDER DETAIL (full AdminOrders-style layout) ── */}
+                    {lead.source === 'order' && (() => {
+                      const actions = getOrderActions(o);
+                      return (
                         <>
-                          <div className="flex justify-between pt-1 border-t">
-                            <span className="text-slate-500">Payment</span>
-                            <span className="font-medium">
-                              {o.payment_method === 'etransfer' ? 'E-Transfer' : 'Credit Card'} — {o.payment_status || 'pending'}
-                            </span>
-                          </div>
-                          {o.shipping_address && (
-                            <div className="pt-1 border-t">
-                              <span className="text-slate-500">Shipping</span>
-                              <p className="mt-1">{o.shipping_address}, {o.shipping_city} {o.shipping_postal_code}</p>
-                              {o.delivery_preference && (
-                                <p className="text-xs text-slate-400 mt-0.5">
-                                  {o.delivery_preference === 'pickup' ? '📦 Warehouse Pickup' :
-                                   o.delivery_preference === 'inside' ? '🏠 Inside House' : '🚗 Garage Delivery'}
-                                </p>
-                              )}
-                            </div>
-                          )}
-                          {o.items && o.items.length > 0 && (
-                            <div className="pt-1 border-t">
-                              <span className="text-slate-500">Items</span>
-                              <div className="space-y-1 mt-1">
-                                {o.items.map((item, idx) => (
-                                  <div key={idx} className="flex justify-between text-xs bg-white p-1.5 rounded">
-                                    <span>{item.product_name} ({item.actual_sqft} sqft)</span>
-                                    <span className="font-semibold">C${item.line_total?.toFixed(2)}</span>
+                          {/* Fraud Warning */}
+                          {o.fraud_flag && (
+                            <div className="bg-red-50 border-2 border-red-400 rounded-xl p-4">
+                              <div className="flex items-start gap-3">
+                                <AlertTriangle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                                <div>
+                                  <h3 className="font-bold text-red-900 mb-1">🚨 FRAUD FLAG — Address Mismatch</h3>
+                                  <p className="text-sm text-red-800">Billing address doesn't match shipping. Verify identity before capturing.</p>
+                                  <div className="grid grid-cols-2 gap-3 mt-3 text-xs">
+                                    <div className="bg-white rounded p-2"><p className="font-semibold text-red-800">Billing (Stripe)</p><p>{o.billing_address || 'N/A'}</p><p>{o.billing_city} {o.billing_postal_code} {o.billing_country}</p></div>
+                                    <div className="bg-white rounded p-2"><p className="font-semibold text-red-800">Shipping</p><p>{o.shipping_address || 'N/A'}</p><p>{o.shipping_city} {o.shipping_postal_code}</p></div>
                                   </div>
-                                ))}
-                              </div>
-                              <div className="flex justify-between font-bold mt-2 pt-1 border-t text-amber-600">
-                                <span>Total</span>
-                                <span>C${o.total?.toFixed(2)}</span>
+                                </div>
                               </div>
                             </div>
                           )}
-                        </>
-                      )}
 
-                      {/* Booking-specific info */}
-                      {lead.source === 'booking' && (
-                        <>
-                          {o.address && (
-                            <div className="flex justify-between pt-1 border-t">
-                              <span className="text-slate-500">Address</span>
-                              <span>{o.address}</span>
-                            </div>
+                          {/* Actions Panel */}
+                          {actions.length > 0 && (
+                            <Card className="border-amber-200 bg-gradient-to-r from-amber-50 to-white">
+                              <CardHeader className="pb-3"><CardTitle className="text-base text-amber-800">⚡ Actions</CardTitle></CardHeader>
+                              <CardContent>
+                                <div className="flex flex-wrap gap-2">
+                                  {actions.map(a => (
+                                    <Button key={a.key} onClick={(e) => { e.stopPropagation(); a.action(); }}
+                                      disabled={capturePaymentMutation.isPending || confirmEtransferMutation.isPending || updateStatusMutation.isPending || cancelOrderMutation.isPending}
+                                      className={`${a.cls} text-sm`}>
+                                      {a.label}
+                                    </Button>
+                                  ))}
+                                </div>
+                              </CardContent>
+                            </Card>
                           )}
-                          {o.preferred_date && (
-                            <div className="flex justify-between">
-                              <span className="text-slate-500">Appointment</span>
-                              <span>{new Date(o.preferred_date).toLocaleDateString()} {o.preferred_time || ''}</span>
-                            </div>
-                          )}
-                        </>
-                      )}
 
-                      {/* Quote-specific info */}
-                      {lead.source === 'quote' && o.square_footage && (
-                        <>
-                          <div className="pt-1 border-t grid grid-cols-2 gap-2 text-xs">
-                            {o.flooring_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Flooring</span><span>C${o.flooring_cost?.toFixed(2)}</span></div>}
-                            {o.installation_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Install</span><span>C${o.installation_cost?.toFixed(2)}</span></div>}
-                            {o.removal_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Removal</span><span>C${o.removal_cost?.toFixed(2)}</span></div>}
-                            {o.delivery_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Delivery</span><span>C${o.delivery_cost?.toFixed(2)}</span></div>}
+                          {/* Pickup Address */}
+                          {o.delivery_preference === 'pickup' && (
+                            <Card className="border-amber-200 bg-amber-50/30">
+                              <CardHeader className="pb-3">
+                                <CardTitle className="text-base flex items-center gap-2">
+                                  <Warehouse className="w-5 h-5 text-amber-600" /> Pickup Address
+                                  {!o.pickup_address && <Badge className="bg-amber-200 text-amber-800 border-0 text-xs ml-2">NOT SET</Badge>}
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent>
+                                <div className="flex gap-2">
+                                  <Input value={pickupAddress} onChange={(e) => setPickupAddress(e.target.value)}
+                                    placeholder="e.g. 6061 Highway 7, Unit B, Markham ON L3P 3B2" className="flex-1" />
+                                  <Button size="sm" onClick={() => updatePickupAddressMutation.mutate({ orderId: o.id, pickupAddress: pickupAddress.trim() })}
+                                    disabled={updatePickupAddressMutation.isPending || !pickupAddress.trim()} className="bg-amber-600 hover:bg-amber-700">
+                                    <Save className="w-4 h-4 mr-1" /> Save
+                                  </Button>
+                                </div>
+                                {o.pickup_address ? <p className="text-xs text-green-600 mt-2">✅ Visible to customer</p> : <p className="text-xs text-amber-600 mt-2">Customer sees "Pickup location will be confirmed after payment"</p>}
+                              </CardContent>
+                            </Card>
+                          )}
+
+                          {/* Schedule Date */}
+                          {o.status !== 'cancelled' && o.status !== 'refunded' && o.status !== 'delivered' && (
+                            <Card className="border-blue-200 bg-blue-50/30">
+                              <CardHeader className="pb-3">
+                                <CardTitle className="text-base flex items-center gap-2">
+                                  <Truck className="w-5 h-5 text-blue-600" />
+                                  {o.delivery_preference === 'pickup' ? 'Schedule Pickup Date' : 'Schedule Delivery Date'}
+                                  {o.scheduled_date && <Badge className="bg-green-200 text-green-800 border-0 text-xs ml-2">SCHEDULED</Badge>}
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent>
+                                {o.scheduled_date && (
+                                  <p className="text-sm text-green-700 mb-3">
+                                    ✅ Scheduled: <strong>{format(new Date(o.scheduled_date + 'T12:00:00'), 'EEEE, MMMM d, yyyy')}</strong>
+                                    {o.scheduled_note && <span className="text-slate-500"> — {o.scheduled_note}</span>}
+                                  </p>
+                                )}
+                                <div className="flex gap-2 items-end">
+                                  <div className="flex-1">
+                                    <Label className="text-xs text-slate-500 mb-1">Date</Label>
+                                    <Input type="date" value={scheduleDate} onChange={(e) => setScheduleDate(e.target.value)}
+                                      min={new Date().toISOString().split('T')[0]} />
+                                  </div>
+                                  <div className="flex-1">
+                                    <Label className="text-xs text-slate-500 mb-1">Note (optional)</Label>
+                                    <Input value={scheduleNote} onChange={(e) => setScheduleNote(e.target.value)} placeholder="e.g. 9am-12pm" />
+                                  </div>
+                                  <Button size="sm" onClick={() => {
+                                    if (!scheduleDate) { toast.error('Pick a date'); return; }
+                                    if (confirm(`Schedule ${o.delivery_preference === 'pickup' ? 'pickup' : 'delivery'} for ${scheduleDate}? Customer will be emailed.`)) {
+                                      scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
+                                    }
+                                  }} disabled={scheduleDateMutation.isPending || !scheduleDate} className="bg-blue-600 hover:bg-blue-700">
+                                    <Mail className="w-4 h-4 mr-1" /> {scheduleDateMutation.isPending ? 'Sending...' : 'Send'}
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          )}
+
+                          {/* Customer Info */}
+                          <Card>
+                            <CardHeader className="pb-3"><CardTitle className="text-base">Customer</CardTitle></CardHeader>
+                            <CardContent className="space-y-2 text-sm">
+                              <p className="font-semibold text-lg">{o.customer_name}</p>
+                              {o.customer_phone && <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-slate-400" /><a href={`tel:${o.customer_phone}`} className="text-blue-600 hover:underline">{o.customer_phone}</a></div>}
+                              {o.customer_email && <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-slate-400" /><a href={`mailto:${o.customer_email}`} className="text-blue-600 hover:underline">{o.customer_email}</a></div>}
+                              {o.shipping_address && (
+                                <div className="flex items-start gap-2 pt-2 border-t">
+                                  <MapPin className="w-4 h-4 text-slate-400 mt-0.5" />
+                                  <div><p>{o.shipping_address}</p><p>{o.shipping_city}, {o.shipping_postal_code}</p></div>
+                                </div>
+                              )}
+                              <div className="flex items-center gap-2 pt-1">
+                                <Package className="w-4 h-4 text-slate-400" />
+                                <span>{o.delivery_preference === 'pickup' ? 'Warehouse Pickup' : o.delivery_preference === 'inside' ? 'Inside Delivery' : o.delivery_preference === 'custom_freight' ? 'Custom Freight' : 'Garage Delivery'}</span>
+                              </div>
+                            </CardContent>
+                          </Card>
+
+                          {/* Items + Totals */}
+                          {o.items && o.items.length > 0 && (
+                            <Card>
+                              <CardHeader className="pb-3"><CardTitle className="text-base">Items</CardTitle></CardHeader>
+                              <CardContent>
+                                <div className="space-y-2">
+                                  {o.items.map((item, idx) => (
+                                    <div key={idx} className="flex justify-between items-start p-3 bg-slate-50 rounded-lg">
+                                      <div className="flex-1 min-w-0">
+                                        <p className="font-medium text-sm">{item.product_name}</p>
+                                        <p className="text-xs text-slate-500">{item.sku && `${item.sku} · `}{item.boxes_required} boxes · {Number(item.actual_sqft).toFixed(1)} sqft</p>
+                                      </div>
+                                      <div className="text-right flex-shrink-0 ml-3">
+                                        <p className="font-semibold text-sm">C${Number(item.line_total).toFixed(2)}</p>
+                                        <p className="text-xs text-slate-400">C${Number(item.price_per_sqft).toFixed(2)}/sqft</p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                                <div className="mt-4 pt-3 border-t space-y-1 text-sm">
+                                  <div className="flex justify-between"><span className="text-slate-500">Subtotal</span><span>C${o.subtotal?.toFixed(2)}</span></div>
+                                  <div className="flex justify-between"><span className="text-slate-500">Tax (13%)</span><span>C${o.tax?.toFixed(2)}</span></div>
+                                  {o.delivery_fee > 0 && <div className="flex justify-between"><span className="text-slate-500">Delivery</span><span>C${o.delivery_fee.toFixed(2)}</span></div>}
+                                  {o.processing_fee > 0 && <div className="flex justify-between"><span className="text-slate-500">Processing (2.9%)</span><span className="text-amber-600">C${o.processing_fee.toFixed(2)}</span></div>}
+                                  {o.discount > 0 && <div className="flex justify-between"><span className="text-slate-500">Discount</span><span className="text-green-600">-C${o.discount.toFixed(2)}</span></div>}
+                                  <div className="flex justify-between pt-2 border-t text-base font-bold"><span>Total</span><span className="text-amber-600">C${o.total?.toFixed(2)}</span></div>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          )}
+
+                          {/* Notes */}
+                          {o.notes && (
+                            <Card>
+                              <CardHeader className="pb-3"><CardTitle className="text-base">Customer Notes</CardTitle></CardHeader>
+                              <CardContent><p className="text-sm text-slate-700">{o.notes}</p></CardContent>
+                            </Card>
+                          )}
+
+                          {/* Metadata */}
+                          <div className="text-xs text-slate-400 space-y-1 pt-2 border-t">
+                            <p>Created: {format(new Date(o.created_date), 'MMM dd, yyyy h:mm a')}</p>
+                            {o.stripe_payment_intent_id && <p>Stripe PI: {o.stripe_payment_intent_id}</p>}
                           </div>
                         </>
-                      )}
-                    </div>
+                      );
+                    })()}
+
+                    {/* ── NON-ORDER: Contact buttons + Info card ────── */}
+                    {lead.source !== 'order' && (
+                      <>
+                        <div className="flex flex-wrap gap-2">
+                          {lead.phone && (
+                            <a href={`tel:${lead.phone}`}>
+                              <Button className="bg-green-600 hover:bg-green-700 text-white">
+                                <Phone className="w-4 h-4 mr-2" /> {lead.phone}
+                              </Button>
+                            </a>
+                          )}
+                          {lead.email && (
+                            <a href={`mailto:${lead.email}`}>
+                              <Button variant="outline"><Mail className="w-4 h-4 mr-2" /> {lead.email}</Button>
+                            </a>
+                          )}
+                        </div>
+
+                        <div className="bg-slate-50 rounded-lg p-3 space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Source</span>
+                            <span className="font-medium capitalize">{lead.source}</span>
+                          </div>
+                          {lead.value > 0 && (
+                            <div className="flex justify-between">
+                              <span className="text-slate-500">Value</span>
+                              <span className="font-bold text-amber-600">${lead.value.toLocaleString()}</span>
+                            </div>
+                          )}
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Received</span>
+                            <span>{new Date(lead.date).toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Age</span>
+                            <span className={lead.displayStatus === 'urgent' ? 'text-red-600 font-bold' : ''}>{timeAgo(lead.date)}</span>
+                          </div>
+                          <div className="pt-1 border-t">
+                            <span className="text-slate-500">Details</span>
+                            <p className="mt-1">{lead.details}</p>
+                          </div>
+
+                          {/* Booking-specific */}
+                          {lead.source === 'booking' && (
+                            <>
+                              {o.address && <div className="flex justify-between pt-1 border-t"><span className="text-slate-500">Address</span><span>{o.address}</span></div>}
+                              {o.preferred_date && <div className="flex justify-between"><span className="text-slate-500">Appointment</span><span>{new Date(o.preferred_date).toLocaleDateString()} {o.preferred_time || ''}</span></div>}
+                            </>
+                          )}
+
+                          {/* Quote-specific */}
+                          {lead.source === 'quote' && o.square_footage && (
+                            <div className="pt-1 border-t grid grid-cols-2 gap-2 text-xs">
+                              {o.flooring_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Flooring</span><span>C${o.flooring_cost?.toFixed(2)}</span></div>}
+                              {o.installation_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Install</span><span>C${o.installation_cost?.toFixed(2)}</span></div>}
+                              {o.removal_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Removal</span><span>C${o.removal_cost?.toFixed(2)}</span></div>}
+                              {o.delivery_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Delivery</span><span>C${o.delivery_cost?.toFixed(2)}</span></div>}
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
 
                     {/* ── NOTES ────────────────────────────────────── */}
                     {(lead.source === 'quote' || lead.source === 'contact') && (

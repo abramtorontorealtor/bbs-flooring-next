@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
+import { requireAdmin } from '@/lib/api-auth';
 import { sendScheduleNotification } from '@/lib/email';
 
 // Admin sets a delivery or pickup date → emails the customer
 export async function POST(request) {
   try {
+    const { error: authError } = await requireAdmin();
+    if (authError) return authError;
+
     const { orderId, scheduledDate, scheduledNote } = await request.json();
 
     if (!orderId || !scheduledDate) {

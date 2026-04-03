@@ -5,7 +5,7 @@ import { getSupabaseAdminClient } from '@/lib/supabase';
 // Max orders per email within a time window (prevents card testing)
 const MAX_ORDERS_PER_EMAIL = 3;
 const VELOCITY_WINDOW_HOURS = 1;
-const MIN_CC_AMOUNT = 0.50; // Temporarily lowered for testing (was $10) — restore after cutover
+const MIN_CC_AMOUNT = 10; // Minimum $10 for credit card (prevents card testing attacks)
 
 async function checkVelocity(supabase, email) {
   const windowStart = new Date(Date.now() - VELOCITY_WINDOW_HOURS * 60 * 60 * 1000).toISOString();

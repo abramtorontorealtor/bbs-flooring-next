@@ -37,8 +37,7 @@ async function getStats() {
 }
 
 const NAV_ITEMS = [
-  { href: '/admin/crm', label: 'Lead Command Center', desc: 'Unified pipeline — contacts, quotes, bookings, orders.', icon: BarChart3, stat: 'leads', color: 'amber' },
-  { href: '/admin/orders', label: 'Orders', desc: 'View, capture payments, cancel, and track orders.', icon: ShoppingCart, stat: 'orders', color: 'green' },
+  { href: '/admin/crm', label: 'Lead Command Center', desc: 'All leads, orders, quotes, bookings — one view. Full order management built in.', icon: BarChart3, stat: 'leads', color: 'amber' },
   { href: '/admin/bookings', label: 'Bookings', desc: 'Manage measurement bookings and reschedule.', icon: Calendar, stat: 'bookings', color: 'blue' },
   { href: '/admin/quotes', label: 'Quotes', desc: 'View and follow up on customer quotes.', icon: FileText, stat: 'quotes', color: 'purple' },
   { href: '/admin/customers', label: 'Customers', desc: 'Member management, verification status.', icon: Users, stat: 'customers', color: 'indigo' },
