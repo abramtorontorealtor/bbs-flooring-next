@@ -114,9 +114,9 @@ export default function AdminOrdersClient() {
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Failed');
       return res.json();
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['admin-orders']);
-      toast.success(data.emailSent ? 'Date scheduled — customer notified via email!' : 'Date saved (email failed — follow up manually)');
+      toast.success('Date saved. Customer will be notified when you mark "Ready for Pickup".');
     },
     onError: (e) => toast.error('Schedule failed: ' + e.message),
   });
@@ -155,7 +155,7 @@ export default function AdminOrdersClient() {
 
   const handleStatusAdvance = (orderId, newStatus) => {
     const labels = {
-      processing: 'Mark as "Preparing"? Customer will be emailed that their order is being prepared.',
+      processing: 'Mark as "Preparing"? (Silent — no customer email)',
       shipped: selectedOrder?.delivery_preference === 'pickup'
         ? 'Mark as "Ready for Pickup"? Customer will be emailed with pickup instructions.'
         : 'Mark as "Shipped"? Customer will be emailed.',
@@ -256,12 +256,23 @@ export default function AdminOrdersClient() {
       });
     }
     if (s === 'processing') {
+      const pickupMissing = isPickup && (!order.pickup_address || !order.scheduled_date);
       actions.push({
         key: 'shipped',
         label: isPickup ? '🏪 Mark Ready for Pickup' : '🚚 Mark as Shipped',
         variant: 'default',
-        cls: 'bg-indigo-600 hover:bg-indigo-700',
-        action: () => handleStatusAdvance(order.id, 'shipped'),
+        cls: pickupMissing ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700',
+        disabled: pickupMissing,
+        disabledReason: pickupMissing
+          ? `Set ${!order.pickup_address ? 'pickup address' : ''}${!order.pickup_address && !order.scheduled_date ? ' + ' : ''}${!order.scheduled_date ? 'pickup date' : ''} first`
+          : null,
+        action: () => {
+          if (pickupMissing) {
+            toast.error(`Fill in ${!order.pickup_address ? 'pickup address' : ''}${!order.pickup_address && !order.scheduled_date ? ' and ' : ''}${!order.scheduled_date ? 'pickup date' : ''} before marking ready.`);
+            return;
+          }
+          handleStatusAdvance(order.id, 'shipped');
+        },
       });
     }
     if (s === 'shipped') {
@@ -433,15 +444,17 @@ export default function AdminOrdersClient() {
                     <CardContent>
                       <div className="flex flex-wrap gap-2">
                         {actions.map(a => (
-                          <Button
-                            key={a.key}
-                            variant={a.variant}
-                            onClick={(e) => { e.stopPropagation(); a.action(); }}
-                            disabled={capturePaymentMutation.isPending || confirmEtransferMutation.isPending || updateStatusMutation.isPending || cancelOrderMutation.isPending}
-                            className={`${a.cls} text-sm`}
-                          >
-                            {a.label}
-                          </Button>
+                          <div key={a.key} className="flex flex-col">
+                            <Button
+                              variant={a.variant}
+                              onClick={(e) => { e.stopPropagation(); a.action(); }}
+                              disabled={a.disabled || capturePaymentMutation.isPending || confirmEtransferMutation.isPending || updateStatusMutation.isPending || cancelOrderMutation.isPending}
+                              className={`${a.cls} text-sm`}
+                            >
+                              {a.label}
+                            </Button>
+                            {a.disabledReason && <span className="text-xs text-amber-600 mt-1">⚠️ {a.disabledReason}</span>}
+                          </div>
                         ))}
                       </div>
                     </CardContent>
@@ -522,15 +535,15 @@ export default function AdminOrdersClient() {
                         size="sm"
                         onClick={() => {
                           if (!scheduleDate) { toast.error('Pick a date'); return; }
-                          if (confirm(`Schedule ${selectedOrder.delivery_preference === 'pickup' ? 'pickup' : 'delivery'} for ${scheduleDate}? Customer will be emailed.`)) {
+                          if (confirm(`Save ${selectedOrder.delivery_preference === 'pickup' ? 'pickup' : 'delivery'} date: ${scheduleDate}? (No email yet — sent when you mark Ready for Pickup)`)) {
                             scheduleDateMutation.mutate({ orderId: selectedOrder.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
                           }
                         }}
                         disabled={scheduleDateMutation.isPending || !scheduleDate}
                         className="bg-blue-600 hover:bg-blue-700"
                       >
-                        <Mail className="w-4 h-4 mr-1" />
-                        {scheduleDateMutation.isPending ? 'Sending...' : 'Send'}
+                        <Save className="w-4 h-4 mr-1" />
+                        {scheduleDateMutation.isPending ? 'Saving...' : 'Save'}
                       </Button>
                     </div>
                   </CardContent>

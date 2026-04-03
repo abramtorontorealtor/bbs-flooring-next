@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { requireAdmin } from '@/lib/api-auth';
-import { sendScheduleNotification } from '@/lib/email';
 
-// Admin sets a delivery or pickup date → emails the customer
+// Admin sets a delivery or pickup date — saved silently.
+// Customer email is triggered by "Mark Ready for Pickup" / "Mark as Shipped" instead.
 export async function POST(request) {
   try {
     const { error: authError } = await requireAdmin();
@@ -29,15 +29,7 @@ export async function POST(request) {
 
     if (error) throw error;
 
-    // Email the customer
-    try {
-      await sendScheduleNotification({ order });
-    } catch (emailErr) {
-      console.error('[Schedule] Email failed (date still saved):', emailErr);
-      return NextResponse.json({ success: true, emailSent: false, order });
-    }
-
-    return NextResponse.json({ success: true, emailSent: true, order });
+    return NextResponse.json({ success: true, order });
   } catch (error) {
     console.error('Schedule error:', error);
     return NextResponse.json({ error: error.message || 'Failed to schedule' }, { status: 500 });

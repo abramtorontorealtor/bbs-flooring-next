@@ -60,11 +60,19 @@ export async function POST(request) {
 
     // Send email notification for meaningful transitions
     // "processing" (Preparing) is silent — only update account page, no customer email
+    // "shipped" (Ready for Pickup / Shipped) is the BOSS — sends the full customer notification
     const emailTransitions = ['shipped', 'delivered'];
     if (emailTransitions.includes(newStatus) && order.customer_email) {
+      // Re-fetch order to get latest pickup_address, scheduled_date, etc.
+      const { data: freshOrder } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', orderId)
+        .single();
+
       try {
         await sendOrderStatusUpdate({
-          order: { ...order, status: newStatus },
+          order: { ...(freshOrder || order), status: newStatus },
           oldStatus,
         });
       } catch (emailErr) {

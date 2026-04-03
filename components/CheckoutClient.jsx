@@ -185,7 +185,7 @@ export default function CheckoutClient() {
     
     if (!isCustom) {
       if (formData.delivery_preference === 'delivery') {
-        deliveryFee = 140;
+        deliveryFee = 0; // TODO: restore to 140 after testing
       } else if (formData.delivery_preference === 'inside') {
         deliveryFee = 200;
       }
@@ -699,7 +699,7 @@ export default function CheckoutClient() {
                          <Truck className="w-5 h-5 text-amber-600" />
                          <div>
                            <span className="font-medium">Delivery to GTA</span>
-                           <p className="text-sm text-slate-500">$140 flat rate garage delivery</p>
+                           <p className="text-sm text-slate-500">Free garage delivery (GTA)</p>
                          </div>
                        </div>
                      </Label>
