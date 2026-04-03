@@ -7,6 +7,30 @@ import { createServerClient } from '@supabase/ssr';
  * 2. Legacy URL patterns for cutover compatibility
  */
 
+// Wix legacy paths → new paths (previously handled by Cloudflare worker).
+// Only includes redirects where source ≠ destination.
+const WIX_REDIRECTS = new Map([
+  ['/about-us', '/about'],
+  ['/book-online', '/free-measurement'],
+  ['/bookings-checkout', '/free-measurement'],
+  ['/commercial', '/products'],
+  ['/commericial', '/products'],
+  ['/copy-of-all-products', '/products'],
+  ['/engineeredhardwood', '/engineered-hardwood'],
+  ['/flooring-financing', '/products'],
+  ['/flooring-financing-payment-plans', '/products'],
+  ['/flooring-installation-services', '/installation'],
+  ['/flooring-payment-plans', '/products'],
+  ['/flooring-services', '/installation'],
+  ['/flooring-stores', '/flooring-in/markham'],
+  ['/naf-flooring', '/products'],
+  ['/photogallery', '/gallery'],
+  ['/service-page', '/free-measurement'],
+  ['/solidhardwood', '/solid-hardwood'],
+  ['/stairs-flooring-renovation-gallery', '/stairs'],
+  ['/why-bbs-flooring', '/about'],
+]);
+
 // Single-word PascalCase pages that need lowercase redirects.
 // These were removed from next.config.mjs to prevent redirect loops.
 const CASE_REDIRECTS = new Map([
@@ -89,10 +113,27 @@ export async function middleware(request) {
     return response;
   }
 
+  // Wix legacy redirects (exact match)
+  const wixRedirect = WIX_REDIRECTS.get(pathname);
+  if (wixRedirect) {
+    return NextResponse.redirect(new URL(wixRedirect, request.url), { status: 301 });
+  }
+
   // Single-word PascalCase → lowercase (exact match, case-sensitive)
   const caseRedirect = CASE_REDIRECTS.get(pathname);
   if (caseRedirect) {
     return NextResponse.redirect(new URL(caseRedirect, request.url), { status: 301 });
+  }
+
+  // /product-page/slug → /products/slug (Wix product URLs)
+  if (pathname.startsWith('/product-page/')) {
+    const slug = pathname.replace('/product-page/', '');
+    return NextResponse.redirect(new URL(`/products/${slug}`, request.url), { status: 301 });
+  }
+
+  // /blog-1/* or /post/* → /blog
+  if (pathname.startsWith('/blog-1/') || pathname.startsWith('/post/')) {
+    return NextResponse.redirect(new URL('/blog', request.url), { status: 301 });
   }
 
   // /ProductDetail?slug=X → /products/X
@@ -156,5 +197,29 @@ export const config = {
     '/Contact',
     '/Blog',
     '/Cart',
+    // Wix legacy paths
+    '/about-us',
+    '/book-online',
+    '/bookings-checkout',
+    '/commercial',
+    '/commericial',
+    '/copy-of-all-products',
+    '/engineeredhardwood',
+    '/flooring-financing',
+    '/flooring-financing-payment-plans',
+    '/flooring-installation-services',
+    '/flooring-payment-plans',
+    '/flooring-services',
+    '/flooring-stores',
+    '/naf-flooring',
+    '/photogallery',
+    '/service-page',
+    '/solidhardwood',
+    '/stairs-flooring-renovation-gallery',
+    '/why-bbs-flooring',
+    // Wix product/blog patterns
+    '/product-page/:path*',
+    '/blog-1/:path*',
+    '/post/:path*',
   ],
 };
