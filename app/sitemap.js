@@ -79,7 +79,7 @@ export default async function sitemap() {
         .from('products')
         .select('slug, updated_at')
         .not('slug', 'is', null)
-        .eq('is_parent', true)
+        .eq('is_variant', false)
         .order('updated_at', { ascending: false });
 
       if (products) {
