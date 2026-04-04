@@ -25,6 +25,7 @@ import { Analytics } from '@/components/analytics';
 import QuoteProductCTA from '@/components/QuoteProductCTA';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
+import SqftCalculator from '@/components/SqftCalculator';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
@@ -569,8 +570,16 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm text-slate-600 mb-2 block">How many square feet do you need?</label>
-                  <Input type="number" placeholder="Enter square footage (e.g., 500)" value={sqftNeeded} onChange={(e) => setSqftNeeded(e.target.value)} className="text-lg" min="1" step="1" />
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">
+                    <Calculator className="w-4 h-4 inline mr-1.5 text-amber-500" />
+                    Calculate your flooring needs
+                  </label>
+                  <SqftCalculator
+                    variants={product?.has_variants ? (() => { try { return JSON.parse(product.variants_json || '[]'); } catch { return []; } })() : []}
+                    currentVariant={selectedJsonVariant}
+                    onSqftChange={setSqftNeeded}
+                    currentSqft={sqftNeeded}
+                  />
                 </div>
                 {calculation && buyMode === 'material' && (
                   <div className="bg-white rounded-xl p-4 space-y-3 animate-fade-in-up">

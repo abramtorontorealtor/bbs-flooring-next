@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import WidthComparisonBars from '@/components/WidthComparisonBars';
+import CompareGradesTable from '@/components/CompareGradesTable';
 
 function displayPattern(pattern) {
   return pattern === 'Standard' ? 'Standard Plank' : pattern;
@@ -181,21 +183,38 @@ export default function VariantSelector({ product, onVariantChange }) {
         />
       )}
       {widthOptions.length > 1 && (
-        <ChipGroup
-          label="Width"
-          options={widthOptions}
-          selected={selectedWidth}
-          onSelect={setSelectedWidth}
-        />
+        widthOptions.length >= 3 ? (
+          <WidthComparisonBars
+            widths={widthOptions}
+            selectedWidth={selectedWidth}
+            onSelect={setSelectedWidth}
+          />
+        ) : (
+          <ChipGroup
+            label="Width"
+            options={widthOptions}
+            selected={selectedWidth}
+            onSelect={setSelectedWidth}
+          />
+        )
       )}
       {gradeOptions.length > 1 && (
-        <ChipGroup
-          label="Grade"
-          options={gradeOptions}
-          selected={selectedGrade}
-          onSelect={setSelectedGrade}
-          descriptions={GRADE_DESCRIPTIONS}
-        />
+        gradeOptions.length >= 2 ? (
+          <CompareGradesTable
+            grades={gradeOptions}
+            variants={variants}
+            selectedGrade={selectedGrade}
+            onSelect={setSelectedGrade}
+          />
+        ) : (
+          <ChipGroup
+            label="Grade"
+            options={gradeOptions}
+            selected={selectedGrade}
+            onSelect={setSelectedGrade}
+            descriptions={GRADE_DESCRIPTIONS}
+          />
+        )
       )}
 
       {selectedVariant && (
