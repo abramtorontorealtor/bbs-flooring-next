@@ -673,9 +673,7 @@ export default function AccountDashboardClient() {
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="font-bold text-amber-600">C${q.total_estimate?.toFixed(2)}</p>
-                      {q.member_price_total && (
-                        <p className="text-xs text-emerald-600">Member: C${q.member_price_total.toFixed(2)}</p>
-                      )}
+
                     </div>
                     <div className="text-slate-400 flex-shrink-0">
                       {expandedQuote === q.id ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}

@@ -57,8 +57,8 @@ export default function Home() {
       const res = await fetch('/api/products/grid?limit=50');
       if (!res.ok) return [];
       const items = await res.json();
-      const withImages = items.filter(p => p.image_url && p.public_price > 0);
-      withImages.sort((a, b) => (b.public_price || 0) - (a.public_price || 0));
+      const withImages = items.filter(p => p.image_url && p.price_per_sqft > 0);
+      withImages.sort((a, b) => (b.price_per_sqft || 0) - (a.price_per_sqft || 0));
       const seen = {};
       const result = [];
       for (const p of withImages) {

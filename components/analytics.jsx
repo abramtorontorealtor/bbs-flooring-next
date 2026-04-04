@@ -89,7 +89,7 @@ export const Analytics = {
         item_name: product.name,
         item_category: product.category,
         item_brand: product.brand,
-        price: product.public_price || product.sale_price_per_sqft || product.price_per_sqft || 0,
+        price: product.price_per_sqft || product.sale_price_per_sqft || 0,
         index: index,
       })),
     });

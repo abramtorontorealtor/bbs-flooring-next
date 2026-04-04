@@ -86,7 +86,7 @@ const SORT_OPTIONS = [
 ];
 
 function getProductPrice(product) {
-  return parseFloat(product.member_price || product.public_price || product.price || 0);
+  return parseFloat(product.price_per_sqft || product.public_price || 0);
 }
 
 function getProductBrand(product) {
@@ -99,8 +99,8 @@ function isClearance(product) {
   const hasClearanceTag = tags.includes('clearance') || tags.includes('sale');
   const hasDiscount =
     product.public_price &&
-    product.member_price &&
-    parseFloat(product.member_price) < parseFloat(product.public_price) * 0.85;
+    product.price_per_sqft &&
+    parseFloat(product.price_per_sqft) < parseFloat(product.public_price) * 0.85;
   return hasSaleFlag || hasClearanceTag || hasDiscount;
 }
 

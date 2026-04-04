@@ -666,7 +666,7 @@ export default function RoomVisualizerClient() {
                     <div>
                       <h3 className="font-semibold text-slate-800">{selectedProduct?.name}</h3>
                       <p className="text-sm text-amber-600 font-medium">
-                        ${(selectedProduct?.member_price || selectedProduct?.price_per_sqft)?.toFixed(2)}/sq.ft
+                        ${selectedProduct?.price_per_sqft?.toFixed(2)}/sq.ft
                       </p>
                     </div>
                   </div>
@@ -773,7 +773,7 @@ export default function RoomVisualizerClient() {
                       <h3 className="font-semibold text-slate-800 text-sm truncate">{selectedProduct.name}</h3>
                       <p className="text-xs text-slate-600">{selectedProduct.colour} · {selectedProduct.brand}</p>
                       <p className="text-sm font-bold text-amber-600">
-                        ${(selectedProduct.member_price || selectedProduct.price_per_sqft)?.toFixed(2)}/sq.ft
+                        ${selectedProduct.price_per_sqft?.toFixed(2)}/sq.ft
                       </p>
                     </div>
                   </div>

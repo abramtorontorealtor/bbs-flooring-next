@@ -13,7 +13,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ShoppingCart, ArrowLeft, Calculator, Package, Check, Info, Phone, Truck, Shield, X, Star, Award, Clock, CheckCircle2 } from 'lucide-react';
-import MemberPriceBadge from '@/components/MemberPriceBadge';
 import VariantSelector from '@/components/VariantSelector';
 import SaveButton from '@/components/SaveButton';
 import { toast } from 'sonner';
@@ -32,7 +31,6 @@ import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 export default function ProductDetailClient({ slug, initialProduct = null }) {
   const router = useRouter();
   const { user: currentUser, isLoadingAuth } = useAuth();
-  const isVerified = currentUser?.is_verified === true;
   const authResolved = !isLoadingAuth;
 
   const [sqftNeeded, setSqftNeeded] = useState('');
@@ -93,14 +91,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const isClearance = product?.is_clearance;
   const resolvePrice = (p) => {
     if (!p) return null;
-    // Verified members see member_price; guests see public_price
-    if (isVerified) return p.member_price ?? p.sale_price_per_sqft ?? p.price_per_sqft;
-    return p.public_price ?? p.sale_price_per_sqft ?? p.price_per_sqft;
+    return p.price_per_sqft;
   };
 
   const currentPricing = useMemo(() => {
     if (product?.has_variants && selectedJsonVariant) {
-      const price = isVerified ? selectedJsonVariant.member_price : (selectedJsonVariant.public_price || selectedJsonVariant.member_price);
+      // variants_json uses member_price as the low price; fall back to public_price or price_per_sqft
+      const price = selectedJsonVariant.member_price ?? selectedJsonVariant.public_price ?? selectedJsonVariant.price_per_sqft;
       return {
         price_per_sqft: price,
         sale_price_per_sqft: selectedJsonVariant.on_sale ? selectedJsonVariant.sale_price : null,
@@ -141,7 +138,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       grade: product?.grade,
       species: product?.species
     };
-  }, [selectedJsonVariant, selectedVariant, selectedVariantSku, product, productVariants, isVerified]);
+  }, [selectedJsonVariant, selectedVariant, selectedVariantSku, product, productVariants]);
 
   const { data: allRelatedProducts = [] } = useQuery({
     queryKey: ['relatedProducts', product?.category],
@@ -269,7 +266,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           variant_label: selectedJsonVariant.label || null, sku: selectedJsonVariant.sku,
           sqft_needed: calculation.sqftNeeded, sqft_per_box: selectedJsonVariant.sqft_box,
           boxes_required: calculation.boxesRequired, actual_sqft: calculation.actualSqft,
-          price_per_sqft: isVerified ? selectedJsonVariant.member_price : (selectedJsonVariant.public_price || selectedJsonVariant.member_price),
+          price_per_sqft: selectedJsonVariant.member_price ?? selectedJsonVariant.public_price ?? selectedJsonVariant.price_per_sqft,
           line_total: calculation.lineTotal, image_url: product.image_url,
         });
         window.dispatchEvent(new Event('cartUpdated'));
@@ -411,7 +408,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
           {/* Variant Selector — chip-based for variants_json */}
           {product.has_variants && (
-            <VariantSelector product={product} isVerifiedMember={isVerified} onVariantChange={setSelectedJsonVariant} />
+            <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} />
           )}
 
           {/* Legacy Variant Table */}
@@ -507,8 +504,20 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             <div>
               {isOutOfStock ? (
                 <Badge className="bg-slate-700 text-white border-0 text-lg px-4 py-2">Out of Stock</Badge>
+              ) : product.price_per_sqft ? (
+                <div className="flex items-baseline gap-2">
+                  {isClearance && product.public_price ? (
+                    <>
+                      <span className="text-slate-400 line-through text-lg">C${parseFloat(product.public_price).toFixed(2)}</span>
+                      <span className="text-4xl font-bold text-red-600">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                    </>
+                  ) : (
+                    <span className="text-4xl font-bold text-slate-900">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                  )}
+                  <span className="text-slate-500 text-sm">/sq.ft</span>
+                </div>
               ) : (
-                <MemberPriceBadge product={product} user={currentUser} isVerified={isVerified} compact={false} />
+                <span className="text-slate-500 text-lg">Contact for Price</span>
               )}
             </div>
           )}

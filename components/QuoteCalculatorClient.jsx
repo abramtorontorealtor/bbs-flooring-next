@@ -138,17 +138,11 @@ export default function QuoteCalculatorClient() {
   };
 
   const getDisplayPrice = (product) => {
-    if (currentUser) {
-      return product.member_price || product.sale_price_per_sqft || product.price_per_sqft;
-    }
-    return product.public_price || ((product.sale_price_per_sqft || product.price_per_sqft) + 0.50);
+    return product.price_per_sqft || product.sale_price_per_sqft || 0;
   };
 
   const getQuotePrice = (product) => {
-    if (currentUser) {
-      return product.member_price || product.sale_price_per_sqft || product.price_per_sqft;
-    }
-    return product.public_price || ((product.sale_price_per_sqft || product.price_per_sqft) + 0.50);
+    return product.price_per_sqft || product.sale_price_per_sqft || 0;
   };
 
   const getCategoryRoute = (product) => {
@@ -252,14 +246,7 @@ export default function QuoteCalculatorClient() {
   const autoSaveQuote = (quoteData) => {
     if (!currentUser || !selectedProduct) return;
 
-    const memberTotal = (() => {
-      if (selectedProduct?.member_price && selectedProduct.member_price < (selectedProduct.public_price || selectedProduct.price_per_sqft)) {
-        const sqft = parseFloat(formData.square_footage);
-        const priceDiff = (selectedProduct.public_price || selectedProduct.price_per_sqft) - selectedProduct.member_price;
-        return quoteData.total - (sqft * priceDiff * 1.13);
-      }
-      return null;
-    })();
+    const memberTotal = null;
 
     setQuoteSavedToAccount(false);
     entities.SavedQuote.create({
@@ -858,34 +845,7 @@ export default function QuoteCalculatorClient() {
                   </div>
                 )}
 
-                {/* Member price upsell — only show to guests */}
-                {!currentUser && selectedProduct?.member_price && selectedProduct.member_price < (selectedProduct.public_price || selectedProduct.price_per_sqft) && (() => {
-                  const sqft = parseFloat(formData.square_footage);
-                  const priceDiff = (selectedProduct.public_price || selectedProduct.price_per_sqft) - selectedProduct.member_price;
-                  const memberTotal = quote.total - (sqft * priceDiff * 1.13);
-                  return (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 space-y-2">
-                      <div className="flex items-start gap-2">
-                        <span className="text-lg">💡</span>
-                        <div className="flex-1">
-                          <div className="flex justify-between items-center">
-                            <span className="font-semibold text-emerald-800 text-sm">Member Price</span>
-                            <span className="font-bold text-emerald-700">C${memberTotal.toFixed(2)}</span>
-                          </div>
-                          <p className="text-xs text-emerald-700 mt-0.5">
-                            Save <strong>C${(quote.total - memberTotal).toFixed(2)}</strong> with a BBS Wholesale Membership
-                          </p>
-                        </div>
-                      </div>
-                      <Link
-                        href="/verify-email"
-                        className="block text-center text-xs font-semibold text-emerald-700 underline underline-offset-2 hover:text-emerald-900"
-                      >
-                        Become a Member →
-                      </Link>
-                    </div>
-                  );
-                })()}
+
 
                 {/* CTAs */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-1">

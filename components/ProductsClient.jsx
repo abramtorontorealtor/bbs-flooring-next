@@ -294,7 +294,7 @@ export default function ProductsClient() {
     }
 
     result = result.filter(p => {
-      const price = p.public_price || p.sale_price_per_sqft || p.price_per_sqft || 0;
+      const price = p.price_per_sqft || p.sale_price_per_sqft || 0;
       return price >= filters.priceRange[0] && price <= filters.priceRange[1];
     });
 
@@ -313,10 +313,10 @@ export default function ProductsClient() {
         result.sort((a, b) => (b.sort_score_all || 0) - (a.sort_score_all || 0));
         break;
       case 'price_low':
-        result.sort((a, b) => (a.public_price || a.sale_price_per_sqft || a.price_per_sqft) - (b.public_price || b.sale_price_per_sqft || b.price_per_sqft));
+        result.sort((a, b) => (a.price_per_sqft || a.sale_price_per_sqft || 0) - (b.price_per_sqft || b.sale_price_per_sqft || 0));
         break;
       case 'price_high':
-        result.sort((a, b) => (b.public_price || b.sale_price_per_sqft || b.price_per_sqft) - (a.public_price || a.sale_price_per_sqft || a.price_per_sqft));
+        result.sort((a, b) => (b.price_per_sqft || b.sale_price_per_sqft || 0) - (a.price_per_sqft || a.sale_price_per_sqft || 0));
         break;
       case 'newest':
         result.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));

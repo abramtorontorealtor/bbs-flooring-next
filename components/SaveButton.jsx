@@ -33,7 +33,7 @@ export default function SaveButton({ product, user, isSaved: isSavedProp, classN
       setSaved(false); setSavedItemId(null);
       toast.success('Removed from saved items');
     } else {
-      const publicPrice = product.public_price || product.price_per_sqft;
+      const publicPrice = product.price_per_sqft;
       const item = await entities.SavedItem.create({ user_email: user.email, user_id: user.id, product_id: product.id, product_name: product.name, product_sku: product.sku, product_slug: product.slug, product_image_url: product.image_url, product_price: publicPrice, product_category: product.category });
       setSaved(true); setSavedItemId(item.id);
       toast.success('Saved to your profile!');

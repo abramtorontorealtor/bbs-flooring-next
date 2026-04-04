@@ -6,7 +6,7 @@ function displayPattern(pattern) {
   return pattern === 'Standard' ? 'Standard Plank' : pattern;
 }
 
-export default function VariantSelector({ product, isVerifiedMember, onVariantChange }) {
+export default function VariantSelector({ product, onVariantChange }) {
   const variants = useMemo(() => {
     try { return JSON.parse(product.variants_json || '[]'); }
     catch { return []; }
@@ -76,10 +76,8 @@ export default function VariantSelector({ product, isVerifiedMember, onVariantCh
 
   if (variants.length === 0) return null;
 
-  // Verified members see member price; guests see public price
-  const displayPrice = isVerifiedMember
-    ? (selectedVariant?.member_price ?? selectedVariant?.public_price)
-    : (selectedVariant?.public_price ?? selectedVariant?.member_price);
+  // Show the lowest available price (member_price is the low price in variants_json)
+  const displayPrice = selectedVariant?.member_price ?? selectedVariant?.public_price ?? selectedVariant?.price_per_sqft;
 
   const originalPrice = selectedVariant?.price_per_sqft;
   const showStrikethrough = selectedVariant?.on_sale && originalPrice && originalPrice > displayPrice;

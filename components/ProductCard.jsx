@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
 import { MapPin } from 'lucide-react';
-import MemberPriceBadge from './MemberPriceBadge';
 import SaveButton from './SaveButton';
 import { useAuth } from '@/lib/auth-context';
 
@@ -32,7 +31,6 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
   const autoBadges = getProductBadges(product);
   const { user: authUser } = useAuth();
   const user = userProp !== undefined ? userProp : authUser;
-  const isVerified = user?.is_verified === true;
   const isFastPickup = product.in_stock !== false && FAST_PICKUP_BRANDS.some(b => (product.brand || '').toLowerCase().includes(b));
 
   const handleClick = () => {
@@ -81,52 +79,49 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
           </Link>
           <div className="mt-2">
             {product.has_variants && product.starting_price ? (
-              (() => {
-                const isClearance = product.is_clearance;
-                const showMemberPrice = isVerified;
-                const displayStartPrice = showMemberPrice && product.starting_member_price ? product.starting_member_price : product.starting_price;
-                return (
-                  <div className="flex items-baseline gap-0.5">
-                    <span className="text-xs text-slate-500 font-medium">From</span>
-                    <span className="text-lg font-bold text-slate-900 ml-1">C${displayStartPrice.toFixed(2)}</span>
-                    <span className="text-xs text-slate-500">/sqft</span>
-                    {isClearance && isVerified && product.starting_member_price && <span className="ml-1 text-xs text-amber-700 font-semibold">Member</span>}
-                  </div>
-                );
-              })()
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-xs text-slate-500 font-medium">From</span>
+                <span className="text-lg font-bold text-slate-900 ml-1">C${product.starting_price.toFixed(2)}</span>
+                <span className="text-xs text-slate-500">/sqft</span>
+              </div>
             ) : (
               <>
-                {/* Was/Now pricing for sale items — auth-aware */}
                 {(() => {
-                  const hasSale = product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft && !product.is_clearance;
-                  if (!hasSale) return <MemberPriceBadge product={product} user={user} isVerified={isVerified} compact={true} />;
-                  // Guests see public_price (or fall back to sale_price); members see member_price (or sale_price)
-                  const displaySalePrice = isVerified
-                    ? (product.member_price ?? product.sale_price_per_sqft)
-                    : (product.public_price ?? product.sale_price_per_sqft);
-                  const savings = Math.round((1 - displaySalePrice / product.price_per_sqft) * 100);
-                  return (
-                    <div>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-sm text-slate-400 line-through">C${product.price_per_sqft.toFixed(2)}</span>
-                        <span className={`text-xl font-bold ${isVerified ? 'text-amber-600' : 'text-red-600'}`}>C${displaySalePrice.toFixed(2)}</span>
-                        <span className="text-xs text-slate-500">/sqft</span>
+                  if (product.is_clearance && product.public_price) {
+                    return (
+                      <div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-sm text-slate-400 line-through">C${parseFloat(product.public_price).toFixed(2)}</span>
+                          <span className="text-xl font-bold text-red-600">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                          <span className="text-xs text-slate-500">/sqft</span>
+                        </div>
                       </div>
-                      {savings > 0 && (
-                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${isVerified ? 'text-amber-700 bg-amber-50' : 'text-red-600 bg-red-50'}`}>
-                          Save {savings}%{isVerified ? ' · Member' : ''}
-                        </span>
-                      )}
-                      {!isVerified && product.member_price && product.member_price < displaySalePrice && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); e.preventDefault(); localStorage.setItem('bbs_return_url', window.location.pathname + window.location.search); window.location.href = '/login'; }}
-                          className="mt-1 flex items-center gap-1 text-xs text-amber-700 hover:text-amber-800 font-semibold transition-colors group"
-                        >
-                          <span className="group-hover:underline">🔒 Sign in for even lower pricing</span>
-                        </button>
-                      )}
-                    </div>
-                  );
+                    );
+                  }
+                  if (product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft) {
+                    const savings = Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100);
+                    return (
+                      <div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-sm text-slate-400 line-through">C${product.price_per_sqft.toFixed(2)}</span>
+                          <span className="text-xl font-bold text-red-600">C${product.sale_price_per_sqft.toFixed(2)}</span>
+                          <span className="text-xs text-slate-500">/sqft</span>
+                        </div>
+                        {savings > 0 && (
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full text-red-600 bg-red-50">Save {savings}%</span>
+                        )}
+                      </div>
+                    );
+                  }
+                  if (product.price_per_sqft) {
+                    return (
+                      <div className="flex items-baseline gap-0.5">
+                        <span className="text-xl font-bold text-slate-900">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                        <span className="text-xs text-slate-500 ml-0.5">/sqft</span>
+                      </div>
+                    );
+                  }
+                  return <span className="text-sm text-slate-500">Contact for Price</span>;
                 })()}
               </>
             )}

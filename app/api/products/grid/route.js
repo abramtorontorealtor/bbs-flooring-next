@@ -8,7 +8,7 @@ const CARD_COLUMNS = [
   'id', 'slug', 'sku', 'name', 'brand', 'category', 'subcategory',
   'image_url', 'image_alt_text',
   'price_per_sqft', 'sale_price_per_sqft', 'member_price', 'public_price',
-  'starting_price', 'starting_member_price', 'has_variants',
+  'starting_price', 'has_variants',
   'is_on_sale', 'is_clearance', 'is_new_arrival', 'is_waterproof', 'is_canadian',
   'in_stock', 'made_in',
   'dimensions', 'thickness', 'colour', 'finish', 'grade', 'species',
