@@ -79,10 +79,15 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
           </Link>
           <div className="mt-2">
             {product.has_variants && product.starting_price ? (
-              <div className="flex items-baseline gap-0.5">
-                <span className="text-xs text-slate-500 font-medium">From</span>
-                <span className="text-lg font-bold text-slate-900 ml-1">C${product.starting_price.toFixed(2)}</span>
-                <span className="text-xs text-slate-500">/sqft</span>
+              <div>
+                <div className="flex items-baseline gap-0.5">
+                  <span className="text-xs text-slate-500 font-medium">From</span>
+                  <span className="text-lg font-bold text-slate-900 ml-1">C${product.starting_price.toFixed(2)}</span>
+                  <span className="text-xs text-slate-500">/sqft</span>
+                </div>
+                {product.variant_count > 1 && (
+                  <span className="text-[11px] text-amber-700 font-medium">{product.variant_count} options available</span>
+                )}
               </div>
             ) : (
               <>

@@ -96,8 +96,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
   const currentPricing = useMemo(() => {
     if (product?.has_variants && selectedJsonVariant) {
-      // variants_json uses member_price as the low price; fall back to public_price or price_per_sqft
-      const price = selectedJsonVariant.member_price ?? selectedJsonVariant.public_price ?? selectedJsonVariant.price_per_sqft;
+      // price_per_sqft is THE selling price. sale_price is the deal price if on_sale.
+      const price = selectedJsonVariant.price_per_sqft;
       return {
         price_per_sqft: price,
         sale_price_per_sqft: selectedJsonVariant.on_sale ? selectedJsonVariant.sale_price : null,
