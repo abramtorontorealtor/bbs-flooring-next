@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { vidarFlooringData } from '@/data/landingPages';
-import VidarFlooringClient from '@/components/VidarFlooringClient';
+import BrandLandingClient from '@/components/BrandLandingClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
@@ -12,7 +12,7 @@ export default function VidarFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(vidarFlooringData.faqItems)} />
-      <Suspense><VidarFlooringClient /></Suspense>
+      <Suspense><BrandLandingClient brandKey="vidar" /></Suspense>
     </>
   );
 }
