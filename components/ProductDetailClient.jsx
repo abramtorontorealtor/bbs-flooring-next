@@ -153,7 +153,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     if (!product || allRelatedProducts.length === 0) return [];
     const candidates = allRelatedProducts.filter(p => p.image_url && p.id !== product.id);
     if (candidates.length === 0) return [];
-    const basePrice = product.public_price || product.price_per_sqft || 0;
+    const basePrice = product.sale_price_per_sqft || product.price_per_sqft || 0;
     const scored = candidates.map(p => {
       let score = 0;
       // Same species = strong match
@@ -161,7 +161,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       // Same brand = good match
       if (product.brand && p.brand && p.brand.toLowerCase() === product.brand.toLowerCase()) score += 2;
       // Price within 30% = relevant
-      const pPrice = p.public_price || p.price_per_sqft || 0;
+      const pPrice = p.sale_price_per_sqft || p.price_per_sqft || 0;
       if (basePrice > 0 && pPrice > 0) {
         const diff = Math.abs(pPrice - basePrice) / basePrice;
         if (diff <= 0.15) score += 2;
@@ -247,7 +247,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           variant_label: selectedJsonVariant.label || null, sku: selectedJsonVariant.sku,
           sqft_needed: calculation.sqftNeeded, sqft_per_box: selectedJsonVariant.sqft_box,
           boxes_required: calculation.boxesRequired, actual_sqft: calculation.actualSqft,
-          price_per_sqft: selectedJsonVariant.member_price ?? selectedJsonVariant.public_price ?? selectedJsonVariant.price_per_sqft,
+          price_per_sqft: selectedJsonVariant.on_sale ? selectedJsonVariant.sale_price : selectedJsonVariant.price_per_sqft,
           line_total: calculation.lineTotal, image_url: product.image_url,
         });
         window.dispatchEvent(new Event('cartUpdated'));
@@ -487,13 +487,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                 <Badge className="bg-slate-700 text-white border-0 text-lg px-4 py-2">Out of Stock</Badge>
               ) : product.price_per_sqft ? (
                 <div className="flex items-baseline gap-2">
-                  {isClearance && product.public_price ? (
+                  {hasDiscount ? (
                     <>
-                      <span className="text-slate-400 line-through text-lg">C${parseFloat(product.public_price).toFixed(2)}</span>
-                      <span className="text-4xl font-bold text-red-600">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                      <span className="text-slate-400 line-through text-lg">C${parseFloat(currentPricing.price_per_sqft).toFixed(2)}</span>
+                      <span className="text-4xl font-bold text-red-600">C${parseFloat(displayPrice).toFixed(2)}</span>
                     </>
                   ) : (
-                    <span className="text-4xl font-bold text-slate-900">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                    <span className="text-4xl font-bold text-slate-900">C${parseFloat(displayPrice).toFixed(2)}</span>
                   )}
                   <span className="text-slate-500 text-sm">/sq.ft</span>
                 </div>

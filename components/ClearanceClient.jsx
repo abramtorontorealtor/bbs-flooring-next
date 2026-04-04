@@ -86,7 +86,7 @@ const SORT_OPTIONS = [
 ];
 
 function getProductPrice(product) {
-  return parseFloat(product.price_per_sqft || product.public_price || 0);
+  return parseFloat(product.sale_price_per_sqft || product.price_per_sqft || 0);
 }
 
 function getProductBrand(product) {
@@ -94,14 +94,15 @@ function getProductBrand(product) {
 }
 
 function isClearance(product) {
+  const hasClearanceFlag = product.is_clearance === true;
   const hasSaleFlag = product.is_on_sale === true;
   const tags = (product.tags || '').toLowerCase();
   const hasClearanceTag = tags.includes('clearance') || tags.includes('sale');
   const hasDiscount =
-    product.public_price &&
+    product.sale_price_per_sqft &&
     product.price_per_sqft &&
-    parseFloat(product.price_per_sqft) < parseFloat(product.public_price) * 0.85;
-  return hasSaleFlag || hasClearanceTag || hasDiscount;
+    parseFloat(product.sale_price_per_sqft) < parseFloat(product.price_per_sqft);
+  return hasClearanceFlag || hasSaleFlag || hasClearanceTag || hasDiscount;
 }
 
 function FilterSidebarContent({ filters, onChange, brands, maxPriceInStock }) {

@@ -19,10 +19,6 @@ function ProductVariantCard({ product, expanded, onToggle, onSave, saving, onCha
   function updateVariantField(index, field, value) {
     const updated = [...variants];
     updated[index] = { ...updated[index], [field]: value };
-    // Auto-recalculate public_price when member_price changes
-    if (field === 'member_price') {
-      updated[index].public_price = Math.round((parseFloat(value) + 0.5) * 100) / 100;
-    }
     onChange({ ...product, variants_json: JSON.stringify(updated) });
   }
 
@@ -38,8 +34,6 @@ function ProductVariantCard({ product, expanded, onToggle, onSave, saving, onCha
       length: 'RL',
       price_per_sqft: 0,
       sale_price: null,
-      member_price: 0,
-      public_price: 0.5,
       sqft_box: 20,
       in_stock: true,
       on_sale: false,
@@ -57,28 +51,24 @@ function ProductVariantCard({ product, expanded, onToggle, onSave, saving, onCha
     const adjustment = window.prompt(
       'Enter price adjustment for ALL variants of this product.\n' +
         'Examples: "+0.50" or "-0.25" or "=4.99" (set exact)\n' +
-        'This adjusts the MEMBER price. Public = member + $0.50 auto.'
+        'This adjusts the regular price (price_per_sqft).'
     );
     if (!adjustment) return;
 
     const updated = variants.map((v) => {
-      let newMember;
+      let newPrice;
       if (adjustment.startsWith('=')) {
-        newMember = parseFloat(adjustment.slice(1));
+        newPrice = parseFloat(adjustment.slice(1));
       } else {
-        newMember = (v.member_price || 0) + parseFloat(adjustment);
+        newPrice = (v.price_per_sqft || 0) + parseFloat(adjustment);
       }
-      newMember = Math.round(newMember * 100) / 100;
-      return {
-        ...v,
-        member_price: newMember,
-        public_price: Math.round((newMember + 0.5) * 100) / 100,
-      };
+      newPrice = Math.round(newPrice * 100) / 100;
+      return { ...v, price_per_sqft: newPrice };
     });
     onChange({ ...product, variants_json: JSON.stringify(updated) });
   }
 
-  const lowestPrice = variants.length ? Math.min(...variants.map((v) => v.member_price || 0)) : 0;
+  const lowestPrice = variants.length ? Math.min(...variants.map((v) => v.price_per_sqft || 0)) : 0;
 
   return (
     <div className="border rounded-xl mb-4 overflow-hidden shadow-sm">
@@ -120,8 +110,8 @@ function ProductVariantCard({ product, expanded, onToggle, onSave, saving, onCha
                   <th className="pb-2 pr-2">Label</th>
                   <th className="pb-2 pr-2">Grade</th>
                   <th className="pb-2 pr-2">Dimensions</th>
-                  <th className="pb-2 pr-2">Member $</th>
-                  <th className="pb-2 pr-2">Public $</th>
+                  <th className="pb-2 pr-2">Price $/sqft</th>
+                  <th className="pb-2 pr-2">Sale $</th>
                   <th className="pb-2 pr-2">Sqft/Box</th>
                   <th className="pb-2 pr-2">Stock</th>
                   <th className="pb-2"></th>
@@ -173,19 +163,27 @@ function ProductVariantCard({ product, expanded, onToggle, onSave, saving, onCha
                       <input
                         type="number"
                         step="0.01"
-                        value={v.member_price || ''}
+                        value={v.price_per_sqft || ''}
                         onChange={(e) =>
-                          updateVariantField(i, 'member_price', parseFloat(e.target.value) || 0)
+                          updateVariantField(i, 'price_per_sqft', parseFloat(e.target.value) || 0)
                         }
                         className="border rounded px-2 py-1 w-20 font-medium text-green-700 bg-white"
                         placeholder="3.99"
                       />
                     </td>
                     <td className="py-2 pr-2">
-                      <span className="text-slate-600 font-medium">
-                        ${(v.public_price || 0).toFixed(2)}
-                      </span>
-                      <span className="text-xs text-slate-400 ml-1">(auto)</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        value={v.sale_price || ''}
+                        onChange={(e) => {
+                          const val = e.target.value ? parseFloat(e.target.value) : null;
+                          updateVariantField(i, 'sale_price', val);
+                          updateVariantField(i, 'on_sale', val != null && val > 0);
+                        }}
+                        className="border rounded px-2 py-1 w-20 text-red-600 bg-white"
+                        placeholder="—"
+                      />
                     </td>
                     <td className="py-2 pr-2">
                       <input
@@ -294,17 +292,14 @@ function VariantManager() {
     setSaving(product.id);
     try {
       const variants = JSON.parse(product.variants_json || '[]');
-      const publicPrices = variants.map((v) => v.public_price).filter((p) => p > 0);
-      const memberPrices = variants.map((v) => v.member_price).filter((p) => p > 0);
-      const lowestPublic = publicPrices.length ? Math.min(...publicPrices) : null;
-      const lowestMember = memberPrices.length ? Math.min(...memberPrices) : null;
+      const prices = variants.map((v) => v.on_sale && v.sale_price ? v.sale_price : v.price_per_sqft).filter((p) => p > 0);
+      const lowestPrice = prices.length ? Math.min(...prices) : null;
 
       await entities.Product.update(product.id, {
         variants_json: product.variants_json,
         has_variants: variants.length > 0,
         variant_count: variants.length,
-        ...(lowestPublic != null && { starting_price: lowestPublic }),
-        ...(lowestMember != null && { starting_member_price: lowestMember }),
+        ...(lowestPrice != null && { starting_price: lowestPrice }),
       });
       toast.success('Variants saved!');
     } catch (err) {

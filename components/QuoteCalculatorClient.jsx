@@ -266,7 +266,7 @@ export default function QuoteCalculatorClient() {
       subtotal: quoteData.subtotal,
       tax: quoteData.tax,
       total_estimate: quoteData.total,
-      member_price_total: memberTotal,
+      member_price_total: null,
       removal_type: formData.removal_type,
       needs_baseboards: formData.needs_baseboards,
       needs_shoe_moulding: formData.needs_shoe_moulding,

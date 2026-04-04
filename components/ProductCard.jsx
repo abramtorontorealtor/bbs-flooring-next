@@ -89,24 +89,14 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
             ) : (
               <>
                 {(() => {
-                  if (product.is_clearance && product.public_price) {
-                    return (
-                      <div>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-sm text-slate-400 line-through">C${parseFloat(product.public_price).toFixed(2)}</span>
-                          <span className="text-xl font-bold text-red-600">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
-                          <span className="text-xs text-slate-500">/sqft</span>
-                        </div>
-                      </div>
-                    );
-                  }
-                  if (product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft) {
+                  const hasSale = product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
+                  if (hasSale) {
                     const savings = Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100);
                     return (
                       <div>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-sm text-slate-400 line-through">C${product.price_per_sqft.toFixed(2)}</span>
-                          <span className="text-xl font-bold text-red-600">C${product.sale_price_per_sqft.toFixed(2)}</span>
+                          <span className="text-sm text-slate-400 line-through">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                          <span className="text-xl font-bold text-red-600">C${parseFloat(product.sale_price_per_sqft).toFixed(2)}</span>
                           <span className="text-xs text-slate-500">/sqft</span>
                         </div>
                         {savings > 0 && (

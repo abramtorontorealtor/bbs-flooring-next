@@ -50,7 +50,7 @@ export default function Home() {
     },
   });
 
-  // Best sellers — products with highest public_price (proxy for popular, since no sales data)
+  // Best sellers — products with highest price (proxy for popular, since no sales data)
   const { data: popularProducts = [] } = useQuery({
     queryKey: ['popularProductsHome'],
     queryFn: async () => {
