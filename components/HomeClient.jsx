@@ -363,8 +363,7 @@ export default function Home() {
             <AnimDiv className="flex justify-between items-end mb-12">
               <div>
                 <div className="inline-flex items-center gap-2 bg-red-100 border border-red-200 rounded-full px-4 py-1.5 mb-4">
-                  <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                  <span className="text-red-700 text-sm font-bold uppercase tracking-wider">Limited Stock</span>
+                  <span className="text-red-700 text-sm font-bold uppercase tracking-wider">Clearance</span>
                 </div>
                 <h2 className="text-4xl font-bold text-slate-800 mb-2">Clearance Deals</h2>
                 <p className="text-slate-600">Premium flooring at closeout prices. When it's gone, it's gone.</p>

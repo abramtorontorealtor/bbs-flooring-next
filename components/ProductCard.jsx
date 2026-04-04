@@ -20,7 +20,7 @@ function getProductBadges(product) {
   const isWaterproof = product.is_waterproof || category.includes('vinyl') || name.includes('lvp') || name.includes('spc') || name.includes('waterproof');
   if (isWaterproof) badges.push({ key: 'waterproof', label: '💧 Waterproof', className: 'bg-blue-600 text-white' });
   const hasDiscount = product.sale_price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
-  if (hasDiscount) badges.push({ key: 'deal', label: '🔥 Hot Deal', className: 'bg-orange-500 text-white' });
+  if (hasDiscount) badges.push({ key: 'deal', label: 'On Sale', className: 'bg-orange-500 text-white' });
   return badges;
 }
 
@@ -58,10 +58,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
               {isOutOfStock && <span className="text-xs font-semibold px-2 py-1 rounded-full bg-slate-700 text-white">Out of Stock</span>}
               {product.is_new_arrival && !isOutOfStock && <span className="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-500 text-white">New Arrival</span>}
               {product.is_clearance && !isOutOfStock && (
-                <>
-                  <span className="text-xs font-semibold px-2 py-1 rounded-full bg-amber-500 text-white">Clearance</span>
-                  <span className="text-xs font-semibold px-2 py-1 rounded-full bg-red-600 text-white animate-pulse">Limited Stock</span>
-                </>
+                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-amber-500 text-white">Clearance</span>
               )}
             </div>
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center pointer-events-none">
