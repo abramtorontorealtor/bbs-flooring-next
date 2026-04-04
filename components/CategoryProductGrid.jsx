@@ -40,6 +40,7 @@ const DEFAULT_FILTERS = {
   isNewArrival: false,
   isClearance: false,
   brand: 'all',
+  collection: 'all',
   colour: 'all',
   species: 'all',
   width: 'all',
@@ -89,6 +90,7 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
         isNewArrival: getParam('newArrival', 'boolean') || false,
         isClearance: getParam('clearance', 'boolean') || false,
         brand: getParam('brand') || 'all',
+        collection: getParam('collection') || 'all',
         colour: getParam('colour') || 'all',
         species: getParam('species') || 'all',
         width: getParam('width') || 'all',
@@ -123,6 +125,7 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
     if (filters.isNewArrival) params.set('newArrival', 'true');
     if (filters.isClearance) params.set('clearance', 'true');
     if (filters.brand !== 'all') params.set('brand', filters.brand);
+    if (filters.collection !== 'all') params.set('collection', filters.collection);
     if (filters.colour !== 'all') params.set('colour', filters.colour);
     if (filters.species !== 'all') params.set('species', filters.species);
     if (filters.width !== 'all') params.set('width', filters.width);
@@ -194,6 +197,14 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
     const u = [...new Set(baseProducts.map(p => p.brand).filter(Boolean))];
     return [{ value: 'all', label: 'All Brands' }, ...u.map(b => ({ value: b, label: b }))];
   }, [baseProducts]);
+  // Collections — show options relevant to current brand filter
+  const collections = useMemo(() => {
+    const pool = filters.brand !== 'all' ? baseProducts.filter(p => p.brand === filters.brand) : baseProducts;
+    const u = [...new Set(pool.map(p => p.collection).filter(Boolean))];
+    if (u.length <= 1) return []; // Don't show filter if only 0-1 collection
+    return [{ value: 'all', label: 'All Collections' }, ...u.sort().map(c => ({ value: c, label: c }))];
+  }, [baseProducts, filters.brand]);
+
   const colours = useMemo(() => {
     const u = [...new Set(baseProducts.map(p => p.colour).filter(Boolean))];
     return [{ value: 'all', label: 'All Colours' }, ...u.map(c => ({ value: c, label: c }))];
@@ -234,6 +245,7 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
     if (filters.isNewArrival) r = r.filter(p => p.is_new_arrival);
     if (filters.isClearance) r = r.filter(p => p.is_clearance);
     if (filters.brand !== 'all') r = r.filter(p => p.brand === filters.brand);
+    if (filters.collection !== 'all') r = r.filter(p => p.collection === filters.collection);
     if (filters.colour !== 'all') r = r.filter(p => p.colour === filters.colour);
     if (filters.species !== 'all') r = r.filter(p => p.species === filters.species);
     if (filters.width !== 'all') r = r.filter(p => getProductWidth(p) === filters.width);
@@ -302,12 +314,21 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
   }, [category]);
 
   const clearFilters = () => { setFilters(DEFAULT_FILTERS); setCurrentPage(1); };
-  const set = (key, val) => { setFilters(f => ({ ...f, [key]: val })); setCurrentPage(1); };
+  const set = (key, val) => {
+    setFilters(f => {
+      const next = { ...f, [key]: val };
+      // Reset collection when brand changes (collections are brand-specific)
+      if (key === 'brand') next.collection = 'all';
+      return next;
+    });
+    setCurrentPage(1);
+  };
 
   const hasActiveFilters = filters.search || filters.isOnSale || filters.isWaterproof ||
     filters.isNewArrival || filters.isClearance || filters.brand !== 'all' ||
-    filters.colour !== 'all' || filters.species !== 'all' || filters.width !== 'all' ||
-    filters.thickness !== 'all' || filters.finish !== 'all' || filters.grade !== 'all';
+    filters.collection !== 'all' || filters.colour !== 'all' || filters.species !== 'all' ||
+    filters.width !== 'all' || filters.thickness !== 'all' || filters.finish !== 'all' ||
+    filters.grade !== 'all';
 
   const FilterSidebar = () => (
     <div className="space-y-8">
@@ -345,6 +366,16 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
           <SelectContent>{brands.map(b => <SelectItem key={b.value} value={b.value}>{b.label}</SelectItem>)}</SelectContent>
         </Select>
       </div>
+
+      {collections.length > 1 && (
+        <div>
+          <h3 className="font-semibold text-slate-800 mb-4">Collection</h3>
+          <Select value={filters.collection} onValueChange={(v) => set('collection', v)}>
+            <SelectTrigger><SelectValue placeholder="All Collections" /></SelectTrigger>
+            <SelectContent>{collections.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}</SelectContent>
+          </Select>
+        </div>
+      )}
 
       {colours.length > 1 && (
         <div>
@@ -477,6 +508,7 @@ export default function CategoryProductGrid({ sessionKey, queryKey, category, ca
               {filters.isNewArrival && <Pill label="New Arrivals" onRemove={() => set('isNewArrival', false)} />}
               {filters.isClearance && <Pill label="Clearance" onRemove={() => set('isClearance', false)} />}
               {filters.brand !== 'all' && <Pill label={filters.brand} onRemove={() => set('brand', 'all')} />}
+              {filters.collection !== 'all' && <Pill label={filters.collection} onRemove={() => set('collection', 'all')} />}
               {filters.colour !== 'all' && <Pill label={filters.colour} onRemove={() => set('colour', 'all')} />}
               {filters.species !== 'all' && <Pill label={filters.species} onRemove={() => set('species', 'all')} />}
               {filters.width !== 'all' && <Pill label={WIDTH_BUCKETS.find(b => b.value === filters.width)?.label} onRemove={() => set('width', 'all')} />}

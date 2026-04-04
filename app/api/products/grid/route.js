@@ -12,6 +12,7 @@ const CARD_COLUMNS = [
   'is_variant', 'is_on_sale', 'is_clearance', 'is_new_arrival', 'is_waterproof', 'is_canadian',
   'in_stock', 'made_in',
   'dimensions', 'thickness', 'colour', 'finish', 'grade', 'species',
+  'collection',
   'sort_score', 'sort_score_all', 'is_archived_variant',
   'created_at',
 ].join(', ');

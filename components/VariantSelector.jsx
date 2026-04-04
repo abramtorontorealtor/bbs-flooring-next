@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import WidthComparisonBars from '@/components/WidthComparisonBars';
 import CompareGradesTable from '@/components/CompareGradesTable';
@@ -252,10 +253,17 @@ export default function VariantSelector({ product, onVariantChange }) {
         </div>
       )}
 
-      {/* Variant count */}
-      <p className="text-xs text-slate-400">
-        {variants.length} configuration{variants.length !== 1 ? 's' : ''} available
-      </p>
+      {/* Variant count + grade guide CTA */}
+      <div className="flex items-center justify-between">
+        <p className="text-xs text-slate-400">
+          {variants.length} configuration{variants.length !== 1 ? 's' : ''} available
+        </p>
+        {gradeOptions.length > 1 && (
+          <Link href="/grade-guide" className="text-xs text-amber-700 hover:text-amber-800 font-medium transition-colors underline underline-offset-2">
+            Not sure which grade? →
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
