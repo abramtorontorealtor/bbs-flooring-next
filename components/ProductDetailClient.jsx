@@ -615,16 +615,16 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             Quick Question? WhatsApp Us
           </a>
 
-          {/* Request Free Sample CTA */}
+          {/* Request Sample CTA */}
           <a
-            href={`https://wa.me/message/CQQRGZKI3U2VH1?text=${encodeURIComponent(`Hi! I'd like to request a free sample of ${product.name} (SKU: ${product.sku || 'N/A'}). Can you arrange that?`)}`}
+            href={`https://wa.me/message/CQQRGZKI3U2VH1?text=${encodeURIComponent(`Hi! I'm interested in ${product.name}${product.sku ? ` (SKU: ${product.sku})` : ''}. Can you bring a sample when you come for the measurement?`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-white hover:bg-slate-50 text-slate-800 font-semibold rounded-xl transition-colors border-2 border-slate-200 hover:border-amber-300"
             onClick={() => Analytics.trackEvent('request_sample_click', 'engagement', product.name)}
           >
             <Package className="w-5 h-5 text-amber-500" />
-            Request Free Sample
+            Request a Sample
           </a>
 
           {/* Trust Badges */}

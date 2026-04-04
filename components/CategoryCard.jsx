@@ -28,6 +28,8 @@ const CATEGORY_ROUTES = {
   engineered_hardwood: '/engineered-hardwood',
   laminate: '/laminate',
   vinyl: '/vinyl',
+  waterproof: '/waterproof-flooring',
+  clearance: '/clearance',
 };
 
 export default function CategoryCard({ category, image, imageAlt, title, description }) {
