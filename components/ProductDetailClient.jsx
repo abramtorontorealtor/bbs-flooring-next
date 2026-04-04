@@ -199,7 +199,9 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     const sqftPerBox = currentPricing.sqft_per_box || 20;
     const boxesRequired = Math.ceil(sqft / sqftPerBox);
     const actualSqft = boxesRequired * sqftPerBox;
-    const pricePerSqft = currentPricing.price_per_sqft;
+    const pricePerSqft = (currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft)
+      ? currentPricing.sale_price_per_sqft
+      : currentPricing.price_per_sqft;
     const lineTotal = actualSqft * pricePerSqft;
     return { sqftNeeded: sqft, sqftPerBox, boxesRequired, actualSqft, pricePerSqft, lineTotal, extraSqft: actualSqft - sqft };
   }, [currentPricing, sqftNeeded]);

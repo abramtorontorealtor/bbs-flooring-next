@@ -61,7 +61,10 @@ export default function CartClient() {
       const sqftPerBox = product.sqft_per_box || 20;
       const boxesRequired = Math.ceil(newSqft / sqftPerBox);
       const actualSqft = boxesRequired * sqftPerBox;
-      const lineTotal = actualSqft * (product.price_per_sqft || 0);
+      const effectivePrice = (product.sale_price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft)
+        ? product.sale_price_per_sqft
+        : (product.price_per_sqft || 0);
+      const lineTotal = actualSqft * effectivePrice;
 
       return entities.CartItem.update(itemId, {
         sqft_needed: newSqft,
