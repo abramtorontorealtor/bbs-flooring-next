@@ -38,6 +38,8 @@ export function trackEvent(action, category, label = '') {
 }
 
 export const Analytics = {
+  trackEvent,
+
   trackPhoneClick: (location = 'header') => {
     trackEvent('click_call', 'contact', location);
   },
