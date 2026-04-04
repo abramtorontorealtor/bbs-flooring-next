@@ -176,18 +176,13 @@ export default function ProductsClient() {
     return [{ value: 'all', label: 'All Brands' }, ...uniqueBrands.map(b => ({ value: b, label: b }))];
   }, [products]);
 
-  const SPECIES_KEYWORDS = ['Oak', 'Maple', 'Hickory', 'Walnut', 'Ash'];
-  const getProductSpecies = (product) => {
-    const text = (product.name || '') + ' ' + (product.product_description || '');
-    for (const kw of SPECIES_KEYWORDS) {
-      if (new RegExp(`\\b${kw}\\b`, 'i').test(text)) return kw;
-    }
-    return null;
-  };
+  const HARDWOOD_CATEGORIES = ['solid_hardwood', 'engineered_hardwood'];
 
   const species = useMemo(() => {
     const found = new Set();
-    products.forEach(p => { const s = getProductSpecies(p); if (s) found.add(s); });
+    products
+      .filter(p => HARDWOOD_CATEGORIES.includes(p.category))
+      .forEach(p => { if (p.species) found.add(p.species); });
     return [{ value: 'all', label: 'All Species' }, ...[...found].sort().map(s => ({ value: s, label: s }))];
   }, [products]);
 
@@ -275,7 +270,7 @@ export default function ProductsClient() {
     }
 
     if (filters.species && filters.species !== 'all') {
-      result = result.filter(p => getProductSpecies(p) === filters.species);
+      result = result.filter(p => p.species === filters.species);
     }
 
     if (filters.width && filters.width !== 'all') {
@@ -482,7 +477,7 @@ export default function ProductsClient() {
         </Select>
       </div>
 
-      {species.length > 1 && (
+      {species.length > 1 && (!filters.category || filters.category === 'all' || HARDWOOD_CATEGORIES.includes(filters.category)) && (
         <div>
           <h3 className="font-semibold text-slate-800 mb-4">Species</h3>
           <Select

@@ -533,8 +533,9 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           {/* Specs Grid */}
           <div className="grid grid-cols-3 gap-4">
             {product.brand && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Brand</div><div className="font-semibold text-slate-800">{product.brand}</div></div>}
-            {currentPricing.species && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Species</div><div className="font-semibold text-slate-800">{currentPricing.species}</div></div>}
+            {currentPricing.species && !['vinyl', 'vinyl_plank', 'laminate'].includes(product.category) && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Species</div><div className="font-semibold text-slate-800">{currentPricing.species}</div></div>}
             {product.colour && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Colour</div><div className="font-semibold text-slate-800">{product.colour}</div></div>}
+            {product.thickness && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Thickness</div><div className="font-semibold text-slate-800">{product.thickness}</div></div>}
             {currentPricing.dimensions && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Dimensions</div><div className="font-semibold text-slate-800">{currentPricing.dimensions}</div></div>}
             {product.finish && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Finish</div><div className="font-semibold text-slate-800">{product.finish}</div></div>}
             {currentPricing.grade && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Grade</div><div className="font-semibold text-slate-800">{currentPricing.grade}</div></div>}
