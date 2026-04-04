@@ -29,7 +29,7 @@ import TransitionPieces from '@/components/TransitionPieces';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
-export default function ProductDetailClient({ slug }) {
+export default function ProductDetailClient({ slug, initialProduct = null }) {
   const router = useRouter();
   const { user: currentUser, isLoadingAuth } = useAuth();
   const isVerified = currentUser?.is_verified === true;
@@ -62,6 +62,8 @@ export default function ProductDetailClient({ slug }) {
     retryDelay: (attempt) => Math.min(1000 * Math.pow(2, attempt), 5000),
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
+    // Use server-fetched product as initial data to avoid loading flash
+    ...(initialProduct ? { initialData: [initialProduct], placeholderData: [initialProduct] } : {}),
   });
 
   // Fetch variants if parent product
