@@ -6,6 +6,8 @@ import { entities } from '@/lib/base44-compat';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getGalleryProjectBreadcrumbs } from '@/lib/breadcrumbs';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Calendar, Ruler, ArrowRight } from 'lucide-react';
@@ -51,6 +53,7 @@ export default function ProjectDetailClient({ slug }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <Breadcrumbs items={getGalleryProjectBreadcrumbs(project.title)} />
       {/* Project Header */}
       <div className="mb-12">
         <Link 

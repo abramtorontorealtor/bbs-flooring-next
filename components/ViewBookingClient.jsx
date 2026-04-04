@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import BookingCalendar from '@/components/BookingCalendar';
 import { MapPin, Calendar as CalendarIcon, Clock, Phone, Mail, AlertCircle, CheckCircle, Search, Loader2, ArrowLeft, X } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 const STATUS_CONFIG = {
   pending: { color: 'bg-yellow-100 text-yellow-800', label: 'Awaiting Confirmation', icon: '⏳', message: 'We received your request and will confirm your appointment within a few hours.' },
@@ -188,6 +190,7 @@ export default function ViewBookingClient() {
     return (
       <div className="min-h-[60vh] bg-slate-50 py-12">
         <div className="max-w-md mx-auto px-4">
+          <Breadcrumbs items={getStaticBreadcrumbs('/view-booking')} />
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-slate-800 mb-2">Find Your Booking</h1>
             <p className="text-slate-600">Enter the email and phone number you used when booking.</p>

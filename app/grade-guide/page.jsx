@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 export const metadata = {
   title: 'Hardwood Flooring Grade Guide | Character, Select & Select Better Explained | BBS Flooring',
@@ -231,14 +233,7 @@ export default function GradeGuidePage() {
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section className="bg-slate-900 text-white py-20 px-4">
           <div className="max-w-5xl mx-auto">
-            {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="mb-8">
-              <ol className="flex items-center gap-2 text-sm text-slate-400">
-                <li><Link href="/" className="hover:text-amber-400 transition-colors">Home</Link></li>
-                <li aria-hidden="true" className="text-slate-600">/</li>
-                <li className="text-slate-200" aria-current="page">Grade Guide</li>
-              </ol>
-            </nav>
+            <Breadcrumbs items={getStaticBreadcrumbs('/grade-guide')} />
 
             <div className="max-w-3xl">
               <span className="inline-block text-amber-400 text-sm font-semibold tracking-widest uppercase mb-4">

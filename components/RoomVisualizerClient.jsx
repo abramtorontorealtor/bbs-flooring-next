@@ -8,6 +8,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Upload, Camera, Loader2, Sparkles, ArrowRight, Download, MessageSquare, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 // =========================================================================
 // CONSTANTS
@@ -619,6 +621,7 @@ export default function RoomVisualizerClient() {
       {/* Hero Header */}
       <div className="bg-slate-900 text-white py-10 md:py-16 px-4">
         <div className="max-w-5xl mx-auto text-center">
+          <Breadcrumbs items={getStaticBreadcrumbs('/room-visualizer')} />
           <h1 className="text-3xl md:text-5xl font-bold mb-3">
             Room Visualizer
           </h1>

@@ -22,6 +22,8 @@ import { useAuth } from '@/lib/auth-context';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
 import { Analytics } from '@/components/analytics';
 import { validatePhone } from '@/lib/validations';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 export default function QuoteCalculatorClient() {
   const searchParams = useSearchParams();
@@ -445,6 +447,7 @@ export default function QuoteCalculatorClient() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <Breadcrumbs items={getStaticBreadcrumbs('/quote-calculator')} />
       <div className="text-center mb-10">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full mb-4">
           <Calculator className="w-8 h-8 text-amber-600" />

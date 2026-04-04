@@ -7,6 +7,8 @@ import { CheckCircle, Clock, Shield, DollarSign, Users, Wrench, Star } from 'luc
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 const INSTALLATION_FAQS = [
   {
@@ -94,6 +96,7 @@ export default function InstallationClient() {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-amber-50 to-slate-50 py-16">
         <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs items={getStaticBreadcrumbs('/installation')} />
           <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
             Professional Flooring Installation Services in Markham, Durham & Toronto
           </h1>

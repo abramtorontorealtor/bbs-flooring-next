@@ -10,6 +10,8 @@ import { CheckCircle, Clock, ArrowRight, Loader2, MapPin, Phone, Star, CalendarC
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { Analytics } from '@/components/analytics';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 function formatPostalCode(value) {
   const clean = value.replace(/\s/g, '').toUpperCase();
@@ -269,6 +271,7 @@ export default function QuoteBookingClient() {
       {/* Hero */}
       <div className="bg-gradient-to-br from-amber-50 to-slate-50 py-6 md:py-14">
         <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs items={getStaticBreadcrumbs('/quote-booking')} />
           <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 text-xs md:text-sm font-semibold px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-3 md:mb-5">
             <CalendarCheck className="w-3.5 h-3.5 md:w-4 md:h-4" /> Book Your Free In-Home Estimate
           </div>

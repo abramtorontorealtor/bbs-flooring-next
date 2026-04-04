@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { stairsImages, flooringImages, commercialImages } from '@/data/galleryImages';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 export default function GalleryClient() {
   const [activeTab, setActiveTab] = useState('stairs');
@@ -19,6 +21,7 @@ export default function GalleryClient() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <Breadcrumbs items={getStaticBreadcrumbs('/gallery')} />
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Our Project Gallery</h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">

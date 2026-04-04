@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import CarpetRemovalEstimator from '@/components/CarpetRemovalEstimator';
 import FinancingBanner from '@/components/FinancingBanner';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 const FAQ_ITEMS = [
   {
@@ -54,6 +56,7 @@ export default function CarpetRemovalClient() {
           className="absolute inset-0 w-full h-full object-cover opacity-30"
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          <Breadcrumbs items={getStaticBreadcrumbs('/carpet-removal')} />
           {/* Trust Badges */}
           <div className="flex flex-wrap gap-2 mb-6">
             {['Serving Markham, Toronto & Durham', 'Fully Insured', '24-Hour Turnaround'].map(b => (

@@ -6,6 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { MapPin, Calculator, Phone } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getLocationBreadcrumbs } from '@/lib/breadcrumbs';
 import ProductCard from '@/components/ProductCard';
 import { locationData } from '@/data/locationData';
 
@@ -34,6 +36,7 @@ export default function LocationClient({ citySlug }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <Breadcrumbs items={getLocationBreadcrumbs(data.city)} />
       {/* Hero Section */}
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 bg-amber-50 text-amber-800 px-4 py-2 rounded-full mb-6">

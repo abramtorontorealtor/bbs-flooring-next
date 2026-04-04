@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import ProductComparison from '@/components/ProductComparison';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 export default function CompareClient() {
   const [products, setProducts] = useState([]);
@@ -51,6 +53,7 @@ export default function CompareClient() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      <Breadcrumbs items={getStaticBreadcrumbs('/compare')} />
       <h1 className="text-3xl font-bold text-slate-800 mb-6">Compare Products</h1>
       <ProductComparison products={products} onRemove={handleRemove} inline />
     </div>

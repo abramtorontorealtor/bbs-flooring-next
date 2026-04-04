@@ -4,11 +4,14 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { MapPin, Phone, Calendar, Star, Users, Home, Shield, Truck, Heart, CheckCircle } from 'lucide-react';
 
 export default function AboutClient() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <Breadcrumbs items={getStaticBreadcrumbs('/about')} />
       <div className="text-center mb-16 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">About BBS Flooring</h1>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto">

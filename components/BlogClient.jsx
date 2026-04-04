@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
 import { Search } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 const CATEGORIES = [
   { value: 'all', label: 'All Posts' },
@@ -81,6 +83,7 @@ export default function BlogClient() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      <Breadcrumbs items={getStaticBreadcrumbs('/blog')} />
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Flooring Blog</h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">Expert tips, installation guides, and design inspiration for your flooring project.</p>

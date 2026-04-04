@@ -44,11 +44,11 @@ export default function AdLandingTemplate({
     Analytics.trackEvent('generate_lead', 'conversion', `${h1}_${location}`);
   };
 
-  // Build breadcrumb items
+  // Build breadcrumb items — hierarchy-based (Home > Parent > Current)
   const breadcrumbs = [
     { label: 'Home', url: '/' },
     ...(parentPage ? [{ label: parentPage.label, url: createPageUrl(parentPage.route) }] : []),
-    { label: h1, url: '#' },
+    { label: h1 },
   ];
 
   return (
@@ -56,13 +56,7 @@ export default function AdLandingTemplate({
       {/* Hero */}
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900 text-white py-14 px-4">
         <div className="max-w-5xl mx-auto">
-          <Breadcrumbs
-            items={breadcrumbs.map((b, i) =>
-              i === breadcrumbs.length - 1
-                ? { label: b.label, url: b.url }
-                : { label: b.label, url: b.url }
-            )}
-          />
+          <Breadcrumbs items={breadcrumbs} />
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4 text-white">
             {h1}
           </h1>

@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import BookingCalendar from '@/components/BookingCalendar';
 import { CheckCircle, Clock, Users, FileText, Phone, Star, ArrowRight, Calendar as CalendarIcon, Loader2, MapPin } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
 
@@ -207,6 +209,7 @@ export default function FreeMeasurementClient() {
       {/* Hero */}
       <div className="bg-gradient-to-br from-amber-50 to-slate-50 py-6 md:py-14">
         <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs items={getStaticBreadcrumbs('/free-measurement')} />
           <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 text-xs md:text-sm font-semibold px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-3 md:mb-5">
             <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4" /> 100% Free & No Obligation
           </div>

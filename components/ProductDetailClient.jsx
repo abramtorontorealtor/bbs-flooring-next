@@ -20,6 +20,7 @@ import ProductCard from '@/components/ProductCard';
 import FAQSection from '@/components/FAQSection';
 import StickyAddToCart from '@/components/StickyAddToCart';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getProductBreadcrumbs } from '@/lib/breadcrumbs';
 import { generateProductSchema, generateProductMetaTags } from '@/lib/seo';
 import { Analytics } from '@/components/analytics';
 import QuoteProductCTA from '@/components/QuoteProductCTA';
@@ -203,28 +204,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     return { sqftNeeded: sqft, sqftPerBox, boxesRequired, actualSqft, pricePerSqft, lineTotal, extraSqft: actualSqft - sqft };
   }, [currentPricing, sqftNeeded]);
 
-  const breadcrumbItems = useMemo(() => {
-    if (!product) return [];
-    const categoryMap = {
-      solid_hardwood: { label: 'Solid Hardwood', url: '/solid-hardwood' },
-      engineered_hardwood: { label: 'Engineered Hardwood', url: '/engineered-hardwood' },
-      laminate: { label: 'Laminate', url: '/laminate' },
-      vinyl: { label: 'Vinyl', url: '/vinyl' }
-    };
-    const items = [{ label: 'Home', url: '/' }];
-    if (categoryMap[product.category]) items.push(categoryMap[product.category]);
-    if (product.species) {
-      items.push({ label: product.species, url: `/products?category=${product.category}&species=${encodeURIComponent(product.species)}` });
-    }
-    if (product.brand) {
-      const brandUrl = `/products?category=${product.category}` +
-        (product.species ? `&species=${encodeURIComponent(product.species)}` : '') +
-        `&brand=${encodeURIComponent(product.brand)}`;
-      items.push({ label: product.brand, url: brandUrl });
-    }
-    items.push({ label: product.name, url: null });
-    return items;
-  }, [product]);
+  const breadcrumbItems = useMemo(() => getProductBreadcrumbs(product), [product]);
 
   // Inject JSON-LD
   useEffect(() => {

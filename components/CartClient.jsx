@@ -12,6 +12,8 @@ import { Separator } from "@/components/ui/separator";
 import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import TransitionPieces from '@/components/TransitionPieces';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 export default function CartClient() {
   const queryClient = useQueryClient();
@@ -162,10 +164,7 @@ export default function CartClient() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <Link href="/products" className="inline-flex items-center gap-2 text-slate-600 hover:text-amber-600 mb-8 transition-colors">
-        <ArrowLeft className="w-4 h-4" />
-        Continue Shopping
-      </Link>
+      <Breadcrumbs items={getStaticBreadcrumbs('/cart')} />
 
       <h1 className="text-4xl font-bold text-slate-800 mb-4">Your Cart</h1>
 

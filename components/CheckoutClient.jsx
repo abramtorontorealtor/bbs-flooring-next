@@ -15,6 +15,8 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Package, Truck, Store, CheckCircle, AlertCircle, Phone, Loader, Copy, Check, Clock, ShieldCheck, MessageSquare, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 export default function CheckoutClient() {
   const queryClient = useQueryClient();
@@ -609,10 +611,7 @@ export default function CheckoutClient() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 w-full overflow-x-hidden">
-      <Link href="/cart" className="inline-flex items-center gap-2 text-slate-600 hover:text-amber-600 mb-8 transition-colors">
-        <ArrowLeft className="w-4 h-4" />
-        Back to Cart
-      </Link>
+      <Breadcrumbs items={getStaticBreadcrumbs('/checkout')} />
 
       <h1 className="text-4xl font-bold text-slate-800 mb-8">Checkout</h1>
 

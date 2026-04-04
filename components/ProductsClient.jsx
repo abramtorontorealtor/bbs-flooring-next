@@ -7,6 +7,7 @@ import { createPageUrl } from '@/lib/routes';
 import { generateCollectionMetaTags } from '@/lib/seo';
 import ProductCard from '@/components/ProductCard';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { CATEGORY_PAGES } from '@/lib/breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -645,47 +646,17 @@ export default function ProductsClient() {
     </div>
   );
 
-  // Generate dynamic breadcrumbs based on filters (visual only — no schema injection)
+    // Hierarchy-based breadcrumbs: Home > Category (if filtered) or Home > All Products
   const breadcrumbItems = useMemo(() => {
-    const items = [{ label: 'Home', url: createPageUrl('Home') }];
-
-    const categoryMap = {
-      solid_hardwood: 'Solid Hardwood',
-      engineered_hardwood: 'Engineered Hardwood',
-      laminate: 'Laminate',
-      vinyl: 'Vinyl'
-    };
-
+    const items = [{ label: 'Home', url: '/' }];
     if (filters.category && filters.category !== 'all') {
-      const categoryLabel = categoryMap[filters.category] || filters.category;
-      items.push({
-        label: categoryLabel,
-        url: `${createPageUrl('Products')}?category=${filters.category}`
-      });
+      const cat = CATEGORY_PAGES[filters.category];
+      items.push({ label: cat ? cat.label : filters.category });
     } else {
-      items.push({ label: 'All Products', url: createPageUrl('Products') });
-      return items;
+      items.push({ label: 'All Products' });
     }
-
-    if (filters.species && filters.species !== 'all') {
-      items.push({
-        label: filters.species,
-        url: `${createPageUrl('Products')}?category=${filters.category}&species=${encodeURIComponent(filters.species)}`
-      });
-    }
-
-    if (filters.brand && filters.brand !== 'all') {
-      const brandUrl = `${createPageUrl('Products')}?category=${filters.category}` +
-        (filters.species !== 'all' ? `&species=${encodeURIComponent(filters.species)}` : '') +
-        `&brand=${encodeURIComponent(filters.brand)}`;
-      items.push({
-        label: filters.brand,
-        url: brandUrl
-      });
-    }
-
     return items;
-  }, [filters.category, filters.species, filters.brand]);
+  }, [filters.category]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 pb-8 pt-14">

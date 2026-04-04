@@ -10,6 +10,8 @@ import RelatedCategories from '@/components/RelatedCategories';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 const STAIRS_FAQS = [
   {
@@ -72,6 +74,7 @@ export default function StairsClient() {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-amber-50 to-slate-50 py-16">
         <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs items={getStaticBreadcrumbs('/stairs')} />
           <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
             Staircase Renovation & Installation – Markham, Toronto & Durham
           </h1>

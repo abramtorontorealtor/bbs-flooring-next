@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { CreditCard, Clock, TrendingDown, ChevronDown, ChevronUp } from 'lucide-react';
 import { FINANCEIT_LINKS, getMonthlyPayment } from '@/lib/financing';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 const PROGRAMS = [
   {
@@ -52,6 +54,7 @@ export default function FinancingClient() {
       {/* Hero */}
       <section className="bg-gradient-to-br from-slate-900 to-slate-700 text-white py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
+          <Breadcrumbs items={getStaticBreadcrumbs('/financing')} />
           <span className="inline-block bg-amber-500 text-slate-900 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-4">Financing Available</span>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">New Floors Now.<br />Pay Monthly.</h1>
           <p className="text-lg text-slate-300 mb-8 max-w-xl mx-auto">

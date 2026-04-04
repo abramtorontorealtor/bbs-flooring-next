@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar, MessageCircle } from 'lucide-react';
 import { createPageUrl } from '@/lib/routes';
 import { Analytics } from '@/components/analytics';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 const initialFormData = {
   name: '',
@@ -81,6 +83,7 @@ export default function ContactClient() {
       {/* Hero */}
       <section className="bg-slate-900 text-white py-16 px-4">
         <div className="max-w-6xl mx-auto text-center">
+          <Breadcrumbs items={getStaticBreadcrumbs('/contact')} />
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
           <p className="text-slate-300 text-lg max-w-2xl mx-auto">
             Ready to transform your floors? Our team is here to help with a free consultation and quote.

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
 import { Calendar, Clock, Tag, ArrowLeft, Share2, Phone, Ruler, Star } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { getBlogPostBreadcrumbs } from '@/lib/breadcrumbs';
 
 const categories = [
   { value: 'flooring_tips', label: 'Flooring Tips' },
@@ -79,9 +81,7 @@ export default function BlogPostClient({ slug }) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <Link href="/blog" className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-800 mb-8 -ml-2 px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Back to Blog
-      </Link>
+      <Breadcrumbs items={getBlogPostBreadcrumbs(post.title)} />
 
       {post.featured_image && (
         <div className="relative rounded-2xl overflow-hidden mb-8 h-96">
