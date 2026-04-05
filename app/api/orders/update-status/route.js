@@ -1,13 +1,36 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderStatusUpdate } from '@/lib/email';
+import { cookies } from 'next/headers';
+import { createServerClient } from '@supabase/ssr';
 
 /**
  * Server-side order status update with email notifications.
- * All status changes go through here — no more raw client-side DB updates.
+ * Admin-only — requires authenticated admin session.
  */
 export async function POST(request) {
   try {
+    // Auth check — admin only
+    const cookieStore = await cookies();
+    const supabaseAuth = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      { cookies: { getAll() { return cookieStore.getAll(); } } }
+    );
+    const { data: { user } } = await supabaseAuth.auth.getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const adminClient = getSupabaseAdminClient();
+    const { data: profile } = await adminClient
+      .from('users')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+    if (!profile || profile.role !== 'admin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
     const { orderId, newStatus } = await request.json();
 
     if (!orderId || !newStatus) {
