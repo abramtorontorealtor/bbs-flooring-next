@@ -9,9 +9,7 @@ const WASTE_OPTIONS = [
   { value: 15, label: '15%', desc: 'Complex layout / diagonal install' },
 ];
 
-const BULK_SQFT_THRESHOLD = 1000;
-
-export default function SqftCalculator({ variants = [], currentVariant = null, onSqftChange, currentSqft = '', productName = '', productSku = '' }) {
+export default function SqftCalculator({ variants = [], currentVariant = null, onSqftChange, currentSqft = '' }) {
   const [mode, setMode] = useState('direct'); // 'direct' | 'dimensions'
   const [length, setLength] = useState('');
   const [width, setWidth] = useState('');
@@ -177,30 +175,6 @@ export default function SqftCalculator({ variants = [], currentVariant = null, o
           />
         </div>
       )}
-
-      {/* Bulk Pricing CTA */}
-      {(() => {
-        const effectiveSqft = mode === 'dimensions' ? totalSqft : (parseFloat(currentSqft) || 0);
-        if (effectiveSqft < BULK_SQFT_THRESHOLD) return null;
-        const waMsg = `Hi! I'm looking for bulk pricing on ${productName}${productSku ? ` (SKU: ${productSku})` : ''} — I need ${Math.round(effectiveSqft)} sqft. What's the best price you can do?`;
-        return (
-          <a
-            href={`https://wa.me/16474281111?text=${encodeURIComponent(waMsg)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 w-full p-3 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl transition-colors group"
-          >
-            <div className="flex-shrink-0 w-10 h-10 bg-[#25D366] rounded-full flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.519 5.834L.052 23.579a.5.5 0 00.612.612l5.746-1.467A11.948 11.948 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.903 0-3.72-.504-5.32-1.459l-.382-.227-3.951 1.009 1.009-3.951-.227-.382A9.786 9.786 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818S21.818 6.582 21.818 12s-4.4 9.818-9.818 9.818z"/></svg>
-            </div>
-            <div className="flex-1 min-w-0">
-              <span className="text-sm font-semibold text-emerald-800 block">Ordering {Math.round(effectiveSqft).toLocaleString()}+ sqft?</span>
-              <span className="text-xs text-emerald-600">Message us for bulk pricing</span>
-            </div>
-            <svg className="w-4 h-4 text-emerald-400 group-hover:text-emerald-600 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-          </a>
-        );
-      })()}
 
       {/* Variant Comparison Table */}
       {comparison && comparison.length > 1 && (

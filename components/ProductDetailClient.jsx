@@ -564,8 +564,6 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                     currentVariant={selectedJsonVariant}
                     onSqftChange={setSqftNeeded}
                     currentSqft={sqftNeeded}
-                    productName={product.name}
-                    productSku={product.sku}
                   />
                 </div>
                 {calculation && buyMode === 'material' && (
