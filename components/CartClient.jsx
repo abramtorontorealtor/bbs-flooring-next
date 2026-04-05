@@ -193,9 +193,9 @@ export default function CartClient() {
             {productItems.map((item) => (
               <div key={item.id}>
                 <Card>
-                  <CardContent className="p-6">
-                    <div className="flex gap-6">
-                      <div className="w-24 h-24 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+                  <CardContent className="p-4 md:p-6">
+                    <div className="flex gap-3 md:gap-6">
+                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
                         <img
                           src={item.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop'}
                           alt={item.product_name}
@@ -203,10 +203,10 @@ export default function CartClient() {
                         />
                       </div>
                       
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <Link href={`/products/${item.product_id}`} className="font-semibold text-slate-800 hover:text-amber-600 transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="min-w-0">
+                            <Link href={`/products/${item.product_id}`} className="font-semibold text-slate-800 hover:text-amber-600 transition-colors line-clamp-2">
                               {item.product_name}
                             </Link>
                             <p className="text-sm text-slate-500 mt-1">SKU: {item.sku}</p>
@@ -215,7 +215,7 @@ export default function CartClient() {
                             variant="ghost"
                             size="icon"
                             onClick={() => deleteMutation.mutate(item.id)}
-                            className="text-slate-400 hover:text-red-500"
+                            className="text-slate-400 hover:text-red-500 flex-shrink-0 h-10 w-10"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
