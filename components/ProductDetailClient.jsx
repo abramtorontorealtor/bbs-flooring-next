@@ -357,7 +357,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               onClick={() => setIsImageZoomed(true)}
             >
               <Image
-                src={product.image_url ? `https://wsrv.nl/?url=${encodeURIComponent(product.image_url.split('?')[0])}&w=1200&q=80&output=webp` : 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop'}
+                src={product.image_url ? product.image_url : '/images/product-placeholder.svg'}
                 alt={product.image_alt_text || product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 width={1200}
@@ -735,7 +735,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       {/* Zoomed Image Modal */}
       {isImageZoomed && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-zoom-out animate-fade-in" onClick={() => setIsImageZoomed(false)}>
-          <Image src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=1200&fit=crop'} alt={product.image_alt_text || product.name} className="max-h-[90vh] object-contain animate-scale-in" style={{ maxWidth: 'min(896px, calc(100vw - 2rem))' }} width={1200} height={1200} />
+          <Image src={product.image_url || '/images/product-placeholder.svg'} alt={product.image_alt_text || product.name} className="max-h-[90vh] object-contain animate-scale-in" style={{ maxWidth: 'min(896px, calc(100vw - 2rem))' }} width={1200} height={1200} />
           <button className="absolute top-4 right-4 text-white text-3xl hover:opacity-70" onClick={() => setIsImageZoomed(false)}>✕</button>
         </div>
       )}

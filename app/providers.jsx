@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import StickyMobileCTA from '@/components/StickyMobileCTA';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ExitIntentPopup from '@/components/ExitIntentPopup';
+import CookieConsent from '@/components/CookieConsent';
 import { Toaster } from 'sonner';
 import { usePathname } from 'next/navigation';
 import { entities } from '@/lib/base44-compat';
@@ -118,6 +119,7 @@ export function ClientProviders({ children }) {
           <StickyMobileCTA />
           <WhatsAppButton />
           <ExitIntentPopup />
+          <CookieConsent />
           <Toaster richColors position="top-right" duration={4000} />
         </div>
       </AuthProvider>

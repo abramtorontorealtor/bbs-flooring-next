@@ -197,7 +197,7 @@ export default function CartClient() {
                     <div className="flex gap-3 md:gap-6">
                       <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
                         <img
-                          src={item.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop'}
+                          src={item.image_url || '/images/product-placeholder.svg'}
                           alt={item.product_name}
                           className="w-full h-full object-cover"
                         />

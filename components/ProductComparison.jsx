@@ -68,7 +68,7 @@ export default function ProductComparison({ products, onRemove }) {
                         <X className="w-4 h-4" />
                       </button>
                       <img
-                        src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop'}
+                        src={product.image_url || '/images/product-placeholder.svg'}
                         alt={product.name}
                         className="w-full h-32 object-cover rounded-lg mb-3"
                       />

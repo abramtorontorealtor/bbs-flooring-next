@@ -47,7 +47,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
   };
 
   const getImageUrl = (url) => {
-    if (!url) return 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop';
+    if (!url) return '/images/product-placeholder.svg';
     return url.split('?')[0];
   };
 

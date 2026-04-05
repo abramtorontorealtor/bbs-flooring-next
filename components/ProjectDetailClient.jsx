@@ -148,7 +148,7 @@ export default function ProjectDetailClient({ slug }) {
                 <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group">
                   <div className="aspect-square overflow-hidden bg-slate-50 relative">
                     <Image 
-                      src={(product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop').split('?')[0]}
+                      src={(product.image_url || '/images/product-placeholder.svg').split('?')[0]}
                       alt={product.name}
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       fill

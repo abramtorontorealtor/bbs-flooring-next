@@ -1,9 +1,23 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendBookingRequestReceived, sendBookingAdminNotification } from '@/lib/email';
+import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
+
+// Rate limit: 3 booking submissions per IP per 15 minutes
+const RATE_LIMIT = { maxRequests: 3, windowMs: 15 * 60 * 1000 };
 
 export async function POST(request) {
   try {
+    // Rate limiting
+    const ip = getClientIP(request);
+    const limit = checkRateLimit(`booking:${ip}`, RATE_LIMIT);
+    if (!limit.ok) {
+      return NextResponse.json(
+        { success: false, error: 'Too many booking requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((limit.resetAt - Date.now()) / 1000)) } }
+      );
+    }
+
     const { booking } = await request.json();
 
     if (!booking?.customer_email) {

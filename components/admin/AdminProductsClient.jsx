@@ -311,7 +311,7 @@ export default function AdminProductsClient() {
                         <img
                           src={
                             product.image_url ||
-                            'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&h=100&fit=crop'
+                            '/images/product-placeholder.svg'
                           }
                           alt={product.name}
                           className="w-12 h-12 rounded object-cover"
