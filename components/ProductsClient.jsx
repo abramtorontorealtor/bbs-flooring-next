@@ -49,6 +49,8 @@ export default function ProductsClient() {
     const urlThickness = searchParams.get('thickness') || '';
     const urlFinish = searchParams.get('finish') || '';
     const urlGrade = searchParams.get('grade') || '';
+    const urlWearLayer = searchParams.get('wearLayer') || '';
+    const urlAcRating = searchParams.get('acRating') || '';
     const urlSort = searchParams.get('sort') || '';
     const urlPriceMin = searchParams.get('priceMin');
     const urlPriceMax = searchParams.get('priceMax');
@@ -73,11 +75,13 @@ export default function ProductsClient() {
       thickness: urlThickness || 'all',
       finish: urlFinish || 'all',
       grade: urlGrade || 'all',
+      wearLayer: urlWearLayer || 'all',
+      acRating: urlAcRating || 'all',
       sortBy: urlSort || 'recommended',
     };
 
     const hasUrlFilters = urlCategory || urlSearch || urlSpecies || urlBrand ||
-      urlWidth || urlThickness || urlFinish || urlGrade || urlSort ||
+      urlWidth || urlThickness || urlFinish || urlGrade || urlWearLayer || urlAcRating || urlSort ||
       urlShowSale || urlWaterproof || urlNewArrival || urlClearance ||
       urlPriceMin != null || urlPriceMax != null;
 
@@ -219,8 +223,18 @@ export default function ProductsClient() {
   }, [products]);
 
   const grades = useMemo(() => {
-    const uniqueGrades = [...new Set(products.map(p => p.grade).filter(Boolean))];
-    return [{ value: 'all', label: 'All Grades' }, ...uniqueGrades.map(g => ({ value: g, label: g }))];
+    const uniqueGrades = [...new Set(products.filter(p => HARDWOOD_CATEGORIES.includes(p.category)).map(p => p.grade).filter(Boolean))];
+    return [{ value: 'all', label: 'All Grades' }, ...uniqueGrades.sort().map(g => ({ value: g, label: g }))];
+  }, [products]);
+
+  const wearLayers = useMemo(() => {
+    const unique = [...new Set(products.filter(p => p.category === 'vinyl').map(p => p.wear_layer).filter(Boolean))];
+    return [{ value: 'all', label: 'All Wear Layers' }, ...unique.sort().map(w => ({ value: w, label: w }))];
+  }, [products]);
+
+  const acRatings = useMemo(() => {
+    const unique = [...new Set(products.filter(p => p.category === 'laminate').map(p => p.ac_rating).filter(Boolean))];
+    return [{ value: 'all', label: 'All AC Ratings' }, ...unique.sort().map(a => ({ value: a, label: a }))];
   }, [products]);
 
   // Apply all filters
@@ -289,13 +303,21 @@ export default function ProductsClient() {
       result = result.filter(p => p.grade === filters.grade);
     }
 
+    if (filters.wearLayer && filters.wearLayer !== 'all') {
+      result = result.filter(p => p.wear_layer === filters.wearLayer);
+    }
+
+    if (filters.acRating && filters.acRating !== 'all') {
+      result = result.filter(p => p.ac_rating === filters.acRating);
+    }
+
     result = result.filter(p => {
       const price = p.price_per_sqft || p.sale_price_per_sqft || 0;
       return price >= filters.priceRange[0] && price <= filters.priceRange[1];
     });
 
     return result;
-  }, [products, filters.category, filters.search, filters.isOnSale, filters.isWaterproof, filters.isNewArrival, filters.isClearance, filters.brand, filters.species, filters.width, filters.thickness, filters.finish, filters.grade, filters.priceRange]);
+  }, [products, filters.category, filters.search, filters.isOnSale, filters.isWaterproof, filters.isNewArrival, filters.isClearance, filters.brand, filters.species, filters.width, filters.thickness, filters.finish, filters.grade, filters.wearLayer, filters.acRating, filters.priceRange]);
 
   // Final sorted products
   const filteredProducts = useMemo(() => {
@@ -361,6 +383,8 @@ export default function ProductsClient() {
     if (filters.thickness && filters.thickness !== 'all') params.set('thickness', filters.thickness);
     if (filters.finish && filters.finish !== 'all') params.set('finish', filters.finish);
     if (filters.grade && filters.grade !== 'all') params.set('grade', filters.grade);
+    if (filters.wearLayer && filters.wearLayer !== 'all') params.set('wearLayer', filters.wearLayer);
+    if (filters.acRating && filters.acRating !== 'all') params.set('acRating', filters.acRating);
     if (filters.sortBy && filters.sortBy !== 'recommended') params.set('sort', filters.sortBy);
     if (filters.priceRange[0] !== 0) params.set('priceMin', String(filters.priceRange[0]));
     if (filters.priceRange[1] !== 50) params.set('priceMax', String(filters.priceRange[1]));
@@ -382,6 +406,8 @@ export default function ProductsClient() {
     filters.thickness !== 'all',
     filters.finish !== 'all',
     filters.grade !== 'all',
+    filters.wearLayer !== 'all',
+    filters.acRating !== 'all',
     filters.isOnSale,
     filters.isWaterproof,
     filters.isNewArrival,
@@ -558,7 +584,7 @@ export default function ProductsClient() {
         </div>
       )}
 
-      {grades.length > 1 && (
+      {grades.length > 1 && (!filters.category || filters.category === 'all' || HARDWOOD_CATEGORIES.includes(filters.category)) && (
         <div>
           <h3 className="font-semibold text-slate-800 mb-4">Grade</h3>
           <Select
@@ -572,6 +598,48 @@ export default function ProductsClient() {
               {grades.map((grade) => (
                 <SelectItem key={grade.value} value={grade.value}>
                   {grade.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {wearLayers.length > 1 && (!filters.category || filters.category === 'all' || filters.category === 'vinyl') && (
+        <div>
+          <h3 className="font-semibold text-slate-800 mb-4">Wear Layer</h3>
+          <Select
+            value={filters.wearLayer}
+            onValueChange={(value) => setFilters({ ...filters, wearLayer: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="All Wear Layers" />
+            </SelectTrigger>
+            <SelectContent>
+              {wearLayers.map((wl) => (
+                <SelectItem key={wl.value} value={wl.value}>
+                  {wl.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      {acRatings.length > 1 && (!filters.category || filters.category === 'all' || filters.category === 'laminate') && (
+        <div>
+          <h3 className="font-semibold text-slate-800 mb-4">AC Rating</h3>
+          <Select
+            value={filters.acRating}
+            onValueChange={(value) => setFilters({ ...filters, acRating: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="All AC Ratings" />
+            </SelectTrigger>
+            <SelectContent>
+              {acRatings.map((ac) => (
+                <SelectItem key={ac.value} value={ac.value}>
+                  {ac.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -629,6 +697,8 @@ export default function ProductsClient() {
             thickness: 'all',
             finish: 'all',
             grade: 'all',
+            wearLayer: 'all',
+            acRating: 'all',
             sortBy: 'recommended',
           };
           setFilters(resetFilters);
@@ -684,7 +754,7 @@ export default function ProductsClient() {
           />
 
           {/* Active Filters */}
-          {(filters.category !== 'all' || filters.search || isSearchMode || filters.isOnSale || filters.isWaterproof || filters.isNewArrival || filters.isClearance || filters.brand !== 'all' || filters.species !== 'all' || filters.width !== 'all' || filters.thickness !== 'all' || filters.finish !== 'all' || filters.grade !== 'all') && (
+          {(filters.category !== 'all' || filters.search || isSearchMode || filters.isOnSale || filters.isWaterproof || filters.isNewArrival || filters.isClearance || filters.brand !== 'all' || filters.species !== 'all' || filters.width !== 'all' || filters.thickness !== 'all' || filters.finish !== 'all' || filters.grade !== 'all' || filters.wearLayer !== 'all' || filters.acRating !== 'all') && (
             <div className="flex flex-wrap gap-2 mb-6">
               {filters.category !== 'all' && (
                 <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm">
@@ -778,6 +848,22 @@ export default function ProductsClient() {
                 <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm">
                   {filters.grade}
                   <button onClick={() => setFilters({ ...filters, grade: 'all' })}>
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {filters.wearLayer !== 'all' && (
+                <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm">
+                  {filters.wearLayer} Wear Layer
+                  <button onClick={() => setFilters({ ...filters, wearLayer: 'all' })}>
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {filters.acRating !== 'all' && (
+                <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm">
+                  {filters.acRating}
+                  <button onClick={() => setFilters({ ...filters, acRating: 'all' })}>
                     <X className="w-3 h-3" />
                   </button>
                 </span>

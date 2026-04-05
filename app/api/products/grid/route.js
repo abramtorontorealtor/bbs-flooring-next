@@ -11,7 +11,7 @@ const CARD_COLUMNS = [
   'starting_price', 'has_variants', 'variant_count',
   'is_variant', 'is_on_sale', 'is_clearance', 'is_new_arrival', 'is_waterproof', 'is_canadian',
   'in_stock', 'made_in',
-  'dimensions', 'thickness', 'colour', 'finish', 'grade', 'species',
+  'dimensions', 'thickness', 'colour', 'finish', 'grade', 'species', 'wear_layer', 'ac_rating',
   'collection',
   'sort_score', 'sort_score_all', 'is_archived_variant',
   'created_at',

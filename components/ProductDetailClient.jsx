@@ -539,6 +539,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             {currentPricing.dimensions && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Dimensions</div><div className="font-semibold text-slate-800">{currentPricing.dimensions}</div></div>}
             {product.finish && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Finish</div><div className="font-semibold text-slate-800">{product.finish}</div></div>}
             {currentPricing.grade && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Grade</div><div className="font-semibold text-slate-800">{currentPricing.grade}</div></div>}
+            {product.wear_layer && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Wear Layer</div><div className="font-semibold text-slate-800">{product.wear_layer}</div></div>}
+            {product.ac_rating && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">AC Rating</div><div className="font-semibold text-slate-800">{product.ac_rating}</div></div>}
             <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Sq.Ft/Box</div><div className="font-semibold text-slate-800">{currentPricing.sqft_per_box?.toFixed(2)}</div></div>
           </div>
 
