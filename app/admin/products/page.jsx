@@ -1,7 +1,7 @@
 import AdminProductsClient from '@/components/admin/AdminProductsClient';
 
 export const metadata = {
-  title: 'Products — BBS Flooring Admin',
+  title: 'Products',
   robots: { index: false, follow: false },
 };
 

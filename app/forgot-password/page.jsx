@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import ForgotPasswordClient from '@/components/ForgotPasswordClient';
 
 export const metadata = {
-  title: 'Reset Password — BBS Flooring',
+  title: 'Reset Password',
   description: 'Reset your BBS Flooring account password.',
   robots: { index: false, follow: false },
 };

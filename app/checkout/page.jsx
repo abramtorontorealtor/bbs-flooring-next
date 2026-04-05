@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import CheckoutClient from '@/components/CheckoutClient';
 
 export const metadata = {
-  title: 'Checkout — BBS Flooring',
+  title: 'Checkout',
   description: 'Complete your flooring order with BBS Flooring.',
   robots: { index: false, follow: false },
 };

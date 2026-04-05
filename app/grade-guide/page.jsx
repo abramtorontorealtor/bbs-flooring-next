@@ -4,7 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
 export const metadata = {
-  title: 'Hardwood Flooring Grade Guide | Character, Select & Select Better Explained | BBS Flooring',
+  title: 'Hardwood Flooring Grade Guide | Character, Select & Select Better Explained',
   description:
     'Learn the difference between hardwood flooring grades — Character (ABCD), Select (ABC), and Select & Better (AB). Find the right grade for your lifestyle, budget, and design goals.',
   keywords: [
@@ -16,7 +16,7 @@ export const metadata = {
     'hardwood grade comparison',
   ],
   openGraph: {
-    title: 'Hardwood Grade Guide | BBS Flooring',
+    title: 'Hardwood Grade Guide',
     description:
       "Not sure which hardwood grade to choose? Our plain-English guide covers Character, Select, and Select & Better — what each looks like, who it suits, and what you'll pay.",
     url: 'https://bbsflooring.ca/grade-guide',

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import AccountDashboardClient from '@/components/AccountDashboardClient';
 
 export const metadata = {
-  title: 'My Account — BBS Flooring',
+  title: 'My Account',
   robots: { index: false, follow: false },
 };
 

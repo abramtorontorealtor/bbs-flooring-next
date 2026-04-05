@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import QuoteBookingClient from '@/components/QuoteBookingClient';
 
 export const metadata = {
-  title: 'Book Your Free Measurement — BBS Flooring',
+  title: 'Book Your Free Measurement',
   description: 'Schedule a free in-home measurement with BBS Flooring. Our team will come to you.',
   alternates: { canonical: '/quote-booking' },
 };

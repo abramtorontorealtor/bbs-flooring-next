@@ -8,23 +8,27 @@ export function generateStaticParams() {
   return Object.keys(locationData).map(city => ({ city }));
 }
 
-export function generateMetadata({ params }) {
-  const data = locationData[params.city] || locationData['markham'];
+export async function generateMetadata({ params }) {
+  const { city } = await params;
+  const data = locationData[city] || locationData['markham'];
+  // Strip "| BBS Flooring" if present in data.title — root layout template adds it
+  const title = data.title ? data.title.replace(/\s*\|\s*BBS\s*Flooring\s*$/i, '').trim() : data.title;
   return {
-    title: data.title,
+    title,
     description: data.description,
     alternates: {
-      canonical: `https://bbsflooring.ca/flooring-in/${params.city}`,
+      canonical: `/flooring-in/${city}`,
     },
   };
 }
 
-export default function LocationPage({ params }) {
-  const data = locationData[params.city] || locationData['markham'];
+export default async function LocationPage({ params }) {
+  const { city } = await params;
+  const data = locationData[city] || locationData['markham'];
   return (
     <>
       <JsonLd data={cityLocalBusinessSchema(data.city, data.content)} />
-      <Suspense><LocationClient citySlug={params.city} /></Suspense>
+      <Suspense><LocationClient citySlug={city} /></Suspense>
     </>
   );
 }

@@ -3,7 +3,7 @@ import ProjectDetailClient from '@/components/ProjectDetailClient';
 
 export function generateMetadata({ params }) {
   return {
-    title: `Project Gallery | BBS Flooring`,
+    title: `Project Gallery`,
     description: 'View our flooring project portfolio. Professional installation by BBS Flooring in Markham and the GTA.',
   };
 }

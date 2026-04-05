@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Privacy Policy | BBS Flooring',
+  title: 'Privacy Policy',
   description: 'BBS Flooring privacy policy — how we collect, use, and safeguard your personal information.',
 };
 

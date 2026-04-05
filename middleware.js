@@ -10,6 +10,8 @@ import { createServerClient } from '@supabase/ssr';
 // Wix legacy paths → new paths (previously handled by Cloudflare worker).
 // Only includes redirects where source ≠ destination.
 const WIX_REDIRECTS = new Map([
+  ['/flooring', '/products'],
+  ['/flooring-clearance-sale', '/clearance'],
   ['/about-us', '/about'],
   ['/book-online', '/free-measurement'],
   ['/bookings-checkout', '/free-measurement'],
@@ -23,7 +25,6 @@ const WIX_REDIRECTS = new Map([
   ['/flooring-payment-plans', '/products'],
   ['/flooring-services', '/installation'],
   ['/flooring-stores', '/flooring-in/markham'],
-  ['/naf-flooring', '/products'],
   ['/photogallery', '/gallery'],
   ['/service-page', '/free-measurement'],
   ['/solidhardwood', '/solid-hardwood'],
@@ -197,7 +198,9 @@ export const config = {
     '/Contact',
     '/Blog',
     '/Cart',
-    // Wix legacy paths
+    // Wix legacy paths + convenience redirects
+    '/flooring',
+    '/flooring-clearance-sale',
     '/about-us',
     '/book-online',
     '/bookings-checkout',
@@ -211,7 +214,6 @@ export const config = {
     '/flooring-payment-plans',
     '/flooring-services',
     '/flooring-stores',
-    '/naf-flooring',
     '/photogallery',
     '/service-page',
     '/solidhardwood',

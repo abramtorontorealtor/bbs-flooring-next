@@ -40,12 +40,13 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const product = await getProduct(slug);
   if (!product) {
-    return { title: 'Product Not Found | BBS Flooring' };
+    return { title: 'Product Not Found' };
   }
   const meta = generateProductMetaTags(product, product.category);
   return {
     title: meta.title,
     description: meta.description,
+    alternates: { canonical: `/products/${slug}` },
     openGraph: {
       title: meta.title,
       description: meta.description,

@@ -19,7 +19,7 @@ const has = (str, sub) => lc(str).includes(lc(sub));
 
 export const vidarFlooringData = {
   route: 'VidarFlooring',
-  title: 'Vidar Flooring Markham | Engineered Hardwood | BBS Flooring',
+  title: 'Vidar Flooring Markham | Engineered Hardwood',
   description: 'Shop Vidar engineered hardwood flooring in Markham. European oak, wide plank, waterproof options. In-stock at BBS Flooring. Free measurements. Call (647) 428-1111.',
   h1: 'Vidar Engineered Hardwood Flooring',
   subtitle: 'Premium European oak from Vidar — in stock at our Markham showroom. Expert installation across the GTA.',
@@ -60,7 +60,7 @@ export const vidarFlooringData = {
 
 export const basementFlooringData = {
   route: 'BasementFlooring',
-  title: 'Best Basement Flooring Markham | Waterproof Vinyl & SPC | BBS Flooring',
+  title: 'Best Basement Flooring Markham | Waterproof Vinyl & SPC',
   description: 'Waterproof basement flooring in Markham. SPC vinyl, luxury vinyl plank. Moisture-resistant, durable. Free measurements. Call (647) 428-1111.',
   h1: 'Waterproof Basement Flooring',
   subtitle: 'Moisture-proof vinyl and SPC flooring built for Canadian basements. In stock at our Markham showroom.',
@@ -109,7 +109,7 @@ export const basementFlooringData = {
 
 export const flooringInstallationCostData = {
   route: 'FlooringInstallationCost',
-  title: 'Flooring Installation Cost Markham & GTA | Price Guide | BBS Flooring',
+  title: 'Flooring Installation Cost Markham & GTA | Price Guide',
   description: 'How much does flooring installation cost in Markham? Hardwood $2.25/sqft, vinyl $2.00-2.25/sqft, laminate $2.00-2.25/sqft. Free quotes. Call (647) 428-1111.',
   h1: 'Flooring Installation Cost Guide',
   subtitle: 'Transparent pricing from a local, family-owned company. No hidden fees — free in-home measurements across the GTA.',
@@ -162,7 +162,7 @@ export const flooringInstallationCostData = {
 
 export const flooringShowroomMarkhamData = {
   route: 'FlooringShowroomMarkham',
-  title: 'Flooring Store Markham | Showroom | BBS Flooring | 6061 Hwy 7',
+  title: 'Flooring Store Markham | Showroom | 6061 Hwy 7',
   description: 'Visit BBS Flooring showroom in Markham. 600+ products, hardwood, vinyl, laminate. 6061 Highway 7. Mon-Sat. Free measurements. Call (647) 428-1111.',
   h1: 'BBS Flooring Showroom — Markham',
   subtitle: '600+ flooring products on display. Expert advice, free measurements, and honest pricing since 2012.',
@@ -206,7 +206,7 @@ export const flooringShowroomMarkhamData = {
 
 export const stairRefinishingData = {
   route: 'StairRefinishing',
-  title: 'Staircase Refinishing Markham & GTA | Hardwood Stairs | BBS Flooring',
+  title: 'Staircase Refinishing Markham & GTA | Hardwood Stairs',
   description: 'Professional staircase refinishing in Markham. Hardwood treads, custom staining, carpet-to-hardwood conversion. Free quotes. Call (647) 428-1111.',
   h1: 'Staircase Refinishing & Renovation',
   subtitle: 'Transform outdated carpet stairs into stunning hardwood. Custom staining, recapping, and full stair renovation.',
@@ -261,7 +261,7 @@ export const stairRefinishingData = {
 
 export const whiteOakFlooringData = {
   route: 'WhiteOakFlooring',
-  title: 'White Oak Flooring Markham | Engineered & Solid | BBS Flooring',
+  title: 'White Oak Flooring Markham | Engineered & Solid',
   description: 'Shop white oak hardwood flooring in Markham. Engineered and solid options. Wide plank, wire-brushed. Free measurements. Call (647) 428-1111.',
   h1: 'White Oak Hardwood Flooring',
   subtitle: 'The most popular hardwood species in North America — available in engineered and solid options at BBS Flooring.',
@@ -299,7 +299,7 @@ export const whiteOakFlooringData = {
 
 export const wickhamFlooringData = {
   route: 'WickhamFlooring',
-  title: 'Wickham Flooring Markham | Hardwood Made in Canada | BBS Flooring',
+  title: 'Wickham Flooring Markham | Hardwood Made in Canada',
   description: 'Shop Wickham hardwood flooring in Markham. Canadian-made, solid & engineered. Red oak, maple, hickory. Free measurements. Call (647) 428-1111.',
   h1: 'Wickham Hardwood Flooring',
   subtitle: 'Canadian-made hardwood from Wickham — solid and engineered collections in stock at BBS Flooring.',
@@ -334,7 +334,7 @@ export const wickhamFlooringData = {
 
 export const carpetToHardwoodStairsData = {
   route: 'CarpetToHardwoodStairs',
-  title: 'Carpet to Hardwood Stairs Markham | Conversion Cost | BBS Flooring',
+  title: 'Carpet to Hardwood Stairs Markham | Conversion Cost',
   description: 'Convert carpet stairs to hardwood in Markham. Professional stair recapping, custom staining. From $150/step. Free quotes. Call (647) 428-1111.',
   h1: 'Carpet to Hardwood Stair Conversion',
   subtitle: 'Remove dated carpet and reveal (or install) beautiful hardwood treads. Professional results, honest pricing.',
@@ -369,7 +369,7 @@ export const carpetToHardwoodStairsData = {
 
 export const flooringClearanceSaleData = {
   route: 'FlooringClearanceSale',
-  title: 'Flooring Clearance Sale Markham | Up to 60% Off | BBS Flooring',
+  title: 'Flooring Clearance Sale Markham | Up to 60% Off',
   description: 'Flooring clearance sale in Markham. Hardwood, vinyl, laminate up to 60% off. In-stock, limited quantities. Visit BBS Flooring or call (647) 428-1111.',
   h1: 'Flooring Clearance Sale',
   subtitle: 'In-stock overruns, discontinued lines, and limited quantities at 30–60% off. First come, first served.',
@@ -405,7 +405,7 @@ export const flooringClearanceSaleData = {
 
 export const waterproofFlooringData = {
   route: 'WaterproofFlooring',
-  title: 'Waterproof Flooring Markham | SPC Vinyl & Laminate | BBS Flooring',
+  title: 'Waterproof Flooring Markham | SPC Vinyl & Laminate',
   description: 'Shop waterproof flooring in Markham. SPC vinyl, waterproof laminate. Perfect for kitchens, bathrooms, basements. Free measurements. Call (647) 428-1111.',
   h1: 'Waterproof Flooring',
   subtitle: '100% waterproof SPC vinyl and water-resistant laminate — built for kitchens, bathrooms, and basements.',
@@ -450,7 +450,7 @@ export const waterproofFlooringData = {
 
 export const contractorFlooringData = {
   route: 'ContractorFlooring',
-  title: 'Contractor Flooring Markham | Trade Pricing & Bulk Orders | BBS Flooring',
+  title: 'Contractor Flooring Markham | Trade Pricing & Bulk Orders',
   description: 'Flooring contractor pricing in Markham. Member trade discounts, bulk orders, project scheduling. Hardwood, vinyl, laminate. Call (647) 428-1111.',
   h1: 'Flooring for Contractors & Trade Professionals',
   subtitle: 'Member pricing, priority scheduling, and dedicated project support — built for GTA contractors who demand quality and reliability.',
@@ -510,7 +510,7 @@ export const contractorFlooringData = {
 
 export const hardwoodRefinishingData = {
   route: 'HardwoodRefinishing',
-  title: 'Hardwood Floor Refinishing Markham & GTA | Sand & Stain | BBS Flooring',
+  title: 'Hardwood Floor Refinishing Markham & GTA | Sand & Stain',
   description: 'Professional hardwood floor refinishing in Markham. Dustless sanding, custom staining, polyurethane finish. Free quotes. Call (647) 428-1111.',
   h1: 'Hardwood Floor Refinishing',
   subtitle: 'Bring your worn hardwood floors back to life — dustless sanding, custom staining, and professional-grade finishes.',
@@ -572,7 +572,7 @@ export const hardwoodRefinishingData = {
 
 export const compareFlooringData = {
   route: 'Compare',
-  title: 'Hardwood vs Vinyl vs Laminate Flooring Comparison | BBS Flooring Markham',
+  title: 'Hardwood vs Vinyl vs Laminate Flooring Comparison | Markham',
   description: 'Compare engineered hardwood, solid hardwood, vinyl LVP/SPC, and laminate flooring side by side. Real pricing, pros & cons, and which is best for every room. BBS Flooring Markham.',
   h1: 'Flooring Comparison Guide: Which Floor Is Right for You?',
   subtitle: 'Honest, no-BS comparison from a family-owned flooring company that sells and installs all four types. We\'ll tell you what actually works — not just what has the highest margin.',

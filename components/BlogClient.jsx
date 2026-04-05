@@ -18,14 +18,16 @@ const CATEGORIES = [
   { value: 'company_news', label: 'Company News' },
 ];
 
-export default function BlogClient() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function BlogClient({ initialPosts = null }) {
+  const [posts, setPosts] = useState(initialPosts || []);
+  const [loading, setLoading] = useState(!initialPosts);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
   const [activeTag, setActiveTag] = useState(null);
 
   useEffect(() => {
+    // Skip fetch if we already have server-provided posts
+    if (initialPosts && initialPosts.length > 0) return;
     async function fetchPosts() {
       const supabase = getSupabaseBrowserClient();
       if (!supabase) { setLoading(false); return; }
@@ -35,7 +37,7 @@ export default function BlogClient() {
       setLoading(false);
     }
     fetchPosts();
-  }, []);
+  }, [initialPosts]);
 
   // Extract popular tags from all posts
   const popularTags = (() => {

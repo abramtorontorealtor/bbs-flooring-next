@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import SignupClient from '@/components/SignupClient';
 
 export const metadata = {
-  title: 'Create Account — BBS Flooring',
+  title: 'Create Account',
   description: 'Create a BBS Flooring account to unlock member pricing, save quotes, and track your orders.',
   robots: { index: false, follow: false },
 };

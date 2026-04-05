@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import CartClient from '@/components/CartClient';
 
 export const metadata = {
-  title: 'Your Cart — BBS Flooring',
+  title: 'Your Cart',
   description: 'Review your flooring selections and proceed to checkout.',
   robots: { index: false, follow: false },
 };

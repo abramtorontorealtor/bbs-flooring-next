@@ -2,7 +2,7 @@ import FinancingClient from '@/components/FinancingClient';
 import { JsonLd, localBusinessSchema } from '@/lib/schemas';
 
 export const metadata = {
-  title: 'Flooring Financing — Apply in Minutes | BBS Flooring Markham',
+  title: 'Flooring Financing — Apply in Minutes | Markham',
   description:
     'Finance your flooring project with BBS Flooring. Low monthly payments, 0% deferred options, and instant approvals through Financeit. Serving Markham, Toronto, and the GTA.',
   alternates: { canonical: '/financing' },

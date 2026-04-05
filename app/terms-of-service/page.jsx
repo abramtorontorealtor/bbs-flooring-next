@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Terms of Service | BBS Flooring',
+  title: 'Terms of Service',
   description: 'BBS Flooring terms of service and customer policies.',
 };
 

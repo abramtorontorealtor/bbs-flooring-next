@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import ViewBookingClient from '@/components/ViewBookingClient';
 
 export const metadata = {
-  title: 'Your Booking — BBS Flooring',
+  title: 'Your Booking',
   robots: { index: false, follow: false },
 };
 

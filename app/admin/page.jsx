@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Admin Dashboard — BBS Flooring',
+  title: 'Admin Dashboard',
   robots: { index: false, follow: false },
 };
 

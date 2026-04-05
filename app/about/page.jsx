@@ -2,7 +2,7 @@ import AboutClient from '@/components/AboutClient';
 import { JsonLd, localBusinessSchema, organizationSchema } from '@/lib/schemas';
 
 export const metadata = {
-  title: 'About BBS Flooring | Family-Owned Since 2010 | Markham',
+  title: 'About Us | Family-Owned Flooring Since 2010 | Markham',
   description: 'Family-owned flooring company in Markham serving Toronto & Durham since 2010. 794+ products, expert installation. Visit our showroom at 6061 Highway 7.',
   alternates: { canonical: '/about' },
 };

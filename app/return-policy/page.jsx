@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Return Policy | BBS Flooring',
+  title: 'Return Policy',
   description: 'BBS Flooring return and exchange policy — 30-day returns with conditions.',
 };
 

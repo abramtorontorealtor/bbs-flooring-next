@@ -1,4 +1,4 @@
-import { getSupabaseServerClient } from '@/lib/supabase';
+import { getSupabaseAdminClient, getSupabaseServerClient } from '@/lib/supabase';
 import BlogPostClient from '@/components/BlogPostClient';
 import { JsonLd } from '@/lib/schemas';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -9,7 +9,7 @@ export const revalidate = 3600;
 // Pre-generate published blog posts at build time
 export async function generateStaticParams() {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = getSupabaseAdminClient() || getSupabaseServerClient();
     if (!supabase) return [];
     const { data: posts } = await supabase
       .from('blog_posts')
@@ -23,26 +23,33 @@ export async function generateStaticParams() {
 }
 
 async function getPost(slug) {
-  const supabase = getSupabaseServerClient();
+  const supabase = getSupabaseAdminClient() || getSupabaseServerClient();
   if (!supabase) return null;
-  const { data: posts } = await supabase
+  const { data: posts, error } = await supabase
     .from('blog_posts')
-    .select('title,seo_title,seo_description,excerpt,featured_image,keywords,author,created_at,updated_at,slug,category')
+    .select('*')
     .eq('slug', slug)
+    .eq('status', 'published')
     .limit(1);
+  if (error) console.error('[BlogPost] Server fetch error:', error.message);
   return posts?.[0] || null;
 }
+
+// Strip trailing "| BBS Flooring" — root layout template adds it
+function cleanTitle(t) { return t ? t.replace(/\s*\|\s*BBS\s*Flooring\s*$/i, '').trim() : t; }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  if (!post) return { title: 'Blog Post Not Found | BBS Flooring' };
+  if (!post) return { title: 'Blog Post Not Found' };
+  const title = cleanTitle(post.seo_title || post.title);
   return {
-    title: post.seo_title || post.title,
+    title,
     description: post.seo_description || post.excerpt,
+    alternates: { canonical: `/blog/${slug}` },
     keywords: post.keywords || undefined,
     openGraph: {
-      title: post.seo_title || post.title,
+      title,
       description: post.seo_description || post.excerpt,
       type: 'article',
       images: post.featured_image ? [post.featured_image] : [],
@@ -51,7 +58,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.seo_title || post.title,
+      title,
       description: post.seo_description || post.excerpt,
       images: post.featured_image ? [post.featured_image] : [],
     },
@@ -104,7 +111,7 @@ export default async function BlogPostPage({ params }) {
   return (
     <>
       {articleSchema && <JsonLd data={[articleSchema, breadcrumbSchema]} />}
-      <BlogPostClient slug={slug} />
+      <BlogPostClient slug={slug} initialPost={post} />
     </>
   );
 }

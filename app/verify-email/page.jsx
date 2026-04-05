@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import VerifyEmailClient from '@/components/VerifyEmailClient';
 
 export const metadata = {
-  title: 'Verifying Email — BBS Flooring',
+  title: 'Verifying Email',
   robots: { index: false, follow: false },
 };
 

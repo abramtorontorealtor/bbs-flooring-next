@@ -1,7 +1,7 @@
 import AdminSEOClient from '@/components/admin/AdminSEOClient';
 
 export const metadata = {
-  title: 'SEO Optimization — BBS Flooring Admin',
+  title: 'SEO Optimization',
   robots: { index: false, follow: false },
 };
 

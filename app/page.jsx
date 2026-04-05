@@ -2,13 +2,13 @@ import { Suspense } from 'react';
 import HomeClient from '@/components/HomeClient';
 
 export const metadata = {
-  title: 'BBS Flooring | Markham, Toronto & Durham | Free Quote',
+  title: 'Flooring Store Markham, Toronto & Durham | Free Quote',
   description: 'Premium flooring in Markham, Toronto & Durham. Hardwood, vinyl, laminate. 600+ products, expert installation. Free measurements. Call (647) 428-1111!',
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'BBS Flooring | Premium Flooring in Markham, Toronto & Durham',
+    title: 'Premium Flooring in Markham, Toronto & Durham',
     description: 'Premium flooring in Markham, Toronto & Durham. 600+ products, expert installation. Free measurements.',
     images: [
       {

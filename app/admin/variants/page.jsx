@@ -1,7 +1,7 @@
 import AdminVariantsClient from '@/components/admin/AdminVariantsClient';
 
 export const metadata = {
-  title: 'Variants — BBS Flooring Admin',
+  title: 'Variants',
   robots: { index: false, follow: false },
 };
 

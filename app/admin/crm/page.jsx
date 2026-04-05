@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import AdminCRMClient from '@/components/admin/AdminCRMClient';
 
 export const metadata = {
-  title: 'Lead Command Center — BBS Flooring Admin',
+  title: 'Lead Command Center',
   robots: { index: false, follow: false },
 };
 

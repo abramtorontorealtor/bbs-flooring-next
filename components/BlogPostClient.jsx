@@ -23,18 +23,22 @@ function formatDate(dateStr, long = false) {
   return new Date(dateStr).toLocaleDateString('en-US', opts);
 }
 
-export default function BlogPostClient({ slug }) {
-  const [post, setPost] = useState(null);
+export default function BlogPostClient({ slug, initialPost = null }) {
+  const [post, setPost] = useState(initialPost);
   const [relatedPosts, setRelatedPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!initialPost);
 
   useEffect(() => {
     async function loadPost() {
       const supabase = getSupabaseBrowserClient();
       if (!supabase || !slug) { setIsLoading(false); return; }
-      const { data: posts } = await supabase.from('blog_posts').select('*').eq('slug', slug).eq('status', 'published').limit(1);
-      const p = posts?.[0] || null;
-      setPost(p);
+      // If we have server-provided post, skip fetch — just load related posts
+      let p = initialPost;
+      if (!p) {
+        const { data: posts } = await supabase.from('blog_posts').select('*').eq('slug', slug).eq('status', 'published').limit(1);
+        p = posts?.[0] || null;
+        setPost(p);
+      }
       if (p?.category) {
         const { data: related } = await supabase.from('blog_posts').select('id,slug,title,excerpt,featured_image,published_at,read_time').eq('category', p.category).eq('status', 'published').neq('id', p.id).limit(3);
         setRelatedPosts(related || []);
@@ -42,7 +46,7 @@ export default function BlogPostClient({ slug }) {
       setIsLoading(false);
     }
     loadPost();
-  }, [slug]);
+  }, [slug, initialPost]);
 
   const handleShare = async () => {
     const shareData = { title: post?.title, text: post?.excerpt, url: window.location.href };

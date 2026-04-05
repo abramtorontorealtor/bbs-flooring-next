@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import LoginClient from '@/components/LoginClient';
 
 export const metadata = {
-  title: 'Login — BBS Flooring',
+  title: 'Login',
   description: 'Sign in to your BBS Flooring account to access member pricing, saved quotes, and order history.',
   robots: { index: false, follow: false },
 };

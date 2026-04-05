@@ -15,7 +15,7 @@ const has = (str, sub) => lc(str).includes(lc(sub));
 
 export const nafFlooringData = {
   route: 'NafFlooring',
-  title: 'NAF Flooring Markham | Vinyl, Hardwood & Laminate | BBS Flooring',
+  title: 'NAF Flooring Markham | Vinyl, Hardwood & Laminate',
   description: 'Shop NAF Flooring in Markham — 164 products in stock. Vinyl plank, engineered hardwood, and laminate from $2.89/sqft. Free measurements. Call (647) 428-1111.',
   h1: 'NAF Flooring — Vinyl, Hardwood & Laminate',
   subtitle: '164 NAF products in stock at our Markham showroom. From waterproof vinyl to European oak engineered hardwood — one brand covers every room in your home.',
@@ -66,7 +66,7 @@ export const nafFlooringData = {
 
 export const northernestFlooringData = {
   route: 'NorthernestFlooring',
-  title: 'Northernest Flooring Markham | Hardwood & Laminate | BBS Flooring',
+  title: 'Northernest Flooring Markham | Hardwood & Laminate',
   description: 'Shop Northernest Flooring in Markham — 106 products in stock. Engineered hardwood, solid hardwood, and European laminate from $3.19/sqft. Call (647) 428-1111.',
   h1: 'Northernest Hardwood & Laminate Flooring',
   subtitle: '106 Northernest products in stock. Engineered and solid hardwood in oak, maple, and hickory — plus 12mm European laminate. All at our Markham showroom.',
@@ -111,7 +111,7 @@ export const northernestFlooringData = {
 
 export const wodenFlooringData = {
   route: 'WodenFlooring',
-  title: 'Woden Flooring Markham | Vinyl & Engineered Hardwood | BBS Flooring',
+  title: 'Woden Flooring Markham | Vinyl & Engineered Hardwood',
   description: 'Shop Woden Flooring in Markham — 62 products in stock. Vinyl plank and engineered hardwood from $2.59/sqft. Free measurements. Call (647) 428-1111.',
   h1: 'Woden Vinyl & Engineered Hardwood Flooring',
   subtitle: '62 Woden products in stock — from waterproof vinyl at $2.59/sqft to engineered oak hardwood. In stock at our Markham showroom.',
@@ -158,7 +158,7 @@ export const wodenFlooringData = {
 
 export const falconFlooringData = {
   route: 'FalconFlooring',
-  title: 'Falcon Flooring Markham | Affordable Hardwood, Vinyl & Laminate | BBS Flooring',
+  title: 'Falcon Flooring Markham | Affordable Hardwood, Vinyl & Laminate',
   description: 'Shop Falcon Flooring in Markham — 56 products from $2.19/sqft. Engineered hardwood, vinyl, and waterproof laminate. Free measurements. Call (647) 428-1111.',
   h1: 'Falcon Flooring — Hardwood, Vinyl & Laminate',
   subtitle: '56 Falcon products from $2.19/sqft. Real hardwood, waterproof vinyl, and 12mm laminate — quality floors at prices that make renovations actually affordable.',
@@ -203,7 +203,7 @@ export const falconFlooringData = {
 
 export const canadianStandardFlooringData = {
   route: 'CanadianStandardFlooring',
-  title: 'Canadian Standard Flooring Markham | Engineered Hardwood | BBS Flooring',
+  title: 'Canadian Standard Flooring Markham | Engineered Hardwood',
   description: 'Shop Canadian Standard engineered hardwood in Markham — 48 products from $4.99/sqft. Oak, hickory, maple, walnut in 6½" and 7½" planks. Call (647) 428-1111.',
   h1: 'Canadian Standard Engineered Hardwood',
   subtitle: '48 engineered hardwood options from $4.99/sqft. Oak, hickory, maple, and walnut in 6½" and 7½" wide planks — all in stock at our Markham showroom.',
@@ -250,7 +250,7 @@ export const canadianStandardFlooringData = {
 
 export const triforestFlooringData = {
   route: 'TriforestFlooring',
-  title: 'Triforest Flooring Markham | Vinyl Plank & Laminate | BBS Flooring',
+  title: 'Triforest Flooring Markham | Vinyl Plank & Laminate',
   description: 'Shop Triforest Flooring in Markham — 38 products from $2.29/sqft. Waterproof vinyl plank and 12mm laminate. Condo approved. Call (647) 428-1111.',
   h1: 'Triforest Vinyl Plank & Laminate Flooring',
   subtitle: '38 Triforest products from $2.29/sqft. Waterproof vinyl in multiple thicknesses plus budget-friendly laminate — smart choices for cost-conscious renovations.',
@@ -296,7 +296,7 @@ export const triforestFlooringData = {
 
 export const simbaFlooringData = {
   route: 'SimbaFlooring',
-  title: 'Simba Flooring Markham | Vinyl Plank & Herringbone | BBS Flooring',
+  title: 'Simba Flooring Markham | Vinyl Plank & Herringbone',
   description: 'Shop Simba Flooring in Markham — 27 vinyl products from $2.99/sqft. SPC vinyl plank and herringbone patterns. Waterproof. Call (647) 428-1111.',
   h1: 'Simba Vinyl Plank & Herringbone Flooring',
   subtitle: '27 Simba vinyl products from $2.99/sqft — including herringbone patterns that bring a luxury look without the luxury price tag.',
@@ -347,7 +347,7 @@ export const simbaFlooringData = {
 
 export const leeFlooringData = {
   route: 'LeeFlooring',
-  title: 'Lee Flooring Markham | Engineered Hardwood & Vinyl | BBS Flooring',
+  title: 'Lee Flooring Markham | Engineered Hardwood & Vinyl',
   description: 'Shop Lee Flooring in Markham — 24 products from $2.29/sqft. Engineered oak hardwood and vinyl plank with condo pad. Call (647) 428-1111.',
   h1: 'Lee Engineered Hardwood & Vinyl Flooring',
   subtitle: '24 Lee products from $2.29/sqft. European and American oak engineered hardwood plus 7mm vinyl with condo-approved underpad.',
@@ -388,7 +388,7 @@ export const leeFlooringData = {
 
 export const toscaFlooringData = {
   route: 'ToscaFlooring',
-  title: 'Tosca Floors Markham | Budget Laminate Flooring | BBS Flooring',
+  title: 'Tosca Floors Markham | Budget Laminate Flooring',
   description: 'Shop Tosca laminate flooring in Markham — 21 products from $0.99/sqft. The most affordable laminate in our showroom. Call (647) 428-1111.',
   h1: 'Tosca Laminate Flooring',
   subtitle: '21 Tosca laminate products starting under $2/sqft — the most budget-friendly flooring in our showroom. Ideal for rentals, flips, and large-area renovations.',
@@ -430,7 +430,7 @@ export const toscaFlooringData = {
 
 export const appalachianFlooringData = {
   route: 'AppalachianFlooring',
-  title: 'Appalachian Flooring Markham | Solid Hardwood | BBS Flooring',
+  title: 'Appalachian Flooring Markham | Solid Hardwood',
   description: 'Shop Appalachian solid hardwood in Markham — 18 products from $5.99/sqft. Solid maple and red oak. Canadian-made. Call (647) 428-1111.',
   h1: 'Appalachian Solid Hardwood Flooring',
   subtitle: '18 solid hardwood options in maple and red oak from $5.99/sqft. Real ¾" Canadian hardwood — sand it, refinish it, pass it down.',
@@ -471,7 +471,7 @@ export const appalachianFlooringData = {
 
 export const evergreenFlooringData = {
   route: 'EvergreenFlooring',
-  title: 'Evergreen Flooring Markham | 12mm Waterproof Laminate | BBS Flooring',
+  title: 'Evergreen Flooring Markham | 12mm Waterproof Laminate',
   description: 'Shop Evergreen 12mm waterproof laminate in Markham — 16 products from $2.99/sqft. Thick, durable, moisture-resistant. Call (647) 428-1111.',
   h1: 'Evergreen 12mm Waterproof Laminate',
   subtitle: '16 waterproof laminate options from $2.99/sqft. 12mm thick with moisture-resistant cores — the laminate upgrade for kitchens, entryways, and main floors.',
@@ -516,7 +516,7 @@ export const evergreenFlooringData = {
 
 export const sherwoodFlooringData = {
   route: 'SherwoodFlooring',
-  title: 'Sherwood Forest Products Markham | Solid Hardwood | BBS Flooring',
+  title: 'Sherwood Forest Products Markham | Solid Hardwood',
   description: 'Shop Sherwood Forest Products solid hardwood in Markham — 16 options from $5.69/sqft. Maple and red oak in 3¼" and 4¼" planks. Call (647) 428-1111.',
   h1: 'Sherwood Forest Products — Solid Hardwood',
   subtitle: '16 solid hardwood options in maple and red oak. Traditional 3¼" and 4¼" plank widths from $5.69/sqft — classic hardwood for classic homes.',
@@ -556,7 +556,7 @@ export const sherwoodFlooringData = {
 
 export const goldenChoiceFlooringData = {
   route: 'GoldenChoiceFlooring',
-  title: 'Golden Choice Flooring Markham | 12mm Waterproof Laminate | BBS Flooring',
+  title: 'Golden Choice Flooring Markham | 12mm Waterproof Laminate',
   description: 'Shop Golden Choice 12mm waterproof laminate in Markham — 6 curated options at $3.49/sqft. In stock at BBS Flooring. Call (647) 428-1111.',
   h1: 'Golden Choice 12mm Waterproof Laminate',
   subtitle: '6 curated waterproof laminate options at $3.49/sqft. A small, focused collection — every colour handpicked for our showroom.',
