@@ -59,7 +59,8 @@ export default async function sitemap() {
     { path: '/financing', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/compare', priority: 0.5, changeFrequency: 'monthly' },
     { path: '/quote-calculator', priority: 0.7, changeFrequency: 'monthly' },
-    { path: '/room-visualizer', priority: 0.6, changeFrequency: 'monthly' },
+    // Room Visualizer hidden — needs rework (Apr 5, 2026)
+    // { path: '/room-visualizer', priority: 0.6, changeFrequency: 'monthly' },
     // Policy pages
     { path: '/privacy-policy', priority: 0.2, changeFrequency: 'yearly' },
     { path: '/terms-of-service', priority: 0.2, changeFrequency: 'yearly' },

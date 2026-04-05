@@ -130,11 +130,7 @@ export default function Footer() {
                   Installation Services
                 </Link>
               </li>
-              <li>
-                <Link href="/room-visualizer" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
-                  Room Visualizer
-                </Link>
-              </li>
+
               <li>
                 <Link href="/financing" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
                   Financing Available
