@@ -58,6 +58,10 @@ const nextConfig = {
       { source: '/FlooringClearanceSale', destination: '/flooring-clearance-sale', permanent: true },
       { source: '/QuoteCalculator', destination: '/quote-calculator', permanent: true },
       { source: '/RoomVisualizer', destination: '/room-visualizer', permanent: true },
+      // Missing legacy pages (were 404ing in GSC)
+      { source: '/Hardwood', destination: '/engineered-hardwood', permanent: true },
+      { source: '/WaterproofVinyl', destination: '/waterproof-flooring', permanent: true },
+      { source: '/FlooringPaymentPlans', destination: '/financing', permanent: true },
       // Brand/specialty pages
       { source: '/VidarFlooring', destination: '/vidar-flooring', permanent: true },
       { source: '/WickhamFlooring', destination: '/wickham-flooring', permanent: true },
