@@ -193,9 +193,9 @@ export default function CartClient() {
             {productItems.map((item) => (
               <div key={item.id}>
                 <Card>
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex gap-3 md:gap-6">
-                      <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+                  <CardContent className="p-3 sm:p-4 md:p-6">
+                    <div className="flex gap-3 md:gap-6 overflow-hidden">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
                         <img
                           src={item.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop'}
                           alt={item.product_name}
@@ -203,22 +203,21 @@ export default function CartClient() {
                         />
                       </div>
                       
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-start gap-2">
-                          <div className="min-w-0">
-                            <Link href={`/products/${item.product_id}`} className="font-semibold text-slate-800 hover:text-amber-600 transition-colors line-clamp-2">
+                      <div className="flex-1 min-w-0 overflow-hidden">
+                        <div className="flex items-start gap-2">
+                          <div className="flex-1 min-w-0">
+                            <Link href={`/products/${item.product_id}`} className="font-semibold text-slate-800 hover:text-amber-600 transition-colors block truncate sm:line-clamp-2 sm:whitespace-normal">
                               {item.product_name}
                             </Link>
-                            <p className="text-sm text-slate-500 mt-1">SKU: {item.sku}</p>
+                            <p className="text-sm text-slate-500 mt-1 truncate">SKU: {item.sku}</p>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
+                          <button
                             onClick={() => deleteMutation.mutate(item.id)}
-                            className="text-slate-400 hover:text-red-500 flex-shrink-0 h-10 w-10"
+                            className="flex-shrink-0 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                            aria-label="Remove item"
                           >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
+                            <Trash2 className="w-5 h-5" />
+                          </button>
                         </div>
 
                         <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
