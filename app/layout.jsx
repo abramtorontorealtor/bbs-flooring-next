@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <link rel="preconnect" href="https://cdn.bbsflooring.ca" crossOrigin="anonymous" />
+        {/* preconnect to cdn.bbsflooring.ca removed — images go through /_next/image proxy */}
         <LocalBusinessJsonLd />
       </head>
       <body className={inter.className}>

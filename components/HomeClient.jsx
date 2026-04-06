@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Truck, Shield, Calendar, Star, CheckCircle } from 'lucide-react';
+import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
 import CategoryCard from '@/components/CategoryCard';
 import { entities } from '@/lib/base44-compat';
 import { useQuery } from '@tanstack/react-query';
@@ -137,76 +137,9 @@ export default function Home() {
     },
   ];
 
-  const features = [
-    { icon: Truck, title: 'GTA Delivery', description: 'Fast delivery across the Greater Toronto Area' },
-    { icon: Shield, title: 'Quality Guaranteed', description: 'Premium products with manufacturer warranties' },
-    { icon: Calendar, title: 'Free Measurements', description: 'Book your free in-home measurement today' },
-    { icon: Star, title: 'Expert Service', description: 'Professional installation by local experts' },
-  ];
-
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative" style={{ height: '100svh', minHeight: '600px', maxHeight: '900px', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}>
-        <div className="absolute inset-0">
-          <Image
-            src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
-            alt="Luxury hardwood flooring installation in modern Markham home living room"
-            className="w-full h-full object-cover"
-            width={1920}
-            height={1080}
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,23,42,0.9), rgba(15,23,42,0.7), transparent)' }} />
-        </div>
-        <div className="relative max-w-5xl mx-auto px-4 w-full pt-28 md:pt-24 pb-24 md:pb-20">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-2 mb-6">
-              <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-              <span className="text-amber-400 text-sm font-medium">Serving Markham, Toronto & Durham</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.08] mb-6 tracking-tight">
-              Premium Flooring in Markham at <span className="text-amber-500">Wholesale Prices</span>
-            </h1>
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-lg">
-              Expert installation, huge selection, and 100% satisfaction guaranteed.
-              Visit our showroom or let us bring samples to you.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href={createPageUrl('FreeMeasurement')}>
-                <Button size="lg" className="bg-amber-700 hover:bg-amber-800 text-white px-8 py-6 text-base rounded-full w-full sm:w-auto font-bold shadow-lg shadow-amber-700/40 hover:shadow-amber-700/50 hover:-translate-y-0.5 transition-all">
-                  Get Free In-Home Quote <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-              <Link href={createPageUrl('Products')}>
-                <Button size="lg" variant="outline" className="border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-8 py-6 text-base rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all">
-                  Browse All Flooring <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Bar */}
-      <section className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <AnimDiv key={feature.title} delay={index * 100} className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                  <feature.icon className="w-6 h-6 text-amber-600" />
-                </div>
-                <div>
-                  <h2 className="font-semibold text-slate-800">{feature.title}</h2>
-                  <p className="text-sm text-slate-500">{feature.description}</p>
-                </div>
-              </AnimDiv>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Hero + Features bar are now server-rendered in app/page.jsx for instant LCP */}
 
       {/* Categories Section */}
       <section className="py-20 px-4">
