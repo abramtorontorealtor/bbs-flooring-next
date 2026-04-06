@@ -66,16 +66,38 @@ export default function ProductEditDialog({ product, open, onOpenChange }) {
         slug: '',
         review_count: 0,
         review_rating: 0,
+        product_description: '',
+        product_details: '',
       });
     }
   }, [product]);
 
+  // Only send editable fields to Supabase — never send id, created_at, sort_score, etc.
+  const EDITABLE_FIELDS = [
+    'name', 'sku', 'brand', 'category', 'subcategory',
+    'price_per_sqft', 'sale_price_per_sqft', 'sqft_per_box',
+    'species', 'colour', 'dimensions', 'thickness', 'wear_layer', 'finish', 'grade',
+    'is_waterproof', 'warranty', 'features', 'specifications',
+    'image_url', 'image_alt_text',
+    'is_new_arrival', 'is_on_sale', 'is_clearance', 'is_canadian',
+    'made_in', 'in_stock',
+    'seo_title', 'seo_description', 'slug',
+    'review_count', 'review_rating',
+    'product_description', 'product_details',
+    'collection', 'ac_rating',
+  ];
+
   const saveMutation = useMutation({
     mutationFn: async (data) => {
+      // Strip non-editable fields to avoid Supabase errors on read-only columns
+      const payload = {};
+      for (const key of EDITABLE_FIELDS) {
+        if (key in data) payload[key] = data[key];
+      }
       if (product) {
-        return await entities.Product.update(product.id, data);
+        return await entities.Product.update(product.id, payload);
       } else {
-        return await entities.Product.create(data);
+        return await entities.Product.create(payload);
       }
     },
     onSuccess: () => {
@@ -251,6 +273,15 @@ export default function ProductEditDialog({ product, open, onOpenChange }) {
 
             <TabsContent value="details" className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2">
+                  <Label>Product Description</Label>
+                  <Textarea
+                    value={formData.product_description || ''}
+                    onChange={(e) => handleChange('product_description', e.target.value)}
+                    rows={5}
+                    placeholder="Main product description shown on the product page"
+                  />
+                </div>
                 <div>
                   <Label>Species</Label>
                   <Input
@@ -320,6 +351,16 @@ export default function ProductEditDialog({ product, open, onOpenChange }) {
                     value={formData.specifications || ''}
                     onChange={(e) => handleChange('specifications', e.target.value)}
                     rows={4}
+                  />
+                </div>
+                <div className="col-span-2">
+                  <Label>Tech Specs / Product Details (HTML)</Label>
+                  <Textarea
+                    value={formData.product_details || ''}
+                    onChange={(e) => handleChange('product_details', e.target.value)}
+                    rows={6}
+                    placeholder="HTML content for the spec grid (product_details column)"
+                    className="font-mono text-xs"
                   />
                 </div>
               </div>
