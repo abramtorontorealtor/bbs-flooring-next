@@ -23,7 +23,7 @@ export default function CategoryCardServer({ category, image, imageAlt, title, d
   return (
     <Link href={href}>
       <div className="group relative h-[500px] rounded-3xl overflow-hidden">
-        <Image src={image} alt={imageAlt || title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" quality={75} loading="lazy" />
+        <Image src={image} alt={imageAlt || title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" quality={60} loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8">
           <div className="bg-amber-500 text-white px-4 py-2 rounded-lg inline-block mb-4 font-semibold">{title}</div>

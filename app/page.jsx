@@ -158,7 +158,7 @@ export default function HomePage() {
             priority
             fetchPriority="high"
             sizes="(max-width: 768px) 100vw, 100vw"
-            quality={75}
+            quality={65}
           />
           <div
             className="absolute inset-0"

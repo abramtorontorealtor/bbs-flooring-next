@@ -1,7 +1,10 @@
 'use client';
 
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getSupabaseBrowserClient } from './supabase';
+import React, { createContext, useState, useContext, useEffect, useRef } from 'react';
+
+// ⚡ Supabase is NOT imported at module level — it's dynamically imported
+// inside useEffect so it stays OUT of the initial hydration bundle (~50KB saved).
+// This reduces TBT because the browser doesn't parse/eval supabase during hydration.
 
 const AuthContext = createContext();
 
@@ -9,57 +12,59 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const supabaseRef = useRef(null);
 
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase) {
-      setIsLoadingAuth(false);
-      return;
-    }
+    let subscription;
 
-    // Check initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        loadUserProfile(session.user.id);
-      } else {
+    // Dynamic import — supabase JS loads AFTER hydration, not during
+    import('./supabase').then(({ getSupabaseBrowserClient }) => {
+      const supabase = getSupabaseBrowserClient();
+      supabaseRef.current = supabase;
+      if (!supabase) {
         setIsLoadingAuth(false);
+        return;
       }
-    });
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      // Check initial session
+      supabase.auth.getSession().then(({ data: { session } }) => {
         if (session?.user) {
-          await loadUserProfile(session.user.id);
+          loadUserProfile(supabase, session.user.id);
         } else {
-          setUser(null);
-          setIsAuthenticated(false);
           setIsLoadingAuth(false);
         }
-      }
-    );
+      });
 
-    return () => subscription.unsubscribe();
+      // Listen for auth changes
+      const { data } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          if (session?.user) {
+            await loadUserProfile(supabase, session.user.id);
+          } else {
+            setUser(null);
+            setIsAuthenticated(false);
+            setIsLoadingAuth(false);
+          }
+        }
+      );
+      subscription = data.subscription;
+    });
+
+    return () => subscription?.unsubscribe();
   }, []);
 
-  async function loadUserProfile(userId) {
-    const supabase = getSupabaseBrowserClient();
+  async function loadUserProfile(supabase, userId) {
     if (!supabase) return;
 
     try {
-      // Get user profile from users table (includes role, full_name, etc.)
       const { data: profile } = await supabase
         .from('users')
         .select('*')
         .eq('id', userId)
         .single();
 
-      // Also get the auth user for email + confirmation status
       const { data: { user: authUser } } = await supabase.auth.getUser();
 
-      // Auto-sync: if Supabase Auth confirmed the email but users.is_verified
-      // is still false, update it. This bridges Supabase's built-in confirmation
-      // with the BBS custom verification system so either link works.
       const supabaseConfirmed = !!authUser?.email_confirmed_at;
       const profileVerified = profile?.is_verified === true;
 
@@ -83,7 +88,6 @@ export function AuthProvider({ children }) {
       setIsAuthenticated(true);
     } catch (err) {
       console.warn('Failed to load user profile:', err);
-      // Still set as authenticated even if profile load fails
       const { data: { user: authUser } } = await supabase.auth.getUser();
       setUser({
         id: userId,
@@ -98,7 +102,7 @@ export function AuthProvider({ children }) {
   }
 
   async function logout() {
-    const supabase = getSupabaseBrowserClient();
+    const supabase = supabaseRef.current;
     if (supabase) {
       await supabase.auth.signOut();
     }
