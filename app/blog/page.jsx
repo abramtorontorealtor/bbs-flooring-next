@@ -21,7 +21,7 @@ async function getPosts() {
   if (!supabase) return [];
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('*')
+    .select('id, title, slug, excerpt, featured_image, image_alt_text, author_name, category, tags, keywords, read_time, status, published_at, view_count, neighbourhood, city, created_at, updated_at')
     .eq('status', 'published')
     .order('published_at', { ascending: false });
   if (error) console.error('[Blog] Server fetch error:', error.message);
