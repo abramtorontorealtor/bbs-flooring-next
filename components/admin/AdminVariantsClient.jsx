@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 function ProductVariantCard({ product, expanded, onToggle, onSave, saving, onChange }) {
   const variants = useMemo(() => {
     try {
+      if (Array.isArray(product.variants_json)) return product.variants_json;
       return JSON.parse(product.variants_json || '[]');
     } catch {
       return [];
@@ -291,7 +292,7 @@ function VariantManager() {
   async function saveProduct(product) {
     setSaving(product.id);
     try {
-      const variants = JSON.parse(product.variants_json || '[]');
+      const variants = Array.isArray(product.variants_json) ? product.variants_json : JSON.parse(product.variants_json || '[]');
       const prices = variants.map((v) => v.on_sale && v.sale_price ? v.sale_price : v.price_per_sqft).filter((p) => p > 0);
       const lowestPrice = prices.length ? Math.min(...prices) : null;
 

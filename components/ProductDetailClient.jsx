@@ -560,7 +560,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                     Calculate your flooring needs
                   </label>
                   <SqftCalculator
-                    variants={product?.has_variants ? (() => { try { return JSON.parse(product.variants_json || '[]'); } catch { return []; } })() : []}
+                    variants={product?.has_variants ? (() => { try { if (Array.isArray(product.variants_json)) return product.variants_json; return JSON.parse(product.variants_json || '[]'); } catch { return []; } })() : []}
                     currentVariant={selectedJsonVariant}
                     onSqftChange={setSqftNeeded}
                     currentSqft={sqftNeeded}

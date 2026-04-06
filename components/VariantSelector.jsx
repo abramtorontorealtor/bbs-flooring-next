@@ -22,7 +22,10 @@ export default function VariantSelector({ product, onVariantChange }) {
   const pathname = usePathname();
 
   const variants = useMemo(() => {
-    try { return JSON.parse(product.variants_json || '[]'); }
+    try {
+      if (Array.isArray(product.variants_json)) return product.variants_json;
+      return JSON.parse(product.variants_json || '[]');
+    }
     catch { return []; }
   }, [product.variants_json]);
 
