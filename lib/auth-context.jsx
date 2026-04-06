@@ -33,6 +33,8 @@ export function AuthProvider({ children }) {
         } else {
           setIsLoadingAuth(false);
         }
+      }).catch(() => {
+        setIsLoadingAuth(false);
       });
 
       // Listen for auth changes
@@ -48,6 +50,9 @@ export function AuthProvider({ children }) {
         }
       );
       subscription = data.subscription;
+    }).catch(() => {
+      // If dynamic import fails (chunk load error, etc.), unblock the UI
+      setIsLoadingAuth(false);
     });
 
     return () => subscription?.unsubscribe();
