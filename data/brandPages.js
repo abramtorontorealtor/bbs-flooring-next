@@ -296,45 +296,54 @@ export const triforestFlooringData = {
 
 export const simbaFlooringData = {
   route: 'SimbaFlooring',
-  title: 'Simba Flooring Markham | Vinyl Plank & Herringbone',
-  description: 'Shop Simba Flooring in Markham — 27 vinyl products from $2.99/sqft. SPC vinyl plank and herringbone patterns. Waterproof. Call (647) 428-1111.',
-  h1: 'Simba Vinyl Plank & Herringbone Flooring',
-  subtitle: '27 Simba vinyl products from $2.99/sqft — including herringbone patterns that bring a luxury look without the luxury price tag.',
-  parentPage: { label: 'Vinyl', route: 'Vinyl' },
+  title: 'Simba Flooring Markham | Vinyl, Engineered Hardwood & Laminate',
+  description: 'Shop Simba Flooring in Markham — 103 products from $2.29/sqft. SPC vinyl plank, herringbone, engineered hardwood (Oak, Hickory, Birch), and waterproof laminate. Call (647) 428-1111.',
+  h1: 'Simba Flooring — Vinyl, Engineered Hardwood & Laminate',
+  subtitle: '103 Simba products from $2.29/sqft — vinyl plank, herringbone, engineered hardwood in Oak & Hickory, and waterproof laminate.',
+  parentPage: { label: 'Shop', route: 'Shop' },
   schemaType: 'product',
   content: [
     {
-      heading: 'Vinyl with a Design Edge',
-      body: `<p>Simba is a vinyl specialist with a twist — they're one of the few brands at this price point that offer <strong>herringbone-pattern vinyl plank</strong>. Herringbone installation creates a zigzag pattern that's become the signature of high-end renovations, and Simba lets you achieve it with waterproof SPC vinyl.</p>
-<p>The standard plank collection is equally solid, with 6.5mm thickness and integrated 1.5mm underpad across the board. No thin, bargain-bin options — everything in the Simba lineup is built for real living.</p>`
+      heading: 'A Full Flooring Lineup Under One Brand',
+      body: `<p>Simba Flooring covers three product categories: <strong>SPC vinyl plank</strong> (including herringbone), <strong>engineered hardwood</strong>, and <strong>waterproof laminate</strong>. Whether you're doing a basement in vinyl, a main floor in engineered Oak, or a budget renovation with laminate — Simba has a product for it.</p>
+<p>BBS Flooring carries the complete Simba lineup in Markham, including exclusive showroom-only options not available online.</p>`
     },
     {
-      heading: 'Standard Plank — 6.5mm SPC from $2.99/sqft',
-      body: `<p>Simba's standard vinyl plank comes in <strong>6.5mm with 1.5mm underpad</strong>. At $2.99 to $4.29/sqft, you're getting a respectable mid-range vinyl with:</p>
+      heading: 'Engineered Hardwood — Oak & Hickory from $3.49/sqft',
+      body: `<p>Simba's engineered hardwood collection is the largest part of their lineup — <strong>45 products in Oak, Hickory, Birch, Maple, Sapele, and Black Walnut</strong>. Available in 3/4", 5/8", 3/5", and 1/2" thicknesses, with wire-brushed finishes across most colours.</p>
 <ul>
-<li>100% waterproof SPC core</li>
-<li>Integrated underpad (no separate underlay needed)</li>
-<li>Click-lock installation</li>
-<li>Realistic wood-grain textures</li>
+<li>Species: Oak (most common), Hickory, Birch, Maple, Sapele, Black Walnut</li>
+<li>Plank widths: 4" standard, 6.5" wide-plank, 9.5" extra-wide</li>
+<li>AB grade = the clean, uniform look. Rustic grades available too.</li>
+<li>Price range: $3.49–$8.99/sqft depending on species and thickness</li>
 </ul>`
     },
     {
-      heading: 'Herringbone Vinyl — 7mm from $2.99/sqft',
-      body: `<p>The standout in Simba's lineup is their <strong>7mm herringbone vinyl with 1.5mm underpad</strong>. Herringbone flooring is typically associated with expensive hardwood installations that require skilled labour. Simba's vinyl herringbone gives you the same visual impact with:</p>
+      heading: 'SPC Vinyl — 6.5–7mm from $2.29/sqft',
+      body: `<p>Simba's vinyl lineup includes standard plank and their signature <strong>herringbone pattern vinyl</strong> — one of the few brands offering herringbone at this price point. All vinyl is 100% waterproof SPC with integrated underpad.</p>
 <ul>
-<li>Click-lock installation (no need for specialized herringbone installers)</li>
-<li>Waterproof construction — use it in kitchens and entryways</li>
-<li>Consistent pattern alignment built into the plank design</li>
-</ul>
-<p>If you want a floor that gets compliments, herringbone is the move.</p>`
+<li>Universe & Galaxy collections: 6.5mm SPC, integrated 1.5mm IXPE underpad, 12–20mil wear layer</li>
+<li>Venus Herringbone: 7mm, 12mil wear layer, click-lock installation</li>
+<li>Galaxy Pressed U-Groove: 8mm premium plank, $3.39/sqft</li>
+<li>Planet Tile Visual: realistic tile-look SPC, $2.99/sqft</li>
+</ul>`
+    },
+    {
+      heading: 'Waterproof Laminate — Rocky Mountain & Danube from $2.69/sqft',
+      body: `<p>Simba's waterproof laminate comes in two collections. <strong>Rocky Mountain</strong> is a premium 14mm plank (60"×9") — one of the thickest laminates on the market. <strong>Danube</strong> offers a range of widths and lengths at a more accessible price point. Both are AC4 rated for heavy residential use.</p>
+<ul>
+<li>Rocky Mountain: 14mm, 60"×9", AC4 — $2.69/sqft</li>
+<li>Danube: 48"×7", 60"×9", 72"×9" options — $2.79–$2.89/sqft</li>
+<li>Waterproof core: safe for kitchens and laundry rooms</li>
+</ul>`
     },
   ],
   faqItems: [
-    { question: 'Does Simba Flooring offer herringbone vinyl?', answer: 'Yes. Simba offers 7mm herringbone vinyl plank with 1.5mm integrated underpad. It creates a luxury zigzag pattern using click-lock installation — no specialized herringbone skills required. Available at BBS Flooring in Markham from $2.99/sqft.' },
-    { question: 'Is Simba vinyl flooring waterproof?', answer: 'Yes. All Simba vinyl plank flooring is 100% waterproof with SPC (Stone Polymer Composite) cores. Safe for basements, kitchens, bathrooms, and laundry rooms.' },
-    { question: 'How much does Simba herringbone flooring cost?', answer: 'Simba herringbone vinyl starts at $2.99/sqft at BBS Flooring — significantly less than traditional hardwood herringbone installation, which typically runs $12+/sqft installed. Call (647) 428-1111 for current pricing.' },
-    { question: 'Is Simba flooring good for condos?', answer: 'Simba vinyl is 6.5–7mm thick with integrated underpad, which helps with sound transmission. Check your condo board\'s specific STC/IIC requirements to confirm compliance. Visit our Markham showroom to compare options.' },
-    { question: 'Where can I buy Simba Flooring?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham carries 27 Simba products including their popular herringbone collection. Walk-ins welcome Monday–Saturday.' },
+    { question: 'Does Simba Flooring offer engineered hardwood?', answer: 'Yes. Simba has 45 engineered hardwood products in Oak, Hickory, Birch, Maple, Sapele, and Black Walnut. Available in 3/4", 5/8", 3/5", and 1/2" thicknesses from $3.49/sqft at BBS Flooring in Markham.' },
+    { question: 'Does Simba Flooring offer herringbone vinyl?', answer: 'Yes. Simba offers 7mm herringbone vinyl plank (Venus collection) with 1.5mm integrated underpad. Click-lock installation — no specialized herringbone skills required. Available from $3.59/sqft at BBS Flooring.' },
+    { question: 'Is Simba vinyl flooring waterproof?', answer: 'Yes. All Simba SPC vinyl is 100% waterproof with Stone Polymer Composite cores. Safe for basements, kitchens, bathrooms, and laundry rooms.' },
+    { question: 'What is the thickest Simba laminate?', answer: 'Simba Rocky Mountain is 14mm thick — one of the thickest laminates available. It\'s 60"×9" wide plank, AC4 rated, and waterproof. Available at $2.69/sqft at BBS Flooring Markham.' },
+    { question: 'Where can I buy Simba Flooring in Markham?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham carries 103 Simba products across vinyl, engineered hardwood, and laminate. Walk-ins welcome Monday–Saturday 10am–5pm. Call (647) 428-1111.' },
   ],
   productFilter: (p) => has(p.brand, 'simba'),
   productSessionKey: 'simba',
