@@ -1,19 +1,21 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { getQueryClient } from '@/lib/query-client';
 import { AuthProvider } from '@/lib/auth-context';
 import { initGA4 } from '@/components/analytics';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import StickyMobileCTA from '@/components/StickyMobileCTA';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import ExitIntentPopup from '@/components/ExitIntentPopup';
-import CookieConsent from '@/components/CookieConsent';
 import { Toaster } from 'sonner';
 import { usePathname } from 'next/navigation';
 import { entities } from '@/lib/base44-compat';
+
+// Lazy-load non-critical layout components — they don't affect above-fold content
+const StickyMobileCTA = lazy(() => import('@/components/StickyMobileCTA'));
+const WhatsAppButton = lazy(() => import('@/components/WhatsAppButton'));
+const ExitIntentPopup = lazy(() => import('@/components/ExitIntentPopup'));
+const CookieConsent = lazy(() => import('@/components/CookieConsent'));
 
 const GA_MEASUREMENT_ID = 'G-YN10E7FBP5';
 const META_PIXEL_ID = '653350609943913';
@@ -116,10 +118,12 @@ export function ClientProviders({ children }) {
             {children}
           </main>
           <Footer />
-          <StickyMobileCTA />
-          <WhatsAppButton />
-          <ExitIntentPopup />
-          <CookieConsent />
+          <Suspense fallback={null}>
+            <StickyMobileCTA />
+            <WhatsAppButton />
+            <ExitIntentPopup />
+            <CookieConsent />
+          </Suspense>
           <Toaster richColors position="top-right" duration={4000} />
         </div>
       </AuthProvider>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef, forwardRef } from 'react';
+import React, { useEffect, useState, useRef, forwardRef, lazy, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
@@ -10,10 +10,13 @@ import CategoryCard from '@/components/CategoryCard';
 import { entities } from '@/lib/base44-compat';
 import { useQuery } from '@tanstack/react-query';
 import ProductCard from '@/components/ProductCard';
-import { recentProjectsShowcase } from '@/data/galleryImages';
-import GeneralFAQSection from '@/components/GeneralFAQSection';
-import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
 import { FINANCEIT_LINKS } from '@/lib/financing';
+
+import { recentProjectsShowcase } from '@/data/galleryImages';
+
+// Lazy-load below-fold heavy components
+const GeneralFAQSection = lazy(() => import('@/components/GeneralFAQSection'));
+const GoogleReviewsBanner = lazy(() => import('@/components/GoogleReviewsBanner'));
 
 // CSS-only fade-in via IntersectionObserver — avoids framer-motion bundle
 function useFadeInView(delay = 0) {
@@ -381,7 +384,9 @@ export default function Home() {
       </section>
 
       {/* Google Reviews */}
-      <GoogleReviewsBanner variant="carousel" />
+      <Suspense fallback={<div className="min-h-[200px]" />}>
+        <GoogleReviewsBanner variant="carousel" />
+      </Suspense>
 
       {/* Financing Trust Block */}
       <section className="py-14 px-4 bg-slate-900">
@@ -469,7 +474,9 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <GeneralFAQSection />
+      <Suspense fallback={<div className="min-h-[100px]" />}>
+        <GeneralFAQSection />
+      </Suspense>
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-gradient-to-r from-amber-500 to-amber-600">

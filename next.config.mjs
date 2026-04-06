@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizeCss: true,       // Inline critical CSS via critters — reduces render-blocking CSS
+  },
   images: {
     remotePatterns: [
       {
