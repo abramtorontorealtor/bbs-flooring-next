@@ -43,9 +43,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Preconnect to CDN — saves ~100-200ms on hero image (TCP+TLS handshake) */}
-        <link rel="preconnect" href="https://cdn.bbsflooring.ca" />
-        <link rel="dns-prefetch" href="https://cdn.bbsflooring.ca" />
+        {/* CDN preconnect removed — images route through /_next/image proxy, not direct browser fetch */}
         <LocalBusinessJsonLd />
       </head>
       <body className={`${inter.className} min-h-screen flex flex-col bg-slate-50`}>
