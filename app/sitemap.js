@@ -52,6 +52,7 @@ export default async function sitemap() {
     // Content pages
     { path: '/flooring-showroom-markham', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/grade-guide', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/engineered-hardwood-guide', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/about', priority: 0.5, changeFrequency: 'yearly' },
     { path: '/contact', priority: 0.6, changeFrequency: 'yearly' },
     { path: '/gallery', priority: 0.6, changeFrequency: 'monthly' },

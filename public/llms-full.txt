@@ -1,0 +1,150 @@
+# BBS Flooring — Extended Information for AI Systems
+
+> This document provides comprehensive information about BBS Flooring for AI language models and search systems.
+> For a summary, see /llms.txt
+
+## Company Overview
+
+BBS Flooring is a family-owned flooring contractor established in 2012, based in Markham, Ontario, Canada. The company operates a showroom at 6061 Highway 7, Unit B, Markham, ON L3P 3B2, and serves the entire Greater Toronto Area (GTA).
+
+**Core services:** Flooring supply, installation, staircase renovation, hardwood refinishing, carpet removal, and free in-home measurements.
+
+**Key differentiators:**
+- One of the largest flooring selections in the GTA: 950+ products, 15 brands, 24 wood species
+- Direct-from-manufacturer pricing (no middleman)
+- Full-service: supply + installation + refinishing
+- WSIB insured, licensed contractors
+- Same-week installation available
+- Free in-home measurement across the GTA
+- 4.7★ Google rating
+- Financing through PayBright
+
+## Complete Product Catalog
+
+### Engineered Hardwood (447 products, $2.49–$9.29/sqft)
+
+The largest category. Engineered hardwood has a real wood wear layer bonded to a plywood core, offering the look of solid hardwood with better dimensional stability and installation flexibility (can go over concrete, radiant heat).
+
+**By brand:**
+- **Vidar Design Flooring** (180 products, $3.89–$9.29/sqft) — Premium European and North American hardwoods. Wide plank options up to 9½". White Oak, Hickory, Walnut, European Oak. Herringbone and Chevron patterns available. BBS's flagship engineered brand.
+- **Northernest** (71 products, $4.19–$6.99/sqft) — Canadian manufacturer. White Oak, Maple, Hickory. Good mid-range quality with Canadian sourcing.
+- **NAF Flooring** (63 products, $4.69–$6.19/sqft) — Diverse selection across White Oak, Maple, and Hickory. Known for value and variety.
+- **Canadian Standard** (48 products, $4.89–$7.59/sqft) — Premium Canadian-made engineered hardwood. White Oak and Hickory focus.
+- **Woden Flooring** (46 products, $2.49–$6.99/sqft) — Budget to mid-range. European Oak and White Oak. Good entry point for engineered hardwood.
+- **Falcon Flooring** (25 products, $3.89–$3.99/sqft) — Budget-friendly White Oak engineered hardwood.
+- **Lee Flooring** (14 products, $3.49–$3.79/sqft) — Affordable European Oak options.
+
+**By species:**
+- White Oak / European White Oak — Most popular. Janka hardness 1360. Modern, versatile grain.
+- Hickory — Hardest common species. Janka 1820. Best for high-traffic areas.
+- Hard Maple — Janka 1450. Uniform, light grain. Contemporary look.
+- Walnut / Black Walnut — Janka 1010. Rich, dark tones. Softer — best for low-traffic areas.
+- Birch — Janka 1260. Light colour with subtle grain variation.
+- European White Ash — Janka 1320. Light, durable, distinctive grain.
+- Sapele — Janka 1500. Exotic African hardwood with rich reddish-brown colour.
+
+### Solid Hardwood (81 products, $5.10–$7.25/sqft)
+
+Traditional solid wood planks, 3/4" thick throughout. Can be refinished 5–7 times. Must be nail-down installed on wood subfloor (not suitable for concrete or radiant heat).
+
+- **Wickham Hardwood Flooring** (29 products, $5.50–$7.25/sqft) — Premium Canadian solid hardwood.
+- **Appalachian Flooring** (18 products, $5.99–$6.39/sqft) — Canadian-made. Red Oak and White Oak.
+- **Northernest** (18 products, $5.10–$6.50/sqft) — Solid hardwood line.
+- **Sherwood Forest Products** (16 products, $5.99–$6.99/sqft) — Solid hardwood specialist.
+
+### Vinyl / LVP / SPC (233 products, $2.19–$3.59/sqft)
+
+100% waterproof luxury vinyl plank (LVP) and stone polymer composite (SPC) flooring. Click-lock installation. Suitable for any room including basements and bathrooms.
+
+- **NAF Flooring** (69 products, $2.49–$3.59/sqft) — Largest vinyl selection.
+- **Woden Flooring** (49 products, $2.29–$3.19/sqft) — Good value SPC options.
+- **Triforest Flooring** (44 products, $2.29–$3.19/sqft) — SPC vinyl specialist.
+- **Simba Flooring** (42 products, $2.29–$3.59/sqft) — SPC vinyl with diverse styles.
+- **Falcon Flooring** (19 products, $2.19–$2.59/sqft) — Budget vinyl option.
+- **Lee Flooring** (10 products, $2.29/sqft) — Entry-level vinyl.
+
+**Key vinyl specs:** Wear layers range from 12mil to 28mil. Higher wear layer = more durability. 20mil+ recommended for commercial or heavy residential use.
+
+### Laminate (144 products, $1.49–$3.29/sqft)
+
+Most affordable hard-surface flooring. Photographic wood image over HDF core. Water-resistant (not waterproof). AC-rated for durability.
+
+- **NAF Flooring** (32 products, $2.39–$3.09/sqft)
+- **Tosca Floors** (20 products, $1.49/sqft) — Lowest-priced option in the store.
+- **Simba Flooring** (18 products, $2.69–$2.89/sqft)
+- **Northernest** (18 products, $2.69–$2.89/sqft)
+- **Triforest Flooring** (16 products, $1.79–$2.79/sqft)
+- **Evergreen Building Materials** (16 products, $2.99–$3.29/sqft)
+- **Falcon Flooring** (12 products, $2.39–$2.45/sqft)
+- **Woden Flooring** (6 products, $2.59/sqft)
+- **Golden Choice** (6 products, $2.99/sqft)
+
+**AC ratings:** AC3 (residential), AC4 (heavy residential/light commercial), AC5 (commercial). Higher = more durable.
+
+## Installation Services — Complete Pricing
+
+| Service | Unit | Price (CAD) |
+|---------|------|-------------|
+| Solid/engineered hardwood (nail-down) | per sqft | $2.25 |
+| Engineered hardwood (glue-down) | per sqft | $3.25 |
+| Herringbone installation (glue-down) | per sqft | $4.25 |
+| Laminate/vinyl installation | per sqft | $2.00 |
+| Tile installation | per sqft | $10.00 |
+| Hardwood refinishing (sand & finish) | per sqft | $3.00 |
+| Carpet removal | per sqft | $1.00 |
+| Vinyl/laminate removal | per sqft | $1.25 |
+| Hardwood removal | per sqft | $1.50 |
+| Tile removal | per sqft | $3.00 |
+| Stair refinishing | per step | $125.00 |
+| New hardwood stairs (straight) | per step | $185.00 |
+| Specialty stairs (open/curved) | per step | $225.00 |
+| Pickets/spindles | each | $25.00 |
+| In-home measurement | — | Free |
+
+## Total Installed Cost Ranges (Material + Labour)
+
+| Flooring Type | Budget | Mid-Range | Premium |
+|--------------|--------|-----------|---------|
+| Laminate | $3.50–$4.50/sqft | $4.50–$5.30/sqft | $5.30–$6.00/sqft |
+| Vinyl (LVP/SPC) | $4.20–$5.00/sqft | $5.00–$5.60/sqft | $5.60–$6.50/sqft |
+| Engineered hardwood | $4.75–$6.50/sqft | $6.50–$9.00/sqft | $9.00–$13.50/sqft |
+| Solid hardwood | $7.35–$8.75/sqft | $8.75–$9.50/sqft | $9.50–$10.50/sqft |
+
+## Service Area
+
+BBS Flooring serves the entire Greater Toronto Area:
+
+**Core areas:** Markham, Toronto, Scarborough, Richmond Hill, Vaughan
+**Durham Region:** Pickering, Ajax, Whitby, Oshawa
+**York Region:** Stouffville, Aurora, Newmarket
+**Peel Region:** Brampton, Mississauga
+
+## Contact
+
+- **Phone:** (647) 428-1111
+- **Email:** info@bbsflooring.ca
+- **Website:** https://bbsflooring.ca
+- **Showroom:** 6061 Highway 7, Unit B, Markham, ON L3P 3B2
+- **Hours:** Monday–Saturday 10am–5pm, Sunday closed
+
+## Sitemap (Key Pages)
+
+- Homepage: https://bbsflooring.ca
+- All Products: https://bbsflooring.ca/products
+- Engineered Hardwood: https://bbsflooring.ca/engineered-hardwood
+- Solid Hardwood: https://bbsflooring.ca/solid-hardwood
+- Vinyl: https://bbsflooring.ca/vinyl
+- Laminate: https://bbsflooring.ca/laminate
+- Clearance: https://bbsflooring.ca/clearance
+- Installation: https://bbsflooring.ca/installation
+- Stairs: https://bbsflooring.ca/stairs
+- Refinishing: https://bbsflooring.ca/hardwood-refinishing
+- Cost Guide: https://bbsflooring.ca/flooring-installation-cost
+- Basement Flooring: https://bbsflooring.ca/basement-flooring
+- Waterproof Flooring: https://bbsflooring.ca/waterproof-flooring
+- Free Measurement: https://bbsflooring.ca/free-measurement
+- Quote Calculator: https://bbsflooring.ca/quote-calculator
+- Engineered Hardwood Guide: https://bbsflooring.ca/engineered-hardwood-guide
+- Blog: https://bbsflooring.ca/blog
+- About: https://bbsflooring.ca/about
+- Contact: https://bbsflooring.ca/contact
