@@ -145,14 +145,14 @@ export default function HomePage() {
     <div>
       {/* ═══ Hero — Server-rendered for instant LCP ═══ */}
       <section
-        className="relative"
-        style={{ height: '100svh', minHeight: '600px', maxHeight: '900px', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}
+        className="relative h-[70svh] md:h-[100svh]"
+        style={{ minHeight: '500px', maxHeight: '900px', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}
       >
         <div className="absolute inset-0">
           <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
             alt="Luxury hardwood flooring installation in modern Markham home living room"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[center_40%]"
             width={1920}
             height={1080}
             priority
