@@ -56,6 +56,8 @@ export default async function sitemap() {
     { path: '/flooring-comparison-guide', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/flooring-cost-toronto-2026', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/basement-flooring-guide', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/vinyl-flooring-guide', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/stair-renovation-guide', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/about', priority: 0.5, changeFrequency: 'yearly' },
     { path: '/contact', priority: 0.6, changeFrequency: 'yearly' },
     { path: '/gallery', priority: 0.6, changeFrequency: 'monthly' },
