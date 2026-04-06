@@ -64,5 +64,13 @@
   "devDependencies": {
     "eslint": "^9",
     "eslint-config-next": "16.2.1"
-  }
+  },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Safari versions",
+    "last 2 Edge versions",
+    "not dead",
+    "not ie 11"
+  ]
 }

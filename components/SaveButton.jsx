@@ -1,7 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Heart } from 'lucide-react';
+/* Heart inline SVG — avoids importing entire lucide-react */
+function HeartIcon({ className, filled }) {
+  return <svg className={className} fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>;
+}
 import { entities } from '@/lib/base44-compat';
 import { toast } from 'sonner';
 
@@ -43,7 +46,7 @@ export default function SaveButton({ product, user, isSaved: isSavedProp, classN
 
   return (
     <button onClick={handleToggle} disabled={loading} title={saved ? 'Remove from saved' : 'Save to profile'} className={`flex items-center gap-1.5 transition-colors ${saved ? 'text-red-500' : 'text-slate-400 hover:text-red-400'} ${className}`}>
-      <Heart className={`w-5 h-5 ${saved ? 'fill-red-500' : ''}`} />
+      <HeartIcon className={`w-5 h-5 ${saved ? 'text-red-500' : ''}`} filled={saved} />
     </button>
   );
 }

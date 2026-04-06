@@ -4,7 +4,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
-import { MapPin } from 'lucide-react';
+/* MapPin inline SVG — avoids importing entire lucide-react */
+function MapPinIcon({ className }) {
+  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>;
+}
 import SaveButton from './SaveButton';
 import { useAuth } from '@/lib/auth-context';
 
@@ -143,7 +146,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
           )}
           <div className="mt-3 flex items-center justify-between">
             <Link href={createPageUrl('Contact')} className="inline-flex items-center gap-1 text-xs text-amber-700 hover:text-amber-800 font-medium transition-colors whitespace-nowrap" onClick={(e) => e.stopPropagation()} title="📍 Available at 6061 Hwy 7, Markham">
-              <MapPin className="w-3 h-3 flex-shrink-0" />
+              <MapPinIcon className="w-3 h-3 flex-shrink-0" />
               See in Showroom
             </Link>
             <SaveButton product={product} user={user} isSaved={isSaved} />

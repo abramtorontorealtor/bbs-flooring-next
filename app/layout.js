@@ -4,8 +4,7 @@ import Script from 'next/script';
 import { LocalBusinessJsonLd } from '@/components/LocalBusinessJsonLd';
 import { ClientProviders } from './providers';
 import FooterServer from '@/components/FooterServer';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { DeferredAnalytics } from '@/components/DeferredAnalytics';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -44,16 +43,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        {/* Preconnect to CDN — saves ~100-200ms on hero image (TCP+TLS handshake) */}
+        <link rel="preconnect" href="https://cdn.bbsflooring.ca" />
+        <link rel="dns-prefetch" href="https://cdn.bbsflooring.ca" />
         <LocalBusinessJsonLd />
       </head>
       <body className={`${inter.className} min-h-screen flex flex-col bg-slate-50`}>
 
-        {/* ── Google Analytics + Ads ── afterInteractive: loads after page is interactive, doesn't block render */}
+        {/* ── Google Analytics + Ads ── lazyOnload: loads during browser idle, zero TBT impact */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="gtag-init" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -64,7 +66,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        {/* ── Meta Pixel ── lazyOnload: loads during idle time, lowest priority */}
+        {/* ── Meta Pixel ── lazyOnload: loads during idle time */}
         <Script id="meta-pixel" strategy="lazyOnload">
           {`
             !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -84,8 +86,8 @@ export default function RootLayout({ children }) {
         {/* Footer is a server component — zero client JS */}
         <FooterServer />
 
-        <Analytics />
-        <SpeedInsights />
+        {/* Vercel Analytics + Speed Insights — deferred until after hydration */}
+        <DeferredAnalytics />
       </body>
     </html>
   );

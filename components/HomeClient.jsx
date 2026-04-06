@@ -4,15 +4,23 @@ import React, { useEffect, useState, useRef, forwardRef, lazy, Suspense } from '
 import Image from 'next/image';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
 import CategoryCard from '@/components/CategoryCard';
-import { entities } from '@/lib/base44-compat';
 import { useQuery } from '@tanstack/react-query';
 import ProductCard from '@/components/ProductCard';
 import { FINANCEIT_LINKS } from '@/lib/financing';
 
 import { recentProjectsShowcase } from '@/data/galleryImages';
+
+/* ── Inline SVG icons — eliminates lucide-react from homepage bundle ── */
+function ArrowRightIcon({ className = 'w-4 h-4' }) {
+  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
+}
+function PhoneIcon({ className = 'w-5 h-5' }) {
+  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
+}
+function CheckCircleIcon({ className = 'w-6 h-6' }) {
+  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>;
+}
 
 // Lazy-load below-fold heavy components
 const GeneralFAQSection = lazy(() => import('@/components/GeneralFAQSection'));
@@ -209,7 +217,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-amber-600 transition-colors">{service.title}</h3>
                   <p className="text-slate-600 text-sm leading-relaxed">{service.description}</p>
                   <span className="inline-flex items-center gap-1 text-amber-600 font-semibold text-sm mt-4 group-hover:gap-2 transition-all">
-                    Learn more <ArrowRight className="w-4 h-4" />
+                    Learn more <ArrowRightIcon className="w-4 h-4" />
                   </span>
                 </Link>
               </AnimDiv>
@@ -228,9 +236,9 @@ export default function Home() {
                 <p className="text-slate-600">Handpicked selections from our 700+ product showroom</p>
               </div>
               <Link href={createPageUrl('Products')}>
-                <Button variant="outline" className="hidden sm:flex">
-                  View All Products <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                <span className="hidden sm:flex items-center gap-2 border border-slate-200 bg-white shadow-sm hover:bg-slate-50 hover:text-amber-600 rounded-md text-sm font-medium h-9 px-4 py-2 transition-colors">
+                  View All Products <ArrowRightIcon className="ml-2 w-4 h-4" />
+                </span>
               </Link>
             </AnimDiv>
 
@@ -283,9 +291,9 @@ export default function Home() {
 
             <div className="mt-8 text-center md:hidden">
               <Link href={createPageUrl('Products') + (showcaseTab === 'new' ? '?sort=newest' : '')}>
-                <Button variant="outline" size="lg" className="w-full">
-                  View All Products <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                <span className="flex items-center justify-center gap-2 w-full border border-slate-200 bg-white shadow-sm hover:bg-slate-50 hover:text-amber-600 rounded-md text-sm font-medium h-10 px-8 transition-colors">
+                  View All Products <ArrowRightIcon className="ml-2 w-4 h-4" />
+                </span>
               </Link>
             </div>
           </div>
@@ -305,9 +313,9 @@ export default function Home() {
                 <p className="text-slate-600">Premium flooring at closeout prices. When it's gone, it's gone.</p>
               </div>
               <Link href={createPageUrl('Clearance')}>
-                <Button variant="outline" className="hidden sm:flex border-red-300 text-red-700 hover:bg-red-100">
-                  Shop All Clearance <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                <span className="hidden sm:flex items-center gap-2 border border-red-300 text-red-700 hover:bg-red-100 bg-white shadow-sm rounded-md text-sm font-medium h-9 px-4 py-2 transition-colors">
+                  Shop All Clearance <ArrowRightIcon className="ml-2 w-4 h-4" />
+                </span>
               </Link>
             </AnimDiv>
 
@@ -319,9 +327,9 @@ export default function Home() {
 
             <div className="mt-8 text-center sm:hidden">
               <Link href={createPageUrl('Clearance')}>
-                <Button variant="outline" size="lg" className="w-full border-red-300 text-red-700 hover:bg-red-100">
-                  Shop All Clearance <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                <span className="flex items-center justify-center gap-2 w-full border border-red-300 text-red-700 hover:bg-red-100 bg-white shadow-sm rounded-md text-sm font-medium h-10 px-8 transition-colors">
+                  Shop All Clearance <ArrowRightIcon className="ml-2 w-4 h-4" />
+                </span>
               </Link>
             </div>
           </div>
@@ -349,16 +357,16 @@ export default function Home() {
                   'Customer satisfaction guaranteed',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircleIcon className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" />
                     <span className="text-slate-300">{item}</span>
                   </li>
                 ))}
               </ul>
               <div className="mt-10 flex gap-4">
                 <Link href={createPageUrl('FreeMeasurement')}>
-                  <Button size="lg" className="bg-amber-700 hover:bg-amber-800 rounded-full">
+                  <span className="inline-flex items-center justify-center bg-amber-700 hover:bg-amber-800 text-white rounded-full h-10 px-8 text-sm font-medium shadow transition-colors">
                     Get a Free Quote
-                  </Button>
+                  </span>
                 </Link>
               </div>
             </AnimDiv>
@@ -465,9 +473,9 @@ export default function Home() {
 
           <div className="text-center">
             <Link href={createPageUrl('Gallery')}>
-              <Button size="lg" variant="outline">
-                View Full Gallery <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+              <span className="inline-flex items-center justify-center border border-slate-200 bg-white shadow-sm hover:bg-slate-50 hover:text-amber-600 rounded-md text-sm font-medium h-10 px-8 transition-colors">
+                View Full Gallery <ArrowRightIcon className="ml-2 w-5 h-5" />
+              </span>
             </Link>
           </div>
         </div>
@@ -490,14 +498,14 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="tel:6474281111">
-                <Button size="lg" className="bg-white text-amber-600 hover:bg-slate-100 px-8 py-6 text-lg rounded-full">
-                  <Phone className="mr-2 w-5 h-5" /> (647) 428-1111
-                </Button>
+                <span className="inline-flex items-center justify-center bg-white text-amber-600 hover:bg-slate-100 px-8 py-6 text-lg rounded-full font-medium shadow transition-colors">
+                  <PhoneIcon className="mr-2 w-5 h-5" /> (647) 428-1111
+                </span>
               </a>
               <Link href={createPageUrl('FreeMeasurement')}>
-                <Button size="lg" className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-amber-600 px-8 py-6 text-lg rounded-full font-semibold">
+                <span className="inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-amber-600 px-8 py-6 text-lg rounded-full font-semibold transition-colors">
                   Book Free Measurement
-                </Button>
+                </span>
               </Link>
             </div>
           </AnimDiv>

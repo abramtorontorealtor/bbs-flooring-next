@@ -5,20 +5,22 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { getQueryClient } from '@/lib/query-client';
 import { AuthProvider } from '@/lib/auth-context';
 import Header from '@/components/Header';
-import { Toaster } from 'sonner';
 import { usePathname } from 'next/navigation';
-import { entities } from '@/lib/base44-compat';
 
-// Lazy-load non-critical layout components
-const StickyMobileCTA   = lazy(() => import('@/components/StickyMobileCTA'));
-const WhatsAppButton    = lazy(() => import('@/components/WhatsAppButton'));
-const ExitIntentPopup   = lazy(() => import('@/components/ExitIntentPopup'));
-const CookieConsent     = lazy(() => import('@/components/CookieConsent'));
+// Lazy-load non-critical layout components — none of these fire on initial render
+const StickyMobileCTA = lazy(() => import('@/components/StickyMobileCTA'));
+const WhatsAppButton = lazy(() => import('@/components/WhatsAppButton'));
+const ExitIntentPopup = lazy(() => import('@/components/ExitIntentPopup'));
+const CookieConsent = lazy(() => import('@/components/CookieConsent'));
+
+// Sonner Toaster — no toasts fire on page load, safe to lazy-load
+const LazyToaster = lazy(() => import('sonner').then(m => ({ default: m.Toaster })));
 
 export function ClientProviders({ children }) {
   const queryClient = getQueryClient();
   const pathname = usePathname();
   const [cartCount, setCartCount] = useState(0);
+  const [overlaysReady, setOverlaysReady] = useState(false);
   const isHomePage = pathname === '/';
 
   // Track Meta Pixel PageView on route changes (script already loaded via next/script)
@@ -28,19 +30,34 @@ export function ClientProviders({ children }) {
     }
   }, [pathname]);
 
-  // Load cart count from Supabase
+  // Defer overlays + toaster — load 2s after hydration
+  useEffect(() => {
+    const id = setTimeout(() => setOverlaysReady(true), 2000);
+    return () => clearTimeout(id);
+  }, []);
+
+  // Load cart count — deferred, uses fetch instead of importing heavy base44-compat
   useEffect(() => {
     const loadCartCount = async () => {
       const sessionId = localStorage.getItem('bbs_session_id');
       if (!sessionId) return;
       try {
-        const items = await entities.CartItem.filter({ session_id: sessionId });
-        setCartCount(items.length);
+        const res = await fetch(`/api/cart?session_id=${encodeURIComponent(sessionId)}`);
+        if (res.ok) {
+          const { count = 0 } = await res.json();
+          setCartCount(count);
+        }
       } catch {
-        // Cart items table may not exist yet
+        // Cart API may not exist yet
       }
     };
-    loadCartCount();
+
+    // Defer cart count load — not needed for LCP
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadCartCount);
+    } else {
+      setTimeout(loadCartCount, 1000);
+    }
 
     const handleCartUpdate = () => loadCartCount();
     window.addEventListener('cartUpdated', handleCartUpdate);
@@ -73,13 +90,15 @@ export function ClientProviders({ children }) {
         <main className={`flex-1 ${isHomePage ? '' : 'pt-28'}`}>
           {children}
         </main>
-        <Suspense fallback={null}>
-          <StickyMobileCTA />
-          <WhatsAppButton />
-          <ExitIntentPopup />
-          <CookieConsent />
-        </Suspense>
-        <Toaster richColors position="top-right" duration={4000} />
+        {overlaysReady && (
+          <Suspense fallback={null}>
+            <StickyMobileCTA />
+            <WhatsAppButton />
+            <ExitIntentPopup />
+            <CookieConsent />
+            <LazyToaster richColors position="top-right" duration={4000} />
+          </Suspense>
+        )}
       </AuthProvider>
     </QueryClientProvider>
   );
