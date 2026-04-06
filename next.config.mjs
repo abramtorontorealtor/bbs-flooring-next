@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    optimizeCss: true,       // Inline critical CSS via critters — reduces render-blocking CSS
-    // NOTE: optimizePackageImports REMOVED — caused Turbopack to split into 122+ micro-chunks
-    // which increased HTTP waterfall latency and raised LCP. Turbopack handles tree-shaking natively.
-  },
+  // NOTE: experimental.optimizeCss (critters) does NOT work with Turbopack — produces zero
+  // inline <style> tags. Removed to avoid confusion. optimizePackageImports also removed
+  // previously (caused 122+ micro-chunks with Turbopack). Turbopack handles both natively.
   images: {
     formats: ['image/avif', 'image/webp'],  // AVIF first — 50% smaller than WebP
     remotePatterns: [
