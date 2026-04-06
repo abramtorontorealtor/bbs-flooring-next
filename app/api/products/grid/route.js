@@ -39,8 +39,8 @@ export async function GET(request) {
   if (clearance) query = query.eq('is_clearance', true);
   if (sale) query = query.eq('is_on_sale', true);
 
-  // Default sort: newest first (matches existing behavior)
-  query = query.order('created_at', { ascending: false });
+  // Default sort: smart tier sort (on-sale → regular → clearance → OOS), then newest within tier
+  query = query.order('sort_score', { ascending: false }).order('created_at', { ascending: false });
 
   const { data, error } = await query;
 
