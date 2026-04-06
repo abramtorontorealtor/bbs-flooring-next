@@ -165,7 +165,7 @@ export default function HomePage() {
             style={{ background: 'linear-gradient(to right, rgba(15,23,42,0.9), rgba(15,23,42,0.7), transparent)' }}
           />
         </div>
-        <div className="relative max-w-5xl mx-auto px-4 w-full pt-28 md:pt-24 pb-24 md:pb-20">
+        <div className="relative max-w-5xl mx-auto px-4 w-full pt-20 md:pt-24 pb-12 md:pb-20">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
