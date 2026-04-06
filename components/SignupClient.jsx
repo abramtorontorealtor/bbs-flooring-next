@@ -85,8 +85,7 @@ export default function SignupClient() {
     });
   }
 
-  if (isLoadingAuth) return null;
-  if (isAuthenticated) return null;
+  if (!isLoadingAuth && isAuthenticated) return null;
 
   if (success) {
     return (

@@ -67,14 +67,8 @@ export default function LoginClient() {
     });
   }
 
-  if (isLoadingAuth) {
-    return (
-      <div className="min-h-[80vh] flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-amber-400 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-  if (isAuthenticated) return null;
+  // If already authenticated, redirect — but don't block the form from rendering
+  if (!isLoadingAuth && isAuthenticated) return null;
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-16">
