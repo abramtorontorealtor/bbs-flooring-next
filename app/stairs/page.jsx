@@ -1,5 +1,6 @@
 import StairsClient from '@/components/StairsClient';
-import { stairsSchema, JsonLd } from '@/lib/schemas';
+import { stairsSchema, faqSchema, JsonLd } from '@/lib/schemas';
+import { STAIRS_FAQS } from '@/data/faqs';
 
 export const metadata = {
   title: 'Staircase Renovation & Installation | Markham, Toronto & Durham',
@@ -10,7 +11,7 @@ export const metadata = {
 export default function StairsPage() {
   return (
     <>
-      <JsonLd data={stairsSchema()} />
+      <JsonLd data={[stairsSchema(), faqSchema(STAIRS_FAQS)]} />
       <StairsClient />
     </>
   );

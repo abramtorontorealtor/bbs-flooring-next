@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import EngineeredHardwoodClient from '@/components/EngineeredHardwoodClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
+import { ENGINEERED_HARDWOOD_FAQS } from '@/data/faqs';
 
 export const metadata = {
   title: 'Engineered Hardwood Flooring Markham | Vidar, Wickham & More',
@@ -9,5 +11,10 @@ export const metadata = {
 };
 
 export default function EngineeredHardwoodPage() {
-  return <Suspense><EngineeredHardwoodClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(ENGINEERED_HARDWOOD_FAQS)} />
+      <Suspense><EngineeredHardwoodClient /></Suspense>
+    </>
+  );
 }

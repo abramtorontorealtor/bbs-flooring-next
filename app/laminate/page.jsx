@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import LaminateClient from '@/components/LaminateClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
+import { LAMINATE_FAQS } from '@/data/faqs';
 
 export const metadata = {
   title: 'Laminate Flooring Markham | 12mm from $1.49/sqft',
@@ -9,5 +11,10 @@ export const metadata = {
 };
 
 export default function LaminatePage() {
-  return <Suspense><LaminateClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(LAMINATE_FAQS)} />
+      <Suspense><LaminateClient /></Suspense>
+    </>
+  );
 }

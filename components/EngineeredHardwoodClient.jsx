@@ -4,7 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import CategoryProductGrid from '@/components/CategoryProductGrid';
-import FAQSection from '@/components/FAQSection';
+import StaticFAQ from '@/components/StaticFAQ';
+import { ENGINEERED_HARDWOOD_FAQS } from '@/data/faqs';
 import RelatedCategories from '@/components/RelatedCategories';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
@@ -144,7 +145,13 @@ export default function EngineeredHardwoodClient() {
 
       <FinancingBanner monthlyFrom={122} />
 
-      <FAQSection category="engineered_hardwood" />
+      <StaticFAQ
+          faqItems={ENGINEERED_HARDWOOD_FAQS}
+          title="Frequently Asked Questions About Engineered Hardwood Flooring"
+          subtitle="Get answers to common questions about engineered hardwood flooring in Markham, Toronto, and Durham"
+          schemaId="faq-engineered-hardwood"
+          skipSchema
+        />
 
       <SpokeLinks
         title="Explore Related Flooring Pages"

@@ -9,29 +9,7 @@ import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
-
-const INSTALLATION_FAQS = [
-  {
-    question: 'How much does flooring installation cost in Markham and Toronto?',
-    answer: 'At BBS Flooring, engineered hardwood installation starts at $2.25/sqft (nail-down, planks 6½″ and under), $3.25/sqft (glue+nail or herringbone nail-down), or $4.25/sqft (herringbone glue+nail), and laminate or vinyl installation at $2.00/sqft. These are all-inclusive labour rates with no hidden fees. Use our free Quote Calculator for an instant estimate based on your room size and flooring type.'
-  },
-  {
-    question: 'Do you move furniture before installing new flooring?',
-    answer: 'Yes! BBS Flooring offers full-service installation that includes furniture moving at no extra charge for standard items. Our crew will carefully move your furniture, install your new floors, and place everything back. This is one of the biggest reasons homeowners in Markham, Toronto, and Durham choose us over competitors.'
-  },
-  {
-    question: 'How long does a typical flooring installation take?',
-    answer: 'Most residential flooring installations are completed in 1–3 days depending on the size of the area and type of flooring. A standard 500 sqft room typically takes one day for laminate or vinyl and 1–2 days for hardwood. We also handle old flooring removal, subfloor prep, and baseboard installation in the same visit.'
-  },
-  {
-    question: 'What types of flooring do you install?',
-    answer: 'We install all major flooring types: solid hardwood (nail-down), engineered hardwood (nail-down or glue-down), laminate (click-lock floating), luxury vinyl plank/LVP (click-lock or glue-down), tile, and carpet. We also handle carpet removal, hardwood refinishing, staircase renovations, and baseboard/trim work.'
-  },
-  {
-    question: 'What areas do you serve for flooring installation?',
-    answer: 'BBS Flooring provides professional installation across Markham, Toronto, Scarborough, Pickering, Ajax, Whitby, Oshawa, Richmond Hill, Vaughan, Stouffville, and the entire Durham Region and Greater Toronto Area. Our showroom is located at 6061 Highway 7, Unit B, Markham, ON.'
-  }
-];
+import { INSTALLATION_FAQS } from '@/data/faqs';
 
 const INSTALLATION_SPOKE_LINKS = [
   { route: 'FlooringInstallationCost', label: 'Flooring Installation Cost Guide', description: 'Detailed breakdown of installation costs per sqft for hardwood, vinyl, laminate & tile' },
@@ -258,6 +236,7 @@ export default function InstallationClient() {
           title="Frequently Asked Questions About Flooring Installation"
           subtitle="Answers to the most common installation questions from homeowners in Markham, Toronto & Durham"
           schemaId="faq-installation"
+          skipSchema
         />
 
         {/* Spoke Links */}

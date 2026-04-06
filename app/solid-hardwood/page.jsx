@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import SolidHardwoodClient from '@/components/SolidHardwoodClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
+import { SOLID_HARDWOOD_FAQS } from '@/data/faqs';
 
 export const metadata = {
   title: 'Solid Hardwood Flooring Markham | Red Oak, White Oak, Maple',
@@ -9,5 +11,10 @@ export const metadata = {
 };
 
 export default function SolidHardwoodPage() {
-  return <Suspense><SolidHardwoodClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(SOLID_HARDWOOD_FAQS)} />
+      <Suspense><SolidHardwoodClient /></Suspense>
+    </>
+  );
 }

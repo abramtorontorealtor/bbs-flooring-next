@@ -1,5 +1,6 @@
 import FreeMeasurementClient from '@/components/FreeMeasurementClient';
-import { freeMeasurementSchema, JsonLd } from '@/lib/schemas';
+import { freeMeasurementSchema, faqSchema, JsonLd } from '@/lib/schemas';
+import { FREE_MEASUREMENT_FAQS } from '@/data/faqs';
 
 export const metadata = {
   title: 'Free In-Home Flooring Measurement | Markham',
@@ -10,7 +11,7 @@ export const metadata = {
 export default function FreeMeasurementPage() {
   return (
     <>
-      <JsonLd data={freeMeasurementSchema()} />
+      <JsonLd data={[freeMeasurementSchema(), faqSchema(FREE_MEASUREMENT_FAQS)]} />
       <FreeMeasurementClient />
     </>
   );

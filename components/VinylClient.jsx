@@ -4,7 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import CategoryProductGrid from '@/components/CategoryProductGrid';
-import FAQSection from '@/components/FAQSection';
+import StaticFAQ from '@/components/StaticFAQ';
+import { VINYL_FAQS } from '@/data/faqs';
 import RelatedCategories from '@/components/RelatedCategories';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
@@ -147,7 +148,13 @@ export default function VinylClient() {
 
       <FinancingBanner monthlyFrom={89} />
 
-      <FAQSection category="vinyl_flooring" />
+      <StaticFAQ
+          faqItems={VINYL_FAQS}
+          title="Frequently Asked Questions About Vinyl Flooring"
+          subtitle="Get answers to common questions about luxury vinyl plank flooring in Markham, Toronto, and Durham"
+          schemaId="faq-vinyl"
+          skipSchema
+        />
 
       <SpokeLinks
         title="Explore Related Flooring Pages"

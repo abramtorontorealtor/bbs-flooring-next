@@ -10,6 +10,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
+import StaticFAQ from '@/components/StaticFAQ';
+import { FREE_MEASUREMENT_FAQS } from '@/data/faqs';
 
 const PROJECT_TYPES = [
   { value: 'hardwood', label: '🪵 Hardwood' },
@@ -428,6 +430,14 @@ export default function FreeMeasurementClient() {
           </div>
         </div>
       </div>
+
+      <StaticFAQ
+          faqItems={FREE_MEASUREMENT_FAQS}
+          title="Frequently Asked Questions About Free Measurements"
+          subtitle="Everything you need to know about our free in-home measurement service"
+          schemaId="faq-free-measurement"
+          skipSchema
+        />
 
       {/* Sticky Mobile CTA */}
       {showStickyBar && (

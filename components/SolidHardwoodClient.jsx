@@ -4,7 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import CategoryProductGrid from '@/components/CategoryProductGrid';
-import FAQSection from '@/components/FAQSection';
+import StaticFAQ from '@/components/StaticFAQ';
+import { SOLID_HARDWOOD_FAQS } from '@/data/faqs';
 import RelatedCategories from '@/components/RelatedCategories';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
@@ -149,7 +150,13 @@ export default function SolidHardwoodClient() {
 
       <FinancingBanner monthlyFrom={142} />
 
-      <FAQSection category="solid_hardwood" />
+      <StaticFAQ
+          faqItems={SOLID_HARDWOOD_FAQS}
+          title="Frequently Asked Questions About Solid Hardwood Flooring"
+          subtitle="Get answers to common questions about solid hardwood flooring in Markham, Toronto, and Durham"
+          schemaId="faq-solid-hardwood"
+          skipSchema
+        />
 
       <SpokeLinks
         title="Explore Related Flooring Pages"

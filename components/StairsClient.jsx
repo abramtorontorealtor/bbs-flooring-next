@@ -12,29 +12,7 @@ import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
-
-const STAIRS_FAQS = [
-  {
-    question: 'How much does it cost to convert carpet stairs to hardwood in Markham?',
-    answer: 'Stair tread refinishing (sand & restain) costs $125 per step, new straight steps are $185 each, and specialty steps (pie, triangle, bullnose) are $225 each. A full 13-step staircase refinish with rails and nosing runs approximately $2,000–$2,500. New iron or wood pickets are $25/piece installed with material. BBS Flooring provides free in-home measurements with detailed, no-obligation quotes for all staircase projects in Markham, Toronto, and Durham.'
-  },
-  {
-    question: 'What is staircase refinishing and how long does it take?',
-    answer: 'Staircase refinishing involves sanding down your existing hardwood stair treads to remove scratches, dents, and old finish, then applying new stain and protective coats. Most residential staircases can be refinished in 2–3 days. This is a cost-effective alternative to full replacement if your treads are still structurally sound.'
-  },
-  {
-    question: 'Do you install vinyl stair caps and nosings?',
-    answer: "Yes! Vinyl stair caps (also called stair covers or overlays) are a popular, budget-friendly option that fits over your existing stair treads. They're waterproof, durable, and available in wood-look finishes that match your vinyl plank flooring. We install vinyl stair caps throughout Markham, Toronto, Scarborough, Pickering, and Durham."
-  },
-  {
-    question: 'Can you install glass or metal stair railings?',
-    answer: 'Absolutely. BBS Flooring installs a full range of stair railings including traditional wood balusters, modern glass panels, metal spindles, and combination designs. All railing installations are completed to Ontario Building Code standards. We handle the full project — from removing old railings to installing new ones.'
-  },
-  {
-    question: 'What areas do you serve for staircase renovation?',
-    answer: 'We provide staircase renovation, refinishing, and installation services across Markham, Toronto, Scarborough, Pickering, Ajax, Whitby, Oshawa, Richmond Hill, Vaughan, Stouffville, and the full Greater Toronto Area. Visit our showroom at 6061 Highway 7, Unit B, Markham for samples and a free consultation.'
-  },
-];
+import { STAIRS_FAQS } from '@/data/faqs';
 
 const STAIRS_SPOKE_LINKS = [
   { route: 'StairRefinishing', label: 'Staircase Refinishing & Staining', description: 'Restore your hardwood stairs with professional sanding, staining & finishing' },
@@ -346,6 +324,7 @@ export default function StairsClient() {
           title="Frequently Asked Questions About Staircase Renovation"
           subtitle="Common questions from homeowners in Markham, Toronto & Durham about stair installation and refinishing"
           schemaId="faq-stairs"
+          skipSchema
         />
 
         <SpokeLinks

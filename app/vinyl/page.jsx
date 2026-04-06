@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import VinylClient from '@/components/VinylClient';
+import { faqSchema, JsonLd } from '@/lib/schemas';
+import { VINYL_FAQS } from '@/data/faqs';
 
 export const metadata = {
   title: 'Vinyl Flooring Markham | LVP & SPC Waterproof',
@@ -9,5 +11,10 @@ export const metadata = {
 };
 
 export default function VinylPage() {
-  return <Suspense><VinylClient /></Suspense>;
+  return (
+    <>
+      <JsonLd data={faqSchema(VINYL_FAQS)} />
+      <Suspense><VinylClient /></Suspense>
+    </>
+  );
 }

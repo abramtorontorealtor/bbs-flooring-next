@@ -7,12 +7,12 @@ function generateFAQSchema(faqs) {
   return { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(faq => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) };
 }
 
-export default function StaticFAQ({ faqItems = [], title, subtitle, schemaId = 'faq-schema' }) {
+export default function StaticFAQ({ faqItems = [], title, subtitle, schemaId = 'faq-schema', skipSchema = false }) {
   if (!faqItems.length) return null;
 
   return (
     <div className="mt-16">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(faqItems)) }} />
+      {!skipSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(faqItems)) }} />}
       <div className="max-w-4xl mx-auto">
         {title && <h2 className="text-3xl font-bold text-slate-800 mb-3 text-center">{title}</h2>}
         {subtitle && <p className="text-slate-600 text-center mb-8">{subtitle}</p>}
