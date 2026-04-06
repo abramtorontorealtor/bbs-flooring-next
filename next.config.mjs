@@ -2,23 +2,8 @@
 const nextConfig = {
   experimental: {
     optimizeCss: true,       // Inline critical CSS via critters — reduces render-blocking CSS
-    optimizePackageImports: [
-      // Tree-shake barrel exports — prevents pulling entire packages into bundles
-      '@supabase/supabase-js',
-      '@supabase/ssr',
-      '@tanstack/react-query',
-      'lucide-react',
-      'recharts',
-      '@radix-ui/react-accordion',
-      '@radix-ui/react-dialog',
-      '@radix-ui/react-dropdown-menu',
-      '@radix-ui/react-select',
-      '@radix-ui/react-tabs',
-      '@radix-ui/react-tooltip',
-      'sonner',
-      'embla-carousel-react',
-      'class-variance-authority',
-    ],
+    // NOTE: optimizePackageImports REMOVED — caused Turbopack to split into 122+ micro-chunks
+    // which increased HTTP waterfall latency and raised LCP. Turbopack handles tree-shaking natively.
   },
   images: {
     formats: ['image/avif', 'image/webp'],  // AVIF first — 50% smaller than WebP
