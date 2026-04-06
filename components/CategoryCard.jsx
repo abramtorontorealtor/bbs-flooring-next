@@ -4,7 +4,13 @@ import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
-import { ArrowRight } from 'lucide-react';
+function ArrowRight({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+    </svg>
+  );
+}
 
 function useFadeInView() {
   const ref = useRef(null);

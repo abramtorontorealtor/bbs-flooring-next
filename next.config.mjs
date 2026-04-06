@@ -4,6 +4,7 @@ const nextConfig = {
     optimizeCss: true,       // Inline critical CSS via critters — reduces render-blocking CSS
   },
   images: {
+    formats: ['image/avif', 'image/webp'],  // AVIF first — 50% smaller than WebP
     remotePatterns: [
       {
         protocol: 'https',

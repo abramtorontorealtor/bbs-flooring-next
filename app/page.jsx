@@ -84,10 +84,10 @@ export default function HomePage() {
             className="w-full h-full object-cover"
             width={1920}
             height={1080}
-            loading="eager"
-            fetchPriority="low"
+            priority
+            fetchPriority="high"
             sizes="(max-width: 768px) 100vw, 100vw"
-            quality={60}
+            quality={75}
           />
           <div
             className="absolute inset-0"
