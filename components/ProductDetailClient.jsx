@@ -44,6 +44,24 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [buyMode, setBuyMode] = useState('material');
   const [stickyCartVisible, setStickyCartVisible] = useState(false);
   const [variantSort, setVariantSort] = useState({ key: null, asc: true });
+
+  // Active image — swaps when a child variant is selected, falls back to parent image
+  const PLACEHOLDER = '/images/product-placeholder.svg';
+  const displayImage = useMemo(() => {
+    if (product?.is_parent_product && selectedVariantSku && productVariants?.length) {
+      const v = productVariants.find(p => p.sku === selectedVariantSku);
+      if (v?.image_url) return v.image_url;
+    }
+    return product?.image_url || PLACEHOLDER;
+  }, [product, selectedVariantSku, productVariants]);
+
+  const displayAlt = useMemo(() => {
+    if (product?.is_parent_product && selectedVariantSku && productVariants?.length) {
+      const v = productVariants.find(p => p.sku === selectedVariantSku);
+      if (v?.image_url) return v.image_alt_text || v.name || product?.name;
+    }
+    return product?.image_alt_text || product?.name || '';
+  }, [product, selectedVariantSku, productVariants]);
   const [pdpSessionId, setPdpSessionId] = useState(null);
   const buyBoxRef = useRef(null);
 
@@ -357,8 +375,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               onClick={() => setIsImageZoomed(true)}
             >
               <Image
-                src={product.image_url ? product.image_url : '/images/product-placeholder.svg'}
-                alt={product.image_alt_text || product.name}
+                src={displayImage}
+                alt={displayAlt}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 width={1200}
                 height={1200}
@@ -735,7 +753,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       {/* Zoomed Image Modal */}
       {isImageZoomed && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-zoom-out animate-fade-in" onClick={() => setIsImageZoomed(false)}>
-          <Image src={product.image_url || '/images/product-placeholder.svg'} alt={product.image_alt_text || product.name} className="max-h-[90vh] object-contain animate-scale-in" style={{ maxWidth: 'min(896px, calc(100vw - 2rem))' }} width={1200} height={1200} />
+          <Image src={displayImage} alt={displayAlt} className="max-h-[90vh] object-contain animate-scale-in" style={{ maxWidth: 'min(896px, calc(100vw - 2rem))' }} width={1200} height={1200} />
           <button className="absolute top-4 right-4 text-white text-3xl hover:opacity-70" onClick={() => setIsImageZoomed(false)}>✕</button>
         </div>
       )}
