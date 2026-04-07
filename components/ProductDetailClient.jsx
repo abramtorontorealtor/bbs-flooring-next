@@ -39,7 +39,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isImageZoomed, setIsImageZoomed] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(null);
-  const [selectedVariantSku, setSelectedVariantSku] = useState(null);
+  const [selectedVariantId, setSelectedVariantId] = useState(null);
   const [selectedJsonVariant, setSelectedJsonVariant] = useState(null);
   const [buyMode, setBuyMode] = useState('material');
   const [stickyCartVisible, setStickyCartVisible] = useState(false);
@@ -95,14 +95,14 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
   // When a variant is selected via the table, jump to its image in the gallery
   useEffect(() => {
-    if (selectedVariantSku && productVariants?.length) {
-      const v = productVariants.find(p => p.sku === selectedVariantSku);
+    if (selectedVariantId && productVariants?.length) {
+      const v = productVariants.find(p => p.id === selectedVariantId);
       if (v?.image_url) {
         const idx = imageGallery.findIndex(i => i.url === v.image_url);
         if (idx >= 0) setActiveImageIdx(idx);
       }
     }
-  }, [selectedVariantSku, productVariants, imageGallery]);
+  }, [selectedVariantId, productVariants, imageGallery]);
 
   const displayImage = imageGallery[activeImageIdx]?.url || PLACEHOLDER;
   const displayAlt = imageGallery[activeImageIdx]?.alt || product?.name || '';
@@ -143,8 +143,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         species: product?.species
       };
     }
-    if (product?.is_parent_product && selectedVariantSku) {
-      const variant = productVariants.find(v => v.sku === selectedVariantSku);
+    if (product?.is_parent_product && selectedVariantId) {
+      const variant = productVariants.find(v => v.id === selectedVariantId);
       if (variant) {
         return {
           price_per_sqft: resolvePrice(variant),
@@ -174,7 +174,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       grade: product?.grade,
       species: product?.species
     };
-  }, [selectedJsonVariant, selectedVariant, selectedVariantSku, product, productVariants]);
+  }, [selectedJsonVariant, selectedVariant, selectedVariantId, product, productVariants]);
 
   const { data: allRelatedProducts = [] } = useQuery({
     queryKey: ['relatedProducts', product?.category],
@@ -262,7 +262,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       toast.error('Please select a variant option');
       return;
     }
-    if (product.is_parent_product && productVariants.length > 0 && !selectedVariantSku) {
+    if (product.is_parent_product && productVariants.length > 0 && !selectedVariantId) {
       toast.error('Please select a width and grade option from the table');
       return;
     }
@@ -296,8 +296,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         return;
       }
       let productToAdd = product;
-      if (product.is_parent_product && selectedVariantSku) {
-        productToAdd = productVariants.find(v => v.sku === selectedVariantSku);
+      if (product.is_parent_product && selectedVariantId) {
+        productToAdd = productVariants.find(v => v.id === selectedVariantId);
         if (!productToAdd) { toast.error('Selected variant not found'); setIsAddingToCart(false); return; }
       }
       await entities.CartItem.create({
@@ -312,7 +312,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       setIsAddingToCart(false);
       toast.success('Added to cart!');
       setSqftNeeded('');
-      setSelectedVariantSku(null);
+      setSelectedVariantId(null);
       if (window.gtag) window.gtag('event', 'add_to_cart', { currency: 'CAD', value: calculation.lineTotal, items: [{ item_id: productToAdd.id, item_name: productToAdd.name, price: calculation.pricePerSqft, quantity: calculation.actualSqft }] });
       if (typeof window.fbq === 'function') window.fbq('track', 'AddToCart', { content_name: productToAdd.name, content_ids: [productToAdd.sku || productToAdd.id], content_type: 'product', value: calculation.lineTotal, currency: 'CAD' });
       Analytics.trackAddToCart(productToAdd.name, calculation.lineTotal);
@@ -492,7 +492,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                       else if (variant.name?.toLowerCase().includes('chevron')) patternType = ' Chevron';
                       else if (variant.name?.toLowerCase().includes('click')) patternType = ' Click';
                       return (
-                        <tr key={variant.id} className={`hover:bg-slate-50 transition-colors ${selectedVariantSku === variant.sku ? 'bg-amber-50' : ''}`}>
+                        <tr key={variant.id} className={`hover:bg-slate-50 transition-colors ${selectedVariantId === variant.id ? 'bg-amber-50' : ''}`}>
                           <td className="px-4 py-3 text-sm text-slate-700">{variant.dimensions || 'N/A'}{patternType}</td>
                           <td className="px-4 py-3 text-sm text-slate-700">{variant.grade || 'N/A'}</td>
                           <td className="px-4 py-3 text-sm font-semibold">
@@ -503,8 +503,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                             )}
                           </td>
                           <td className="px-4 py-3 text-center">
-                            <Button size="sm" variant={selectedVariantSku === variant.sku ? 'default' : 'outline'} onClick={() => setSelectedVariantSku(variant.sku)} className={selectedVariantSku === variant.sku ? 'bg-amber-500 hover:bg-amber-600' : ''}>
-                              {selectedVariantSku === variant.sku ? 'Selected' : 'Select'}
+                            <Button size="sm" variant={selectedVariantId === variant.id ? 'default' : 'outline'} onClick={() => setSelectedVariantId(variant.id)} className={selectedVariantId === variant.id ? 'bg-amber-500 hover:bg-amber-600' : ''}>
+                              {selectedVariantId === variant.id ? 'Selected' : 'Select'}
                             </Button>
                           </td>
                         </tr>
