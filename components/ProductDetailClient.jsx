@@ -27,6 +27,7 @@ import QuoteProductCTA from '@/components/QuoteProductCTA';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
 import SqftCalculator from '@/components/SqftCalculator';
+import ProductImageGallery from '@/components/ProductImageGallery';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
@@ -37,7 +38,6 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
   const [sqftNeeded, setSqftNeeded] = useState('');
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [isImageZoomed, setIsImageZoomed] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedVariantId, setSelectedVariantId] = useState(null);
   const [selectedJsonVariant, setSelectedJsonVariant] = useState(null);
@@ -76,17 +76,25 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     enabled: !!product?.is_parent_product,
   });
 
-  // Build gallery: parent image + all unique child images
+  // Build gallery: main image + additional_images + child variant images (deduped)
   const imageGallery = useMemo(() => {
     const images = [];
-    if (product?.image_url) {
-      images.push({ url: product.image_url, alt: product.image_alt_text || product.name, sku: null });
+    const seen = new Set();
+    const add = (url, alt, sku = null) => {
+      if (!url || seen.has(url)) return;
+      seen.add(url);
+      images.push({ url, alt, sku });
+    };
+    // 1. Main product image
+    add(product?.image_url, product?.image_alt_text || product?.name);
+    // 2. Additional images (new jsonb column)
+    if (Array.isArray(product?.additional_images)) {
+      product.additional_images.forEach((url, i) => add(url, `${product?.name} - image ${i + 2}`));
     }
+    // 3. Child variant images (for parent products)
     if (product?.is_parent_product && productVariants?.length) {
       for (const v of productVariants) {
-        if (v.image_url && !images.some(i => i.url === v.image_url)) {
-          images.push({ url: v.image_url, alt: v.image_alt_text || v.name, sku: v.sku });
-        }
+        add(v.image_url, v.image_alt_text || v.name, v.sku);
       }
     }
     if (images.length === 0) images.push({ url: PLACEHOLDER, alt: product?.name || '', sku: null });
@@ -103,9 +111,6 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       }
     }
   }, [selectedVariantId, productVariants, imageGallery]);
-
-  const displayImage = imageGallery[activeImageIdx]?.url || PLACEHOLDER;
-  const displayAlt = imageGallery[activeImageIdx]?.alt || product?.name || '';
 
   // Parse variants from specifications
   const variants = useMemo(() => {
@@ -383,56 +388,18 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       {breadcrumbItems.length > 0 && <Breadcrumbs items={breadcrumbItems} />}
 
       <div className="grid lg:grid-cols-2 gap-12">
-        {/* Product Image */}
+        {/* Product Image Gallery */}
         <div className="animate-fade-in-up">
-          <div className="sticky top-32">
-            <div
-              className="aspect-square rounded-3xl overflow-hidden bg-slate-50 shadow-lg cursor-zoom-in relative group"
-              onClick={() => setIsImageZoomed(true)}
-            >
-              <Image
-                src={displayImage}
-                alt={displayAlt}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                width={1200}
-                height={1200}
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
-                <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">Click to zoom</span>
-              </div>
-            </div>
-            <div className="absolute top-4 left-4 flex flex-col gap-2">
-              {product.is_new_arrival && <Badge className="bg-emerald-500 text-white border-0">New Arrival</Badge>}
-              {product.is_on_sale && <Badge className="bg-red-500 text-white border-0">Sale</Badge>}
-            </div>
-            {/* Thumbnail strip — shows when multiple images exist */}
-            {imageGallery.length > 1 && (
-              <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
-                {imageGallery.map((img, idx) => (
-                  <button
-                    key={img.url}
-                    onClick={() => setActiveImageIdx(idx)}
-                    className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                      idx === activeImageIdx
-                        ? 'border-amber-500 ring-2 ring-amber-200'
-                        : 'border-slate-200 hover:border-slate-300'
-                    }`}
-                  >
-                    <Image
-                      src={img.url}
-                      alt={img.alt}
-                      className="w-full h-full object-cover"
-                      width={64}
-                      height={64}
-                      sizes="64px"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductImageGallery
+            images={imageGallery}
+            activeIdx={activeImageIdx}
+            onActiveIdxChange={setActiveImageIdx}
+            badges={[
+              product.is_new_arrival && <Badge key="new" className="bg-emerald-500 text-white border-0">New Arrival</Badge>,
+              product.is_on_sale && <Badge key="sale" className="bg-red-500 text-white border-0">Sale</Badge>,
+              product.is_clearance && <Badge key="clearance" className="bg-orange-500 text-white border-0">Clearance</Badge>,
+            ].filter(Boolean)}
+          />
         </div>
 
         {/* Product Info */}
@@ -790,14 +757,6 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
       {/* Recently Viewed */}
       <RecentlyViewed excludeProductId={product.id} limit={4} />
-
-      {/* Zoomed Image Modal */}
-      {isImageZoomed && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-zoom-out animate-fade-in" onClick={() => setIsImageZoomed(false)}>
-          <Image src={displayImage} alt={displayAlt} className="max-h-[90vh] object-contain animate-scale-in" style={{ maxWidth: 'min(896px, calc(100vw - 2rem))' }} width={1200} height={1200} />
-          <button className="absolute top-4 right-4 text-white text-3xl hover:opacity-70" onClick={() => setIsImageZoomed(false)}>✕</button>
-        </div>
-      )}
 
       <StickyAddToCart visible={stickyCartVisible} price={currentPricing?.price_per_sqft} sqftPerBox={currentPricing?.sqft_per_box} sqftNeeded={sqftNeeded} setSqftNeeded={setSqftNeeded} calculation={calculation} variantLabel={selectedJsonVariant?.label || null} isOutOfStock={product.in_stock === false} isAddingToCart={isAddingToCart} onAddToCart={handleAddToCart} />
     </div>
