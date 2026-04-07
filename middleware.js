@@ -47,6 +47,8 @@ const SLUG_REDIRECTS = new Map([
   ['/products/provence-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring', '/products/provence-vidar-design-flooring-american-black-walnut-engineered-hardwood-flooring'],
   ['/products/provence-vidar-5-american-white-oak-engineered-hardwood-herringbone-select-abc', '/products/provence-vidar-5-american-black-walnut-engineered-hardwood-herringbone-select-abc'],
   ['/products/provence-vidar-5-american-white-oak-engineered-hardwood-herringbone-select-better-ab', '/products/provence-vidar-5-american-black-walnut-engineered-hardwood-herringbone-select-better-ab'],
+  ['/products/natural-vidar-design-flooring-european-white-ash-engineered-hardwood-flooring', '/products/natural-vidar-design-flooring-american-black-walnut-engineered-hardwood-flooring'],
+  ['/products/clear-vidar-design-flooring-european-white-ash-engineered-hardwood-flooring', '/products/clear-vidar-design-flooring-european-white-oak-engineered-hardwood-flooring'],
   ['/products/sunset-vidar-design-flooring-european-white-ash-engineered-hardwood-flooring', '/products/sunset-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring'],
   ['/products/toffee-crunch-vidar-design-flooring-american-white-oakash-engineered-hardwood-flooring', '/products/toffee-crunch-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring'],
   ['/products/toffee-crunch-vidar-7-5-european-white-oak-engineered-hardwood-character-abcd', '/products/toffee-crunch-vidar-7-5-european-white-ash-engineered-hardwood-character-abcd'],
