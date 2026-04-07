@@ -136,49 +136,62 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   };
 
   const currentPricing = useMemo(() => {
+    // Base specs from product — overridden by variant when selected
+    const base = {
+      price_per_sqft: resolvePrice(product),
+      sale_price_per_sqft: product?.sale_price_per_sqft,
+      sqft_per_box: product?.sqft_per_box,
+      dimensions: product?.dimensions,
+      grade: product?.grade,
+      species: product?.species,
+      thickness: product?.thickness,
+      colour: product?.colour,
+      finish: product?.finish,
+      wear_layer: product?.wear_layer,
+      ac_rating: product?.ac_rating,
+    };
     if (product?.has_variants && selectedJsonVariant) {
-      // price_per_sqft is THE selling price. sale_price is the deal price if on_sale.
       const price = selectedJsonVariant.price_per_sqft;
       return {
+        ...base,
         price_per_sqft: price,
         sale_price_per_sqft: selectedJsonVariant.on_sale ? selectedJsonVariant.sale_price : null,
         sqft_per_box: selectedJsonVariant.sqft_box,
-        dimensions: selectedJsonVariant.dimensions,
-        grade: selectedJsonVariant.grade,
-        species: product?.species
+        dimensions: selectedJsonVariant.dimensions || base.dimensions,
+        grade: selectedJsonVariant.grade || base.grade,
       };
     }
     if (product?.is_parent_product && selectedVariantId) {
       const variant = productVariants.find(v => v.id === selectedVariantId);
       if (variant) {
         return {
+          ...base,
           price_per_sqft: resolvePrice(variant),
           sale_price_per_sqft: variant.sale_price_per_sqft,
-          sqft_per_box: variant.sqft_per_box,
-          dimensions: variant.dimensions,
-          grade: variant.grade,
-          species: variant.species
+          sqft_per_box: variant.sqft_per_box || base.sqft_per_box,
+          dimensions: variant.dimensions || base.dimensions,
+          grade: variant.grade || base.grade,
+          species: variant.species || base.species,
+          thickness: variant.thickness || base.thickness,
+          colour: variant.colour || base.colour,
+          finish: variant.finish || base.finish,
+          wear_layer: variant.wear_layer || base.wear_layer,
+          ac_rating: variant.ac_rating || base.ac_rating,
         };
       }
     }
     if (selectedVariant) {
       return {
+        ...base,
         price_per_sqft: resolvePrice(selectedVariant),
         sale_price_per_sqft: selectedVariant.sale_price_per_sqft,
-        sqft_per_box: selectedVariant.sqft_per_box,
-        dimensions: selectedVariant.dimensions,
-        grade: selectedVariant.grade,
-        species: selectedVariant.species
+        sqft_per_box: selectedVariant.sqft_per_box || base.sqft_per_box,
+        dimensions: selectedVariant.dimensions || base.dimensions,
+        grade: selectedVariant.grade || base.grade,
+        species: selectedVariant.species || base.species,
       };
     }
-    return {
-      price_per_sqft: resolvePrice(product),
-      sale_price_per_sqft: product?.sale_price_per_sqft,
-      sqft_per_box: product?.sqft_per_box,
-      dimensions: product?.dimensions,
-      grade: product?.grade,
-      species: product?.species
-    };
+    return base;
   }, [selectedJsonVariant, selectedVariant, selectedVariantId, product, productVariants]);
 
   const { data: allRelatedProducts = [] } = useQuery({
@@ -556,17 +569,17 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             );
           })()}
 
-          {/* Specs Grid */}
+          {/* Specs Grid — resolves from selected variant */}
           <div className="grid grid-cols-3 gap-4">
             {product.brand && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Brand</div><div className="font-semibold text-slate-800">{product.brand}</div></div>}
             {currentPricing.species && !['vinyl', 'vinyl_plank', 'laminate'].includes(product.category) && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Species</div><div className="font-semibold text-slate-800">{currentPricing.species}</div></div>}
-            {product.colour && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Colour</div><div className="font-semibold text-slate-800">{product.colour}</div></div>}
-            {product.thickness && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Thickness</div><div className="font-semibold text-slate-800">{product.thickness}</div></div>}
+            {currentPricing.colour && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Colour</div><div className="font-semibold text-slate-800">{currentPricing.colour}</div></div>}
+            {currentPricing.thickness && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Thickness</div><div className="font-semibold text-slate-800">{currentPricing.thickness}</div></div>}
             {currentPricing.dimensions && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Dimensions</div><div className="font-semibold text-slate-800">{currentPricing.dimensions}</div></div>}
-            {product.finish && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Finish</div><div className="font-semibold text-slate-800">{product.finish}</div></div>}
+            {currentPricing.finish && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Finish</div><div className="font-semibold text-slate-800">{currentPricing.finish}</div></div>}
             {currentPricing.grade && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Grade</div><div className="font-semibold text-slate-800">{currentPricing.grade}</div></div>}
-            {product.wear_layer && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Wear Layer</div><div className="font-semibold text-slate-800">{product.wear_layer}</div></div>}
-            {product.ac_rating && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">AC Rating</div><div className="font-semibold text-slate-800">{product.ac_rating}</div></div>}
+            {currentPricing.wear_layer && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Wear Layer</div><div className="font-semibold text-slate-800">{currentPricing.wear_layer}</div></div>}
+            {currentPricing.ac_rating && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">AC Rating</div><div className="font-semibold text-slate-800">{currentPricing.ac_rating}</div></div>}
             <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Sq.Ft/Box</div><div className="font-semibold text-slate-800">{currentPricing.sqft_per_box?.toFixed(2)}</div></div>
           </div>
 
@@ -673,12 +686,15 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             <AccordionContent className="px-6 pb-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {product.brand && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Brand:</span><span className="text-sm font-semibold text-slate-800">{product.brand}</span></div>}
-                {product.species && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Species:</span><span className="text-sm font-semibold text-slate-800">{product.species}</span></div>}
-                {product.colour && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Colour:</span><span className="text-sm font-semibold text-slate-800">{product.colour}</span></div>}
+                {currentPricing.species && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Species:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.species}</span></div>}
+                {currentPricing.colour && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Colour:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.colour}</span></div>}
+                {currentPricing.thickness && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Thickness:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.thickness}</span></div>}
                 {currentPricing.sqft_per_box && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Sqft/Box:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.sqft_per_box.toFixed(2)}</span></div>}
                 {currentPricing.dimensions && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Dimensions:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.dimensions}</span></div>}
-                {product.finish && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Finish:</span><span className="text-sm font-semibold text-slate-800">{product.finish}</span></div>}
+                {currentPricing.finish && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Finish:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.finish}</span></div>}
                 {currentPricing.grade && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Grade:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.grade}</span></div>}
+                {currentPricing.wear_layer && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Wear Layer:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.wear_layer}</span></div>}
+                {currentPricing.ac_rating && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">AC Rating:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.ac_rating}</span></div>}
               </div>
             </AccordionContent>
           </AccordionItem>
