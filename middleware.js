@@ -32,6 +32,28 @@ const WIX_REDIRECTS = new Map([
   ['/why-bbs-flooring', '/about'],
 ]);
 
+// Vidar slug fixes — wrong species in URLs (Apr 7, 2026)
+const SLUG_REDIRECTS = new Map([
+  ['/products/chocolate-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring', '/products/chocolate-vidar-design-flooring-american-black-walnut-engineered-hardwood-flooring'],
+  ['/products/chocolate-vidar-5-american-white-oak-engineered-hardwood-herringbone-character-abcd', '/products/chocolate-vidar-5-american-black-walnut-engineered-hardwood-herringbone-character-abcd'],
+  ['/products/clear-vidar-design-flooring-european-white-oakash-engineered-hardwood-flooring', '/products/clear-vidar-design-flooring-european-white-ash-engineered-hardwood-flooring'],
+  ['/products/clear-vidar-7-5-european-white-oak-engineered-hardwood-character-abcd', '/products/clear-vidar-7-5-european-white-ash-engineered-hardwood-character-abcd'],
+  ['/products/clear-vidar-7-5-european-white-oak-engineered-hardwood-select-abc', '/products/clear-vidar-7-5-european-white-ash-engineered-hardwood-select-abc'],
+  ['/products/macaroon-vidar-design-flooring-american-white-oakash-engineered-hardwood-flooring', '/products/macaroon-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring'],
+  ['/products/macaroon-vidar-7-5-american-white-oak-engineered-hardwood-character-abcd', '/products/macaroon-vidar-7-5-european-white-ash-engineered-hardwood-character-abcd'],
+  ['/products/macaroon-vidar-7-5-american-white-oak-engineered-hardwood-select-abc', '/products/macaroon-vidar-7-5-european-white-ash-engineered-hardwood-select-abc'],
+  ['/products/natural-vidar-5-american-white-oak-engineered-hardwood-herringbone-select-abc', '/products/natural-vidar-5-american-black-walnut-engineered-hardwood-herringbone-select-abc'],
+  ['/products/natural-vidar-5-american-white-oak-engineered-hardwood-herringbone-select-better-ab', '/products/natural-vidar-5-american-black-walnut-engineered-hardwood-herringbone-select-better-ab'],
+  ['/products/provence-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring', '/products/provence-vidar-design-flooring-american-black-walnut-engineered-hardwood-flooring'],
+  ['/products/provence-vidar-5-american-white-oak-engineered-hardwood-herringbone-select-abc', '/products/provence-vidar-5-american-black-walnut-engineered-hardwood-herringbone-select-abc'],
+  ['/products/provence-vidar-5-american-white-oak-engineered-hardwood-herringbone-select-better-ab', '/products/provence-vidar-5-american-black-walnut-engineered-hardwood-herringbone-select-better-ab'],
+  ['/products/sunset-vidar-design-flooring-european-white-ash-engineered-hardwood-flooring', '/products/sunset-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring'],
+  ['/products/toffee-crunch-vidar-design-flooring-american-white-oakash-engineered-hardwood-flooring', '/products/toffee-crunch-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring'],
+  ['/products/toffee-crunch-vidar-7-5-european-white-oak-engineered-hardwood-character-abcd', '/products/toffee-crunch-vidar-7-5-european-white-ash-engineered-hardwood-character-abcd'],
+  ['/products/toffee-crunch-vidar-7-5-european-white-oak-engineered-hardwood-select-abc', '/products/toffee-crunch-vidar-7-5-european-white-ash-engineered-hardwood-select-abc'],
+  ['/products/toffee-crunch-vidar-7-5-european-white-oak-engineered-hardwood-select-better-ab', '/products/toffee-crunch-vidar-7-5-european-white-ash-engineered-hardwood-select-better-ab'],
+]);
+
 // Single-word PascalCase pages that need lowercase redirects.
 const CASE_REDIRECTS = new Map([
   ['/Vinyl', '/vinyl'],
@@ -61,6 +83,12 @@ export async function middleware(request) {
   const caseRedirect = CASE_REDIRECTS.get(pathname);
   if (caseRedirect) {
     return NextResponse.redirect(new URL(caseRedirect, request.url), { status: 301 });
+  }
+
+  // Vidar slug fixes (wrong species in URL)
+  const slugRedirect = SLUG_REDIRECTS.get(pathname);
+  if (slugRedirect) {
+    return NextResponse.redirect(new URL(slugRedirect, request.url), { status: 301 });
   }
 
   if (pathname.startsWith('/product-page/')) {
