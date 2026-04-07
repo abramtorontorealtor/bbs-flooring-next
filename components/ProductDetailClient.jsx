@@ -101,10 +101,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     ...(initialProduct ? { initialData: [initialProduct], placeholderData: [initialProduct] } : {}),
   });
 
-  // Fetch variants if parent product
+  // Fetch child variants if parent product (parent_product_id is a UUID, not SKU)
   const { data: productVariants = [] } = useQuery({
-    queryKey: ['product-variants', product?.sku],
-    queryFn: () => entities.Product.filter({ parent_product_id: product.sku }),
+    queryKey: ['product-variants', product?.id],
+    queryFn: () => entities.Product.filter({ parent_product_id: product.id }),
     enabled: !!product?.is_parent_product,
   });
 
@@ -259,11 +259,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   }, [product]);
 
   const handleAddToCart = async () => {
-    if (product.has_variants && !selectedJsonVariant) {
+    if (product.has_variants && !productVariants.length && !selectedJsonVariant) {
       toast.error('Please select a variant option');
       return;
     }
-    if (product.is_parent_product && !product.has_variants && !selectedVariantSku) {
+    if (product.is_parent_product && productVariants.length > 0 && !selectedVariantSku) {
       toast.error('Please select a width and grade option from the table');
       return;
     }
@@ -278,7 +278,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('bbs_session_id', sessionId);
       }
-      if (product.has_variants && selectedJsonVariant) {
+      if (product.has_variants && !productVariants.length && selectedJsonVariant) {
         await entities.CartItem.create({
           session_id: sessionId, product_id: product.id, product_name: product.name,
           variant_label: selectedJsonVariant.label || null, sku: selectedJsonVariant.sku,
@@ -449,13 +449,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             </div>
           )}
 
-          {/* Variant Selector — chip-based for variants_json */}
-          {product.has_variants && (
+          {/* Variant Selector — chip-based for variants_json (only when no child DB variants) */}
+          {product.has_variants && !productVariants.length && (
             <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} />
           )}
 
           {/* Legacy Variant Table */}
-          {product.is_parent_product && !product.has_variants && productVariants.length > 0 && (
+          {product.is_parent_product && productVariants.length > 0 && (
             <div className="space-y-3">
               <label className="text-sm font-medium text-slate-700">Select Variant</label>
               <div className="border rounded-lg overflow-hidden">

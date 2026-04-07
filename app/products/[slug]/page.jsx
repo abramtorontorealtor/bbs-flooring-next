@@ -35,6 +35,24 @@ async function getProduct(slug) {
   }
 }
 
+// Fetch product by UUID (for parent lookup from child variants)
+async function getProductById(id) {
+  try {
+    return await entities.Product.get(id);
+  } catch {
+    return null;
+  }
+}
+
+// Fetch child variants for a parent product
+async function getChildVariants(parentId) {
+  try {
+    return await entities.Product.filter({ parent_product_id: parentId });
+  } catch {
+    return [];
+  }
+}
+
 // Dynamic metadata based on product slug
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -42,16 +60,30 @@ export async function generateMetadata({ params }) {
   if (!product) {
     return { title: 'Product Not Found' };
   }
-  const meta = generateProductMetaTags(product, product.category);
+  // Fetch child variants for dynamic meta descriptions on parent products
+  const childVariants = product.is_parent_product
+    ? await getChildVariants(product.id)
+    : [];
+  const meta = generateProductMetaTags(product, product.category, childVariants);
+
+  // Child variants canonical → parent product (prevents 191 thin pages indexing)
+  let canonicalSlug = slug;
+  if (product.parent_product_id) {
+    const parent = await getProductById(product.parent_product_id);
+    if (parent?.slug) canonicalSlug = parent.slug;
+  }
+
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: `/products/${slug}` },
+    alternates: { canonical: `/products/${canonicalSlug}` },
     openGraph: {
       title: meta.title,
       description: meta.description,
       images: product.image_url ? [{ url: product.image_url }] : [],
     },
+    // Prevent child variant pages from being indexed — canonical + noindex belt-and-suspenders
+    ...(product.parent_product_id ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
@@ -59,8 +91,13 @@ export default async function ProductDetailPage({ params }) {
   const { slug } = await params;
   const product = await getProduct(slug);
 
-  // JSON-LD rendered server-side — in the HTML before any JS executes
-  const productSchema = product ? generateProductSchema(product) : null;
+  // Fetch child variants server-side for ProductGroup JSON-LD
+  const childVariants = product?.is_parent_product
+    ? await getChildVariants(product.id)
+    : [];
+
+  // JSON-LD: ProductGroup + hasVariant + AggregateOffer for parents, single Product for others
+  const productSchema = product ? generateProductSchema(product, 'https://bbsflooring.ca', childVariants) : null;
 
   return (
     <>
