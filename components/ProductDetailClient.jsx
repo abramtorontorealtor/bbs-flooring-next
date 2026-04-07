@@ -44,24 +44,41 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [buyMode, setBuyMode] = useState('material');
   const [stickyCartVisible, setStickyCartVisible] = useState(false);
   const [variantSort, setVariantSort] = useState({ key: null, asc: true });
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
 
-  // Active image — swaps when a child variant is selected, falls back to parent image
+  // Build gallery: parent image + all unique child images
   const PLACEHOLDER = '/images/product-placeholder.svg';
-  const displayImage = useMemo(() => {
-    if (product?.is_parent_product && selectedVariantSku && productVariants?.length) {
-      const v = productVariants.find(p => p.sku === selectedVariantSku);
-      if (v?.image_url) return v.image_url;
+  const imageGallery = useMemo(() => {
+    const images = [];
+    // Parent image first
+    if (product?.image_url) {
+      images.push({ url: product.image_url, alt: product.image_alt_text || product.name, sku: null });
     }
-    return product?.image_url || PLACEHOLDER;
-  }, [product, selectedVariantSku, productVariants]);
+    // Add unique child variant images
+    if (product?.is_parent_product && productVariants?.length) {
+      for (const v of productVariants) {
+        if (v.image_url && !images.some(i => i.url === v.image_url)) {
+          images.push({ url: v.image_url, alt: v.image_alt_text || v.name, sku: v.sku });
+        }
+      }
+    }
+    if (images.length === 0) images.push({ url: PLACEHOLDER, alt: product?.name || '', sku: null });
+    return images;
+  }, [product, productVariants]);
 
-  const displayAlt = useMemo(() => {
-    if (product?.is_parent_product && selectedVariantSku && productVariants?.length) {
+  // When a variant is selected via the table, jump to its image in the gallery
+  useEffect(() => {
+    if (selectedVariantSku && productVariants?.length) {
       const v = productVariants.find(p => p.sku === selectedVariantSku);
-      if (v?.image_url) return v.image_alt_text || v.name || product?.name;
+      if (v?.image_url) {
+        const idx = imageGallery.findIndex(i => i.url === v.image_url);
+        if (idx >= 0) setActiveImageIdx(idx);
+      }
     }
-    return product?.image_alt_text || product?.name || '';
-  }, [product, selectedVariantSku, productVariants]);
+  }, [selectedVariantSku, productVariants, imageGallery]);
+
+  const displayImage = imageGallery[activeImageIdx]?.url || PLACEHOLDER;
+  const displayAlt = imageGallery[activeImageIdx]?.alt || product?.name || '';
   const [pdpSessionId, setPdpSessionId] = useState(null);
   const buyBoxRef = useRef(null);
 
@@ -391,6 +408,31 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               {product.is_new_arrival && <Badge className="bg-emerald-500 text-white border-0">New Arrival</Badge>}
               {product.is_on_sale && <Badge className="bg-red-500 text-white border-0">Sale</Badge>}
             </div>
+            {/* Thumbnail strip — shows when multiple images exist */}
+            {imageGallery.length > 1 && (
+              <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
+                {imageGallery.map((img, idx) => (
+                  <button
+                    key={img.url}
+                    onClick={() => setActiveImageIdx(idx)}
+                    className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                      idx === activeImageIdx
+                        ? 'border-amber-500 ring-2 ring-amber-200'
+                        : 'border-slate-200 hover:border-slate-300'
+                    }`}
+                  >
+                    <Image
+                      src={img.url}
+                      alt={img.alt}
+                      className="w-full h-full object-cover"
+                      width={64}
+                      height={64}
+                      sizes="64px"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
