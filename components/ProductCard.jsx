@@ -11,14 +11,12 @@ function MapPinIcon({ className }) {
 import SaveButton from './SaveButton';
 import { useAuth } from '@/lib/auth-context';
 
-const CANADIAN_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood'];
-
 function getProductBadges(product) {
   const badges = [];
   const name = (product.name || '').toLowerCase();
   const brand = (product.brand || '').toLowerCase();
   const category = (product.category || '').toLowerCase();
-  const isCanadian = product.is_canadian || CANADIAN_BRANDS.some(b => brand.includes(b));
+  const isCanadian = !!product.is_canadian;
   if (isCanadian) badges.push({ key: 'canada', label: '🇨🇦 Canadian', className: 'bg-red-600 text-white' });
   // Waterproof badge only for non-vinyl products (vinyl/LVP/SPC are inherently waterproof)
   const isVinylType = category.includes('vinyl') || name.includes('lvp') || name.includes('spc');
