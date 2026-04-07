@@ -132,6 +132,8 @@ export default function FreeMeasurementClient() {
     if (!formData.customer_phone) { setError('Phone number is required'); return; }
     if (!formData.customer_email) { setError('Email is required'); return; }
     if (!formData.customer_address) { setError('Street address is required'); return; }
+    if (!formData.preferred_date) { setError('Please select a preferred date'); return; }
+    if (!formData.preferred_time) { setError('Please select a preferred time'); return; }
     if (!validatePhone(formData.customer_phone)) { setError('Please enter a valid phone number'); return; }
     if (!validateEmail(formData.customer_email)) { setError('Please enter a valid email address'); return; }
     setError('');
@@ -328,7 +330,7 @@ export default function FreeMeasurementClient() {
                     <span><strong>Next Available:</strong> {nextAvailableDate}</span>
                   </div>
                   <div>
-                    <Label className="font-semibold mb-2 block">Preferred Date & Time</Label>
+                    <Label className="font-semibold mb-2 block">Preferred Date & Time *</Label>
                     <BookingCalendar
                       selected={formData.preferred_date}
                       onSelect={(dateStr) => {
@@ -371,7 +373,7 @@ export default function FreeMeasurementClient() {
                     )}
                   </div>
                   <p className="text-xs text-red-600 font-medium text-center">⚡ Limited spots available this week.</p>
-                  <Button type="submit" disabled={isSubmitting || !formData.customer_name || !formData.customer_phone || !formData.customer_email || !formData.customer_address}
+                  <Button type="submit" disabled={isSubmitting || !formData.customer_name || !formData.customer_phone || !formData.customer_email || !formData.customer_address || !formData.preferred_date || !formData.preferred_time}
                     className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base py-6 disabled:opacity-50 disabled:cursor-not-allowed" size="lg">
                     {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Booking...</> : 'Book Free Measurement'}
                   </Button>

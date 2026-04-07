@@ -261,7 +261,7 @@ export default function AdminBookingsClient() {
                           <td className="py-4 px-4">
                             <div className="flex items-center gap-2 text-sm text-slate-600 max-w-xs">
                               <MapPin className="w-4 h-4 flex-shrink-0" />
-                              <span className="truncate">{booking.address}</span>
+                              <span className="truncate">{booking.customer_address || booking.address || '—'}</span>
                             </div>
                           </td>
                           <td className="py-4 px-4">
