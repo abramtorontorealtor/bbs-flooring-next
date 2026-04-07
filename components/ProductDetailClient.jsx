@@ -46,39 +46,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [variantSort, setVariantSort] = useState({ key: null, asc: true });
   const [activeImageIdx, setActiveImageIdx] = useState(0);
 
-  // Build gallery: parent image + all unique child images
   const PLACEHOLDER = '/images/product-placeholder.svg';
-  const imageGallery = useMemo(() => {
-    const images = [];
-    // Parent image first
-    if (product?.image_url) {
-      images.push({ url: product.image_url, alt: product.image_alt_text || product.name, sku: null });
-    }
-    // Add unique child variant images
-    if (product?.is_parent_product && productVariants?.length) {
-      for (const v of productVariants) {
-        if (v.image_url && !images.some(i => i.url === v.image_url)) {
-          images.push({ url: v.image_url, alt: v.image_alt_text || v.name, sku: v.sku });
-        }
-      }
-    }
-    if (images.length === 0) images.push({ url: PLACEHOLDER, alt: product?.name || '', sku: null });
-    return images;
-  }, [product, productVariants]);
-
-  // When a variant is selected via the table, jump to its image in the gallery
-  useEffect(() => {
-    if (selectedVariantSku && productVariants?.length) {
-      const v = productVariants.find(p => p.sku === selectedVariantSku);
-      if (v?.image_url) {
-        const idx = imageGallery.findIndex(i => i.url === v.image_url);
-        if (idx >= 0) setActiveImageIdx(idx);
-      }
-    }
-  }, [selectedVariantSku, productVariants, imageGallery]);
-
-  const displayImage = imageGallery[activeImageIdx]?.url || PLACEHOLDER;
-  const displayAlt = imageGallery[activeImageIdx]?.alt || product?.name || '';
   const [pdpSessionId, setPdpSessionId] = useState(null);
   const buyBoxRef = useRef(null);
 
@@ -107,6 +75,37 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     queryFn: () => entities.Product.filter({ parent_product_id: product.id }),
     enabled: !!product?.is_parent_product,
   });
+
+  // Build gallery: parent image + all unique child images
+  const imageGallery = useMemo(() => {
+    const images = [];
+    if (product?.image_url) {
+      images.push({ url: product.image_url, alt: product.image_alt_text || product.name, sku: null });
+    }
+    if (product?.is_parent_product && productVariants?.length) {
+      for (const v of productVariants) {
+        if (v.image_url && !images.some(i => i.url === v.image_url)) {
+          images.push({ url: v.image_url, alt: v.image_alt_text || v.name, sku: v.sku });
+        }
+      }
+    }
+    if (images.length === 0) images.push({ url: PLACEHOLDER, alt: product?.name || '', sku: null });
+    return images;
+  }, [product, productVariants]);
+
+  // When a variant is selected via the table, jump to its image in the gallery
+  useEffect(() => {
+    if (selectedVariantSku && productVariants?.length) {
+      const v = productVariants.find(p => p.sku === selectedVariantSku);
+      if (v?.image_url) {
+        const idx = imageGallery.findIndex(i => i.url === v.image_url);
+        if (idx >= 0) setActiveImageIdx(idx);
+      }
+    }
+  }, [selectedVariantSku, productVariants, imageGallery]);
+
+  const displayImage = imageGallery[activeImageIdx]?.url || PLACEHOLDER;
+  const displayAlt = imageGallery[activeImageIdx]?.alt || product?.name || '';
 
   // Parse variants from specifications
   const variants = useMemo(() => {
