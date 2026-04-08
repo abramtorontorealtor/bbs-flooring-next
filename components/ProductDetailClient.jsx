@@ -159,6 +159,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         sqft_per_box: selectedJsonVariant.sqft_box,
         dimensions: selectedJsonVariant.dimensions || base.dimensions,
         grade: selectedJsonVariant.grade || base.grade,
+        thickness: selectedJsonVariant.thickness || base.thickness,
       };
     }
     if (product?.is_parent_product && selectedVariantId) {
@@ -276,11 +277,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   }, [product]);
 
   const handleAddToCart = async () => {
-    if (product.has_variants && !productVariants.length && !selectedJsonVariant) {
+    if (product.has_variants && !selectedJsonVariant) {
       toast.error('Please select a variant option');
       return;
     }
-    if (product.is_parent_product && productVariants.length > 0 && !selectedVariantId) {
+    if (product.is_parent_product && !product.has_variants && productVariants.length > 0 && !selectedVariantId) {
       toast.error('Please select a width and grade option from the table');
       return;
     }
@@ -295,7 +296,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('bbs_session_id', sessionId);
       }
-      if (product.has_variants && !productVariants.length && selectedJsonVariant) {
+      if (product.has_variants && selectedJsonVariant) {
         await entities.CartItem.create({
           session_id: sessionId, product_id: product.id, product_name: product.name,
           variant_label: selectedJsonVariant.label || null, sku: selectedJsonVariant.sku,
@@ -428,13 +429,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             </div>
           )}
 
-          {/* Variant Selector — chip-based for variants_json (only when no child DB variants) */}
-          {product.has_variants && !productVariants.length && (
+          {/* Variant Selector — chip-based for variants_json (always shown when has_variants) */}
+          {product.has_variants && (
             <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} />
           )}
 
-          {/* Variant Cards (mobile) / Table (desktop) for parent products */}
-          {product.is_parent_product && productVariants.length > 0 && (
+          {/* Variant Cards (mobile) / Table (desktop) for parent products WITHOUT variants_json */}
+          {product.is_parent_product && !product.has_variants && productVariants.length > 0 && (
             <div className="space-y-3">
               <label className="text-sm font-medium text-slate-700">Select Variant</label>
 
