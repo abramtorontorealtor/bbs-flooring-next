@@ -418,7 +418,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         {/* Product Info */}
         <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
           {product.brand && <div className="text-sm text-slate-500 font-medium">{product.brand}</div>}
-          <h1 className="text-4xl font-bold text-slate-800">{product.name}</h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800">{product.name}</h1>
 
           {product.review_count > 0 && (
             <div className="flex items-center gap-2">
@@ -433,11 +433,60 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} />
           )}
 
-          {/* Legacy Variant Table */}
+          {/* Variant Cards (mobile) / Table (desktop) for parent products */}
           {product.is_parent_product && productVariants.length > 0 && (
             <div className="space-y-3">
               <label className="text-sm font-medium text-slate-700">Select Variant</label>
-              <div className="border rounded-lg overflow-hidden">
+
+              {/* Mobile: stacked cards */}
+              <div className="md:hidden space-y-2">
+                {[...productVariants].sort((a, b) => {
+                  if (!variantSort.key) return 0;
+                  const dir = variantSort.asc ? 1 : -1;
+                  if (variantSort.key === 'price') return ((a.sale_price_per_sqft || a.price_per_sqft || 0) - (b.sale_price_per_sqft || b.price_per_sqft || 0)) * dir;
+                  const av = (variantSort.key === 'dimensions' ? a.dimensions : a.grade) || '';
+                  const bv = (variantSort.key === 'dimensions' ? b.dimensions : b.grade) || '';
+                  return av.localeCompare(bv) * dir;
+                }).map((variant) => {
+                  let patternType = '';
+                  if (variant.name?.toLowerCase().includes('herringbone')) patternType = ' Herringbone';
+                  else if (variant.name?.toLowerCase().includes('chevron')) patternType = ' Chevron';
+                  else if (variant.name?.toLowerCase().includes('click')) patternType = ' Click';
+                  const isSelected = selectedVariantId === variant.id;
+                  return (
+                    <button
+                      key={variant.id}
+                      onClick={() => setSelectedVariantId(variant.id)}
+                      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                        isSelected ? 'border-amber-500 bg-amber-50 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'
+                      }`}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-1 min-w-0 flex-1">
+                          <div className="font-semibold text-sm text-slate-800">{variant.dimensions || 'N/A'}{patternType}</div>
+                          {variant.grade && <div className="text-xs text-slate-500">Grade: {variant.grade}</div>}
+                        </div>
+                        <div className="text-right ml-3 shrink-0">
+                          {variant.sale_price_per_sqft ? (
+                            <><div className="text-base font-bold text-red-600">C${variant.sale_price_per_sqft.toFixed(2)}</div><div className="text-xs text-slate-400 line-through">C${variant.price_per_sqft.toFixed(2)}</div></>
+                          ) : (
+                            <div className="text-base font-bold text-slate-800">C${variant.price_per_sqft.toFixed(2)}</div>
+                          )}
+                          <div className="text-[10px] text-slate-500">/sqft</div>
+                        </div>
+                      </div>
+                      {isSelected && (
+                        <div className="mt-2 flex items-center gap-1 text-xs text-amber-700 font-semibold">
+                          <Check className="w-3.5 h-3.5" /> Selected
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Desktop: table */}
+              <div className="hidden md:block border rounded-lg overflow-hidden">
                 <table className="w-full">
                   <thead className="bg-slate-100">
                     <tr>
@@ -555,22 +604,22 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             const monthly = getMonthlyPayment(sampleTotal);
             if (!monthly) return null;
             return (
-              <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-4 flex items-center justify-between gap-3">
+              <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <p className="text-xs font-semibold text-amber-400 mb-0.5">💳 Financing Available</p>
                   <p className="text-white font-bold text-base leading-tight">~${monthly}<span className="text-slate-400 text-xs font-normal">/mo</span> for a 500 sqft project</p>
                   <p className="text-slate-400 text-xs mt-0.5">OAC · 13.99% · Max amortization</p>
                 </div>
-                <div className="flex flex-col gap-1.5 shrink-0">
-                  <a href={FINANCEIT_LINKS.freeProgram} target="_blank" rel="noopener noreferrer" className="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-3 py-1.5 rounded-lg text-xs transition-colors whitespace-nowrap text-center">Apply Now →</a>
-                  <Link href="/financing" className="text-slate-300 hover:text-white text-xs text-center transition-colors">See all options</Link>
+                <div className="flex sm:flex-col gap-2 sm:gap-1.5 shrink-0">
+                  <a href={FINANCEIT_LINKS.freeProgram} target="_blank" rel="noopener noreferrer" className="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-3 py-1.5 rounded-lg text-xs transition-colors whitespace-nowrap text-center flex-1 sm:flex-initial">Apply Now →</a>
+                  <Link href="/financing" className="text-slate-300 hover:text-white text-xs text-center transition-colors flex-1 sm:flex-initial py-1.5 sm:py-0">See all options</Link>
                 </div>
               </div>
             );
           })()}
 
           {/* Specs Grid — resolves from selected variant */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             {product.brand && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Brand</div><div className="font-semibold text-slate-800">{product.brand}</div></div>}
             {currentPricing.species && !['vinyl', 'vinyl_plank', 'laminate'].includes(product.category) && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Species</div><div className="font-semibold text-slate-800">{currentPricing.species}</div></div>}
             {currentPricing.colour && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Colour</div><div className="font-semibold text-slate-800">{currentPricing.colour}</div></div>}
@@ -636,10 +685,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                     <Button size="lg" className="w-full bg-amber-500 hover:bg-amber-600 text-white py-6 text-lg"><Calculator className="mr-2 w-5 h-5" />Get Full Installation Quote</Button>
                   </Link>
                 )}
-                <div className="grid grid-cols-3 gap-3 mt-4">
-                  <div className="text-center p-3 bg-emerald-50 rounded-lg border border-emerald-100"><Award className="w-5 h-5 text-emerald-600 mx-auto mb-1" /><span className="text-xs text-emerald-800 font-medium block">Authorized Dealer</span></div>
-                  <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-100"><Shield className="w-5 h-5 text-blue-600 mx-auto mb-1" /><span className="text-xs text-blue-800 font-medium block">25+ Year Warranty</span></div>
-                  <div className="text-center p-3 bg-amber-50 rounded-lg border border-amber-100"><Check className="w-5 h-5 text-amber-600 mx-auto mb-1" /><span className="text-xs text-amber-800 font-medium block">GTA Climate Approved</span></div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-4">
+                  <div className="text-center p-2 sm:p-3 bg-emerald-50 rounded-lg border border-emerald-100"><Award className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 mx-auto mb-1" /><span className="text-[10px] sm:text-xs text-emerald-800 font-medium block leading-tight">Authorized Dealer</span></div>
+                  <div className="text-center p-2 sm:p-3 bg-blue-50 rounded-lg border border-blue-100"><Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mx-auto mb-1" /><span className="text-[10px] sm:text-xs text-blue-800 font-medium block leading-tight">25+ Year Warranty</span></div>
+                  <div className="text-center p-2 sm:p-3 bg-amber-50 rounded-lg border border-amber-100"><Check className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 mx-auto mb-1" /><span className="text-[10px] sm:text-xs text-amber-800 font-medium block leading-tight">GTA Climate Approved</span></div>
                 </div>
               </div>
             </CardContent>
@@ -670,10 +719,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           </a>
 
           {/* Trust Badges */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-white rounded-xl border border-slate-100"><Truck className="w-6 h-6 text-amber-500 mx-auto mb-2" /><span className="text-xs text-slate-600">GTA Delivery</span></div>
-            <div className="text-center p-4 bg-white rounded-xl border border-slate-100"><Shield className="w-6 h-6 text-amber-500 mx-auto mb-2" /><span className="text-xs text-slate-600">Quality Guaranteed</span></div>
-            <div className="text-center p-4 bg-white rounded-xl border border-slate-100"><Phone className="w-6 h-6 text-amber-500 mx-auto mb-2" /><span className="text-xs text-slate-600">Expert Support</span></div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
+            <div className="text-center p-3 sm:p-4 bg-white rounded-xl border border-slate-100"><Truck className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 mx-auto mb-1 sm:mb-2" /><span className="text-[10px] sm:text-xs text-slate-600 leading-tight block">GTA Delivery</span></div>
+            <div className="text-center p-3 sm:p-4 bg-white rounded-xl border border-slate-100"><Shield className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 mx-auto mb-1 sm:mb-2" /><span className="text-[10px] sm:text-xs text-slate-600 leading-tight block">Quality Guaranteed</span></div>
+            <div className="text-center p-3 sm:p-4 bg-white rounded-xl border border-slate-100"><Phone className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 mx-auto mb-1 sm:mb-2" /><span className="text-[10px] sm:text-xs text-slate-600 leading-tight block">Expert Support</span></div>
           </div>
         </div>
       </div>

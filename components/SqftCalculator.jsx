@@ -189,14 +189,14 @@ export default function SqftCalculator({ variants = [], currentVariant = null, o
           </button>
 
           {showComparison && (
-            <div className="mt-2 border border-slate-200 rounded-xl overflow-hidden animate-fade-in-up">
-              <table className="w-full text-xs">
+            <div className="mt-2 border border-slate-200 rounded-xl overflow-x-auto animate-fade-in-up">
+              <table className="w-full text-xs min-w-[340px]">
                 <thead className="bg-slate-50">
                   <tr>
-                    <th className="px-3 py-2 text-left font-semibold text-slate-600">Option</th>
-                    <th className="px-3 py-2 text-right font-semibold text-slate-600">$/sqft</th>
-                    <th className="px-3 py-2 text-right font-semibold text-slate-600">Boxes</th>
-                    <th className="px-3 py-2 text-right font-semibold text-slate-600">Total</th>
+                    <th className="px-2 sm:px-3 py-2 text-left font-semibold text-slate-600">Option</th>
+                    <th className="px-2 sm:px-3 py-2 text-right font-semibold text-slate-600">$/sqft</th>
+                    <th className="px-2 sm:px-3 py-2 text-right font-semibold text-slate-600">Boxes</th>
+                    <th className="px-2 sm:px-3 py-2 text-right font-semibold text-slate-600">Total</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">

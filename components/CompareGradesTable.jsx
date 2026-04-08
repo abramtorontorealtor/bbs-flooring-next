@@ -77,7 +77,7 @@ export default function CompareGradesTable({ grades, variants, selectedGrade, on
         <span className="text-[10px] text-slate-400">Tap to select</span>
       </div>
 
-      <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${gradeInfo.length}, 1fr)` }}>
+      <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ '--grade-count': gradeInfo.length }}>
         {gradeInfo.map(info => {
           const isSelected = selectedGrade === info.grade;
           return (
