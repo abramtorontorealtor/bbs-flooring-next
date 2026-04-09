@@ -29,8 +29,12 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
   const [isZoomHover, setIsZoomHover] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const [touchStart, setTouchStart] = useState(null);
+  // Track which image URLs are low-res (natural dimensions < LOW_RES_THRESHOLD)
+  const [lowResMap, setLowResMap] = useState({});
   const mainRef = useRef(null);
   const thumbnailRefs = useRef([]);
+
+  const LOW_RES_THRESHOLD = 600; // px — below this, don't try to fill the viewport
 
   const PLACEHOLDER = '/images/product-placeholder.svg';
   const gallery = images.length > 0 ? images : [{ url: PLACEHOLDER, alt: 'Product image' }];
@@ -287,16 +291,34 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
           )}
 
           {/* Main lightbox image */}
-          <div className="max-w-5xl max-h-[85vh] w-full mx-4 flex items-center justify-center">
+          <div className="max-w-5xl max-h-[85vh] w-full mx-4 flex flex-col items-center justify-center gap-3">
             <Image
               src={current.url}
               alt={current.alt}
-              className="max-h-[85vh] w-auto object-contain animate-scale-in select-none"
+              className={`animate-scale-in select-none ${
+                lowResMap[current.url]
+                  ? 'object-contain max-h-[70vh] w-auto' // low-res: show at natural size, don't stretch
+                  : 'max-h-[85vh] w-auto object-contain' // high-res: fill viewport naturally
+              }`}
+              style={lowResMap[current.url] ? { maxWidth: '80vw' } : undefined}
               width={1800}
               height={1800}
               sizes="100vw"
               draggable={false}
+              onLoad={(e) => {
+                const { naturalWidth, naturalHeight } = e.currentTarget;
+                const isLow = naturalWidth < LOW_RES_THRESHOLD || naturalHeight < LOW_RES_THRESHOLD;
+                setLowResMap((prev) => {
+                  if (prev[current.url] === isLow) return prev; // no update needed
+                  return { ...prev, [current.url]: isLow };
+                });
+              }}
             />
+            {lowResMap[current.url] && (
+              <p className="text-white/50 text-xs text-center px-4">
+                High-res image not available for this product
+              </p>
+            )}
           </div>
 
           {/* Bottom thumbnail strip in lightbox */}
