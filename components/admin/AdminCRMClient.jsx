@@ -390,7 +390,7 @@ export default function AdminCRMClient() {
         value: q.total || 0,
         status: q.lead_status || 'new',
         date: q.created_date,
-        details: `${q.square_footage || '?'} sq ft — ${q.product_name || 'Unknown product'}`,
+        details: `${q.square_footage || '?'} sq ft — ${q.product_name || 'Unknown product'}${q.removal_type && q.removal_type !== 'none' ? ` · ${q.removal_type} removal` : ''}`,
         notes: q.notes || '', lost_reason: q.lost_reason || '',
         raw: q,
         entityType: 'Quote',
@@ -1200,7 +1200,11 @@ export default function AdminCRMClient() {
                             <div className="pt-1 border-t grid grid-cols-2 gap-2 text-xs">
                               {o.flooring_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Flooring</span><span>C${o.flooring_cost?.toFixed(2)}</span></div>}
                               {o.installation_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Install</span><span>C${o.installation_cost?.toFixed(2)}</span></div>}
-                              {o.removal_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Removal</span><span>C${o.removal_cost?.toFixed(2)}</span></div>}
+                              {o.removal_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Removal{o.removal_type && o.removal_type !== 'none' ? ` (${o.removal_type})` : ''}</span><span>C${o.removal_cost?.toFixed(2)}</span></div>}
+                              {o.baseboard_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Baseboards</span><span>C${o.baseboard_cost?.toFixed(2)}</span></div>}
+                              {o.needs_baseboards === false && !o.baseboard_cost && <div className="flex justify-between"><span className="text-slate-400">Baseboards</span><span className="text-slate-400">No</span></div>}
+                              {o.shoe_moulding_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Shoe Moulding</span><span>C${o.shoe_moulding_cost?.toFixed(2)}</span></div>}
+                              {o.needs_shoe_moulding === false && !o.shoe_moulding_cost && <div className="flex justify-between"><span className="text-slate-400">Shoe Moulding</span><span className="text-slate-400">No</span></div>}
                               {o.delivery_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Delivery</span><span>C${o.delivery_cost?.toFixed(2)}</span></div>}
                             </div>
                           )}
