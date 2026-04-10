@@ -49,13 +49,9 @@ export function LocalBusinessJsonLd() {
         closes: '17:00'
       }
     ],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.7',
-      reviewCount: '41',
-      bestRating: '5',
-      worstRating: '1'
-    }
+    // aggregateRating removed — Google sees this on every page (including product pages)
+    // which triggers "Review has multiple aggregate ratings" error.
+    // Google pulls the 4.7★ rating directly from Google Maps reviews anyway.
   };
 
   const organization = {
