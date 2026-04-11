@@ -31,6 +31,10 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
   const [touchStart, setTouchStart] = useState(null);
   // Track which image URLs are low-res (natural dimensions < LOW_RES_THRESHOLD)
   const [lowResMap, setLowResMap] = useState({});
+  // Track image loading state to show shimmer while loading
+  const [mainLoaded, setMainLoaded] = useState(false);
+  // Track errored image URLs to swap in placeholder
+  const [erroredUrls, setErroredUrls] = useState(new Set());
   const mainRef = useRef(null);
   const thumbnailRefs = useRef([]);
 
@@ -38,7 +42,16 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
 
   const PLACEHOLDER = '/images/product-placeholder.svg';
   const gallery = images.length > 0 ? images : [{ url: PLACEHOLDER, alt: 'Product image' }];
-  const current = gallery[activeIdx] || gallery[0];
+  const rawCurrent = gallery[activeIdx] || gallery[0];
+  // If this URL has errored, swap in the placeholder
+  const current = erroredUrls.has(rawCurrent.url)
+    ? { ...rawCurrent, url: PLACEHOLDER }
+    : rawCurrent;
+
+  // Reset loading state when active image changes
+  useEffect(() => {
+    setMainLoaded(false);
+  }, [activeIdx]);
 
   // Keep activeIdx in bounds if images change
   useEffect(() => {
@@ -141,15 +154,27 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
               onMouseMove={handleMouseMove}
               onClick={() => setLightboxOpen(true)}
             >
+              {/* Loading shimmer — shown while image loads */}
+              {!mainLoaded && (
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 animate-pulse z-[1]" />
+              )}
+
               {/* Normal image */}
               <Image
                 src={current.url}
                 alt={current.alt}
-                className={`w-full h-full object-cover transition-opacity duration-200 ${isZoomHover ? 'opacity-0' : 'opacity-100'}`}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                  isZoomHover ? 'opacity-0' : mainLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
                 width={1200}
                 height={1200}
                 priority={activeIdx === 0}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
+                onLoad={() => setMainLoaded(true)}
+                onError={() => {
+                  setErroredUrls((prev) => new Set(prev).add(rawCurrent.url));
+                  setMainLoaded(true);
+                }}
               />
 
               {/* Zoom layer — 2× magnification on hover (desktop) */}
