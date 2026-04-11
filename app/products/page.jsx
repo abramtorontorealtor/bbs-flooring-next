@@ -1,6 +1,9 @@
 import { Suspense } from 'react';
 import ProductsClient from '@/components/ProductsClient';
 import { SEO_DATA } from '@/lib/seo';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: SEO_DATA.products.title,
@@ -8,6 +11,7 @@ export const metadata = {
   alternates: { canonical: '/products' },
 };
 
-export default function ProductsPage() {
-  return <Suspense><ProductsClient /></Suspense>;
+export default async function ProductsPage() {
+  const products = await getProductsForGrid();
+  return <Suspense><ProductsClient initialProducts={products} /></Suspense>;
 }

@@ -2,6 +2,9 @@ import { Suspense } from 'react';
 import { waterproofFlooringData } from '@/data/landingPages';
 import WaterproofFlooringClient from '@/components/WaterproofFlooringClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: waterproofFlooringData.title,
@@ -9,11 +12,12 @@ export const metadata = {
   alternates: { canonical: '/waterproof-flooring' },
 };
 
-export default function WaterproofFlooringPage() {
+export default async function WaterproofFlooringPage() {
+  const products = await getProductsForGrid();
   return (
     <>
       <JsonLd data={faqSchema(waterproofFlooringData.faqItems)} />
-      <Suspense><WaterproofFlooringClient /></Suspense>
+      <Suspense><WaterproofFlooringClient initialProducts={products} /></Suspense>
     </>
   );
 }

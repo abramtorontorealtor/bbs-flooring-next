@@ -2,6 +2,9 @@ import { Suspense } from 'react';
 import EngineeredHardwoodClient from '@/components/EngineeredHardwoodClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { ENGINEERED_HARDWOOD_FAQS } from '@/data/faqs';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: 'Engineered Hardwood Flooring Markham | Vidar, Wickham & More',
@@ -10,11 +13,12 @@ export const metadata = {
   alternates: { canonical: '/engineered-hardwood' },
 };
 
-export default function EngineeredHardwoodPage() {
+export default async function EngineeredHardwoodPage() {
+  const products = await getProductsForGrid({ category: 'engineered_hardwood' });
   return (
     <>
       <JsonLd data={faqSchema(ENGINEERED_HARDWOOD_FAQS)} />
-      <Suspense><EngineeredHardwoodClient /></Suspense>
+      <Suspense><EngineeredHardwoodClient initialProducts={products} /></Suspense>
     </>
   );
 }

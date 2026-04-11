@@ -103,7 +103,7 @@ function CheckboxFilterList({ options, selected, onChange, maxVisible = 6 }) {
 }
 
 
-export default function ProductsClient() {
+export default function ProductsClient({ initialProducts }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -177,6 +177,8 @@ export default function ProductsClient() {
       if (!data || data.length === 0) throw new Error('EMPTY_CATALOG');
       return data;
     },
+    // SSR: server passes initialProducts → skip client fetch on first render
+    initialData: initialProducts?.length ? initialProducts : undefined,
     staleTime: 5 * 60 * 1000,
     retry: 4,
     retryDelay: (attempt) => Math.min(1000 * Math.pow(2, attempt), 5000),

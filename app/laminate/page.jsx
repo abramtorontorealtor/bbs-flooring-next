@@ -2,6 +2,9 @@ import { Suspense } from 'react';
 import LaminateClient from '@/components/LaminateClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { LAMINATE_FAQS } from '@/data/faqs';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: 'Laminate Flooring Markham | 12mm from $1.49/sqft',
@@ -10,11 +13,12 @@ export const metadata = {
   alternates: { canonical: '/laminate' },
 };
 
-export default function LaminatePage() {
+export default async function LaminatePage() {
+  const products = await getProductsForGrid({ category: 'laminate' });
   return (
     <>
       <JsonLd data={faqSchema(LAMINATE_FAQS)} />
-      <Suspense><LaminateClient /></Suspense>
+      <Suspense><LaminateClient initialProducts={products} /></Suspense>
     </>
   );
 }

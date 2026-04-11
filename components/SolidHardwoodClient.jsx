@@ -47,7 +47,7 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function SolidHardwoodClient() {
+export default function SolidHardwoodClient({ initialProducts }) {
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -146,6 +146,7 @@ export default function SolidHardwoodClient() {
         category="solid_hardwood"
         sessionKey="solid-hardwood"
         queryKey="products-solid-hardwood"
+        initialProducts={initialProducts}
       />
 
       <FinancingBanner monthlyFrom={142} />

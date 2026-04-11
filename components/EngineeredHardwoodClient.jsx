@@ -47,7 +47,7 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function EngineeredHardwoodClient() {
+export default function EngineeredHardwoodClient({ initialProducts }) {
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -141,6 +141,7 @@ export default function EngineeredHardwoodClient() {
         category="engineered_hardwood"
         sessionKey="engineered-hardwood"
         queryKey="products-engineered-hardwood"
+        initialProducts={initialProducts}
       />
 
       <FinancingBanner monthlyFrom={122} />

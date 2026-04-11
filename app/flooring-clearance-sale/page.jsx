@@ -2,6 +2,9 @@ import { Suspense } from 'react';
 import { flooringClearanceSaleData } from '@/data/landingPages';
 import FlooringClearanceSaleClient from '@/components/FlooringClearanceSaleClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: flooringClearanceSaleData.title,
@@ -9,11 +12,12 @@ export const metadata = {
   alternates: { canonical: '/clearance' },
 };
 
-export default function FlooringClearanceSalePage() {
+export default async function FlooringClearanceSalePage() {
+  const products = await getProductsForGrid();
   return (
     <>
       <JsonLd data={faqSchema(flooringClearanceSaleData.faqItems)} />
-      <Suspense><FlooringClearanceSaleClient /></Suspense>
+      <Suspense><FlooringClearanceSaleClient initialProducts={products} /></Suspense>
     </>
   );
 }

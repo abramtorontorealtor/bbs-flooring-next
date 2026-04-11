@@ -34,6 +34,7 @@ export default function AdLandingTemplate({
   mapEmbed,
   parentPage,
   ctaText = 'Get a Free Quote',
+  initialProducts,
 }) {
   const [openFaq, setOpenFaq] = useState(null);
 
@@ -136,6 +137,7 @@ export default function AdLandingTemplate({
               sessionKey={productSessionKey || 'landing'}
               queryKey={productQueryKey || 'products-landing'}
               hideBrand={hideBrandFilter}
+              initialProducts={initialProducts}
             />
           </div>
         )}

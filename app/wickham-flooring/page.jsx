@@ -2,17 +2,21 @@ import { Suspense } from 'react';
 import { wickhamFlooringData } from '@/data/landingPages';
 import BrandLandingClient from '@/components/BrandLandingClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: wickhamFlooringData.title,
   description: wickhamFlooringData.description,
 };
 
-export default function WickhamFlooringPage() {
+export default async function WickhamFlooringPage() {
+  const products = await getProductsForGrid({ brand: 'Wickham' });
   return (
     <>
       <JsonLd data={faqSchema(wickhamFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="wickham" /></Suspense>
+      <Suspense><BrandLandingClient brandKey="wickham" initialProducts={products} /></Suspense>
     </>
   );
 }

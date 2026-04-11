@@ -2,6 +2,9 @@ import { Suspense } from 'react';
 import VinylClient from '@/components/VinylClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { VINYL_FAQS } from '@/data/faqs';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: 'Vinyl Flooring Markham | LVP & SPC Waterproof',
@@ -10,11 +13,12 @@ export const metadata = {
   alternates: { canonical: '/vinyl' },
 };
 
-export default function VinylPage() {
+export default async function VinylPage() {
+  const products = await getProductsForGrid({ category: 'vinyl' });
   return (
     <>
       <JsonLd data={faqSchema(VINYL_FAQS)} />
-      <Suspense><VinylClient /></Suspense>
+      <Suspense><VinylClient initialProducts={products} /></Suspense>
     </>
   );
 }

@@ -2,17 +2,21 @@ import { Suspense } from 'react';
 import { triforestFlooringData } from '@/data/brandPages';
 import BrandLandingClient from '@/components/BrandLandingClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import { getProductsForGrid } from '@/lib/products-server';
+
+export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
   title: triforestFlooringData.title,
   description: triforestFlooringData.description,
 };
 
-export default function TriforestFlooringPage() {
+export default async function TriforestFlooringPage() {
+  const products = await getProductsForGrid({ brand: 'Triforest' });
   return (
     <>
       <JsonLd data={faqSchema(triforestFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="triforest" /></Suspense>
+      <Suspense><BrandLandingClient brandKey="triforest" initialProducts={products} /></Suspense>
     </>
   );
 }
