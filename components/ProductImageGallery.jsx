@@ -30,6 +30,11 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
   const [isZoomHover, setIsZoomHover] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const [touchStart, setTouchStart] = useState(null);
+  // Detect touch device to disable hover-zoom (prevents white flash on mobile tap)
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   // Track image loading state to show shimmer while loading
   // Default to true to prevent white-flash on mobile hydration race condition:
@@ -158,10 +163,10 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
           <div className="flex-1 relative">
             <div
               ref={mainRef}
-              className="aspect-square rounded-2xl overflow-hidden bg-slate-50 shadow-lg relative group cursor-crosshair"
-              onMouseEnter={() => setIsZoomHover(true)}
-              onMouseLeave={() => setIsZoomHover(false)}
-              onMouseMove={handleMouseMove}
+              className={`aspect-square rounded-2xl overflow-hidden bg-slate-50 shadow-lg relative group ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'}`}
+              onMouseEnter={() => { if (!isTouchDevice) setIsZoomHover(true); }}
+              onMouseLeave={() => { if (!isTouchDevice) setIsZoomHover(false); }}
+              onMouseMove={isTouchDevice ? undefined : handleMouseMove}
               onClick={() => setLightboxOpen(true)}
             >
               {/* Loading shimmer — shown while image loads */}
