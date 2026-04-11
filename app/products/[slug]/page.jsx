@@ -110,11 +110,47 @@ export default async function ProductDetailPage({ params }) {
 
       {/* 
         initialProduct provides server-fetched data to React Query's initialData.
-        This means the FULL product content (description, details, specs) renders
-        in the server HTML — no loading skeleton, no client-fetch-then-render.
-        Crawlers see the complete page immediately.
+        The Suspense fallback renders a lightweight shell with the hero image
+        so users see content immediately while JS loads and hydrates.
       */}
-      <Suspense>
+      <Suspense fallback={
+        product ? (
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="grid lg:grid-cols-2 gap-12">
+              <div className="aspect-square rounded-2xl overflow-hidden bg-slate-50 shadow-lg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={product.image_url || '/images/product-placeholder.svg'}
+                  alt={product.image_alt_text || product.name}
+                  className="w-full h-full object-cover"
+                  fetchPriority="high"
+                />
+              </div>
+              <div className="space-y-4">
+                <div className="text-sm text-slate-500">{product.brand}</div>
+                <h1 className="text-3xl font-bold text-slate-900">{product.name}</h1>
+                {product.price_per_sqft > 0 && (
+                  <div className="text-xl font-semibold text-slate-800">
+                    C${product.price_per_sqft.toFixed(2)}/sqft
+                  </div>
+                )}
+                <div className="h-8 bg-slate-100 rounded w-1/2 animate-pulse" />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="grid lg:grid-cols-2 gap-12">
+              <div className="aspect-square bg-slate-100 rounded-3xl animate-pulse" />
+              <div className="space-y-4">
+                <div className="h-8 bg-slate-100 rounded w-1/4 animate-pulse" />
+                <div className="h-12 bg-slate-100 rounded w-3/4 animate-pulse" />
+                <div className="h-6 bg-slate-100 rounded w-1/2 animate-pulse" />
+              </div>
+            </div>
+          </div>
+        )
+      }>
         <ProductDetailClient slug={slug} initialProduct={product} />
       </Suspense>
     </>
