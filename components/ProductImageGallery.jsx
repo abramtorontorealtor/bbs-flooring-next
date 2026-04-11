@@ -272,7 +272,7 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
       {/* Fullscreen Lightbox */}
       {lightboxOpen && (
         <div
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center animate-fade-in"
+          className="fixed inset-0 bg-black/95 z-[60] flex items-center justify-center animate-fade-in"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -314,13 +314,14 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
 
           {/* Main lightbox image — use native img to bypass Next.js srcset
               and load the original full-res image for zoom/pinch */}
-          <div className="w-full max-h-[85vh] px-4 md:px-12 flex items-center justify-center">
+          <div className="w-full max-h-[80vh] px-2 md:px-12 flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={current.url}
               alt={current.alt}
-              className="animate-scale-in select-none max-h-[85vh] w-full object-contain"
+              className="animate-scale-in select-none max-h-[80vh] w-full object-contain"
               draggable={false}
+              style={{ touchAction: 'pinch-zoom' }}
             />
           </div>
 
