@@ -49,7 +49,7 @@ const SPOKE_LINKS = [
 
 export default function SolidHardwoodClient() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
         items={[
           { label: 'Home', url: '/' },
@@ -61,7 +61,7 @@ export default function SolidHardwoodClient() {
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
           Solid Hardwood Flooring
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">

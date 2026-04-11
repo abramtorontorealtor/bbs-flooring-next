@@ -33,9 +33,10 @@ function BreadcrumbJsonLd({ items, currentPath }) {
   );
 }
 
-export default function Breadcrumbs({ items }) {
+export default function Breadcrumbs({ items, variant = 'light' }) {
   const pathname = usePathname();
   const handleBreadcrumbClick = () => { window.scrollTo(0, 0); };
+  const isDark = variant === 'dark';
   return (
     <>
       <BreadcrumbJsonLd items={items} currentPath={pathname} />
@@ -45,11 +46,11 @@ export default function Breadcrumbs({ items }) {
             const isLast = index === items.length - 1;
             return (
               <li key={index} className="flex items-center gap-2">
-                {index > 0 && <ChevronRight className="w-4 h-4 text-slate-400" />}
+                {index > 0 && <ChevronRight className={`w-4 h-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />}
                 {isLast ? (
-                  <span className="text-slate-900 font-medium">{item.label}</span>
+                  <span className={`font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>{item.label}</span>
                 ) : (
-                  <Link href={item.url} onClick={handleBreadcrumbClick} className="text-slate-600 hover:text-amber-600 transition-colors">
+                  <Link href={item.url} onClick={handleBreadcrumbClick} className={`transition-colors ${isDark ? 'text-slate-400 hover:text-amber-400' : 'text-slate-600 hover:text-amber-600'}`}>
                     {index === 0 && <Home className="w-4 h-4 inline mr-1" />}
                     {item.label}
                   </Link>

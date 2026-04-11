@@ -58,7 +58,7 @@ export default function AdLandingTemplate({
       {/* Hero */}
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900 text-white py-14 px-4">
         <div className="max-w-5xl mx-auto">
-          <Breadcrumbs items={breadcrumbs} />
+          <Breadcrumbs items={breadcrumbs} variant="dark" />
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4 text-white">
             {h1}
           </h1>
@@ -102,11 +102,10 @@ export default function AdLandingTemplate({
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-4 py-10">
-        {/* Rich content sections */}
-        {content.length > 0 && (
-          <div className="space-y-8 mb-12">
+      {/* Main Content — info sections */}
+      {content.length > 0 && (
+        <div className="max-w-5xl mx-auto px-4 pt-10 pb-2">
+          <div className="space-y-8">
             {content.map((section, idx) => (
               <div
                 key={idx}
@@ -124,9 +123,11 @@ export default function AdLandingTemplate({
               </div>
             ))}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Product Grid */}
+      {/* Product Grid — full width to match browse/category pages */}
+      <div className="max-w-7xl mx-auto px-4 py-10">
         {showProducts && productFilter && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-slate-800 mb-6">Products Available Now</h2>

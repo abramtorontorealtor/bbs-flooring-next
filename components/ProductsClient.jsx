@@ -573,12 +573,12 @@ export default function ProductsClient() {
   }, [filters.category]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-12 pt-14">
+    <div className="max-w-7xl mx-auto px-4 pb-12 pt-10 md:pt-14">
       <Breadcrumbs items={breadcrumbItems} />
 
-      {/* Header — compact */}
-      <div className="mb-2 sm:mb-4">
-        <h1 className="text-xl sm:text-3xl font-bold text-slate-800">{getCategoryTitle()}</h1>
+      {/* Header */}
+      <div className="mb-3 sm:mb-5">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800">{getCategoryTitle()}</h1>
       </div>
 
       {/* Category chips — horizontal, scrollable */}

@@ -13,8 +13,8 @@ export default function StaticFAQ({ faqItems = [], title, subtitle, schemaId = '
   return (
     <div className="mt-16">
       {!skipSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(faqItems)) }} />}
-      <div className="max-w-4xl mx-auto">
-        {title && <h2 className="text-3xl font-bold text-slate-800 mb-3 text-center">{title}</h2>}
+      <div className="max-w-3xl mx-auto">
+        {title && <h2 className="text-2xl font-bold text-slate-800 mb-3 text-center">{title}</h2>}
         {subtitle && <p className="text-slate-600 text-center mb-8">{subtitle}</p>}
         <Accordion type="single" collapsible className="bg-white rounded-2xl border border-slate-200 shadow-sm">
           {faqItems.map((faq, index) => (

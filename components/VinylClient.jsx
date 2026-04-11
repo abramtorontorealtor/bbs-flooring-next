@@ -44,7 +44,7 @@ const SPOKE_LINKS = [
 
 export default function VinylClient() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
         items={[
           { label: 'Home', url: '/' },
@@ -56,7 +56,7 @@ export default function VinylClient() {
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
           Luxury Vinyl Plank (LVP) &amp; SPC Flooring
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
