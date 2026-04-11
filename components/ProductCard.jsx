@@ -164,19 +164,11 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
             )}
           </div>
 
-          {/* Footer — showroom link + save (mobile) */}
-          <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-            <Link
-              href={createPageUrl('Contact')}
-              className="inline-flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-800 font-medium transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <MapPinIcon className="w-3 h-3 flex-shrink-0" />
-              Showroom
-            </Link>
+          {/* Footer — stock + save */}
+          <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between">
             {!isOutOfStock ? (
               <span className="text-[10px] text-green-700 font-medium flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />In Stock
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />In Stock
               </span>
             ) : (
               <span className="text-[10px] text-slate-400 font-medium">Out of Stock</span>

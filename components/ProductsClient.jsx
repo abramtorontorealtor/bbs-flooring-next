@@ -577,17 +577,17 @@ export default function ProductsClient() {
       <Breadcrumbs items={breadcrumbItems} />
 
       {/* Header — compact */}
-      <div className="mb-4">
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">{getCategoryTitle()}</h1>
+      <div className="mb-2 sm:mb-4">
+        <h1 className="text-xl sm:text-3xl font-bold text-slate-800">{getCategoryTitle()}</h1>
       </div>
 
       {/* Category chips — horizontal, scrollable */}
-      <div className="flex gap-2 overflow-x-auto scrollbar-none pb-3 -mx-4 px-4">
+      <div className="flex gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2 sm:pb-3 -mx-4 px-4">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.value}
             onClick={() => setFilters(f => ({ ...f, category: cat.value }))}
-            className={`whitespace-nowrap text-sm px-3.5 py-1.5 rounded-full font-medium transition-all duration-150 border ${
+            className={`whitespace-nowrap text-xs sm:text-sm px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full font-medium transition-all duration-150 border ${
               filters.category === cat.value
                 ? 'bg-slate-800 text-white border-slate-800 shadow-sm'
                 : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'

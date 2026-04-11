@@ -35,7 +35,7 @@ export default function ProductToolbar({
   };
 
   return (
-    <div className="sticky top-[140px] z-40 bg-white/95 backdrop-blur-md py-2.5 border-b border-slate-200 mb-4">
+    <div className="sticky top-[140px] z-40 bg-white/95 backdrop-blur-md py-1.5 sm:py-2.5 border-b border-slate-200 mb-3 sm:mb-4">
       {/* Row 1: Search + View toggle + Filter button (mobile) */}
       <div className="flex gap-2 items-center px-1">
         {/* Search */}
@@ -107,7 +107,7 @@ export default function ProductToolbar({
       </div>
 
       {/* Row 2: Sort chips — inline, scrollable */}
-      <div className="flex gap-1.5 items-center mt-2 px-1 overflow-x-auto scrollbar-none">
+      <div className="flex gap-1 sm:gap-1.5 items-center mt-1.5 sm:mt-2 px-1 overflow-x-auto scrollbar-none">
         <span className="text-[11px] text-slate-400 font-medium whitespace-nowrap mr-0.5">Sort:</span>
         {SORT_OPTIONS.map((opt) => (
           <button
