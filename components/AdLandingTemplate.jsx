@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import CategoryProductGrid from '@/components/CategoryProductGrid';
+import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Phone, MapPin, Clock, Star, Shield, Truck, ChevronDown } from 'lucide-react';
 import { Analytics } from './analytics';
@@ -28,6 +28,7 @@ export default function AdLandingTemplate({
   productSessionKey,
   productQueryKey,
   showProducts = true,
+  hideBrandFilter = false,
   showMap = false,
   mapEmbed,
   parentPage,
@@ -128,10 +129,11 @@ export default function AdLandingTemplate({
         {showProducts && productFilter && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-slate-800 mb-6">Products Available Now</h2>
-            <CategoryProductGrid
+            <CategoryFilterGrid
+              categoryFilter={productFilter}
               sessionKey={productSessionKey || 'landing'}
               queryKey={productQueryKey || 'products-landing'}
-              categoryFilter={productFilter}
+              hideBrand={hideBrandFilter}
             />
           </div>
         )}

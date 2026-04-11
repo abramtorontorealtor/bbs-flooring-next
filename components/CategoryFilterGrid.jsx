@@ -92,25 +92,31 @@ function CheckboxFilterList({ options, selected, onChange, maxVisible = 6 }) {
 }
 
 /**
- * CategoryFilterGrid — World-class filter + product grid for category pages.
+ * CategoryFilterGrid — World-class filter + product grid for category & brand pages.
  *
  * Reuses the same filter architecture as ProductsClient but pre-scoped to a
- * single category. The category page wrapper (VinylClient, etc.) provides the
- * hero content, FAQs, and SEO blocks around this component.
+ * single category or brand. The page wrapper provides hero content, FAQs, and
+ * SEO blocks around this component.
  *
- * @param {string} category      — Supabase category value (e.g. 'vinyl', 'engineered_hardwood')
- * @param {string} sessionKey    — sessionStorage prefix for scroll/filter persistence
- * @param {string} queryKey      — react-query cache key
+ * @param {string}   [category]       — Supabase category value (e.g. 'vinyl', 'engineered_hardwood')
+ * @param {function} [categoryFilter]  — JS predicate for client-side filtering (brand pages)
+ * @param {string}   sessionKey       — sessionStorage prefix for scroll/filter persistence
+ * @param {string}   queryKey         — react-query cache key
+ * @param {boolean}  [hideBrand]      — Hide the brand filter when pre-scoped to a brand
  */
-export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
+export default function CategoryFilterGrid({ category, categoryFilter, sessionKey, queryKey, hideBrand = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { user: currentUser } = useAuth();
 
-  const isHardwood = HARDWOOD_CATEGORIES.includes(category);
+  // When using categoryFilter (brand pages), detect categories dynamically
+  // Otherwise use the single category prop
+  const isHardwood = category ? HARDWOOD_CATEGORIES.includes(category) : false;
   const isVinyl = category === 'vinyl';
   const isLaminate = category === 'laminate';
+  // For brand pages (no category), we'll compute these dynamically after loading products
+  const isMixedCategory = !category && !!categoryFilter;
 
   // ── Saved items ──
   const { data: savedItems = [] } = useQuery({
@@ -144,14 +150,15 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
       grades: p('grade') ? p('grade').split(',') : [],
       wearLayers: p('wearLayer') ? p('wearLayer').split(',') : [],
       acRatings: p('acRating') ? p('acRating').split(',') : [],
+      categories: p('cat') ? p('cat').split(',') : [],
       sortBy: p('sort') || 'recommended',
     };
 
     const hasUrlFilters = defaults.search || defaults.brands.length || defaults.collections.length ||
       defaults.species.length || defaults.colours.length || defaults.widths.length ||
       defaults.thicknesses.length || defaults.finishes.length || defaults.grades.length ||
-      defaults.wearLayers.length || defaults.acRatings.length || defaults.isOnSale ||
-      defaults.isWaterproof || defaults.isNewArrival || defaults.isClearance ||
+      defaults.wearLayers.length || defaults.acRatings.length || defaults.categories.length ||
+      defaults.isOnSale || defaults.isWaterproof || defaults.isNewArrival || defaults.isClearance ||
       defaults.sortBy !== 'recommended' || defaults.priceRange[0] !== 0 || defaults.priceRange[1] !== 50;
 
     if (hasUrlFilters) return defaults;
@@ -168,12 +175,13 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [viewMode, setViewMode] = useState('grid');
 
-  // ── Load products (pre-filtered by category on server) ──
+  // ── Load products (pre-filtered by category on server, or all for brand pages) ──
   const { data: allProducts = [], isLoading } = useQuery({
     queryKey: [queryKey],
     queryFn: async () => {
       const params = new URLSearchParams();
       if (category) params.set('category', category);
+      // Brand pages: no category param → fetches all products, filtered client-side
       const res = await fetch(`/api/products/grid?${params}`);
       if (!res.ok) throw new Error(`Products grid API ${res.status}`);
       const data = await res.json();
@@ -190,9 +198,22 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
     allProducts.filter(p => {
       if (!p.image_url || p.is_variant) return false;
       if (p.name && (p.name.toLowerCase().includes('installation') || p.name.toLowerCase().includes('removal'))) return false;
+      // Apply client-side brand/landing filter if provided
+      if (categoryFilter && !categoryFilter(p)) return false;
       return true;
-    }), [allProducts]
+    }), [allProducts, categoryFilter]
   );
+
+  // Detect category composition for mixed-category brand pages
+  const hasHardwood = useMemo(() => isMixedCategory && products.some(p => HARDWOOD_CATEGORIES.includes(p.category)), [products, isMixedCategory]);
+  const hasVinyl = useMemo(() => isMixedCategory && products.some(p => p.category === 'vinyl'), [products, isMixedCategory]);
+  const hasLaminate = useMemo(() => isMixedCategory && products.some(p => p.category === 'laminate'), [products, isMixedCategory]);
+
+  // Unified category awareness — works for both single-category and mixed-brand pages
+  const showSpecies = isHardwood || hasHardwood;
+  const showGrades = isHardwood || hasHardwood;
+  const showWearLayer = isVinyl || hasVinyl;
+  const showAcRating = isLaminate || hasLaminate;
 
   // ── Dynamic filter options with counts ──
   const filterOptions = useMemo(() => {
@@ -212,15 +233,16 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
     return {
       brands: countBy(products, 'brand'),
       collections: countBy(brandFiltered, 'collection'),
-      species: isHardwood ? countBy(products, 'species') : [],
+      species: showSpecies ? countBy(products, 'species') : [],
       colours: countBy(products, 'colour'),
       thicknesses: countBy(products, 'thickness'),
       finishes: countBy(products, 'finish'),
-      grades: isHardwood ? countBy(products, 'grade') : [],
-      wearLayers: isVinyl ? countBy(products, 'wear_layer') : [],
-      acRatings: isLaminate ? countBy(products, 'ac_rating') : [],
+      grades: showGrades ? countBy(products, 'grade') : [],
+      wearLayers: showWearLayer ? countBy(products, 'wear_layer') : [],
+      acRatings: showAcRating ? countBy(products, 'ac_rating') : [],
+      categories: isMixedCategory ? countBy(products, 'category') : [],
     };
-  }, [products, filters.brands, isHardwood, isVinyl, isLaminate]);
+  }, [products, filters.brands, showSpecies, showGrades, showWearLayer, showAcRating, isMixedCategory]);
 
   // ── Apply filters ──
   const filteredProducts = useMemo(() => {
@@ -254,6 +276,7 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
     if (filters.grades.length) result = result.filter(p => filters.grades.includes(p.grade));
     if (filters.wearLayers.length) result = result.filter(p => filters.wearLayers.includes(p.wear_layer));
     if (filters.acRatings.length) result = result.filter(p => filters.acRatings.includes(p.ac_rating));
+    if (filters.categories.length) result = result.filter(p => filters.categories.includes(p.category));
 
     result = result.filter(p => {
       const price = p.sale_price_per_sqft || p.price_per_sqft || 0;
@@ -306,6 +329,8 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
     filters.grades.forEach(g => pills.push({ key: `grade-${g}`, label: g, clear: () => setFilters(f => ({ ...f, grades: f.grades.filter(x => x !== g) })) }));
     filters.wearLayers.forEach(w => pills.push({ key: `wl-${w}`, label: `${w} Wear Layer`, clear: () => setFilters(f => ({ ...f, wearLayers: f.wearLayers.filter(x => x !== w) })) }));
     filters.acRatings.forEach(a => pills.push({ key: `ac-${a}`, label: a, clear: () => setFilters(f => ({ ...f, acRatings: f.acRatings.filter(x => x !== a) })) }));
+    const CAT_LABELS = { vinyl: 'Vinyl', engineered_hardwood: 'Engineered Hardwood', solid_hardwood: 'Solid Hardwood', laminate: 'Laminate' };
+    filters.categories.forEach(c => pills.push({ key: `cat-${c}`, label: CAT_LABELS[c] || c, clear: () => setFilters(f => ({ ...f, categories: f.categories.filter(x => x !== c) })) }));
     if (filters.priceRange[0] > 0 || filters.priceRange[1] < 50) pills.push({ key: 'price', label: `C$${filters.priceRange[0]}–$${filters.priceRange[1]}/sqft`, clear: () => setFilters(f => ({ ...f, priceRange: [0, 50] })) });
     return pills;
   }, [filters]);
@@ -319,6 +344,7 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
       isOnSale: false, isWaterproof: false, isNewArrival: false, isClearance: false,
       brands: [], collections: [], species: [], colours: [], widths: [],
       thicknesses: [], finishes: [], grades: [], wearLayers: [], acRatings: [],
+      categories: [],
       sortBy: 'recommended',
     };
     setFilters(reset);
@@ -347,6 +373,7 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
     if (filters.grades.length) params.set('grade', filters.grades.join(','));
     if (filters.wearLayers.length) params.set('wearLayer', filters.wearLayers.join(','));
     if (filters.acRatings.length) params.set('acRating', filters.acRatings.join(','));
+    if (filters.categories.length) params.set('cat', filters.categories.join(','));
     if (filters.sortBy !== 'recommended') params.set('sort', filters.sortBy);
     if (filters.priceRange[0] !== 0) params.set('priceMin', String(filters.priceRange[0]));
     if (filters.priceRange[1] !== 50) params.set('priceMax', String(filters.priceRange[1]));
@@ -396,12 +423,23 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
         </div>
       </FilterSection>
 
+      {/* Category — brand pages with mixed categories */}
+      {filterOptions.categories.length > 1 && (
+        <FilterSection title="Category" defaultOpen={true}>
+          <CheckboxFilterList
+            options={filterOptions.categories.map(c => ({ ...c, label: ({ vinyl: 'Vinyl', engineered_hardwood: 'Engineered Hardwood', solid_hardwood: 'Solid Hardwood', laminate: 'Laminate' })[c.value] || c.value }))}
+            selected={filters.categories}
+            onChange={(val) => setFilters(f => ({ ...f, categories: val }))}
+          />
+        </FilterSection>
+      )}
+
       {/* Quick Filters */}
       <FilterSection title="Quick Filters" defaultOpen={true}>
         <div className="space-y-1.5">
           {[
             { label: 'On Sale', key: 'isOnSale', count: products.filter(p => p.is_on_sale).length },
-            ...(isVinyl || isLaminate ? [{ label: 'Waterproof', key: 'isWaterproof', count: products.filter(p => p.is_waterproof).length }] : []),
+            ...(isVinyl || isLaminate || hasVinyl || hasLaminate ? [{ label: 'Waterproof', key: 'isWaterproof', count: products.filter(p => p.is_waterproof).length }] : []),
             { label: 'New Arrivals', key: 'isNewArrival', count: products.filter(p => p.is_new_arrival).length },
             { label: 'Clearance', key: 'isClearance', count: products.filter(p => p.is_clearance).length },
           ].filter(({ count }) => count > 0).map(({ label, key, count }) => (
@@ -418,8 +456,8 @@ export default function CategoryFilterGrid({ category, sessionKey, queryKey }) {
         </div>
       </FilterSection>
 
-      {/* Brand */}
-      {filterOptions.brands.length > 0 && (
+      {/* Brand — hidden when pre-scoped to a single brand */}
+      {!hideBrand && filterOptions.brands.length > 1 && (
         <FilterSection title="Brand" defaultOpen={filters.brands.length > 0}>
           <CheckboxFilterList
             options={filterOptions.brands}
