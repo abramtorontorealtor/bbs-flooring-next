@@ -3,16 +3,11 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ShoppingCart, ArrowLeft, Calculator, Package, Check, Info, Phone, Truck, Shield, X, Star, Award, Clock, CheckCircle2 } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Package, Check, Phone, Truck, Shield, Star, Award, Clock, CheckCircle2, ChevronDown, ChevronUp, Ruler, Wrench, Sparkles } from 'lucide-react';
 import VariantSelector from '@/components/VariantSelector';
 import SaveButton from '@/components/SaveButton';
 import { toast } from 'sonner';
@@ -21,15 +16,17 @@ import FAQSection from '@/components/FAQSection';
 import StickyAddToCart from '@/components/StickyAddToCart';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getProductBreadcrumbs } from '@/lib/breadcrumbs';
-import { generateProductSchema, generateProductMetaTags } from '@/lib/seo';
+import { generateProductSchema } from '@/lib/seo';
 import { Analytics } from '@/components/analytics';
-import QuoteProductCTA from '@/components/QuoteProductCTA';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
+
+/* ── FAST_PICKUP_BRANDS — warehouse-stocked brands with quick turnaround ── */
+const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
 
 export default function ProductDetailClient({ slug, initialProduct = null }) {
   const router = useRouter();
@@ -45,11 +42,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [stickyCartVisible, setStickyCartVisible] = useState(false);
   const [variantSort, setVariantSort] = useState({ key: null, asc: true });
   const [activeImageIdx, setActiveImageIdx] = useState(0);
+  const [showAllSpecs, setShowAllSpecs] = useState(false);
+  const [descExpanded, setDescExpanded] = useState(false);
 
   const PLACEHOLDER = '/images/product-placeholder.svg';
-  const [pdpSessionId, setPdpSessionId] = useState(null);
   const buyBoxRef = useRef(null);
 
+  /* ── Data fetching ── */
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', slug],
     queryFn: async () => {
@@ -65,18 +64,16 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     retryDelay: (attempt) => Math.min(1000 * Math.pow(2, attempt), 5000),
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
-    // Use server-fetched product as initial data to avoid loading flash
     ...(initialProduct ? { initialData: [initialProduct], placeholderData: [initialProduct] } : {}),
   });
 
-  // Fetch child variants if parent product (parent_product_id is a UUID, not SKU)
   const { data: productVariants = [] } = useQuery({
     queryKey: ['product-variants', product?.id],
     queryFn: () => entities.Product.filter({ parent_product_id: product.id }),
     enabled: !!product?.is_parent_product,
   });
 
-  // Build gallery: main image + additional_images + child variant images (deduped)
+  /* ── Image gallery ── */
   const imageGallery = useMemo(() => {
     const images = [];
     const seen = new Set();
@@ -85,23 +82,18 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       seen.add(url);
       images.push({ url, alt, sku });
     };
-    // 1. Main product image
     add(product?.image_url, product?.image_alt_text || product?.name);
-    // 2. Additional images (new jsonb column)
     if (Array.isArray(product?.additional_images)) {
       product.additional_images.forEach((url, i) => add(url, `${product?.name} - image ${i + 2}`));
     }
-    // 3. Child variant images (for parent products)
     if (product?.is_parent_product && productVariants?.length) {
-      for (const v of productVariants) {
-        add(v.image_url, v.image_alt_text || v.name, v.sku);
-      }
+      for (const v of productVariants) add(v.image_url, v.image_alt_text || v.name, v.sku);
     }
     if (images.length === 0) images.push({ url: PLACEHOLDER, alt: product?.name || '', sku: null });
     return images;
   }, [product, productVariants]);
 
-  // When a variant is selected via the table, jump to its image in the gallery
+  // Jump to variant image when selected
   useEffect(() => {
     if (selectedVariantId && productVariants?.length) {
       const v = productVariants.find(p => p.id === selectedVariantId);
@@ -112,7 +104,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     }
   }, [selectedVariantId, productVariants, imageGallery]);
 
-  // Parse variants from specifications
+  // Parse spec-based variants
   const variants = useMemo(() => {
     if (!product?.specifications) return null;
     try {
@@ -125,18 +117,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     if (variants && !selectedVariant) setSelectedVariant(variants[0]);
   }, [variants, selectedVariant]);
 
-  useEffect(() => {
-    setPdpSessionId(localStorage.getItem('bbs_session_id'));
-  }, []);
-
-  const isClearance = product?.is_clearance;
-  const resolvePrice = (p) => {
-    if (!p) return null;
-    return p.price_per_sqft;
-  };
+  /* ── Pricing logic ── */
+  const resolvePrice = (p) => p?.price_per_sqft || null;
 
   const currentPricing = useMemo(() => {
-    // Base specs from product — overridden by variant when selected
     const base = {
       price_per_sqft: resolvePrice(product),
       sale_price_per_sqft: product?.sale_price_per_sqft,
@@ -151,10 +135,9 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       ac_rating: product?.ac_rating,
     };
     if (product?.has_variants && selectedJsonVariant) {
-      const price = selectedJsonVariant.price_per_sqft;
       return {
         ...base,
-        price_per_sqft: price,
+        price_per_sqft: selectedJsonVariant.price_per_sqft,
         sale_price_per_sqft: selectedJsonVariant.on_sale ? selectedJsonVariant.sale_price : null,
         sqft_per_box: selectedJsonVariant.sqft_box,
         dimensions: selectedJsonVariant.dimensions || base.dimensions,
@@ -195,13 +178,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     return base;
   }, [selectedJsonVariant, selectedVariant, selectedVariantId, product, productVariants]);
 
+  /* ── Related products ── */
   const { data: allRelatedProducts = [] } = useQuery({
     queryKey: ['relatedProducts', product?.category],
     queryFn: () => entities.Product.filter({ category: product.category }, { limit: 30, order: '-created_date' }),
     enabled: !!product?.category,
   });
 
-  // Smart related products — scored by species, brand, price proximity
   const relatedProducts = useMemo(() => {
     if (!product || allRelatedProducts.length === 0) return [];
     const candidates = allRelatedProducts.filter(p => p.image_url && p.id !== product.id);
@@ -209,20 +192,15 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     const basePrice = product.sale_price_per_sqft || product.price_per_sqft || 0;
     const scored = candidates.map(p => {
       let score = 0;
-      // Same species = strong match
       if (product.species && p.species && p.species.toLowerCase() === product.species.toLowerCase()) score += 3;
-      // Same brand = good match
       if (product.brand && p.brand && p.brand.toLowerCase() === product.brand.toLowerCase()) score += 2;
-      // Price within 30% = relevant
       const pPrice = p.sale_price_per_sqft || p.price_per_sqft || 0;
       if (basePrice > 0 && pPrice > 0) {
         const diff = Math.abs(pPrice - basePrice) / basePrice;
         if (diff <= 0.15) score += 2;
         else if (diff <= 0.30) score += 1;
       }
-      // Same subcategory
       if (product.subcategory && p.subcategory && p.subcategory === product.subcategory) score += 1;
-      // Has image and price = quality listing
       if (p.image_url && pPrice > 0) score += 1;
       return { ...p, _score: score };
     });
@@ -230,12 +208,9 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     return scored.slice(0, 4);
   }, [product, allRelatedProducts]);
 
-  // Record product view for "Recently Viewed"
-  useEffect(() => {
-    if (product?.id) recordProductView(product);
-  }, [product?.id]);
+  /* ── Side effects ── */
+  useEffect(() => { if (product?.id) recordProductView(product); }, [product?.id]);
 
-  // Sticky CTA after buy box scrolls out
   useEffect(() => {
     if (!buyBoxRef.current) return;
     const observer = new IntersectionObserver(
@@ -246,6 +221,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     return () => observer.disconnect();
   }, [product]);
 
+  /* ── Calculation ── */
   const calculation = useMemo(() => {
     if (!currentPricing || !sqftNeeded || parseFloat(sqftNeeded) <= 0) return null;
     const sqft = parseFloat(sqftNeeded);
@@ -261,7 +237,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
   const breadcrumbItems = useMemo(() => getProductBreadcrumbs(product), [product]);
 
-  // Inject JSON-LD
+  /* ── Analytics ── */
   useEffect(() => {
     if (!product) return;
     const displayedPrice = resolvePrice(product) || 0;
@@ -276,6 +252,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     }
   }, [product]);
 
+  /* ── Add to cart ── */
   const handleAddToCart = async () => {
     if (product.has_variants && !selectedJsonVariant) {
       toast.error('Please select a variant option');
@@ -305,39 +282,33 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           price_per_sqft: selectedJsonVariant.on_sale ? selectedJsonVariant.sale_price : selectedJsonVariant.price_per_sqft,
           line_total: calculation.lineTotal, image_url: product.image_url,
         });
-        window.dispatchEvent(new Event('cartUpdated'));
-        setIsAddingToCart(false);
-        toast.success('Added to cart!');
-        setSqftNeeded('');
-        if (window.gtag) window.gtag('event', 'add_to_cart', { currency: 'CAD', value: calculation.lineTotal, items: [{ item_id: product.id, item_name: product.name, price: calculation.pricePerSqft, quantity: calculation.actualSqft }] });
-        if (typeof window.fbq === 'function') window.fbq('track', 'AddToCart', { content_name: product.name, content_ids: [product.sku || product.id], content_type: 'product', value: calculation.lineTotal, currency: 'CAD' });
-        Analytics.trackAddToCart(product.name, calculation.lineTotal);
-        return;
+      } else {
+        let productToAdd = product;
+        if (product.is_parent_product && selectedVariantId) {
+          productToAdd = productVariants.find(v => v.id === selectedVariantId);
+          if (!productToAdd) { toast.error('Selected variant not found'); setIsAddingToCart(false); return; }
+        }
+        await entities.CartItem.create({
+          session_id: sessionId, product_id: productToAdd.id,
+          product_name: selectedVariant ? `${product.name} (${selectedVariant.dimensions}, ${selectedVariant.grade})` : productToAdd.name,
+          sku: productToAdd.sku, sqft_needed: calculation.sqftNeeded, sqft_per_box: calculation.sqftPerBox,
+          boxes_required: calculation.boxesRequired, actual_sqft: calculation.actualSqft,
+          price_per_sqft: calculation.pricePerSqft, line_total: calculation.lineTotal,
+          image_url: productToAdd.image_url,
+        });
       }
-      let productToAdd = product;
-      if (product.is_parent_product && selectedVariantId) {
-        productToAdd = productVariants.find(v => v.id === selectedVariantId);
-        if (!productToAdd) { toast.error('Selected variant not found'); setIsAddingToCart(false); return; }
-      }
-      await entities.CartItem.create({
-        session_id: sessionId, product_id: productToAdd.id,
-        product_name: selectedVariant ? `${product.name} (${selectedVariant.dimensions}, ${selectedVariant.grade})` : productToAdd.name,
-        sku: productToAdd.sku, sqft_needed: calculation.sqftNeeded, sqft_per_box: calculation.sqftPerBox,
-        boxes_required: calculation.boxesRequired, actual_sqft: calculation.actualSqft,
-        price_per_sqft: calculation.pricePerSqft, line_total: calculation.lineTotal,
-        image_url: productToAdd.image_url,
-      });
       window.dispatchEvent(new Event('cartUpdated'));
-      setIsAddingToCart(false);
       toast.success('Added to cart!');
       setSqftNeeded('');
       setSelectedVariantId(null);
-      if (window.gtag) window.gtag('event', 'add_to_cart', { currency: 'CAD', value: calculation.lineTotal, items: [{ item_id: productToAdd.id, item_name: productToAdd.name, price: calculation.pricePerSqft, quantity: calculation.actualSqft }] });
-      if (typeof window.fbq === 'function') window.fbq('track', 'AddToCart', { content_name: productToAdd.name, content_ids: [productToAdd.sku || productToAdd.id], content_type: 'product', value: calculation.lineTotal, currency: 'CAD' });
-      Analytics.trackAddToCart(productToAdd.name, calculation.lineTotal);
+      const trackProduct = (product.has_variants && selectedJsonVariant) ? product : (product.is_parent_product && selectedVariantId ? productVariants.find(v => v.id === selectedVariantId) || product : product);
+      if (window.gtag) window.gtag('event', 'add_to_cart', { currency: 'CAD', value: calculation.lineTotal, items: [{ item_id: trackProduct.id, item_name: trackProduct.name, price: calculation.pricePerSqft, quantity: calculation.actualSqft }] });
+      if (typeof window.fbq === 'function') window.fbq('track', 'AddToCart', { content_name: trackProduct.name, content_ids: [trackProduct.sku || trackProduct.id], content_type: 'product', value: calculation.lineTotal, currency: 'CAD' });
+      Analytics.trackAddToCart(trackProduct.name, calculation.lineTotal);
     } catch {
-      setIsAddingToCart(false);
       toast.error('Failed to add to cart');
+    } finally {
+      setIsAddingToCart(false);
     }
   };
 
@@ -353,21 +324,62 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     return `/quote-calculator?${params.toString()}`;
   };
 
+  /* ── Derived display values ── */
+  const hasDiscount = currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft;
+  const displayPrice = hasDiscount ? currentPricing.sale_price_per_sqft : currentPricing.price_per_sqft;
+  const isOutOfStock = product?.in_stock === false;
+  const isFastPickup = product && !isOutOfStock && FAST_PICKUP_BRANDS.some(b => (product.brand || '').toLowerCase().includes(b));
+
+  /* ── Spec items (consolidated, no duplication) ── */
+  const specItems = useMemo(() => {
+    if (!currentPricing) return [];
+    const items = [];
+    const isVinyl = ['vinyl', 'vinyl_plank', 'laminate'].includes(product?.category);
+    if (currentPricing.species && !isVinyl) items.push({ label: 'Species', value: currentPricing.species });
+    if (currentPricing.colour) items.push({ label: 'Colour', value: currentPricing.colour });
+    if (currentPricing.dimensions) items.push({ label: 'Dimensions', value: currentPricing.dimensions });
+    if (currentPricing.thickness) items.push({ label: 'Thickness', value: currentPricing.thickness });
+    if (currentPricing.finish) items.push({ label: 'Finish', value: currentPricing.finish });
+    if (currentPricing.grade) items.push({ label: 'Grade', value: currentPricing.grade });
+    if (currentPricing.wear_layer) items.push({ label: 'Wear Layer', value: currentPricing.wear_layer });
+    if (currentPricing.ac_rating) items.push({ label: 'AC Rating', value: currentPricing.ac_rating });
+    if (currentPricing.sqft_per_box) items.push({ label: 'Sqft/Box', value: currentPricing.sqft_per_box.toFixed(2) });
+    return items;
+  }, [currentPricing, product?.category]);
+
+  const visibleSpecs = showAllSpecs ? specItems : specItems.slice(0, 4);
+
+  /* ── Financing teaser ── */
+  const financingTeaser = useMemo(() => {
+    if (isOutOfStock || !currentPricing.price_per_sqft) return null;
+    const sampleTotal = Math.round((currentPricing.price_per_sqft || 0) * 500 * 1.13);
+    const monthly = getMonthlyPayment(sampleTotal);
+    return monthly ? `From ~$${monthly}/mo for 500 sqft` : null;
+  }, [currentPricing.price_per_sqft, isOutOfStock]);
+
+  /* ── Product description ── */
+  const description = product?.product_description || product?.description || '';
+  const productDetails = product?.product_details || '';
+  const shouldTruncateDesc = description.length > 300;
+
+  /* ── Loading state ── */
   if (isLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div className="aspect-square bg-slate-100 rounded-3xl animate-pulse" />
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="aspect-square bg-slate-100 rounded-2xl animate-pulse" />
           <div className="space-y-4">
-            <div className="h-8 bg-slate-100 rounded w-1/4 animate-pulse" />
-            <div className="h-12 bg-slate-100 rounded w-3/4 animate-pulse" />
-            <div className="h-6 bg-slate-100 rounded w-1/2 animate-pulse" />
+            <div className="h-5 bg-slate-100 rounded w-1/4 animate-pulse" />
+            <div className="h-10 bg-slate-100 rounded w-3/4 animate-pulse" />
+            <div className="h-8 bg-slate-100 rounded w-1/3 animate-pulse" />
+            <div className="h-48 bg-slate-100 rounded animate-pulse" />
           </div>
         </div>
       </div>
     );
   }
 
+  /* ── Not found ── */
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
@@ -379,30 +391,25 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     );
   }
 
-  const hasDiscount = currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft;
-  const displayPrice = hasDiscount ? currentPricing.sale_price_per_sqft : currentPricing.price_per_sqft;
-  const isOutOfStock = product.in_stock === false;
-
-  // Product JSON-LD
   const productSchema = generateProductSchema(product);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* JSON-LD */}
+    <div className="max-w-7xl mx-auto px-4 pb-16">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
 
-      {/* Back Link */}
-      <Link
-        href={(() => { if (typeof window !== 'undefined') { const referrer = sessionStorage.getItem('product_referrer'); if (referrer) return referrer; } return '/products'; })()}
-        className="inline-flex items-center gap-2 text-slate-600 hover:text-amber-600 mb-4 transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" /> Back to Products
-      </Link>
+      {/* ── Breadcrumbs + Back ── */}
+      <div className="pt-4 pb-2">
+        {breadcrumbItems.length > 0 && <Breadcrumbs items={breadcrumbItems} />}
+      </div>
 
-      {breadcrumbItems.length > 0 && <Breadcrumbs items={breadcrumbItems} />}
+      {/* ═══════════════════════════════════════════════════
+          SECTION 1: HERO — Image Gallery + Buy Box
+          Two-column on desktop, stacked on mobile.
+          Gallery is sticky so buy box scrolls alongside.
+      ═══════════════════════════════════════════════════ */}
+      <div className="grid lg:grid-cols-[1fr_minmax(380px,480px)] gap-8 lg:gap-12">
 
-      <div className="grid lg:grid-cols-2 gap-12">
-        {/* Product Image Gallery */}
+        {/* ── Left: Image Gallery ── */}
         <div className="animate-fade-in-up">
           <ProductImageGallery
             images={imageGallery}
@@ -416,29 +423,91 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           />
         </div>
 
-        {/* Product Info */}
-        <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          {product.brand && <div className="text-sm text-slate-500 font-medium">{product.brand}</div>}
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800">{product.name}</h1>
+        {/* ── Right: Product Info + Buy Box ── */}
+        <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
 
+          {/* Brand */}
+          {product.brand && (
+            <p className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">{product.brand}</p>
+          )}
+
+          {/* Title */}
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mb-3">{product.name}</h1>
+
+          {/* Reviews (if any) */}
           {product.review_count > 0 && (
-            <div className="flex items-center gap-2">
-              <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
-              <span className="font-semibold text-slate-800">{product.review_rating?.toFixed(1)}</span>
-              <span className="text-slate-500 text-sm">({product.review_count} reviews)</span>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className={`w-4 h-4 ${i < Math.round(product.review_rating) ? 'fill-amber-400 text-amber-400' : 'fill-slate-200 text-slate-200'}`} />
+                ))}
+              </div>
+              <span className="text-sm font-medium text-slate-700">{product.review_rating?.toFixed(1)}</span>
+              <span className="text-sm text-slate-400">({product.review_count})</span>
             </div>
           )}
 
-          {/* Variant Selector — chip-based for variants_json (always shown when has_variants) */}
-          {product.has_variants && (
-            <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} />
+          {/* ── Price Block ── */}
+          {!product.has_variants && (
+            <div className="mb-4">
+              {isOutOfStock ? (
+                <Badge className="bg-slate-700 text-white border-0 text-base px-3 py-1.5">Out of Stock</Badge>
+              ) : product.price_per_sqft ? (
+                <div>
+                  <div className="flex items-baseline gap-2">
+                    {hasDiscount ? (
+                      <>
+                        <span className="text-3xl font-bold text-red-600">C${parseFloat(displayPrice).toFixed(2)}</span>
+                        <span className="text-lg text-slate-400 line-through">C${parseFloat(currentPricing.price_per_sqft).toFixed(2)}</span>
+                      </>
+                    ) : (
+                      <span className="text-3xl font-bold text-slate-900">C${parseFloat(displayPrice).toFixed(2)}</span>
+                    )}
+                    <span className="text-sm text-slate-500">/sq.ft</span>
+                  </div>
+                  {/* Financing teaser — one subtle line */}
+                  {financingTeaser && (
+                    <Link href="/financing" className="text-xs text-slate-500 hover:text-amber-600 transition-colors mt-1 block">
+                      💳 {financingTeaser} · <span className="underline">Financing options</span>
+                    </Link>
+                  )}
+                </div>
+              ) : (
+                <span className="text-lg text-slate-500">Contact for Price</span>
+              )}
+            </div>
           )}
 
-          {/* Variant Cards (mobile) / Table (desktop) for parent products WITHOUT variants_json */}
-          {product.is_parent_product && !product.has_variants && productVariants.length > 0 && (
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-slate-700">Select Variant</label>
+          {/* ── Stock + Save row ── */}
+          <div className="flex items-center gap-3 mb-5">
+            {isOutOfStock ? (
+              <span className="flex items-center gap-1.5 text-sm text-slate-500">
+                <span className="w-2 h-2 rounded-full bg-slate-400" />Out of Stock
+              </span>
+            ) : isFastPickup ? (
+              <span className="flex items-center gap-1.5 text-sm text-emerald-700 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />Fast Pickup · In Stock
+              </span>
+            ) : (
+              <span className="flex items-center gap-1.5 text-sm text-emerald-700 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />In Stock
+              </span>
+            )}
+            <div className="w-px h-4 bg-slate-200" />
+            <SaveButton product={product} user={currentUser} />
+          </div>
 
+          {/* ── Variant Selector (chip-based for has_variants) ── */}
+          {product.has_variants && (
+            <div className="mb-5">
+              <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} />
+            </div>
+          )}
+
+          {/* ── Variant Table (parent products without variants_json) ── */}
+          {product.is_parent_product && !product.has_variants && productVariants.length > 0 && (
+            <div className="mb-5 space-y-3">
+              <label className="text-sm font-medium text-slate-700">Select Variant</label>
               {/* Mobile: stacked cards */}
               <div className="md:hidden space-y-2">
                 {[...productVariants].sort((a, b) => {
@@ -455,17 +524,12 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                   else if (variant.name?.toLowerCase().includes('click')) patternType = ' Click';
                   const isSelected = selectedVariantId === variant.id;
                   return (
-                    <button
-                      key={variant.id}
-                      onClick={() => setSelectedVariantId(variant.id)}
-                      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-                        isSelected ? 'border-amber-500 bg-amber-50 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'
-                      }`}
-                    >
-                      <div className="flex justify-between items-start">
-                        <div className="space-y-1 min-w-0 flex-1">
+                    <button key={variant.id} onClick={() => setSelectedVariantId(variant.id)}
+                      className={`w-full text-left p-3.5 rounded-xl border-2 transition-all ${isSelected ? 'border-amber-500 bg-amber-50 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'}`}>
+                      <div className="flex justify-between items-center">
+                        <div className="space-y-0.5 min-w-0 flex-1">
                           <div className="font-semibold text-sm text-slate-800">{variant.dimensions || 'N/A'}{patternType}</div>
-                          {variant.grade && <div className="text-xs text-slate-500">Grade: {variant.grade}</div>}
+                          {variant.grade && <div className="text-xs text-slate-500">{variant.grade}</div>}
                         </div>
                         <div className="text-right ml-3 shrink-0">
                           {variant.sale_price_per_sqft ? (
@@ -476,39 +540,27 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                           <div className="text-[10px] text-slate-500">/sqft</div>
                         </div>
                       </div>
-                      {isSelected && (
-                        <div className="mt-2 flex items-center gap-1 text-xs text-amber-700 font-semibold">
-                          <Check className="w-3.5 h-3.5" /> Selected
-                        </div>
-                      )}
+                      {isSelected && <div className="mt-1.5 flex items-center gap-1 text-xs text-amber-700 font-semibold"><Check className="w-3.5 h-3.5" /> Selected</div>}
                     </button>
                   );
                 })}
               </div>
-
               {/* Desktop: table */}
               <div className="hidden md:block border rounded-lg overflow-hidden">
                 <table className="w-full">
-                  <thead className="bg-slate-100">
+                  <thead className="bg-slate-50">
                     <tr>
-                      {[
-                        { key: 'dimensions', label: 'Dimensions & Pattern' },
-                        { key: 'grade', label: 'Grade' },
-                        { key: 'price', label: 'Price' },
-                      ].map((col) => (
-                        <th
-                          key={col.key}
-                          className="px-4 py-3 text-left text-sm font-semibold text-slate-700 cursor-pointer hover:text-amber-600 transition-colors select-none"
-                          onClick={() => setVariantSort(prev => ({ key: col.key, asc: prev.key === col.key ? !prev.asc : true }))}
-                        >
-                          {col.label}
-                          {variantSort.key === col.key && <span className="ml-1">{variantSort.asc ? '↑' : '↓'}</span>}
+                      {[{ key: 'dimensions', label: 'Dimensions' }, { key: 'grade', label: 'Grade' }, { key: 'price', label: 'Price' }].map((col) => (
+                        <th key={col.key}
+                          className="px-4 py-2.5 text-left text-xs font-semibold text-slate-600 cursor-pointer hover:text-amber-600 transition-colors select-none"
+                          onClick={() => setVariantSort(prev => ({ key: col.key, asc: prev.key === col.key ? !prev.asc : true }))}>
+                          {col.label}{variantSort.key === col.key && <span className="ml-1">{variantSort.asc ? '↑' : '↓'}</span>}
                         </th>
                       ))}
-                      <th className="px-4 py-3 text-center text-sm font-semibold text-slate-700">Select</th>
+                      <th className="px-4 py-2.5 text-center text-xs font-semibold text-slate-600">Select</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-200">
+                  <tbody className="divide-y divide-slate-100">
                     {[...productVariants].sort((a, b) => {
                       if (!variantSort.key) return 0;
                       const dir = variantSort.asc ? 1 : -1;
@@ -523,17 +575,17 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                       else if (variant.name?.toLowerCase().includes('click')) patternType = ' Click';
                       return (
                         <tr key={variant.id} className={`hover:bg-slate-50 transition-colors ${selectedVariantId === variant.id ? 'bg-amber-50' : ''}`}>
-                          <td className="px-4 py-3 text-sm text-slate-700">{variant.dimensions || 'N/A'}{patternType}</td>
-                          <td className="px-4 py-3 text-sm text-slate-700">{variant.grade || 'N/A'}</td>
-                          <td className="px-4 py-3 text-sm font-semibold">
+                          <td className="px-4 py-2.5 text-sm text-slate-700">{variant.dimensions || 'N/A'}{patternType}</td>
+                          <td className="px-4 py-2.5 text-sm text-slate-700">{variant.grade || 'N/A'}</td>
+                          <td className="px-4 py-2.5 text-sm font-semibold">
                             {variant.sale_price_per_sqft ? (
                               <><span className="text-red-600">C${variant.sale_price_per_sqft.toFixed(2)}</span><span className="text-slate-400 line-through ml-2 text-xs">C${variant.price_per_sqft.toFixed(2)}</span></>
                             ) : (
                               <span className="text-slate-800">C${variant.price_per_sqft.toFixed(2)}</span>
                             )}
                           </td>
-                          <td className="px-4 py-3 text-center">
-                            <Button size="sm" variant={selectedVariantId === variant.id ? 'default' : 'outline'} onClick={() => setSelectedVariantId(variant.id)} className={selectedVariantId === variant.id ? 'bg-amber-500 hover:bg-amber-600' : ''}>
+                          <td className="px-4 py-2.5 text-center">
+                            <Button size="sm" variant={selectedVariantId === variant.id ? 'default' : 'outline'} onClick={() => setSelectedVariantId(variant.id)} className={selectedVariantId === variant.id ? 'bg-amber-500 hover:bg-amber-600 text-xs' : 'text-xs'}>
                               {selectedVariantId === variant.id ? 'Selected' : 'Select'}
                             </Button>
                           </td>
@@ -546,285 +598,287 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             </div>
           )}
 
-          {/* Non-parent spec-based variants */}
+          {/* ── Non-parent spec-based variants ── */}
           {!product.is_parent_product && variants && variants.length > 1 && (
-            <div className="space-y-3">
+            <div className="mb-5 space-y-2">
               <label className="text-sm font-medium text-slate-700">Select Variant</label>
               <div className="grid gap-2">
                 {variants.map((variant) => (
                   <button key={variant.id} onClick={() => setSelectedVariant(variant)}
-                    className={`p-4 rounded-xl border-2 text-left transition-all ${selectedVariant?.id === variant.id ? 'border-amber-500 bg-amber-50' : 'border-slate-200 hover:border-slate-300 bg-white'}`}>
-                    <div className="flex justify-between items-start mb-1">
-                      <div className="font-semibold text-slate-800">{variant.dimensions} - {variant.grade}</div>
+                    className={`p-3.5 rounded-xl border-2 text-left transition-all ${selectedVariant?.id === variant.id ? 'border-amber-500 bg-amber-50' : 'border-slate-200 hover:border-slate-300 bg-white'}`}>
+                    <div className="flex justify-between items-center">
+                      <div className="font-semibold text-sm text-slate-800">{variant.dimensions} · {variant.grade}</div>
                       <div className="text-right">
                         {variant.sale_price_per_sqft && variant.sale_price_per_sqft < variant.price_per_sqft ? (
-                          <div><div className="text-lg font-bold text-amber-600">C${variant.sale_price_per_sqft.toFixed(2)}</div><div className="text-xs text-slate-400 line-through">C${variant.price_per_sqft.toFixed(2)}</div></div>
+                          <div className="flex items-baseline gap-2"><span className="text-base font-bold text-red-600">C${variant.sale_price_per_sqft.toFixed(2)}</span><span className="text-xs text-slate-400 line-through">C${variant.price_per_sqft.toFixed(2)}</span></div>
                         ) : (
-                          <div className="text-lg font-bold text-slate-900">C${variant.price_per_sqft.toFixed(2)}</div>
+                          <div className="text-base font-bold text-slate-900">C${variant.price_per_sqft.toFixed(2)}</div>
                         )}
                       </div>
                     </div>
-                    <div className="text-xs text-slate-500">{variant.sqft_per_box} sq.ft/box</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{variant.sqft_per_box} sqft/box</div>
                   </button>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Price — hide for variants_json */}
-          {!product.has_variants && (
-            <div>
-              {isOutOfStock ? (
-                <Badge className="bg-slate-700 text-white border-0 text-lg px-4 py-2">Out of Stock</Badge>
-              ) : product.price_per_sqft ? (
-                <div className="flex items-baseline gap-2">
-                  {hasDiscount ? (
-                    <>
-                      <span className="text-slate-400 line-through text-lg">C${parseFloat(currentPricing.price_per_sqft).toFixed(2)}</span>
-                      <span className="text-4xl font-bold text-red-600">C${parseFloat(displayPrice).toFixed(2)}</span>
-                    </>
-                  ) : (
-                    <span className="text-4xl font-bold text-slate-900">C${parseFloat(displayPrice).toFixed(2)}</span>
-                  )}
-                  <span className="text-slate-500 text-sm">/sq.ft</span>
-                </div>
-              ) : (
-                <span className="text-slate-500 text-lg">Contact for Price</span>
+          {/* ── Key Specs (compact grid — max 4 visible, expand for more) ── */}
+          {specItems.length > 0 && (
+            <div className="mb-5">
+              <div className="grid grid-cols-2 gap-2">
+                {visibleSpecs.map(spec => (
+                  <div key={spec.label} className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg">
+                    <span className="text-xs text-slate-500 whitespace-nowrap">{spec.label}</span>
+                    <span className="text-xs font-semibold text-slate-800 truncate ml-auto">{spec.value}</span>
+                  </div>
+                ))}
+              </div>
+              {specItems.length > 4 && (
+                <button onClick={() => setShowAllSpecs(!showAllSpecs)}
+                  className="flex items-center gap-1 text-xs text-amber-700 hover:text-amber-800 font-medium mt-2 transition-colors">
+                  {showAllSpecs ? <><ChevronUp className="w-3.5 h-3.5" /> Show less</> : <><ChevronDown className="w-3.5 h-3.5" /> +{specItems.length - 4} more specs</>}
+                </button>
               )}
             </div>
           )}
 
-          <div className="flex items-center gap-2">
-            <SaveButton product={product} user={currentUser} />
-            {currentUser && <span className="text-sm text-slate-500">Save to Profile</span>}
-          </div>
+          {/* ═══════════════════════════════════════
+              BUY BOX — The Conversion Engine
+              Clear hierarchy: calculator → total → CTA
+          ═══════════════════════════════════════ */}
+          <div ref={buyBoxRef} className="border-2 border-amber-200 rounded-2xl bg-gradient-to-b from-amber-50/80 to-white p-5 space-y-4">
 
-          {/* Financing teaser */}
-          {!isOutOfStock && (() => {
-            const sampleTotal = Math.round((currentPricing.price_per_sqft || 0) * 500 * 1.13);
-            const monthly = getMonthlyPayment(sampleTotal);
-            if (!monthly) return null;
-            return (
-              <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold text-amber-400 mb-0.5">💳 Financing Available</p>
-                  <p className="text-white font-bold text-base leading-tight">~${monthly}<span className="text-slate-400 text-xs font-normal">/mo</span> for a 500 sqft project</p>
-                  <p className="text-slate-400 text-xs mt-0.5">OAC · 13.99% · Max amortization</p>
-                </div>
-                <div className="flex sm:flex-col gap-2 sm:gap-1.5 shrink-0">
-                  <a href={FINANCEIT_LINKS.freeProgram} target="_blank" rel="noopener noreferrer" className="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-3 py-1.5 rounded-lg text-xs transition-colors whitespace-nowrap text-center flex-1 sm:flex-initial">Apply Now →</a>
-                  <Link href="/financing" className="text-slate-300 hover:text-white text-xs text-center transition-colors flex-1 sm:flex-initial py-1.5 sm:py-0">See all options</Link>
-                </div>
-              </div>
-            );
-          })()}
+            {/* Material / Installation toggle */}
+            <div className="flex rounded-lg overflow-hidden border border-amber-300">
+              <button onClick={() => setBuyMode('material')}
+                className={`flex-1 py-2 text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 ${buyMode === 'material' ? 'bg-amber-500 text-white' : 'bg-white text-slate-600 hover:bg-amber-50'}`}>
+                <Package className="w-3.5 h-3.5" />Material Only
+              </button>
+              <button onClick={() => setBuyMode('installation')}
+                className={`flex-1 py-2 text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 ${buyMode === 'installation' ? 'bg-amber-500 text-white' : 'bg-white text-slate-600 hover:bg-amber-50'}`}>
+                <Wrench className="w-3.5 h-3.5" />+ Installation
+              </button>
+            </div>
 
-          {/* Specs Grid — resolves from selected variant */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-            {product.brand && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Brand</div><div className="font-semibold text-slate-800">{product.brand}</div></div>}
-            {currentPricing.species && !['vinyl', 'vinyl_plank', 'laminate'].includes(product.category) && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Species</div><div className="font-semibold text-slate-800">{currentPricing.species}</div></div>}
-            {currentPricing.colour && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Colour</div><div className="font-semibold text-slate-800">{currentPricing.colour}</div></div>}
-            {currentPricing.thickness && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Thickness</div><div className="font-semibold text-slate-800">{currentPricing.thickness}</div></div>}
-            {currentPricing.dimensions && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Dimensions</div><div className="font-semibold text-slate-800">{currentPricing.dimensions}</div></div>}
-            {currentPricing.finish && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Finish</div><div className="font-semibold text-slate-800">{currentPricing.finish}</div></div>}
-            {currentPricing.grade && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Grade</div><div className="font-semibold text-slate-800">{currentPricing.grade}</div></div>}
-            {currentPricing.wear_layer && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Wear Layer</div><div className="font-semibold text-slate-800">{currentPricing.wear_layer}</div></div>}
-            {currentPricing.ac_rating && <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">AC Rating</div><div className="font-semibold text-slate-800">{currentPricing.ac_rating}</div></div>}
-            <div className="p-3 bg-slate-50 rounded-lg"><div className="text-xs text-slate-500 mb-1">Sq.Ft/Box</div><div className="font-semibold text-slate-800">{currentPricing.sqft_per_box?.toFixed(2)}</div></div>
-          </div>
+            {buyMode === 'material' ? (
+              <div className="space-y-3">
+                {/* Calculator */}
+                <SqftCalculator
+                  variants={product.has_variants ? ((() => { try { const s = JSON.parse(product.specifications); return s.variants || []; } catch { return []; } })()) : []}
+                  currentVariant={selectedJsonVariant}
+                  onSqftChange={setSqftNeeded}
+                  currentSqft={sqftNeeded}
+                />
 
-          <QuoteProductCTA productId={product.id} productName={product.name} />
-
-          {/* Buy Box */}
-          <Card ref={buyBoxRef} className="border-2 border-amber-200 bg-amber-50/50">
-            <CardContent className="p-6">
-              <div className="flex rounded-lg overflow-hidden border border-amber-300 mb-5">
-                <button onClick={() => setBuyMode('material')} className={`flex-1 py-2.5 text-sm font-semibold transition-colors ${buyMode === 'material' ? 'bg-amber-500 text-white' : 'bg-white text-slate-600 hover:bg-amber-50'}`}>Material Only</button>
-                <button onClick={() => setBuyMode('installation')} className={`flex-1 py-2.5 text-sm font-semibold transition-colors ${buyMode === 'installation' ? 'bg-amber-500 text-white' : 'bg-white text-slate-600 hover:bg-amber-50'}`}>+ Installation</button>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-slate-700 mb-2 block">
-                    <Calculator className="w-4 h-4 inline mr-1.5 text-amber-500" />
-                    Calculate your flooring needs
-                  </label>
-                  <SqftCalculator
-                    variants={product?.has_variants ? (() => { try { if (Array.isArray(product.variants_json)) return product.variants_json; return JSON.parse(product.variants_json || '[]'); } catch { return []; } })() : []}
-                    currentVariant={selectedJsonVariant}
-                    onSqftChange={setSqftNeeded}
-                    currentSqft={sqftNeeded}
-                  />
-                </div>
-                {calculation && buyMode === 'material' && (
-                  <div className="bg-white rounded-xl p-4 space-y-3 animate-fade-in-up">
-                    <div className="flex justify-between text-sm"><span className="text-slate-600">Square footage needed:</span><span className="font-medium">{calculation.sqftNeeded.toFixed(2)} sq.ft</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-slate-600">Sq.ft per box:</span><span className="font-medium">{calculation.sqftPerBox.toFixed(2)} sq.ft</span></div>
-                    <Separator />
-                    <div className="flex justify-between items-center"><div className="flex items-center gap-2"><Package className="w-5 h-5 text-amber-600" /><span className="font-semibold text-slate-800">Boxes Required:</span></div><span className="text-2xl font-bold text-amber-600">{calculation.boxesRequired}</span></div>
-                    <div className="flex justify-between text-sm"><span className="text-slate-600">Actual coverage:</span><span className="font-medium">{calculation.actualSqft.toFixed(2)} sq.ft</span></div>
+                {/* Live calculation result */}
+                {calculation && (
+                  <div className="bg-white rounded-xl border border-slate-200 p-3 space-y-1.5">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">{calculation.boxesRequired} boxes × {calculation.sqftPerBox} sqft</span>
+                      <span className="text-slate-600">{calculation.actualSqft} sqft</span>
+                    </div>
                     {calculation.extraSqft > 0 && (
-                      <div className="flex items-start gap-2 text-sm text-emerald-700 bg-emerald-50 p-2 rounded-lg"><Info className="w-4 h-4 flex-shrink-0 mt-0.5" /><span>You&apos;ll have {calculation.extraSqft.toFixed(2)} sq.ft extra for cuts and waste</span></div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Extra coverage</span>
+                        <span className="text-slate-400">+{calculation.extraSqft.toFixed(1)} sqft</span>
+                      </div>
                     )}
-                    <Separator />
-                    <div className="flex justify-between items-center text-lg"><span className="font-semibold text-slate-800">Total Price:</span><span className="text-2xl font-bold text-slate-900">C${calculation.lineTotal.toFixed(2)}</span></div>
+                    <div className="flex justify-between items-baseline pt-1.5 border-t border-slate-100">
+                      <span className="text-sm font-semibold text-slate-800">Total</span>
+                      <span className="text-xl font-bold text-slate-900">C${calculation.lineTotal.toFixed(2)}</span>
+                    </div>
                   </div>
                 )}
-                {buyMode === 'installation' && sqftNeeded && (
-                  <div className="bg-white rounded-xl p-4 text-sm text-slate-600 space-y-1 animate-fade-in-up">
-                    <p className="font-medium text-slate-800">Full installation quote includes:</p>
-                    <p>✓ Materials ({sqftNeeded} sq.ft)</p><p>✓ Professional installation</p><p>✓ Old floor removal &amp; disposal</p><p>✓ Delivery to your door</p>
-                  </div>
-                )}
-                {isOutOfStock ? (
-                  <div className="w-full bg-slate-100 border-2 border-slate-300 text-slate-600 py-6 text-lg rounded-lg text-center font-semibold">Out of Stock - Coming Soon</div>
-                ) : buyMode === 'material' ? (
-                  <Button size="lg" className="w-full bg-amber-500 hover:bg-amber-600 text-white py-6 text-lg disabled:bg-slate-400" onClick={handleAddToCart} disabled={!calculation || isAddingToCart}>
-                    <ShoppingCart className="mr-2 w-5 h-5" />{isAddingToCart ? 'Adding...' : 'Add to Cart'}
-                  </Button>
-                ) : (
-                  <Link href={buildInstallQuoteUrl()} onClick={() => Analytics.trackQuoteSubmit(product.name)}>
-                    <Button size="lg" className="w-full bg-amber-500 hover:bg-amber-600 text-white py-6 text-lg"><Calculator className="mr-2 w-5 h-5" />Get Full Installation Quote</Button>
-                  </Link>
-                )}
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-4">
-                  <div className="text-center p-2 sm:p-3 bg-emerald-50 rounded-lg border border-emerald-100"><Award className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 mx-auto mb-1" /><span className="text-[10px] sm:text-xs text-emerald-800 font-medium block leading-tight">Authorized Dealer</span></div>
-                  <div className="text-center p-2 sm:p-3 bg-blue-50 rounded-lg border border-blue-100"><Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mx-auto mb-1" /><span className="text-[10px] sm:text-xs text-blue-800 font-medium block leading-tight">25+ Year Warranty</span></div>
-                  <div className="text-center p-2 sm:p-3 bg-amber-50 rounded-lg border border-amber-100"><Check className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 mx-auto mb-1" /><span className="text-[10px] sm:text-xs text-amber-800 font-medium block leading-tight">GTA Climate Approved</span></div>
-                </div>
+
+                {/* Primary CTA: Add to Cart */}
+                <Button
+                  className={`w-full h-12 text-base font-bold rounded-xl transition-all ${
+                    calculation
+                      ? 'bg-amber-500 hover:bg-amber-600 text-white shadow-md hover:shadow-lg'
+                      : 'bg-slate-200 text-slate-500 cursor-not-allowed'
+                  }`}
+                  onClick={handleAddToCart}
+                  disabled={isAddingToCart || isOutOfStock || !calculation}
+                >
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  {isAddingToCart ? 'Adding...' : isOutOfStock ? 'Out of Stock' : calculation ? `Add to Cart · C$${calculation.lineTotal.toFixed(2)}` : 'Enter sqft to add to cart'}
+                </Button>
               </div>
-            </CardContent>
-          </Card>
+            ) : (
+              /* Installation mode → route to quote calculator */
+              <div className="space-y-3">
+                <div className="text-center py-4">
+                  <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-3">
+                    <Ruler className="w-6 h-6 text-amber-600" />
+                  </div>
+                  <p className="text-sm font-semibold text-slate-800 mb-1">Get a full project quote</p>
+                  <p className="text-xs text-slate-500">Materials + labour + delivery — instant estimate</p>
+                </div>
+                <Link href={buildInstallQuoteUrl()} className="block">
+                  <Button className="w-full h-12 text-base font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow-md">
+                    Get Installation Quote
+                  </Button>
+                </Link>
+                <Link href="/free-measurement" className="block">
+                  <Button variant="outline" className="w-full h-10 text-sm font-semibold rounded-xl border-amber-300 text-amber-700 hover:bg-amber-50">
+                    Book Free Measurement
+                  </Button>
+                </Link>
+              </div>
+            )}
 
-          {/* WhatsApp Quick Question */}
-          <a
-            href={`https://wa.me/message/CQQRGZKI3U2VH1?text=${encodeURIComponent(`Hi! I have a question about ${product.name} (SKU: ${product.sku || 'N/A'})`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-[#25D366] hover:bg-[#1fb855] text-white font-semibold rounded-xl transition-colors"
-            onClick={() => Analytics.trackEvent('whatsapp_pdp_click', 'engagement', product.name)}
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.519 5.834L.052 23.579a.5.5 0 00.612.612l5.746-1.467A11.948 11.948 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.903 0-3.72-.504-5.32-1.459l-.382-.227-3.951 1.009 1.009-3.951-.227-.382A9.786 9.786 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818S21.818 6.582 21.818 12s-4.4 9.818-9.818 9.818z"/></svg>
-            Quick Question? WhatsApp Us
-          </a>
+            {/* Trust signals — compact, single row */}
+            <div className="flex items-center justify-center gap-4 pt-2 border-t border-slate-100">
+              <span className="flex items-center gap-1 text-[11px] text-slate-500"><Shield className="w-3 h-3" />25+ Year Warranty</span>
+              <span className="flex items-center gap-1 text-[11px] text-slate-500"><Truck className="w-3 h-3" />GTA Delivery</span>
+              <span className="flex items-center gap-1 text-[11px] text-slate-500"><Award className="w-3 h-3" />Authorized Dealer</span>
+            </div>
+          </div>
 
-          {/* Request Sample CTA */}
-          <a
-            href={`https://wa.me/message/CQQRGZKI3U2VH1?text=${encodeURIComponent(`Hi! I'm interested in ${product.name}${product.sku ? ` (SKU: ${product.sku})` : ''}. Can you bring a sample when you come for the measurement?`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-white hover:bg-slate-50 text-slate-800 font-semibold rounded-xl transition-colors border-2 border-slate-200 hover:border-amber-300"
-            onClick={() => Analytics.trackEvent('request_sample_click', 'engagement', product.name)}
-          >
-            <Package className="w-5 h-5 text-amber-500" />
-            Request a Sample
-          </a>
-
-          {/* Trust Badges */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            <div className="text-center p-3 sm:p-4 bg-white rounded-xl border border-slate-100"><Truck className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 mx-auto mb-1 sm:mb-2" /><span className="text-[10px] sm:text-xs text-slate-600 leading-tight block">GTA Delivery</span></div>
-            <div className="text-center p-3 sm:p-4 bg-white rounded-xl border border-slate-100"><Shield className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 mx-auto mb-1 sm:mb-2" /><span className="text-[10px] sm:text-xs text-slate-600 leading-tight block">Quality Guaranteed</span></div>
-            <div className="text-center p-3 sm:p-4 bg-white rounded-xl border border-slate-100"><Phone className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 mx-auto mb-1 sm:mb-2" /><span className="text-[10px] sm:text-xs text-slate-600 leading-tight block">Expert Support</span></div>
+          {/* ── Quick Contact (below buy box, not competing with it) ── */}
+          <div className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+            <div className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0">
+              <Phone className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-slate-800">Questions? Talk to an expert</p>
+              <a href="tel:6474281111" className="text-sm text-amber-600 font-medium hover:underline">(647) 428-1111</a>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Specs Accordion */}
-      <div className="mt-12">
-        <Accordion type="single" collapsible className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm">
-          <AccordionItem value="specs" className="border-b border-slate-200">
-            <AccordionTrigger className="px-6 py-4 text-xl font-bold text-slate-800 hover:no-underline">Product Specifications</AccordionTrigger>
-            <AccordionContent className="px-6 pb-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {product.brand && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Brand:</span><span className="text-sm font-semibold text-slate-800">{product.brand}</span></div>}
-                {currentPricing.species && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Species:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.species}</span></div>}
-                {currentPricing.colour && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Colour:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.colour}</span></div>}
-                {currentPricing.thickness && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Thickness:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.thickness}</span></div>}
-                {currentPricing.sqft_per_box && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Sqft/Box:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.sqft_per_box.toFixed(2)}</span></div>}
-                {currentPricing.dimensions && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Dimensions:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.dimensions}</span></div>}
-                {currentPricing.finish && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Finish:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.finish}</span></div>}
-                {currentPricing.grade && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Grade:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.grade}</span></div>}
-                {currentPricing.wear_layer && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">Wear Layer:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.wear_layer}</span></div>}
-                {currentPricing.ac_rating && <div className="flex justify-between items-center p-4 bg-slate-50 rounded-lg"><span className="text-sm font-medium text-slate-600">AC Rating:</span><span className="text-sm font-semibold text-slate-800">{currentPricing.ac_rating}</span></div>}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          {product.product_details && (
-            <AccordionItem value="product-details" className="border-b border-slate-200">
-              <AccordionTrigger className="px-6 py-4 text-xl font-bold text-slate-800 hover:no-underline">Technical Specifications &amp; Downloads</AccordionTrigger>
-              <AccordionContent className="px-6 pb-6"><div className="prose prose-slate max-w-none text-slate-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: product.product_details }} /></AccordionContent>
-            </AccordionItem>
-          )}
-          {product.product_description && (
-            <AccordionItem value="product-description" className="border-0">
-              <AccordionTrigger className="px-6 py-4 text-xl font-bold text-slate-800 hover:no-underline">Product Description</AccordionTrigger>
-              <AccordionContent className="px-6 pb-6"><div className="prose prose-slate max-w-none text-slate-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: product.product_description }} /></AccordionContent>
-            </AccordionItem>
-          )}
-        </Accordion>
-      </div>
+      {/* ═══════════════════════════════════════════════════
+          SECTION 2: BELOW THE FOLD — Description, Specs, Services
+          Full-width, stacked sections with visual rhythm.
+      ═══════════════════════════════════════════════════ */}
 
-      {/* See It In Your Home CTA */}
-      <div className="mt-16 bg-gradient-to-r from-amber-50 to-slate-50 rounded-2xl border border-amber-200 p-8 flex flex-col md:flex-row items-center gap-6">
-        <div className="text-4xl">🏠</div>
-        <div className="flex-1 text-center md:text-left">
-          <h3 className="text-xl font-bold text-slate-800 mb-1">Want to See This Flooring In Person?</h3>
-          <p className="text-slate-600">Book a free in-home measurement and we&apos;ll bring samples right to your door. No obligation — just expert advice and a precise quote.</p>
-        </div>
-        <Link href="/free-measurement"><Button size="lg" className="bg-amber-600 hover:bg-amber-700 text-white rounded-full px-8 whitespace-nowrap">📏 Book Free Measurement</Button></Link>
-      </div>
-
-      {/* Transition Pieces — for vinyl and laminate products */}
-      {product && ['vinyl', 'laminate'].includes(product.category?.toLowerCase()) && (
-        <div className="mt-12" id="transition-pieces">
-          <TransitionPieces
-            product={product}
-            sessionId={pdpSessionId}
-            onTransitionAdded={() => window.dispatchEvent(new Event('cartUpdated'))}
-          />
-        </div>
+      {/* ── Description + Details ── */}
+      {(description || productDetails) && (
+        <section className="mt-16 max-w-4xl">
+          <h2 className="text-xl font-bold text-slate-900 mb-4">About This Product</h2>
+          {description && (
+            <div className="prose prose-slate prose-sm max-w-none">
+              <p className={`text-slate-600 leading-relaxed ${!descExpanded && shouldTruncateDesc ? 'line-clamp-4' : ''}`}>
+                {description}
+              </p>
+              {shouldTruncateDesc && (
+                <button onClick={() => setDescExpanded(!descExpanded)}
+                  className="text-amber-600 hover:text-amber-700 text-sm font-medium mt-1 transition-colors">
+                  {descExpanded ? 'Show less' : 'Read more'}
+                </button>
+              )}
+            </div>
+          )}
+          {productDetails && (
+            <div className="mt-4 text-sm text-slate-600 leading-relaxed whitespace-pre-line">{productDetails}</div>
+          )}
+        </section>
       )}
 
-      {/* Complete Your Project */}
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">Complete Your Project</h2>
-        <p className="text-slate-600 mb-6">Everything you need for a hassle-free flooring renovation</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Link href="/installation" className="group"><div className="bg-white rounded-xl border border-slate-200 p-6 hover:border-amber-300 hover:shadow-md transition-all"><div className="text-3xl mb-3">🔨</div><h3 className="font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Professional Installation</h3><p className="text-sm text-slate-500 mt-1">Expert installers serving Markham, Toronto &amp; Durham. We move your furniture.</p></div></Link>
-          <Link href="/carpet-removal" className="group"><div className="bg-white rounded-xl border border-slate-200 p-6 hover:border-amber-300 hover:shadow-md transition-all"><div className="text-3xl mb-3">🧹</div><h3 className="font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Carpet Removal &amp; Disposal</h3><p className="text-sm text-slate-500 mt-1">Old floor tear-out, haul-away, and subfloor prep included.</p></div></Link>
-          <Link href="/products?category=baseboards" className="group"><div className="bg-white rounded-xl border border-slate-200 p-6 hover:border-amber-300 hover:shadow-md transition-all"><div className="text-3xl mb-3">📐</div><h3 className="font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Baseboards &amp; Trim</h3><p className="text-sm text-slate-500 mt-1">Finish the look with matching baseboards and shoe moulding.</p></div></Link>
-        </div>
-      </div>
+      {/* ── Full Specifications Table ── */}
+      {specItems.length > 0 && (
+        <section className="mt-12 max-w-4xl">
+          <h2 className="text-xl font-bold text-slate-900 mb-4">Specifications</h2>
+          <div className="border border-slate-200 rounded-xl overflow-hidden">
+            {specItems.map((spec, i) => (
+              <div key={spec.label} className={`flex justify-between items-center px-4 py-3 text-sm ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                <span className="text-slate-600">{spec.label}</span>
+                <span className="font-medium text-slate-900">{spec.value}</span>
+              </div>
+            ))}
+            {product.brand && (
+              <div className={`flex justify-between items-center px-4 py-3 text-sm ${specItems.length % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                <span className="text-slate-600">Brand</span>
+                <span className="font-medium text-slate-900">{product.brand}</span>
+              </div>
+            )}
+            {product.category && (
+              <div className={`flex justify-between items-center px-4 py-3 text-sm ${(specItems.length + 1) % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                <span className="text-slate-600">Category</span>
+                <span className="font-medium text-slate-900">{product.category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</span>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
-      {/* Related Products */}
+      {/* ── Transition Pieces ── */}
+      <TransitionPieces product={product} />
+
+      {/* ── Complete Your Project — Compact service cards ── */}
+      <section className="mt-16">
+        <h2 className="text-xl font-bold text-slate-900 mb-2">Complete Your Project</h2>
+        <p className="text-sm text-slate-600 mb-5">Everything you need for a hassle-free flooring renovation</p>
+        <div className="grid sm:grid-cols-3 gap-3">
+          <Link href="/installation" className="group flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-amber-300 hover:shadow-md transition-all">
+            <span className="text-2xl">🔨</span>
+            <div>
+              <h3 className="text-sm font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Professional Installation</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Expert installers serving the GTA</p>
+            </div>
+          </Link>
+          <Link href="/carpet-removal" className="group flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-amber-300 hover:shadow-md transition-all">
+            <span className="text-2xl">🧹</span>
+            <div>
+              <h3 className="text-sm font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Carpet Removal</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Tear-out, haul-away & subfloor prep</p>
+            </div>
+          </Link>
+          <Link href="/products?category=baseboards" className="group flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-amber-300 hover:shadow-md transition-all">
+            <span className="text-2xl">📐</span>
+            <div>
+              <h3 className="text-sm font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Baseboards & Trim</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Matching finishing touches</p>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Related Products ── */}
       {relatedProducts.length > 0 && (
-        <div className="mt-20">
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">You Might Also Like</h2>
-          <p className="text-slate-600 mb-8">Smart recommendations based on style, price, and quality match</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <section className="mt-16">
+          <h2 className="text-xl font-bold text-slate-900 mb-2">You Might Also Like</h2>
+          <p className="text-sm text-slate-600 mb-6">Based on style, price, and quality match</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {relatedProducts.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
-        </div>
+        </section>
       )}
 
-      {/* Brand Authority */}
+      {/* ── Brand Authority ── */}
       {product.brand && (
-        <div className="mt-16 bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+        <section className="mt-16 bg-slate-50 rounded-2xl p-6 sm:p-8">
           {product.brand === 'Vidar' ? (
-            <><h2 className="text-2xl font-bold text-slate-800 mb-4">Why Markham Homeowners Choose Vidar Wide Plank</h2><p className="text-slate-600 leading-relaxed">Vidar&apos;s UV-cured oil finish and 3mm dry-sawn wear layer offer superior stability for Southern Ontario&apos;s humid summers and dry winters.</p></>
+            <><h2 className="text-xl font-bold text-slate-900 mb-3">Why Markham Homeowners Choose Vidar Wide Plank</h2><p className="text-sm text-slate-600 leading-relaxed">Vidar&apos;s UV-cured oil finish and 3mm dry-sawn wear layer offer superior stability for Southern Ontario&apos;s humid summers and dry winters.</p></>
           ) : product.brand === 'Twelve Oaks' ? (
-            <><h2 className="text-2xl font-bold text-slate-800 mb-4">The Twelve Oaks Durability Standard</h2><p className="text-slate-600 leading-relaxed">With FloorScore certification and commercial-grade wear layers, Twelve Oaks is the preferred choice for high-traffic GTA homes.</p></>
+            <><h2 className="text-xl font-bold text-slate-900 mb-3">The Twelve Oaks Durability Standard</h2><p className="text-sm text-slate-600 leading-relaxed">With FloorScore certification and commercial-grade wear layers, Twelve Oaks is the preferred choice for high-traffic GTA homes.</p></>
           ) : (
-            <><h2 className="text-2xl font-bold text-slate-800 mb-4">Premium {product.brand} Flooring</h2><p className="text-slate-600 leading-relaxed">Discover why {product.brand} is a trusted name in flooring, handpicked for quality and performance in the Greater Toronto Area.</p></>
+            <><h2 className="text-xl font-bold text-slate-900 mb-3">Premium {product.brand} Flooring</h2><p className="text-sm text-slate-600 leading-relaxed">Discover why {product.brand} is a trusted name in flooring, handpicked for quality and performance in the Greater Toronto Area.</p></>
           )}
-        </div>
+        </section>
       )}
 
+      {/* ── FAQ ── */}
       {product.category && <FAQSection category={product.category} />}
 
-      {/* Recently Viewed */}
+      {/* ── Recently Viewed ── */}
       <RecentlyViewed excludeProductId={product.id} limit={4} />
 
-      <StickyAddToCart visible={stickyCartVisible} price={currentPricing?.price_per_sqft} sqftPerBox={currentPricing?.sqft_per_box} sqftNeeded={sqftNeeded} setSqftNeeded={setSqftNeeded} calculation={calculation} variantLabel={selectedJsonVariant?.label || null} isOutOfStock={product.in_stock === false} isAddingToCart={isAddingToCart} onAddToCart={handleAddToCart} />
+      {/* ── Sticky Mobile Cart ── */}
+      <StickyAddToCart
+        visible={stickyCartVisible}
+        price={currentPricing?.price_per_sqft}
+        sqftPerBox={currentPricing?.sqft_per_box}
+        sqftNeeded={sqftNeeded}
+        setSqftNeeded={setSqftNeeded}
+        calculation={calculation}
+        variantLabel={selectedJsonVariant?.label || null}
+        isOutOfStock={product.in_stock === false}
+        isAddingToCart={isAddingToCart}
+        onAddToCart={handleAddToCart}
+      />
     </div>
   );
 }
