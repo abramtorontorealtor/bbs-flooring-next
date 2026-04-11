@@ -647,7 +647,18 @@ export default function ProductsClient() {
           {isLoading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4">
               {[...Array(12)].map((_, i) => (
-                <div key={i} className="bg-slate-100 rounded-xl aspect-[3/4] animate-pulse" />
+                <div key={i} className="bg-white rounded-xl overflow-hidden border border-slate-100 animate-pulse">
+                  <div className="aspect-[4/3] bg-slate-100" />
+                  <div className="p-3 space-y-2">
+                    <div className="h-2.5 bg-slate-100 rounded w-1/3" />
+                    <div className="h-3.5 bg-slate-100 rounded w-3/4" />
+                    <div className="h-5 bg-slate-100 rounded w-1/2" />
+                    <div className="flex gap-1.5 pt-1">
+                      <div className="h-5 bg-slate-100 rounded-full w-14" />
+                      <div className="h-5 bg-slate-100 rounded-full w-12" />
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           ) : filteredProducts.length === 0 ? (
