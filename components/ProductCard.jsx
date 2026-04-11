@@ -98,7 +98,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
         </Link>
 
         {/* Content — tight, price-first */}
-        <div className="p-3 flex-1 flex flex-col min-h-0">
+        <div className="p-3 pb-3.5 flex-1 flex flex-col min-h-0">
           {/* Brand + Category row */}
           <div className="flex items-center gap-1.5 mb-0.5">
             <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wide truncate">{product.brand || product.subcategory}</span>
@@ -111,7 +111,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
 
           {/* Product Name */}
           <Link href={createPageUrl(`ProductDetail?slug=${product.slug || product.sku || product.id}`)} onClick={handleClick}>
-            <h3 className="font-semibold text-slate-800 group-hover:text-amber-600 transition-colors line-clamp-2 text-sm leading-tight mb-1.5">
+            <h3 className="font-semibold text-slate-800 group-hover:text-amber-600 transition-colors line-clamp-2 text-sm leading-tight mb-1.5 min-h-[2.5rem]">
               {product.name}
             </h3>
           </Link>
@@ -165,7 +165,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
           </div>
 
           {/* Footer — showroom link + save (mobile) */}
-          <div className="mt-2 pt-2 border-t border-slate-50 flex items-center justify-between">
+          <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
             <Link
               href={createPageUrl('Contact')}
               className="inline-flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-800 font-medium transition-colors"

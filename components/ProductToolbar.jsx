@@ -42,7 +42,7 @@ export default function ProductToolbar({
         <div className="relative flex-1 min-w-0">
           <Input
             type="text"
-            placeholder="Search by name, brand, colour…"
+            placeholder="Search products…"
             value={filters.search}
             onChange={handleSearchChange}
             className="pl-8 pr-8 h-9 text-sm rounded-lg border-slate-200 focus:border-amber-400 focus:ring-amber-400/20"
