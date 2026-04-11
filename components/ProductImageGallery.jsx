@@ -32,7 +32,10 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
   const [touchStart, setTouchStart] = useState(null);
 
   // Track image loading state to show shimmer while loading
-  const [mainLoaded, setMainLoaded] = useState(false);
+  // Default to true to prevent white-flash on mobile hydration race condition:
+  // If onLoad fires before React hydrates, state update is lost → image stuck at opacity-0.
+  // The shimmer overlay handles the loading UX; the image itself should always be visible.
+  const [mainLoaded, setMainLoaded] = useState(true);
   // Track errored image URLs to swap in placeholder
   const [erroredUrls, setErroredUrls] = useState(new Set());
   const mainRef = useRef(null);
@@ -46,8 +49,17 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
     ? { ...rawCurrent, url: PLACEHOLDER }
     : rawCurrent;
 
-  // Reset loading state when active image changes
+  // Track whether initial mount has happened (to skip shimmer on first render)
+  const hasMounted = useRef(false);
+
+  // Reset loading state when active image changes (show shimmer for new image)
   useEffect(() => {
+    // Skip the first render — image is already visible via priority loading.
+    // Only show shimmer on subsequent image switches (thumbnail clicks, variant changes).
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
     setMainLoaded(false);
   }, [activeIdx]);
 
@@ -157,12 +169,14 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 animate-pulse z-[1]" />
               )}
 
-              {/* Normal image */}
+              {/* Normal image — always visible (shimmer overlay handles loading UX).
+                  Only hide for desktop zoom-hover effect. Never opacity-0 by default
+                  to avoid hydration race condition on mobile (M14/M15 in MISTAKES.md). */}
               <Image
                 src={current.url}
                 alt={current.alt}
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
-                  isZoomHover ? 'opacity-0' : mainLoaded ? 'opacity-100' : 'opacity-0'
+                  isZoomHover ? 'opacity-0' : 'opacity-100'
                 }`}
                 width={1200}
                 height={1200}
