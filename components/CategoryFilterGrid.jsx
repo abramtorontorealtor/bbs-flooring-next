@@ -388,7 +388,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
   // ── GA4: view_item_list ──
   useEffect(() => {
     if (!isLoading && filteredProducts.length > 0) {
-      const listName = category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const listName = category ? category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Brand Products';
       Analytics.trackViewItemList(filteredProducts, listName);
     }
   }, [filteredProducts, isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
