@@ -12,7 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Package, Truck, Store, CheckCircle, AlertCircle, Phone, Loader, Copy, Check, Clock, ShieldCheck, MessageSquare, Wrench } from 'lucide-react';
+import { ArrowLeft, Package, Truck, Store, CheckCircle, AlertCircle, Phone, Loader, Copy, Check, Clock, ShieldCheck, MessageSquare, Wrench, CreditCard } from 'lucide-react';
+import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -953,6 +954,26 @@ export default function CheckoutClient() {
                     💰 You&apos;re saving C${(totals.subtotal * 0.029).toFixed(2)} by choosing E-Transfer!
                   </div>
                 )}
+
+                {/* Financing nudge — alternative to paying full amount now */}
+                {totals.total >= 1000 && (() => {
+                  const monthly = getMonthlyPayment(Math.round(totals.total));
+                  if (!monthly) return null;
+                  return (
+                    <a
+                      href={FINANCEIT_LINKS.freeProgram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-lg hover:border-amber-300 transition-colors group"
+                    >
+                      <CreditCard className="w-5 h-5 text-amber-500 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold text-slate-700 group-hover:text-amber-700">Prefer monthly payments? From C${monthly}/mo</p>
+                        <p className="text-[10px] text-slate-500">Apply with Financeit · Instant decision · OAC</p>
+                      </div>
+                    </a>
+                  );
+                })()}
 
                 <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4">
                   <label className="flex items-start gap-3 cursor-pointer">

@@ -99,7 +99,7 @@ const STATS = [
   { value: '700+', label: 'Products In Stock' },
   { value: '13+', label: 'Years in Markham' },
   { value: '4.7★', label: 'Google Reviews' },
-  { value: '2,000+', label: 'Projects Completed' },
+  { value: '0%', label: 'Financing Available' },
 ];
 
 /* ─── Lazy-load the ONLY client components needed ─── */

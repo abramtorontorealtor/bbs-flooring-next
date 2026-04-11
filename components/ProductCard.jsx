@@ -164,15 +164,20 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
             )}
           </div>
 
-          {/* Footer — stock + save */}
+          {/* Footer — stock + financing + save */}
           <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between">
-            {!isOutOfStock ? (
-              <span className="text-[10px] text-green-700 font-medium flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />In Stock
-              </span>
-            ) : (
-              <span className="text-[10px] text-slate-400 font-medium">Out of Stock</span>
-            )}
+            <div className="flex items-center gap-2">
+              {!isOutOfStock ? (
+                <span className="text-[10px] text-green-700 font-medium flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />In Stock
+                </span>
+              ) : (
+                <span className="text-[10px] text-slate-400 font-medium">Out of Stock</span>
+              )}
+              {!isOutOfStock && displayPrice >= 4 && (
+                <span className="text-[10px] text-amber-600 font-medium">💳 Financing</span>
+              )}
+            </div>
             <div className="sm:hidden">
               <SaveButton product={product} user={user} isSaved={isSaved} />
             </div>

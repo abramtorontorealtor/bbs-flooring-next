@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X, CheckCircle } from 'lucide-react';
+import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X, CheckCircle, CreditCard } from 'lucide-react';
+import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { toast } from 'sonner';
 import TransitionPieces from '@/components/TransitionPieces';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -479,6 +480,40 @@ export default function CartClient() {
                 <span className="font-semibold">Total</span>
                 <span className="font-bold text-xl">C${totals.total.toFixed(2)}</span>
               </div>
+
+              {/* Financing callout — show when cart total qualifies ($1000+) */}
+              {totals.total >= 1000 && (() => {
+                const monthly = getMonthlyPayment(Math.round(totals.total));
+                if (!monthly) return null;
+                return (
+                  <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-4 text-white">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <CreditCard className="w-4 h-4 text-amber-400" />
+                      <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">Financing Available</span>
+                    </div>
+                    <p className="text-lg font-bold mb-0.5">
+                      As low as <span className="text-amber-400">C${monthly}/mo</span>
+                    </p>
+                    <p className="text-[11px] text-slate-400 mb-3">On approved credit · No prepayment penalty</p>
+                    <div className="flex gap-2">
+                      <a
+                        href={FINANCEIT_LINKS.freeProgram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-xs text-center py-2 rounded-lg transition-colors"
+                      >
+                        Apply Now
+                      </a>
+                      <Link
+                        href="/financing"
+                        className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs text-center py-2 rounded-lg transition-colors border border-white/20"
+                      >
+                        Learn More
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })()}
 
               <Link href="/checkout" className="block">
                 <Button

@@ -349,13 +349,21 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
   const visibleSpecs = showAllSpecs ? specItems : specItems.slice(0, 4);
 
-  /* ── Financing teaser ── */
+  /* ── Financing teaser (static, under price) ── */
   const financingTeaser = useMemo(() => {
     if (isOutOfStock || !currentPricing.price_per_sqft) return null;
     const sampleTotal = Math.round((currentPricing.price_per_sqft || 0) * 500 * 1.13);
     const monthly = getMonthlyPayment(sampleTotal);
     return monthly ? `From ~$${monthly}/mo for 500 sqft` : null;
   }, [currentPricing.price_per_sqft, isOutOfStock]);
+
+  /* ── Financing — dynamic based on actual calculation ── */
+  const dynamicFinancing = useMemo(() => {
+    if (!calculation || calculation.lineTotal < 1000) return null;
+    const withTax = Math.round(calculation.lineTotal * 1.13);
+    const monthly = getMonthlyPayment(withTax);
+    return monthly ? { monthly, total: withTax } : null;
+  }, [calculation]);
 
   /* ── Product description ── */
   const description = product?.product_description || product?.description || '';
@@ -688,6 +696,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                       <span className="text-sm font-semibold text-slate-800">Total</span>
                       <span className="text-xl font-bold text-slate-900">C${calculation.lineTotal.toFixed(2)}</span>
                     </div>
+                    {/* Dynamic financing — only when total qualifies */}
+                    {dynamicFinancing && (
+                      <Link href="/financing" className="flex items-center justify-between pt-1.5 border-t border-dashed border-slate-200 group">
+                        <span className="text-xs text-slate-500 group-hover:text-amber-600 transition-colors">💳 Or ~<strong className="text-slate-700 group-hover:text-amber-700">C${dynamicFinancing.monthly}/mo</strong> with financing</span>
+                        <span className="text-[10px] text-amber-600 underline">Details</span>
+                      </Link>
+                    )}
                   </div>
                 )}
 
@@ -724,6 +739,14 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                   <Button variant="outline" className="w-full h-10 text-sm font-semibold rounded-xl border-amber-300 text-amber-700 hover:bg-amber-50">
                     Book Free Measurement
                   </Button>
+                </Link>
+                {/* Financing callout — especially relevant for full project quotes */}
+                <Link href="/financing" className="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 hover:border-amber-300 transition-colors group">
+                  <span className="text-lg">💳</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-slate-700 group-hover:text-amber-700">Finance your full project</p>
+                    <p className="text-[10px] text-slate-500">From $68/mo · Instant approval · No prepayment penalty</p>
+                  </div>
                 </Link>
               </div>
             )}

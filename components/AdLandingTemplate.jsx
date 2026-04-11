@@ -8,6 +8,7 @@ import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Phone, MapPin, Clock, Star, Shield, Truck, ChevronDown } from 'lucide-react';
 import { Analytics } from './analytics';
+import FinancingBanner from '@/components/FinancingBanner';
 
 const PHONE = '(647) 428-1111';
 const ADDRESS = '6061 Highway 7, Unit B, Markham, ON';
@@ -137,6 +138,9 @@ export default function AdLandingTemplate({
             />
           </div>
         )}
+
+        {/* Financing Banner */}
+        <FinancingBanner monthlyFrom={68} />
 
         {/* FAQ Accordion */}
         {faqItems.length > 0 && (
