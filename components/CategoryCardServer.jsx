@@ -24,25 +24,25 @@ export default function CategoryCardServer({ category, image, imageAlt, title, d
 
   return (
     <Link href={href}>
-      <div className={`group relative overflow-hidden rounded-3xl ${isLarge ? 'h-[400px] md:h-[500px]' : 'h-[320px] md:h-[400px]'}`}>
+      <div className={`group relative overflow-hidden rounded-2xl md:rounded-3xl ${isLarge ? 'h-[220px] md:h-[500px]' : 'h-[180px] md:h-[400px]'}`}>
         <Image
           src={image}
           alt={imageAlt || title}
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           fill
-          sizes={isLarge ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 50vw, 25vw'}
+          sizes={isLarge ? '(max-width: 768px) 50vw, 50vw' : '(max-width: 768px) 50vw, 25vw'}
           quality={60}
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-          <div className={`bg-amber-500 text-white rounded-lg inline-block mb-3 font-semibold ${isLarge ? 'px-5 py-2.5 text-base' : 'px-4 py-2 text-sm'}`}>
+        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
+          <div className={`bg-amber-500 text-white rounded-lg inline-block mb-1.5 md:mb-3 font-semibold ${isLarge ? 'px-3 py-1.5 text-sm md:px-5 md:py-2.5 md:text-base' : 'px-2.5 py-1 text-xs md:px-4 md:py-2 md:text-sm'}`}>
             {title}
           </div>
-          <p className={`text-white/80 mb-3 max-w-xs ${isLarge ? 'text-base' : 'text-sm'}`}>{description}</p>
-          <div className={`flex items-center gap-2 text-white font-medium group-hover:text-amber-400 transition-colors ${isLarge ? 'text-base' : 'text-sm'}`}>
+          <p className={`text-white/80 mb-1.5 md:mb-3 max-w-xs hidden md:block ${isLarge ? 'text-base' : 'text-sm'}`}>{description}</p>
+          <div className={`flex items-center gap-2 text-white font-medium group-hover:text-amber-400 transition-colors ${isLarge ? 'text-sm md:text-base' : 'text-xs md:text-sm'}`}>
             <span>Shop Now</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+            <ArrowRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-2 transition-transform" />
           </div>
         </div>
       </div>

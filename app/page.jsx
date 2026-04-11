@@ -123,8 +123,8 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* ═══ HERO — Full-viewport, immersive, vertically centered ═══ */}
-      <section className="relative min-h-[600px] h-[100svh] max-h-[1000px] flex items-center overflow-hidden">
+      {/* ═══ HERO — Full-viewport, immersive, mobile-first ═══ */}
+      <section className="relative min-h-[520px] h-[85svh] md:h-[100svh] max-h-[1000px] flex items-end md:items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
@@ -135,36 +135,41 @@ export default function HomePage() {
             priority
             fetchPriority="high"
             sizes="100vw"
-            quality={65}
+            quality={75}
+          />
+          {/* Mobile: heavier bottom gradient so text is always readable. Desktop: side gradient. */}
+          <div
+            className="absolute inset-0 md:hidden"
+            style={{ background: 'linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.8) 35%, rgba(15,23,42,0.3) 65%, transparent 100%)' }}
           />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 hidden md:block"
             style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.7) 40%, rgba(15,23,42,0.3) 70%, transparent 100%)' }}
           />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full py-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-8 pt-24 md:py-20">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-4 py-2 mb-8">
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-5 md:mb-8">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-              <span className="text-amber-400 text-sm font-medium">Serving Markham, Toronto &amp; Durham</span>
+              <span className="text-amber-400 text-xs md:text-sm font-medium">Serving Markham, Toronto &amp; Durham</span>
             </div>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+            <h1 className="text-[2.5rem] leading-[1.08] sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white md:leading-[1.05] mb-5 md:mb-8 tracking-tight">
               Premium Flooring at{' '}
               <span className="text-amber-500">Wholesale Prices</span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-300 mb-10 leading-relaxed max-w-lg">
+            <p className="text-base md:text-2xl text-slate-300 mb-7 md:mb-10 leading-relaxed max-w-lg">
               Expert installation, huge selection, and 100% satisfaction guaranteed.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link
                 href="/free-measurement"
-                className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 text-lg rounded-full w-full sm:w-auto font-bold shadow-lg shadow-amber-600/30 hover:shadow-amber-600/40 hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-7 py-3.5 md:px-8 md:py-4 text-base md:text-lg rounded-full w-full sm:w-auto font-bold shadow-lg shadow-amber-600/30 hover:shadow-amber-600/40 hover:-translate-y-0.5 transition-all"
               >
                 Get Free In-Home Quote <ArrowIcon />
               </Link>
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-8 py-4 text-lg rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center justify-center border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-7 py-3.5 md:px-8 md:py-4 text-base md:text-lg rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all"
               >
                 Browse All Flooring <ArrowIcon />
               </Link>
@@ -173,14 +178,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ STATS BAR — Concrete numbers, not generic badges ═══ */}
+      {/* ═══ STATS BAR — Compact on mobile, prominent on desktop ═══ */}
       <section className="bg-slate-900 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 py-5 md:py-10">
+          <div className="grid grid-cols-4 md:gap-8 gap-2">
             {STATS.map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-extrabold text-amber-500 mb-1">{stat.value}</div>
-                <div className="text-sm text-slate-400 font-medium uppercase tracking-wider">{stat.label}</div>
+                <div className="text-xl md:text-4xl font-extrabold text-amber-500 mb-0.5 md:mb-1">{stat.value}</div>
+                <div className="text-[10px] md:text-sm text-slate-400 font-medium uppercase tracking-wider leading-tight">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -188,20 +193,20 @@ export default function HomePage() {
       </section>
 
       {/* ═══ CATEGORIES — Featured 2 large + 4 standard grid ═══ */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 bg-white">
+      <section className="py-12 md:py-28 px-4 sm:px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14 md:mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Shop by Category</h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Explore our wide selection of premium flooring options</p>
+          <div className="text-center mb-8 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-2 md:mb-4">Shop by Category</h2>
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">Explore our wide selection of premium flooring options</p>
           </div>
           {/* Top row: 2 featured categories — large hero cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-6 mb-3 md:mb-6">
             {featuredCategories.map((cat) => (
               <CategoryCardServer key={cat.category} {...cat} size="large" />
             ))}
           </div>
           {/* Bottom row: 4 standard categories */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
             {standardCategories.map((cat) => (
               <CategoryCardServer key={cat.category} {...cat} />
             ))}
@@ -209,35 +214,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SERVICES — With lifestyle image on the side ═══ */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 bg-stone-50">
+      {/* ═══ SERVICES — Compact 2x2 on mobile, side image on desktop ═══ */}
+      <section className="py-12 md:py-28 px-4 sm:px-6 bg-stone-50">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-start">
-            {/* Left: Image + headline */}
-            <div className="lg:col-span-2">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Full-Service Flooring Experts</h2>
-              <p className="text-lg text-slate-600 mb-8">We don&apos;t just sell floors — we install, refinish, and renovate. One team, start to finish.</p>
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl hidden lg:block">
+          <div className="text-center mb-8 md:mb-0 md:text-left">
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-2 md:mb-4">Full-Service Flooring Experts</h2>
+            <p className="text-base md:text-lg text-slate-600 mb-0 md:mb-8">We don&apos;t just sell floors — we install, refinish, and renovate. One team, start to finish.</p>
+          </div>
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-16 items-start">
+            {/* Left: Image (desktop only) */}
+            <div className="lg:col-span-2 hidden lg:block">
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/gallery/flooring-project-1.webp"
                   alt="BBS Flooring professional hardwood installation in Markham home"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  sizes="40vw"
                   className="object-cover"
                   loading="lazy"
                   quality={75}
                 />
               </div>
             </div>
-            {/* Right: Service cards */}
-            <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {/* Right: Service cards — 2x2 grid on mobile */}
+            <div className="lg:col-span-3 grid grid-cols-2 gap-3 md:gap-5">
               {SERVICES.map((service) => (
-                <Link key={service.title} href={service.href} className="block bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl border border-slate-200 hover:border-amber-300 transition-all group h-full">
-                  <div className="text-4xl mb-5">{service.icon}</div>
-                  <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-amber-600 transition-colors">{service.title}</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-4">{service.description}</p>
-                  <span className="inline-flex items-center gap-1 text-amber-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                    Learn more <ArrowIcon className="w-4 h-4" />
+                <Link key={service.title} href={service.href} className="block bg-white rounded-xl md:rounded-2xl p-4 md:p-7 shadow-sm hover:shadow-xl border border-slate-200 hover:border-amber-300 transition-all group h-full">
+                  <div className="text-2xl md:text-4xl mb-2 md:mb-5">{service.icon}</div>
+                  <h3 className="text-sm md:text-xl font-bold text-slate-800 mb-1 md:mb-3 group-hover:text-amber-600 transition-colors leading-tight">{service.title}</h3>
+                  <p className="text-slate-600 text-xs md:text-sm leading-relaxed mb-2 md:mb-4 hidden sm:block">{service.description}</p>
+                  <span className="inline-flex items-center gap-1 text-amber-600 font-semibold text-xs md:text-sm group-hover:gap-2 transition-all">
+                    Learn more <ArrowIcon className="w-3 h-3 md:w-4 md:h-4" />
                   </span>
                 </Link>
               ))}
@@ -252,14 +259,14 @@ export default function HomePage() {
       </Suspense>
 
       {/* ═══ WHY CHOOSE US — Stats-driven, not adjective-driven ═══ */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 bg-slate-900">
+      <section className="py-14 md:py-28 px-4 sm:px-6 bg-slate-900">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-4 py-2 mb-8">
                 <span className="text-amber-400 text-sm font-medium">Why Homeowners Trust Us</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 md:mb-8">
                 Why Choose <span className="text-amber-500">BBS Flooring</span>?
               </h2>
               <ul className="space-y-5">
@@ -286,7 +293,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="relative">
-              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative aspect-[3/4] md:aspect-[4/5] rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
                 <Image
                   src="https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/gallery/flooring-project-3.webp"
                   alt="Real BBS Flooring hardwood installation project in Markham home"
@@ -298,7 +305,7 @@ export default function HomePage() {
                 />
               </div>
               {/* Floating badge */}
-              <div className="absolute -bottom-6 -left-4 md:left-8 bg-white rounded-2xl shadow-xl px-6 py-4 flex items-center gap-4">
+              <div className="absolute -bottom-4 left-2 md:-bottom-6 md:left-8 bg-white rounded-xl md:rounded-2xl shadow-xl px-4 py-3 md:px-6 md:py-4 flex items-center gap-3 md:gap-4">
                 <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
                   <span className="text-amber-600 text-xl font-bold">★</span>
                 </div>
@@ -348,36 +355,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ RECENT PROJECTS — Asymmetric masonry grid ═══ */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 bg-stone-50">
+      {/* ═══ RECENT PROJECTS — Clean grid, mobile-optimized ═══ */}
+      <section className="py-12 md:py-28 px-4 sm:px-6 bg-stone-50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14 md:mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Our Latest Projects</h2>
-            <p className="text-lg text-slate-600">See the quality craftsmanship in every installation</p>
+          <div className="text-center mb-8 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-2 md:mb-4">Our Latest Projects</h2>
+            <p className="text-base md:text-lg text-slate-600">See the quality craftsmanship in every installation</p>
           </div>
-          {/* Masonry-style grid: 1 large + 2 stacked left, 2 stacked + 1 large right */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 mb-10">
-            {/* Large left */}
-            <div className="col-span-2 md:col-span-1 md:row-span-2 rounded-2xl overflow-hidden group">
-              <Link href="/gallery/heritage-home-renovation-unionville" className="block w-full h-full relative aspect-square md:aspect-auto md:h-full min-h-[300px]">
+          {/* Mobile: 2-col grid. Desktop: masonry 3-col */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-5 mb-8 md:mb-10">
+            {/* Large spanning left — desktop only span 2 rows */}
+            <div className="rounded-xl md:rounded-2xl overflow-hidden group md:row-span-2">
+              <Link href="/gallery/heritage-home-renovation-unionville" className="block w-full h-full relative aspect-square md:aspect-auto md:h-full md:min-h-[500px]">
                 <Image
                   src={galleryImages[0]?.url || ''}
                   alt={galleryAlts[0]}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                  quality={75}
-                />
-              </Link>
-            </div>
-            {/* Top middle */}
-            <div className="rounded-2xl overflow-hidden group">
-              <Link href="/gallery" className="block w-full h-full relative aspect-square">
-                <Image
-                  src={galleryImages[1]?.url || ''}
-                  alt={galleryAlts[1]}
-                  fill
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
@@ -385,48 +378,21 @@ export default function HomePage() {
                 />
               </Link>
             </div>
-            {/* Top right */}
-            <div className="rounded-2xl overflow-hidden group">
-              <Link href="/gallery" className="block w-full h-full relative aspect-square">
-                <Image
-                  src={galleryImages[2]?.url || ''}
-                  alt={galleryAlts[2]}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                  quality={75}
-                />
-              </Link>
-            </div>
-            {/* Bottom middle */}
-            <div className="rounded-2xl overflow-hidden group">
-              <Link href="/gallery" className="block w-full h-full relative aspect-square">
-                <Image
-                  src={galleryImages[3]?.url || ''}
-                  alt={galleryAlts[3]}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                  quality={75}
-                />
-              </Link>
-            </div>
-            {/* Bottom right — large */}
-            <div className="col-span-2 md:col-span-1 md:row-span-1 rounded-2xl overflow-hidden group">
-              <Link href="/gallery" className="block w-full h-full relative aspect-video md:aspect-square">
-                <Image
-                  src={galleryImages[4]?.url || ''}
-                  alt={galleryAlts[4]}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                  quality={75}
-                />
-              </Link>
-            </div>
+            {galleryImages.slice(1, 5).map((img, idx) => (
+              <div key={idx} className="rounded-xl md:rounded-2xl overflow-hidden group">
+                <Link href="/gallery" className="block w-full h-full relative aspect-square">
+                  <Image
+                    src={img?.url || ''}
+                    alt={galleryAlts[idx + 1] || `BBS Flooring project ${idx + 2}`}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                    quality={75}
+                  />
+                </Link>
+              </div>
+            ))}
           </div>
           <div className="text-center">
             <Link href="/gallery" className="inline-flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white rounded-full h-12 px-8 text-base font-semibold transition-colors hover:-translate-y-0.5">
@@ -442,19 +408,19 @@ export default function HomePage() {
       </Suspense>
 
       {/* ═══ FINAL CTA — Warm amber gradient ═══ */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700">
+      <section className="py-14 md:py-28 px-4 sm:px-6 bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-6xl font-bold text-white mb-4 md:mb-6">
             Ready to Transform Your Floors?
           </h2>
-          <p className="text-xl text-amber-100 mb-10 max-w-2xl mx-auto">
+          <p className="text-base md:text-xl text-amber-100 mb-7 md:mb-10 max-w-2xl mx-auto">
             Get started today with a free measurement and quote. No obligation, no pressure — just honest advice from local flooring experts.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:6474281111" className="inline-flex items-center justify-center bg-white text-amber-700 hover:bg-slate-50 px-10 py-5 text-lg rounded-full font-bold shadow-lg transition-all hover:-translate-y-0.5">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+            <a href="tel:6474281111" className="inline-flex items-center justify-center bg-white text-amber-700 hover:bg-slate-50 px-8 py-4 md:px-10 md:py-5 text-base md:text-lg rounded-full font-bold shadow-lg transition-all hover:-translate-y-0.5">
               <PhoneIcon className="mr-2 w-5 h-5" /> (647) 428-1111
             </a>
-            <Link href="/free-measurement" className="inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-amber-700 px-10 py-5 text-lg rounded-full font-bold transition-all hover:-translate-y-0.5">
+            <Link href="/free-measurement" className="inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-amber-700 px-8 py-4 md:px-10 md:py-5 text-base md:text-lg rounded-full font-bold transition-all hover:-translate-y-0.5">
               Book Free Measurement <ArrowIcon />
             </Link>
           </div>
