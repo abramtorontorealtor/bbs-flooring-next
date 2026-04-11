@@ -759,20 +759,27 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         <section className="mt-16 max-w-4xl">
           <h2 className="text-xl font-bold text-slate-900 mb-4">About This Product</h2>
           {description && (
-            <div className="prose prose-slate prose-sm max-w-none">
-              <p className={`text-slate-600 leading-relaxed ${!descExpanded && shouldTruncateDesc ? 'line-clamp-4' : ''}`}>
-                {description}
-              </p>
+            <div className="relative">
+              <div
+                className={`prose prose-slate prose-sm max-w-none [&_p]:text-slate-600 [&_p]:leading-relaxed [&_ul]:text-slate-600 [&_li]:text-slate-600 [&_a]:text-amber-600 [&_a:hover]:text-amber-700 ${!descExpanded && shouldTruncateDesc ? 'max-h-[6.5rem] overflow-hidden' : ''}`}
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
+              {shouldTruncateDesc && !descExpanded && (
+                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent" />
+              )}
               {shouldTruncateDesc && (
                 <button onClick={() => setDescExpanded(!descExpanded)}
-                  className="text-amber-600 hover:text-amber-700 text-sm font-medium mt-1 transition-colors">
+                  className="text-amber-600 hover:text-amber-700 text-sm font-medium mt-2 transition-colors relative z-10">
                   {descExpanded ? 'Show less' : 'Read more'}
                 </button>
               )}
             </div>
           )}
           {productDetails && (
-            <div className="mt-4 text-sm text-slate-600 leading-relaxed whitespace-pre-line">{productDetails}</div>
+            <div
+              className="mt-4 prose prose-slate prose-sm max-w-none [&_p]:text-slate-600 [&_ul]:text-slate-600 [&_li]:text-slate-600 [&_li]:leading-relaxed [&_b]:text-slate-800 [&_strong]:text-slate-800 [&_a]:text-amber-600"
+              dangerouslySetInnerHTML={{ __html: productDetails }}
+            />
           )}
         </section>
       )}
