@@ -30,9 +30,9 @@ export default function StickyAddToCart({
         </div>
       )}
 
-      <div className="px-3 py-3 flex items-center gap-2">
+      <div className="px-4 py-3 safe-bottom flex items-center gap-3">
         {/* Price badge */}
-        <div className="flex-shrink-0 text-center">
+        <div className="flex-shrink-0 text-center min-w-[52px]">
           {price ? (
             <>
               <div className="text-base font-bold text-slate-900 leading-none">C${price.toFixed(2)}</div>
@@ -58,12 +58,12 @@ export default function StickyAddToCart({
                 onChange={(e) => setSqftNeeded(e.target.value)}
                 autoFocus={false}
                 onClick={() => inputRef.current?.focus()}
-                className="w-full h-10 px-3 text-sm border border-slate-300 rounded-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-300"
+                className="w-full h-11 px-3 text-base border border-slate-300 rounded-lg focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-300"
                 min="1"
               />
             </div>
             <Button
-              className="bg-amber-500 hover:bg-amber-600 text-white h-10 px-4 text-sm font-semibold flex-shrink-0"
+              className="bg-amber-500 hover:bg-amber-600 text-white h-11 px-5 text-sm font-bold flex-shrink-0 min-w-[72px]"
               onClick={onAddToCart}
               disabled={isAddingToCart || !price || !sqftNeeded}
             >

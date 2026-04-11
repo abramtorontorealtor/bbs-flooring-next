@@ -163,7 +163,7 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
           <div className="flex-1 relative">
             <div
               ref={mainRef}
-              className={`aspect-square rounded-2xl overflow-hidden bg-slate-50 shadow-lg relative group ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'}`}
+              className={`aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-slate-50 shadow-lg relative group ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'}`}
               onMouseEnter={() => { if (!isTouchDevice) setIsZoomHover(true); }}
               onMouseLeave={() => { if (!isTouchDevice) setIsZoomHover(false); }}
               onMouseMove={isTouchDevice ? undefined : handleMouseMove}

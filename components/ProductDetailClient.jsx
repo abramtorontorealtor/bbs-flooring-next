@@ -394,7 +394,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const productSchema = generateProductSchema(product);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-16">
+    <div className="max-w-7xl mx-auto px-4 pb-24 lg:pb-16">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
 
       {/* ── Breadcrumbs + Back ── */}
@@ -673,7 +673,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
                 {/* Live calculation result */}
                 {calculation && (
-                  <div className="bg-white rounded-xl border border-slate-200 p-3 space-y-1.5">
+                  <div className="bg-white rounded-xl border border-slate-200 p-3 space-y-1.5 animate-fade-in-up">
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-600">{calculation.boxesRequired} boxes × {calculation.sqftPerBox} sqft</span>
                       <span className="text-slate-600">{calculation.actualSqft} sqft</span>
@@ -756,7 +756,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
       {/* ── Description + Details ── */}
       {(description || productDetails) && (
-        <section className="mt-16 max-w-4xl">
+        <section className="mt-16 max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900 mb-4">About This Product</h2>
           {description && (
             <div className="relative">
@@ -786,7 +786,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
       {/* ── Full Specifications Table ── */}
       {specItems.length > 0 && (
-        <section className="mt-12 max-w-4xl">
+        <section className="mt-12 max-w-3xl">
           <h2 className="text-xl font-bold text-slate-900 mb-4">Specifications</h2>
           <div className="border border-slate-200 rounded-xl overflow-hidden">
             {specItems.map((spec, i) => (
@@ -857,10 +857,12 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       {/* ── Brand Authority ── */}
       {product.brand && (
         <section className="mt-16 bg-slate-50 rounded-2xl p-6 sm:p-8">
-          {product.brand === 'Vidar' ? (
-            <><h2 className="text-xl font-bold text-slate-900 mb-3">Why Markham Homeowners Choose Vidar Wide Plank</h2><p className="text-sm text-slate-600 leading-relaxed">Vidar&apos;s UV-cured oil finish and 3mm dry-sawn wear layer offer superior stability for Southern Ontario&apos;s humid summers and dry winters.</p></>
-          ) : product.brand === 'Twelve Oaks' ? (
-            <><h2 className="text-xl font-bold text-slate-900 mb-3">The Twelve Oaks Durability Standard</h2><p className="text-sm text-slate-600 leading-relaxed">With FloorScore certification and commercial-grade wear layers, Twelve Oaks is the preferred choice for high-traffic GTA homes.</p></>
+          {(product.brand.toLowerCase().includes('vidar')) ? (
+            <><h2 className="text-xl font-bold text-slate-900 mb-3">Why Markham Homeowners Choose Vidar Wide Plank</h2><p className="text-sm text-slate-600 leading-relaxed">Vidar&apos;s UV-cured oil finish and 3mm dry-sawn wear layer offer superior stability for Southern Ontario&apos;s humid summers and dry winters. As an authorized Vidar dealer, BBS Flooring carries the full collection with expert installation available across the GTA.</p></>
+          ) : (product.brand.toLowerCase().includes('twelve oaks')) ? (
+            <><h2 className="text-xl font-bold text-slate-900 mb-3">The Twelve Oaks Durability Standard</h2><p className="text-sm text-slate-600 leading-relaxed">With FloorScore certification and commercial-grade wear layers, Twelve Oaks is the preferred choice for high-traffic GTA homes. Visit our Markham showroom to see the full Twelve Oaks collection.</p></>
+          ) : (product.brand.toLowerCase().includes('northernest')) ? (
+            <><h2 className="text-xl font-bold text-slate-900 mb-3">Northernest — Canadian-Made Quality</h2><p className="text-sm text-slate-600 leading-relaxed">Proudly Canadian-made, Northernest flooring combines European design with domestic manufacturing excellence. Built for Canadian climates and available for fast pickup from our Markham location.</p></>
           ) : (
             <><h2 className="text-xl font-bold text-slate-900 mb-3">Premium {product.brand} Flooring</h2><p className="text-sm text-slate-600 leading-relaxed">Discover why {product.brand} is a trusted name in flooring, handpicked for quality and performance in the Greater Toronto Area.</p></>
           )}
