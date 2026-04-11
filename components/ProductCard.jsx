@@ -174,7 +174,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
               ) : (
                 <span className="text-[10px] text-slate-400 font-medium">Out of Stock</span>
               )}
-              {!isOutOfStock && displayPrice >= 4 && (
+              {!isOutOfStock && (displayPrice >= 4 || (product.has_variants && product.starting_price >= 4)) && (
                 <span className="text-[10px] text-amber-600 font-medium">💳 Financing</span>
               )}
             </div>
