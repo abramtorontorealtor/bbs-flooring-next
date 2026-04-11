@@ -1,35 +1,33 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
-/* MapPin inline SVG — avoids importing entire lucide-react */
+import SaveButton from './SaveButton';
+import { useAuth } from '@/lib/auth-context';
+
+/* Inline SVGs — avoids importing entire lucide-react */
 function MapPinIcon({ className }) {
   return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>;
 }
-import SaveButton from './SaveButton';
-import { useAuth } from '@/lib/auth-context';
 
 function getProductBadges(product) {
   const badges = [];
   const name = (product.name || '').toLowerCase();
-  const brand = (product.brand || '').toLowerCase();
   const category = (product.category || '').toLowerCase();
   const isCanadian = !!product.is_canadian;
   if (isCanadian) badges.push({ key: 'canada', label: '🇨🇦 Canadian', className: 'bg-red-600 text-white' });
-  // Waterproof badge only for non-vinyl products (vinyl/LVP/SPC are inherently waterproof)
   const isVinylType = category.includes('vinyl') || name.includes('lvp') || name.includes('spc');
   const isWaterproof = product.is_waterproof || name.includes('waterproof');
   if (isWaterproof && !isVinylType) badges.push({ key: 'waterproof', label: '💧 Waterproof', className: 'bg-blue-600 text-white' });
-  // Clearance supersedes On Sale — don't show both
   const hasDiscount = product.sale_price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
   if (product.is_clearance) {
     badges.push({ key: 'clearance', label: 'Clearance', className: 'bg-amber-500 text-white' });
   } else if (hasDiscount) {
-    badges.push({ key: 'deal', label: 'On Sale', className: 'bg-orange-500 text-white' });
+    const pct = Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100);
+    badges.push({ key: 'deal', label: pct > 0 ? `-${pct}%` : 'Sale', className: 'bg-red-500 text-white' });
   }
-  // Max 2 badges to keep cards clean
   return badges.slice(0, 2);
 }
 
@@ -52,102 +50,140 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
     return url.split('?')[0];
   };
 
+  const hasSale = product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
+  const displayPrice = hasSale ? product.sale_price_per_sqft : product.price_per_sqft;
+
   return (
-    <div ref={ref} className="h-full transform hover:-translate-y-1 transition-transform duration-300">
-      <div className={`group h-full flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 ${isOutOfStock ? 'opacity-75' : ''}`}>
+    <div ref={ref} className="h-full">
+      <div className={`group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 border border-slate-100 ${isOutOfStock ? 'opacity-70' : ''}`}>
+        {/* Image — tight ratio, badges overlaid */}
         <Link href={createPageUrl(`ProductDetail?slug=${product.slug || product.sku || product.id}`)} onClick={handleClick} className="block">
-          <div className="relative aspect-square overflow-hidden bg-slate-50">
-            <Image src={getImageUrl(product.image_url)} alt={product.image_alt_text || product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width={400} height={400} sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" quality={75} />
+          <div className="relative aspect-[4/3] overflow-hidden bg-slate-50">
+            <Image
+              src={getImageUrl(product.image_url)}
+              alt={product.image_alt_text || product.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              width={400}
+              height={300}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              quality={75}
+            />
+
+            {/* Badges — top left */}
             {autoBadges.length > 0 && (
-              <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                {autoBadges.map(badge => <span key={badge.key} className={`text-xs font-semibold px-2 py-1 rounded-full shadow-sm ${badge.className}`}>{badge.label}</span>)}
+              <div className="absolute top-2 left-2 flex flex-col gap-1">
+                {autoBadges.map(badge => (
+                  <span key={badge.key} className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${badge.className}`}>
+                    {badge.label}
+                  </span>
+                ))}
               </div>
             )}
-            <div className="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
-              {isOutOfStock && <span className="text-xs font-semibold px-2 py-1 rounded-full bg-slate-700 text-white">Out of Stock</span>}
-              {product.is_new_arrival && !isOutOfStock && <span className="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-500 text-white">New Arrival</span>}
+
+            {/* Status — top right */}
+            <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
+              {isOutOfStock && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-700 text-white">Sold Out</span>}
+              {product.is_new_arrival && !isOutOfStock && <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500 text-white">New</span>}
             </div>
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center pointer-events-none">
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-slate-800 px-4 py-2 rounded-full text-sm font-medium shadow-lg">View Details</span>
+
+            {/* Save button — overlaid bottom right of image */}
+            <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 sm:block hidden">
+              <SaveButton product={product} user={user} isSaved={isSaved} className="bg-white/90 backdrop-blur-sm rounded-full p-1.5 shadow-md hover:bg-white" />
             </div>
+
+            {/* Quick view overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
           </div>
         </Link>
-        <div className="p-4 flex-1 flex flex-col">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs text-slate-500 uppercase tracking-wider">{product.brand || product.subcategory}</span>
-            {product.category && <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">{product.category.replace(/_/g, ' ')}</span>}
+
+        {/* Content — tight, price-first */}
+        <div className="p-3 flex-1 flex flex-col min-h-0">
+          {/* Brand + Category row */}
+          <div className="flex items-center gap-1.5 mb-0.5">
+            <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wide truncate">{product.brand || product.subcategory}</span>
+            {isFastPickup && (
+              <span className="flex items-center gap-0.5 text-[10px] text-green-700 font-semibold whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />Fast Pickup
+              </span>
+            )}
           </div>
+
+          {/* Product Name */}
           <Link href={createPageUrl(`ProductDetail?slug=${product.slug || product.sku || product.id}`)} onClick={handleClick}>
-            <h3 className="font-semibold text-slate-800 group-hover:text-amber-600 transition-colors line-clamp-3 min-h-[48px] text-sm">{product.name}</h3>
+            <h3 className="font-semibold text-slate-800 group-hover:text-amber-600 transition-colors line-clamp-2 text-sm leading-tight mb-1.5">
+              {product.name}
+            </h3>
           </Link>
-          <div className="mt-2">
+
+          {/* Price — elevated, immediately after name */}
+          <div className="mb-1.5">
             {product.has_variants && product.starting_price ? (
-              <div>
-                <div className="flex items-baseline gap-0.5">
-                  <span className="text-xs text-slate-500 font-medium">From</span>
-                  <span className="text-lg font-bold text-slate-900 ml-1">C${product.starting_price.toFixed(2)}</span>
-                  <span className="text-xs text-slate-500">/sqft</span>
-                </div>
+              <div className="flex items-baseline gap-1 flex-wrap">
+                <span className="text-[11px] text-slate-500">From</span>
+                <span className="text-lg font-bold text-slate-900">C${product.starting_price.toFixed(2)}</span>
+                <span className="text-[11px] text-slate-400">/sqft</span>
                 {product.variant_count > 1 && (
-                  <span className="text-[11px] text-amber-700 font-medium">{product.variant_count} options available</span>
+                  <span className="text-[10px] text-amber-700 font-medium ml-auto">{product.variant_count} options</span>
                 )}
               </div>
+            ) : hasSale ? (
+              <div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-lg font-bold text-red-600">C${parseFloat(product.sale_price_per_sqft).toFixed(2)}</span>
+                  <span className="text-xs text-slate-400 line-through">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                  <span className="text-[11px] text-slate-400">/sqft</span>
+                </div>
+              </div>
+            ) : product.price_per_sqft ? (
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-lg font-bold text-slate-900">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
+                <span className="text-[11px] text-slate-400">/sqft</span>
+              </div>
             ) : (
-              <>
-                {(() => {
-                  const hasSale = product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
-                  if (hasSale) {
-                    const savings = Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100);
-                    return (
-                      <div>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-sm text-slate-400 line-through">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
-                          <span className="text-xl font-bold text-red-600">C${parseFloat(product.sale_price_per_sqft).toFixed(2)}</span>
-                          <span className="text-xs text-slate-500">/sqft</span>
-                        </div>
-                        {savings > 0 && (
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full text-red-600 bg-red-50">Save {savings}%</span>
-                        )}
-                      </div>
-                    );
-                  }
-                  if (product.price_per_sqft) {
-                    return (
-                      <div className="flex items-baseline gap-0.5">
-                        <span className="text-xl font-bold text-slate-900">C${parseFloat(product.price_per_sqft).toFixed(2)}</span>
-                        <span className="text-xs text-slate-500 ml-0.5">/sqft</span>
-                      </div>
-                    );
-                  }
-                  return <span className="text-sm text-slate-500">Contact for Price</span>;
-                })()}
-              </>
+              <span className="text-sm font-medium text-slate-500">Call for Pricing</span>
             )}
           </div>
-          <Link href={createPageUrl('Financing')} className="block mt-1 text-xs text-slate-400 hover:text-amber-600 transition-colors">💳 Financing available</Link>
-          <div className="mt-2 flex items-center gap-1.5">
-            {isOutOfStock ? (
-              <span className="flex items-center gap-1 text-xs text-slate-400"><span className="w-2 h-2 rounded-full bg-slate-300 inline-block" />Out of Stock</span>
-            ) : isFastPickup ? (
-              <span className="flex items-center gap-1 text-xs text-green-700 font-medium"><span className="w-2 h-2 rounded-full bg-green-500 inline-block" />Fast Pickup</span>
-            ) : (
-              <span className="flex items-center gap-1 text-xs text-green-700 font-medium"><span className="w-2 h-2 rounded-full bg-green-500 inline-block" />In Stock</span>
+
+          {/* Spec pills — compact, key info only */}
+          <div className="flex flex-wrap gap-1 mt-auto">
+            {product.category && (
+              <span className="text-[10px] font-medium text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded">
+                {product.category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+              </span>
+            )}
+            {product.colour && (
+              <span className="text-[10px] font-medium text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded truncate max-w-[80px]">
+                {product.colour}
+              </span>
+            )}
+            {product.thickness && (
+              <span className="text-[10px] font-medium text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded">
+                {product.thickness}
+              </span>
             )}
           </div>
-          <div className="flex-grow" />
-          {(product.dimensions || product.thickness || product.colour) && (
-            <div className="mt-3 pt-3 border-t border-slate-100 space-y-1">
-              {product.dimensions && <div className="flex justify-between items-center text-xs"><span className="text-slate-500">Size:</span><span className="text-slate-700 font-medium truncate ml-2">{product.dimensions}</span></div>}
-              {product.thickness && <div className="flex justify-between items-center text-xs"><span className="text-slate-500">Thickness:</span><span className="text-slate-700 font-medium truncate ml-2">{product.thickness}</span></div>}
-              {product.colour && <div className="flex justify-between items-center text-xs"><span className="text-slate-500">Colour:</span><span className="text-slate-700 font-medium truncate ml-2">{product.colour}</span></div>}
-            </div>
-          )}
-          <div className="mt-3 flex items-center justify-between">
-            <Link href={createPageUrl('Contact')} className="inline-flex items-center gap-1 text-xs text-amber-700 hover:text-amber-800 font-medium transition-colors whitespace-nowrap" onClick={(e) => e.stopPropagation()} title="📍 Available at 6061 Hwy 7, Markham">
+
+          {/* Footer — showroom link + save (mobile) */}
+          <div className="mt-2 pt-2 border-t border-slate-50 flex items-center justify-between">
+            <Link
+              href={createPageUrl('Contact')}
+              className="inline-flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-800 font-medium transition-colors"
+              onClick={(e) => e.stopPropagation()}
+            >
               <MapPinIcon className="w-3 h-3 flex-shrink-0" />
-              See in Showroom
+              Showroom
             </Link>
-            <SaveButton product={product} user={user} isSaved={isSaved} />
+            {!isOutOfStock ? (
+              <span className="text-[10px] text-green-700 font-medium flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />In Stock
+              </span>
+            ) : (
+              <span className="text-[10px] text-slate-400 font-medium">Out of Stock</span>
+            )}
+            <div className="sm:hidden">
+              <SaveButton product={product} user={user} isSaved={isSaved} />
+            </div>
           </div>
         </div>
       </div>
