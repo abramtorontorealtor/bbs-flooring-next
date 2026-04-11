@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
-import CategoryProductGrid from '@/components/CategoryProductGrid';
+import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import StaticFAQ from '@/components/StaticFAQ';
 import { SOLID_HARDWOOD_FAQS } from '@/data/faqs';
 import RelatedCategories from '@/components/RelatedCategories';
@@ -142,10 +142,10 @@ export default function SolidHardwoodClient() {
       </div>
 
       {/* Product Grid */}
-      <CategoryProductGrid
+      <CategoryFilterGrid
+        category="solid_hardwood"
         sessionKey="solid-hardwood"
         queryKey="products-solid-hardwood"
-        category="solid_hardwood"
       />
 
       <FinancingBanner monthlyFrom={142} />

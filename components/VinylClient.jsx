@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
-import CategoryProductGrid from '@/components/CategoryProductGrid';
+import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import StaticFAQ from '@/components/StaticFAQ';
 import { VINYL_FAQS } from '@/data/faqs';
 import RelatedCategories from '@/components/RelatedCategories';
@@ -140,10 +140,10 @@ export default function VinylClient() {
       </div>
 
       {/* Product Grid */}
-      <CategoryProductGrid
+      <CategoryFilterGrid
+        category="vinyl"
         sessionKey="vinyl"
         queryKey="products-vinyl"
-        category="vinyl"
       />
 
       <FinancingBanner monthlyFrom={89} />

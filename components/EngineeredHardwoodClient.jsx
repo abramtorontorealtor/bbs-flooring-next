@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
-import CategoryProductGrid from '@/components/CategoryProductGrid';
+import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import StaticFAQ from '@/components/StaticFAQ';
 import { ENGINEERED_HARDWOOD_FAQS } from '@/data/faqs';
 import RelatedCategories from '@/components/RelatedCategories';
@@ -137,10 +137,10 @@ export default function EngineeredHardwoodClient() {
       </div>
 
       {/* Product Grid */}
-      <CategoryProductGrid
+      <CategoryFilterGrid
+        category="engineered_hardwood"
         sessionKey="engineered-hardwood"
         queryKey="products-engineered-hardwood"
-        category="engineered_hardwood"
       />
 
       <FinancingBanner monthlyFrom={122} />

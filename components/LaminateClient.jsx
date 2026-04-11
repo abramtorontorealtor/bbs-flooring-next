@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
-import CategoryProductGrid from '@/components/CategoryProductGrid';
+import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import StaticFAQ from '@/components/StaticFAQ';
 import { LAMINATE_FAQS } from '@/data/faqs';
 import RelatedCategories from '@/components/RelatedCategories';
@@ -139,10 +139,10 @@ export default function LaminateClient() {
       </div>
 
       {/* Product Grid */}
-      <CategoryProductGrid
+      <CategoryFilterGrid
+        category="laminate"
         sessionKey="laminate"
         queryKey="products-laminate"
-        category="laminate"
       />
 
       <FinancingBanner monthlyFrom={68} />
