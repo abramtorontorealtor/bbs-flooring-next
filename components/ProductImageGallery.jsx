@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Expand } from 'lucide-react';
 
@@ -269,8 +270,9 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
         </div>
       </div>
 
-      {/* Fullscreen Lightbox */}
-      {lightboxOpen && (
+      {/* Fullscreen Lightbox — rendered via portal to bypass ancestor transforms
+          that break position:fixed (e.g. animate-fade-in-up sets transform) */}
+      {lightboxOpen && typeof document !== 'undefined' && createPortal(
         <div
           className="fixed inset-0 bg-black/95 z-[60] flex items-center justify-center animate-fade-in"
           onTouchStart={handleTouchStart}
@@ -350,7 +352,8 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
               ))}
             </div>
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
