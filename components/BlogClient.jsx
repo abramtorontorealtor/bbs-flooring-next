@@ -1,202 +1,309 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getSupabaseBrowserClient } from '@/lib/supabase';
-import { Search } from 'lucide-react';
+import { Search, MapPin, Clock, ChevronRight } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
-const CATEGORIES = [
-  { value: 'all', label: 'All Posts' },
-  { value: 'flooring_tips', label: 'Flooring Tips' },
-  { value: 'installation_guide', label: 'Installation Guides' },
-  { value: 'design_trends', label: 'Design Trends' },
-  { value: 'product_reviews', label: 'Product Reviews' },
-  { value: 'maintenance', label: 'Maintenance' },
-  { value: 'company_news', label: 'Company News' },
+// Derive topic from post title/content
+function detectTopic(post) {
+  const t = (post.title || '').toLowerCase();
+  if (t.includes('stair')) return 'Stairs';
+  if (t.includes('vinyl')) return 'Vinyl';
+  if (t.includes('laminate')) return 'Laminate';
+  if (t.includes('solid hardwood')) return 'Solid Hardwood';
+  if (t.includes('engineered hardwood') || t.includes('engineered')) return 'Engineered Hardwood';
+  if (t.includes('trend') || t.includes('guide') || t.includes('vs.') || t.includes('vs ')) return 'Guides';
+  return 'Flooring Tips';
+}
+
+const TOPICS = [
+  { value: 'all', label: 'All Articles' },
+  { value: 'Vinyl', label: 'Vinyl' },
+  { value: 'Engineered Hardwood', label: 'Engineered Hardwood' },
+  { value: 'Solid Hardwood', label: 'Solid Hardwood' },
+  { value: 'Laminate', label: 'Laminate' },
+  { value: 'Stairs', label: 'Stairs' },
+  { value: 'Guides', label: 'Guides' },
 ];
 
-export default function BlogClient({ initialPosts = null }) {
-  const [posts, setPosts] = useState(initialPosts || []);
-  const [loading, setLoading] = useState(!initialPosts);
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('all');
-  const [activeTag, setActiveTag] = useState(null);
+const POSTS_PER_PAGE = 9;
 
-  useEffect(() => {
-    // Skip fetch if we already have server-provided posts
-    if (initialPosts && initialPosts.length > 0) return;
-    async function fetchPosts() {
-      const supabase = getSupabaseBrowserClient();
-      if (!supabase) { setLoading(false); return; }
-      let query = supabase.from('blog_posts').select('*').eq('status', 'published').order('published_at', { ascending: false });
-      const { data } = await query;
-      setPosts(data || []);
-      setLoading(false);
-    }
-    fetchPosts();
-  }, [initialPosts]);
+function PostCard({ post, featured = false }) {
+  const topic = detectTopic(post);
 
-  // Extract popular tags from all posts
-  const popularTags = (() => {
-    const tagCount = {};
-    posts.forEach(p => {
-      const tags = Array.isArray(p.tags) ? p.tags : [];
-      tags.forEach(t => {
-        if (t && typeof t === 'string' && t.length > 1) {
-          // Normalize: trim, title case
-          const normalized = t.replace(/_/g, ' ').trim();
-          tagCount[normalized] = (tagCount[normalized] || 0) + 1;
-        }
-      });
-    });
-    return Object.entries(tagCount)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 12)
-      .map(([tag]) => tag);
-  })();
-
-  const filtered = posts.filter(p => {
-    if (category !== 'all' && p.category !== category) return false;
-    if (search && !p.title?.toLowerCase().includes(search.toLowerCase()) && !p.excerpt?.toLowerCase().includes(search.toLowerCase())) return false;
-    if (activeTag) {
-      const tags = Array.isArray(p.tags) ? p.tags.map(t => t.replace(/_/g, ' ').trim().toLowerCase()) : [];
-      if (!tags.includes(activeTag.toLowerCase())) return false;
-    }
-    return true;
-  });
-
-  const featured = filtered[0];
-  const rest = filtered.slice(1);
-
-  if (loading) {
+  if (featured) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="animate-pulse space-y-8">
-          <div className="h-12 bg-slate-200 rounded w-1/3" />
-          <div className="h-64 bg-slate-200 rounded-2xl" />
-          <div className="grid md:grid-cols-3 gap-6">{[1,2,3].map(i => <div key={i} className="h-48 bg-slate-200 rounded-xl" />)}</div>
+      <Link href={`/blog/${post.slug}`} className="group block mb-12">
+        <div className="relative rounded-2xl overflow-hidden bg-slate-900">
+          {post.featured_image && (
+            <div className="relative aspect-[21/9] sm:aspect-[2.4/1]">
+              <Image
+                src={post.featured_image}
+                alt={post.image_alt_text || post.title}
+                fill
+                className="object-cover opacity-60 group-hover:opacity-50 group-hover:scale-105 transition-all duration-500"
+                sizes="(max-width: 768px) 100vw, 1280px"
+                priority
+              />
+            </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="inline-flex items-center gap-1 bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+                Latest
+              </span>
+              <span className="inline-flex items-center gap-1 bg-white/15 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
+                {topic}
+              </span>
+              {post.neighbourhood && (
+                <span className="hidden sm:inline-flex items-center gap-1 bg-white/15 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
+                  <MapPin className="w-3 h-3" />
+                  {post.neighbourhood}
+                </span>
+              )}
+            </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors line-clamp-2 max-w-3xl">
+              {post.title}
+            </h2>
+            <p className="text-sm sm:text-base text-slate-300 line-clamp-2 max-w-2xl mb-3 hidden sm:block">
+              {post.excerpt}
+            </p>
+            <div className="flex items-center gap-3 text-xs text-slate-400">
+              {post.published_at && (
+                <span>{new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              )}
+              {post.read_time && (
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {post.read_time} min read
+                </span>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      </Link>
     );
   }
 
   return (
+    <Link href={`/blog/${post.slug}`} className="group">
+      <article className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg hover:border-slate-300 transition-all duration-200 h-full flex flex-col">
+        {post.featured_image && (
+          <div className="relative aspect-[16/10] overflow-hidden">
+            <Image
+              src={post.featured_image}
+              alt={post.image_alt_text || post.title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+            {/* Topic badge overlay */}
+            <div className="absolute top-3 left-3 flex items-center gap-1.5">
+              <span className="bg-white/90 backdrop-blur-sm text-slate-700 text-[11px] font-semibold px-2 py-0.5 rounded-md shadow-sm">
+                {topic}
+              </span>
+            </div>
+          </div>
+        )}
+        <div className="p-4 sm:p-5 flex flex-col flex-1">
+          {/* Neighbourhood */}
+          {post.neighbourhood && (
+            <div className="flex items-center gap-1 text-amber-600 text-xs font-medium mb-2">
+              <MapPin className="w-3 h-3" />
+              {post.neighbourhood}
+            </div>
+          )}
+          <h3 className="font-bold text-slate-800 text-[15px] leading-snug mb-2 group-hover:text-amber-600 transition-colors line-clamp-2">
+            {post.title}
+          </h3>
+          <p className="text-slate-500 text-sm line-clamp-2 flex-1 leading-relaxed">
+            {post.excerpt}
+          </p>
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
+            <div className="flex items-center gap-3 text-xs text-slate-400">
+              {post.published_at && (
+                <span>{new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+              )}
+              {post.read_time && (
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {post.read_time} min
+                </span>
+              )}
+            </div>
+            <span className="text-amber-600 text-xs font-medium flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+              Read <ChevronRight className="w-3 h-3" />
+            </span>
+          </div>
+        </div>
+      </article>
+    </Link>
+  );
+}
+
+export default function BlogClient({ initialPosts = [] }) {
+  const [search, setSearch] = useState('');
+  const [topic, setTopic] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(POSTS_PER_PAGE);
+
+  // Topic counts
+  const topicCounts = useMemo(() => {
+    const counts = { all: initialPosts.length };
+    initialPosts.forEach(p => {
+      const t = detectTopic(p);
+      counts[t] = (counts[t] || 0) + 1;
+    });
+    return counts;
+  }, [initialPosts]);
+
+  const filtered = useMemo(() => {
+    return initialPosts.filter(p => {
+      if (topic !== 'all' && detectTopic(p) !== topic) return false;
+      if (search) {
+        const q = search.toLowerCase();
+        return (
+          p.title?.toLowerCase().includes(q) ||
+          p.excerpt?.toLowerCase().includes(q) ||
+          p.neighbourhood?.toLowerCase().includes(q)
+        );
+      }
+      return true;
+    });
+  }, [initialPosts, topic, search]);
+
+  const featured = filtered[0];
+  const rest = filtered.slice(1, visibleCount + 1);
+  const hasMore = filtered.length > visibleCount + 1;
+
+  return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs items={getStaticBreadcrumbs('/blog')} />
-      <div className="text-center mb-12">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-800 mb-4">Flooring Blog</h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto">Expert tips, installation guides, and design inspiration for your flooring project.</p>
+
+      {/* Header */}
+      <div className="mb-10">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-800 mb-3">
+          Flooring Blog
+        </h1>
+        <p className="text-base sm:text-lg text-slate-500 max-w-xl">
+          Neighbourhood-specific flooring advice from our Markham team. Real products, real homes, real talk.
+        </p>
       </div>
 
-      {/* Search + Filter */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-10">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input type="text" placeholder="Search articles..." value={search} onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-amber-400" />
+      {/* Topic chips + Search */}
+      <div className="flex flex-col gap-4 mb-8">
+        {/* Topic chips — horizontal scroll on mobile */}
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+          {TOPICS.map(t => {
+            const count = topicCounts[t.value] || 0;
+            if (t.value !== 'all' && count === 0) return null;
+            const active = topic === t.value;
+            return (
+              <button
+                key={t.value}
+                onClick={() => { setTopic(t.value); setVisibleCount(POSTS_PER_PAGE); }}
+                className={`inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-medium px-3.5 py-2 rounded-full transition-all shrink-0 ${
+                  active
+                    ? 'bg-slate-800 text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                {t.label}
+                <span className={`text-xs ${active ? 'text-slate-400' : 'text-slate-400'}`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
-        <select value={category} onChange={e => setCategory(e.target.value)}
-          className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm bg-white">
-          {CATEGORIES.map(cat => <option key={cat.value} value={cat.value}>{cat.label}</option>)}
-        </select>
-      </div>
 
-      {/* Tag Pills */}
-      {popularTags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-8">
-          {activeTag && (
-            <button onClick={() => setActiveTag(null)}
-              className="text-xs font-medium px-3 py-1.5 rounded-full bg-slate-800 text-white hover:bg-slate-700 transition-colors">
-              ✕ Clear tag
+        {/* Search */}
+        <div className="relative max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search by title or neighbourhood..."
+            value={search}
+            onChange={e => { setSearch(e.target.value); setVisibleCount(POSTS_PER_PAGE); }}
+            className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400 transition-all"
+          />
+          {search && (
+            <button
+              onClick={() => setSearch('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs"
+            >
+              ✕
             </button>
           )}
-          {popularTags.map(tag => (
-            <button key={tag} onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-              className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
-                activeTag === tag
-                  ? 'bg-amber-500 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-amber-100 hover:text-amber-700'
-              }`}>
-              {tag}
-            </button>
-          ))}
         </div>
-      )}
+      </div>
 
+      {/* Empty state */}
       {filtered.length === 0 && (
         <div className="text-center py-20 text-slate-500">
           <p className="text-5xl mb-4">📝</p>
           <p className="text-lg font-semibold">No articles found</p>
-          <p className="text-sm mt-1">Try adjusting your search or filter.</p>
+          <p className="text-sm mt-1">Try a different search or topic.</p>
         </div>
       )}
 
-      {/* Featured Post */}
-      {featured && (
-        <Link href={`/blog/${featured.slug}`} className="block mb-12 group">
-          <div className="grid md:grid-cols-2 gap-6 bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
-            {featured.featured_image && (
-              <div className="relative aspect-video md:aspect-auto min-h-[240px] overflow-hidden">
-                <Image src={featured.featured_image} alt={featured.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="(max-width: 768px) 100vw, 50vw" priority />
-              </div>
-            )}
-            <div className="p-6 md:p-8 flex flex-col justify-center">
-              {featured.category && (
-                <span className="inline-block bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-full mb-3 w-fit">
-                  {featured.category.replace(/_/g, ' ')}
-                </span>
-              )}
-              <h2 className="text-2xl font-bold text-slate-800 mb-3 group-hover:text-amber-600 transition-colors">{featured.title}</h2>
-              <p className="text-slate-600 text-sm line-clamp-3 mb-4">{featured.excerpt}</p>
-              <div className="flex items-center gap-3 text-xs text-slate-500">
-                {featured.published_at && <span>{new Date(featured.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
-                {featured.read_time && <span>· {featured.read_time} min read</span>}
-              </div>
-            </div>
-          </div>
-        </Link>
-      )}
+      {/* Featured post */}
+      {featured && <PostCard post={featured} featured />}
 
-      {/* Post Grid */}
+      {/* Post grid */}
       {rest.length > 0 && (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {rest.map(post => (
-            <Link key={post.id || post.slug} href={`/blog/${post.slug}`} className="group">
-              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
-                {post.featured_image && (
-                  <div className="relative aspect-video overflow-hidden">
-                    <Image src={post.featured_image} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
-                  </div>
-                )}
-                <div className="p-5 flex flex-col flex-1">
-                  <div className="flex flex-wrap items-center gap-1.5 mb-2">
-                    {post.category && (
-                      <span className="inline-block bg-slate-100 text-slate-600 text-xs font-semibold px-2 py-0.5 rounded">
-                        {post.category.replace(/_/g, ' ')}
-                      </span>
-                    )}
-                    {Array.isArray(post.tags) && post.tags.slice(0, 2).map((tag, i) => (
-                      <button key={i} onClick={(e) => { e.preventDefault(); setActiveTag(tag.replace(/_/g, ' ').trim()); }}
-                        className="inline-block bg-amber-50 text-amber-700 text-[10px] font-medium px-1.5 py-0.5 rounded hover:bg-amber-100 transition-colors">
-                        {tag.replace(/_/g, ' ').trim()}
-                      </button>
-                    ))}
-                  </div>
-                  <h3 className="font-bold text-slate-800 mb-2 group-hover:text-amber-600 transition-colors line-clamp-2">{post.title}</h3>
-                  <p className="text-slate-600 text-sm line-clamp-2 flex-1">{post.excerpt}</p>
-                  <div className="flex items-center gap-2 text-xs text-slate-500 mt-3">
-                    {(post.published_at || post.published_at) && <span>{new Date(post.published_at || post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>}
-                    {post.read_time && <span>· {post.read_time} min</span>}
-                  </div>
-                </div>
-              </div>
-            </Link>
+            <PostCard key={post.id || post.slug} post={post} />
           ))}
         </div>
       )}
+
+      {/* Load More */}
+      {hasMore && (
+        <div className="text-center mt-10">
+          <button
+            onClick={() => setVisibleCount(prev => prev + POSTS_PER_PAGE)}
+            className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-6 py-3 rounded-xl transition-colors text-sm"
+          >
+            Load More Articles
+            <span className="text-slate-400 text-xs">
+              ({filtered.length - visibleCount - 1} remaining)
+            </span>
+          </button>
+        </div>
+      )}
+
+      {/* Browse by Neighbourhood */}
+      {topic === 'all' && !search && (() => {
+        const neighbourhoods = [...new Set(initialPosts.map(p => p.neighbourhood).filter(Boolean))].sort();
+        if (neighbourhoods.length < 3) return null;
+        return (
+          <div className="mt-16 pt-12 border-t border-slate-200">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">Browse by Neighbourhood</h2>
+            <p className="text-sm text-slate-500 mb-6">Flooring advice tailored to homes in your area.</p>
+            <div className="flex flex-wrap gap-2">
+              {neighbourhoods.map(n => {
+                const count = initialPosts.filter(p => p.neighbourhood === n).length;
+                return (
+                  <button
+                    key={n}
+                    onClick={() => { setSearch(n); }}
+                    className="inline-flex items-center gap-1.5 bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-slate-700 hover:text-amber-700 text-sm font-medium px-3 py-2 rounded-lg transition-all"
+                  >
+                    <MapPin className="w-3 h-3" />
+                    {n}
+                    <span className="text-slate-400 text-xs">{count}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

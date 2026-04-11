@@ -5,12 +5,12 @@ import { JsonLd } from '@/lib/schemas';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Flooring Blog - Expert Tips & Trends',
-  description: 'Expert flooring advice, installation guides, design trends, and maintenance tips from BBS Flooring.',
+  title: 'Flooring Blog — Neighbourhood Flooring Guides',
+  description: 'Neighbourhood-specific flooring advice from BBS Flooring in Markham. Real products, real homes — vinyl, hardwood, laminate & stair guides for the GTA.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Flooring Blog - Expert Tips & Trends',
-    description: 'Expert flooring advice, installation guides, design trends, and maintenance tips from BBS Flooring.',
+    title: 'Flooring Blog — Neighbourhood Flooring Guides',
+    description: 'Neighbourhood-specific flooring advice from BBS Flooring in Markham. Real products, real homes — vinyl, hardwood, laminate & stair guides for the GTA.',
     url: '/blog',
     type: 'website',
   },
