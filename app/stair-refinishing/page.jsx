@@ -6,6 +6,7 @@ import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
 export const metadata = {
   title: stairRefinishingData.title,
   description: stairRefinishingData.description,
+  alternates: { canonical: '/stair-refinishing' },
 };
 
 export default function StairRefinishingPage() {
