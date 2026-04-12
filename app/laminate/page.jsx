@@ -16,14 +16,12 @@ export const metadata = {
 
 export default async function LaminatePage() {
   const products = await getProductsForGrid({ category: 'laminate' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(LAMINATE_FAQS)} />
-      <Suspense>
-        <LaminateClient
-          initialProducts={products}
-          serverGrid={<ProductGridServer products={products} />}
-        />
+      <Suspense fallback={serverGrid}>
+        <LaminateClient initialProducts={products} serverGrid={serverGrid} />
       </Suspense>
     </>
   );

@@ -18,7 +18,7 @@ export default async function BasementFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(basementFlooringData.faqItems)} />
-      <Suspense><BasementFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BasementFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

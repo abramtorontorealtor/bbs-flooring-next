@@ -17,7 +17,7 @@ export default async function AppalachianFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(appalachianFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="appalachian" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="appalachian" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

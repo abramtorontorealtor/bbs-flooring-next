@@ -17,7 +17,7 @@ export default async function WodenFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(wodenFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="woden" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="woden" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

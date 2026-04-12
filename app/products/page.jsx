@@ -14,12 +14,10 @@ export const metadata = {
 
 export default async function ProductsPage() {
   const products = await getProductsForGrid();
+  const serverGrid = <ProductGridServer products={products} />;
   return (
-    <Suspense>
-      <ProductsClient
-        initialProducts={products}
-        serverGrid={<ProductGridServer products={products} />}
-      />
+    <Suspense fallback={serverGrid}>
+      <ProductsClient initialProducts={products} serverGrid={serverGrid} />
     </Suspense>
   );
 }

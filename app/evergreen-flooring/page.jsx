@@ -17,7 +17,7 @@ export default async function EvergreenFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(evergreenFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="evergreen" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="evergreen" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

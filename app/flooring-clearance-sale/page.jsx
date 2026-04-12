@@ -18,7 +18,7 @@ export default async function FlooringClearanceSalePage() {
   return (
     <>
       <JsonLd data={faqSchema(flooringClearanceSaleData.faqItems)} />
-      <Suspense><FlooringClearanceSaleClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><FlooringClearanceSaleClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

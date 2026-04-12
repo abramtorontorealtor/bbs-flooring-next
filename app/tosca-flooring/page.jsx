@@ -17,7 +17,7 @@ export default async function ToscaFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(toscaFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="tosca" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="tosca" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

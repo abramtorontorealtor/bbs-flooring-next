@@ -17,7 +17,7 @@ export default async function VidarFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(vidarFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="vidar" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="vidar" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

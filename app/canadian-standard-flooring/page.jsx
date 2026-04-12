@@ -17,7 +17,7 @@ export default async function CanadianStandardFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(canadianStandardFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="canadian-standard" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="canadian-standard" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

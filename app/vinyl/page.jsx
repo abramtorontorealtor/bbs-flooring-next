@@ -16,14 +16,12 @@ export const metadata = {
 
 export default async function VinylPage() {
   const products = await getProductsForGrid({ category: 'vinyl' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(VINYL_FAQS)} />
-      <Suspense>
-        <VinylClient
-          initialProducts={products}
-          serverGrid={<ProductGridServer products={products} />}
-        />
+      <Suspense fallback={serverGrid}>
+        <VinylClient initialProducts={products} serverGrid={serverGrid} />
       </Suspense>
     </>
   );

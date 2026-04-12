@@ -17,7 +17,7 @@ export default async function LeeFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(leeFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="lee" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="lee" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

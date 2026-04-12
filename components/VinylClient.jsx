@@ -45,7 +45,7 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function VinylClient({ initialProducts, serverGrid }) {
+export default function VinylClient({ initialProducts, children, serverGrid }) {
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -148,7 +148,7 @@ export default function VinylClient({ initialProducts, serverGrid }) {
         sessionKey="vinyl"
         queryKey="products-vinyl"
         initialProducts={initialProducts}
-        serverGrid={serverGrid}
+        serverGrid={children || serverGrid}
       />
 
       <FinancingBanner monthlyFrom={89} />

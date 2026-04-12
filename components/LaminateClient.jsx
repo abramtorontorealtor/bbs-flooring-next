@@ -44,7 +44,7 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function LaminateClient({ initialProducts, serverGrid }) {
+export default function LaminateClient({ initialProducts, children, serverGrid }) {
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -146,7 +146,7 @@ export default function LaminateClient({ initialProducts, serverGrid }) {
         sessionKey="laminate"
         queryKey="products-laminate"
         initialProducts={initialProducts}
-        serverGrid={serverGrid}
+        serverGrid={children || serverGrid}
       />
 
       <FinancingBanner monthlyFrom={68} />

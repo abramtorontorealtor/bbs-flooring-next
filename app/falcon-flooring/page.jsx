@@ -17,7 +17,7 @@ export default async function FalconFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(falconFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="falcon" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="falcon" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

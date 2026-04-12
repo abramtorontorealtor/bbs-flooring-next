@@ -18,7 +18,7 @@ export default async function WaterproofFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(waterproofFlooringData.faqItems)} />
-      <Suspense><WaterproofFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><WaterproofFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

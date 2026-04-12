@@ -17,7 +17,7 @@ export default async function WhiteOakFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(whiteOakFlooringData.faqItems)} />
-      <Suspense><WhiteOakFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><WhiteOakFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

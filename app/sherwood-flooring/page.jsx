@@ -17,7 +17,7 @@ export default async function SherwoodFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(sherwoodFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="sherwood" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="sherwood" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

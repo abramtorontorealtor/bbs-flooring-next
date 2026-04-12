@@ -16,14 +16,12 @@ export const metadata = {
 
 export default async function SolidHardwoodPage() {
   const products = await getProductsForGrid({ category: 'solid_hardwood' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(SOLID_HARDWOOD_FAQS)} />
-      <Suspense>
-        <SolidHardwoodClient
-          initialProducts={products}
-          serverGrid={<ProductGridServer products={products} />}
-        />
+      <Suspense fallback={serverGrid}>
+        <SolidHardwoodClient initialProducts={products} serverGrid={serverGrid} />
       </Suspense>
     </>
   );

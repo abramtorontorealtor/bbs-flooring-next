@@ -17,7 +17,7 @@ export default async function NafFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(nafFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="naf" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="naf" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

@@ -49,7 +49,7 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function EngineeredHardwoodClient({ initialProducts, serverGrid }) {
+export default function EngineeredHardwoodClient({ initialProducts, children, serverGrid }) {
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -144,7 +144,7 @@ export default function EngineeredHardwoodClient({ initialProducts, serverGrid }
         sessionKey="engineered-hardwood"
         queryKey="products-engineered-hardwood"
         initialProducts={initialProducts}
-        serverGrid={serverGrid}
+        serverGrid={children || serverGrid}
       />
 
       <FinancingBanner monthlyFrom={122} />

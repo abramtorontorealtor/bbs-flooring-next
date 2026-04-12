@@ -17,7 +17,7 @@ export default async function NorthernestFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(northernestFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="northernest" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="northernest" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

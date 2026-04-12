@@ -17,7 +17,7 @@ export default async function GoldenChoiceFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(goldenChoiceFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="golden-choice" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="golden-choice" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

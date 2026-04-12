@@ -17,7 +17,7 @@ export default async function WickhamFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(wickhamFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="wickham" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="wickham" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

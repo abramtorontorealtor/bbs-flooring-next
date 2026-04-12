@@ -17,7 +17,7 @@ export default async function SimbaFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(simbaFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="simba" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="simba" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

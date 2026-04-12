@@ -103,7 +103,7 @@ function CheckboxFilterList({ options, selected, onChange, maxVisible = 6 }) {
 }
 
 
-export default function ProductsClient({ initialProducts, serverGrid }) {
+export default function ProductsClient({ initialProducts, children, serverGrid }) {
   const [clientReady, setClientReady] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -650,9 +650,9 @@ export default function ProductsClient({ initialProducts, serverGrid }) {
           )}
 
           {/* Product Grid */}
-          {!clientReady && serverGrid ? (
-            serverGrid
-          ) : isLoading && !serverGrid ? (
+          {!clientReady && (children || serverGrid) ? (
+            children || serverGrid
+          ) : isLoading && !(children || serverGrid) ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4">
               {[...Array(12)].map((_, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden border border-slate-100 animate-pulse">

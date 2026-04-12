@@ -17,7 +17,7 @@ export default async function TriforestFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(triforestFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="triforest" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="triforest" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }
