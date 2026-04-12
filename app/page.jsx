@@ -124,7 +124,7 @@ export default function HomePage() {
   return (
     <div>
       {/* ═══ HERO — Full-viewport, immersive, mobile-first ═══ */}
-      <section className="relative min-h-[520px] h-[85svh] md:h-[100svh] max-h-[1000px] flex items-end md:items-center overflow-hidden">
+      <section className="relative min-h-[520px] h-[100svh] md:h-[100svh] max-h-[1000px] flex items-end md:items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
