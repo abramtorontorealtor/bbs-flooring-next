@@ -500,7 +500,7 @@ export default function ContractorFlooringClient() {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800 text-center mb-10">
             Frequently Asked Questions
           </h2>
-          <StaticFAQ items={FAQ_ITEMS} />
+          <StaticFAQ faqItems={FAQ_ITEMS} skipSchema />
         </div>
       </section>
 
