@@ -128,7 +128,7 @@ export const flooringInstallationCostData = {
 <tr><td class="p-3 border"><strong>Engineered Hardwood</strong></td><td class="p-3 border">$3.00–$7.25</td><td class="p-3 border">$2.25–$4.25</td><td class="p-3 border">$5.25–$11.50</td></tr>
 <tr><td class="p-3 border"><strong>Luxury Vinyl (SPC)</strong></td><td class="p-3 border">$1.79–$5.00</td><td class="p-3 border">$2.00–$2.25</td><td class="p-3 border">$3.79–$7.25</td></tr>
 <tr><td class="p-3 border"><strong>Laminate</strong></td><td class="p-3 border">$1.79–$5.00</td><td class="p-3 border">$2.00–$2.25</td><td class="p-3 border">$3.79–$7.25</td></tr>
-<tr><td class="p-3 border"><strong>Staircase Recapping</strong></td><td class="p-3 border" colspan="3">$125–$225 per step (railings, pickets, posts &amp; nosing extra — needs measurement)</td></tr>
+<tr><td class="p-3 border"><strong>Staircase Recapping</strong></td><td class="p-3 border" colspan="3">$185–$225 per step (railings, pickets, posts &amp; nosing extra — needs measurement)</td></tr>
 </tbody>
 </table>
 <p><strong>Want an exact number?</strong> <a href="/QuoteCalculator">Use our free Quote Calculator</a> — enter your room dimensions and material choice, and get an instant estimate.</p>`
@@ -230,9 +230,9 @@ export const stairRefinishingData = {
       heading: 'How Much Does Staircase Refinishing Cost?',
       body: `<p>Staircase pricing depends on the number of steps, material, and scope of work:</p>
 <ul>
-<li><strong>Stair Recapping (hardwood treads):</strong> $125–$225 per step (railings, pickets, posts &amp; nosing extra — needs measurement)</li>
+<li><strong>Stair Recapping (hardwood treads):</strong> $185–$225 per step (railings, pickets, posts &amp; nosing extra — needs measurement)</li>
 <li><strong>Full Carpet Removal + Hardwood:</strong> $200–$400 per step</li>
-<li><strong>Staining/Refinishing Only:</strong> $80–$150 per step</li>
+<li><strong>Staining/Refinishing Only:</strong> $125–$150 per step</li>
 <li><strong>Railing/Spindle Replacement:</strong> $1,500–$5,000+ depending on material</li>
 </ul>
 <p>A typical 13-step staircase recapping runs $2,000–$4,500 total. <a href="/QuoteCalculator">Use our Quote Calculator</a> or call <a href="tel:+16474281111">(647) 428-1111</a> for a free in-home quote.</p>`
@@ -515,7 +515,7 @@ export const hardwoodRefinishingData = {
   title: 'Hardwood Floor Refinishing Markham & GTA | Sand & Stain',
   description: 'Professional hardwood floor refinishing in Markham. Dustless sanding, custom staining, polyurethane finish. Free quotes. Call (647) 428-1111.',
   h1: 'Hardwood Floor Refinishing',
-  subtitle: 'Bring your worn hardwood floors back to life — dustless sanding, custom staining, and professional-grade finishes.',
+  subtitle: 'Bring your worn hardwood floors back to life — dust-contained sanding, custom staining, and professional-grade finishes.',
   parentPage: { label: 'Installation', route: 'Installation' },
   schemaType: 'service',
   showProducts: false,
@@ -529,7 +529,7 @@ export const hardwoodRefinishingData = {
       heading: 'Our Refinishing Process',
       body: `<ol>
 <li><strong>Free In-Home Assessment:</strong> We inspect your floors, test the wood thickness, and discuss your goals (natural, dark stain, matte vs. gloss).</li>
-<li><strong>Dustless Sanding:</strong> Our dust-containment system captures 99% of sanding dust — keeping your home clean and your family safe.</li>
+<li><strong>Dust-Contained Sanding:</strong> HEPA-filtered vacuums on every sander significantly reduce airborne dust. We seal and isolate the work area to keep the rest of your home clean.</li>
 <li><strong>Stain Application:</strong> Choose from dozens of stain colours. We apply test patches so you approve the exact colour before we proceed.</li>
 <li><strong>Polyurethane Finish:</strong> 2–3 coats of commercial-grade oil-based or water-based polyurethane for maximum durability.</li>
 <li><strong>Final Inspection:</strong> We walk through the finished floors with you to ensure everything meets your expectations.</li>
@@ -565,7 +565,7 @@ export const hardwoodRefinishingData = {
   faqItems: [
     { question: 'How much does hardwood floor refinishing cost in Markham?', answer: 'Sand & refinish (natural) is $5.25/sqft. Sand, stain & refinish is $6.25/sqft. Call (647) 428-1111 for a free in-home quote tailored to your specific floors.' },
     { question: 'How long does hardwood refinishing take?', answer: 'A typical 1,000 sqft floor takes 3–5 days: 1 day sanding, 1 day staining (if applicable), and 1–2 days for polyurethane coats with drying time between each. Water-based finishes dry faster (2–3 hours between coats) than oil-based (8–12 hours).' },
-    { question: 'Is dustless sanding really dustless?', answer: 'Our dust-containment sanding system captures 99% of airborne dust using HEPA-filtered vacuum attachments connected directly to the sander. It\'s not 100% dust-free, but it\'s dramatically cleaner than traditional sanding — no plastic sheeting needed on your furniture.' },
+    { question: 'How dusty is the sanding process?', answer: 'We use HEPA-filtered vacuum attachments connected directly to the sander, which significantly reduces airborne dust compared to traditional sanding. We also seal off the work area and isolate rooms to keep the rest of your home clean. Expect some fine dust in the immediate work zone, but nothing like old-school sanding.' },
     { question: 'Can engineered hardwood be refinished?', answer: 'It depends on the wear layer thickness. Engineered hardwood with a 2mm+ wear layer can typically be sanded and refinished once. Premium products (like Vidar with 4mm wear layers) can be refinished 2–3 times. We measure your wear layer during the free assessment.' },
     { question: 'Do you refinish hardwood floors in Toronto and Durham?', answer: 'Yes. BBS Flooring refinishes hardwood floors across the GTA including Markham, Toronto, Scarborough, Pickering, Ajax, Whitby, Richmond Hill, Vaughan, and all of Durham Region. Free in-home assessments anywhere in our service area.' },
   ],

@@ -35,14 +35,14 @@ const SPOKE_LINKS = [
 const PROCESS_STEPS = [
   { step: '01', title: 'Free Assessment', desc: 'We inspect your stairs, check wood condition, and discuss your vision — stain colour, finish, railing options.', icon: '📋' },
   { step: '02', title: 'Detailed Quote', desc: 'Transparent per-step pricing. No surprises — you know exactly what it costs before we start.', icon: '💰' },
-  { step: '03', title: 'Prep & Sand', desc: 'Dustless sanding system captures 99% of dust. Old finish stripped, wood smoothed and prepped.', icon: '🔧' },
+  { step: '03', title: 'Prep & Sand', desc: 'HEPA-filtered dust-contained sanding. Work area sealed and isolated. Old finish stripped, wood smoothed and prepped.', icon: '🔧' },
   { step: '04', title: 'Stain & Finish', desc: 'Custom stain colour matched to your floors. 2-3 coats of commercial-grade polyurethane.', icon: '🎨' },
   { step: '05', title: 'Final Walkthrough', desc: 'We review every step and riser with you. Not satisfied? We fix it before we leave.', icon: '✅' },
 ];
 
 const PRICING = [
-  { service: 'Stair Recapping (hardwood treads)', price: '$125–$225/step', note: 'Railings, pickets, posts & nosing extra' },
-  { service: 'Custom Staining & Refinishing', price: '$80–$150/step', note: 'Includes sanding + 2-3 coats poly' },
+  { service: 'Stair Recapping (hardwood treads)', price: '$185–$225/step', note: 'Railings, pickets, posts & nosing extra' },
+  { service: 'Custom Staining & Refinishing', price: '$125–$150/step', note: 'Includes sanding + 2-3 coats poly' },
   { service: 'Full Carpet-to-Hardwood Conversion', price: '$200–$400/step', note: 'Demo + new treads + stain + finish' },
   { service: 'Railing & Spindle Replacement', price: '$1,500–$5,000+', note: 'Depends on material (iron, glass, wood)' },
 ];
@@ -118,8 +118,8 @@ export default function StairRefinishingClient() {
           {/* Pricing Pills */}
           <div className="flex flex-wrap gap-3 mb-8">
             {[
-              { value: '$125', label: 'per step recapping' },
-              { value: '$80', label: 'per step refinish' },
+              { value: '$185', label: 'per step recapping' },
+              { value: '$125', label: 'per step refinish' },
               { value: 'FREE', label: 'in-home assessment' },
             ].map(pill => (
               <div key={pill.label} className="bg-white/10 backdrop-blur rounded-xl px-4 py-2.5 text-center min-w-[100px]">
@@ -193,7 +193,7 @@ export default function StairRefinishingClient() {
       <section className="py-12 md:py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">Our Refinishing Process</h2>
-          <p className="text-slate-500 text-center mb-12 max-w-2xl mx-auto">Dustless sanding, custom staining, and professional-grade finishes — every step handled with care.</p>
+          <p className="text-slate-500 text-center mb-12 max-w-2xl mx-auto">Dust-contained sanding, custom staining, and professional-grade finishes — every step handled with care.</p>
 
           <div className="space-y-6 max-w-3xl mx-auto">
             {PROCESS_STEPS.map((s, i) => (
@@ -251,7 +251,7 @@ export default function StairRefinishingClient() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {[
               { emoji: '🎨', title: 'Perfect Colour Match', desc: 'We match your stairs to your existing floors — same stain, same finish, seamless result.' },
-              { emoji: '💨', title: 'Dustless Sanding', desc: '99% dust containment system keeps your home clean during the entire refinishing process.' },
+              { emoji: '💨', title: 'Dust-Contained Sanding', desc: 'HEPA-filtered vacuums on every sander plus sealed work areas. Dramatically less dust than traditional sanding.' },
               { emoji: '🏠', title: 'One-Stop Shop', desc: 'Floors + stairs + trim in one project = better pricing and a perfectly coordinated look.' },
               { emoji: '🛡️', title: 'WSIB Insured', desc: 'Full WSIB workplace insurance + commercial liability. You\'re never liable during our work.' },
               { emoji: '⏱️', title: 'Fast Turnaround', desc: 'Most staircases completed in 2-3 days. We respect your home and your schedule.' },

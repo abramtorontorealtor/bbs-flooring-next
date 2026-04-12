@@ -32,7 +32,7 @@ const SPOKE_LINKS = [
 const PROCESS_STEPS = [
   { step: '01', title: 'Free In-Home Assessment', desc: 'We inspect your floors, test wood thickness and wear layer, identify damage, and discuss your goals — natural, dark stain, matte, satin, or gloss.', icon: '📋' },
   { step: '02', title: 'Detailed Quote', desc: 'Transparent per-sqft pricing based on your exact floor area, wood condition, and chosen finish. No surprises — you approve before we start.', icon: '💰' },
-  { step: '03', title: 'Dustless Sanding', desc: 'Our HEPA-filtered dust-containment system captures 99% of sanding dust. Old finish stripped, wood smoothed to a clean, even surface.', icon: '💨' },
+  { step: '03', title: 'Dust-Contained Sanding', desc: 'HEPA-filtered vacuum attachments on every sander significantly reduce airborne dust. We still seal and isolate the work area for a clean result. Old finish stripped, wood smoothed to an even surface.', icon: '💨' },
   { step: '04', title: 'Stain Application', desc: 'Choose from dozens of stain colours. We apply test patches on your actual floor so you approve the exact shade before we proceed.', icon: '🎨' },
   { step: '05', title: 'Polyurethane Finish', desc: '2–3 coats of commercial-grade oil-based or water-based polyurethane. Each coat sanded between applications for maximum adhesion and durability.', icon: '🛡️' },
   { step: '06', title: 'Final Walkthrough', desc: 'We inspect every square foot with you. Not satisfied? We address it before we leave. Your floors are guaranteed to meet your expectations.', icon: '✅' },
@@ -41,8 +41,7 @@ const PROCESS_STEPS = [
 const PRICING = [
   { service: 'Sand & Refinish (Natural)', price: '$5.25/sqft', note: 'Sand existing finish, apply 2-3 coats polyurethane' },
   { service: 'Sand, Stain & Refinish', price: '$6.25/sqft', note: 'Includes custom stain colour + 2-3 coats poly' },
-  { service: 'Spot Repair (per area)', price: 'From $500', note: 'Patch damaged boards, blend finish to match' },
-  { service: 'Screen & Recoat', price: '$2.50/sqft', note: 'Light buff + new poly coat — extends life 5-7 years' },
+
 ];
 
 const REFINISH_VS_REPLACE = {
@@ -65,7 +64,7 @@ const REFINISH_VS_REPLACE = {
 const FAQ_ITEMS = [
   { question: 'How much does hardwood floor refinishing cost in Markham?', answer: 'Sand & refinish (natural) is $5.25/sqft. Sand, stain & refinish is $6.25/sqft. A typical 1,000 sqft main floor runs $5,250–$6,250. Call (647) 428-1111 for a free in-home quote tailored to your specific floors.' },
   { question: 'How long does hardwood refinishing take?', answer: 'A typical 1,000 sqft floor takes 3–5 days: 1 day sanding, 1 day staining (if applicable), and 1–2 days for polyurethane coats with drying time between each. Water-based finishes dry faster (2–3 hours between coats) than oil-based (8–12 hours).' },
-  { question: 'Is dustless sanding really dustless?', answer: 'Our dust-containment sanding system captures 99% of airborne dust using HEPA-filtered vacuum attachments connected directly to the sander. It\'s not 100% dust-free, but it\'s dramatically cleaner than traditional sanding — no plastic sheeting needed on your furniture.' },
+  { question: 'How dusty is the sanding process?', answer: 'We use HEPA-filtered vacuum attachments connected directly to the sander, which significantly reduces airborne dust compared to traditional sanding. That said, it\'s not dust-free — we seal off the work area and isolate rooms to keep the rest of your home clean. Expect some fine dust in the immediate work zone, but nothing like old-school sanding.' },
   { question: 'Can engineered hardwood be refinished?', answer: 'It depends on the wear layer thickness. Engineered hardwood with a 2mm+ wear layer can typically be sanded and refinished once. Premium products (like Vidar with 4mm wear layers) can be refinished 2–3 times. We measure your wear layer during the free assessment.' },
   { question: 'Oil-based vs water-based polyurethane — which is better?', answer: 'Oil-based adds a warm amber tone, is more durable, and costs slightly more. Water-based dries clear (no yellowing), dries faster (walk on it the same day), and has lower VOC. Most GTA homeowners choose water-based for lighter wood and oil-based for a classic warm look. We carry both.' },
   { question: 'How soon can I put furniture back after refinishing?', answer: 'Light foot traffic (socks only) is usually safe after 24 hours for water-based finish, or 48 hours for oil-based. Furniture can go back after 72 hours (water-based) or 5–7 days (oil-based). Area rugs should wait 2 weeks. We\'ll give you exact timelines based on your finish choice.' },
@@ -121,7 +120,7 @@ export default function HardwoodRefinishingClient() {
             {[
               `⭐ ${GOOGLE_RATING}/5 from ${GOOGLE_REVIEW_COUNT} Reviews`,
               '🛡️ WSIB Insured',
-              '💨 Dustless Sanding',
+              '💨 Dust-Contained Sanding',
               '📏 Free In-Home Assessment',
             ].map(badge => (
               <span key={badge} className="bg-white/10 backdrop-blur-sm text-amber-200 text-xs font-semibold px-3 py-1.5 rounded-full border border-white/15">
@@ -135,7 +134,7 @@ export default function HardwoodRefinishingClient() {
             <span className="text-amber-400">Refinishing</span>
           </h1>
           <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl">
-            Scratched, faded, or worn hardwood doesn&apos;t need replacing — it needs refinishing. Dustless sanding, custom staining, and commercial-grade finishes across Markham, Toronto &amp; the GTA.
+            Scratched, faded, or worn hardwood doesn&apos;t need replacing — it needs refinishing. Professional dust-contained sanding, custom staining, and commercial-grade finishes across Markham, Toronto &amp; the GTA.
           </p>
 
           {/* Pricing Pills */}
@@ -226,11 +225,7 @@ export default function HardwoodRefinishingClient() {
                 title: 'Pet Damage Restoration',
                 desc: 'Deep scratches, urine stains, worn traffic paths. We sand past the damage, treat stains, and apply extra-durable finish coats.',
               },
-              {
-                emoji: '🔄',
-                title: 'Screen & Recoat',
-                desc: 'Floors in decent shape but dull? A light buff and fresh polyurethane coat restores the shine without a full sand-down. From $2.50/sqft.',
-              },
+
             ].map(s => (
               <div key={s.title} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
                 <div className="text-3xl mb-3">{s.emoji}</div>
@@ -431,7 +426,7 @@ export default function HardwoodRefinishingClient() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {[
-              { emoji: '💨', title: 'Dustless Sanding', desc: '99% dust containment system keeps your home clean. No need to seal rooms with plastic or relocate.' },
+              { emoji: '💨', title: 'Dust-Contained Sanding', desc: 'HEPA-filtered vacuums on every sander plus sealed work areas. Dramatically less dust than traditional sanding.' },
               { emoji: '🎨', title: 'Stain Matching', desc: 'We match your refinished floors to existing trim, stairs, and adjacent rooms — seamless colour throughout.' },
               { emoji: '🛡️', title: 'WSIB Insured', desc: 'Full WSIB workplace insurance + commercial liability. You\'re never liable during our work in your home.' },
               { emoji: '🏠', title: 'Floors + Stairs Together', desc: 'Refinish floors and stairs in one project for the best pricing and a perfectly coordinated look.' },

@@ -110,7 +110,7 @@ export default function CarpetToHardwoodStairsClient() {
           <div className="flex flex-wrap gap-3 mb-8">
             {[
               { value: '$200', label: 'per step (full conversion)' },
-              { value: '$150', label: 'per step (recapping)' },
+              { value: '$185', label: 'per step (recapping)' },
               { value: '~$2,600', label: 'typical 13-step staircase' },
             ].map(pill => (
               <div key={pill.label} className="bg-white/10 backdrop-blur rounded-xl px-4 py-2.5 text-center min-w-[100px]">
@@ -232,7 +232,7 @@ export default function CarpetToHardwoodStairsClient() {
 
           <div className="space-y-3">
             {[
-              { service: 'Basic Recapping (over existing structure)', price: '$150–$300/step', note: 'New hardwood treads + risers installed over structure' },
+              { service: 'Basic Recapping (over existing structure)', price: '$185–$300/step', note: 'New hardwood treads + risers installed over structure' },
               { service: 'Full Conversion (carpet removal + hardwood)', price: '$200–$400/step', note: 'Demo + prep + new treads + stain + finish' },
               { service: 'Custom Staining', price: 'Included', note: 'Colour-matched to your existing floors' },
               { service: 'Railing Upgrades (iron spindles)', price: '$25/picket installed', note: 'Modern iron pickets with material included' },
