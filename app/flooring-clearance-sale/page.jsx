@@ -3,6 +3,7 @@ import { flooringClearanceSaleData } from '@/data/landingPages';
 import FlooringClearanceSaleClient from '@/components/FlooringClearanceSaleClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
+import ProductGridServer from '@/components/ProductGridServer';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -17,7 +18,7 @@ export default async function FlooringClearanceSalePage() {
   return (
     <>
       <JsonLd data={faqSchema(flooringClearanceSaleData.faqItems)} />
-      <Suspense><FlooringClearanceSaleClient initialProducts={products} /></Suspense>
+      <Suspense><FlooringClearanceSaleClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

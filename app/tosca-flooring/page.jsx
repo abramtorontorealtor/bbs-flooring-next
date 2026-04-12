@@ -3,6 +3,7 @@ import { toscaFlooringData } from '@/data/brandPages';
 import BrandLandingClient from '@/components/BrandLandingClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
+import ProductGridServer from '@/components/ProductGridServer';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -16,7 +17,7 @@ export default async function ToscaFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(toscaFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="tosca" initialProducts={products} /></Suspense>
+      <Suspense><BrandLandingClient brandKey="tosca" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

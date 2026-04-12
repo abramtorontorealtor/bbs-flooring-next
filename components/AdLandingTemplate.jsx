@@ -8,7 +8,9 @@ import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Phone, MapPin, Clock, Star, Shield, Truck, ChevronDown } from 'lucide-react';
 import { Analytics } from './analytics';
-import FinancingBanner from '@/components/FinancingBanner';
+import dynamic from 'next/dynamic';
+
+const FinancingBanner = dynamic(() => import('@/components/FinancingBanner'), { ssr: false });
 
 const PHONE = '(647) 428-1111';
 const ADDRESS = '6061 Highway 7, Unit B, Markham, ON';
@@ -35,6 +37,7 @@ export default function AdLandingTemplate({
   parentPage,
   ctaText = 'Get a Free Quote',
   initialProducts,
+  serverGrid,
 }) {
   const [openFaq, setOpenFaq] = useState(null);
 
@@ -138,6 +141,7 @@ export default function AdLandingTemplate({
               queryKey={productQueryKey || 'products-landing'}
               hideBrand={hideBrandFilter}
               initialProducts={initialProducts}
+              serverGrid={serverGrid}
             />
           </div>
         )}

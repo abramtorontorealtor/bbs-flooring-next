@@ -104,7 +104,8 @@ function CheckboxFilterList({ options, selected, onChange, maxVisible = 6 }) {
  * @param {string}   queryKey         — react-query cache key
  * @param {boolean}  [hideBrand]      — Hide the brand filter when pre-scoped to a brand
  */
-export default function CategoryFilterGrid({ category, categoryFilter, sessionKey, queryKey, hideBrand = false, initialProducts }) {
+export default function CategoryFilterGrid({ category, categoryFilter, sessionKey, queryKey, hideBrand = false, initialProducts, serverGrid }) {
+  const [clientReady, setClientReady] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -395,6 +396,9 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     }
   }, [filteredProducts, isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // ── Mark client as ready (hides server-rendered grid) ──
+  useEffect(() => { setClientReady(true); }, []);
+
   // ── Restore scroll position ──
   useEffect(() => {
     const savedScroll = sessionStorage.getItem(`${sessionKey}_scroll`);
@@ -639,7 +643,10 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
         )}
 
         {/* Product Grid */}
-        {isLoading ? (
+        {!clientReady && serverGrid ? (
+          /* Server-rendered grid visible until client hydrates — zero CLS */
+          serverGrid
+        ) : isLoading && !serverGrid ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4">
             {[...Array(12)].map((_, i) => (
               <div key={i} className="bg-white rounded-xl overflow-hidden border border-slate-100 animate-pulse">

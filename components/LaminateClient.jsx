@@ -1,16 +1,18 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import CategoryFilterGrid from '@/components/CategoryFilterGrid';
-import StaticFAQ from '@/components/StaticFAQ';
 import { LAMINATE_FAQS } from '@/data/faqs';
-import RelatedCategories from '@/components/RelatedCategories';
-import SpokeLinks from '@/components/SpokeLinks';
-import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
+
+const StaticFAQ = dynamic(() => import('@/components/StaticFAQ'), { ssr: false });
+const RelatedCategories = dynamic(() => import('@/components/RelatedCategories'), { ssr: false });
+const SpokeLinks = dynamic(() => import('@/components/SpokeLinks'), { ssr: false });
+const FinancingBanner = dynamic(() => import('@/components/FinancingBanner'), { ssr: false });
 
 // Server-side filtered via `category` prop — no client-side filter needed
 
@@ -42,7 +44,7 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function LaminateClient({ initialProducts }) {
+export default function LaminateClient({ initialProducts, serverGrid }) {
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -144,6 +146,7 @@ export default function LaminateClient({ initialProducts }) {
         sessionKey="laminate"
         queryKey="products-laminate"
         initialProducts={initialProducts}
+        serverGrid={serverGrid}
       />
 
       <FinancingBanner monthlyFrom={68} />

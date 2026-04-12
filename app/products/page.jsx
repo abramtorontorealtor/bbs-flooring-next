@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import ProductsClient from '@/components/ProductsClient';
+import ProductGridServer from '@/components/ProductGridServer';
 import { SEO_DATA } from '@/lib/seo';
 import { getProductsForGrid } from '@/lib/products-server';
 
@@ -13,5 +14,12 @@ export const metadata = {
 
 export default async function ProductsPage() {
   const products = await getProductsForGrid();
-  return <Suspense><ProductsClient initialProducts={products} /></Suspense>;
+  return (
+    <Suspense>
+      <ProductsClient
+        initialProducts={products}
+        serverGrid={<ProductGridServer products={products} />}
+      />
+    </Suspense>
+  );
 }

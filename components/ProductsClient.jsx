@@ -103,7 +103,8 @@ function CheckboxFilterList({ options, selected, onChange, maxVisible = 6 }) {
 }
 
 
-export default function ProductsClient({ initialProducts }) {
+export default function ProductsClient({ initialProducts, serverGrid }) {
+  const [clientReady, setClientReady] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -372,6 +373,9 @@ export default function ProductsClient({ initialProducts }) {
       Analytics.trackViewItemList(filteredProducts, listName);
     }
   }, [filteredProducts, isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Mark client as ready (hides server-rendered grid)
+  useEffect(() => { setClientReady(true); }, []);
 
   // Restore scroll position
   useEffect(() => {
@@ -646,7 +650,9 @@ export default function ProductsClient({ initialProducts }) {
           )}
 
           {/* Product Grid */}
-          {isLoading ? (
+          {!clientReady && serverGrid ? (
+            serverGrid
+          ) : isLoading && !serverGrid ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4">
               {[...Array(12)].map((_, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden border border-slate-100 animate-pulse">

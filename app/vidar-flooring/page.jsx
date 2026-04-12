@@ -3,6 +3,7 @@ import { vidarFlooringData } from '@/data/landingPages';
 import BrandLandingClient from '@/components/BrandLandingClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
+import ProductGridServer from '@/components/ProductGridServer';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -16,7 +17,7 @@ export default async function VidarFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(vidarFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="vidar" initialProducts={products} /></Suspense>
+      <Suspense><BrandLandingClient brandKey="vidar" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

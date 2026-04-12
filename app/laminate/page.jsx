@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import LaminateClient from '@/components/LaminateClient';
+import ProductGridServer from '@/components/ProductGridServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { LAMINATE_FAQS } from '@/data/faqs';
 import { getProductsForGrid } from '@/lib/products-server';
@@ -18,7 +19,12 @@ export default async function LaminatePage() {
   return (
     <>
       <JsonLd data={faqSchema(LAMINATE_FAQS)} />
-      <Suspense><LaminateClient initialProducts={products} /></Suspense>
+      <Suspense>
+        <LaminateClient
+          initialProducts={products}
+          serverGrid={<ProductGridServer products={products} />}
+        />
+      </Suspense>
     </>
   );
 }

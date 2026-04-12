@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import VinylClient from '@/components/VinylClient';
+import ProductGridServer from '@/components/ProductGridServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { VINYL_FAQS } from '@/data/faqs';
 import { getProductsForGrid } from '@/lib/products-server';
@@ -18,7 +19,12 @@ export default async function VinylPage() {
   return (
     <>
       <JsonLd data={faqSchema(VINYL_FAQS)} />
-      <Suspense><VinylClient initialProducts={products} /></Suspense>
+      <Suspense>
+        <VinylClient
+          initialProducts={products}
+          serverGrid={<ProductGridServer products={products} />}
+        />
+      </Suspense>
     </>
   );
 }

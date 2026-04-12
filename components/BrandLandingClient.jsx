@@ -29,8 +29,8 @@ const BRAND_DATA_MAP = {
   wickham: wickhamFlooringData,
 };
 
-export default function BrandLandingClient({ brandKey, initialProducts }) {
+export default function BrandLandingClient({ brandKey, initialProducts, serverGrid }) {
   const data = BRAND_DATA_MAP[brandKey];
   if (!data) return null;
-  return <AdLandingTemplate {...data} initialProducts={initialProducts} />;
+  return <AdLandingTemplate {...data} initialProducts={initialProducts} serverGrid={serverGrid} />;
 }

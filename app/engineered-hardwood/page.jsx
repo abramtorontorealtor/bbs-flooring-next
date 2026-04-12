@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import EngineeredHardwoodClient from '@/components/EngineeredHardwoodClient';
+import ProductGridServer from '@/components/ProductGridServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { ENGINEERED_HARDWOOD_FAQS } from '@/data/faqs';
 import { getProductsForGrid } from '@/lib/products-server';
@@ -18,7 +19,12 @@ export default async function EngineeredHardwoodPage() {
   return (
     <>
       <JsonLd data={faqSchema(ENGINEERED_HARDWOOD_FAQS)} />
-      <Suspense><EngineeredHardwoodClient initialProducts={products} /></Suspense>
+      <Suspense>
+        <EngineeredHardwoodClient
+          initialProducts={products}
+          serverGrid={<ProductGridServer products={products} />}
+        />
+      </Suspense>
     </>
   );
 }

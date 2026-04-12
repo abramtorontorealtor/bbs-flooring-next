@@ -3,6 +3,7 @@ import { waterproofFlooringData } from '@/data/landingPages';
 import WaterproofFlooringClient from '@/components/WaterproofFlooringClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
+import ProductGridServer from '@/components/ProductGridServer';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -17,7 +18,7 @@ export default async function WaterproofFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(waterproofFlooringData.faqItems)} />
-      <Suspense><WaterproofFlooringClient initialProducts={products} /></Suspense>
+      <Suspense><WaterproofFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

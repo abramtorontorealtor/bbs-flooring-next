@@ -3,6 +3,7 @@ import { leeFlooringData } from '@/data/brandPages';
 import BrandLandingClient from '@/components/BrandLandingClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
+import ProductGridServer from '@/components/ProductGridServer';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -16,7 +17,7 @@ export default async function LeeFlooringPage() {
   return (
     <>
       <JsonLd data={faqSchema(leeFlooringData.faqItems)} />
-      <Suspense><BrandLandingClient brandKey="lee" initialProducts={products} /></Suspense>
+      <Suspense><BrandLandingClient brandKey="lee" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
     </>
   );
 }

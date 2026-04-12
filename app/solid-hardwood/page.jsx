@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import SolidHardwoodClient from '@/components/SolidHardwoodClient';
+import ProductGridServer from '@/components/ProductGridServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { SOLID_HARDWOOD_FAQS } from '@/data/faqs';
 import { getProductsForGrid } from '@/lib/products-server';
@@ -18,7 +19,12 @@ export default async function SolidHardwoodPage() {
   return (
     <>
       <JsonLd data={faqSchema(SOLID_HARDWOOD_FAQS)} />
-      <Suspense><SolidHardwoodClient initialProducts={products} /></Suspense>
+      <Suspense>
+        <SolidHardwoodClient
+          initialProducts={products}
+          serverGrid={<ProductGridServer products={products} />}
+        />
+      </Suspense>
     </>
   );
 }
