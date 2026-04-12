@@ -37,7 +37,7 @@ function getImageUrl(url) {
   return url.split('?')[0];
 }
 
-export default function ProductCardStatic({ product }) {
+export default function ProductCardStatic({ product, priority = false }) {
   const isOutOfStock = product.in_stock === false;
   const autoBadges = getProductBadges(product);
   const isFastPickup = product.in_stock !== false && FAST_PICKUP_BRANDS.some(b => (product.brand || '').toLowerCase().includes(b));
@@ -55,7 +55,7 @@ export default function ProductCardStatic({ product }) {
               src={getImageUrl(product.image_url)}
               alt={product.image_alt_text || product.name}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
+              {...(priority ? { priority: true } : { loading: 'lazy' })}
               width={400}
               height={300}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"

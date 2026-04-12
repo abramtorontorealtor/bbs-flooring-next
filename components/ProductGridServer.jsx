@@ -37,8 +37,8 @@ export default function ProductGridServer({ products, viewMode = 'grid' }) {
           : 'grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'
       }
     >
-      {visible.map((product) => (
-        <ProductCardStatic key={product.id} product={product} />
+      {visible.map((product, index) => (
+        <ProductCardStatic key={product.id} product={product} priority={index < 4} />
       ))}
     </div>
   );
