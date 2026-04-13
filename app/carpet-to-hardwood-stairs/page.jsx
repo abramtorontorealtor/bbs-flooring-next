@@ -12,7 +12,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Carpet to Hardwood Stairs Markham & GTA 2026 | From $185/Step — BBS Flooring',
+  title: 'Carpet to Hardwood Stairs Markham & GTA 2026 | From $185/Step',
   description: 'Convert carpet stairs to hardwood in Markham & GTA. Recapping from $185/step, full conversion from $200/step. Custom staining, 2-3 day turnaround. WSIB insured. Call (647) 428-1111.',
   alternates: { canonical: '/carpet-to-hardwood-stairs' },
 };

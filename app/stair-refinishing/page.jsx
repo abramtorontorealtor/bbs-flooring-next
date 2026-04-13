@@ -11,7 +11,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Staircase Refinishing Markham & GTA 2026 | Recapping $185/Step — BBS Flooring',
+  title: 'Staircase Refinishing Markham & GTA 2026 | Recapping $185/Step',
   description: 'Professional staircase refinishing in Markham & the GTA. Recapping from $185/step, refinishing from $125/step. Custom staining, WSIB insured. Free in-home assessment. Call (647) 428-1111.',
   alternates: { canonical: '/stair-refinishing' },
 };

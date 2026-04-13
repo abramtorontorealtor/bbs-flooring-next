@@ -13,7 +13,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Hardwood Floor Refinishing Markham & GTA 2026 | From $5.25/sqft — BBS Flooring',
+  title: 'Hardwood Floor Refinishing Markham & GTA 2026 | From $5.25/sqft',
   description: 'Professional hardwood floor refinishing from $5.25/sqft in Markham & GTA. Dust-contained sanding, custom staining, polyurethane finish. 60–75% cheaper than replacement. Free assessment. Call (647) 428-1111.',
   alternates: { canonical: '/hardwood-refinishing' },
 };

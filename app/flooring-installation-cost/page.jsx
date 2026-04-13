@@ -14,7 +14,7 @@ const FAQ_ITEMS_FOR_SCHEMA = [
 ];
 
 export const metadata = {
-  title: 'Flooring Installation Cost Markham & GTA 2026 | Price Guide & Calculator — BBS Flooring',
+  title: 'Flooring Installation Cost Markham & GTA 2026 | Price Guide & Calculator',
   description: 'How much does flooring installation cost in Markham & GTA? Hardwood from $2.25/sqft, vinyl/laminate from $2.00/sqft. Free cost calculator + free in-home measurement. Call (647) 428-1111.',
   alternates: { canonical: '/flooring-installation-cost' },
 };
