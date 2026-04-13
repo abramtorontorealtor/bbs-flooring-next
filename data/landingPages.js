@@ -337,7 +337,7 @@ export const wickhamFlooringData = {
 export const carpetToHardwoodStairsData = {
   route: 'CarpetToHardwoodStairs',
   title: 'Carpet to Hardwood Stairs Markham | Conversion Cost',
-  description: 'Convert carpet stairs to hardwood in Markham. Professional stair recapping, custom staining. From $150/step. Free quotes. Call (647) 428-1111.',
+  description: 'Convert carpet stairs to hardwood in Markham & GTA 2026. Recapping from $185/step, full conversion from $200/step. Custom staining. WSIB insured. Call (647) 428-1111.',
   h1: 'Carpet to Hardwood Stair Conversion',
   subtitle: 'Remove dated carpet and reveal (or install) beautiful hardwood treads. Professional results, honest pricing.',
   parentPage: { label: 'Stairs', route: 'Stairs' },

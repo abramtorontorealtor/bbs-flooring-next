@@ -2,8 +2,8 @@ import CarpetRemovalClient from '@/components/CarpetRemovalClient';
 import { carpetRemovalSchemas, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
-  title: 'Fast Carpet Removal Service | Markham, Toronto & Durham',
-  description: 'Professional carpet rip-out, haul-away, and subfloor prep for $1.00/sqft. Get a clean slate for your new floors. Serving Markham, Toronto, and Durham.',
+  title: 'Carpet Removal Service Markham & GTA 2026 | $1.00/sqft — BBS Flooring',
+  description: 'Professional carpet removal in Markham, Toronto & Durham for $1.00/sqft + $75 haul-away. 24-hr turnaround, install-ready subfloor guaranteed. WSIB insured. Call (647) 428-1111.',
   alternates: { canonical: '/carpet-removal' },
 };
 

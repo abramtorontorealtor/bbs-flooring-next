@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import FlooringInstallationCostClient from '@/components/FlooringInstallationCostClient';
-import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, installationCostServiceSchema, JsonLd } from '@/lib/schemas';
 
 const FAQ_ITEMS_FOR_SCHEMA = [
   { question: 'How much does it cost to install 1,000 sqft of flooring?', answer: 'For 1,000 sqft, expect roughly $3,790–$7,250 for vinyl or laminate, $5,250–$9,500 for engineered hardwood (nail-down), or $7,250–$14,250 for solid hardwood. These ranges include material + professional installation. Call (647) 428-1111 for a free quote.' },
@@ -14,15 +14,15 @@ const FAQ_ITEMS_FOR_SCHEMA = [
 ];
 
 export const metadata = {
-  title: 'Flooring Installation Cost Markham & GTA | Price Guide 2026',
-  description: 'How much does flooring installation cost in Markham? Hardwood $2.25/sqft, vinyl $2.00-2.25/sqft, laminate $2.00-2.25/sqft. Free cost calculator. Call (647) 428-1111.',
+  title: 'Flooring Installation Cost Markham & GTA 2026 | Price Guide & Calculator — BBS Flooring',
+  description: 'How much does flooring installation cost in Markham & GTA? Hardwood from $2.25/sqft, vinyl/laminate from $2.00/sqft. Free cost calculator + free in-home measurement. Call (647) 428-1111.',
   alternates: { canonical: '/flooring-installation-cost' },
 };
 
 export default function FlooringInstallationCostPage() {
   const schemas = [
+    installationCostServiceSchema(),
     faqSchema(FAQ_ITEMS_FOR_SCHEMA),
-    localBusinessSchema(),
   ].filter(Boolean);
 
   return (

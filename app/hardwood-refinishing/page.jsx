@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import HardwoodRefinishingClient from '@/components/HardwoodRefinishingClient';
-import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, hardwoodRefinishingServiceSchema, JsonLd } from '@/lib/schemas';
 
 const FAQ_ITEMS = [
   { question: 'How much does hardwood floor refinishing cost in Markham?', answer: 'Sand & refinish (natural) is $5.25/sqft. Sand, stain & refinish is $6.25/sqft. A typical 1,000 sqft main floor runs $5,250–$6,250. Call (647) 428-1111 for a free in-home quote tailored to your specific floors.' },
@@ -13,20 +13,15 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Hardwood Floor Refinishing Markham & GTA | Sand & Stain — BBS Flooring',
-  description: 'Professional hardwood floor refinishing from $5.25/sqft. Dust-contained sanding, custom staining, polyurethane finish. 60–75% cheaper than replacement. Free in-home assessment. Call (647) 428-1111.',
+  title: 'Hardwood Floor Refinishing Markham & GTA 2026 | From $5.25/sqft — BBS Flooring',
+  description: 'Professional hardwood floor refinishing from $5.25/sqft in Markham & GTA. Dust-contained sanding, custom staining, polyurethane finish. 60–75% cheaper than replacement. Free assessment. Call (647) 428-1111.',
   alternates: { canonical: '/hardwood-refinishing' },
 };
 
 export default function HardwoodRefinishingPage() {
-  const schemas = [
-    faqSchema(FAQ_ITEMS),
-    localBusinessSchema(),
-  ].filter(Boolean);
-
   return (
     <>
-      <JsonLd data={schemas} />
+      <JsonLd data={[hardwoodRefinishingServiceSchema(), faqSchema(FAQ_ITEMS)]} />
       <Suspense><HardwoodRefinishingClient /></Suspense>
     </>
   );

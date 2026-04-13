@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import ContractorFlooringClient from '@/components/ContractorFlooringClient';
-import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, contractorServiceSchema, JsonLd } from '@/lib/schemas';
 
 const FAQ_ITEMS = [
   { question: 'Does BBS Flooring offer contractor pricing?', answer: 'Yes. Our Member Trade Program gives contractors exclusive pricing on our full catalog — hardwood, vinyl, laminate, and stair materials. No annual fees or minimum commitments. Call (647) 428-1111 or visit our showroom to register.' },
@@ -21,8 +21,8 @@ export const metadata = {
 
 export default function ContractorFlooringPage() {
   const schemas = [
+    contractorServiceSchema(),
     faqSchema(FAQ_ITEMS),
-    localBusinessSchema(),
   ].filter(Boolean);
 
   return (
