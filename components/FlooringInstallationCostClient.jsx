@@ -7,23 +7,20 @@ import { createPageUrl } from '@/lib/routes';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { Analytics } from '@/components/analytics';
 import { flooringImages } from '@/data/galleryImages';
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, CDN_GALLERY } from '@/lib/service-constants';
+import {
+  ServiceHero,
+  GoogleReviews,
+  ServiceGallery,
+  ServiceAreaPills,
+  FinalCTA,
+  MobileStickyBtn,
+  CheckIcon,
+} from '@/components/service';
 
-/* ── Inline SVG icons ── */
-function PhoneIcon({ className = 'w-5 h-5' }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
-}
-function CheckIcon({ className = 'w-4 h-4' }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>;
-}
-
-const GOOGLE_RATING = '4.7';
-const GOOGLE_REVIEW_COUNT = 41;
-
-const HERO_IMAGE = 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/gallery/flooring-project-5.webp';
+const HERO_IMAGE = `${CDN_GALLERY}/flooring-project-5.webp`;
 
 /* ── Table of Contents ── */
 const TOC_ITEMS = [
@@ -168,11 +165,7 @@ const SPOKE_LINKS = [
   { route: 'HardwoodRefinishing', label: 'Hardwood Floor Refinishing', description: 'Sand, stain & refinish existing hardwood from $5.25/sqft — 60-75% cheaper than replacement' },
 ];
 
-const SERVICE_AREAS = [
-  'Markham', 'Toronto', 'Scarborough', 'Richmond Hill', 'Vaughan',
-  'Pickering', 'Ajax', 'Whitby', 'Oshawa', 'Stouffville',
-  'Newmarket', 'Aurora', 'Mississauga', 'Brampton', 'North York',
-];
+
 
 const REVIEWS = [
   { text: 'The installers were efficient, showed up on time, completed the work in the timeline promised and cleaned up afterwards. I highly recommend Abram and his installers.', name: 'Cathy F.' },
@@ -186,8 +179,6 @@ const GALLERY_ITEMS = [
 ];
 
 export default function FlooringInstallationCostClient() {
-  const [showStickyBtn, setShowStickyBtn] = useState(false);
-
   // Calculator state
   const [calcSqft, setCalcSqft] = useState('');
   const [calcType, setCalcType] = useState(0);
@@ -198,12 +189,6 @@ export default function FlooringInstallationCostClient() {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'view_item_list', { item_list_name: 'Flooring Installation Cost Guide' });
     }
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => setShowStickyBtn(window.scrollY > 600);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const removalRates = { carpet: 1.00, hardwood: 1.50, vinyl: 1.50, tile: 3.00 };
@@ -235,70 +220,26 @@ export default function FlooringInstallationCostClient() {
   return (
     <div className="bg-white">
       {/* ─── Dark Hero ─── */}
-      <div className="relative bg-slate-900 text-white overflow-hidden">
-        <img
-          src={HERO_IMAGE}
-          alt="Professional flooring installation in a Markham home — hardwood and vinyl"
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/80" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 md:pt-14 md:pb-24">
-          <Breadcrumbs items={getStaticBreadcrumbs('/flooring-installation-cost')} variant="dark" />
-
-          <div className="flex flex-wrap gap-2 mb-6 mt-2">
-            {[
-              `⭐ ${GOOGLE_RATING}/5 from ${GOOGLE_REVIEW_COUNT} Reviews`,
-              '🛡️ WSIB Insured',
-              '📏 Free In-Home Measurement',
-              '🚛 Free Furniture Moving',
-            ].map(badge => (
-              <span key={badge} className="bg-white/10 backdrop-blur-sm text-amber-200 text-xs font-semibold px-3 py-1.5 rounded-full border border-white/15">
-                {badge}
-              </span>
-            ))}
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 max-w-4xl">
-            Flooring Installation<br />
-            <span className="text-amber-400">Cost Guide</span>
-          </h1>
-          <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl">
-            Transparent pricing from a local, family-owned company. Material + professional installation — no hidden fees, free in-home measurements across the GTA.
-          </p>
-
-          {/* Pricing Pills */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            {[
-              { value: '$2.00', label: 'per sqft vinyl/laminate install' },
-              { value: '$2.25', label: 'per sqft hardwood install' },
-              { value: 'FREE', label: 'in-home measurement' },
-            ].map(pill => (
-              <div key={pill.label} className="bg-white/10 backdrop-blur rounded-xl px-4 py-2.5 text-center min-w-[100px]">
-                <p className="text-xl md:text-2xl font-black text-amber-400">{pill.value}</p>
-                <p className="text-[11px] text-slate-300 leading-tight">{pill.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Dual CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link
-              href={createPageUrl('FreeMeasurement')}
-              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-base px-7 py-3.5 rounded-xl transition-colors"
-            >
-              📏 Book Free Measurement
-            </Link>
-            <a
-              href="tel:6474281111"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold text-base px-7 py-3.5 rounded-xl border border-white/20 transition-colors"
-            >
-              <PhoneIcon className="w-4 h-4" />
-              (647) 428-1111
-            </a>
-          </div>
-        </div>
-      </div>
+      <ServiceHero
+        heroImage={HERO_IMAGE}
+        heroAlt="Professional flooring installation in a Markham home — hardwood and vinyl"
+        breadcrumbPath="/flooring-installation-cost"
+        badges={[
+          `⭐ ${GOOGLE_RATING}/5 from ${GOOGLE_REVIEW_COUNT} Reviews`,
+          '🛡️ WSIB Insured',
+          '📏 Free In-Home Measurement',
+          '🚛 Free Furniture Moving',
+        ]}
+        titleLine1="Flooring Installation"
+        titleLine2="Cost Guide"
+        subtitle="Transparent pricing from a local, family-owned company. Material + professional installation — no hidden fees, free in-home measurements across the GTA."
+        pricingPills={[
+          { value: '$2.00', label: 'per sqft vinyl/laminate install' },
+          { value: '$2.25', label: 'per sqft hardwood install' },
+          { value: 'FREE', label: 'in-home measurement' },
+        ]}
+        primaryCTA={{ text: '📏 Book Free Measurement', route: 'FreeMeasurement' }}
+      />
 
       {/* ─── Table of Contents ─── */}
       <nav className="bg-slate-50 border-b border-slate-200 sticky top-0 z-40">
@@ -710,83 +651,22 @@ export default function FlooringInstallationCostClient() {
       </section>
 
       {/* ─── Reviews ─── */}
-      <section className="py-12 md:py-16 bg-slate-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="text-amber-500 text-xl">⭐</span>
-            <span className="font-bold text-lg text-slate-800">{GOOGLE_RATING}/5</span>
-            <span className="text-slate-500 text-sm">from {GOOGLE_REVIEW_COUNT} Google Reviews</span>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4 mt-6">
-            {REVIEWS.map((review, i) => (
-              <div key={i} className="bg-white border border-slate-200 rounded-xl p-5">
-                <p className="text-sm text-slate-600 leading-relaxed mb-3">&ldquo;{review.text}&rdquo;</p>
-                <p className="text-xs font-semibold text-slate-800">— {review.name}</p>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-4">
-            <a
-              href="https://g.page/r/CSOcdolefFaJEAI/review"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-amber-600 hover:text-amber-700 text-xs font-semibold underline underline-offset-2"
-            >
-              Read all {GOOGLE_REVIEW_COUNT} reviews on Google →
-            </a>
-          </div>
-        </div>
-      </section>
+      <GoogleReviews reviews={REVIEWS} bg="bg-slate-50" />
 
       {/* ─── Project Gallery ─── */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">Our Installation Work</h2>
-          <p className="text-slate-500 text-center mb-8 max-w-2xl mx-auto">
-            Real flooring installation projects by our crew across the GTA.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {GALLERY_ITEMS.map((img, i) => (
-              <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden group">
-                <Image
-                  src={img.url}
-                  alt={img.alt_text || img.alt || `BBS Flooring installation project ${i + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 text-center">
-            <Link
-              href={createPageUrl('Gallery')}
-              className="text-amber-600 hover:text-amber-700 font-semibold text-sm underline underline-offset-2"
-            >
-              View all projects in our gallery →
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ServiceGallery
+        title="Our Installation Work"
+        subtitle="Real flooring installation projects by our crew across the GTA."
+        images={GALLERY_ITEMS}
+        galleryLink="View all projects in our gallery"
+      />
 
       {/* ─── Service Area ─── */}
-      <section className="py-10 md:py-12 bg-slate-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">Flooring Installation Across the GTA</h2>
-          <p className="text-slate-500 text-sm mb-6 max-w-xl mx-auto">
-            Free in-home measurements and professional installation anywhere in our service area.
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {SERVICE_AREAS.map(area => (
-              <span key={area} className="bg-white border border-slate-200 text-slate-700 text-xs font-medium px-3 py-1.5 rounded-full">
-                📍 {area}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServiceAreaPills
+        title="Flooring Installation Across the GTA"
+        subtitle="Free in-home measurements and professional installation anywhere in our service area."
+        bg="bg-slate-50"
+      />
 
       {/* ─── Financing ─── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -809,40 +689,15 @@ export default function FlooringInstallationCostClient() {
         />
 
         {/* ─── Final CTA ─── */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 md:p-12 text-center text-white mt-12">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to Get Your Exact Cost?</h2>
-          <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-            Book a free in-home measurement. We&apos;ll measure every room, discuss your flooring goals, and give you a detailed, no-obligation quote.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href={createPageUrl('FreeMeasurement')}
-              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-base px-8 py-3.5 rounded-xl transition-colors"
-            >
-              📏 Book Free Measurement
-            </Link>
-            <a
-              href="tel:6474281111"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-base px-8 py-3.5 rounded-xl border border-white/20 transition-colors"
-            >
-              <PhoneIcon className="w-4 h-4" />
-              (647) 428-1111
-            </a>
-          </div>
-        </div>
+        <FinalCTA
+          title="Ready to Get Your Exact Cost?"
+          subtitle="Book a free in-home measurement. We'll measure every room, discuss your flooring goals, and give you a detailed, no-obligation quote."
+          primaryCTA={{ text: '📏 Book Free Measurement', route: 'FreeMeasurement' }}
+        />
       </div>
 
       {/* ─── Mobile Sticky CTA ─── */}
-      {showStickyBtn && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3 shadow-xl safe-area-inset-bottom">
-          <Link
-            href={createPageUrl('FreeMeasurement')}
-            className="block w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl text-center text-base transition-colors"
-          >
-            📏 Book Free Measurement
-          </Link>
-        </div>
-      )}
+      <MobileStickyBtn text="📏 Book Free Measurement" />
     </div>
   );
 }

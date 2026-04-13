@@ -8,6 +8,7 @@ import { CheckCircle, Star, ArrowRight, DollarSign, Shield } from 'lucide-react'
 import { stairsImages } from '@/data/galleryImages';
 import RelatedCategories from '@/components/RelatedCategories';
 import StaticFAQ from '@/components/StaticFAQ';
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/lib/service-constants';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -288,7 +289,7 @@ export default function StairsClient() {
                 <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
               ))}
             </div>
-            <span className="text-lg font-semibold text-slate-700">4.7/5 from 41 Google Reviews</span>
+            <span className="text-lg font-semibold text-slate-700">{GOOGLE_RATING}/5 from {GOOGLE_REVIEW_COUNT} Google Reviews</span>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -312,7 +313,7 @@ export default function StairsClient() {
 
           <div className="mt-6 text-center">
             <a href="https://g.page/r/CWJpmP-Dl-g4EBM/review" target="_blank" rel="noopener noreferrer" className="text-amber-600 hover:text-amber-700 font-semibold underline">
-              Read all 41 reviews on Google →
+              Read all {GOOGLE_REVIEW_COUNT} reviews on Google →
             </a>
           </div>
         </div>

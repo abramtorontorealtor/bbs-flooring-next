@@ -1,25 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { createPageUrl } from '@/lib/routes';
+import { useEffect } from 'react';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { flooringImages } from '@/data/galleryImages';
+import { CDN_GALLERY } from '@/lib/service-constants';
+import {
+  ServiceHero,
+  ServiceProcess,
+  ServiceGallery,
+  ServiceAreaPills,
+  FinalCTA,
+  MobileStickyBtn,
+} from '@/components/service';
 
-/* ── Inline SVG icons ── */
-function PhoneIcon({ className = 'w-5 h-5' }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
-}
+/* ── Page Data ── */
 
-const GOOGLE_RATING = '4.7';
-const GOOGLE_REVIEW_COUNT = 41;
-
-const HERO_IMAGE = 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/gallery/flooring-project-10.webp';
+const HERO_IMAGE = `${CDN_GALLERY}/flooring-project-10.webp`;
 
 const SPOKE_LINKS = [
   { route: 'StairRefinishing', label: 'Stair Refinishing & Renovation', description: 'Match your freshly refinished floors with beautifully restored staircases' },
@@ -41,7 +39,6 @@ const PROCESS_STEPS = [
 const PRICING = [
   { service: 'Sand & Refinish (Natural)', price: '$5.25/sqft', note: 'Sand existing finish, apply 2-3 coats polyurethane' },
   { service: 'Sand, Stain & Refinish', price: '$6.25/sqft', note: 'Includes custom stain colour + 2-3 coats poly' },
-
 ];
 
 const REFINISH_VS_REPLACE = {
@@ -71,104 +68,45 @@ const FAQ_ITEMS = [
   { question: 'Do you refinish hardwood floors in Toronto and Durham?', answer: 'Yes. BBS Flooring refinishes hardwood floors across the GTA including Markham, Toronto, Scarborough, Pickering, Ajax, Whitby, Richmond Hill, Vaughan, and all of Durham Region. Free in-home assessments anywhere in our service area.' },
 ];
 
-// Gallery — pick floor project images showing refinished hardwood
 const GALLERY_ITEMS = [
-  flooringImages[9],  // High-gloss finished floor
-  flooringImages[0],  // Laminate/hardwood installation
-  flooringImages[5],  // Natural maple wood-look
-  flooringImages[3],  // Rich espresso
-  flooringImages[8],  // Multi-room renovation
-  flooringImages[7],  // Quality craftsmanship detail
-];
-
-const SERVICE_AREAS = [
-  'Markham', 'Toronto', 'Scarborough', 'Richmond Hill', 'Vaughan',
-  'Pickering', 'Ajax', 'Whitby', 'Oshawa', 'Stouffville',
-  'Newmarket', 'Aurora', 'Mississauga', 'Brampton', 'Oakville',
+  flooringImages[9],
+  flooringImages[0],
+  flooringImages[5],
+  flooringImages[3],
+  flooringImages[8],
+  flooringImages[7],
 ];
 
 export default function HardwoodRefinishingClient() {
-  const [showStickyBtn, setShowStickyBtn] = useState(false);
-
   useEffect(() => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'view_item_list', { item_list_name: 'Hardwood Refinishing' });
     }
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => setShowStickyBtn(window.scrollY > 600);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="bg-white">
       {/* ─── Dark Hero ─── */}
-      <div className="relative bg-slate-900 text-white overflow-hidden">
-        <img
-          src={HERO_IMAGE}
-          alt="Professional hardwood floor refinishing — glossy finished hardwood in Markham home"
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/80" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 md:pt-14 md:pb-24">
-          <Breadcrumbs items={getStaticBreadcrumbs('/hardwood-refinishing')} variant="dark" />
-
-          <div className="flex flex-wrap gap-2 mb-6 mt-2">
-            {[
-              `⭐ ${GOOGLE_RATING}/5 from ${GOOGLE_REVIEW_COUNT} Reviews`,
-              '🛡️ WSIB Insured',
-              '💨 Dust-Contained Sanding',
-              '📏 Free In-Home Assessment',
-            ].map(badge => (
-              <span key={badge} className="bg-white/10 backdrop-blur-sm text-amber-200 text-xs font-semibold px-3 py-1.5 rounded-full border border-white/15">
-                {badge}
-              </span>
-            ))}
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 max-w-4xl">
-            Hardwood Floor<br />
-            <span className="text-amber-400">Refinishing</span>
-          </h1>
-          <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl">
-            Scratched, faded, or worn hardwood doesn&apos;t need replacing — it needs refinishing. Professional dust-contained sanding, custom staining, and commercial-grade finishes across Markham, Toronto &amp; the GTA.
-          </p>
-
-          {/* Pricing Pills */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            {[
-              { value: '$5.25', label: 'per sqft natural' },
-              { value: '$6.25', label: 'per sqft with stain' },
-              { value: 'FREE', label: 'in-home assessment' },
-            ].map(pill => (
-              <div key={pill.label} className="bg-white/10 backdrop-blur rounded-xl px-4 py-2.5 text-center min-w-[100px]">
-                <p className="text-xl md:text-2xl font-black text-amber-400">{pill.value}</p>
-                <p className="text-[11px] text-slate-300 leading-tight">{pill.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Dual CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link
-              href={createPageUrl('FreeMeasurement')}
-              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-base px-7 py-3.5 rounded-xl transition-colors"
-            >
-              Book a Free Assessment
-            </Link>
-            <a
-              href="tel:6474281111"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold text-base px-7 py-3.5 rounded-xl border border-white/20 transition-colors"
-            >
-              <PhoneIcon className="w-4 h-4" />
-              (647) 428-1111
-            </a>
-          </div>
-        </div>
-      </div>
+      <ServiceHero
+        heroImage={HERO_IMAGE}
+        heroAlt="Professional hardwood floor refinishing — glossy finished hardwood in Markham home"
+        breadcrumbPath="/hardwood-refinishing"
+        badges={[
+          '⭐ 4.7/5 from 41 Reviews',
+          '🛡️ WSIB Insured',
+          '💨 Dust-Contained Sanding',
+          '📏 Free In-Home Assessment',
+        ]}
+        titleLine1="Hardwood Floor"
+        titleLine2="Refinishing"
+        subtitle="Scratched, faded, or worn hardwood doesn't need replacing — it needs refinishing. Professional dust-contained sanding, custom staining, and commercial-grade finishes across Markham, Toronto & the GTA."
+        pricingPills={[
+          { value: '$5.25', label: 'per sqft natural' },
+          { value: '$6.25', label: 'per sqft with stain' },
+          { value: 'FREE', label: 'in-home assessment' },
+        ]}
+        primaryCTA={{ text: 'Book a Free Assessment', route: 'FreeMeasurement' }}
+      />
 
       {/* ─── The Savings Pitch ─── */}
       <section className="bg-amber-50 border-b border-amber-100">
@@ -200,32 +138,11 @@ export default function HardwoodRefinishingClient() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              {
-                emoji: '🪵',
-                title: 'Solid Hardwood',
-                desc: 'Red oak, white oak, maple, hickory, walnut — classic solid floors refinished to perfection. Can be sanded 5+ times over its lifetime.',
-              },
-              {
-                emoji: '🏗️',
-                title: 'Engineered Hardwood',
-                desc: 'Premium engineered with 2mm+ wear layers can be refinished 1–3 times. We measure your wear layer before proceeding — no guesswork.',
-              },
-              {
-                emoji: '🎨',
-                title: 'Colour Changes',
-                desc: 'Transform light oak to rich walnut, or go from dark to Scandinavian white. Full sand-down + new stain + fresh polyurethane.',
-              },
-              {
-                emoji: '💧',
-                title: 'Water Damage Repair',
-                desc: 'Black water stains, cupping, and minor warping. We replace damaged boards, bleach stains, and blend the repair seamlessly.',
-              },
-              {
-                emoji: '🐾',
-                title: 'Pet Damage Restoration',
-                desc: 'Deep scratches, urine stains, worn traffic paths. We sand past the damage, treat stains, and apply extra-durable finish coats.',
-              },
-
+              { emoji: '🪵', title: 'Solid Hardwood', desc: 'Red oak, white oak, maple, hickory, walnut — classic solid floors refinished to perfection. Can be sanded 5+ times over its lifetime.' },
+              { emoji: '🏗️', title: 'Engineered Hardwood', desc: 'Premium engineered with 2mm+ wear layers can be refinished 1–3 times. We measure your wear layer before proceeding — no guesswork.' },
+              { emoji: '🎨', title: 'Colour Changes', desc: 'Transform light oak to rich walnut, or go from dark to Scandinavian white. Full sand-down + new stain + fresh polyurethane.' },
+              { emoji: '💧', title: 'Water Damage Repair', desc: 'Black water stains, cupping, and minor warping. We replace damaged boards, bleach stains, and blend the repair seamlessly.' },
+              { emoji: '🐾', title: 'Pet Damage Restoration', desc: 'Deep scratches, urine stains, worn traffic paths. We sand past the damage, treat stains, and apply extra-durable finish coats.' },
             ].map(s => (
               <div key={s.title} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
                 <div className="text-3xl mb-3">{s.emoji}</div>
@@ -238,31 +155,11 @@ export default function HardwoodRefinishingClient() {
       </section>
 
       {/* ─── Process Stepper ─── */}
-      <section className="py-12 md:py-16 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">Our Refinishing Process</h2>
-          <p className="text-slate-500 text-center mb-12 max-w-2xl mx-auto">From assessment to final walkthrough — every step handled with precision and care.</p>
-
-          <div className="space-y-6 max-w-3xl mx-auto">
-            {PROCESS_STEPS.map((s, i) => (
-              <div key={s.step} className="flex gap-4">
-                <div className="flex flex-col items-center">
-                  <div className="w-11 h-11 bg-amber-500 text-white rounded-full flex items-center justify-center text-lg flex-shrink-0">
-                    {s.icon}
-                  </div>
-                  {i < PROCESS_STEPS.length - 1 && (
-                    <div className="w-0.5 flex-1 bg-amber-200 mt-2" />
-                  )}
-                </div>
-                <div className="pb-2">
-                  <h3 className="font-bold text-base text-slate-800 mb-0.5">{s.title}</h3>
-                  <p className="text-sm text-slate-500">{s.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServiceProcess
+        title="Our Refinishing Process"
+        subtitle="From assessment to final walkthrough — every step handled with precision and care."
+        steps={PROCESS_STEPS}
+      />
 
       {/* ─── Pricing ─── */}
       <section className="py-12 md:py-16 bg-white">
@@ -274,10 +171,7 @@ export default function HardwoodRefinishingClient() {
 
           <div className="space-y-3">
             {PRICING.map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 hover:border-amber-300 transition-colors"
-              >
+              <div key={i} className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 hover:border-amber-300 transition-colors">
                 <div>
                   <h3 className="font-semibold text-slate-800 text-sm">{item.service}</h3>
                   <p className="text-xs text-slate-400 mt-0.5">{item.note}</p>
@@ -326,7 +220,6 @@ export default function HardwoodRefinishingClient() {
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Refinish Column */}
             <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-lg flex-shrink-0">✓</div>
@@ -342,7 +235,6 @@ export default function HardwoodRefinishingClient() {
               </ul>
             </div>
 
-            {/* Replace Column */}
             <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center text-lg flex-shrink-0">✕</div>
@@ -374,7 +266,6 @@ export default function HardwoodRefinishingClient() {
           </p>
 
           <div className="grid sm:grid-cols-2 gap-6">
-            {/* Stain Colours */}
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
               <h3 className="font-bold text-lg text-slate-800 mb-4">🎨 Popular Stain Colours</h3>
               <div className="flex flex-wrap gap-2">
@@ -398,7 +289,6 @@ export default function HardwoodRefinishingClient() {
               <p className="text-xs text-slate-400 mt-4">We carry Minwax, Bona, and Rubio Monocoat stains. Test patches applied on your floor before committing.</p>
             </div>
 
-            {/* Finish Types */}
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
               <h3 className="font-bold text-lg text-slate-800 mb-4">🛡️ Finish Types</h3>
               <div className="space-y-3">
@@ -444,54 +334,19 @@ export default function HardwoodRefinishingClient() {
       </section>
 
       {/* ─── Project Gallery ─── */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">Our Flooring Work</h2>
-          <p className="text-slate-500 text-center mb-8 max-w-2xl mx-auto">
-            Real hardwood refinishing and installation projects by our crew across the GTA.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {GALLERY_ITEMS.map((img, i) => (
-              <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden group">
-                <Image
-                  src={img.url}
-                  alt={img.alt_text || img.alt || `BBS Flooring hardwood project ${i + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 text-center">
-            <Link
-              href={createPageUrl('Gallery')}
-              className="text-amber-600 hover:text-amber-700 font-semibold text-sm underline underline-offset-2"
-            >
-              View all projects in our gallery →
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ServiceGallery
+        title="Our Flooring Work"
+        subtitle="Real hardwood refinishing and installation projects by our crew across the GTA."
+        images={GALLERY_ITEMS}
+        galleryLink="View all projects in our gallery"
+      />
 
       {/* ─── Service Area ─── */}
-      <section className="py-10 md:py-12 bg-slate-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">Hardwood Refinishing Across the GTA</h2>
-          <p className="text-slate-500 text-sm mb-6 max-w-xl mx-auto">
-            Free in-home assessments anywhere in our service area. Same-day quotes available.
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {SERVICE_AREAS.map(area => (
-              <span key={area} className="bg-white border border-slate-200 text-slate-700 text-xs font-medium px-3 py-1.5 rounded-full">
-                📍 {area}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServiceAreaPills
+        title="Hardwood Refinishing Across the GTA"
+        subtitle="Free in-home assessments anywhere in our service area. Same-day quotes available."
+        bg="bg-slate-50"
+      />
 
       {/* ─── Financing ─── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -508,46 +363,18 @@ export default function HardwoodRefinishingClient() {
           skipSchema
         />
 
-        <SpokeLinks
-          title="Explore Related Services"
-          links={SPOKE_LINKS}
-        />
+        <SpokeLinks title="Explore Related Services" links={SPOKE_LINKS} />
 
         {/* ─── Final CTA ─── */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 md:p-12 text-center text-white mt-12">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to Restore Your Hardwood Floors?</h2>
-          <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-            Book a free in-home assessment. We&apos;ll inspect your floors, show you stain samples, and provide a detailed quote — no obligation.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href={createPageUrl('FreeMeasurement')}
-              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-base px-8 py-3.5 rounded-xl transition-colors"
-            >
-              Book a Free Assessment
-            </Link>
-            <a
-              href="tel:6474281111"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-base px-8 py-3.5 rounded-xl border border-white/20 transition-colors"
-            >
-              <PhoneIcon className="w-4 h-4" />
-              (647) 428-1111
-            </a>
-          </div>
-        </div>
+        <FinalCTA
+          title="Ready to Restore Your Hardwood Floors?"
+          subtitle="Book a free in-home assessment. We'll inspect your floors, show you stain samples, and provide a detailed quote — no obligation."
+          primaryCTA={{ text: 'Book a Free Assessment', route: 'FreeMeasurement' }}
+        />
       </div>
 
       {/* ─── Mobile Sticky CTA ─── */}
-      {showStickyBtn && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3 shadow-xl safe-area-inset-bottom">
-          <Link
-            href={createPageUrl('FreeMeasurement')}
-            className="block w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl text-center text-base transition-colors"
-          >
-            🏠 Book Free Assessment
-          </Link>
-        </div>
-      )}
+      <MobileStickyBtn text="🏠 Book Free Assessment" />
     </div>
   );
 }

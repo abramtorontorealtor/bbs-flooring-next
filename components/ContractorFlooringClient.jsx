@@ -1,37 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, CDN_GALLERY, PHONE_HREF, PHONE_DISPLAY, SERVICE_AREAS } from '@/lib/service-constants';
+import { PhoneIcon, CheckIcon, StarIcon } from '@/components/service';
+import { MobileStickyBtn } from '@/components/service';
 
 const StaticFAQ = dynamic(() => import('@/components/StaticFAQ'), { ssr: false });
 const SpokeLinks = dynamic(() => import('@/components/SpokeLinks'), { ssr: false });
 const FinancingBanner = dynamic(() => import('@/components/FinancingBanner'), { ssr: false });
 const ContractorRegistrationForm = dynamic(() => import('@/components/ContractorRegistrationForm'), { ssr: false });
 
-/* ── Inline SVG icons — avoids lucide-react in bundle ── */
-function PhoneIcon({ className = 'w-5 h-5' }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
-}
-function CheckIcon({ className = 'w-4 h-4' }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>;
-}
-function StarIcon({ className = 'w-5 h-5' }) {
-  return <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>;
-}
 function ArrowRightIcon({ className = 'w-4 h-4' }) {
   return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>;
 }
 
-const CDN = 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/gallery';
-const HERO_IMAGE = `${CDN}/commercial-project-4.webp`;
-
-const GOOGLE_RATING = '4.7';
-const GOOGLE_REVIEW_COUNT = 41;
+const CDN = CDN_GALLERY;
+const HERO_IMAGE = `${CDN_GALLERY}/commercial-project-4.webp`;
 
 /* ── Trade Program Benefits ── */
 const BENEFITS = [
@@ -145,22 +134,11 @@ const SPOKE_LINKS = [
   { route: 'FreeMeasurement', label: 'Free In-Home Measurement', description: 'Complimentary on-site measurement for accurate project quoting' },
 ];
 
-/* ── Service Area ── */
-const SERVICE_AREAS = [
-  'Markham', 'Toronto', 'Scarborough', 'North York', 'Richmond Hill',
-  'Vaughan', 'Stouffville', 'Pickering', 'Ajax', 'Whitby',
-  'Oshawa', 'Durham Region', 'Newmarket', 'Aurora', 'Brampton',
-];
+
 
 export default function ContractorFlooringClient() {
   const breadcrumbs = getStaticBreadcrumbs('/contractor-flooring');
-  const [showSticky, setShowSticky] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setShowSticky(window.scrollY > 600);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <main className="min-h-screen bg-white">
@@ -539,20 +517,7 @@ export default function ContractorFlooringClient() {
       </section>
 
       {/* ── MOBILE STICKY CTA ── */}
-      <div
-        className={`fixed bottom-0 left-0 right-0 z-40 md:hidden transition-transform duration-300 ${
-          showSticky ? 'translate-y-0' : 'translate-y-full'
-        }`}
-      >
-        <div className="bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 safe-area-inset-bottom">
-          <a
-            href="#contractor-form"
-            className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl text-base transition-colors w-full shadow-lg shadow-amber-500/20"
-          >
-            🏗️ Apply for Trade Pricing
-          </a>
-        </div>
-      </div>
+      <MobileStickyBtn text="🏗️ Apply for Trade Pricing" href="#contractor-form" />
     </main>
   );
 }

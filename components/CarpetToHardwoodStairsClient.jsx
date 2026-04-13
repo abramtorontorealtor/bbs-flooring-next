@@ -1,25 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useEffect } from 'react';
 import Image from 'next/image';
-import { createPageUrl } from '@/lib/routes';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { stairsImages } from '@/data/galleryImages';
+import { CDN_GALLERY } from '@/lib/service-constants';
+import {
+  ServiceHero,
+  ServiceProcess,
+  ServiceGallery,
+  FinalCTA,
+  MobileStickyBtn,
+} from '@/components/service';
 
-/* ── Inline SVG icons ── */
-function PhoneIcon({ className = 'w-5 h-5' }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
-}
+/* ── Page Data ── */
 
-const GOOGLE_RATING = '4.7';
-const GOOGLE_REVIEW_COUNT = 41;
-
-const HERO_IMAGE = 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/gallery/stair-project-4.webp';
+const HERO_IMAGE = `${CDN_GALLERY}/stair-project-4.webp`;
 
 const SPOKE_LINKS = [
   { route: 'StairRefinishing', label: 'Staircase Refinishing & Staining', description: 'Already have hardwood stairs? Restore them with professional sanding, staining & finishing' },
@@ -46,100 +44,47 @@ const FAQ_ITEMS = [
   { question: 'Can I get vinyl stair caps instead of hardwood?', answer: 'Yes. Vinyl stair caps are a more budget-friendly option that still looks great. They\'re especially popular when the main floors are vinyl plank — everything matches perfectly. Ask about vinyl stair options during your free assessment.' },
 ];
 
-// Gallery — show transformations
 const GALLERY_ITEMS = [
-  stairsImages[0],  // Full reno
-  stairsImages[7],  // White risers dark treads
-  stairsImages[2],  // Recapping
-  stairsImages[4],  // Vinyl stair treads with hardwood
-  stairsImages[11], // Cherry stain
-  stairsImages[9],  // Hardwood stair installation
+  stairsImages[0],
+  stairsImages[7],
+  stairsImages[2],
+  stairsImages[4],
+  stairsImages[11],
+  stairsImages[9],
 ];
 
 export default function CarpetToHardwoodStairsClient() {
-  const [showStickyBtn, setShowStickyBtn] = useState(false);
-
   useEffect(() => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'view_item_list', { item_list_name: 'Carpet to Hardwood Stairs' });
     }
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => setShowStickyBtn(window.scrollY > 600);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="bg-white">
       {/* ─── Dark Hero ─── */}
-      <div className="relative bg-slate-900 text-white overflow-hidden">
-        <img
-          src={HERO_IMAGE}
-          alt="Carpet to hardwood stair conversion showing beautiful dark-stained treads"
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/80" />
+      <ServiceHero
+        heroImage={HERO_IMAGE}
+        heroAlt="Carpet to hardwood stair conversion showing beautiful dark-stained treads"
+        breadcrumbPath="/carpet-to-hardwood-stairs"
+        badges={[
+          '⭐ 4.7/5 Google Reviews',
+          '🛡️ WSIB Insured',
+          '⏱️ 2-3 Day Turnaround',
+          '🎨 Custom Stain Matching',
+        ]}
+        titleLine1="Carpet to Hardwood"
+        titleLine2="Stair Conversion"
+        subtitle="Ditch the dust-trapping carpet and reveal (or install) beautiful hardwood treads. Professional results, honest pricing, 2-3 day turnaround."
+        pricingPills={[
+          { value: '$200', label: 'per step (full conversion)' },
+          { value: '$185', label: 'per step (recapping)' },
+          { value: '~$2,600', label: 'typical 13-step staircase' },
+        ]}
+        primaryCTA={{ text: 'Get a Free Stair Quote', route: 'FreeMeasurement' }}
+      />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 md:pt-14 md:pb-24">
-          <Breadcrumbs items={getStaticBreadcrumbs('/carpet-to-hardwood-stairs')} variant="dark" />
-
-          <div className="flex flex-wrap gap-2 mb-6 mt-2">
-            {[
-              `⭐ ${GOOGLE_RATING}/5 Google Reviews`,
-              '🛡️ WSIB Insured',
-              '⏱️ 2-3 Day Turnaround',
-              '🎨 Custom Stain Matching',
-            ].map(badge => (
-              <span key={badge} className="bg-white/10 backdrop-blur-sm text-amber-200 text-xs font-semibold px-3 py-1.5 rounded-full border border-white/15">
-                {badge}
-              </span>
-            ))}
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 max-w-4xl">
-            Carpet to Hardwood<br />
-            <span className="text-amber-400">Stair Conversion</span>
-          </h1>
-          <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl">
-            Ditch the dust-trapping carpet and reveal (or install) beautiful hardwood treads. Professional results, honest pricing, 2-3 day turnaround.
-          </p>
-
-          {/* Pricing Pills */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            {[
-              { value: '$200', label: 'per step (full conversion)' },
-              { value: '$185', label: 'per step (recapping)' },
-              { value: '~$2,600', label: 'typical 13-step staircase' },
-            ].map(pill => (
-              <div key={pill.label} className="bg-white/10 backdrop-blur rounded-xl px-4 py-2.5 text-center min-w-[100px]">
-                <p className="text-xl md:text-2xl font-black text-amber-400">{pill.value}</p>
-                <p className="text-[11px] text-slate-300 leading-tight">{pill.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Dual CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link
-              href={createPageUrl('FreeMeasurement')}
-              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-base px-7 py-3.5 rounded-xl transition-colors"
-            >
-              Get a Free Stair Quote
-            </Link>
-            <a
-              href="tel:6474281111"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold text-base px-7 py-3.5 rounded-xl border border-white/20 transition-colors"
-            >
-              <PhoneIcon className="w-4 h-4" />
-              (647) 428-1111
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* ─── The Transformation Story ─── */}
+      {/* ─── Why Convert ─── */}
       <section className="pt-10 pb-12 md:pt-14 md:pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">Why Convert Your Carpet Stairs?</h2>
@@ -149,21 +94,9 @@ export default function CarpetToHardwoodStairsClient() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              {
-                emoji: '🧹',
-                title: 'Health & Cleanliness',
-                desc: 'Carpet traps dust, pet dander, allergens, and bacteria deep in the fibres. Hardwood stairs are easy to clean and don\'t harbour allergens.',
-              },
-              {
-                emoji: '📈',
-                title: 'Instant Resale Value',
-                desc: 'Hardwood stairs are a top-5 home upgrade for resale. Buyers notice stairs immediately — they\'re the centrepiece of most entryways.',
-              },
-              {
-                emoji: '🛡️',
-                title: 'Durability & Safety',
-                desc: 'Carpet wears on high-traffic stair edges within 3-5 years, creating trip hazards. Hardwood treads with proper nosing are safer and last decades.',
-              },
+              { emoji: '🧹', title: 'Health & Cleanliness', desc: 'Carpet traps dust, pet dander, allergens, and bacteria deep in the fibres. Hardwood stairs are easy to clean and don\'t harbour allergens.' },
+              { emoji: '📈', title: 'Instant Resale Value', desc: 'Hardwood stairs are a top-5 home upgrade for resale. Buyers notice stairs immediately — they\'re the centrepiece of most entryways.' },
+              { emoji: '🛡️', title: 'Durability & Safety', desc: 'Carpet wears on high-traffic stair edges within 3-5 years, creating trip hazards. Hardwood treads with proper nosing are safer and last decades.' },
             ].map(item => (
               <div key={item.title} className="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center">
                 <div className="text-4xl mb-3">{item.emoji}</div>
@@ -198,31 +131,11 @@ export default function CarpetToHardwoodStairsClient() {
       </section>
 
       {/* ─── Process Stepper ─── */}
-      <section className="py-12 md:py-16 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">The Conversion Process</h2>
-          <p className="text-slate-500 text-center mb-12 max-w-2xl mx-auto">From carpet to stunning hardwood in 2-3 days. Here&apos;s exactly how it works.</p>
-
-          <div className="space-y-6 max-w-3xl mx-auto">
-            {PROCESS_STEPS.map((s, i) => (
-              <div key={s.step} className="flex gap-4">
-                <div className="flex flex-col items-center">
-                  <div className="w-11 h-11 bg-amber-500 text-white rounded-full flex items-center justify-center text-lg flex-shrink-0">
-                    {s.icon}
-                  </div>
-                  {i < PROCESS_STEPS.length - 1 && (
-                    <div className="w-0.5 flex-1 bg-amber-200 mt-2" />
-                  )}
-                </div>
-                <div className="pb-2">
-                  <h3 className="font-bold text-base text-slate-800 mb-0.5">{s.title}</h3>
-                  <p className="text-sm text-slate-500">{s.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServiceProcess
+        title="The Conversion Process"
+        subtitle="From carpet to stunning hardwood in 2-3 days. Here's exactly how it works."
+        steps={PROCESS_STEPS}
+      />
 
       {/* ─── Pricing ─── */}
       <section className="py-12 md:py-16 bg-white">
@@ -238,10 +151,7 @@ export default function CarpetToHardwoodStairsClient() {
               { service: 'Railing Upgrades (iron spindles)', price: '$25/picket installed', note: 'Modern iron pickets with material included' },
               { service: 'New Nosing', price: '$30/ft', note: 'Stair nose transition to match flooring' },
             ].map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 hover:border-amber-300 transition-colors"
-              >
+              <div key={i} className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 hover:border-amber-300 transition-colors">
                 <div>
                   <h3 className="font-semibold text-slate-800 text-sm">{item.service}</h3>
                   <p className="text-xs text-slate-400 mt-0.5">{item.note}</p>
@@ -266,37 +176,13 @@ export default function CarpetToHardwoodStairsClient() {
       </section>
 
       {/* ─── Project Gallery ─── */}
-      <section className="py-12 md:py-16 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">Carpet-to-Hardwood Transformations</h2>
-          <p className="text-slate-500 text-center mb-8 max-w-2xl mx-auto">
-            Real projects from our stair crew across Markham, Toronto & Durham.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {GALLERY_ITEMS.map((img, i) => (
-              <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden group">
-                <Image
-                  src={img.url}
-                  alt={img.alt_text || img.alt || `BBS Flooring stair conversion project ${i + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 text-center">
-            <Link
-              href={createPageUrl('Gallery')}
-              className="text-amber-600 hover:text-amber-700 font-semibold text-sm underline underline-offset-2"
-            >
-              View all 47 staircase projects →
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ServiceGallery
+        title="Carpet-to-Hardwood Transformations"
+        subtitle="Real projects from our stair crew across Markham, Toronto & Durham."
+        images={GALLERY_ITEMS}
+        galleryLink="View all 47 staircase projects"
+        bg="bg-slate-50"
+      />
 
       {/* ─── Financing ─── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -313,46 +199,18 @@ export default function CarpetToHardwoodStairsClient() {
           skipSchema
         />
 
-        <SpokeLinks
-          title="Explore Related Services"
-          links={SPOKE_LINKS}
-        />
+        <SpokeLinks title="Explore Related Services" links={SPOKE_LINKS} />
 
         {/* ─── Final CTA ─── */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 md:p-12 text-center text-white mt-12">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to Ditch the Carpet?</h2>
-          <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-            Book a free in-home assessment. We&apos;ll check what&apos;s under your carpet, show you material options, and quote the full job.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href={createPageUrl('FreeMeasurement')}
-              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-base px-8 py-3.5 rounded-xl transition-colors"
-            >
-              Get a Free Stair Quote
-            </Link>
-            <a
-              href="tel:6474281111"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-base px-8 py-3.5 rounded-xl border border-white/20 transition-colors"
-            >
-              <PhoneIcon className="w-4 h-4" />
-              (647) 428-1111
-            </a>
-          </div>
-        </div>
+        <FinalCTA
+          title="Ready to Ditch the Carpet?"
+          subtitle="Book a free in-home assessment. We'll check what's under your carpet, show you material options, and quote the full job."
+          primaryCTA={{ text: 'Get a Free Stair Quote', route: 'FreeMeasurement' }}
+        />
       </div>
 
       {/* ─── Mobile Sticky CTA ─── */}
-      {showStickyBtn && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3 shadow-xl safe-area-inset-bottom">
-          <Link
-            href={createPageUrl('FreeMeasurement')}
-            className="block w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl text-center text-base transition-colors"
-          >
-            🪜 Get a Free Stair Quote
-          </Link>
-        </div>
-      )}
+      <MobileStickyBtn text="🪜 Get a Free Stair Quote" />
     </div>
   );
 }
