@@ -48,11 +48,13 @@ export default function ContactClient() {
     }
 
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Submission failed');
       // GA4 — generate_lead event
       if (typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'generate_lead', {

@@ -449,12 +449,15 @@ export default function AdminCRMClient() {
     contactLeads.forEach(c => {
       leads.push({
         id: `contact-${c.id}`, entityId: c.id, source: 'contact',
-        name: c.name || 'Anonymous',
-        phone: c.phone || '', email: c.email || '',
+        name: c.customer_name || c.name || 'Anonymous',
+        phone: c.customer_phone || c.phone || '', email: c.customer_email || c.email || '',
         value: 0,
-        status: c.lead_status || 'new',
+        status: c.lead_status || c.status || 'new',
         date: c.created_date,
-        details: c.message ? c.message.substring(0, 100) + (c.message.length > 100 ? '...' : '') : 'Contact form',
+        details: [
+          c.source && c.source !== 'contact_form' ? `[${c.source.replace(/_/g, ' ')}]` : '',
+          c.message ? c.message.substring(0, 120) + (c.message.length > 120 ? '...' : '') : 'Contact form',
+        ].filter(Boolean).join(' '),
         notes: c.notes || '', lost_reason: c.lost_reason || '',
         raw: c,
       });

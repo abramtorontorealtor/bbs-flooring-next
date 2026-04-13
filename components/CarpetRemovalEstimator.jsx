@@ -29,7 +29,7 @@ export default function CarpetRemovalEstimator() {
     setError('');
     setLoading(true);
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -40,9 +40,19 @@ export default function CarpetRemovalEstimator() {
           source: 'carpet-removal-estimator',
         }),
       });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Submission failed');
+      // GA4
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: 'carpet-removal-estimator', value: total });
+      }
+      // Meta Pixel
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'Carpet Removal Estimate', value: total, currency: 'CAD' });
+      }
       setSubmitted(true);
     } catch {
-      setError('Something went wrong. Please try again or call us directly.');
+      setError('Something went wrong. Please try again or call us at (647) 428-1111.');
     } finally {
       setLoading(false);
     }

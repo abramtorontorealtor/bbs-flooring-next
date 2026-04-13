@@ -15,7 +15,10 @@ export default function NewsletterForm() {
     try {
       await entities.ContactLead.create({
         email,
+        customer_email: email,
         lead_status: 'new',
+        status: 'new',
+        source: 'newsletter_footer',
         message: 'Email subscriber (footer signup)',
       });
     } catch (err) {

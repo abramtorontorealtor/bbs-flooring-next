@@ -17,7 +17,10 @@ export default function Footer() {
     try {
       await entities.ContactLead.create({
         email: footerEmail,
+        customer_email: footerEmail,
         lead_status: 'new',
+        status: 'new',
+        source: 'newsletter_footer',
         message: 'Email subscriber (footer signup)',
       });
     } catch (err) {

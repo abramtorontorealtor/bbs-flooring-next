@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
-import { sendContactAdminNotification } from '@/lib/email';
+import { sendContactAdminNotification, sendContractorCustomerConfirmation } from '@/lib/email';
 
 export async function POST(request) {
   try {
@@ -13,32 +13,48 @@ export async function POST(request) {
 
     const supabase = getSupabaseAdminClient();
 
+    const detailMessage = [
+      `Company: ${company_name || 'N/A'}`,
+      `Trade: ${trade_type || 'N/A'}`,
+      `Monthly Volume: ${monthly_volume || 'N/A'}`,
+      message ? `Message: ${message}` : '',
+    ].filter(Boolean).join('\n');
+
     const { error } = await supabase
       .from('contact_leads')
       .insert({
         customer_name: contact_name,
         customer_email: email,
         customer_phone: phone,
-        message: [
-          `Company: ${company_name || 'N/A'}`,
-          `Trade: ${trade_type || 'N/A'}`,
-          `Monthly Volume: ${monthly_volume || 'N/A'}`,
-          message ? `Message: ${message}` : '',
-        ].filter(Boolean).join('\n'),
+        name: contact_name,
+        email,
+        phone,
+        message: detailMessage,
         source: 'contractor_registration',
         status: 'new',
+        lead_status: 'new',
+        metadata: { company_name: company_name || null, trade_type: trade_type || null, monthly_volume: monthly_volume || null },
       });
 
     if (error) throw error;
 
-    // Admin notification (non-blocking)
-    sendContactAdminNotification({
-      name: `[CONTRACTOR] ${contact_name} — ${company_name || 'No company'}`,
-      email,
-      phone,
-      message: `Trade: ${trade_type}\nVolume: ${monthly_volume}\n${message || ''}`,
-      source: 'contractor_registration',
-    }).catch(err => console.warn('[Contractor] Admin email failed:', err));
+    // Send emails (non-blocking — don't fail the form if email fails)
+    Promise.allSettled([
+      sendContactAdminNotification({
+        name: `[CONTRACTOR] ${contact_name} — ${company_name || 'No company'}`,
+        email,
+        phone,
+        message: `Trade: ${trade_type}\nVolume: ${monthly_volume}\n${message || ''}`,
+        source: 'contractor_registration',
+      }),
+      sendContractorCustomerConfirmation({ name: contact_name, email, company_name }),
+    ]).then(results => {
+      results.forEach((r, i) => {
+        if (r.status === 'rejected' || (r.value && !r.value.success)) {
+          console.warn(`[Contractor] Email ${i} failed:`, r.reason || r.value);
+        }
+      });
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {

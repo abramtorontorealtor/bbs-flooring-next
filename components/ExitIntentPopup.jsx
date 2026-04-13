@@ -80,7 +80,10 @@ export default function ExitIntentPopup() {
     try {
       await entities.ContactLead.create({
         email,
+        customer_email: email,
         lead_status: 'new',
+        status: 'new',
+        source: 'exit_intent_popup',
         message: 'Email subscriber (exit-intent popup)',
       });
     } catch (err) {
