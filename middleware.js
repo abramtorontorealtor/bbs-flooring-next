@@ -193,6 +193,17 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL(slugRedirect, request.url), { status: 301 });
   }
 
+  // Removal service pages — redirect old Wix URLs to new service pages
+  if (pathname === '/product-page/hardwood-removal') {
+    return NextResponse.redirect(new URL('/hardwood-removal', request.url), { status: 301 });
+  }
+  if (pathname === '/product-page/tile-removal') {
+    return NextResponse.redirect(new URL('/tile-removal', request.url), { status: 301 });
+  }
+  if (pathname === '/product-page/vinyl-laminate-removal' || pathname === '/product-page/vinyl-removal' || pathname === '/product-page/laminate-removal') {
+    return NextResponse.redirect(new URL('/vinyl-laminate-removal', request.url), { status: 301 });
+  }
+
   if (pathname.startsWith('/product-page/')) {
     const slug = pathname.replace('/product-page/', '');
     return NextResponse.redirect(new URL(`/products/${slug}`, request.url), { status: 301 });
