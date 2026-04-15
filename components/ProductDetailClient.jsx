@@ -756,7 +756,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                     Get Installation Quote
                   </Button>
                 </Link>
-                <Link href="/free-measurement" className="block">
+                <Link href={product?.name ? `/free-measurement?product=${encodeURIComponent(product.name)}` : '/free-measurement'} className="block">
                   <Button variant="outline" className="w-full h-10 text-sm font-semibold rounded-xl border-amber-300 text-amber-700 hover:bg-amber-50">
                     Book Free Measurement
                   </Button>

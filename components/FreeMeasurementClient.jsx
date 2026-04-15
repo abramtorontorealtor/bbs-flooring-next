@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -63,6 +64,7 @@ export default function FreeMeasurementClient() {
 
   const [postalCode, setPostalCode] = useState('');
   const [projectType, setProjectType] = useState('');
+  const [productsInterested, setProductsInterested] = useState('');
 
   const [formData, setFormData] = useState({
     customer_name: '',
@@ -75,6 +77,15 @@ export default function FreeMeasurementClient() {
 
   const formRef = useRef(null);
   const nextAvailableDate = useMemo(() => getNextAvailableDate(), []);
+  const searchParams = useSearchParams();
+
+  // Pre-populate products field from URL param (?product=Product+Name)
+  useEffect(() => {
+    const productParam = searchParams?.get('product');
+    if (productParam) {
+      setProductsInterested(productParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (submitted) return;
@@ -167,7 +178,7 @@ export default function FreeMeasurementClient() {
             preferred_date: formData.preferred_date,
             preferred_time: formData.preferred_time,
             flooring_type: projectType,
-            notes: `Project Type: ${projectType}`,
+            notes: [projectType && `Project Type: ${projectType}`, productsInterested && `Products interested in: ${productsInterested}`].filter(Boolean).join(' | '),
           },
         }),
       });
@@ -197,7 +208,7 @@ export default function FreeMeasurementClient() {
               Thank you! We&apos;ll review your request and confirm your appointment within a few hours. Check your email for details.
             </p>
             <button
-              onClick={() => { setSubmitted(false); setStep(1); setPostalCode(''); setProjectType(''); setFormData({ customer_name: '', customer_email: '', customer_phone: '', customer_address: '', preferred_date: '', preferred_time: '' }); }}
+              onClick={() => { setSubmitted(false); setStep(1); setPostalCode(''); setProjectType(''); setProductsInterested(''); setFormData({ customer_name: '', customer_email: '', customer_phone: '', customer_address: '', preferred_date: '', preferred_time: '' }); }}
               className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
             >
               Book Another Measurement
@@ -330,7 +341,18 @@ export default function FreeMeasurementClient() {
                     <span><strong>Next Available:</strong> {nextAvailableDate}</span>
                   </div>
                   <div>
-                    <Label className="font-semibold mb-2 block">Preferred Date & Time *</Label>
+                    <Label className="font-semibold">Products You&apos;re Interested In</Label>
+                    <input
+                      type="text"
+                      className="w-full mt-1 px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                      placeholder="e.g. Vidar Macaroon, hardwood for living room"
+                      value={productsInterested}
+                      onChange={(e) => setProductsInterested(e.target.value)}
+                    />
+                    <p className="text-[11px] text-slate-400 mt-1">Our installer will bring samples of these products to your measurement.</p>
+                  </div>
+                  <div>
+                    <Label className="font-semibold mb-2 block">Preferred Date &amp; Time *</Label>
                     <BookingCalendar
                       selected={formData.preferred_date}
                       onSelect={(dateStr) => {

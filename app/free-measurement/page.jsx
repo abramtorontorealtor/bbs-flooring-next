@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import FreeMeasurementClient from '@/components/FreeMeasurementClient';
 import { freeMeasurementSchema, faqSchema, JsonLd } from '@/lib/schemas';
 import { FREE_MEASUREMENT_FAQS } from '@/data/faqs';
@@ -12,7 +13,9 @@ export default function FreeMeasurementPage() {
   return (
     <>
       <JsonLd data={[freeMeasurementSchema(), faqSchema(FREE_MEASUREMENT_FAQS)]} />
-      <FreeMeasurementClient />
+      <Suspense fallback={<div className="min-h-[60vh]" />}>
+        <FreeMeasurementClient />
+      </Suspense>
     </>
   );
 }

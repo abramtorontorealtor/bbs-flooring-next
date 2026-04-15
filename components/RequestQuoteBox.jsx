@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Shield, Truck, Award, Phone, CheckCircle2, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { Shield, Truck, Award, Phone, CheckCircle2, Loader2, Star, MapPin, Ruler, ChevronDown, ChevronUp, Warehouse, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
@@ -10,6 +11,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [deliveryOpen, setDeliveryOpen] = useState(false);
 
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -178,6 +180,89 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
         >
           <Phone className="w-4 h-4" />
           (647) 428-1111
+        </a>
+      </div>
+
+      {/* Google Reviews badge */}
+      <div className="flex items-center justify-center gap-2 py-2.5 border-t border-slate-100">
+        <div className="flex items-center gap-0.5">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+          ))}
+        </div>
+        <span className="text-xs font-semibold text-slate-700">4.7</span>
+        <span className="text-xs text-slate-500">· 41 Google Reviews</span>
+      </div>
+
+      {/* Delivery & pickup info — collapsible */}
+      <div className="border border-slate-200 rounded-xl overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setDeliveryOpen(prev => !prev)}
+          className="w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+        >
+          <span className="flex items-center gap-1.5">
+            <Truck className="w-4 h-4 text-slate-500" />
+            Delivery &amp; Pickup Options
+          </span>
+          {deliveryOpen
+            ? <ChevronUp className="w-4 h-4 text-slate-400" />
+            : <ChevronDown className="w-4 h-4 text-slate-400" />}
+        </button>
+        {deliveryOpen && (
+          <div className="divide-y divide-slate-100 border-t border-slate-200">
+            <div className="flex items-center justify-between px-3.5 py-2.5">
+              <span className="flex items-center gap-2 text-xs text-slate-600">
+                <Warehouse className="w-3.5 h-3.5 text-slate-400" />
+                Warehouse Pickup
+              </span>
+              <span className="text-xs font-bold text-emerald-600">FREE</span>
+            </div>
+            <div className="flex items-center justify-between px-3.5 py-2.5">
+              <span className="flex items-center gap-2 text-xs text-slate-600">
+                <Truck className="w-3.5 h-3.5 text-slate-400" />
+                Garage Delivery (GTA)
+              </span>
+              <span className="text-xs font-semibold text-slate-700">$140</span>
+            </div>
+            <div className="flex items-center justify-between px-3.5 py-2.5">
+              <span className="flex items-center gap-2 text-xs text-slate-600">
+                <Home className="w-3.5 h-3.5 text-slate-400" />
+                Inside House Delivery
+              </span>
+              <span className="text-xs font-semibold text-slate-700">$200</span>
+            </div>
+            <div className="flex items-center justify-between px-3.5 py-2.5">
+              <span className="flex items-center gap-2 text-xs text-slate-600">
+                <Ruler className="w-3.5 h-3.5 text-amber-500" />
+                Free In-Home Measurement
+              </span>
+              <Link href={`/free-measurement${product?.name ? `?product=${encodeURIComponent(product.name)}` : ''}`} className="text-xs font-semibold text-amber-600 hover:text-amber-700 underline">
+                Book Now
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* See it in person CTA */}
+      <div className="grid grid-cols-2 gap-2">
+        <Link
+          href="/free-measurement" target="_blank" rel="noopener"
+          className="flex flex-col items-center gap-1 p-3 bg-slate-50 rounded-xl border border-slate-200 hover:border-amber-300 hover:bg-amber-50 transition-all group"
+        >
+          <Ruler className="w-5 h-5 text-amber-500 group-hover:text-amber-600" />
+          <span className="text-[11px] font-semibold text-slate-700 group-hover:text-amber-700 text-center leading-tight">Free In-Home Measurement</span>
+          <span className="text-[10px] text-slate-400 text-center leading-tight">We&apos;ll bring samples</span>
+        </Link>
+        <a
+          href="https://www.google.com/maps/place/BBS+Flooring/@43.8476,-79.3252,17z"
+          target="_blank" rel="noopener noreferrer"
+          className="flex flex-col items-center gap-1 p-3 bg-slate-50 rounded-xl border border-slate-200 hover:border-amber-300 hover:bg-amber-50 transition-all group"
+        >
+          <MapPin className="w-5 h-5 text-amber-500 group-hover:text-amber-600" />
+          <span className="text-[11px] font-semibold text-slate-700 group-hover:text-amber-700 text-center leading-tight">Visit Our Showroom</span>
+          <span className="text-[10px] text-slate-400 text-center leading-tight">6061 Hwy 7, Markham</span>
         </a>
       </div>
 
