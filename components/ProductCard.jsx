@@ -21,12 +21,15 @@ function getProductBadges(product) {
   const isVinylType = category.includes('vinyl') || name.includes('lvp') || name.includes('spc');
   const isWaterproof = product.is_waterproof || name.includes('waterproof');
   if (isWaterproof && !isVinylType) badges.push({ key: 'waterproof', label: '💧 Waterproof', className: 'bg-blue-600 text-white' });
-  const hasDiscount = product.sale_price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
-  if (product.is_clearance) {
-    badges.push({ key: 'clearance', label: 'Clearance', className: 'bg-amber-500 text-white' });
-  } else if (hasDiscount) {
-    const pct = Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100);
-    badges.push({ key: 'deal', label: pct > 0 ? `-${pct}%` : 'Sale', className: 'bg-red-500 text-white' });
+  // Only show price-related badges when price is visible
+  if (!product.hide_price) {
+    const hasDiscount = product.sale_price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
+    if (product.is_clearance) {
+      badges.push({ key: 'clearance', label: 'Clearance', className: 'bg-amber-500 text-white' });
+    } else if (hasDiscount) {
+      const pct = Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100);
+      badges.push({ key: 'deal', label: pct > 0 ? `-${pct}%` : 'Sale', className: 'bg-red-500 text-white' });
+    }
   }
   return badges.slice(0, 2);
 }
@@ -50,7 +53,8 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
     return url.split('?')[0];
   };
 
-  const hasSale = product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
+  const hidePrice = product.hide_price === true;
+  const hasSale = !hidePrice && product.sale_price_per_sqft && product.price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
   const displayPrice = hasSale ? product.sale_price_per_sqft : product.price_per_sqft;
 
   return (
@@ -118,7 +122,11 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
 
           {/* Price — elevated, immediately after name */}
           <div className="mb-1.5">
-            {product.has_variants && product.starting_price ? (
+            {hidePrice ? (
+              <a href="tel:6474281111" className="text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors">
+                📞 Call for Pricing
+              </a>
+            ) : product.has_variants && product.starting_price ? (
               <div className="flex items-baseline gap-1 flex-wrap">
                 <span className="text-[11px] text-slate-500">From</span>
                 <span className="text-lg font-bold text-slate-900">C${product.starting_price.toFixed(2)}</span>
@@ -174,7 +182,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
               ) : (
                 <span className="text-[10px] text-slate-400 font-medium">Out of Stock</span>
               )}
-              {!isOutOfStock && (displayPrice >= 4 || (product.has_variants && product.starting_price >= 4)) && (
+              {!hidePrice && !isOutOfStock && (displayPrice >= 4 || (product.has_variants && product.starting_price >= 4)) && (
                 <span className="text-[10px] text-amber-600 font-medium">💳 Financing</span>
               )}
             </div>

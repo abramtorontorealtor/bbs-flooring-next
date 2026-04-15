@@ -64,7 +64,8 @@ export async function generateMetadata({ params }) {
   const childVariants = product.is_parent_product
     ? await getChildVariants(product.id)
     : [];
-  const meta = generateProductMetaTags(product, product.category, childVariants);
+  const hidePrice = product.hide_price === true;
+  const meta = generateProductMetaTags(product, product.category, childVariants, { hidePrice });
 
   // Child variants canonical → parent product (prevents 191 thin pages indexing)
   let canonicalSlug = slug;
@@ -97,7 +98,8 @@ export default async function ProductDetailPage({ params }) {
     : [];
 
   // JSON-LD: ProductGroup + hasVariant + AggregateOffer for parents, single Product for others
-  const productSchema = product ? generateProductSchema(product, 'https://bbsflooring.ca', childVariants) : null;
+  const hidePrice = product?.hide_price === true;
+  const productSchema = product ? generateProductSchema(product, 'https://bbsflooring.ca', childVariants, { hidePrice }) : null;
 
   return (
     <>
@@ -129,7 +131,7 @@ export default async function ProductDetailPage({ params }) {
               <div className="space-y-4">
                 <div className="text-sm text-slate-500">{product.brand}</div>
                 <h1 className="text-3xl font-bold text-slate-900">{product.name}</h1>
-                {product.price_per_sqft > 0 && (
+                {!hidePrice && product.price_per_sqft > 0 && (
                   <div className="text-xl font-semibold text-slate-800">
                     C${product.price_per_sqft.toFixed(2)}/sqft
                   </div>

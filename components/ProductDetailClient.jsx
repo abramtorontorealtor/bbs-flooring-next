@@ -22,6 +22,7 @@ import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
+import RequestQuoteBox from '@/components/RequestQuoteBox';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
@@ -325,7 +326,9 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   };
 
   /* ── Derived display values ── */
-  const hasDiscount = currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft;
+  const hidePrice = product?.hide_price === true;
+  const isAdmin = currentUser?.email === 'info@bbsflooring.ca';
+  const hasDiscount = !hidePrice && currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft;
   const displayPrice = hasDiscount ? currentPricing.sale_price_per_sqft : currentPricing.price_per_sqft;
   const isOutOfStock = product?.in_stock === false;
   const isFastPickup = product && !isOutOfStock && FAST_PICKUP_BRANDS.some(b => (product.brand || '').toLowerCase().includes(b));
@@ -399,7 +402,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     );
   }
 
-  const productSchema = generateProductSchema(product);
+  const productSchema = generateProductSchema(product, 'https://bbsflooring.ca', [], { hidePrice });
 
   return (
     <div className="max-w-7xl mx-auto px-4 pb-24 lg:pb-16">
@@ -425,8 +428,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             onActiveIdxChange={setActiveImageIdx}
             badges={[
               product.is_new_arrival && <Badge key="new" className="bg-emerald-500 text-white border-0">New Arrival</Badge>,
-              product.is_on_sale && <Badge key="sale" className="bg-red-500 text-white border-0">Sale</Badge>,
-              product.is_clearance && <Badge key="clearance" className="bg-orange-500 text-white border-0">Clearance</Badge>,
+              !hidePrice && product.is_on_sale && <Badge key="sale" className="bg-red-500 text-white border-0">Sale</Badge>,
+              !hidePrice && product.is_clearance && <Badge key="clearance" className="bg-orange-500 text-white border-0">Clearance</Badge>,
             ].filter(Boolean)}
           />
         </div>
@@ -440,7 +443,15 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           )}
 
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mb-3">{product.name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mb-3">
+            {product.name}
+            {/* Admin-only internal price reference */}
+            {hidePrice && isAdmin && product.price_per_sqft > 0 && (
+              <span className="ml-2 text-xs font-normal text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
+                [Internal: C${parseFloat(product.price_per_sqft).toFixed(2)}/sqft]
+              </span>
+            )}
+          </h1>
 
           {/* Reviews (if any) */}
           {product.review_count > 0 && (
@@ -456,7 +467,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           )}
 
           {/* ── Price Block ── */}
-          {!product.has_variants && (
+          {!product.has_variants && !hidePrice && (
             <div className="mb-4">
               {isOutOfStock ? (
                 <Badge className="bg-slate-700 text-white border-0 text-base px-3 py-1.5">Out of Stock</Badge>
@@ -508,7 +519,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           {/* ── Variant Selector (chip-based for has_variants) ── */}
           {product.has_variants && (
             <div className="mb-5">
-              <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} />
+              <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} hidePrice={hidePrice} />
             </div>
           )}
 
@@ -652,9 +663,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           )}
 
           {/* ═══════════════════════════════════════
-              BUY BOX — The Conversion Engine
-              Clear hierarchy: calculator → total → CTA
+              BUY BOX or REQUEST QUOTE BOX
           ═══════════════════════════════════════ */}
+          {hidePrice ? (
+            <div ref={buyBoxRef}>
+              <RequestQuoteBox product={product} selectedVariant={selectedJsonVariant} />
+            </div>
+          ) : (
           <div ref={buyBoxRef} className="border-2 border-amber-200 rounded-2xl bg-gradient-to-b from-amber-50/80 to-white p-5 space-y-4">
 
             {/* Material / Installation toggle */}
@@ -758,6 +773,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               <span className="flex items-center gap-1 text-[11px] text-slate-500"><Award className="w-3 h-3" />Authorized Dealer</span>
             </div>
           </div>
+          )}
 
           {/* ── Quick Contact (below buy box, not competing with it) ── */}
           <div className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
@@ -910,6 +926,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         isOutOfStock={product.in_stock === false}
         isAddingToCart={isAddingToCart}
         onAddToCart={handleAddToCart}
+        hidePrice={hidePrice}
       />
     </div>
   );

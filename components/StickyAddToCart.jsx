@@ -15,9 +15,26 @@ export default function StickyAddToCart({
   isOutOfStock,
   isAddingToCart,
   onAddToCart,
+  hidePrice = false,
 }) {
   const inputRef = useRef(null);
   if (!visible || isOutOfStock) return null;
+
+  // Hidden-price mode: show call CTA instead of cart
+  if (hidePrice) {
+    return (
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-amber-200 shadow-[0_-4px_20px_rgba(0,0,0,0.12)]">
+        <div className="px-4 py-3 safe-bottom">
+          <a
+            href="tel:6474281111"
+            className="flex items-center justify-center gap-2 w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold text-base rounded-xl transition-colors shadow-md"
+          >
+            📞 Call for Pricing — (647) 428-1111
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   const hasCalc = calculation && parseFloat(sqftNeeded) > 0;
 

@@ -16,7 +16,7 @@ const GRADE_DESCRIPTIONS = {
   'Select & Better (AB)': 'Premium — minimal knots, consistent colour and grain. Most refined look.',
 };
 
-export default function VariantSelector({ product, onVariantChange }) {
+export default function VariantSelector({ product, onVariantChange, hidePrice = false }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -171,7 +171,7 @@ export default function VariantSelector({ product, onVariantChange }) {
   return (
     <div className="space-y-5 mt-2">
       {/* Price range context */}
-      {showRange && (
+      {!hidePrice && showRange && (
         <p className="text-xs text-slate-500">
           Prices range from <span className="font-semibold text-slate-700">C${minPrice.toFixed(2)}</span> to <span className="font-semibold text-slate-700">C${maxPrice.toFixed(2)}</span>/sqft depending on configuration
         </p>
@@ -209,6 +209,7 @@ export default function VariantSelector({ product, onVariantChange }) {
             variants={variants}
             selectedGrade={selectedGrade}
             onSelect={setSelectedGrade}
+            hidePrice={hidePrice}
           />
         ) : (
           <ChipGroup
@@ -223,16 +224,18 @@ export default function VariantSelector({ product, onVariantChange }) {
 
       {selectedVariant && (
         <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-slate-900">
-              C${displayPrice?.toFixed(2)}
-            </span>
-            <span className="text-sm text-slate-500">/sqft</span>
-            {showStrikethrough && (
-              <span className="text-base text-slate-400 line-through">C${originalPrice?.toFixed(2)}</span>
-            )}
-          </div>
-          <div className="mt-2 text-sm text-slate-600 space-y-1">
+          {!hidePrice && (
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-bold text-slate-900">
+                C${displayPrice?.toFixed(2)}
+              </span>
+              <span className="text-sm text-slate-500">/sqft</span>
+              {showStrikethrough && (
+                <span className="text-base text-slate-400 line-through">C${originalPrice?.toFixed(2)}</span>
+              )}
+            </div>
+          )}
+          <div className={`${!hidePrice ? 'mt-2 ' : ''}text-sm text-slate-600 space-y-1`}>
             <div className="flex flex-wrap gap-x-4 gap-y-0.5">
               <span><span className="font-medium text-slate-700">SKU:</span> {selectedVariant.sku}</span>
               {selectedVariant.dimensions && (
@@ -242,7 +245,7 @@ export default function VariantSelector({ product, onVariantChange }) {
                 <span><span className="font-medium text-slate-700">Coverage:</span> {selectedVariant.sqft_box} sqft/box</span>
               )}
             </div>
-            {selectedVariant.sqft_box && displayPrice && (
+            {!hidePrice && selectedVariant.sqft_box && displayPrice && (
               <div className="text-xs text-slate-500 mt-1">
                 C${(displayPrice * selectedVariant.sqft_box).toFixed(2)}/box
               </div>

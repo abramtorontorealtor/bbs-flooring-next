@@ -52,7 +52,7 @@ function DotRating({ value, max = 3, color = 'amber' }) {
   );
 }
 
-export default function CompareGradesTable({ grades, variants, selectedGrade, onSelect }) {
+export default function CompareGradesTable({ grades, variants, selectedGrade, onSelect, hidePrice = false }) {
   const gradeInfo = useMemo(() => {
     return grades
       .map(g => {
@@ -122,7 +122,7 @@ export default function CompareGradesTable({ grades, variants, selectedGrade, on
               </div>
 
               {/* Price */}
-              {info.minPrice && (
+              {!hidePrice && info.minPrice && (
                 <div className={`text-sm font-bold mt-auto ${isSelected ? 'text-amber-700' : 'text-slate-800'}`}>
                   {info.minPrice === info.maxPrice
                     ? `C$${info.minPrice.toFixed(2)}/sqft`
