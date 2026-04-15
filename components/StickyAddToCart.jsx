@@ -16,21 +16,46 @@ export default function StickyAddToCart({
   isAddingToCart,
   onAddToCart,
   hidePrice = false,
+  selectionSummary = '',    // e.g. "Standard Plank · 7 1/2" · Character (ABCD)"
+  onScrollToQuote = null,   // callback to smooth-scroll to Request Quote box
 }) {
   const inputRef = useRef(null);
   if (!visible || isOutOfStock) return null;
 
-  // Hidden-price mode: show call CTA instead of cart
+  // Hidden-price mode: dual CTA — scroll to quote + call
   if (hidePrice) {
     return (
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-amber-200 shadow-[0_-4px_20px_rgba(0,0,0,0.12)]">
         <div className="px-4 py-3 safe-bottom">
-          <a
-            href="tel:6474281111"
-            className="flex items-center justify-center gap-2 w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold text-base rounded-xl transition-colors shadow-md"
-          >
-            📞 Call for Pricing — (647) 428-1111
-          </a>
+          {/* Selected variant summary strip */}
+          {selectionSummary && (
+            <p className="text-[11px] text-slate-500 text-center truncate mb-1.5">{selectionSummary}</p>
+          )}
+          <div className="flex gap-2">
+            {onScrollToQuote ? (
+              <>
+                <button
+                  onClick={onScrollToQuote}
+                  className="flex-1 flex items-center justify-center gap-1.5 h-11 bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md"
+                >
+                  Request a Quote ↓
+                </button>
+                <a
+                  href="tel:6474281111"
+                  className="flex items-center justify-center gap-1 h-11 px-4 bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm rounded-xl transition-colors"
+                >
+                  📞 Call
+                </a>
+              </>
+            ) : (
+              <a
+                href="tel:6474281111"
+                className="flex items-center justify-center gap-2 w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold text-base rounded-xl transition-colors shadow-md"
+              >
+                📞 Call for Pricing — (647) 428-1111
+              </a>
+            )}
+          </div>
         </div>
       </div>
     );

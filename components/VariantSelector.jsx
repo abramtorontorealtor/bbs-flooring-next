@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { Check, ChevronDown } from 'lucide-react';
 import WidthComparisonBars from '@/components/WidthComparisonBars';
 import CompareGradesTable from '@/components/CompareGradesTable';
 
@@ -16,7 +17,7 @@ const GRADE_DESCRIPTIONS = {
   'Select & Better (AB)': 'Premium — minimal knots, consistent colour and grain. Most refined look.',
 };
 
-export default function VariantSelector({ product, onVariantChange, hidePrice = false }) {
+export default function VariantSelector({ product, onVariantChange, hidePrice = false, onSelectionSummary = null }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -49,6 +50,8 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
   const [selectedWidth, setSelectedWidth] = useState('');
   const [selectedGrade, setSelectedGrade] = useState('');
   const [showGradeTooltip, setShowGradeTooltip] = useState(null);
+  // Mobile stepper: which step is expanded (0=pattern, 1=width, 2=grade)
+  const [mobileStep, setMobileStep] = useState(0);
 
   // Init from URL params or defaults
   useEffect(() => {
@@ -123,18 +126,47 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     if (selectedVariant) onVariantChange(selectedVariant);
   }, [selectedVariant]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (variants.length === 0) return null;
+  // Report selection summary to parent for sticky bar
+  useEffect(() => {
+    if (onSelectionSummary) {
+      const parts = [];
+      if (selectedPattern && patternOptions.length > 1) parts.push(displayPattern(selectedPattern));
+      if (selectedWidth) parts.push(selectedWidth);
+      if (selectedGrade) parts.push(selectedGrade);
+      onSelectionSummary(parts.length > 0 ? parts.join(' · ') : '');
+    }
+  }, [selectedPattern, selectedWidth, selectedGrade]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // New pricing model: price_per_sqft is THE price. sale_price is the deal price if it exists.
+  // Pricing display values (derived, not hooks)
   const displayPrice = selectedVariant?.sale_price ?? selectedVariant?.price_per_sqft;
   const originalPrice = selectedVariant?.price_per_sqft;
   const showStrikethrough = selectedVariant?.on_sale && originalPrice && originalPrice > displayPrice;
 
   // Price range across all variants for context
   const allPrices = variants.map(v => v.sale_price ?? v.price_per_sqft).filter(Boolean);
-  const minPrice = Math.min(...allPrices);
-  const maxPrice = Math.max(...allPrices);
+  const minPrice = allPrices.length ? Math.min(...allPrices) : 0;
+  const maxPrice = allPrices.length ? Math.max(...allPrices) : 0;
   const showRange = maxPrice - minPrice > 0.5;
+
+  // Build the ordered steps for mobile stepper
+  const steps = useMemo(() => {
+    const s = [];
+    if (patternOptions.length > 1) s.push({ key: 'pattern', label: 'Pattern', value: selectedPattern ? displayPattern(selectedPattern) : null });
+    if (widthOptions.length > 1) s.push({ key: 'width', label: 'Width', value: selectedWidth || null });
+    if (gradeOptions.length > 1) s.push({ key: 'grade', label: 'Grade', value: selectedGrade || null });
+    return s;
+  }, [patternOptions, widthOptions, gradeOptions, selectedPattern, selectedWidth, selectedGrade]);
+
+  // Auto-advance mobile stepper when a selection is made
+  const handleMobileSelect = useCallback((stepKey, value, setter) => {
+    setter(value);
+    const currentIdx = steps.findIndex(s => s.key === stepKey);
+    if (currentIdx < steps.length - 1) {
+      setTimeout(() => setMobileStep(currentIdx + 1), 250);
+    }
+  }, [steps]);
+
+  if (variants.length === 0) return null;
 
   const ChipGroup = ({ label, options, selected, onSelect, displayFn, descriptions }) => (
     <div>
@@ -168,8 +200,115 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     </div>
   );
 
-  return (
-    <div className="space-y-5 mt-2">
+  // ── MOBILE STEPPER RENDERING ──
+  const renderMobileStepper = () => {
+    if (steps.length === 0) return null;
+
+    return (
+      <div className="space-y-2">
+        {steps.map((step, idx) => {
+          const isActive = mobileStep === idx;
+          const isCompleted = !!step.value;
+
+          return (
+            <div key={step.key} className={`rounded-xl border-2 transition-all overflow-hidden ${
+              isActive ? 'border-amber-300 bg-amber-50/50' : isCompleted ? 'border-slate-200 bg-slate-50' : 'border-slate-100 bg-white'
+            }`}>
+              {/* Step header — always visible, tappable */}
+              <button
+                onClick={() => setMobileStep(isActive ? -1 : idx)}
+                className="w-full flex items-center justify-between px-3 py-2.5"
+              >
+                <div className="flex items-center gap-2">
+                  {isCompleted && !isActive ? (
+                    <span className="w-5 h-5 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </span>
+                  ) : (
+                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                      isActive ? 'bg-amber-500 text-white' : 'bg-slate-200 text-slate-500'
+                    }`}>{idx + 1}</span>
+                  )}
+                  <span className={`text-sm font-semibold ${
+                    isActive ? 'text-amber-800' : 'text-slate-700'
+                  }`}>{step.label}</span>
+                  {isCompleted && !isActive && (
+                    <span className="text-sm text-slate-600 font-medium ml-1">— {step.value}</span>
+                  )}
+                </div>
+                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${
+                  isActive ? 'rotate-180' : ''
+                }`} />
+              </button>
+
+              {/* Step content — only when active */}
+              {isActive && (
+                <div className="px-3 pb-3">
+                  {step.key === 'pattern' && (
+                    <div className="flex flex-wrap gap-2">
+                      {patternOptions.map(opt => (
+                        <button
+                          key={opt}
+                          onClick={() => handleMobileSelect('pattern', opt, setSelectedPattern)}
+                          className={`px-3 py-1.5 rounded-lg border-2 text-sm font-medium transition-all ${
+                            selectedPattern === opt
+                              ? 'border-amber-500 bg-amber-50 text-amber-800'
+                              : 'border-slate-200 bg-white text-slate-600'
+                          }`}
+                        >{displayPattern(opt)}</button>
+                      ))}
+                    </div>
+                  )}
+                  {step.key === 'width' && (
+                    <div className="flex flex-wrap gap-2">
+                      {widthOptions.map(opt => (
+                        <button
+                          key={opt}
+                          onClick={() => handleMobileSelect('width', opt, setSelectedWidth)}
+                          className={`px-3 py-1.5 rounded-lg border-2 text-sm font-medium transition-all ${
+                            selectedWidth === opt
+                              ? 'border-amber-500 bg-amber-50 text-amber-800'
+                              : 'border-slate-200 bg-white text-slate-600'
+                          }`}
+                        >{opt}</button>
+                      ))}
+                    </div>
+                  )}
+                  {step.key === 'grade' && (
+                    <div className="space-y-1.5">
+                      {gradeOptions.map(g => {
+                        const data = GRADE_DESCRIPTIONS[g];
+                        return (
+                          <button
+                            key={g}
+                            onClick={() => handleMobileSelect('grade', g, setSelectedGrade)}
+                            className={`w-full text-left px-3 py-2 rounded-lg border-2 transition-all ${
+                              selectedGrade === g
+                                ? 'border-amber-500 bg-amber-50'
+                                : 'border-slate-200 bg-white'
+                            }`}
+                          >
+                            <span className={`text-sm font-semibold ${
+                              selectedGrade === g ? 'text-amber-800' : 'text-slate-700'
+                            }`}>{g}</span>
+                            {data && <p className="text-xs text-slate-500 mt-0.5">{data}</p>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  // ── DESKTOP RENDERING (unchanged) ──
+  const renderDesktop = () => (
+    <div className="space-y-5">
       {/* Price range context */}
       {!hidePrice && showRange && (
         <p className="text-xs text-slate-500">
@@ -221,9 +360,23 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
           />
         )
       )}
+    </div>
+  );
 
+  return (
+    <div className="mt-2">
+      {/* Mobile: compact stepper (hidden on lg+) */}
+      <div className="lg:hidden">
+        {renderMobileStepper()}
+      </div>
+      {/* Desktop: full rich UI (hidden below lg) */}
+      <div className="hidden lg:block">
+        {renderDesktop()}
+      </div>
+
+      {/* Selected variant summary — shared between mobile and desktop */}
       {selectedVariant && (
-        <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+        <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 mt-4">
           {!hidePrice && (
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-bold text-slate-900">
@@ -260,7 +413,7 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
       )}
 
       {/* Variant count + grade guide CTA */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-4">
         <p className="text-xs text-slate-400">
           {variants.length} configuration{variants.length !== 1 ? 's' : ''} available
         </p>

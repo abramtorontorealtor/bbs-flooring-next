@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import Link from 'next/link';
@@ -45,9 +45,15 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [showAllSpecs, setShowAllSpecs] = useState(false);
   const [descExpanded, setDescExpanded] = useState(false);
+  const [selectionSummary, setSelectionSummary] = useState('');
 
   const PLACEHOLDER = '/images/product-placeholder.svg';
   const buyBoxRef = useRef(null);
+  const quoteBoxRef = useRef(null);
+
+  const scrollToQuoteBox = useCallback(() => {
+    quoteBoxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
 
   /* ── Data fetching ── */
   const { data: product, isLoading } = useQuery({
@@ -519,7 +525,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           {/* ── Variant Selector (chip-based for has_variants) ── */}
           {product.has_variants && (
             <div className="mb-5">
-              <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} hidePrice={hidePrice} />
+              <VariantSelector product={product} onVariantChange={setSelectedJsonVariant} hidePrice={hidePrice} onSelectionSummary={setSelectionSummary} />
             </div>
           )}
 
@@ -666,7 +672,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               BUY BOX or REQUEST QUOTE BOX
           ═══════════════════════════════════════ */}
           {hidePrice ? (
-            <div ref={buyBoxRef}>
+            <div ref={(el) => { buyBoxRef.current = el; quoteBoxRef.current = el; }}>
               <RequestQuoteBox product={product} selectedVariant={selectedJsonVariant} />
             </div>
           ) : (
@@ -927,6 +933,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         isAddingToCart={isAddingToCart}
         onAddToCart={handleAddToCart}
         hidePrice={hidePrice}
+        selectionSummary={selectionSummary}
+        onScrollToQuote={hidePrice ? scrollToQuoteBox : null}
       />
     </div>
   );
