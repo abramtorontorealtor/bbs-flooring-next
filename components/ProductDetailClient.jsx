@@ -41,7 +41,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [selectedJsonVariant, setSelectedJsonVariant] = useState(null);
   const [buyMode, setBuyMode] = useState('material');
   const [stickyCartVisible, setStickyCartVisible] = useState(false);
-  const [variantSort, setVariantSort] = useState({ key: null, asc: true });
+  // variantSort removed Apr 15 — was only used by dead variant table block
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [showAllSpecs, setShowAllSpecs] = useState(false);
   const [descExpanded, setDescExpanded] = useState(false);
@@ -265,10 +265,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       toast.error('Please select a variant option');
       return;
     }
-    if (product.is_parent_product && !product.has_variants && productVariants.length > 0 && !selectedVariantId) {
-      toast.error('Please select a width and grade option from the table');
-      return;
-    }
+    // Dead guard removed Apr 15 — all parent products have has_variants=true
     if (!calculation) {
       toast.error('Please enter the square footage you need');
       return;
@@ -529,8 +526,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             </div>
           )}
 
-          {/* ── Variant Table (parent products without variants_json) ── */}
-          {product.is_parent_product && !product.has_variants && productVariants.length > 0 && (
+          {/* Variant Table (parent products without variants_json) — DEAD CODE REMOVED Apr 15, 2026.
+               All 45 parent products have has_variants=true (JSON variants). This block never fired. */}
+
+          {/* ── Non-parent spec-based variants (legacy path, kept for safety) ── */}
+          {false && product.is_parent_product && !product.has_variants && productVariants.length > 0 && (
             <div className="mb-5 space-y-3">
               <label className="text-sm font-medium text-slate-700">Select Variant</label>
               {/* Mobile: stacked cards */}

@@ -88,6 +88,7 @@ async function buildClientCache() {
         brand: p.brand || '',
         image_url: p.image_url || p.image || p.thumbnail || null,
         price_per_sqft: p.price_per_sqft ?? p.sale_price_per_sqft ?? 0,
+        hide_price: p.hide_price !== false, // default true (hidden) unless explicitly false
         category: p.category || '',
         _name: (p.name || '').toLowerCase(),
         _brand: (p.brand || '').toLowerCase(),
@@ -129,7 +130,7 @@ function clientSearch(query, limit) {
       seen.add(p.slug);
       var clean = {
         id: p.id, slug: p.slug, name: p.name, brand: p.brand,
-        image_url: p.image_url, price_per_sqft: p.price_per_sqft, category: p.category
+        image_url: p.image_url, price_per_sqft: p.price_per_sqft, hide_price: p.hide_price, category: p.category
       };
       results.push(clean);
     }
@@ -299,8 +300,14 @@ export default function AdvancedSearchBar({ onClose }) {
                         {product.brand && <p className="text-xs text-slate-500 mt-0.5">{product.brand}</p>}
                       </div>
                       <div className="flex-shrink-0 text-right">
-                        <span className="text-sm font-bold text-amber-600">{"C$" + (product.price_per_sqft || 0).toFixed(2)}</span>
-                        <span className="block text-xs text-slate-400">/sq.ft</span>
+                        {product.hide_price ? (
+                          <span className="text-xs font-medium text-amber-600">Call for Pricing</span>
+                        ) : (
+                          <>
+                            <span className="text-sm font-bold text-amber-600">{"C$" + (product.price_per_sqft || 0).toFixed(2)}</span>
+                            <span className="block text-xs text-slate-400">/sq.ft</span>
+                          </>
+                        )}
                       </div>
                     </button>
                   </li>
