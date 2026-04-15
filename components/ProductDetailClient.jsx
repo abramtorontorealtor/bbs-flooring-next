@@ -933,6 +933,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         isAddingToCart={isAddingToCart}
         onAddToCart={handleAddToCart}
         hidePrice={hidePrice}
+        productName={product?.name || ''}
         selectionSummary={selectionSummary}
         onScrollToQuote={hidePrice ? scrollToQuoteBox : null}
       />
