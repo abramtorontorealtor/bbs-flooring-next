@@ -87,7 +87,7 @@ export function ClientProviders({ children }) {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Header cartCount={cartCount} />
-        <main className={`flex-1 ${isHomePage ? '' : 'pt-28'}`}>
+        <main className={`flex-1 ${isHomePage ? '' : 'pt-32'}`}>
           {children}
         </main>
         {overlaysReady && (

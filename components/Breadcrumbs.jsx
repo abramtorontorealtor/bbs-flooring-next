@@ -46,11 +46,11 @@ export default function Breadcrumbs({ items, variant = 'light' }) {
             const isLast = index === items.length - 1;
             return (
               <li key={index} className="flex items-center gap-2">
-                {index > 0 && <ChevronRight className={`w-4 h-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />}
+                {index > 0 && <ChevronRight className={`w-4 h-4 ${isDark ? 'text-slate-500' : 'text-slate-500'}`} />}
                 {isLast ? (
                   <span className={`font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>{item.label}</span>
                 ) : (
-                  <Link href={item.url} onClick={handleBreadcrumbClick} className={`transition-colors ${isDark ? 'text-slate-400 hover:text-amber-400' : 'text-slate-600 hover:text-amber-600'}`}>
+                  <Link href={item.url} onClick={handleBreadcrumbClick} className={`transition-colors ${isDark ? 'text-slate-400 hover:text-amber-400' : 'text-slate-700 hover:text-amber-600'}`}>
                     {index === 0 && <Home className="w-4 h-4 inline mr-1" />}
                     {item.label}
                   </Link>
