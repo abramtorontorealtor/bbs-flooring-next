@@ -16,7 +16,8 @@ import FAQSection from '@/components/FAQSection';
 import StickyAddToCart from '@/components/StickyAddToCart';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getProductBreadcrumbs } from '@/lib/breadcrumbs';
-import { generateProductSchema } from '@/lib/seo';
+// Product schema is emitted by the server component (app/products/[slug]/page.jsx)
+// to avoid duplicate JSON-LD and to include childVariants data.
 import { Analytics } from '@/components/analytics';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
@@ -405,11 +406,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     );
   }
 
-  const productSchema = generateProductSchema(product, 'https://bbsflooring.ca', [], { hidePrice });
+  // Product schema rendered by server component — no duplicate here
 
   return (
     <div className="max-w-7xl mx-auto px-4 pb-24 lg:pb-16">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
+      {/* Product JSON-LD schema is in app/products/[slug]/page.jsx (server component) */}
 
       {/* ── Breadcrumbs + Back ── */}
       <div className="pt-4 pb-2">
