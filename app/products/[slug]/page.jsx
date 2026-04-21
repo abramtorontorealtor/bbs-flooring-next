@@ -99,7 +99,10 @@ export default async function ProductDetailPage({ params }) {
 
   // JSON-LD: ProductGroup + hasVariant + AggregateOffer for parents, single Product for others
   const hidePrice = product?.hide_price === true;
-  const productSchema = product ? generateProductSchema(product, 'https://bbsflooring.ca', childVariants, { hidePrice }) : null;
+  // Skip product schema entirely for hide_price products — Google requires
+  // either offers or aggregateRating for Product/ProductGroup rich results.
+  // Emitting without either just generates GSC validation errors.
+  const productSchema = (product && !hidePrice) ? generateProductSchema(product, 'https://bbsflooring.ca', childVariants, { hidePrice }) : null;
 
   return (
     <>
