@@ -4,7 +4,9 @@ const nextConfig = {
   // inline <style> tags. Removed to avoid confusion. optimizePackageImports also removed
   // previously (caused 122+ micro-chunks with Turbopack). Turbopack handles both natively.
   images: {
-    formats: ['image/avif', 'image/webp'],  // AVIF first — 50% smaller than WebP
+    minimumCacheTTL: 2678400,  // 31 days — Supabase sends no-cache, this prevents 60s re-transformation cycle
+    formats: ['image/webp'],  // WebP only — AVIF doubles transformation count for ~20% size gain, not worth the cost
+    deviceSizes: [640, 750, 828, 1080, 1200],  // Dropped 1920/2048/3840 — no flooring shopper needs 4K breakpoints
     remotePatterns: [
       {
         protocol: 'https',
