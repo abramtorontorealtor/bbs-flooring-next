@@ -93,7 +93,7 @@ export default function BasementFlooringGuideClient() {
                 Vinyl is the gold standard for basement flooring. SPC (stone polymer composite) vinyl is 100% waterproof through every layer — surface, core, and backing. Water can pool on it for days without damage. It installs via click-lock directly over concrete with no adhesive, handles temperature swings without expanding or contracting, and feels warm and comfortable underfoot despite the cold slab below.
               </p>
               <p className="text-stone-600 leading-relaxed mb-4">
-                BBS stocks 233 vinyl options from 6 brands: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link> (69 options, $2.49–$3.59/sqft), <Link href="/woden-flooring" className="text-amber-700 underline">Woden</Link> (49, $2.29–$3.19/sqft), <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link> (44, $2.29–$3.19/sqft), <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link> (42, $2.29–$3.59/sqft), <Link href="/falcon-flooring" className="text-amber-700 underline">Falcon</Link> (19, $2.19–$2.59/sqft), and <Link href="/lee-flooring" className="text-amber-700 underline">Lee</Link> (10, $2.29/sqft). Wear layers range from 12mil to 28mil.
+                BBS stocks 188+ vinyl options from 6 brands: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link>, <Link href="/woden-flooring" className="text-amber-700 underline">Woden</Link>, <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link>, <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link>, <Link href="/falcon-flooring" className="text-amber-700 underline">Falcon</Link>, and <Link href="/lee-flooring" className="text-amber-700 underline">Lee</Link>. Prices range from $2.19–$3.59/sqft with wear layers from 12mil to 28mil. Our top picks for basements: the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum Fulham</Link> ($3.49/sqft, 9mm with 20mil wear layer — ideal for family rooms), the budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside</Link> ($2.19/sqft, 6mm SPC), and for a premium herringbone look, the <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone</Link> ($2.79/sqft).
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -150,7 +150,7 @@ export default function BasementFlooringGuideClient() {
                 <strong>However, engineered hardwood is NOT waterproof.</strong> Any standing water will damage the wood veneer and core. Only use engineered hardwood in basements that are: (a) completely dry with verified low moisture readings, (b) finished and climate-controlled year-round, and (c) protected by a proper moisture barrier between the concrete and the flooring. If your basement has ANY history of water intrusion, choose vinyl.
               </p>
               <p className="text-stone-600 text-sm">
-                Budget picks for dry basements: <Link href="/woden-flooring" className="text-amber-700 underline">Woden</Link> from $2.49/sqft, <Link href="/falcon-flooring" className="text-amber-700 underline">Falcon</Link> from $3.89/sqft. Premium: <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link>, <Link href="/canadian-standard-flooring" className="text-amber-700 underline">Canadian Standard</Link>.
+                For dry basements on a budget, the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Blizzard</Link> ($3.99/sqft) or <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Linen Red Oak</Link> ($3.89/sqft) offer real hardwood beauty at accessible prices. Premium options include <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link> (call for pricing) and <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Canadian Standard Lucid Pure</Link> ($7.59/sqft).
               </p>
             </div>
 
@@ -292,12 +292,12 @@ export default function BasementFlooringGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['NAF Flooring', '69', '$2.49–$3.59', 'Widest selection, multiple wear layers'],
-                  ['Woden Flooring', '49', '$2.29–$3.19', 'Good mid-range variety'],
-                  ['Triforest Flooring', '44', '$2.29–$3.19', 'Reliable mid-range'],
-                  ['Simba Flooring', '42', '$2.29–$3.59', 'Budget to premium range'],
-                  ['Falcon Flooring', '19', '$2.19–$2.59', 'Lowest price point — best budget vinyl'],
-                  ['Lee Flooring', '10', '$2.29', 'Simple, affordable'],
+                  ['NAF Flooring', '60+', '$2.79–$3.49', 'Widest selection, AquaPlus series with 20mil+ wear layers'],
+                  ['Woden Flooring', '45+', '$2.79–$3.19', 'Herringbone options, great mid-range quality'],
+                  ['Triforest Flooring', '40+', '$2.29–$3.19', 'Reliable mid-range, 4.2–7mm options'],
+                  ['Simba Flooring', '35+', '$2.59–$3.59', 'Budget to premium range, Venus herringbone'],
+                  ['Falcon Flooring', '18+', '$2.19–$2.59', 'Lowest price point — best budget vinyl at BBS'],
+                  ['Lee Flooring', '10+', '$2.49', 'Affordable 7mm with 22mil wear layer'],
                 ].map(([brand, count, price, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{brand}</td>

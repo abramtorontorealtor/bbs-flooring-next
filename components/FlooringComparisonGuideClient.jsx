@@ -43,6 +43,7 @@ export default function FlooringComparisonGuideClient() {
             <li><a href="#best-for-room" className="hover:underline">Best Flooring for Every Room</a></li>
             <li><a href="#cost-comparison" className="hover:underline">Full Cost Comparison</a></li>
             <li><a href="#decision-flowchart" className="hover:underline">5-Question Decision Helper</a></li>
+            <li><a href="#top-picks" className="hover:underline">Our Top Pick in Each Category</a></li>
             <li><a href="#faq" className="hover:underline">Frequently Asked Questions</a></li>
           </ol>
         </div>
@@ -58,9 +59,9 @@ export default function FlooringComparisonGuideClient() {
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              ['Hardwood (Engineered + Solid)', '528 options from $2.49/sqft', 'Real wood — either a solid plank or an engineered core topped with a genuine wood veneer. Nothing replicates its warmth, character, or how it lifts a home\u2019s resale value. Engineered handles moisture better; solid is refinishable for generations.', '/engineered-hardwood'],
-              ['Vinyl (LVP/SPC)', '233 options from $2.19/sqft', '100% synthetic, 100% waterproof. Luxury Vinyl Plank is built from multiple PVC layers printed with hyper-realistic wood or stone visuals. The fastest-growing category — handles moisture, pets, and heavy traffic without flinching.', '/vinyl'],
-              ['Laminate', '145 options from $1.49/sqft', 'A high-density fibreboard core with a photographic wood layer sealed under a tough wear surface. Budget-friendly and scratch-resistant, but not waterproof — placement matters. Best for bedrooms, offices, and dry living spaces.', '/laminate'],
+              ['Hardwood (Engineered + Solid)', '528 options from $2.49/sqft', 'Real wood — either a solid plank or an engineered core topped with a genuine wood veneer. Nothing replicates its warmth, character, or how it lifts a home\u2019s resale value. Engineered handles moisture better; solid is refinishable for generations.', '/engineered-hardwood-flooring'],
+              ['Vinyl (LVP/SPC)', '233 options from $2.19/sqft', '100% synthetic, 100% waterproof. Luxury Vinyl Plank is built from multiple PVC layers printed with hyper-realistic wood or stone visuals. The fastest-growing category — handles moisture, pets, and heavy traffic without flinching.', '/vinyl-flooring'],
+              ['Laminate', '145 options from $1.49/sqft', 'A high-density fibreboard core with a photographic wood layer sealed under a tough wear surface. Budget-friendly and scratch-resistant, but not waterproof — placement matters. Best for bedrooms, offices, and dry living spaces.', '/laminate-flooring'],
             ].map(([title, price, desc, link]) => (
               <div key={title} className="border border-stone-200 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-stone-800 mb-1">{title}</h3>
@@ -132,6 +133,13 @@ export default function FlooringComparisonGuideClient() {
           <p className="text-stone-600 leading-relaxed mb-6">
             BBS stocks 348 engineered hardwood products from 8 brands: Northernest (71), NAF (63), Canadian Standard (48), Woden (46), Simba (45), Vidar (36), Falcon (25), and Lee (14). Species range from White Oak and Hickory to European Oak, Maple, Walnut, and Birch. Widths span 3¼" to 9½" — with wide plank (7"+) dominating 2026 sales.
           </p>
+          <p className="text-stone-600 leading-relaxed mb-6">
+            A popular entry point is the{' '}
+            <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee</Link>
+            {' '}— a 6.5" SELECT grade European Oak at $3.69/sqft with genuine warmth and character. For a wider-plank statement floor, the{' '}
+            <Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Arizona by NAF Elegant</Link>
+            {' '}(7.5" Oak, $4.69/sqft) is one of our best-selling wide-plank options for open-concept main floors in 2026.
+          </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <div className="bg-green-50 border border-green-200 rounded-xl p-5">
@@ -159,7 +167,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Living rooms, dining rooms, bedrooms, hallways, open-concept main floors. The go-to choice for homeowners who want real wood and plan to stay in their home long-term. <Link href="/engineered-hardwood" className="text-amber-700 underline">Browse all 348 options →</Link></p>
+            <p className="text-stone-600 text-sm">Living rooms, dining rooms, bedrooms, hallways, open-concept main floors. The go-to choice for homeowners who want real wood and plan to stay in their home long-term. <Link href="/engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 348 options →</Link></p>
           </div>
         </section>
 
@@ -175,6 +183,13 @@ export default function FlooringComparisonGuideClient() {
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             BBS carries 81 solid hardwood options from 4 Canadian brands: Wickham (29 options, $5.50–$7.25/sqft), Appalachian (18 options, $5.99–$6.39/sqft), Northernest (18 options, $5.10–$6.50/sqft), and Sherwood Forest Products (16 options, $5.99–$6.99/sqft). Species include White Oak, Red Oak, Hard Maple, and Hickory.
+          </p>
+          <p className="text-stone-600 leading-relaxed mb-6">
+            The{' '}
+            <Link href="/products/fraser-4-3-4-maple-northernest-solid-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Fraser by Northernest</Link>
+            {' '}(4.75" Hard Maple, $5.10/sqft) is our most accessible solid hardwood entry point — a true Canadian Maple that can be sanded and refinished for decades. At the premium end, the{' '}
+            <Link href="/products/natural-wickham-solid-maple-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Natural by Wickham</Link>
+            {' '}(Solid Maple, $7.25/sqft) is a heritage-grade floor built to last a century.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -203,7 +218,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Traditional homes with wood subfloors, homeowners who want maximum refinishing potential over decades, and anyone who values the authenticity of a single-piece wood floor. <Link href="/solid-hardwood" className="text-amber-700 underline">Browse all 81 options →</Link></p>
+            <p className="text-stone-600 text-sm">Traditional homes with wood subfloors, homeowners who want maximum refinishing potential over decades, and anyone who values the authenticity of a single-piece wood floor. <Link href="/solid-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 81 options →</Link></p>
           </div>
         </section>
 
@@ -219,6 +234,13 @@ export default function FlooringComparisonGuideClient() {
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             BBS stocks 233 vinyl options from 6 brands: NAF (69 options, $2.49–$3.59/sqft), Woden (49, $2.29–$3.19/sqft), Triforest (44, $2.29–$3.19/sqft), Simba (42, $2.29–$3.59/sqft), Falcon (19, $2.19–$2.59/sqft), and Lee (10, $2.29/sqft). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
+          </p>
+          <p className="text-stone-600 leading-relaxed mb-6">
+            At the entry level, the{' '}
+            <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside by Falcon</Link>
+            {' '}(6mm, $2.19/sqft) delivers solid 100% waterproof performance at the lowest price in our catalogue. For premium durability, the{' '}
+            <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham by NAF AquaPlus Platinum</Link>
+            {' '}(9mm, $3.49/sqft) features a thicker rigid SPC core with commercial-grade construction — ideal for basements and high-traffic kitchens.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -247,7 +269,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-sky-50 border border-sky-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Basements, kitchens, bathrooms, laundry rooms, rental properties, pet-owner homes, and anyone on a budget. The practical all-rounder. <Link href="/vinyl" className="text-amber-700 underline">Browse all 233 options →</Link></p>
+            <p className="text-stone-600 text-sm">Basements, kitchens, bathrooms, laundry rooms, rental properties, pet-owner homes, and anyone on a budget. The practical all-rounder. <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 233 options →</Link></p>
           </div>
         </section>
 
@@ -263,6 +285,13 @@ export default function FlooringComparisonGuideClient() {
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             BBS carries 145 laminate options from 9 brands: NAF (32), Tosca Floors (21, from $1.49/sqft), Simba (18), Northernest (18), Triforest (16), Evergreen (16), Falcon (12), Woden (6), and Golden Choice (6). AC ratings range from AC3 (residential) to AC5 (heavy commercial). Water-resistant cores are available but laminate is NOT waterproof — standing water will damage the HDF core.
+          </p>
+          <p className="text-stone-600 leading-relaxed mb-6">
+            The{' '}
+            <Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904</Link>
+            {' '}($1.49/sqft) is our most affordable laminate and a perennial top-seller for budget renovations. For a step up with added water resistance, the{' '}
+            <Link href="/products/beachy-falcon-floors-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">Beachy by Falcon Floors</Link>
+            {' '}(12mm Waterproof, $2.39/sqft) delivers 72-hour waterproof protection and a satisfyingly thick 12mm profile.
           </p>
 
           <div className="bg-stone-50 border border-stone-200 rounded-xl p-5 mb-6">
@@ -306,7 +335,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Bedrooms, home offices, dry living areas, rental properties on a tight budget, and anyone who wants the wood look at the lowest possible cost. Keep it away from water. <Link href="/laminate" className="text-amber-700 underline">Browse all 145 options →</Link></p>
+            <p className="text-stone-600 text-sm">Bedrooms, home offices, dry living areas, rental properties on a tight budget, and anyone who wants the wood look at the lowest possible cost. Keep it away from water. <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 145 options →</Link></p>
           </div>
         </section>
 
@@ -382,7 +411,8 @@ export default function FlooringComparisonGuideClient() {
             </table>
           </div>
           <p className="mt-4 text-stone-500 text-sm">
-            * Labour: nail-down $2.25/sqft, glue-down $3.25/sqft, herringbone $4.25/sqft, vinyl/laminate $2.00/sqft. Old flooring removal additional ($1.00–$3.00/sqft). Free in-home measurement included with all BBS installations.
+            * Labour: nail-down $2.25/sqft, glue-down $3.25/sqft, herringbone $4.25/sqft, vinyl/laminate $2.00/sqft. Old flooring removal additional ($1.00–$3.00/sqft). Free in-home measurement included with all BBS installations.{' '}
+            <Link href="/installation" className="text-amber-700 underline hover:text-amber-800">See full installation services →</Link>
           </p>
         </section>
 
@@ -430,6 +460,78 @@ export default function FlooringComparisonGuideClient() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Top Picks */}
+        <section id="top-picks">
+          <h2 className="text-3xl font-bold text-stone-900 mb-4">Our Top Pick in Each Category</h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-8">
+            Can&apos;t decide where to start? These four products represent the best value, quality, and popularity in each flooring category at BBS — with real prices and direct links.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-6">
+
+            {/* Vinyl top pick */}
+            <div className="border border-sky-200 rounded-xl p-6 bg-sky-50">
+              <span className="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">💧 TOP VINYL PICK</span>
+              <h3 className="text-lg font-bold text-stone-800 mt-3 mb-1">
+                <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">
+                  Fulham — NAF AquaPlus Platinum 9mm
+                </Link>
+              </h3>
+              <p className="text-amber-600 font-semibold text-sm mb-3">$3.49/sqft · 100% Waterproof</p>
+              <p className="text-stone-600 text-sm leading-relaxed mb-4">9mm rigid SPC core, commercial-grade wear layer, 100% waterproof through the entire plank. The premium vinyl pick for basements, kitchens, and pet-owner homes throughout the GTA.</p>
+              <Link href="/vinyl-flooring" className="text-sm text-amber-700 underline hover:text-amber-800">Browse all vinyl flooring →</Link>
+            </div>
+
+            {/* Laminate top pick */}
+            <div className="border border-emerald-200 rounded-xl p-6 bg-emerald-50">
+              <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">💰 TOP LAMINATE PICK</span>
+              <h3 className="text-lg font-bold text-stone-800 mt-3 mb-1">
+                <Link href="/products/beachy-falcon-floors-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">
+                  Beachy — Falcon Floors 12mm Waterproof
+                </Link>
+              </h3>
+              <p className="text-amber-600 font-semibold text-sm mb-3">$2.39/sqft · 72-Hour Waterproof Protection</p>
+              <p className="text-stone-600 text-sm leading-relaxed mb-4">12mm thick with 72-hour waterproof protection. Outstanding value for bedrooms, home offices, and dry living areas — the step-up pick from our budget laminate range.</p>
+              <Link href="/laminate-flooring" className="text-sm text-amber-700 underline hover:text-amber-800">Browse all laminate flooring →</Link>
+            </div>
+
+            {/* Engineered top pick */}
+            <div className="border border-amber-200 rounded-xl p-6 bg-amber-50">
+              <span className="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">🌳 TOP ENGINEERED PICK</span>
+              <h3 className="text-lg font-bold text-stone-800 mt-3 mb-1">
+                <Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">
+                  Arizona — NAF Elegant 7.5&quot; Oak
+                </Link>
+              </h3>
+              <p className="text-amber-600 font-semibold text-sm mb-3">$4.69/sqft · Genuine Wood Veneer</p>
+              <p className="text-stone-600 text-sm leading-relaxed mb-4">Wide-plank 7.5&quot; European Oak with a real hardwood veneer. BBS&apos;s most popular engineered hardwood for open-concept main floors — the 2026 standard for Ontario homes.</p>
+              <Link href="/engineered-hardwood-flooring" className="text-sm text-amber-700 underline hover:text-amber-800">Browse all engineered hardwood →</Link>
+            </div>
+
+            {/* Solid top pick */}
+            <div className="border border-stone-300 rounded-xl p-6 bg-stone-50">
+              <span className="bg-stone-200 text-stone-800 text-xs font-bold px-3 py-1 rounded-full">🏆 TOP SOLID PICK</span>
+              <h3 className="text-lg font-bold text-stone-800 mt-3 mb-1">
+                <Link href="/products/fraser-4-3-4-maple-northernest-solid-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">
+                  Fraser — Northernest 4.75&quot; Maple
+                </Link>
+              </h3>
+              <p className="text-amber-600 font-semibold text-sm mb-3">$5.10/sqft · Refinishable for 50+ Years</p>
+              <p className="text-stone-600 text-sm leading-relaxed mb-4">Our most accessible solid hardwood — Canadian Hard Maple, nail-down installation, refinishable 5–7 times. The floor that can outlast the house.</p>
+              <Link href="/solid-hardwood-flooring" className="text-sm text-amber-700 underline hover:text-amber-800">Browse all solid hardwood →</Link>
+            </div>
+
+          </div>
+          <div className="mt-8 bg-stone-100 border border-stone-200 rounded-xl p-5 text-center">
+            <p className="text-stone-700 text-sm">
+              Not sure which is right for your space?{' '}
+              <Link href="/free-measurement" className="text-amber-700 underline hover:text-amber-800 font-semibold">Book a free in-home measurement</Link>
+              {' '}or use our{' '}
+              <Link href="/quote-calculator" className="text-amber-700 underline hover:text-amber-800 font-semibold">quote calculator</Link>
+              {' '}for an instant cost estimate on any flooring type.
+            </p>
           </div>
         </section>
 

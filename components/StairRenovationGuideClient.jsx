@@ -1,10 +1,13 @@
 'use client';
 
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 export default function StairRenovationGuideClient() {
   return (
     <div className="min-h-screen bg-white">
+      <Header />
 
       {/* Hero */}
       <section className="bg-gradient-to-br from-stone-900 via-stone-800 to-stone-700 text-white py-20 px-4">
@@ -248,6 +251,11 @@ export default function StairRenovationGuideClient() {
             <p className="text-stone-800 font-semibold mb-2">Our Recommendation</p>
             <p className="text-stone-600 text-sm">White oak dominates 2026 GTA renovation projects — it&apos;s hard enough for stair traffic, takes the full range of modern stains (especially the popular grey-brown tones), and matches the majority of current hardwood floor species. If you have red oak floors, we recommend red oak treads for consistency. Hickory is the choice when you have large dogs or extremely heavy traffic.</p>
           </div>
+
+          <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
+            <p className="text-stone-800 font-semibold mb-2">🎯 Match Your Stairs to Your Floors</p>
+            <p className="text-stone-600 text-sm">Doing stairs and flooring together? Choose stair treads in the same species as your new floors for a seamless transition. Popular combinations at BBS: <Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Elegant Oak floors</Link> with matching white oak treads, or <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Oak</Link> paired with custom-stained treads. Browse our full <Link href="/engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">engineered hardwood collection</Link> or <Link href="/solid-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">solid hardwood options</Link> to find your match.</p>
+          </div>
         </section>
 
         {/* Section 5: Railing Options */}
@@ -315,6 +323,7 @@ export default function StairRenovationGuideClient() {
               <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>The existing tread structure is solid but cosmetically worn</li>
               <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>Rental property renovation — maximum durability, minimum cost</li>
             </ul>
+            <p className="text-stone-600 text-sm mt-4">Considering vinyl for the whole project? Match your stair caps to your <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">vinyl plank flooring</Link> — options like the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum</Link> ($3.49/sqft) or budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon 6mm</Link> ($2.19/sqft) have coordinating stair cap options.</p>
           </div>
         </section>
 
@@ -372,6 +381,12 @@ export default function StairRenovationGuideClient() {
             <p className="text-blue-800 font-semibold mb-2">📅 Booking &amp; Lead Time</p>
             <p className="text-blue-700 text-sm">From initial contact to project start is typically 7–14 days depending on season. Spring (April–June) is our busiest period — book early for summer timelines. Free in-home estimates are available within 2–3 business days of your call.</p>
           </div>
+
+          {/* Combo savings */}
+          <div className="mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+            <p className="text-emerald-800 font-semibold mb-2">💰 Save by Combining Projects</p>
+            <p className="text-emerald-700 text-sm">Most GTA homeowners who do stairs also do at least one room of flooring. Combining stair renovation with a <Link href="/installation" className="text-amber-700 underline hover:text-amber-800">flooring installation project</Link> saves you a second mobilization fee and often gets you into a faster timeline. Use our <Link href="/quote-calculator" className="text-amber-700 underline hover:text-amber-800">quote calculator</Link> to estimate your combined project cost, or <Link href="/free-measurement" className="text-amber-700 underline hover:text-amber-800">book a free measurement</Link> for an exact quote covering everything.</p>
+          </div>
         </section>
 
         {/* FAQ */}
@@ -414,6 +429,8 @@ export default function StairRenovationGuideClient() {
         </section>
 
       </main>
+
+      <Footer />
     </div>
   );
 }

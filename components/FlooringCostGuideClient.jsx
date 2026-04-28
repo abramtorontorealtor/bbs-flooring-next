@@ -69,10 +69,10 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '348 products', '$2.49–$8.99/sqft', '$5.02/sqft', 'Woden ($2.49) · Falcon ($3.89)'],
-                  ['Solid Hardwood', '81 products', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Appalachian ($5.99)'],
-                  ['Vinyl (LVP/SPC)', '233 products', '$2.19–$3.59/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($2.29)'],
-                  ['Laminate', '145 products', '$1.49–$3.29/sqft', '$2.53/sqft', 'Tosca ($1.49) · Triforest ($1.79)'],
+                  ['Engineered Hardwood', '258+ options', '$3.69–$7.59/sqft', '$4.89/sqft', 'Lee ($3.69) · Woden ($3.99) · Falcon ($3.89)'],
+                  ['Solid Hardwood', '75+ options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
+                  ['Vinyl (LVP/SPC)', '188+ options', '$2.19–$3.59/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($2.49) · Woden ($2.79)'],
+                  ['Laminate', '99+ options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
                 ].map(([type, options, range, avg, value], i) => (
                   <tr key={type} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{type}</td>
@@ -88,8 +88,31 @@ export default function FlooringCostGuideClient() {
 
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
             <p className="text-stone-700 font-medium">
-              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $2.49/sqft when big-box stores start at $4.00+. Same quality, fewer markups.
+              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $3.69/sqft (like the <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee Flooring</Link>) when big-box stores start at $5.00+ for comparable European Oak. Same quality, fewer markups.
             </p>
+          </div>
+
+          {/* Specific product recommendations by budget */}
+          <div className="mt-8">
+            <h3 className="text-xl font-bold text-stone-900 mb-4">Our Top Picks at Each Price Point</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="border border-stone-200 rounded-xl p-5">
+                <p className="text-sm font-semibold text-amber-600 mb-1">💰 Budget Vinyl — $2.19/sqft</p>
+                <p className="text-stone-700"><Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside by Falcon</Link> — 6mm SPC, 100% waterproof, click-lock install. Perfect for basements and rentals.</p>
+              </div>
+              <div className="border border-stone-200 rounded-xl p-5">
+                <p className="text-sm font-semibold text-amber-600 mb-1">💰 Budget Laminate — $1.49/sqft</p>
+                <p className="text-stone-700"><Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904</Link> — 8mm AC4-rated, ideal for bedrooms and low-traffic areas. Cheapest flooring in the GTA.</p>
+              </div>
+              <div className="border border-stone-200 rounded-xl p-5">
+                <p className="text-sm font-semibold text-amber-600 mb-1">⭐ Mid-Range Engineered — $4.69/sqft</p>
+                <p className="text-stone-700"><Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Arizona by NAF Elegant Collection</Link> — 7.5&quot; Oak, wire-brushed finish. Best value for open-concept living rooms.</p>
+              </div>
+              <div className="border border-stone-200 rounded-xl p-5">
+                <p className="text-sm font-semibold text-amber-600 mb-1">👑 Premium Solid — $7.25/sqft</p>
+                <p className="text-stone-700"><Link href="/products/natural-wickham-solid-maple-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Natural Maple by Wickham</Link> — Canadian-made solid maple, 25+ year warranty, can be refinished 5–10 times over its lifetime.</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -267,7 +290,7 @@ export default function FlooringCostGuideClient() {
           <div className="space-y-4">
             {[
               ['1. Shop the BBS clearance page', 'Discontinued and overstock products from $1.49/sqft. Same quality, deep discounts. New items added regularly.', '/clearance'],
-              ['2. Choose mid-range brands', 'NAF ($4.69/sqft EH) and Northernest ($4.19/sqft EH) offer excellent quality without the premium price tag of Vidar or Canadian Standard. Same species, similar construction, lower cost.', '/naf-flooring'],
+              ['2. Choose mid-range brands', 'NAF ($4.69/sqft EH) and Northernest ($4.19/sqft EH) offer excellent quality without the premium price tag. Same species, similar construction, lower cost. Try the Blizzard by Woden at $3.99/sqft — European Oak that rivals products twice its price.', '/woden-flooring'],
               ['3. Float instead of glue-down', 'Floating click-lock installation saves $1.00–$1.25/sqft in labour vs glue-down. Works great on any flat, level subfloor. Not suitable for all situations — ask BBS during your free measurement.', '/installation'],
               ['4. Use wider planks', 'Counterintuitive: wider planks mean fewer cuts, fewer seams, and slightly faster installation. Modern 7"+ planks can actually be more efficient to install than narrow strips.', null],
               ['5. Buy 10% extra upfront', 'Buying waste material upfront is cheaper than ordering a separate small batch later (shipping, minimum orders). 10% is standard for most rooms.', null],
@@ -345,7 +368,7 @@ export default function FlooringCostGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Get Your Exact Flooring Cost</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            Every home is different. Book a free in-home measurement and get a detailed, no-obligation quote with material, labour, and all extras itemized. Or browse 807+ products online and use our quote calculator.
+            Every home is different. Book a free in-home measurement and get a detailed, no-obligation quote with material, labour, and all extras itemized. Or browse 600+ in-stock products online and use our quote calculator.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/products" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">

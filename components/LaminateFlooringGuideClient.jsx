@@ -36,6 +36,7 @@ export default function LaminateFlooringGuideClient() {
             <li><a href="#thickness" className="hover:underline">Thickness: 12mm vs 14mm</a></li>
             <li><a href="#waterproof" className="hover:underline">Is Waterproof Laminate Real?</a></li>
             <li><a href="#brand-comparison" className="hover:underline">Brand &amp; Price Comparison</a></li>
+            <li><a href="#budget-breakdown" className="hover:underline">Budget Breakdown by Tier</a></li>
             <li><a href="#cost-breakdown" className="hover:underline">Total Cost Breakdown</a></li>
             <li><a href="#laminate-vs-others" className="hover:underline">Laminate vs Vinyl vs Hardwood</a></li>
             <li><a href="#installation" className="hover:underline">Installation: What to Expect</a></li>
@@ -51,7 +52,7 @@ export default function LaminateFlooringGuideClient() {
         <section id="what-is-laminate">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">What Is Laminate Flooring?</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            Laminate is a multi-layer flooring product that mimics the look of hardwood (or stone) using a high-resolution photographic print layer protected by a tough wear coating. Modern laminate has come a long way — with embossed-in-register (EIR) textures and realistic grain, quality laminate is almost indistinguishable from real wood.
+            Laminate is a multi-layer flooring product that mimics the look of hardwood (or stone) using a high-resolution photographic print layer protected by a tough wear coating. Modern laminate has come a long way — with embossed-in-register (EIR) textures and realistic grain, quality laminate is almost indistinguishable from real wood. Browse our full <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">laminate flooring collection</Link> to see 145 options starting from $1.49/sqft.
           </p>
 
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
@@ -139,7 +140,7 @@ export default function LaminateFlooringGuideClient() {
         <section id="thickness">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Thickness: Why It Matters</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            At BBS Flooring, we carry only 12mm+ laminate. Here&apos;s why thickness matters and what each option offers:
+            At BBS Flooring, we carry only 12mm+ laminate. Here&apos;s why thickness matters and what each option offers — including why thinner products fall short:
           </p>
 
           <div className="overflow-x-auto mb-8">
@@ -154,6 +155,20 @@ export default function LaminateFlooringGuideClient() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
+                <tr className="opacity-50">
+                  <td className="p-3 font-semibold text-slate-500">8mm</td>
+                  <td className="p-3 text-slate-400">Poor — hollow click when walked on</td>
+                  <td className="p-3 text-slate-400">Flimsy, telegraphs every subfloor lump</td>
+                  <td className="p-3 text-slate-400 italic">Not carried at BBS</td>
+                  <td className="p-3 text-slate-400">$0.79–$1.29/sqft</td>
+                </tr>
+                <tr className="opacity-60">
+                  <td className="p-3 font-semibold text-slate-500">10mm</td>
+                  <td className="p-3 text-slate-400">Fair — better than 8mm but still noticeably hollow</td>
+                  <td className="p-3 text-slate-400">Adequate on perfect subfloors only</td>
+                  <td className="p-3 text-slate-400 italic">Not carried at BBS</td>
+                  <td className="p-3 text-slate-400">$1.20–$1.79/sqft</td>
+                </tr>
                 <tr>
                   <td className="p-3 font-semibold text-slate-800">12mm</td>
                   <td className="p-3 text-slate-600">Good — requires separate underlay for best results</td>
@@ -173,7 +188,7 @@ export default function LaminateFlooringGuideClient() {
           </div>
 
           <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5 text-sm text-emerald-900">
-            <strong>Why we don&apos;t carry 8mm laminate:</strong> Thin laminate sounds hollow when walked on, telegraphs subfloor imperfections, and has weaker click-lock joints that gap over time. The $0.50–$1.00/sqft savings isn&apos;t worth the compromised feel and shorter lifespan. Quality starts at 12mm.
+            <strong>Why we don&apos;t carry 8mm or 10mm laminate:</strong> Thin laminate sounds hollow when walked on, telegraphs subfloor imperfections, and has weaker click-lock joints that gap over time. The $0.50–$1.00/sqft savings isn&apos;t worth the compromised feel, shorter lifespan, and more frequent replacement costs. Quality starts at 12mm — and the difference is immediately noticeable underfoot.
           </div>
         </section>
 
@@ -183,6 +198,10 @@ export default function LaminateFlooringGuideClient() {
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
             Yes and no. Modern laminate with sealed edges and wax-treated cores can handle <strong>surface spills for 24–72 hours</strong> without damage — a massive improvement over older laminate that swelled at the first drop of water. However, no laminate is truly waterproof like vinyl (SPC/WPC), which is solid plastic through its entire core.
           </p>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6 text-sm text-amber-900">
+            <strong>Important distinction:</strong> Regular laminate is <em>water-resistant</em> — it tolerates light splashes but will swell with prolonged exposure. Waterproof laminate (like Evergreen and Falcon) offers <em>72-hour waterproof protection</em> from sealed edges and hydrophobic core treatment. Neither type is permanently waterproof — vinyl is the right choice for bathrooms and laundry rooms.
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-green-50 border border-green-200 rounded-xl p-5">
@@ -204,6 +223,27 @@ export default function LaminateFlooringGuideClient() {
                 <li>✘ Pet washing stations</li>
                 <li>✘ Mudrooms with heavy snow/water tracking</li>
               </ul>
+            </div>
+          </div>
+
+          {/* Waterproof product recommendations */}
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5 mb-6">
+            <h3 className="font-semibold text-emerald-800 mb-4">BBS Waterproof Laminate Picks</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <Link href="/products/beachy-falcon-floors-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800 font-medium">Beachy — Falcon Floors 12mm Waterproof</Link>
+                  <p className="text-slate-600 text-sm mt-1">72-hour waterproof protection · AC4 · EIR embossed texture · floating click-lock</p>
+                </div>
+                <span className="font-bold text-slate-800 shrink-0 ml-6">$2.39/sqft</span>
+              </div>
+              <div className="border-t border-emerald-200 pt-4 flex justify-between items-start">
+                <div>
+                  <Link href="/products/72147-evergreen-flooring-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800 font-medium">72147 — Evergreen Flooring 12mm Waterproof</Link>
+                  <p className="text-slate-600 text-sm mt-1">72-hour waterproof protection · premium finish · AC4 · ideal for kitchens &amp; busy households</p>
+                </div>
+                <span className="font-bold text-slate-800 shrink-0 ml-6">$3.29/sqft</span>
+              </div>
             </div>
           </div>
 
@@ -232,25 +272,31 @@ export default function LaminateFlooringGuideClient() {
               </thead>
               <tbody className="divide-y divide-slate-200">
                 <tr className="bg-emerald-50">
-                  <td className="p-3 font-semibold text-emerald-800">NAF Flooring</td>
+                  <td className="p-3 font-semibold text-emerald-800">
+                    <Link href="/naf-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Flooring</Link>
+                  </td>
                   <td className="p-3 text-center">32</td>
                   <td className="p-3 text-slate-600">14mm (12+2mm IXPE)</td>
                   <td className="p-3 text-slate-600 font-medium">$2.39–$3.09/sqft</td>
-                  <td className="p-3 text-slate-600">Premium feel, no separate underlay needed</td>
+                  <td className="p-3 text-slate-600">Premium feel, no separate underlay needed. See <Link href="/products/space-grey-naf-12mm-laminate-flooring" className="text-amber-700 underline hover:text-amber-800">Space Grey NAF 12mm</Link> ($2.59)</td>
                 </tr>
                 <tr>
-                  <td className="p-3 font-semibold text-slate-800">Evergreen</td>
+                  <td className="p-3 font-semibold text-slate-800">
+                    <Link href="/evergreen-flooring" className="text-amber-700 underline hover:text-amber-800">Evergreen</Link>
+                  </td>
                   <td className="p-3 text-center">16</td>
                   <td className="p-3 text-slate-600">12mm waterproof</td>
                   <td className="p-3 text-slate-600 font-medium">$2.99–$3.29/sqft</td>
-                  <td className="p-3 text-slate-600">Best waterproof performance in laminate</td>
+                  <td className="p-3 text-slate-600">Best waterproof performance in laminate. See <Link href="/products/72147-evergreen-flooring-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">Evergreen 72147</Link> ($3.29)</td>
                 </tr>
                 <tr className="bg-slate-50">
-                  <td className="p-3 font-semibold text-slate-800">Northernest</td>
+                  <td className="p-3 font-semibold text-slate-800">
+                    <Link href="/northernest-flooring" className="text-amber-700 underline hover:text-amber-800">Northernest</Link>
+                  </td>
                   <td className="p-3 text-center">18</td>
                   <td className="p-3 text-slate-600">12mm</td>
                   <td className="p-3 text-slate-600 font-medium">$2.69–$2.89/sqft</td>
-                  <td className="p-3 text-slate-600">Reliable mid-range, good colour selection</td>
+                  <td className="p-3 text-slate-600">Reliable mid-range, good colour selection. See <Link href="/products/eastern-oak-12mm-laminate-northernest-laminate-flooring" className="text-amber-700 underline hover:text-amber-800">Eastern Oak 12mm</Link> ($2.89)</td>
                 </tr>
                 <tr>
                   <td className="p-3 font-semibold text-slate-800">Simba</td>
@@ -267,11 +313,13 @@ export default function LaminateFlooringGuideClient() {
                   <td className="p-3 text-slate-600">Wide price range, budget-to-mid options</td>
                 </tr>
                 <tr>
-                  <td className="p-3 font-semibold text-slate-800">Falcon</td>
+                  <td className="p-3 font-semibold text-slate-800">
+                    <Link href="/falcon-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon</Link>
+                  </td>
                   <td className="p-3 text-center">12</td>
                   <td className="p-3 text-slate-600">12mm</td>
                   <td className="p-3 text-slate-600 font-medium">$2.39–$2.45/sqft</td>
-                  <td className="p-3 text-slate-600">Tight pricing, straightforward selection</td>
+                  <td className="p-3 text-slate-600">Tight pricing, straightforward selection. See <Link href="/products/beachy-falcon-floors-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">Beachy 12mm Waterproof</Link> ($2.39)</td>
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-semibold text-slate-800">Woden</td>
@@ -281,11 +329,13 @@ export default function LaminateFlooringGuideClient() {
                   <td className="p-3 text-slate-600">Curated selection, single price point</td>
                 </tr>
                 <tr className="bg-green-50">
-                  <td className="p-3 font-semibold text-green-800">Tosca Floors</td>
+                  <td className="p-3 font-semibold text-green-800">
+                    <Link href="/tosca-flooring" className="text-amber-700 underline hover:text-amber-800">Tosca Floors</Link>
+                  </td>
                   <td className="p-3 text-center">21</td>
                   <td className="p-3 text-slate-600">12mm</td>
                   <td className="p-3 text-green-700 font-medium">From $1.49/sqft</td>
-                  <td className="p-3 text-slate-600">Lowest price — best for rentals, flips, large areas</td>
+                  <td className="p-3 text-slate-600">Lowest price — best for rentals, flips, large areas. See <Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904</Link> ($1.49)</td>
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-semibold text-slate-800">Golden Choice</td>
@@ -299,7 +349,106 @@ export default function LaminateFlooringGuideClient() {
           </div>
         </section>
 
-        {/* Section 6: Cost Breakdown */}
+        {/* Section 6: Budget Breakdown */}
+        <section id="budget-breakdown">
+          <h2 className="text-3xl font-bold text-slate-900 mb-6">Budget Breakdown: Which Laminate Should You Buy?</h2>
+          <p className="text-slate-600 text-lg leading-relaxed mb-8">
+            Not sure which price tier is right for your project? Here&apos;s the honest breakdown — with real product examples from our in-stock selection:
+          </p>
+
+          <div className="space-y-6 mb-8">
+            {/* Budget Tier */}
+            <div className="border border-slate-200 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full">BUDGET</span>
+                <span className="text-slate-500 text-sm font-medium">$1.49–$1.99/sqft</span>
+              </div>
+              <h3 className="font-semibold text-slate-800 mb-2">Best for: Rental properties, investment flips, basements, temporary installs</h3>
+              <p className="text-slate-600 text-sm mb-4">
+                12mm AC3–AC4 laminate at price points that make large-area projects viable. Scratch-resistant, clean-looking, and easy to replace if a tenant damages it. Don&apos;t mistake &ldquo;affordable&rdquo; for cheap — our budget tier is still 12mm solid-core laminate, not the hollow 8mm stuff sold at big-box stores.
+              </p>
+              <div className="bg-slate-50 rounded-lg p-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800 font-medium">Tosca 9904 — 12mm Laminate</Link>
+                    <p className="text-slate-500 text-sm mt-1">21 colour options · AC4 · water-resistant · ideal for rentals &amp; large areas</p>
+                  </div>
+                  <span className="font-bold text-slate-800 shrink-0 ml-6 text-lg">$1.49/sqft</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Mid Tier */}
+            <div className="border border-emerald-200 rounded-xl p-6 bg-emerald-50/20">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">MID-RANGE</span>
+                <span className="text-emerald-700 text-sm font-medium">$2.39–$2.69/sqft — Most popular</span>
+              </div>
+              <h3 className="font-semibold text-slate-800 mb-2">Best for: Main floor living areas, family homes, first-time buyers</h3>
+              <p className="text-slate-600 text-sm mb-4">
+                This is the sweet spot. You get 12mm AC4+ laminate with EIR textures, realistic grain, and (in many cases) waterproof protection — at a price point that makes whole-home projects affordable. Most GTA homeowners land here.
+              </p>
+              <div className="space-y-3">
+                <div className="bg-white rounded-lg p-4 border border-emerald-100">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <Link href="/products/beachy-falcon-floors-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800 font-medium">Beachy — Falcon Floors 12mm Waterproof</Link>
+                      <p className="text-slate-500 text-sm mt-1">72-hour waterproof protection · AC4 · EIR texture · floating click-lock</p>
+                    </div>
+                    <span className="font-bold text-slate-800 shrink-0 ml-6">$2.39/sqft</span>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-4 border border-emerald-100">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <Link href="/products/space-grey-naf-12mm-laminate-flooring" className="text-amber-700 underline hover:text-amber-800 font-medium">Space Grey — NAF 12mm Laminate</Link>
+                      <p className="text-slate-500 text-sm mt-1">Modern grey tone · AC4 · water-resistant · great for open-concept main floors</p>
+                    </div>
+                    <span className="font-bold text-slate-800 shrink-0 ml-6">$2.59/sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Premium Tier */}
+            <div className="border border-slate-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="bg-slate-800 text-white text-xs font-bold px-3 py-1 rounded-full">PREMIUM</span>
+                <span className="text-slate-500 text-sm font-medium">$2.89–$3.29/sqft</span>
+              </div>
+              <h3 className="font-semibold text-slate-800 mb-2">Best for: Primary living spaces, show homes, high-end renovations</h3>
+              <p className="text-slate-600 text-sm mb-4">
+                Top-tier 12mm laminate from brands that invest in finish quality, locking mechanism precision, and broader wear warranties. If you&apos;re spending on a renovation that needs to impress — buyers, tenants, or yourself — this is your tier.
+              </p>
+              <div className="space-y-3">
+                <div className="bg-slate-50 rounded-lg p-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <Link href="/products/eastern-oak-12mm-laminate-northernest-laminate-flooring" className="text-amber-700 underline hover:text-amber-800 font-medium">Eastern Oak — Northernest 12mm</Link>
+                      <p className="text-slate-500 text-sm mt-1">Rich oak tone · AC4 · wide plank · excellent EIR grain detail</p>
+                    </div>
+                    <span className="font-bold text-slate-800 shrink-0 ml-6">$2.89/sqft</span>
+                  </div>
+                </div>
+                <div className="bg-slate-50 rounded-lg p-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <Link href="/products/72147-evergreen-flooring-12mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800 font-medium">72147 — Evergreen 12mm Waterproof</Link>
+                      <p className="text-slate-500 text-sm mt-1">72-hour waterproof protection · AC4 · premium finish · top-rated waterproof laminate</p>
+                    </div>
+                    <span className="font-bold text-slate-800 shrink-0 ml-6">$3.29/sqft</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-blue-900">
+            <strong>Not sure which tier fits your project?</strong> Use our <Link href="/quote-calculator" className="text-blue-700 underline hover:text-blue-800">Quote Calculator</Link> for an instant estimate, or <Link href="/free-measurement" className="text-blue-700 underline hover:text-blue-800">book a free in-home measurement</Link> — our team will match you to the right product after seeing the space.
+          </div>
+        </section>
+
+        {/* Section 7: Cost Breakdown */}
         <section id="cost-breakdown">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Total Cost Breakdown</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
@@ -354,7 +503,7 @@ export default function LaminateFlooringGuideClient() {
             <h3 className="text-lg font-semibold text-slate-800 mb-4">Sample Project: 500 sqft Living Area</h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-slate-600">Material (Tosca 12mm @ $1.49/sqft × 525 sqft)</span>
+                <span className="text-slate-600"><Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904 12mm</Link> @ $1.49/sqft × 525 sqft (incl. 5% waste)</span>
                 <span className="font-semibold text-slate-800">$782</span>
               </div>
               <div className="flex justify-between">
@@ -403,7 +552,7 @@ export default function LaminateFlooringGuideClient() {
           </p>
         </section>
 
-        {/* Section 7: Laminate vs Others */}
+        {/* Section 8: Laminate vs Others */}
         <section id="laminate-vs-others">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Laminate vs Vinyl vs Hardwood</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
@@ -484,11 +633,11 @@ export default function LaminateFlooringGuideClient() {
           </div>
         </section>
 
-        {/* Section 8: Installation */}
+        {/* Section 9: Installation */}
         <section id="installation">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Installation: What to Expect</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            Laminate uses a floating click-lock installation — one of the fastest and cleanest flooring methods. No nails, no glue, no mess.
+            Laminate uses a floating click-lock installation — one of the fastest and cleanest flooring methods. No nails, no glue, no mess. Learn more about our full <Link href="/installation" className="text-amber-700 underline hover:text-amber-800">laminate installation service</Link>.
           </p>
 
           <div className="space-y-6 mb-8">
@@ -523,11 +672,11 @@ export default function LaminateFlooringGuideClient() {
           </div>
 
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm text-blue-900">
-            <strong>DIY-friendly?</strong> Laminate is the most DIY-friendly flooring type. However, professional installation avoids common mistakes (wrong expansion gaps, poor staggering, underlay issues) and comes with warranty protection. At $2.00/sqft, the peace of mind is worth it.
+            <strong>DIY-friendly?</strong> Laminate is the most DIY-friendly flooring type. However, professional installation avoids common mistakes (wrong expansion gaps, poor staggering, underlay issues) and comes with warranty protection. At $2.00/sqft, the peace of mind is worth it. <Link href="/installation" className="text-blue-700 underline hover:text-blue-800">See our installation service →</Link>
           </div>
         </section>
 
-        {/* Section 9: Best Rooms */}
+        {/* Section 10: Best Rooms */}
         <section id="best-rooms">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Best Rooms for Laminate</h2>
 
@@ -579,7 +728,7 @@ export default function LaminateFlooringGuideClient() {
                 <tr className="bg-slate-50">
                   <td className="p-3 font-medium text-slate-800">Rental Property</td>
                   <td className="p-3 text-center text-green-600 font-bold">✔ Top choice</td>
-                  <td className="p-3 text-slate-600">Best cost-per-year value. Scratch-resistant. Easy to replace if damaged. Tosca from $1.49/sqft.</td>
+                  <td className="p-3 text-slate-600">Best cost-per-year value. Scratch-resistant. Easy to replace if damaged. <Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca from $1.49/sqft</Link>.</td>
                 </tr>
               </tbody>
             </table>
@@ -620,11 +769,14 @@ export default function LaminateFlooringGuideClient() {
             Feel the difference between 12mm and 14mm. Compare textures. See how modern laminate looks nothing like the cheap stuff from 10 years ago.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/laminate" className="bg-white text-emerald-900 px-6 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition">
+            <Link href="/laminate-flooring" className="bg-white text-emerald-900 px-6 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition">
               Browse 145 Options →
             </Link>
             <Link href="/free-measurement" className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
               Free In-Home Measurement
+            </Link>
+            <Link href="/quote-calculator" className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
+              Get an Instant Quote
             </Link>
             <a href="tel:6474281111" className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
               Call (647) 428-1111

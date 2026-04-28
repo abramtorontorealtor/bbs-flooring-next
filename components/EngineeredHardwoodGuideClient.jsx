@@ -41,6 +41,7 @@ export default function EngineeredHardwoodGuideClient() {
             <li><a href="#installation-methods" className="hover:underline">Installation Methods &amp; Costs</a></li>
             <li><a href="#cost-breakdown" className="hover:underline">Total Cost Breakdown</a></li>
             <li><a href="#best-for" className="hover:underline">Best Engineered Hardwood For...</a></li>
+            <li><a href="#when-not-to-choose" className="hover:underline">When NOT to Choose Engineered Hardwood</a></li>
             <li><a href="#faq" className="hover:underline">Frequently Asked Questions</a></li>
           </ol>
         </div>
@@ -172,17 +173,59 @@ export default function EngineeredHardwoodGuideClient() {
                   </tbody>
                 </table>
               </div>
+
+              {/* Species Comparison Callout */}
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mt-5">
+                <h4 className="font-semibold text-stone-800 mb-3">🌿 Oak vs. Maple vs. Ash — Which Species Is Right For You?</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <p className="font-semibold text-amber-800 mb-1">White Oak</p>
+                    <p className="text-stone-600">The 2026 bestseller. Golden to grey tones, open grain, takes stain beautifully. Janka 1360. Works in every aesthetic from farmhouse to ultra-modern. Best all-around choice for Canadian homes — see our full <Link href="/engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">engineered hardwood collection</Link>.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-amber-800 mb-1">Hard Maple</p>
+                    <p className="text-stone-600">Light, nearly white, minimal grain variation. Janka 1450 — harder than Oak. Ideal for contemporary and Scandinavian designs. Shows wear more visibly than Oak due to its uniform colour; best in lower-traffic bedrooms and offices.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-amber-800 mb-1">European Ash</p>
+                    <p className="text-stone-600">Janka 1320. Light tone with distinctive flowing grain — similar to Oak but with more drama. Popular for Scandinavian and modern interiors. Excellent dimensional stability makes it a top choice for radiant heat installations.</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Factor 2: Width */}
             <div>
               <h3 className="text-xl font-bold text-stone-800 mb-3">2. Plank Width</h3>
-              <p className="text-stone-600 mb-4">Width has the single biggest impact on the visual feel of a room.</p>
-              <ul className="space-y-2 text-stone-600">
-                <li className="flex gap-2"><span className="text-amber-600 font-bold">3¼"</span> <span>Traditional strip look. Fewer size options available in 2026 — this width is fading from the market.</span></li>
-                <li className="flex gap-2"><span className="text-amber-600 font-bold">5"</span> <span>The safe middle ground. Works in any room size and style. Still the most-sold width in Ontario.</span></li>
-                <li className="flex gap-2"><span className="text-amber-600 font-bold">6"–7½"</span> <span>Wide plank. The dominant trend in 2026 — fewer seams, more modern look, makes rooms feel larger.</span></li>
-                <li className="flex gap-2"><span className="text-amber-600 font-bold">8"–9½"</span> <span>Ultra-wide. Statement flooring. Available from Vidar and Canadian Standard at BBS. Best in large, open-concept spaces.</span></li>
+              <p className="text-stone-600 mb-4">Width has the single biggest impact on the visual feel of a room — and affects installation method requirements.</p>
+              <ul className="space-y-4 text-stone-600">
+                <li className="flex gap-3 items-start">
+                  <span className="text-amber-600 font-bold shrink-0 min-w-[3rem]">3¼"</span>
+                  <span>Traditional strip look. Fewer options available in 2026 — this width is fading from the market. Works over any standard wood subfloor. Best for traditional and colonial interiors where narrower planks suit the architecture.</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-amber-600 font-bold shrink-0 min-w-[3rem]">5"</span>
+                  <span>The versatile middle ground. Works in any room size and style. Still the most-sold width in Ontario. Compatible with nail-down, glue-down, and floating installation over any subfloor type. Generally the most affordable width per species.</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-amber-600 font-bold shrink-0 min-w-[3rem]">6"–7½"</span>
+                  <div>
+                    <p className="mb-2">Wide plank — the dominant trend in 2026. Fewer seams, more open look, makes rooms feel visually larger. <strong>Subfloor note:</strong> glue-down recommended over concrete for wide planks to minimize seasonal movement and eliminate hollow sound.</p>
+                    <p className="text-sm text-stone-500">Popular picks at BBS:{' '}
+                      <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard by Woden (6½" Vermont Oak, $3.99/sqft)</Link>{' '}·{' '}
+                      <Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Arizona by NAF Elegant (7½" Oak, $4.69/sqft)</Link>
+                    </p>
+                  </div>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-amber-600 font-bold shrink-0 min-w-[3rem]">8"–9½"</span>
+                  <div>
+                    <p className="mb-2">Ultra-wide statement flooring for large, open-concept spaces. <strong>Glue-down installation required</strong> — floating is not recommended at this width due to expansion forces. Best on flat, stable concrete slabs. Adds immediate visual luxury.</p>
+                    <p className="text-sm text-stone-500">At BBS:{' '}
+                      <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Pure by Canadian Standard Lucid (7½", $7.59/sqft)</Link>{' '}· Vidar Design Flooring (call for pricing)
+                    </p>
+                  </div>
+                </li>
               </ul>
             </div>
 
@@ -276,7 +319,12 @@ export default function EngineeredHardwoodGuideClient() {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-green-50 border border-green-200 rounded-xl p-5">
               <p className="font-semibold text-green-800 mb-1">💰 Best Value</p>
-              <p className="text-stone-600 text-sm">Woden Flooring from $2.49/sqft and Lee Flooring from $3.49/sqft offer the lowest entry points for real engineered hardwood.</p>
+              <p className="text-stone-600 text-sm">
+                Woden Flooring and Lee Flooring offer the lowest entry points for real engineered hardwood. Top picks:{' '}
+                <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee (6½" European Oak, $3.69/sqft)</Link>,{' '}
+                <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Linen by Falcon (6½" Red Oak, $3.89/sqft)</Link>, and{' '}
+                <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard by Woden (6½" Vermont Oak, $3.99/sqft)</Link>.
+              </p>
             </div>
             <div className="bg-purple-50 border border-purple-200 rounded-xl p-5">
               <p className="font-semibold text-purple-800 mb-1">👑 Premium Pick</p>
@@ -307,9 +355,17 @@ export default function EngineeredHardwoodGuideClient() {
             ))}
           </div>
 
-          <div className="bg-stone-50 border border-stone-200 rounded-xl p-5">
+          <div className="bg-stone-50 border border-stone-200 rounded-xl p-5 mb-4">
             <p className="font-semibold text-stone-800 mb-2">Herringbone &amp; Chevron: $4.25/sqft labour</p>
             <p className="text-stone-600 text-sm">Pattern installations require glue-down and take roughly twice as long as standard installations. The result is a stunning geometric floor that elevates any room. Vidar offers dedicated herringbone and Chevron products at BBS.</p>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+            <p className="font-semibold text-blue-900 mb-2">🏢 GTA Condo Installer Note</p>
+            <p className="text-stone-600 text-sm">
+              Most GTA condos have concrete subfloors — <strong>glue-down is the recommended installation method.</strong> It eliminates hollow sound (important for noise bylaws and downstairs neighbours), bonds directly to the slab, and performs better with in-suite radiant heating. Many Toronto condo buildings require <strong>STC 50+ / IIC 50+ acoustic ratings</strong> — BBS can advise on compliant underlayment combinations for your building’s requirements.{' '}
+              <Link href="/installation" className="text-amber-700 underline hover:text-amber-800">Learn more about our professional installation service →</Link>
+            </p>
           </div>
         </section>
 
@@ -376,7 +432,53 @@ export default function EngineeredHardwoodGuideClient() {
           </div>
         </section>
 
-        {/* Section 8: FAQ */}
+        {/* Section 8: When NOT to Choose */}
+        <section id="when-not-to-choose">
+          <h2 className="text-3xl font-bold text-stone-900 mb-6">When NOT to Choose Engineered Hardwood</h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-8">
+            Engineered hardwood is excellent — but it’s not the right choice for every situation. Here’s when you should consider an alternative before you commit.
+          </p>
+
+          <div className="space-y-4">
+            <div className="border-l-4 border-red-400 bg-red-50 rounded-r-xl p-5">
+              <h3 className="font-semibold text-stone-800 mb-2">❌ Basements with Active Moisture or Water History</h3>
+              <p className="text-stone-600 text-sm">If your basement has ever flooded, shows efflorescence (white mineral deposits on concrete), or reads above 75% relative humidity on a moisture metre — engineered hardwood is not safe. Wood of any kind will swell, buckle, and delaminate under prolonged moisture exposure. Choose a{' '}
+                <Link href="/waterproof-flooring" className="text-amber-700 underline hover:text-amber-800">100% waterproof vinyl (LVP/SPC) floor</Link>{' '}
+                instead. BBS stocks 233 waterproof vinyl options from $2.19/sqft.
+              </p>
+            </div>
+
+            <div className="border-l-4 border-red-400 bg-red-50 rounded-r-xl p-5">
+              <h3 className="font-semibold text-stone-800 mb-2">❌ High-Traffic Pet Areas (Large Dogs)</h3>
+              <p className="text-stone-600 text-sm">Hickory is the hardest option (Janka 1820), but large dogs with long nails will still scratch and dull any hardwood finish over time. If your dog runs daily circuits through the kitchen or main living area, a rigid-core vinyl floor with a scratch-resistant wear layer is the more practical long-term choice. It handles claws, spills, and muddy paws without reservation. See our{' '}
+                <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">vinyl flooring options</Link>{' '}
+                for pet-friendly picks.
+              </p>
+            </div>
+
+            <div className="border-l-4 border-red-400 bg-red-50 rounded-r-xl p-5">
+              <h3 className="font-semibold text-stone-800 mb-2">❌ Bathrooms &amp; Laundry Rooms</h3>
+              <p className="text-stone-600 text-sm">Engineered hardwood is not suitable for wet rooms. Standing water, shower steam, and persistent high humidity will damage the wood veneer and cause delamination of the core layers. Use porcelain tile, LVP, or SPC flooring in all bathrooms and laundry rooms — no exceptions.</p>
+            </div>
+
+            <div className="border-l-4 border-amber-400 bg-amber-50 rounded-r-xl p-5">
+              <h3 className="font-semibold text-stone-800 mb-2">⚠️ When Your Budget Is Under $3.50/sqft (Material)</h3>
+              <p className="text-stone-600 text-sm">Entry-level engineered hardwood starts at $2.49/sqft, but at that price point wear layers are thin (1–2mm) and refinishing isn’t a realistic option. If you’re on a tight budget and want a durable, long-lasting floor, a quality 12mm laminate (from $2.39/sqft at BBS) may offer better value per dollar. Explore our{' '}
+                <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">laminate flooring</Link>{' '}
+                options as a budget-conscious alternative.
+              </p>
+            </div>
+
+            <div className="border-l-4 border-amber-400 bg-amber-50 rounded-r-xl p-5">
+              <h3 className="font-semibold text-stone-800 mb-2">⚠️ Matching Existing Solid Hardwood in an Older Home</h3>
+              <p className="text-stone-600 text-sm">If you’re extending existing solid hardwood floors in an older Toronto home, matching the exact species, width, and finish with engineered hardwood is difficult — and the two materials age differently. In these cases, sourcing matching solid hardwood and having the entire floor refinished together gives you a seamless, unified result.{' '}
+                <Link href="/hardwood-refinishing" className="text-amber-700 underline hover:text-amber-800">BBS offers professional hardwood refinishing throughout the GTA →</Link>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 9: FAQ */}
         <section id="faq">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Frequently Asked Questions</h2>
 
@@ -411,14 +513,17 @@ export default function EngineeredHardwoodGuideClient() {
             BBS Flooring stocks 447 engineered hardwood options from 7 brands, starting at $2.49/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/engineered-hardwood" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">
+            <Link href="/engineered-hardwood-flooring" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">
               Browse 447+ Options
-            </Link>
-            <Link href="/quote-calculator" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">
-              Get a Free Quote
             </Link>
             <Link href="/free-measurement" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">
               Book Free Measurement
+            </Link>
+            <Link href="/installation" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">
+              Our Installation Service
+            </Link>
+            <Link href="/hardwood-refinishing" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">
+              Hardwood Refinishing
             </Link>
           </div>
           <p className="mt-6 text-stone-400 text-sm">
