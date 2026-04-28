@@ -47,6 +47,16 @@ export default function FlooringCostGuideClient() {
         </div>
       </section>
 
+      {/* AI Quick Answer Block */}
+      <section id="quick-answer" className="bg-amber-50 border border-amber-200 rounded-xl p-6 md:p-8 mb-8 mx-4 md:mx-0">
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-3">
+          Quick Answer: Flooring Installation Cost in Toronto &amp; GTA (2026)
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          Total cost (material + labour) at BBS Flooring: Laminate from $3.49/sqft, Vinyl/SPC from $4.19/sqft, Engineered hardwood from $5.94/sqft, Solid hardwood from $7.35/sqft. A typical 500 sqft room costs $1,745&#8211;$4,750 depending on material. BBS buys direct from manufacturers &#8212; 20&#8211;40% less than big-box stores. Free in-home measurement: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+        </p>
+      </section>
+
       <main className="max-w-4xl mx-auto px-4 py-16 space-y-20">
 
         {/* 1. Material Costs */}

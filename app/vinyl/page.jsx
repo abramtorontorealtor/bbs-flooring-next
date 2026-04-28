@@ -19,7 +19,29 @@ export default async function VinylPage() {
   const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
-      <JsonLd data={faqSchema(VINYL_FAQS)} />
+      <JsonLd data={[
+        faqSchema(VINYL_FAQS),
+        {
+          '@context': 'https://schema.org',
+          '@type': 'OfferCatalog',
+          name: 'Vinyl LVP & SPC Flooring at BBS Flooring',
+          description: '188 waterproof vinyl flooring options (LVP/SPC) from 6 brands. 100% waterproof, click-lock installation. Serving the Greater Toronto Area.',
+          numberOfItems: 188,
+          itemListElement: [{
+            '@type': 'AggregateOffer',
+            priceCurrency: 'CAD',
+            lowPrice: '2.19',
+            highPrice: '3.59',
+            offerCount: 188,
+            itemOffered: {
+              '@type': 'Product',
+              name: 'Vinyl LVP & SPC Flooring',
+              category: 'Vinyl Flooring',
+              additionalProperty: { '@type': 'PropertyValue', name: 'Waterproof', value: 'Yes — 100% permanently waterproof' },
+            },
+          }],
+        },
+      ]} />
       <Suspense fallback={serverGrid}>
         <VinylClient initialProducts={products} serverGrid={serverGrid} />
       </Suspense>

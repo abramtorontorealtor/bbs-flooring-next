@@ -19,7 +19,28 @@ export default async function LaminatePage() {
   const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
-      <JsonLd data={faqSchema(LAMINATE_FAQS)} />
+      <JsonLd data={[
+        faqSchema(LAMINATE_FAQS),
+        {
+          '@context': 'https://schema.org',
+          '@type': 'OfferCatalog',
+          name: 'Laminate Flooring at BBS Flooring',
+          description: '99 laminate flooring options from 8 brands. AC3–AC5 rated, from $1.49/sqft. Serving the Greater Toronto Area.',
+          numberOfItems: 99,
+          itemListElement: [{
+            '@type': 'AggregateOffer',
+            priceCurrency: 'CAD',
+            lowPrice: '1.49',
+            highPrice: '3.29',
+            offerCount: 99,
+            itemOffered: {
+              '@type': 'Product',
+              name: 'Laminate Flooring',
+              category: 'Laminate',
+            },
+          }],
+        },
+      ]} />
       <Suspense fallback={serverGrid}>
         <LaminateClient initialProducts={products} serverGrid={serverGrid} />
       </Suspense>

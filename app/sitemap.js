@@ -73,6 +73,13 @@ export default async function sitemap() {
     { path: '/privacy-policy', priority: 0.2, changeFrequency: 'yearly' },
     { path: '/terms-of-service', priority: 0.2, changeFrequency: 'yearly' },
     { path: '/return-policy', priority: 0.2, changeFrequency: 'yearly' },
+    // Removal service pages
+    { path: '/hardwood-removal', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/tile-removal', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/vinyl-laminate-removal', priority: 0.7, changeFrequency: 'monthly' },
+    // AI-friendly content files (helps AI crawlers discover our structured data)
+    { path: '/llms.txt', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/llms-full.txt', priority: 0.8, changeFrequency: 'weekly' },
   ];
 
   for (const page of staticPages) {

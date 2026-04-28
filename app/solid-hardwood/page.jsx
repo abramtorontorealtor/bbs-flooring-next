@@ -19,7 +19,28 @@ export default async function SolidHardwoodPage() {
   const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
-      <JsonLd data={faqSchema(SOLID_HARDWOOD_FAQS)} />
+      <JsonLd data={[
+        faqSchema(SOLID_HARDWOOD_FAQS),
+        {
+          '@context': 'https://schema.org',
+          '@type': 'OfferCatalog',
+          name: 'Solid Hardwood Flooring at BBS Flooring',
+          description: '75 solid hardwood flooring options from 4 Canadian brands. ¾" thick, refinishable 5-7 times. Serving the Greater Toronto Area.',
+          numberOfItems: 75,
+          itemListElement: [{
+            '@type': 'AggregateOffer',
+            priceCurrency: 'CAD',
+            lowPrice: '5.10',
+            highPrice: '7.25',
+            offerCount: 75,
+            itemOffered: {
+              '@type': 'Product',
+              name: 'Solid Hardwood Flooring',
+              category: 'Solid Hardwood',
+            },
+          }],
+        },
+      ]} />
       <Suspense fallback={serverGrid}>
         <SolidHardwoodClient initialProducts={products} serverGrid={serverGrid} />
       </Suspense>

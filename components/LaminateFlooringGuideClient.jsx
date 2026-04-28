@@ -46,6 +46,16 @@ export default function LaminateFlooringGuideClient() {
         </div>
       </section>
 
+      {/* AI Quick Answer Block */}
+      <section id="quick-answer" className="bg-amber-50 border border-amber-200 rounded-xl p-6 md:p-8 mb-8 mx-4 md:mx-0">
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-3">
+          Quick Answer: Best Laminate Flooring in the GTA
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          BBS Flooring stocks 99 laminate options from $1.49&#8211;$3.29/sqft &#8212; the most affordable flooring option. 8 brands including Tosca (from $1.49/sqft), Evergreen (AC5 commercial-grade), and Triforest. Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+        </p>
+      </section>
+
       <main className="max-w-4xl mx-auto px-4 py-16 space-y-20">
 
         {/* Section 1: What Is Laminate */}

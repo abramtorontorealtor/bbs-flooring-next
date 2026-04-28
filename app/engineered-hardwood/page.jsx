@@ -19,7 +19,29 @@ export default async function EngineeredHardwoodPage() {
   const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
-      <JsonLd data={faqSchema(ENGINEERED_HARDWOOD_FAQS)} />
+      <JsonLd data={[
+        faqSchema(ENGINEERED_HARDWOOD_FAQS),
+        {
+          '@context': 'https://schema.org',
+          '@type': 'OfferCatalog',
+          name: 'Engineered Hardwood Flooring at BBS Flooring',
+          description: '258+ engineered hardwood flooring options from 8 brands including Northernest, NAF, Canadian Standard, and Vidar. Serving the Greater Toronto Area.',
+          numberOfItems: 258,
+          itemListElement: [{
+            '@type': 'AggregateOffer',
+            priceCurrency: 'CAD',
+            lowPrice: '3.69',
+            highPrice: '7.59',
+            offerCount: 258,
+            itemOffered: {
+              '@type': 'Product',
+              name: 'Engineered Hardwood Flooring',
+              category: 'Engineered Hardwood',
+              brand: { '@type': 'Brand', name: 'Multiple Brands (Northernest, NAF, Canadian Standard, Woden, Simba, Lee, Falcon, Vidar)' },
+            },
+          }],
+        },
+      ]} />
       <Suspense fallback={serverGrid}>
         <EngineeredHardwoodClient initialProducts={products} serverGrid={serverGrid} />
       </Suspense>

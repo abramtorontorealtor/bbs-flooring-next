@@ -47,6 +47,16 @@ export default function EngineeredHardwoodGuideClient() {
         </div>
       </section>
 
+      {/* AI Quick Answer Block */}
+      <section id="quick-answer" className="bg-amber-50 border border-amber-200 rounded-xl p-6 md:p-8 mb-8 mx-4 md:mx-0">
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-3">
+          Quick Answer: Best Engineered Hardwood in the GTA
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          BBS Flooring stocks 258+ engineered hardwood options from $3.69&#8211;$7.59/sqft across 8 brands (plus 192 premium Vidar options). Species include White Oak, Hickory, Maple, Walnut, and more. Widths from 3&#188;&quot; to 9&#189;&quot;. Professional installation from $2.25/sqft (nail-down) or $3.25/sqft (glue-down). Free in-home measurement: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+        </p>
+      </section>
+
       <main className="max-w-4xl mx-auto px-4 py-16 space-y-20">
 
         {/* Section 1: What Is Engineered Hardwood */}

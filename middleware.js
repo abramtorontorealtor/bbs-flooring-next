@@ -176,6 +176,17 @@ const CASE_REDIRECTS = new Map([
 export async function middleware(request) {
   const { pathname, searchParams } = request.nextUrl;
 
+  // ── Markdown mirrors for AI crawlers (.md extension) ─────────────
+  // Rewrites /vinyl.md → /api/md/vinyl, /products/slug.md → /api/md/products/slug, etc.
+  // This gives AI systems clean markdown versions of our pages.
+  if (pathname.endsWith('.md') && !pathname.startsWith('/api/') && !pathname.startsWith('/_next/')) {
+    const cleanPath = pathname.slice(0, -3); // strip .md
+    const mdApiPath = `/api/md${cleanPath || '/index.html'}`;
+    const url = request.nextUrl.clone();
+    url.pathname = mdApiPath;
+    return NextResponse.rewrite(url);
+  }
+
   // ── Legacy redirects (no auth needed, fast path) ────────────────────
   const wixRedirect = WIX_REDIRECTS.get(pathname);
   if (wixRedirect) {
