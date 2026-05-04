@@ -23,23 +23,21 @@ export default async function VinylPage() {
         faqSchema(VINYL_FAQS),
         {
           '@context': 'https://schema.org',
-          '@type': 'OfferCatalog',
-          name: 'Vinyl LVP & SPC Flooring at BBS Flooring',
+          '@type': 'Product',
+          name: 'Vinyl LVP & SPC Flooring',
           description: '188 waterproof vinyl flooring options (LVP/SPC) from 6 brands. 100% waterproof, click-lock installation. Serving the Greater Toronto Area.',
-          numberOfItems: 188,
-          itemListElement: [{
+          category: 'Vinyl Flooring',
+          brand: { '@type': 'Brand', name: 'BBS Flooring' },
+          additionalProperty: { '@type': 'PropertyValue', name: 'Waterproof', value: 'Yes — 100% permanently waterproof' },
+          offers: {
             '@type': 'AggregateOffer',
             priceCurrency: 'CAD',
             lowPrice: '2.19',
             highPrice: '3.59',
             offerCount: 188,
-            itemOffered: {
-              '@type': 'Product',
-              name: 'Vinyl LVP & SPC Flooring',
-              category: 'Vinyl Flooring',
-              additionalProperty: { '@type': 'PropertyValue', name: 'Waterproof', value: 'Yes — 100% permanently waterproof' },
-            },
-          }],
+            availability: 'https://schema.org/InStock',
+            url: 'https://bbsflooring.ca/vinyl',
+          },
         },
       ]} />
       <Suspense fallback={serverGrid}>

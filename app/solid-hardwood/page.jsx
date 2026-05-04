@@ -23,22 +23,20 @@ export default async function SolidHardwoodPage() {
         faqSchema(SOLID_HARDWOOD_FAQS),
         {
           '@context': 'https://schema.org',
-          '@type': 'OfferCatalog',
-          name: 'Solid Hardwood Flooring at BBS Flooring',
+          '@type': 'Product',
+          name: 'Solid Hardwood Flooring',
           description: '75 solid hardwood flooring options from 4 Canadian brands. ¾" thick, refinishable 5-7 times. Serving the Greater Toronto Area.',
-          numberOfItems: 75,
-          itemListElement: [{
+          category: 'Solid Hardwood',
+          brand: { '@type': 'Brand', name: 'BBS Flooring' },
+          offers: {
             '@type': 'AggregateOffer',
             priceCurrency: 'CAD',
             lowPrice: '5.10',
             highPrice: '7.25',
             offerCount: 75,
-            itemOffered: {
-              '@type': 'Product',
-              name: 'Solid Hardwood Flooring',
-              category: 'Solid Hardwood',
-            },
-          }],
+            availability: 'https://schema.org/InStock',
+            url: 'https://bbsflooring.ca/solid-hardwood',
+          },
         },
       ]} />
       <Suspense fallback={serverGrid}>

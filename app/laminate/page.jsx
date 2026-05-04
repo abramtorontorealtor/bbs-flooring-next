@@ -23,22 +23,20 @@ export default async function LaminatePage() {
         faqSchema(LAMINATE_FAQS),
         {
           '@context': 'https://schema.org',
-          '@type': 'OfferCatalog',
-          name: 'Laminate Flooring at BBS Flooring',
+          '@type': 'Product',
+          name: 'Laminate Flooring',
           description: '99 laminate flooring options from 8 brands. AC3–AC5 rated, from $1.49/sqft. Serving the Greater Toronto Area.',
-          numberOfItems: 99,
-          itemListElement: [{
+          category: 'Laminate',
+          brand: { '@type': 'Brand', name: 'BBS Flooring' },
+          offers: {
             '@type': 'AggregateOffer',
             priceCurrency: 'CAD',
             lowPrice: '1.49',
             highPrice: '3.29',
             offerCount: 99,
-            itemOffered: {
-              '@type': 'Product',
-              name: 'Laminate Flooring',
-              category: 'Laminate',
-            },
-          }],
+            availability: 'https://schema.org/InStock',
+            url: 'https://bbsflooring.ca/laminate',
+          },
         },
       ]} />
       <Suspense fallback={serverGrid}>

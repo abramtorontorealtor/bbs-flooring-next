@@ -23,23 +23,20 @@ export default async function EngineeredHardwoodPage() {
         faqSchema(ENGINEERED_HARDWOOD_FAQS),
         {
           '@context': 'https://schema.org',
-          '@type': 'OfferCatalog',
-          name: 'Engineered Hardwood Flooring at BBS Flooring',
+          '@type': 'Product',
+          name: 'Engineered Hardwood Flooring',
           description: '258+ engineered hardwood flooring options from 8 brands including Northernest, NAF, Canadian Standard, and Vidar. Serving the Greater Toronto Area.',
-          numberOfItems: 258,
-          itemListElement: [{
+          category: 'Engineered Hardwood',
+          brand: { '@type': 'Brand', name: 'BBS Flooring' },
+          offers: {
             '@type': 'AggregateOffer',
             priceCurrency: 'CAD',
             lowPrice: '3.69',
             highPrice: '7.59',
             offerCount: 258,
-            itemOffered: {
-              '@type': 'Product',
-              name: 'Engineered Hardwood Flooring',
-              category: 'Engineered Hardwood',
-              brand: { '@type': 'Brand', name: 'Multiple Brands (Northernest, NAF, Canadian Standard, Woden, Simba, Lee, Falcon, Vidar)' },
-            },
-          }],
+            availability: 'https://schema.org/InStock',
+            url: 'https://bbsflooring.ca/engineered-hardwood',
+          },
         },
       ]} />
       <Suspense fallback={serverGrid}>
