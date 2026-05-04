@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import FlooringCostGuideClient from '@/components/FlooringCostGuideClient';
-import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 const faqItems = [
   {
@@ -85,7 +85,6 @@ export default function FlooringCostGuidePage() {
   const schemas = [
     articleSchema,
     faqSchema(faqItems),
-    localBusinessSchema(),
   ];
 
   return (

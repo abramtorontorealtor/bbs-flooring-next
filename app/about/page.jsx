@@ -1,5 +1,5 @@
 import AboutClient from '@/components/AboutClient';
-import { JsonLd, localBusinessSchema, organizationSchema } from '@/lib/schemas';
+import { JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: 'About Us | Family-Owned Flooring Since 2010 | Markham',
@@ -19,7 +19,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <JsonLd data={[localBusinessSchema(), organizationSchema(), breadcrumbSchema]} />
+      <JsonLd data={breadcrumbSchema} />
       <AboutClient />
     </>
   );

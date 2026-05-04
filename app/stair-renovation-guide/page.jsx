@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import StairRenovationGuideClient from '@/components/StairRenovationGuideClient';
-import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 const faqItems = [
   {
@@ -54,7 +54,7 @@ export const metadata = {
 export default function StairRenovationGuidePage() {
   return (
     <>
-      <JsonLd data={[localBusinessSchema(), faqSchema(faqItems)]} />
+      <JsonLd data={faqSchema(faqItems)} />
       <Suspense>
         <StairRenovationGuideClient />
       </Suspense>

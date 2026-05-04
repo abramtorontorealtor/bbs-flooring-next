@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import EngineeredHardwoodGuideClient from '@/components/EngineeredHardwoodGuideClient';
-import { faqSchema, localBusinessSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, JsonLd } from '@/lib/schemas';
 
 const faqItems = [
   {
@@ -85,7 +85,6 @@ export default function EngineeredHardwoodGuidePage() {
   const schemas = [
     articleSchema,
     faqSchema(faqItems),
-    localBusinessSchema(),
   ];
 
   return (

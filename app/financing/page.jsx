@@ -1,5 +1,5 @@
 import FinancingClient from '@/components/FinancingClient';
-import { JsonLd, localBusinessSchema } from '@/lib/schemas';
+import { JsonLd } from '@/lib/schemas';
 
 export const metadata = {
   title: 'Flooring Financing — Apply in Minutes | Markham',
@@ -30,7 +30,7 @@ export default function FinancingPage() {
 
   return (
     <>
-      <JsonLd data={[localBusinessSchema(), faqSchema]} />
+      <JsonLd data={faqSchema} />
       <FinancingClient />
     </>
   );
