@@ -9,7 +9,7 @@ import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
 import { Analytics } from '@/components/analytics';
 import { flooringImages } from '@/data/galleryImages';
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, CDN_GALLERY } from '@/lib/service-constants';
+import { GOOGLE_RATING, CDN_GALLERY } from '@/lib/service-constants';
 import {
   ServiceHero,
   GoogleReviews,
@@ -225,7 +225,7 @@ export default function FlooringInstallationCostClient() {
         heroAlt="Professional flooring installation in a Markham home — hardwood and vinyl"
         breadcrumbPath="/flooring-installation-cost"
         badges={[
-          `⭐ ${GOOGLE_RATING}/5 from ${GOOGLE_REVIEW_COUNT} Reviews`,
+          `⭐ ${GOOGLE_RATING}/5 on Google`,
           '🛡️ WSIB Insured',
           '📏 Free In-Home Measurement',
           '🚛 Free Furniture Moving',

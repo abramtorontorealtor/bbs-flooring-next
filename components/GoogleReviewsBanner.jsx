@@ -85,7 +85,7 @@ function CarouselReviews() {
                 <span className="text-2xl font-bold text-slate-800">{GOOGLE_REVIEW_STATS.averageRating}</span>
                 <Stars rating={Math.round(GOOGLE_REVIEW_STATS.averageRating)} size={20} />
               </div>
-              <p className="text-sm text-slate-500">Based on {GOOGLE_REVIEW_STATS.totalReviews} Google Reviews</p>
+              <p className="text-sm text-slate-500">Rated on Google</p>
             </div>
           </div>
           <a href={GOOGLE_REVIEW_STATS.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline">See all reviews on Google →</a>
@@ -125,7 +125,7 @@ function CompactReviews() {
         <GoogleLogo size={18} />
         <span className="text-sm font-semibold text-slate-700">{GOOGLE_REVIEW_STATS.averageRating} stars</span>
         <Stars rating={Math.round(GOOGLE_REVIEW_STATS.averageRating)} size={14} />
-        <span className="text-xs text-slate-400">({GOOGLE_REVIEW_STATS.totalReviews} reviews)</span>
+        <span className="text-xs text-slate-400">on Google</span>
       </div>
       <div className="transition-opacity duration-500">
         <div className="flex items-center gap-2 mb-1.5">

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, PHONE_HREF, PHONE_DISPLAY } from '@/lib/service-constants';
+import { GOOGLE_RATING, PHONE_HREF, PHONE_DISPLAY } from '@/lib/service-constants';
 import { PhoneIcon } from './ServiceIcons';
 
 /**
@@ -33,7 +33,7 @@ export default function ServiceHero({
 }) {
   // Auto-inject Google rating badge if not already in badges
   const displayBadges = badges || [
-    `⭐ ${GOOGLE_RATING}/5 from ${GOOGLE_REVIEW_COUNT} Reviews`,
+    `⭐ ${GOOGLE_RATING}/5 on Google`,
     '🛡️ WSIB Insured',
   ];
 

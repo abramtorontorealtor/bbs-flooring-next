@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, CDN_GALLERY, PHONE_HREF, PHONE_DISPLAY, SERVICE_AREAS } from '@/lib/service-constants';
+import { GOOGLE_RATING, CDN_GALLERY, PHONE_HREF, PHONE_DISPLAY, SERVICE_AREAS } from '@/lib/service-constants';
 import { PhoneIcon, CheckIcon, StarIcon } from '@/components/service';
 import { MobileStickyBtn } from '@/components/service';
 
@@ -160,7 +160,7 @@ export default function ContractorFlooringClient() {
           {/* Trust badges */}
           <div className="flex flex-wrap items-center gap-3 mt-6 mb-6">
             <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium px-3 py-1.5 rounded-full">
-              <StarIcon className="w-4 h-4 text-amber-400" /> {GOOGLE_RATING} · {GOOGLE_REVIEW_COUNT} Reviews
+              <StarIcon className="w-4 h-4 text-amber-400" /> {GOOGLE_RATING}/5 on Google
             </span>
             <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium px-3 py-1.5 rounded-full">
               🏗️ WSIB Insured
@@ -381,7 +381,7 @@ export default function ContractorFlooringClient() {
             </span>
             <span className="font-bold text-slate-800">{GOOGLE_RATING}/5</span>
             <span className="text-slate-500">·</span>
-            <span className="text-slate-600">{GOOGLE_REVIEW_COUNT} Google Reviews</span>
+            <span className="text-slate-600">Google Reviews</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800 mb-10">

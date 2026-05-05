@@ -92,7 +92,7 @@ export default function HardwoodRefinishingClient() {
         heroAlt="Professional hardwood floor refinishing — glossy finished hardwood in Markham home"
         breadcrumbPath="/hardwood-refinishing"
         badges={[
-          '⭐ 4.7/5 from 41 Reviews',
+          '⭐ 4.7/5 on Google',
           '🛡️ WSIB Insured',
           '💨 Dust-Contained Sanding',
           '📏 Free In-Home Assessment',

@@ -219,7 +219,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
           ))}
         </div>
         <span className="text-xs font-semibold text-slate-700">4.7</span>
-        <span className="text-xs text-slate-500">· 41 Google Reviews</span>
+        <span className="text-xs text-slate-500">· on Google</span>
       </div>
 
       {/* Delivery & pickup info — collapsible */}

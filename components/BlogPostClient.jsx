@@ -262,7 +262,7 @@ export default function BlogPostClient({ slug, initialPost = null }) {
           </a>
         </div>
         <div className="flex flex-wrap items-center gap-3 mt-4 text-xs sm:text-sm text-slate-400">
-          <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-400" /> 4.7★ · 41 Google Reviews</span>
+          <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-400" /> 4.7★ on Google</span>
           <span className="hidden sm:inline">·</span>
           <span>Serving Markham, Toronto & Durham</span>
         </div>

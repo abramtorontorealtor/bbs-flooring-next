@@ -106,7 +106,7 @@ export default function InstallationClient() {
         heroAlt="Professional flooring installation by BBS Flooring in Markham"
         breadcrumbPath="/installation"
         badges={[
-          '⭐ 4.7/5 from 41 Google Reviews',
+          '⭐ 4.7/5 on Google',
           '🛡️ WSIB Insured',
           '📏 Free In-Home Measurement',
           '🏗️ 12+ Years Experience',

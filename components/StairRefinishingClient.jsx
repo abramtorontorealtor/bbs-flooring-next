@@ -74,7 +74,7 @@ export default function StairRefinishingClient() {
         heroAlt="Professional staircase refinishing with dark stain and white risers"
         breadcrumbPath="/stair-refinishing"
         badges={[
-          '⭐ 4.7/5 from 41 Reviews',
+          '⭐ 4.7/5 on Google',
           '🛡️ WSIB Insured',
           '🪜 Dedicated Stair Crew',
           '🎨 Custom Stain Matching',

@@ -311,7 +311,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <div className="font-bold text-slate-800">4.7 out of 5</div>
-                  <div className="text-sm text-slate-500">Based on 41 Google Reviews</div>
+                  <div className="text-sm text-slate-500">Rated on Google</div>
                 </div>
               </div>
             </div>

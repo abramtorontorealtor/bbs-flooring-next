@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/lib/service-constants';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 import { StarIcon } from './ServiceIcons';
 
 /**
@@ -22,7 +22,7 @@ export default function GoogleReviews({ title = 'What Our Customers Say', review
               <StarIcon key={i} className="w-5 h-5" />
             ))}
           </div>
-          <span className="text-lg font-semibold text-slate-700">{GOOGLE_RATING}/5 from {GOOGLE_REVIEW_COUNT} Google Reviews</span>
+          <span className="text-lg font-semibold text-slate-700">{GOOGLE_RATING}/5 on Google</span>
         </div>
 
         {/* Review cards */}
@@ -47,7 +47,7 @@ export default function GoogleReviews({ title = 'What Our Customers Say', review
             rel="noopener noreferrer"
             className="text-amber-600 hover:text-amber-700 font-semibold text-sm underline underline-offset-2"
           >
-            Read all {GOOGLE_REVIEW_COUNT} reviews on Google →
+            Read our reviews on Google →
           </Link>
         </div>
       </div>

@@ -20,7 +20,7 @@ export const metadata = {
     default: 'BBS Flooring — Premium Flooring in Markham, Toronto & Durham',
     template: '%s | BBS Flooring',
   },
-  description: 'Premium flooring installation and materials in Markham, Toronto, and Durham. Hardwood, vinyl, laminate, engineered flooring and staircase renovations. 4.7★ rating, 41 reviews.',
+  description: 'Premium flooring installation and materials in Markham, Toronto, and Durham. Hardwood, vinyl, laminate, engineered flooring and staircase renovations. 4.7★ rated on Google.',
   metadataBase: new URL('https://bbsflooring.ca'),
   icons: {
     icon: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/bbs-logo-official-v2.png',
