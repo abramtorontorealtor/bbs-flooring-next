@@ -67,20 +67,28 @@ export default function Header({ cartCount = 0 }) {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-slate-800'}`}>
 
-      {/* ── Top bar ── */}
-      <div className="bg-amber-700 text-white py-2 px-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
-          <span className="hidden sm:block">We Guarantee Your Satisfaction Throughout Our Start-To-Finish Process</span>
-          <div className="flex items-center gap-3 ml-auto">
+      {/* ── Top bar — prominent call bar on mobile ── */}
+      <div className="bg-amber-700 text-white">
+        {/* Mobile: full-width tappable call bar */}
+        <a
+          href="tel:+16474281111"
+          className="sm:hidden flex items-center justify-center gap-2 py-3 font-bold text-base active:bg-amber-800 transition-colors"
+          style={{ WebkitTapHighlightColor: 'rgba(255,255,255,0.3)', touchAction: 'manipulation', minHeight: '48px' }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 flex-shrink-0 animate-pulse" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>Call or Text: (647) 428-1111</span>
+        </a>
+        {/* Desktop: standard top bar */}
+        <div className="hidden sm:block py-2 px-4">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
+            <span>We Guarantee Your Satisfaction Throughout Our Start-To-Finish Process</span>
             <a
               href="tel:+16474281111"
               className="flex items-center gap-2 font-semibold hover:text-amber-100 transition-colors py-2 px-3 -mx-3 rounded"
               style={{ WebkitTapHighlightColor: 'rgba(255,255,255,0.3)', touchAction: 'manipulation', minHeight: '44px', minWidth: '44px' }}
             >
-              {/* Phone icon */}
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              <span className="hidden sm:inline">Call/Text: 647-428-1111</span>
-              <span className="sm:hidden">647-428-1111</span>
+              Call/Text: 647-428-1111
             </a>
           </div>
         </div>

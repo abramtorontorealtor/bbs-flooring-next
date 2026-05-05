@@ -7,8 +7,8 @@ import { recentProjectsShowcase } from '@/data/galleryImages';
 import { createPageUrl } from '@/lib/routes';
 
 export const metadata = {
-  title: 'Flooring Store Markham, Toronto & Durham | Free Quote',
-  description: 'Premium flooring in Markham, Toronto & Durham. Hardwood, vinyl, laminate. 600+ products, expert installation. Free measurements. Call (647) 428-1111!',
+  title: 'Flooring Store Markham, Toronto & Durham | 700+ Floors from $1.49/sqft',
+  description: '700+ hardwood, vinyl, and laminate floors from $1.49/sqft. Free in-home measurements, expert installation. Visit our Markham showroom or call (647) 428-1111.',
   alternates: {
     canonical: '/',
   },
@@ -151,15 +151,23 @@ export default function HomePage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-5 md:mb-8">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-              <span className="text-amber-400 text-xs md:text-sm font-medium">Serving Markham, Toronto &amp; Durham</span>
+              <span className="text-amber-400 text-xs md:text-sm font-medium">4.7★ Google · 13+ Years in Markham</span>
             </div>
             <h1 className="text-[2.5rem] leading-[1.08] sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white md:leading-[1.05] mb-5 md:mb-8 tracking-tight">
-              Premium Flooring at{' '}
-              <span className="text-amber-500">Wholesale Prices</span>
+              700+ Floors.{' '}
+              <span className="text-amber-500">Wholesale Prices.</span>
             </h1>
-            <p className="text-base md:text-2xl text-slate-300 mb-7 md:mb-10 leading-relaxed max-w-lg">
-              Expert installation, huge selection, and 100% satisfaction guaranteed.
+            <p className="text-base md:text-2xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
+              Hardwood, vinyl, and laminate from $1.49/sqft. Free in-home measurements. Expert installation by our own crew — not subcontractors.
             </p>
+            {/* Phone number directly in hero — unmissable */}
+            <a
+              href="tel:+16474281111"
+              className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-lg md:text-xl font-bold mb-7 md:mb-10 transition-colors"
+            >
+              <PhoneIcon className="w-5 h-5 md:w-6 md:h-6" />
+              (647) 428-1111
+            </a>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link
                 href="/free-measurement"
@@ -167,12 +175,12 @@ export default function HomePage() {
               >
                 Get Free In-Home Quote <ArrowIcon />
               </Link>
-              <Link
-                href="/products"
+              <a
+                href="tel:+16474281111"
                 className="inline-flex items-center justify-center border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-7 py-3.5 md:px-8 md:py-4 text-base md:text-lg rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all"
               >
-                Browse All Flooring <ArrowIcon />
-              </Link>
+                <PhoneIcon className="mr-2 w-5 h-5" /> Call Now
+              </a>
             </div>
           </div>
         </div>

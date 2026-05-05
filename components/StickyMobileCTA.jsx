@@ -7,7 +7,6 @@ import Link from 'next/link';
 
 const HIDDEN_PATHS = [
   '/carpet-removal',
-  '/products/',
   '/cart',
   '/checkout',
   '/view-booking',
@@ -17,7 +16,9 @@ const HIDDEN_PATHS = [
 export default function StickyMobileCTA() {
   const pathname = usePathname();
 
-  const isHiddenPage = HIDDEN_PATHS.some((p) => pathname.startsWith(p));
+  // Hide on explicit paths + individual product detail pages (they have StickyAddToCart)
+  const isProductDetail = /^\/products\/[^/]+/.test(pathname);
+  const isHiddenPage = isProductDetail || HIDDEN_PATHS.some((p) => pathname.startsWith(p));
 
   if (isHiddenPage) return null;
 
