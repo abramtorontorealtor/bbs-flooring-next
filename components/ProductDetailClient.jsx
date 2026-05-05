@@ -20,7 +20,7 @@ import { getProductBreadcrumbs } from '@/lib/breadcrumbs';
 // to avoid duplicate JSON-LD and to include childVariants data.
 import { Analytics } from '@/components/analytics';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
-import TransitionPieces from '@/components/TransitionPieces';
+// TransitionPieces import removed — trim sales paused until pricing/availability fixed (Abram May 5)
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import RequestQuoteBox from '@/components/RequestQuoteBox';
@@ -857,10 +857,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         </section>
       )}
 
-      {/* ── Transition Pieces (hidden on hardwood — Abram directive May 5) ── */}
-      {!['engineered_hardwood', 'solid_hardwood'].includes(product?.category) && (
-        <TransitionPieces product={product} />
-      )}
+      {/* Transition Pieces removed site-wide — trim sales paused until pricing/availability fixed (Abram May 5) */}
 
       {/* ── Complete Your Project — Compact service cards ── */}
       <section className="mt-16">
