@@ -857,8 +857,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         </section>
       )}
 
-      {/* ── Transition Pieces ── */}
-      <TransitionPieces product={product} />
+      {/* ── Transition Pieces (hidden on hardwood — Abram directive May 5) ── */}
+      {!['engineered_hardwood', 'solid_hardwood'].includes(product?.category) && (
+        <TransitionPieces product={product} />
+      )}
 
       {/* ── Complete Your Project — Compact service cards ── */}
       <section className="mt-16">
