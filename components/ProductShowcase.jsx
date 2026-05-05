@@ -10,47 +10,29 @@ function ArrowRightIcon({ className = 'w-4 h-4' }) {
   return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
 }
 
+const TABS = [
+  { key: 'new', label: 'New Arrivals', icon: '✨' },
+  { key: 'popular', label: 'Best Sellers', icon: '🔥' },
+  { key: 'sale', label: 'On Sale', icon: '💰' },
+];
+
 export default function ProductShowcase() {
   const [showcaseTab, setShowcaseTab] = useState('new');
 
-  const { data: featuredProducts = [] } = useQuery({
-    queryKey: ['featuredProductsOptimized'],
-    queryFn: async () => {
-      const res = await fetch('/api/products/grid?limit=8');
-      if (!res.ok) return [];
-      const data = await res.json();
-      return data.filter(p => p.image_url).slice(0, 8);
-    },
+  // Each tab fetches from the curated showcase API (brand + category diverse, prices visible)
+  const { data: newProducts = [] } = useQuery({
+    queryKey: ['showcase', 'new'],
+    queryFn: () => fetch('/api/products/showcase?tab=new').then(r => r.ok ? r.json() : []),
   });
 
   const { data: popularProducts = [] } = useQuery({
-    queryKey: ['popularProductsHome'],
-    queryFn: async () => {
-      const res = await fetch('/api/products/grid?limit=50');
-      if (!res.ok) return [];
-      const items = await res.json();
-      const withImages = items.filter(p => p.image_url && p.price_per_sqft > 0);
-      withImages.sort((a, b) => (b.price_per_sqft || 0) - (a.price_per_sqft || 0));
-      const seen = {};
-      const result = [];
-      for (const p of withImages) {
-        const cat = p.category || 'other';
-        if (!seen[cat]) seen[cat] = 0;
-        if (seen[cat] < 3) { result.push(p); seen[cat]++; }
-        if (result.length >= 8) break;
-      }
-      return result;
-    },
+    queryKey: ['showcase', 'popular'],
+    queryFn: () => fetch('/api/products/showcase?tab=popular').then(r => r.ok ? r.json() : []),
   });
 
   const { data: saleProducts = [] } = useQuery({
-    queryKey: ['saleProductsHome'],
-    queryFn: async () => {
-      const res = await fetch('/api/products/grid?sale=true&limit=16');
-      if (!res.ok) return [];
-      const items = await res.json();
-      return items.filter(p => p.image_url).slice(0, 8);
-    },
+    queryKey: ['showcase', 'sale'],
+    queryFn: () => fetch('/api/products/showcase?tab=sale').then(r => r.ok ? r.json() : []),
   });
 
   const { data: clearanceProducts = [] } = useQuery({
@@ -58,21 +40,21 @@ export default function ProductShowcase() {
     queryFn: async () => {
       const res = await fetch('/api/products/grid?clearance=true&limit=4');
       if (!res.ok) return [];
-      return (await res.json()).filter(p => p.image_url).slice(0, 4);
+      return (await res.json()).filter(p => p.image_url && !p.hide_price).slice(0, 4);
     },
   });
 
-  if (featuredProducts.length === 0 && clearanceProducts.length === 0) return null;
-
   const tabProducts = showcaseTab === 'popular' ? popularProducts
     : showcaseTab === 'sale' ? saleProducts
-    : featuredProducts;
+    : newProducts;
   const emptyMsg = showcaseTab === 'sale' && tabProducts.length === 0 ? 'No sale items right now — check back soon!' : null;
+
+  if (newProducts.length === 0 && clearanceProducts.length === 0) return null;
 
   return (
     <>
       {/* Product Showcase — Multi-Tab */}
-      {featuredProducts.length > 0 && (
+      {newProducts.length > 0 && (
         <section className="py-20 px-4 bg-white">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12">
@@ -86,11 +68,7 @@ export default function ProductShowcase() {
             </div>
 
             <div className="flex gap-1 mb-8 bg-slate-100 rounded-xl p-1 w-fit">
-              {[
-                { key: 'new', label: 'New Arrivals', icon: '✨' },
-                { key: 'popular', label: 'Best Sellers', icon: '🔥' },
-                { key: 'sale', label: 'On Sale', icon: '💰' },
-              ].map(tab => (
+              {TABS.map(tab => (
                 <button
                   key={tab.key}
                   onClick={() => setShowcaseTab(tab.key)}
