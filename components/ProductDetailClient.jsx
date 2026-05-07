@@ -432,8 +432,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             onActiveIdxChange={setActiveImageIdx}
             badges={[
               product.is_new_arrival && <Badge key="new" className="bg-emerald-500 text-white border-0">New Arrival</Badge>,
-              !hidePrice && product.is_on_sale && <Badge key="sale" className="bg-red-500 text-white border-0">Sale</Badge>,
-              !hidePrice && product.is_clearance && <Badge key="clearance" className="bg-orange-500 text-white border-0">Clearance</Badge>,
+              !hidePrice && product.is_on_sale && !product.is_clearance && <Badge key="sale" className="bg-red-500 text-white border-0 text-sm font-bold px-3 py-1">SALE</Badge>,
+              !hidePrice && product.is_clearance && <Badge key="clearance" className="bg-orange-500 text-white border-0 text-sm font-bold px-3 py-1">🔥 CLEARANCE</Badge>,
             ].filter(Boolean)}
           />
         </div>
@@ -477,6 +477,21 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                 <Badge className="bg-slate-700 text-white border-0 text-base px-3 py-1.5">Out of Stock</Badge>
               ) : product.price_per_sqft ? (
                 <div>
+                  {/* Urgency pill for sale/clearance */}
+                  {!hidePrice && product.is_clearance && (
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="inline-flex items-center gap-1.5 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full border border-orange-300">
+                        🔥 Clearance — Limited Stock
+                      </span>
+                    </div>
+                  )}
+                  {!hidePrice && product.is_on_sale && !product.is_clearance && (
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="inline-flex items-center gap-1.5 bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full border border-red-300">
+                        🏷️ On Sale — Save {currentPricing.price_per_sqft > 0 ? Math.round((1 - currentPricing.sale_price_per_sqft / currentPricing.price_per_sqft) * 100) : 0}%
+                      </span>
+                    </div>
+                  )}
                   <div className="flex items-baseline gap-2">
                     {hasDiscount ? (
                       <>
@@ -693,6 +708,39 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
             {buyMode === 'material' ? (
               <div className="space-y-3">
+                {/* ── Quick-Buy shortcuts — common room sizes ── */}
+                {!hidePrice && !isOutOfStock && currentPricing.price_per_sqft > 0 && (
+                  <div>
+                    <p className="text-xs text-slate-500 font-medium mb-1.5">Quick estimate by room size:</p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[100, 200, 500].map((sqft) => {
+                        const sqftPerBox = currentPricing.sqft_per_box || 20;
+                        const boxes = Math.ceil(sqft / sqftPerBox);
+                        const actualSqft = boxes * sqftPerBox;
+                        const pricePerSqft = currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft
+                          ? currentPricing.sale_price_per_sqft
+                          : currentPricing.price_per_sqft;
+                        const total = actualSqft * pricePerSqft;
+                        return (
+                          <button
+                            key={sqft}
+                            onClick={() => setSqftNeeded(String(sqft))}
+                            disabled={product.has_variants && !selectedJsonVariant}
+                            className="flex flex-col items-center justify-center py-2.5 px-2 rounded-xl border-2 border-amber-200 bg-amber-50 hover:bg-amber-100 hover:border-amber-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <span className="text-xs font-bold text-amber-800">{sqft} sqft</span>
+                            <span className="text-[10px] text-slate-600 mt-0.5">C${total.toFixed(0)}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="flex items-center gap-2 my-2">
+                      <div className="flex-1 h-px bg-slate-200" />
+                      <span className="text-[10px] text-slate-400 uppercase tracking-wider">or enter your exact sqft below</span>
+                      <div className="flex-1 h-px bg-slate-200" />
+                    </div>
+                  </div>
+                )}
                 {/* Calculator */}
                 <SqftCalculator
                   variants={product.has_variants ? ((() => { try { const s = JSON.parse(product.specifications); return s.variants || []; } catch { return []; } })()) : []}
@@ -728,6 +776,13 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                   </div>
                 )}
 
+                {/* Clearance urgency note */}
+                {product.is_clearance && !isOutOfStock && (
+                  <div className="flex items-center gap-2 py-2 px-3 bg-orange-50 border border-orange-200 rounded-lg">
+                    <span className="text-base">🔥</span>
+                    <p className="text-xs font-semibold text-orange-800">Clearance price — once it’s gone, it’s gone</p>
+                  </div>
+                )}
                 {/* Primary CTA: Add to Cart */}
                 <Button
                   className={`w-full h-12 text-base font-bold rounded-xl transition-all ${

@@ -186,6 +186,17 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ CLEARANCE URGENCY STRIP ═══ */}
+      <div className="bg-orange-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-center gap-3 text-center">
+          <span className="text-lg">🔥</span>
+          <p className="text-sm font-semibold">
+            <span className="font-bold">30 Clearance Lines — Deep Discounts on Premium Flooring.</span>{' '}
+            <a href="/clearance" className="underline underline-offset-2 hover:no-underline">Shop Before It’s Gone →</a>
+          </p>
+        </div>
+      </div>
+
       {/* ═══ STATS BAR — Compact on mobile, prominent on desktop ═══ */}
       <section className="bg-slate-900 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 py-5 md:py-10">
