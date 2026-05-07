@@ -85,27 +85,50 @@ export default function CheckoutClient() {
     };
   };
 
-  // Fire abandoned tracking only when user leaves the page without completing order
+  // Fire abandoned tracking only when user truly leaves (not just switching tabs).
+  // Strategy: on visibilitychange→hidden, start a 30s timer. If they come back
+  // before it fires, cancel it. On pagehide (actual navigation away), fire immediately.
+  const abandonedTimerRef = useRef(null);
+
   useEffect(() => {
-    const handleLeave = () => {
+    const fireAbandoned = () => {
       if (!pendingAbandonedRef.current) return;
-      if (isSubmittingRef.current) return; // actively submitting — not abandoned
+      if (isSubmittingRef.current) return;
       const payload = pendingAbandonedRef.current;
-      // Use sendBeacon for reliable fire-on-unload
+      pendingAbandonedRef.current = null; // prevent double-fire
       const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
       navigator.sendBeacon('/api/tracking/abandoned', blob);
     };
 
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') handleLeave();
+      if (document.visibilityState === 'hidden') {
+        // Start 30s timer — if they're just checking their bank, they'll come back
+        abandonedTimerRef.current = setTimeout(fireAbandoned, 30_000);
+      } else {
+        // Came back — cancel the timer
+        if (abandonedTimerRef.current) {
+          clearTimeout(abandonedTimerRef.current);
+          abandonedTimerRef.current = null;
+        }
+      }
+    };
+
+    // pagehide = actual navigation or tab close — fire immediately
+    const handlePageHide = () => {
+      if (abandonedTimerRef.current) {
+        clearTimeout(abandonedTimerRef.current);
+        abandonedTimerRef.current = null;
+      }
+      fireAbandoned();
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('pagehide', handleLeave);
+    window.addEventListener('pagehide', handlePageHide);
 
     return () => {
+      if (abandonedTimerRef.current) clearTimeout(abandonedTimerRef.current);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('pagehide', handleLeave);
+      window.removeEventListener('pagehide', handlePageHide);
     };
   }, []);
 
