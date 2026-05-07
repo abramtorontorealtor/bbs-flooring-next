@@ -59,11 +59,14 @@ export default function LaminateClient({ initialProducts, children, serverGrid }
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
-          Laminate Flooring
+          Laminate Flooring in Markham | 12mm From $1.49/sqft
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
-          Maximum floor for minimum budget. Premium 12mm laminate from $1.49/sqft — AC4/AC5 rated
-          and water-resistant. The best value hard-surface flooring in the GTA.
+          Maximum floor for minimum budget. Premium 12mm laminate from{' '}
+          <strong>$1.49/sqft</strong> — AC4/AC5 rated, water-resistant, and perfect for
+          high-traffic areas. In stock at our Markham showroom (6061 Hwy 7) with professional
+          installation available across the GTA. A 500 sqft main floor costs as little as{' '}
+          <strong>$1,745 fully installed</strong>.
         </p>
       </div>
 

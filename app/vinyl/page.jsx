@@ -8,9 +8,9 @@ import { getProductsForGrid } from '@/lib/products-server';
 export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
-  title: 'Vinyl Flooring Markham | LVP & SPC Waterproof',
+  title: 'Vinyl Plank Flooring Markham | LVP & SPC from $1.79/sqft',
   description:
-    'Shop luxury vinyl plank (LVP) and SPC waterproof flooring in Markham. 100+ styles from $1.79/sqft. Perfect for basements, kitchens, bathrooms. Free measurements. Call (647) 428-1111.',
+    'Shop luxury vinyl plank (LVP) and SPC waterproof flooring in Markham from $1.79/sqft. 100% waterproof, scratch-resistant. Perfect for basements, kitchens, bathrooms. Free in-home measurements across the GTA. Call (647) 428-1111.',
   alternates: { canonical: '/vinyl' },
 };
 

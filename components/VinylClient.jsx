@@ -60,11 +60,13 @@ export default function VinylClient({ initialProducts, children, serverGrid }) {
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
-          Luxury Vinyl Plank (LVP) &amp; SPC Flooring
+          Vinyl Plank Flooring in Markham | LVP &amp; SPC
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
           100% waterproof, scratch-resistant, and built for real life. Shop 100+ SPC and LVP vinyl
-          styles starting from $1.79/sqft at our Markham showroom.
+          plank styles from <strong>$1.79/sqft</strong> at our Markham showroom (6061 Hwy 7).
+          Serving Toronto, Scarborough, Vaughan, and all of Durham Region — free in-home
+          measurements included.
         </p>
       </div>
 

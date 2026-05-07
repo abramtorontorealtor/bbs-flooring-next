@@ -8,9 +8,9 @@ import { getProductsForGrid } from '@/lib/products-server';
 export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
-  title: 'Solid Hardwood Flooring Markham | Red Oak, White Oak, Maple',
+  title: 'Solid Hardwood Flooring Markham | Oak, Maple & Hickory from $4.29/sqft',
   description:
-    'Shop solid hardwood flooring in Markham. Red oak, white oak, maple, hickory — ¾" nail-down hardwood from $5.69/sqft. Free measurements across the GTA. Call (647) 428-1111.',
+    'Shop solid hardwood flooring in Markham from $4.29/sqft. Red oak, white oak, maple, hickory — ¾" nail-down hardwood in stock. Expert installation across Toronto & GTA. Free measurements. Call (647) 428-1111.',
   alternates: { canonical: '/solid-hardwood' },
 };
 

@@ -64,11 +64,14 @@ export default function EngineeredHardwoodClient({ initialProducts, children, se
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
-          Engineered Hardwood Flooring
+          Engineered Hardwood Flooring in Markham
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
-          Real wood beauty with superior stability — the #1 choice for GTA homeowners. Shop
-          100+ engineered hardwood styles from Vidar, Wickham, and more at our Markham showroom.
+          Real wood on top, plywood underneath — engineered hardwood is the #1 choice for GTA
+          homeowners renovating with Ontario&apos;s humidity in mind. Shop 100+ engineered hardwood
+          styles from{' '}
+          <strong>$3.69/sqft</strong> at our Markham showroom (6061 Hwy 7). Vidar, Wickham,
+          Triforest, Northernest, and more — all in stock for same-week pickup or installation.
         </p>
       </div>
 

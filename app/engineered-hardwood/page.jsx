@@ -8,9 +8,9 @@ import { getProductsForGrid } from '@/lib/products-server';
 export const revalidate = 300; // 5-minute ISR
 
 export const metadata = {
-  title: 'Engineered Hardwood Flooring Markham | Vidar, Wickham & More',
+  title: 'Engineered Hardwood Flooring Markham | From $3.69/sqft | Vidar & Wickham',
   description:
-    'Shop engineered hardwood flooring in Markham. Vidar, Wickham, wide-plank European oak. 100+ styles in stock. Free measurements across the GTA. Call (647) 428-1111.',
+    'Shop engineered hardwood flooring in Markham from $3.69/sqft. Vidar, Wickham, Triforest — wide-plank European oak in stock. Expert installation across Toronto & GTA. Free measurements. Call (647) 428-1111.',
   alternates: { canonical: '/engineered-hardwood' },
 };
 
