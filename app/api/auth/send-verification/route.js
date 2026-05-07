@@ -2,29 +2,29 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import crypto from 'crypto';
 
-const SENDGRID_API_URL = 'https://api.sendgrid.com/v3/mail/send';
+const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
 const FROM_EMAIL = 'info@bbsflooring.ca';
 const FROM_NAME = 'BBS Flooring';
 
 async function sendEmail({ to, subject, html }) {
-  const apiKey = process.env.SENDGRID_API_KEY;
+  const apiKey = process.env.BREVO_API_KEY;
   if (!apiKey) {
-    console.warn('[Email] SENDGRID_API_KEY not set — skipping');
+    console.warn('[Email] BREVO_API_KEY not set — skipping');
     return { success: false, reason: 'no_api_key' };
   }
-  const res = await fetch(SENDGRID_API_URL, {
+  const res = await fetch(BREVO_API_URL, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    headers: { 'api-key': apiKey, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      personalizations: [{ to: [{ email: to }] }],
-      from: { email: FROM_EMAIL, name: FROM_NAME },
+      sender: { email: FROM_EMAIL, name: FROM_NAME },
+      to: [{ email: to }],
       subject,
-      content: [{ type: 'text/html', value: html }],
+      htmlContent: html,
     }),
   });
   if (!res.ok) {
     const text = await res.text();
-    console.error('[Email] SendGrid error:', res.status, text);
+    console.error('[Email] Brevo error:', res.status, text);
     return { success: false, error: text };
   }
   return { success: true };
