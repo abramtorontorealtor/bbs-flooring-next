@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Return Policy',
-  description: 'BBS Flooring return and exchange policy — 30-day returns with conditions.',
+  description: 'BBS Flooring return and exchange policy — 14-day returns with conditions.',
 };
 
 export default function ReturnPolicy() {
@@ -18,8 +18,8 @@ export default function ReturnPolicy() {
           <section>
             <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">Returns</h2>
             <ul className="list-disc ml-6 space-y-2">
-              <li>Returns are accepted within 30 days of purchase and are subject to a 25% restocking fee.</li>
-              <li>No returns are accepted after 30 days from purchase.</li>
+              <li>Returns are accepted within 14 days of purchase and are subject to a 25% restocking fee.</li>
+              <li>No returns are accepted after 14 days from purchase.</li>
               <li>All returned items must be unused, in their original packaging, and in original color/condition.</li>
               <li>Returns will not be accepted for any materials that have been installed or cut.</li>
               <li>Restocking fees may be waived in the event of documented manufacturer defects or shipping damage.</li>
@@ -28,7 +28,7 @@ export default function ReturnPolicy() {
 
           <section>
             <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">Exchanges</h2>
-            <p>Exchanges are subject to the same 30-day window and 25% restocking fee. All items must be unused, in original packaging, and in original color/condition.</p>
+            <p>Exchanges are subject to the same 14-day window and 25% restocking fee. All items must be unused, in original packaging, and in original color/condition.</p>
           </section>
 
           <section>
