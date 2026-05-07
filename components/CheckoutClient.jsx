@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import Link from 'next/link';
@@ -38,6 +38,7 @@ export default function CheckoutClient() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
   const [isStripeSuccess, setIsStripeSuccess] = useState(false);
@@ -70,6 +71,12 @@ export default function CheckoutClient() {
     // Don't fire if user is already submitting the order
     if (isSubmitting) return;
     sessionStorage.setItem(dedupKey, '1');
+
+    // Delay by 2 minutes — if they complete checkout in that time, the API will suppress it
+    await new Promise(resolve => setTimeout(resolve, 2 * 60 * 1000));
+
+    // After delay, check ref (state closure would be stale)
+    if (isSubmittingRef.current) return;
 
     try {
       const subtotal = cartItems.reduce((sum, item) => sum + (item.line_total || 0), 0);
@@ -255,6 +262,7 @@ export default function CheckoutClient() {
     }
 
     setIsSubmitting(true);
+    isSubmittingRef.current = true;
 
     try {
       const orderData = {
@@ -361,6 +369,7 @@ export default function CheckoutClient() {
         setOrderComplete(true);
         // Clear abandoned cart dedup flag — order placed, not abandoned
         sessionStorage.removeItem('bbs_abandoned_checkout_tracked');
+        isSubmittingRef.current = false;
         
         Analytics.trackPurchase(createdOrderNumber, totals.total, totals.tax, cartItems, 'etransfer');
         

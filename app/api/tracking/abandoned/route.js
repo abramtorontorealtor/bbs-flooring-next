@@ -32,6 +32,19 @@ export async function POST(request) {
 
     const alreadyEmailed = (count || 0) > 0;
 
+    // Check if this person already placed an order recently — if so, suppress everything
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const { count: recentOrderCount } = await supabase
+      .from('orders')
+      .select('id', { count: 'exact', head: true })
+      .eq('customer_email', customerEmail)
+      .gte('created_at', tenMinutesAgo);
+
+    if ((recentOrderCount || 0) > 0) {
+      // They just placed an order — not abandoned, do nothing
+      return NextResponse.json({ success: true, suppressed: true });
+    }
+
     // Log abandoned checkout for follow-up
     const { error } = await supabase
       .from('contact_leads')
