@@ -61,45 +61,59 @@ export default function CheckoutClient() {
   }, []);
 
   // ─── Abandoned Cart Tracking ───
-  const handleEmailBlur = async () => {
+  // Strategy: capture data on email blur, fire only when user actually leaves the page.
+  const pendingAbandonedRef = useRef(null);
+
+  const handleEmailBlur = () => {
     const email = formData.customer_email?.trim();
     if (!email || !email.includes('@')) return;
     if (!cartItems || cartItems.length === 0) return;
+    // Store the payload — will fire on page leave if order not completed
+    const subtotal = cartItems.reduce((sum, item) => sum + (item.line_total || 0), 0);
+    pendingAbandonedRef.current = {
+      customerName: formData.customer_name || '',
+      customerEmail: email,
+      customerPhone: formData.customer_phone || '',
+      cartItems: cartItems.map(item => ({
+        product_name: item.product_name,
+        boxes_required: item.boxes_required,
+        actual_sqft: item.actual_sqft,
+        line_total: item.line_total,
+      })),
+      cartValue: subtotal,
+      pageUrl: window.location.href,
+    };
+  };
 
-    const dedupKey = 'bbs_abandoned_checkout_tracked';
-    if (sessionStorage.getItem(dedupKey)) return;
-    // Don't fire if user is already submitting the order
-    if (isSubmitting) return;
-    sessionStorage.setItem(dedupKey, '1');
+  // Fire abandoned tracking only when user leaves the page without completing order
+  useEffect(() => {
+    const handleLeave = () => {
+      if (!pendingAbandonedRef.current) return;
+      if (isSubmittingRef.current) return; // actively submitting — not abandoned
+      const payload = pendingAbandonedRef.current;
+      // Use sendBeacon for reliable fire-on-unload
+      const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+      navigator.sendBeacon('/api/tracking/abandoned', blob);
+    };
 
-    // Delay by 2 minutes — if they complete checkout in that time, the API will suppress it
-    await new Promise(resolve => setTimeout(resolve, 2 * 60 * 1000));
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') handleLeave();
+    };
 
-    // After delay, check ref (state closure would be stale)
-    if (isSubmittingRef.current) return;
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', handleLeave);
 
-    try {
-      const subtotal = cartItems.reduce((sum, item) => sum + (item.line_total || 0), 0);
-      await fetch('/api/tracking/abandoned', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName: formData.customer_name || '',
-          customerEmail: email,
-          customerPhone: formData.customer_phone || '',
-          cartItems: cartItems.map(item => ({
-            product_name: item.product_name,
-            boxes_required: item.boxes_required,
-            actual_sqft: item.actual_sqft,
-            line_total: item.line_total
-          })),
-          cartValue: subtotal,
-          pageUrl: window.location.href
-        }),
-      });
-    } catch (err) {
-      console.warn('Abandoned checkout tracking failed:', err);
-    }
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', handleLeave);
+    };
+  }, []);
+
+  // Clear pending abandoned data when order completes
+  const clearAbandonedTracking = () => {
+    pendingAbandonedRef.current = null;
+    isSubmittingRef.current = false;
+    sessionStorage.removeItem('bbs_abandoned_checkout_tracked');
   };
 
   // Copy-to-clipboard helper
@@ -353,6 +367,7 @@ export default function CheckoutClient() {
           const checkoutResult = await checkoutResponse.json();
 
           if (checkoutResult.checkoutUrl) {
+            clearAbandonedTracking(); // leaving for Stripe — not abandoned
             window.location.href = checkoutResult.checkoutUrl;
           } else {
             console.error('Stripe checkout failed:', checkoutResult);
@@ -368,8 +383,7 @@ export default function CheckoutClient() {
         setOrderNumber(createdOrderNumber);
         setOrderComplete(true);
         // Clear abandoned cart dedup flag — order placed, not abandoned
-        sessionStorage.removeItem('bbs_abandoned_checkout_tracked');
-        isSubmittingRef.current = false;
+        clearAbandonedTracking();
         
         Analytics.trackPurchase(createdOrderNumber, totals.total, totals.tax, cartItems, 'etransfer');
         
