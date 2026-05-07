@@ -91,6 +91,18 @@ export async function POST(request) {
         console.warn('[Order] Email send error (non-fatal):', err);
       }
     }
+    // Suppress any abandoned cart leads for this email — order was placed, not abandoned
+    if (emailOrder.customer_email) {
+      supabase
+        .from('contact_leads')
+        .update({ status: 'converted' })
+        .eq('customer_email', emailOrder.customer_email)
+        .eq('source', 'abandoned_checkout')
+        .eq('status', 'new')
+        .then(() => {})
+        .catch(() => {});
+    }
+
     // Telegram alert fires for ALL orders immediately (CC orders show as awaiting payment)
     sendTelegramAlert(formatOrderAlert({ order: emailOrder })).catch(() => {});
 

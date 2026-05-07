@@ -67,6 +67,8 @@ export default function CheckoutClient() {
 
     const dedupKey = 'bbs_abandoned_checkout_tracked';
     if (sessionStorage.getItem(dedupKey)) return;
+    // Don't fire if user is already submitting the order
+    if (isSubmitting) return;
     sessionStorage.setItem(dedupKey, '1');
 
     try {
@@ -357,6 +359,8 @@ export default function CheckoutClient() {
         // E-transfer - show success page
         setOrderNumber(createdOrderNumber);
         setOrderComplete(true);
+        // Clear abandoned cart dedup flag — order placed, not abandoned
+        sessionStorage.removeItem('bbs_abandoned_checkout_tracked');
         
         Analytics.trackPurchase(createdOrderNumber, totals.total, totals.tax, cartItems, 'etransfer');
         
