@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendQuoteToCustomer, sendQuoteAdminNotification } from '@/lib/email';
+import { sendTelegramAlert, formatQuoteAlert } from '@/lib/telegram';
 
 export async function POST(request) {
   try {
@@ -70,6 +71,9 @@ export async function POST(request) {
     if (!customerSent) {
       console.warn('[Quote] Customer email failed:', customerResult.reason || customerResult.value);
     }
+
+    // Fire Telegram alert immediately (non-blocking)
+    sendTelegramAlert(formatQuoteAlert(emailQuote)).catch(() => {});
 
     return NextResponse.json({
       success: true,

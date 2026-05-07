@@ -6,6 +6,7 @@ import {
   sendRemovalEstimateCustomerConfirmation,
   sendRemovalEstimateAdminNotification,
 } from '@/lib/email';
+import { sendTelegramAlert, formatContactAlert } from '@/lib/telegram';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 
 // Rate limit: 5 contact submissions per IP per 15 minutes
@@ -95,6 +96,9 @@ export async function POST(request) {
         }
       });
     });
+
+    // Fire Telegram alert immediately (non-blocking)
+    sendTelegramAlert(formatContactAlert({ name, email, phone, message, source })).catch(() => {});
 
     return NextResponse.json({ success: true });
   } catch (error) {

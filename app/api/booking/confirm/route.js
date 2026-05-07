@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendBookingRequestReceived, sendBookingAdminNotification } from '@/lib/email';
+import { sendTelegramAlert, formatBookingAlert } from '@/lib/telegram';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 
 // Rate limit: 3 booking submissions per IP per 15 minutes
@@ -68,6 +69,9 @@ export async function POST(request) {
     if (!customerSent) {
       console.warn('[Booking] Customer email failed:', customerResult.reason || customerResult.value);
     }
+
+    // Fire Telegram alert immediately (non-blocking)
+    sendTelegramAlert(formatBookingAlert(emailBooking)).catch(() => {});
 
     return NextResponse.json({
       success: true,

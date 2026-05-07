@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendContactAdminNotification, sendContractorCustomerConfirmation } from '@/lib/email';
+import { sendTelegramAlert, formatContractorAlert } from '@/lib/telegram';
 
 export async function POST(request) {
   try {
@@ -55,6 +56,9 @@ export async function POST(request) {
         }
       });
     });
+
+    // Fire Telegram alert immediately (non-blocking)
+    sendTelegramAlert(formatContractorAlert({ contact_name, email, phone, company_name, trade_type, monthly_volume })).catch(() => {});
 
     return NextResponse.json({ success: true });
   } catch (error) {

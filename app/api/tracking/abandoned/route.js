@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendAbandonedCheckoutEmail } from '@/lib/email';
+import { sendTelegramAlert, formatAbandonedCartAlert } from '@/lib/telegram';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 
 // Rate limit: 2 abandoned checkout emails per IP per hour
@@ -45,6 +46,11 @@ export async function POST(request) {
 
     if (error) {
       console.warn('Failed to log abandoned checkout:', error);
+    }
+
+    // Fire Telegram alert for every new abandoned cart (non-blocking)
+    if (!alreadyEmailed) {
+      sendTelegramAlert(formatAbandonedCartAlert({ customerName, customerEmail, cartValue, cartItems })).catch(() => {});
     }
 
     // Send recovery email if not already emailed and within rate limit
