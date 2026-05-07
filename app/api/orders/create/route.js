@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib/email';
+import { sendTelegramAlert, formatOrderAlert } from '@/lib/telegram';
 
 async function generateOrderNumber(supabase) {
   // Sequential: BBS-10001, BBS-10002, etc. via Postgres sequence
@@ -79,8 +80,8 @@ export async function POST(request) {
 
     // Only send emails for non-credit-card orders.
     // CC orders: emails sent by Stripe webhook after successful authorization.
+    const emailOrder = { ...order, order_number: orderNumber };
     if (!isCreditCard) {
-      const emailOrder = { ...order, order_number: orderNumber };
       try {
         await Promise.all([
           sendOrderCustomerConfirmation({ order: emailOrder }),
@@ -90,6 +91,8 @@ export async function POST(request) {
         console.warn('[Order] Email send error (non-fatal):', err);
       }
     }
+    // Telegram alert fires for ALL orders immediately (CC orders show as awaiting payment)
+    sendTelegramAlert(formatOrderAlert({ order: emailOrder })).catch(() => {});
 
     return NextResponse.json({
       success: true,

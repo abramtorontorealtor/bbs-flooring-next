@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification, sendAbandonedCartRecovery } from '@/lib/email';
+import { sendTelegramAlert, formatOrderAlert } from '@/lib/telegram';
 
 // Stripe webhook handler — receives events after checkout completion.
 // Critical: stores payment_intent ID so admin can capture pre-authed payments.
@@ -107,6 +108,7 @@ export async function POST(request) {
             sendOrderCustomerConfirmation({ order: emailOrder }),
             sendOrderAdminNotification({ order: emailOrder }),
           ]);
+          sendTelegramAlert(formatOrderAlert({ order: { ...emailOrder, payment_method: 'credit_card' } })).catch(() => {});
           console.log(`[Stripe Webhook] Confirmation emails sent for ${orderNumber || orderId}`);
         } catch (emailErr) {
           console.error('[Stripe Webhook] Email send error (non-fatal):', emailErr);
