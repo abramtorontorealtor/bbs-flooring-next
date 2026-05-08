@@ -237,6 +237,13 @@ export async function middleware(request) {
     }
   }
 
+  // /product/slug (singular, old Base44 format) → /products/slug
+  if (pathname.startsWith('/product/') && !pathname.startsWith('/product-page/') && !pathname.startsWith('/products')) {
+    const slug = pathname.replace('/product/', '');
+    const realSlug = SHORT_SLUG_REDIRECTS[slug] || slug;
+    return NextResponse.redirect(new URL(`/products/${realSlug}`, request.url), { status: 301 });
+  }
+
   if (pathname.startsWith('/blog-1/') || pathname.startsWith('/post/')) {
     return NextResponse.redirect(new URL('/blog', request.url), { status: 301 });
   }
