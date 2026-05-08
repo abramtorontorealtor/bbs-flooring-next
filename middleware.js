@@ -215,9 +215,26 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/vinyl-laminate-removal', request.url), { status: 301 });
   }
 
+  // Old short slugs that don't match new DB slugs
+  const SHORT_SLUG_REDIRECTS = {
+    'cobalt': 'cobalt-falcon-floor-products-6mm-vinyl-flooring',
+    'fog': 'fog-woden-vermont-6-1-2-oak-engineered-hardwood-flooring',
+    'tf1119': 'triforest-tf1119-triforest-laminate-123mm-flooring',
+    'tfspc307': 'triforest-tfspc307-triforest-vinyl-42mm-flooring',
+  };
+
   if (pathname.startsWith('/product-page/')) {
     const slug = pathname.replace('/product-page/', '');
-    return NextResponse.redirect(new URL(`/products/${slug}`, request.url), { status: 301 });
+    const realSlug = SHORT_SLUG_REDIRECTS[slug] || slug;
+    return NextResponse.redirect(new URL(`/products/${realSlug}`, request.url), { status: 301 });
+  }
+
+  // Also catch direct /products/short-slug hits (from cached Google results)
+  if (pathname.startsWith('/products/') && !pathname.startsWith('/products?')) {
+    const slug = pathname.replace('/products/', '');
+    if (SHORT_SLUG_REDIRECTS[slug]) {
+      return NextResponse.redirect(new URL(`/products/${SHORT_SLUG_REDIRECTS[slug]}`, request.url), { status: 301 });
+    }
   }
 
   if (pathname.startsWith('/blog-1/') || pathname.startsWith('/post/')) {
