@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
 import ProductDetailClient from '@/components/ProductDetailClient';
 import { entities } from '@/lib/base44-compat-server';
 import { getSupabaseServerClient } from '@/lib/supabase';
@@ -30,6 +31,37 @@ async function getProduct(slug) {
     if (products?.[0]) return products[0];
     const lcProducts = await entities.Product.filter({ slug: slug.toLowerCase() });
     return lcProducts?.[0] || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fuzzy slug lookup — finds the real product when an old short slug
+ * (e.g. "cobalt") redirected to /products/cobalt but the DB slug is
+ * "cobalt-falcon-floor-products-6mm-vinyl-flooring".
+ * Returns the matching slug string or null.
+ */
+async function fuzzySlugLookup(partialSlug) {
+  try {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return null;
+    // Try: slug starts with the partial slug followed by a hyphen
+    const { data } = await supabase
+      .from('products')
+      .select('slug')
+      .ilike('slug', `${partialSlug}-%`)
+      .eq('is_variant', false)
+      .limit(1);
+    if (data?.[0]?.slug) return data[0].slug;
+    // Also try: slug contains the partial slug (e.g. SKU-based old URLs)
+    const { data: data2 } = await supabase
+      .from('products')
+      .select('slug')
+      .or(`sku.ilike.${partialSlug},sku.ilike.${partialSlug.toUpperCase()}`)
+      .limit(1);
+    if (data2?.[0]?.slug) return data2[0].slug;
+    return null;
   } catch {
     return null;
   }
@@ -90,7 +122,15 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductDetailPage({ params }) {
   const { slug } = await params;
-  const product = await getProduct(slug);
+  let product = await getProduct(slug);
+
+  // If exact slug not found, try fuzzy match (old short slugs from Base44/Wix)
+  if (!product) {
+    const realSlug = await fuzzySlugLookup(slug);
+    if (realSlug && realSlug !== slug) {
+      redirect(`/products/${realSlug}`);
+    }
+  }
 
   // Fetch child variants server-side for ProductGroup JSON-LD
   const childVariants = product?.is_parent_product
