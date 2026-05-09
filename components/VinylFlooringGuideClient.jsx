@@ -607,7 +607,7 @@ export default function VinylFlooringGuideClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
               <h3 className="font-semibold text-emerald-800 text-lg mb-2">🏠 Basement ★★★★★</h3>
-              <p className="text-slate-600 text-sm">The #1 choice. 100% permanently waterproof, handles temperature swings, installs over concrete. SPC with IXPE underpad is the gold standard for Ontario basements.</p>
+              <p className="text-slate-600 text-sm">The #1 choice. 100% permanently waterproof, handles temperature swings, installs over concrete. SPC with IXPE underpad is the gold standard for Ontario basements. See our <Link href="/basement-flooring-guide" className="text-amber-700 underline hover:text-amber-800">complete basement flooring guide</Link> for moisture testing, cost breakdowns, and room-by-room recommendations.</p>
             </div>
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
               <h3 className="font-semibold text-emerald-800 text-lg mb-2">🍳 Kitchen ★★★★★</h3>
