@@ -3,19 +3,24 @@ import VinylClient from '@/components/VinylClient';
 import ProductGridServer from '@/components/ProductGridServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { VINYL_FAQS } from '@/data/faqs';
-import { getProductsForGrid } from '@/lib/products-server';
+import { getProductsForGrid, getCategoryPriceStats } from '@/lib/products-server';
 
 export const revalidate = 300; // 5-minute ISR
 
-export const metadata = {
-  title: 'Vinyl Plank Flooring Markham | LVP & SPC from $1.79/sqft',
-  description:
-    'Shop luxury vinyl plank (LVP) and SPC waterproof flooring in Markham from $1.79/sqft. 100% waterproof, scratch-resistant. Perfect for basements, kitchens, bathrooms. Free in-home measurements across the GTA. Call (647) 428-1111.',
-  alternates: { canonical: '/vinyl' },
-};
+export async function generateMetadata() {
+  const stats = await getCategoryPriceStats('vinyl');
+  return {
+    title: `Vinyl Plank Flooring Markham | LVP & SPC from $${stats.lowPrice}/sqft`,
+    description: `Shop luxury vinyl plank (LVP) and SPC waterproof flooring in Markham from $${stats.lowPrice}/sqft. 100% waterproof, scratch-resistant. Perfect for basements, kitchens, bathrooms. Free in-home measurements across the GTA. Call (647) 428-1111.`,
+    alternates: { canonical: '/vinyl' },
+  };
+}
 
 export default async function VinylPage() {
-  const products = await getProductsForGrid({ category: 'vinyl' });
+  const [products, stats] = await Promise.all([
+    getProductsForGrid({ category: 'vinyl' }),
+    getCategoryPriceStats('vinyl'),
+  ]);
   const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
@@ -25,23 +30,23 @@ export default async function VinylPage() {
           '@context': 'https://schema.org',
           '@type': 'Product',
           name: 'Vinyl LVP & SPC Flooring',
-          description: '188 waterproof vinyl flooring options (LVP/SPC) from 6 brands. 100% waterproof, click-lock installation. Serving the Greater Toronto Area.',
+          description: `${stats.count} waterproof vinyl flooring options (LVP/SPC) from 6 brands. 100% waterproof, click-lock installation. Serving the Greater Toronto Area.`,
           category: 'Vinyl Flooring',
           brand: { '@type': 'Brand', name: 'BBS Flooring' },
           additionalProperty: { '@type': 'PropertyValue', name: 'Waterproof', value: 'Yes — 100% permanently waterproof' },
           offers: {
             '@type': 'AggregateOffer',
             priceCurrency: 'CAD',
-            lowPrice: '2.19',
-            highPrice: '3.59',
-            offerCount: 188,
+            lowPrice: stats.lowPrice,
+            highPrice: stats.highPrice,
+            offerCount: stats.count,
             availability: 'https://schema.org/InStock',
             url: 'https://bbsflooring.ca/vinyl',
           },
         },
       ]} />
       <Suspense fallback={serverGrid}>
-        <VinylClient initialProducts={products} serverGrid={serverGrid} />
+        <VinylClient initialProducts={products} serverGrid={serverGrid} priceStats={stats} />
       </Suspense>
     </>
   );

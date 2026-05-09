@@ -49,7 +49,8 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function SolidHardwoodClient({ initialProducts, children, serverGrid }) {
+export default function SolidHardwoodClient({ initialProducts, children, serverGrid, priceStats }) {
+  const low = priceStats?.lowPrice || '4.29';
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -68,7 +69,7 @@ export default function SolidHardwoodClient({ initialProducts, children, serverG
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
           The gold standard in flooring — ¾&quot; pure hardwood from{' '}
-          <strong>$4.29/sqft</strong> that can be refinished 5+ times and lasts a lifetime.
+          <strong>${low}/sqft</strong> that can be refinished 5+ times and lasts a lifetime.
           In stock at our Markham showroom (6061 Hwy 7) in red oak, white oak, maple, hickory,
           and more. Professional nail-down installation across Markham, Toronto, and the GTA.
         </p>

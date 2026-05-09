@@ -45,7 +45,8 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function VinylClient({ initialProducts, children, serverGrid }) {
+export default function VinylClient({ initialProducts, children, serverGrid, priceStats }) {
+  const low = priceStats?.lowPrice || '1.99';
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -64,7 +65,7 @@ export default function VinylClient({ initialProducts, children, serverGrid }) {
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
           100% waterproof, scratch-resistant, and built for real life. Shop 100+ SPC and LVP vinyl
-          plank styles from <strong>$1.79/sqft</strong> at our Markham showroom (6061 Hwy 7).
+          plank styles from <strong>${low}/sqft</strong> at our Markham showroom (6061 Hwy 7).
           Serving Toronto, Scarborough, Vaughan, and all of Durham Region — free in-home
           measurements included.
         </p>

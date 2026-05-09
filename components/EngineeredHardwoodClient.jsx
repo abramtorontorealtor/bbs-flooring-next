@@ -49,7 +49,8 @@ const SPOKE_LINKS = [
   },
 ];
 
-export default function EngineeredHardwoodClient({ initialProducts, children, serverGrid }) {
+export default function EngineeredHardwoodClient({ initialProducts, children, serverGrid, priceStats }) {
+  const low = priceStats?.lowPrice || '3.69';
   return (
     <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
       <Breadcrumbs
@@ -70,7 +71,7 @@ export default function EngineeredHardwoodClient({ initialProducts, children, se
           Real wood on top, plywood underneath — engineered hardwood is the #1 choice for GTA
           homeowners renovating with Ontario&apos;s humidity in mind. Shop 100+ engineered hardwood
           styles from{' '}
-          <strong>$3.69/sqft</strong> at our Markham showroom (6061 Hwy 7). Vidar, Wickham,
+          <strong>${low}/sqft</strong> at our Markham showroom (6061 Hwy 7). Vidar, Wickham,
           Triforest, Northernest, and more — all in stock for same-week pickup or installation.
         </p>
       </div>
