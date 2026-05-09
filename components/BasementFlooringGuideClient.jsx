@@ -3,6 +3,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import { Phone, MapPin, Calendar, ArrowRight, CheckCircle } from 'lucide-react';
 
 export default function BasementFlooringGuideClient() {
   return (
@@ -41,7 +42,10 @@ export default function BasementFlooringGuideClient() {
             <li><a href="#cost-breakdown" className="hover:underline">Basement Flooring Cost Calculator</a></li>
             <li><a href="#installation" className="hover:underline">Installation Over Concrete</a></li>
             <li><a href="#common-mistakes" className="hover:underline">5 Mistakes to Avoid</a></li>
+            <li><a href="#by-room-purpose" className="hover:underline">Basement Flooring by Room Purpose</a></li>
             <li><a href="#ontario-specific" className="hover:underline">Ontario Basement Considerations</a></li>
+            <li><a href="#how-we-install" className="hover:underline">How BBS Installs Basement Flooring</a></li>
+            <li><a href="#related-guides" className="hover:underline">Related Buying Guides</a></li>
             <li><a href="#faq" className="hover:underline">Frequently Asked Questions</a></li>
           </ol>
         </div>
@@ -103,7 +107,7 @@ export default function BasementFlooringGuideClient() {
                 Vinyl is the gold standard for basement flooring. SPC (stone polymer composite) vinyl is 100% waterproof through every layer — surface, core, and backing. Water can pool on it for days without damage. It installs via click-lock directly over concrete with no adhesive, handles temperature swings without expanding or contracting, and feels warm and comfortable underfoot despite the cold slab below.
               </p>
               <p className="text-stone-600 leading-relaxed mb-4">
-                BBS stocks 188+ vinyl options from 6 brands: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link>, <Link href="/woden-flooring" className="text-amber-700 underline">Woden</Link>, <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link>, <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link>, <Link href="/falcon-flooring" className="text-amber-700 underline">Falcon</Link>, and <Link href="/lee-flooring" className="text-amber-700 underline">Lee</Link>. Prices range from $2.19–$3.59/sqft with wear layers from 12mil to 28mil. Our top picks for basements: the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum Fulham</Link> ($3.49/sqft, 9mm with 20mil wear layer — ideal for family rooms), the budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside</Link> ($2.19/sqft, 6mm SPC), and for a premium herringbone look, the <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone</Link> ($2.79/sqft).
+                BBS stocks 188+ <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank options</Link> from 6 brands: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link>, <Link href="/woden-flooring" className="text-amber-700 underline">Woden</Link>, <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link>, <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link>, <Link href="/falcon-flooring" className="text-amber-700 underline">Falcon</Link>, and <Link href="/lee-flooring" className="text-amber-700 underline">Lee</Link>. Prices range from $2.19–$3.59/sqft with wear layers from 12mil to 28mil. Our top picks for basements: the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum Fulham</Link> ($3.49/sqft, 9mm with 20mil wear layer — ideal for family rooms), the budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside</Link> ($2.19/sqft, 6mm SPC), and for a premium herringbone look, the <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone</Link> ($2.79/sqft).
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -142,7 +146,7 @@ export default function BasementFlooringGuideClient() {
                 Use laminate in basements only if: (a) the basement is dry with no moisture history, (b) you install a quality moisture barrier underlayment, and (c) you accept the risk that any water event (pipe burst, sump pump failure, spring flooding) will likely destroy the floor. For dry, finished basements used as offices or spare bedrooms, laminate is a solid budget choice.
               </p>
               <p className="text-stone-600 text-sm">
-                BBS carries 145 laminate options from 9 brands. For basements, choose AC4+ rated products: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link> (32 options), <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link> (18), <Link href="/northernest-flooring" className="text-amber-700 underline">Northernest</Link> (18), <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link> (16). Budget picks: <Link href="/tosca-flooring" className="text-amber-700 underline">Tosca</Link> from $1.49/sqft.
+                BBS carries 145 <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">laminate flooring options</Link> from 9 brands. For basements, choose AC4+ rated products: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link> (32 options), <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link> (18), <Link href="/northernest-flooring" className="text-amber-700 underline">Northernest</Link> (18), <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link> (16). Budget picks: <Link href="/tosca-flooring" className="text-amber-700 underline">Tosca</Link> from $1.49/sqft. See our <Link href="/vinyl-flooring-guide" className="text-amber-700 underline hover:text-amber-800">vinyl vs laminate breakdown</Link> for a detailed comparison.
               </p>
             </div>
 
@@ -160,7 +164,7 @@ export default function BasementFlooringGuideClient() {
                 <strong>However, engineered hardwood is NOT waterproof.</strong> Any standing water will damage the wood veneer and core. Only use engineered hardwood in basements that are: (a) completely dry with verified low moisture readings, (b) finished and climate-controlled year-round, and (c) protected by a proper moisture barrier between the concrete and the flooring. If your basement has ANY history of water intrusion, choose vinyl.
               </p>
               <p className="text-stone-600 text-sm">
-                For dry basements on a budget, the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Blizzard</Link> ($3.99/sqft) or <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Linen Red Oak</Link> ($3.89/sqft) offer real hardwood beauty at accessible prices. Premium options include <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link> (call for pricing) and <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Canadian Standard Lucid Pure</Link> ($7.59/sqft).
+                For dry basements on a budget, the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Blizzard</Link> ($3.99/sqft) or <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Linen Red Oak</Link> ($3.89/sqft) offer real hardwood beauty at accessible prices. Premium options include <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link> (call for pricing) and <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Canadian Standard Lucid Pure</Link> ($7.59/sqft). Browse all 348 options on our <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link> page.
               </p>
             </div>
 
@@ -443,6 +447,139 @@ export default function BasementFlooringGuideClient() {
           </div>
         </section>
 
+        {/* 7b. Basement Flooring by Room Purpose */}
+        <section id="by-room-purpose">
+          <h2 className="text-3xl font-bold text-stone-900 mb-6">Basement Flooring by Room Purpose</h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-8">
+            A basement gym needs different flooring than a basement home theatre. Here&apos;s how to choose the right material and spec based on what you&apos;re actually using the space for.
+          </p>
+
+          <div className="space-y-6">
+            {/* Home Gym */}
+            <div className="border border-stone-200 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">🏋️</span>
+                <h3 className="text-xl font-bold text-stone-800">Home Gym / Workout Room</h3>
+              </div>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Dropped weights, sweat, heavy equipment — a basement gym punishes flooring harder than almost any residential use. You need a thick, dense core that won&apos;t dent under squat racks or treadmills, and a surface that handles moisture from sweat and cleaning.
+              </p>
+              <div className="bg-stone-50 rounded-lg p-4 mb-3">
+                <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
+                <p className="text-stone-600 text-sm">
+                  <strong>SPC vinyl, 7mm+ thickness, 22–28mil wear layer.</strong> The{' '}
+                  <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum 9mm ($3.49/sqft)</Link>{' '}
+                  is our top pick for home gyms — its stone polymer core resists equipment dents better than any other residential vinyl. For free weight areas, consider adding interlocking rubber mats over the vinyl for extra impact protection.
+                </p>
+              </div>
+              <p className="text-stone-500 text-xs">Budget alternative: <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline">Falcon Cliffside 6mm ($2.19/sqft)</Link> under rubber mat system — total cost lower while still protecting the subfloor.</p>
+            </div>
+
+            {/* Entertainment / Home Theatre */}
+            <div className="border border-stone-200 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">🎬</span>
+                <h3 className="text-xl font-bold text-stone-800">Home Theatre / Entertainment Room</h3>
+              </div>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Sound matters here. You want flooring that minimizes footstep noise and echo while looking premium enough for a dedicated entertainment space. This is the one basement room where engineered hardwood can be worth the investment — if the basement is dry.
+              </p>
+              <div className="bg-stone-50 rounded-lg p-4 mb-3">
+                <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
+                <p className="text-stone-600 text-sm">
+                  <strong>Option A (safe):</strong> Premium SPC vinyl with attached IXPE underpad for sound dampening — like the{' '}
+                  <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone ($2.79/sqft)</Link>.
+                  The herringbone pattern elevates the space visually.{' '}
+                  <strong>Option B (premium, dry basements only):</strong> Glue-down{' '}
+                  <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link>{' '}
+                  — eliminates hollow sound entirely and creates a genuinely premium atmosphere.
+                </p>
+              </div>
+              <p className="text-stone-500 text-xs">Pro tip: Area rugs under seating areas further reduce sound reflection and make the space warmer for barefoot comfort.</p>
+            </div>
+
+            {/* Home Office */}
+            <div className="border border-stone-200 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">💻</span>
+                <h3 className="text-xl font-bold text-stone-800">Home Office / Work-From-Home Space</h3>
+              </div>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Rolling desk chairs are vinyl&apos;s one weakness — they can create surface impressions over time with thin-core products. Choose a thicker vinyl or use a chair mat. Comfort underfoot matters too, since you&apos;ll spend 8+ hours here daily.
+              </p>
+              <div className="bg-stone-50 rounded-lg p-4">
+                <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
+                <p className="text-stone-600 text-sm">
+                  <strong>SPC vinyl, 7mm+, with IXPE underpad.</strong> The attached pad adds warmth and cushion for long standing/sitting. Use a hard chair mat under rolling chairs to prevent wear marks. Mid-range products like{' '}
+                  <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Classic Madagascar 7mm ($2.79/sqft)</Link>{' '}
+                  provide the right balance of durability and comfort for daily office use.
+                </p>
+              </div>
+            </div>
+
+            {/* Playroom */}
+            <div className="border border-stone-200 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">🧸</span>
+                <h3 className="text-xl font-bold text-stone-800">Kids&apos; Playroom</h3>
+              </div>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Spills, tumbles, toy impacts, art projects — playrooms need a floor that can handle everything. Vinyl&apos;s waterproof surface means juice boxes, paint spills, and wet snow boots are non-events. The softer feel of thicker vinyl also cushions falls better than tile or concrete.
+              </p>
+              <div className="bg-stone-50 rounded-lg p-4">
+                <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
+                <p className="text-stone-600 text-sm">
+                  <strong>SPC vinyl, 6mm+, 20mil wear layer.</strong> Mid-range is plenty here — kids outgrow playrooms before they outwear decent vinyl. The{' '}
+                  <Link href="/products/walnut-wharf-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Lee Walnut Wharf 7mm ($2.49/sqft)</Link>{' '}
+                  with its 22mil wear layer handles toy impacts and cleans up easily. Add foam play mats over the vinyl in the main play area for extra cushioning — they&apos;re removable as kids grow.
+                </p>
+              </div>
+            </div>
+
+            {/* Rental Suite */}
+            <div className="border border-stone-200 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">🏠</span>
+                <h3 className="text-xl font-bold text-stone-800">Basement Rental Suite / In-Law Suite</h3>
+              </div>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Basement apartments are one of the most common uses of finished basements in the GTA. Tenants create more wear than a typical family room, and you need flooring that survives tenant turnover without full replacement. Ontario building code requires minimum ceiling heights — keep floor profile thin.
+              </p>
+              <div className="bg-stone-50 rounded-lg p-4 mb-3">
+                <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
+                <p className="text-stone-600 text-sm">
+                  <strong>Budget SPC vinyl, 6mm, throughout the entire suite.</strong> The{' '}
+                  <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside 6mm ($2.19/sqft)</Link>{' '}
+                  is purpose-built for this use case — one consistent floor throughout kitchen, living, and sleeping areas keeps costs low and maintenance simple. Waterproof means no risk from tenant bathroom/kitchen incidents. At $2.19/sqft, replacing an entire 500 sqft suite costs ~$1,095 in material — a reasonable landlord expense every 15–20 years.
+                </p>
+              </div>
+              <p className="text-stone-500 text-xs">GTA landlord tip: Same vinyl colour throughout eliminates transition strips and makes the space look larger — tenants prefer this and it&apos;s faster to install.</p>
+            </div>
+
+            {/* Guest Bedroom / Spare Room */}
+            <div className="border border-stone-200 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">🛏️</span>
+                <h3 className="text-xl font-bold text-stone-800">Guest Bedroom / Spare Room</h3>
+              </div>
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Low-traffic basement bedrooms don&apos;t need premium wear layers. This is where you can save money with lighter-duty vinyl or even{' '}
+                <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">laminate</Link>{' '}
+                — <em>if</em> the basement is verified dry. Comfort and warmth underfoot matter more than durability here.
+              </p>
+              <div className="bg-stone-50 rounded-lg p-4">
+                <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
+                <p className="text-stone-600 text-sm">
+                  <strong>Safe choice:</strong> Budget vinyl at $2.19–$2.49/sqft with underlayment for warmth.{' '}
+                  <strong>Budget choice (dry basements only):</strong>{' '}
+                  <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">Laminate from $1.49/sqft</Link>{' '}
+                  with moisture barrier underlayment — saves ~$0.70/sqft vs vinyl. Always moisture-test first.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* 8. Ontario Specific */}
         <section id="ontario-specific">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Ontario Basement Considerations</h2>
@@ -464,6 +601,141 @@ export default function BasementFlooringGuideClient() {
                 <p className="text-stone-600">{desc}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* 9b. How BBS Installs Basement Flooring */}
+        <section id="how-we-install">
+          <h2 className="text-3xl font-bold text-stone-900 mb-6">How BBS Installs Basement Flooring (Step by Step)</h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-8">
+            We&apos;ve installed thousands of basement floors across the Greater Toronto Area since 2012. Here&apos;s exactly what happens from your first call to walking on your new floor.
+          </p>
+
+          <div className="space-y-5 mb-8">
+            {[
+              {
+                step: '1',
+                title: 'Free In-Home Measurement & Assessment',
+                desc: 'A BBS technician visits your home, measures every room, and tests your concrete slab for moisture levels. We check for subfloor flatness, assess drainage conditions, and note any obstacles (support posts, HVAC runs, sump pumps). You get a detailed quote within 24 hours \u2014 no obligation, no pressure.',
+                time: '45\u201360 min'
+              },
+              {
+                step: '2',
+                title: 'Material Selection & Order',
+                desc: 'Visit our Markham showroom to see and touch your flooring options \u2014 or choose from our online catalogue. We\u2019ll recommend specific products based on your basement\u2019s moisture readings, your budget, and how you plan to use the space. In-stock products ship immediately; special orders take 5\u201310 business days.',
+                time: '1\u20133 days'
+              },
+              {
+                step: '3',
+                title: 'Old Flooring Removal (If Needed)',
+                desc: 'Our crew removes old carpet ($1.00/sqft), vinyl ($1.25/sqft), or laminate ($1.25/sqft) and disposes of all debris. We inspect the concrete underneath for cracks, moisture damage, or levelling issues that weren\u2019t visible before.',
+                time: '0.5\u20131 day'
+              },
+              {
+                step: '4',
+                title: 'Subfloor Preparation',
+                desc: 'Any dips or humps in the concrete get levelled with self-levelling compound ($1\u2013$3/sqft where needed). Cracks are filled. If moisture levels require it, a vapour barrier or DRIcore subfloor system is installed. This step is where shortcuts cause failures \u2014 we don\u2019t skip it.',
+                time: '0.5\u20131 day'
+              },
+              {
+                step: '5',
+                title: 'Flooring Installation',
+                desc: 'Click-lock vinyl or laminate installs at $2.00/sqft. Glue-down engineered hardwood at $3.25/sqft. A typical 600 sqft basement takes 1\u20131.5 days for vinyl, 1.5\u20132 days for glue-down hardwood. We handle all transitions, thresholds, and undercutting of door frames.',
+                time: '1\u20132 days'
+              },
+              {
+                step: '6',
+                title: 'Baseboards & Finishing',
+                desc: 'New baseboards installed at $3.61/linear ft (optional). Quarter round or shoe moulding covers expansion gaps. All seams inspected. Furniture moved back. Complete cleanup \u2014 we leave the space ready to use.',
+                time: '0.5 day'
+              },
+              {
+                step: '7',
+                title: 'Final Walkthrough & Warranty',
+                desc: 'We walk through the entire installation with you, checking every seam and transition. You receive care instructions and warranty documentation. All BBS installations are WSIB-insured and covered by both product warranty (manufacturer) and labour warranty.',
+                time: '30 min'
+              },
+            ].map(({ step, title, desc, time }) => (
+              <div key={step} className="flex gap-4 items-start">
+                <div className="w-12 h-12 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold text-lg shrink-0">{step}</div>
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-baseline gap-3 mb-1">
+                    <h3 className="text-lg font-bold text-stone-800">{title}</h3>
+                    <span className="text-amber-600 text-xs font-semibold">{time}</span>
+                  </div>
+                  <p className="text-stone-600 text-sm leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
+            <p className="font-semibold text-stone-800 mb-2">Total timeline: 3\u20137 business days from material delivery to walking on your new floor.</p>
+            <p className="text-stone-600 text-sm mb-4">
+              Most basement projects take 5 business days total. Larger basements (800+ sqft) or projects requiring extensive subfloor prep may take 7 days. We schedule around your availability \u2014 evening and weekend installation available on request.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/free-measurement" className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors">
+                <Calendar className="w-4 h-4" />
+                Book Free Measurement
+              </Link>
+              <a href="tel:6474281111" className="inline-flex items-center gap-2 border border-amber-600 text-amber-700 hover:bg-amber-50 font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors">
+                <Phone className="w-4 h-4" />
+                (647) 428-1111
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* 9c. Related Guides */}
+        <section id="related-guides">
+          <h2 className="text-3xl font-bold text-stone-900 mb-6">Related Buying Guides</h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-6">
+            Dive deeper into specific flooring types or compare all your options side by side.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link href="/vinyl-flooring-guide" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
+              <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Vinyl Flooring Guide 2026</h3>
+              <p className="text-stone-500 text-sm">SPC vs WPC, wear layers, thickness, costs, and how to choose the right vinyl. 233 options compared.</p>
+              <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Read guide <ArrowRight className="w-3 h-3" />
+              </span>
+            </Link>
+            <Link href="/flooring-comparison-guide" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
+              <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Hardwood vs Vinyl vs Laminate</h3>
+              <p className="text-stone-500 text-sm">Complete head-to-head comparison with real pricing. Room-by-room recommendations for Ontario homeowners.</p>
+              <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Read guide <ArrowRight className="w-3 h-3" />
+              </span>
+            </Link>
+            <Link href="/engineered-hardwood-guide" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
+              <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Engineered Hardwood Guide</h3>
+              <p className="text-stone-500 text-sm">Everything about engineered hardwood \u2014 species, grades, widths, and whether it&apos;s right for your basement.</p>
+              <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Read guide <ArrowRight className="w-3 h-3" />
+              </span>
+            </Link>
+            <Link href="/basement-flooring" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
+              <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Browse Basement Flooring</h3>
+              <p className="text-stone-500 text-sm">See all waterproof and basement-suitable products with real-time pricing and availability.</p>
+              <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Shop now <ArrowRight className="w-3 h-3" />
+              </span>
+            </Link>
+            <Link href="/installation" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
+              <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Installation Services</h3>
+              <p className="text-stone-500 text-sm">Full details on BBS professional installation \u2014 pricing, process, and what&apos;s included across the GTA.</p>
+              <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Learn more <ArrowRight className="w-3 h-3" />
+              </span>
+            </Link>
+            <Link href="/flooring-in/markham" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
+              <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Flooring in Markham</h3>
+              <p className="text-stone-500 text-sm">Local flooring services, showroom info, and neighbourhood-specific recommendations for Markham homeowners.</p>
+              <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Explore <ArrowRight className="w-3 h-3" />
+              </span>
+            </Link>
           </div>
         </section>
 

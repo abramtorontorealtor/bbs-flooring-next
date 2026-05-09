@@ -43,6 +43,14 @@ const faqItems = [
     question: 'How much does it cost to floor a 600 sqft basement?',
     answer: 'At BBS Flooring: Vinyl (material + install): $2,514–$3,354. Laminate: $2,094–$3,174. Engineered hardwood (glue-down): $3,444–$7,344. Add $600–$750 for old flooring removal if needed, plus $140–$200 for delivery. BBS provides free detailed quotes — book at bbsflooring.ca/free-measurement.',
   },
+  {
+    question: 'What is the best flooring for a basement home gym?',
+    answer: 'SPC vinyl with a 22–28mil wear layer is ideal — waterproof, dent-resistant, and easy to clean. The NAF AquaPlus Platinum 9mm ($3.49/sqft) handles heavy equipment. For free weight areas, layer interlocking rubber mats over the vinyl for extra impact protection. Budget option: Falcon Cliffside 6mm ($2.19/sqft) under rubber mats.',
+  },
+  {
+    question: 'Is it worth finishing a basement with good flooring in Ontario?',
+    answer: 'Yes. A finished basement adds 50–70% of its cost to your home\'s resale value in the GTA. Proper flooring (vinyl from $2.19/sqft) transforms unusable space into a family room, rental suite, or home office. At BBS, a 600 sqft basement vinyl installation costs $2,514–$3,354 — a strong ROI for a home addition that costs a fraction of building above grade.',
+  },
 ];
 
 export const metadata = {
@@ -78,7 +86,7 @@ export default function BasementFlooringGuidePage() {
       },
     },
     datePublished: '2026-04-06',
-    dateModified: '2026-04-06',
+    dateModified: '2026-05-09',
     mainEntityOfPage: 'https://bbsflooring.ca/basement-flooring-guide',
   };
 

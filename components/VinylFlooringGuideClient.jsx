@@ -1,10 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default function VinylFlooringGuideClient() {
   return (
     <div className="min-h-screen bg-white">
+      <Header />
 
       {/* Hero */}
       <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white py-20 px-4">
@@ -789,6 +792,7 @@ export default function VinylFlooringGuideClient() {
         </section>
 
       </main>
+      <Footer />
     </div>
   );
 }

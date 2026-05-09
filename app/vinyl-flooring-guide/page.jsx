@@ -49,12 +49,47 @@ export const metadata = {
   title: 'Vinyl Flooring Buying Guide 2026 | LVP & SPC Explained | BBS Flooring',
   description: 'Complete guide to vinyl flooring in Canada. SPC vs WPC, wear layers, costs, installation, and the best LVP brands. 233 options from $2.19/sqft at BBS Flooring Markham.',
   alternates: { canonical: '/vinyl-flooring-guide' },
+  openGraph: {
+    title: 'Vinyl Flooring Buying Guide 2026 | LVP & SPC Explained | BBS Flooring',
+    description: '233 vinyl options from $2.19/sqft. SPC vs WPC, wear layers, costs, and installation explained. Real Canadian pricing from BBS Flooring Markham.',
+    url: 'https://bbsflooring.ca/vinyl-flooring-guide',
+    type: 'article',
+  },
 };
 
 export default function VinylFlooringGuidePage() {
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'The Complete Guide to Vinyl Flooring (LVP & SPC) in Canada',
+    description: metadata.description,
+    author: {
+      '@type': 'Organization',
+      name: 'BBS Flooring',
+      url: 'https://bbsflooring.ca',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'BBS Flooring',
+      url: 'https://bbsflooring.ca',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/bbs-logo-official-v2.png',
+      },
+    },
+    datePublished: '2026-04-06',
+    dateModified: '2026-05-09',
+    mainEntityOfPage: 'https://bbsflooring.ca/vinyl-flooring-guide',
+  };
+
+  const schemas = [
+    articleSchema,
+    faqSchema(faqItems),
+  ];
+
   return (
     <>
-      <JsonLd data={faqSchema(faqItems)} />
+      <JsonLd data={schemas} />
       <Suspense>
         <VinylFlooringGuideClient />
       </Suspense>

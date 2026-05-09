@@ -78,7 +78,7 @@ export default function FlooringComparisonGuidePage() {
       },
     },
     datePublished: '2026-04-06',
-    dateModified: '2026-04-06',
+    dateModified: '2026-05-09',
     mainEntityOfPage: 'https://bbsflooring.ca/flooring-comparison-guide',
   };
 
