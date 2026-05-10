@@ -405,7 +405,7 @@ export default function AdminCRMClient() {
         value: 0,
         status: b.status === 'completed' ? 'completed' : b.status === 'cancelled' ? 'cancelled' : b.status || 'booked',
         date: b.created_date,
-        details: `${b.preferred_date ? new Date(b.preferred_date).toLocaleDateString() : 'No date'} ${b.preferred_time || ''} — ${b.address || 'No address'}`,
+        details: `${b.preferred_date ? new Date(b.preferred_date + 'T00:00:00').toLocaleDateString() : 'No date'} ${b.preferred_time || ''} — ${b.customer_address || b.address || 'No address'}`,
         notes: b.notes || '', lost_reason: '',
         raw: b,
       });
@@ -1193,8 +1193,8 @@ export default function AdminCRMClient() {
                           {/* Booking-specific */}
                           {lead.source === 'booking' && (
                             <>
-                              {o.address && <div className="flex justify-between pt-1 border-t"><span className="text-slate-500">Address</span><span>{o.address}</span></div>}
-                              {o.preferred_date && <div className="flex justify-between"><span className="text-slate-500">Appointment</span><span>{new Date(o.preferred_date).toLocaleDateString()} {o.preferred_time || ''}</span></div>}
+                              {(o.customer_address || o.address) && <div className="flex justify-between pt-1 border-t"><span className="text-slate-500">Address</span><span>{o.customer_address || o.address}</span></div>}
+                              {o.preferred_date && <div className="flex justify-between"><span className="text-slate-500">Appointment</span><span>{new Date(o.preferred_date + 'T00:00:00').toLocaleDateString()} {o.preferred_time || ''}</span></div>}
                             </>
                           )}
 
