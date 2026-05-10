@@ -143,6 +143,7 @@ const CALC_TYPES = [
 ];
 
 const HST_RATE = 0.13;
+const MINIMUM_QUOTE = 500;
 
 /* ── FAQ ── */
 const FAQ_ITEMS = [
@@ -200,11 +201,14 @@ export default function FlooringInstallationCostClient() {
     const removalCost = calcRemoval ? area * removalRates[calcRemovalType] : 0;
     const totalLow = (type.materialLow + type.installLow) * area + removalCost;
     const totalHigh = (type.materialHigh + type.installHigh) * area + removalCost;
+    const displayLow = Math.max(totalLow, MINIMUM_QUOTE);
+    const displayHigh = Math.max(totalHigh, MINIMUM_QUOTE);
+    const minimumApplied = totalLow < MINIMUM_QUOTE;
     return {
-      low: totalLow,
-      high: totalHigh,
-      lowTax: totalLow * (1 + HST_RATE),
-      highTax: totalHigh * (1 + HST_RATE),
+      low: displayLow,
+      high: displayHigh,
+      lowTax: displayLow * (1 + HST_RATE),
+      highTax: displayHigh * (1 + HST_RATE),
       materialLow: type.materialLow * area,
       materialHigh: type.materialHigh * area,
       labourLow: type.installLow * area,
@@ -212,8 +216,9 @@ export default function FlooringInstallationCostClient() {
       removalCost,
       sqft: area,
       typeName: type.label,
-      monthlyLow: Math.round(totalLow / 24),
-      monthlyHigh: Math.round(totalHigh / 24),
+      monthlyLow: Math.round(displayLow / 24),
+      monthlyHigh: Math.round(displayHigh / 24),
+      minimumApplied,
     };
   }, [calcSqft, calcType, calcRemoval, calcRemovalType]);
 
@@ -488,9 +493,12 @@ export default function FlooringInstallationCostClient() {
                 <p className="text-3xl md:text-4xl font-black text-center text-amber-400 mb-1">
                   C${Math.round(calcEstimate.low).toLocaleString()} – C${Math.round(calcEstimate.high).toLocaleString()}
                 </p>
-                <p className="text-xs text-slate-400 text-center mb-4">
+                <p className="text-xs text-slate-400 text-center mb-2">
                   C${Math.round(calcEstimate.lowTax).toLocaleString()} – C${Math.round(calcEstimate.highTax).toLocaleString()} incl. HST
                 </p>
+                {calcEstimate.minimumApplied && (
+                  <p className="text-xs text-amber-300 text-center mb-4">* $500 minimum project charge applies</p>
+                )}
 
                 <div className="grid grid-cols-3 gap-3 text-center text-xs mb-4">
                   <div className="bg-slate-700/50 rounded-lg p-2">

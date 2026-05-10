@@ -33,6 +33,8 @@ export default function RemovalEstimator({
   const basePrice = sqft * ratePerSqft;
   const haulingFeeTotal = hauling ? haulAwayFee : 0;
   const total = basePrice + haulingFeeTotal;
+  const MINIMUM_CHARGE = 500;
+  const displayTotal = Math.max(total, MINIMUM_CHARGE);
 
   const handleSlider = (e) => setSqft(Number(e.target.value));
   const handleSqftInput = (e) => {
@@ -53,7 +55,7 @@ export default function RemovalEstimator({
           name,
           email,
           phone,
-          message: `${removalType.toUpperCase()} ESTIMATE — Sqft: ${sqft} | Haul-Away: ${hauling ? `Yes (+$${haulAwayFee})` : 'No'} | Estimated Total: $${total.toFixed(2)} CAD`,
+          message: `${removalType.toUpperCase()} ESTIMATE — Sqft: ${sqft} | Haul-Away: ${hauling ? `Yes (+$${haulAwayFee})` : 'No'} | Calculated: $${total.toFixed(2)} | Quoted Total: $${displayTotal.toFixed(2)} CAD${total < MINIMUM_CHARGE ? ' (minimum applied)' : ''}`,
           source,
         }),
       });
@@ -61,11 +63,11 @@ export default function RemovalEstimator({
       if (!res.ok || !data.success) throw new Error(data.error || 'Submission failed');
       // GA4
       if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: source, value: total });
+        window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: source, value: displayTotal });
       }
       // Meta Pixel
       if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', { content_name: removalType, value: total, currency: 'CAD' });
+        window.fbq('track', 'Lead', { content_name: removalType, value: displayTotal, currency: 'CAD' });
       }
       setSubmitted(true);
     } catch {
@@ -87,7 +89,7 @@ export default function RemovalEstimator({
         <p className="text-slate-600 text-lg">A flooring specialist will contact you shortly to confirm your {removalType.toLowerCase()} details.</p>
         <div className="mt-6 bg-amber-50 rounded-xl p-4 border border-amber-200">
           <p className="text-sm font-semibold text-amber-800">Your {creditLabel} has been reserved.</p>
-          <p className="text-sm text-amber-700 mt-1">Estimated Total: <strong>${total.toFixed(2)} CAD</strong></p>
+          <p className="text-sm text-amber-700 mt-1">Estimated Total: <strong>${displayTotal.toFixed(2)} CAD</strong></p>
         </div>
       </div>
     );
@@ -163,10 +165,13 @@ export default function RemovalEstimator({
             <div className="border-t border-slate-200 pt-3 mt-3 flex justify-between items-center">
               <span className="text-base font-bold text-slate-800">Estimated Total</span>
               <div className="text-right">
-                <span className="text-2xl font-black text-amber-600">${total.toFixed(2)}</span>
+                <span className="text-2xl font-black text-amber-600">${displayTotal.toFixed(2)}</span>
                 <span className="text-xs text-slate-400 block">CAD</span>
               </div>
             </div>
+            {total < MINIMUM_CHARGE && (
+              <p className="text-xs text-slate-500 mt-2">* $500 minimum service charge applies</p>
+            )}
           </div>
         </div>
 

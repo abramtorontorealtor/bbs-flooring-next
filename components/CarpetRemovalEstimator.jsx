@@ -16,6 +16,8 @@ export default function CarpetRemovalEstimator() {
   const basePrice = sqft * 1.0;
   const haulingFee = hauling ? 75 : 0;
   const total = basePrice + haulingFee;
+  const MINIMUM_CHARGE = 500;
+  const displayTotal = Math.max(total, MINIMUM_CHARGE);
 
   const handleSlider = (e) => setSqft(Number(e.target.value));
   const handleSqftInput = (e) => {
@@ -36,7 +38,7 @@ export default function CarpetRemovalEstimator() {
           name,
           email,
           phone,
-          message: `CARPET REMOVAL ESTIMATE — Sqft: ${sqft} | Haul-Away: ${hauling ? 'Yes (+$75)' : 'No'} | Stairs: ${stairs ? 'Yes (custom quote needed)' : 'No'} | Estimated Total: $${total.toFixed(2)} CAD`,
+          message: `CARPET REMOVAL ESTIMATE — Sqft: ${sqft} | Haul-Away: ${hauling ? 'Yes (+$75)' : 'No'} | Stairs: ${stairs ? 'Yes (custom quote needed)' : 'No'} | Calculated: $${total.toFixed(2)} | Quoted Total: $${displayTotal.toFixed(2)} CAD${total < MINIMUM_CHARGE ? ' (minimum applied)' : ''}`,
           source: 'carpet-removal-estimator',
         }),
       });
@@ -44,11 +46,11 @@ export default function CarpetRemovalEstimator() {
       if (!res.ok || !data.success) throw new Error(data.error || 'Submission failed');
       // GA4
       if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: 'carpet-removal-estimator', value: total });
+        window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: 'carpet-removal-estimator', value: displayTotal });
       }
       // Meta Pixel
       if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', { content_name: 'Carpet Removal Estimate', value: total, currency: 'CAD' });
+        window.fbq('track', 'Lead', { content_name: 'Carpet Removal Estimate', value: displayTotal, currency: 'CAD' });
       }
       setSubmitted(true);
     } catch {
@@ -70,7 +72,7 @@ export default function CarpetRemovalEstimator() {
         <p className="text-slate-600 text-lg">A flooring specialist will contact you shortly to confirm your removal date.</p>
         <div className="mt-6 bg-amber-50 rounded-xl p-4 border border-amber-200">
           <p className="text-sm font-semibold text-amber-800">Your $100 Floor Replacement Credit has been reserved.</p>
-          <p className="text-sm text-amber-700 mt-1">Estimated Total: <strong>${total.toFixed(2)} CAD</strong>{stairs && ' + stairs (custom)'}</p>
+          <p className="text-sm text-amber-700 mt-1">Estimated Total: <strong>${displayTotal.toFixed(2)} CAD</strong>{stairs && ' + stairs (custom)'}</p>
         </div>
       </div>
     );
@@ -177,10 +179,13 @@ export default function CarpetRemovalEstimator() {
             <div className="border-t border-slate-200 pt-3 mt-3 flex justify-between items-center">
               <span className="text-base font-bold text-slate-800">Estimated Total</span>
               <div className="text-right">
-                <span className="text-2xl font-black text-amber-600">${total.toFixed(2)}</span>
+                <span className="text-2xl font-black text-amber-600">${displayTotal.toFixed(2)}</span>
                 <span className="text-xs text-slate-400 block">CAD{stairs && ' + stairs'}</span>
               </div>
             </div>
+            {total < MINIMUM_CHARGE && (
+              <p className="text-xs text-slate-500 mt-2">* $500 minimum service charge applies</p>
+            )}
           </div>
         </div>
 

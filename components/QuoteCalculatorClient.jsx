@@ -45,6 +45,8 @@ const REMOVAL_PRICING = {
   tile: { label: 'Tile Removal', price: 2.50 },
 };
 
+const MINIMUM_QUOTE = 500;
+
 const STEPS = [
   { id: 1, label: 'Choose Product' },
   { id: 2, label: 'Room Details' },
@@ -348,7 +350,9 @@ export default function QuoteCalculatorClient() {
     const tax = subtotal * 0.13;
     const total = subtotal + tax;
 
-    const newQuote = { flooringCost, installationCost, removalCost, baseboardCost, shoeMouldingCost, deliveryCost, linearFeet, subtotal, tax, total, pricePerSqft, isMember: !!currentUser };
+    const displayTotal = Math.max(total, MINIMUM_QUOTE);
+    const minimumApplied = total < MINIMUM_QUOTE;
+    const newQuote = { flooringCost, installationCost, removalCost, baseboardCost, shoeMouldingCost, deliveryCost, linearFeet, subtotal, tax, total, displayTotal, minimumApplied, pricePerSqft, isMember: !!currentUser };
     setQuote(newQuote);
 
     localStorage.setItem('bbs_quote_project', JSON.stringify({
@@ -370,7 +374,7 @@ export default function QuoteCalculatorClient() {
     setTimeout(() => topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'calculate_quote', { event_category: 'engagement', event_label: selectedProduct?.name || 'unknown', value: newQuote.total, currency: 'CAD' });
+      window.gtag('event', 'calculate_quote', { event_category: 'engagement', event_label: selectedProduct?.name || 'unknown', value: newQuote.displayTotal, currency: 'CAD' });
     }
   };
 
@@ -398,7 +402,7 @@ export default function QuoteCalculatorClient() {
 
     Analytics.trackQuoteSubmit(selectedProduct?.name || 'unknown', quoteData.total, 'CAD');
     if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-      window.fbq('track', 'Lead', { content_name: selectedProduct?.name || 'unknown', value: quoteData.total, currency: 'CAD' });
+      window.fbq('track', 'Lead', { content_name: selectedProduct?.name || 'unknown', value: quote.displayTotal, currency: 'CAD' });
     }
 
     setLeadCaptured(true);
@@ -447,7 +451,7 @@ export default function QuoteCalculatorClient() {
   const buildCategoryUrl = (product) => {
     const route = getCategoryRoute(product);
     if (!route || !quote) return null;
-    const params = new URLSearchParams({ from: 'calculator', total: quote.total.toFixed(2), sqft: formData.square_footage, product: product.name });
+    const params = new URLSearchParams({ from: 'calculator', total: quote.displayTotal.toFixed(2), sqft: formData.square_footage, product: product.name });
     return createPageUrl(route.page) + '?' + params.toString();
   };
 
@@ -809,8 +813,11 @@ export default function QuoteCalculatorClient() {
                 <div className="border-t-2 border-slate-200 pt-3">
                   <div className="flex justify-between items-center gap-2">
                     <span className="text-base font-bold text-slate-800">Estimated Total</span>
-                    <span className="text-2xl font-bold text-amber-600">C${quote.total.toFixed(2)}</span>
+                    <span className="text-2xl font-bold text-amber-600">C${quote.displayTotal.toFixed(2)}</span>
                   </div>
+                  {quote.minimumApplied && (
+                    <p className="text-xs text-slate-500 mt-1">* $500 minimum project charge applies</p>
+                  )}
                 </div>
 
                 {/* Stairs note */}
@@ -822,11 +829,11 @@ export default function QuoteCalculatorClient() {
                 )}
 
                 {/* Financing */}
-                {getMonthlyPayment(quote.total) && (
+                {getMonthlyPayment(quote.displayTotal) && (
                   <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center justify-between gap-3">
                     <div>
                       <p className="text-xs font-semibold text-blue-600 mb-0.5">💳 Or finance it</p>
-                      <p className="text-2xl font-extrabold text-blue-700">~${getMonthlyPayment(quote.total)}<span className="text-sm font-semibold text-blue-400">/mo</span></p>
+                      <p className="text-2xl font-extrabold text-blue-700">~${getMonthlyPayment(quote.displayTotal)}<span className="text-sm font-semibold text-blue-400">/mo</span></p>
                       <p className="text-xs text-blue-400 mt-0.5">OAC · Max amortization · 13.99%</p>
                     </div>
                     <a href={FINANCEIT_LINKS.freeProgram} target="_blank" rel="noopener noreferrer"
@@ -843,7 +850,7 @@ export default function QuoteCalculatorClient() {
                     onClick={() => {
                       const quoteData = { product_id: selectedProduct?.id, product_name: selectedProduct?.name,
                         square_footage: parseFloat(formData.square_footage), customer_name: formData.customer_name,
-                        customer_email: formData.customer_email, customer_phone: formData.customer_phone, total: quote.total };
+                        customer_email: formData.customer_email, customer_phone: formData.customer_phone, total: quote.displayTotal };
                       window.location.href = `${createPageUrl('QuoteBooking')}?quote=${encodeURIComponent(JSON.stringify(quoteData))}`;
                     }}>
                     📅 Book Free Measurement <ArrowRight className="w-4 h-4 ml-1" />
@@ -853,7 +860,7 @@ export default function QuoteCalculatorClient() {
                 {/* Browse category */}
                 {getCategoryRoute(selectedProduct) && (
                   <Link href={buildCategoryUrl(selectedProduct)}
-                    onClick={() => { if (typeof window !== 'undefined' && window.gtag) { window.gtag('event', 'browse_category', { event_category: 'engagement', event_label: getCategoryRoute(selectedProduct).label, quote_total: quote.total.toFixed(2), square_footage: formData.square_footage }); } }}
+                    onClick={() => { if (typeof window !== 'undefined' && window.gtag) { window.gtag('event', 'browse_category', { event_category: 'engagement', event_label: getCategoryRoute(selectedProduct).label, quote_total: quote.displayTotal.toFixed(2), square_footage: formData.square_footage }); } }}
                     className="block">
                     <Button variant="outline" className="w-full border-amber-300 text-amber-700 hover:bg-amber-50 font-semibold" size="lg">
                       Browse {getCategoryRoute(selectedProduct).label} Flooring <ArrowRight className="w-4 h-4 ml-2" />
