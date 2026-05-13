@@ -1190,6 +1190,14 @@ export default function AdminCRMClient() {
                             <p className="mt-1">{lead.details}</p>
                           </div>
 
+                          {/* Contact message (full, not truncated) */}
+                          {lead.source === 'contact' && o.message && (
+                            <div className="pt-1 border-t">
+                              <span className="text-slate-500">Full Message</span>
+                              <pre className="mt-1 text-sm whitespace-pre-wrap bg-blue-50 border border-blue-200 rounded p-3 max-h-60 overflow-y-auto">{o.message}</pre>
+                            </div>
+                          )}
+
                           {/* Booking-specific */}
                           {lead.source === 'booking' && (
                             <>
