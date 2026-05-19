@@ -18,7 +18,8 @@ import {
   MessageSquare, ShoppingCart, Calculator, Ruler, Filter,
   ChevronDown, ChevronUp, RefreshCw, StickyNote, X, CheckCircle,
   CreditCard, MapPin, Package, AlertTriangle, Send, Eye,
-  Warehouse, Save, Truck, ArrowRight, Ban, ChevronRight
+  Warehouse, Save, Truck, ArrowRight, Ban, ChevronRight,
+  History, FileText, MailPlus
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -250,6 +251,23 @@ export default function AdminCRMClient() {
   const [bookingRescheduleDate, setBookingRescheduleDate] = useState('');
   const [bookingRescheduleTime, setBookingRescheduleTime] = useState('');
   const [bookingCancelReason, setBookingCancelReason] = useState('');
+
+  // ── FOLLOW-UP STATE ───────────────────────────────────────────────────
+  const [followUpOpen, setFollowUpOpen] = useState(false);
+  const [followUpLead, setFollowUpLead] = useState(null);
+  const [followUpTemplate, setFollowUpTemplate] = useState('quote_followup');
+  const [followUpSubject, setFollowUpSubject] = useState('');
+  const [followUpBody, setFollowUpBody] = useState('');
+  const [followUpNextDate, setFollowUpNextDate] = useState('');
+  const [followUpSending, setFollowUpSending] = useState(false);
+
+  const FOLLOW_UP_TEMPLATES = [
+    { key: 'quote_followup', label: '💰 Quote Follow-Up', description: 'For leads who got a quote on the website' },
+    { key: 'measurement_followup', label: '📏 Measurement Follow-Up', description: 'After a measurement visit' },
+    { key: 'general_checkin', label: '👋 General Check-In', description: 'Casual check-in on their project' },
+    { key: 'cold_reengagement', label: '🧊 Cold Re-engagement', description: 'For older leads who went quiet' },
+    { key: 'abandoned_cart_followup', label: '🛒 Abandoned Cart', description: 'For leads who left items in cart' },
+  ];
 
   const bookingAdminAction = useMutation({
     mutationFn: async ({ bookingId, action, preferred_date, preferred_time, cancel_reason }) => {
@@ -568,6 +586,126 @@ export default function AdminCRMClient() {
     }
   };
 
+  // ─── FOLLOW-UP HELPERS ─────────────────────────────────────────────────
+  const getLeadSourceForFollowUp = (lead) => {
+    if (lead.entityType === 'SavedQuote') return 'saved_quote';
+    if (lead.source === 'quote') return 'quote';
+    if (lead.source === 'contact') return 'contact';
+    if (lead.source === 'booking') return 'booking';
+    return 'contact';
+  };
+
+  const getFollowUpVars = (lead) => {
+    const o = lead.raw;
+    return {
+      name: (lead.name || 'there').split(' ')[0],
+      product: o.product_name || '',
+      sqft: o.square_footage || o.sqft || '',
+      quote_total: lead.value > 0 ? lead.value.toLocaleString('en-CA', { minimumFractionDigits: 0 }) : '',
+      address: o.customer_address || o.address || '',
+    };
+  };
+
+  const generateFollowUpPreview = useCallback((templateKey, vars) => {
+    const name = vars.name || 'there';
+    const product = vars.product || 'flooring';
+    const sqft = vars.sqft;
+    const quoteTotal = vars.quote_total;
+    const address = vars.address;
+
+    const templates = {
+      quote_followup: {
+        subject: `Following Up \u2014 Your ${product || 'Flooring'} Quote`,
+        body: `Hi ${name},\n\nYou recently put together a quote on our website for ${product}${sqft ? ` (${sqft} sq ft)` : ''} and I wanted to check in.${quoteTotal ? `\n\nYour quote: $${quoteTotal} CAD` : ''}\n\nIf you have any questions about the product, installation, or pricing \u2014 I\u2019m happy to help. We also offer free in-home measurements if you\u2019d like us to come take a look at your space.`,
+      },
+      measurement_followup: {
+        subject: `Following Up on Your Measurement${address ? ` at ${address}` : ''}`,
+        body: `Hi ${name},\n\nJust checking in after your measurement${address ? ` at ${address}` : ''}. I hope everything looked good!\n\nIf you\u2019re ready to move forward \u2014 or if you have questions about products, pricing, or the installation process \u2014 just reply to this email or give me a call.`,
+      },
+      general_checkin: {
+        subject: `Checking In on Your Flooring Project`,
+        body: `Hi ${name},\n\nJust checking in \u2014 wanted to see how your flooring project is coming along. If you\u2019re still exploring options or comparing products, I\u2019m here to help.\n\nWe\u2019ve got a great selection of vinyl, hardwood, and laminate \u2014 all at competitive prices with professional installation available.`,
+      },
+      cold_reengagement: {
+        subject: `Still Thinking About ${product || 'New Floors'}?`,
+        body: `Hi ${name},\n\nIt\u2019s been a little while since you were looking at ${product || 'flooring options'} with us. If the timing wasn\u2019t right before, no worries \u2014 just wanted to let you know we\u2019re still here when you\u2019re ready.${product ? `\n\nWe still carry ${product} and our team is ready to help with a free in-home measurement whenever it works for you.` : ''}`,
+      },
+      abandoned_cart_followup: {
+        subject: `You Had ${product || 'Something Great'} in Your Cart`,
+        body: `Hi ${name},\n\nLooks like you were checking out ${product || 'some flooring'} but didn\u2019t finish your order. No pressure at all \u2014 just wanted to make sure everything was okay.${quoteTotal ? `\n\nYour estimate: $${quoteTotal} CAD` : ''}\n\nIf you ran into any issues during checkout or have questions about the product, just reply to this email or give me a call \u2014 I\u2019m happy to help sort it out.`,
+      },
+    };
+
+    return templates[templateKey] || templates.general_checkin;
+  }, []);
+
+  const openFollowUpCompose = useCallback((lead) => {
+    const vars = getFollowUpVars(lead);
+    const bestTemplate = lead.source === 'booking' ? 'measurement_followup' : 'quote_followup';
+    const preview = generateFollowUpPreview(bestTemplate, vars);
+
+    setFollowUpLead(lead);
+    setFollowUpTemplate(bestTemplate);
+    setFollowUpSubject(preview.subject);
+    setFollowUpBody(preview.body);
+    setFollowUpNextDate('');
+    setFollowUpOpen(true);
+  }, [generateFollowUpPreview]);
+
+  const handleFollowUpTemplateChange = useCallback((templateKey) => {
+    if (!followUpLead) return;
+    const vars = getFollowUpVars(followUpLead);
+    const preview = generateFollowUpPreview(templateKey, vars);
+    setFollowUpTemplate(templateKey);
+    setFollowUpSubject(preview.subject);
+    setFollowUpBody(preview.body);
+  }, [followUpLead, generateFollowUpPreview]);
+
+  const sendFollowUp = useCallback(async () => {
+    if (!followUpLead || !followUpSubject || !followUpBody) {
+      toast.error('Subject and body are required');
+      return;
+    }
+
+    const email = followUpLead.email;
+    if (!email) {
+      toast.error('This lead has no email address');
+      return;
+    }
+
+    setFollowUpSending(true);
+    try {
+      const res = await fetch('/api/admin/send-followup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadId: followUpLead.entityId,
+          leadSource: getLeadSourceForFollowUp(followUpLead),
+          to: email,
+          template: followUpTemplate,
+          customSubject: followUpSubject,
+          customBody: `<div style="font-size:15px;color:#334155;line-height:1.8;white-space:pre-wrap;">${followUpBody.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br/>')}</div>`,
+          vars: getFollowUpVars(followUpLead),
+          nextFollowUpDate: followUpNextDate || null,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to send');
+      }
+
+      toast.success(`\u2709\ufe0f Follow-up sent to ${followUpLead.name}`);
+      setFollowUpOpen(false);
+      setFollowUpLead(null);
+      refreshAll();
+    } catch (err) {
+      toast.error('Send failed: ' + err.message);
+    } finally {
+      setFollowUpSending(false);
+    }
+  }, [followUpLead, followUpTemplate, followUpSubject, followUpBody, followUpNextDate]);
+
   // ─── SORT BUTTON ────────────────────────────────────────────────────────
   const SortButton = ({ field, label }) => (
     <button
@@ -584,6 +722,7 @@ export default function AdminCRMClient() {
 
   // ─── RENDER ─────────────────────────────────────────────────────────────
   return (
+    <>
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
 
@@ -841,6 +980,13 @@ export default function AdminCRMClient() {
                                 <Button variant="outline" size="sm" className="h-7 text-xs"
                                   onClick={() => updateLeadStatus(lead, 'contacted')}>
                                   <CheckCircle className="w-3 h-3 mr-1" /> Contacted
+                                </Button>
+                              )}
+                              {/* Follow-up email */}
+                              {lead.source !== 'order' && lead.email && (
+                                <Button variant="outline" size="sm" className="h-7 text-xs border-blue-200 text-blue-700 hover:bg-blue-50"
+                                  onClick={() => openFollowUpCompose(lead)}>
+                                  <MailPlus className="w-3 h-3 mr-1" /> Follow Up
                                 </Button>
                               )}
                               {/* Order: Capture payment */}
@@ -1240,6 +1386,27 @@ export default function AdminCRMClient() {
                       </div>
                     )}
 
+                    {/* ── FOLLOW-UP SECTION ───────────────────────── */}
+                    {lead.source !== 'order' && lead.email && (
+                      <div className="space-y-3">
+                        <Button
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                          onClick={() => openFollowUpCompose(lead)}
+                        >
+                          <MailPlus className="w-4 h-4 mr-2" /> Send Follow-Up Email
+                        </Button>
+
+                        {/* Activity Timeline — fetched inline */}
+                        <FollowUpTimeline
+                          leadId={lead.entityId}
+                          leadSource={getLeadSourceForFollowUp(lead)}
+                        />
+                      </div>
+                    )}
+                    {lead.source !== 'order' && !lead.email && (
+                      <p className="text-xs text-slate-400 italic">No email on file — follow-up requires an email address</p>
+                    )}
+
                     {/* ── ACTION BUTTONS ───────────────────────────── */}
                     <div className="space-y-3 pt-2 border-t">
 
@@ -1423,6 +1590,168 @@ export default function AdminCRMClient() {
           </DialogContent>
         </Dialog>
 
+      </div>
+    </div>
+
+    {/* ── FOLLOW-UP COMPOSE DIALOG ──────────────────────── */}
+    <Dialog open={followUpOpen} onOpenChange={(open) => { if (!open) { setFollowUpOpen(false); setFollowUpLead(null); } }}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <MailPlus className="w-5 h-5 text-blue-600" />
+            Send Follow-Up{followUpLead ? ` to ${followUpLead.name}` : ''}
+          </DialogTitle>
+        </DialogHeader>
+
+        {followUpLead && (
+          <div className="space-y-4">
+            {/* Lead summary */}
+            <div className="bg-slate-50 rounded-lg p-3 flex items-center justify-between">
+              <div>
+                <p className="font-semibold text-slate-800">{followUpLead.name}</p>
+                <p className="text-sm text-slate-500">{followUpLead.email}</p>
+              </div>
+              {followUpLead.value > 0 && (
+                <span className="text-lg font-bold text-amber-600">${followUpLead.value.toLocaleString()}</span>
+              )}
+            </div>
+
+            {/* Template selector */}
+            <div>
+              <Label className="text-sm font-semibold mb-1.5 block">Template</Label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {FOLLOW_UP_TEMPLATES.map((t) => (
+                  <button
+                    key={t.key}
+                    onClick={() => handleFollowUpTemplateChange(t.key)}
+                    className={`text-left p-3 rounded-lg border transition-all ${
+                      followUpTemplate === t.key
+                        ? 'border-blue-400 bg-blue-50 ring-1 ring-blue-400'
+                        : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                    }`}
+                  >
+                    <p className="font-medium text-sm">{t.label}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{t.description}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Subject */}
+            <div>
+              <Label className="text-sm font-semibold mb-1.5 block">Subject</Label>
+              <Input
+                value={followUpSubject}
+                onChange={(e) => setFollowUpSubject(e.target.value)}
+                placeholder="Email subject line..."
+              />
+            </div>
+
+            {/* Body */}
+            <div>
+              <Label className="text-sm font-semibold mb-1.5 block">Message</Label>
+              <Textarea
+                value={followUpBody}
+                onChange={(e) => setFollowUpBody(e.target.value)}
+                rows={10}
+                className="font-sans text-sm leading-relaxed"
+                placeholder="Write your follow-up message..."
+              />
+              <p className="text-xs text-slate-400 mt-1">Sent as Abram from BBS Flooring. Includes Book Free Measurement CTA + contact info.</p>
+            </div>
+
+            {/* Schedule next follow-up */}
+            <div className="bg-slate-50 rounded-lg p-3">
+              <Label className="text-xs font-semibold text-slate-600 mb-1.5 block">
+                <Calendar className="w-3.5 h-3.5 inline mr-1" />
+                Schedule Next Follow-Up (optional)
+              </Label>
+              <Input
+                type="date"
+                value={followUpNextDate}
+                onChange={(e) => setFollowUpNextDate(e.target.value)}
+                min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
+                className="w-48"
+              />
+              <p className="text-xs text-slate-400 mt-1">Lead will appear in CRM with this follow-up date.</p>
+            </div>
+
+            {/* Send button */}
+            <div className="flex gap-3 pt-2">
+              <Button
+                variant="outline"
+                onClick={() => { setFollowUpOpen(false); setFollowUpLead(null); }}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={sendFollowUp}
+                disabled={followUpSending || !followUpSubject || !followUpBody}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                {followUpSending ? (
+                  <><RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Sending...</>
+                ) : (
+                  <><Send className="w-4 h-4 mr-2" /> Send Email</>
+                )}
+              </Button>
+            </div>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+    </>
+  );
+}
+
+// ── FOLLOW-UP TIMELINE COMPONENT ────────────────────────────────────────
+
+function FollowUpTimeline({ leadId, leadSource }) {
+  const [followUps, setFollowUps] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!leadId || !leadSource) return;
+    setLoading(true);
+    fetch(`/api/admin/send-followup?leadId=${leadId}&leadSource=${leadSource}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) setFollowUps(data.followUps || []);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [leadId, leadSource]);
+
+  if (loading) return <p className="text-xs text-slate-400">Loading activity...</p>;
+  if (followUps.length === 0) return null;
+
+  return (
+    <div>
+      <Label className="text-xs font-semibold text-slate-500 flex items-center gap-1.5 mb-2">
+        <History className="w-3.5 h-3.5" /> Follow-Up History
+      </Label>
+      <div className="space-y-2">
+        {followUps.map((fu) => (
+          <div key={fu.id} className="bg-blue-50 border border-blue-200 rounded-lg p-2.5 text-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-blue-500" />
+                <span className="font-medium text-blue-800">{fu.subject || fu.template?.replace(/_/g, ' ')}</span>
+              </div>
+              <span className="text-xs text-slate-400">
+                {fu.sent_at ? new Date(fu.sent_at).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1">Sent to {fu.recipient_email}</p>
+            {fu.next_follow_up_date && (
+              <p className="text-xs text-amber-600 mt-1">
+                <Calendar className="w-3 h-3 inline mr-1" />
+                Next follow-up: {new Date(fu.next_follow_up_date + 'T12:00:00').toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}
+              </p>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
