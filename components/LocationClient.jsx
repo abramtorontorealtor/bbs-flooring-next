@@ -232,8 +232,25 @@ export default function LocationClient({ citySlug }) {
           </div>
         </div>
 
-        {/* Service Area Links */}
+        {/* Product Type Links for This City */}
         <div className="mt-16 pt-8 border-t border-slate-200">
+          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Flooring by Type in {data.city}</h3>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600 mb-8">
+            {[
+              { label: `Vinyl Flooring ${data.city}`, slug: `vinyl-flooring-${citySlug}` },
+              { label: `Hardwood Flooring ${data.city}`, slug: `hardwood-flooring-${citySlug}` },
+              { label: `Laminate Flooring ${data.city}`, slug: `laminate-flooring-${citySlug}` },
+              { label: `Engineered Hardwood ${data.city}`, slug: `engineered-hardwood-flooring-${citySlug}` },
+            ].map(link => (
+              <Link
+                key={link.slug}
+                href={`/${link.slug}`}
+                className="hover:text-amber-600 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
           <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Other Service Areas</h3>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
             {Object.keys(locationData).map(key => (

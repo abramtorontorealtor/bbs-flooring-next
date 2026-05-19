@@ -1,5 +1,6 @@
 import { getSupabaseServerClient } from '@/lib/supabase';
 import { locationData } from '@/data/locationData';
+import { getAllCityProductSlugs } from '@/data/cityProductData';
 
 // Force dynamic rendering so Supabase queries run at request time (not build time)
 export const dynamic = 'force-dynamic';
@@ -98,6 +99,16 @@ export default async function sitemap() {
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.7,
+    });
+  }
+
+  // ── City × Product type pages (SEO landing pages) ──
+  for (const slug of getAllCityProductSlugs()) {
+    entries.push({
+      url: `${SITE_URL}/${slug}`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     });
   }
 
