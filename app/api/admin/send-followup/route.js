@@ -29,13 +29,14 @@ export async function POST(request) {
     const {
       leadId, leadSource, to, template,
       customSubject, customBody, vars = {},
-      nextFollowUpDate, notes,
+      nextFollowUpDate, notes, skipEmail,
+      method: logMethod,
     } = body;
 
     // Validate required fields
-    if (!leadId || !leadSource || !to || !template) {
+    if (!leadId || !leadSource || !template) {
       return NextResponse.json(
-        { success: false, error: 'Missing required fields: leadId, leadSource, to, template' },
+        { success: false, error: 'Missing required fields: leadId, leadSource, template' },
         { status: 400 }
       );
     }
@@ -47,20 +48,24 @@ export async function POST(request) {
       );
     }
 
-    // Send the email
-    const emailResult = await sendFollowUpEmail({
-      to,
-      template,
-      vars,
-      customSubject: customSubject || undefined,
-      customBody: customBody || undefined,
-    });
+    // Send the email (unless skipEmail — used for logging calls/texts)
+    let emailSent = false;
+    if (!skipEmail && to) {
+      const emailResult = await sendFollowUpEmail({
+        to,
+        template,
+        vars,
+        customSubject: customSubject || undefined,
+        customBody: customBody || undefined,
+      });
 
-    if (!emailResult.success) {
-      return NextResponse.json(
-        { success: false, error: `Email failed: ${emailResult.reason || emailResult.error || 'Unknown'}` },
-        { status: 500 }
-      );
+      if (!emailResult.success) {
+        return NextResponse.json(
+          { success: false, error: `Email failed: ${emailResult.reason || emailResult.error || 'Unknown'}` },
+          { status: 500 }
+        );
+      }
+      emailSent = true;
     }
 
     // Log to lead_follow_ups table
@@ -73,7 +78,7 @@ export async function POST(request) {
       .insert({
         lead_id: leadId,
         lead_source: leadSource,
-        method: 'email',
+        method: logMethod || 'email',
         template,
         subject,
         body: customBody || `Template: ${template}`,
@@ -108,7 +113,7 @@ export async function POST(request) {
       }
     }
 
-    return NextResponse.json({ success: true, emailSent: true });
+    return NextResponse.json({ success: true, emailSent, logged: true });
   } catch (err) {
     console.error('[SendFollowup] Error:', err);
     return NextResponse.json(

@@ -1386,25 +1386,55 @@ export default function AdminCRMClient() {
                       </div>
                     )}
 
-                    {/* ── FOLLOW-UP SECTION ───────────────────────── */}
-                    {lead.source !== 'order' && lead.email && (
-                      <div className="space-y-3">
-                        <Button
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                          onClick={() => openFollowUpCompose(lead)}
-                        >
-                          <MailPlus className="w-4 h-4 mr-2" /> Send Follow-Up Email
-                        </Button>
+                    {/* ── LEAD PLAYBOOK ───────────────────────────── */}
+                    {lead.source !== 'order' && (
+                      <LeadPlaybook
+                        lead={lead}
+                        onSendEmail={() => openFollowUpCompose(lead)}
+                        onLogInteraction={async (method, outcome, notes) => {
+                          try {
+                            const supabaseLeadSource = getLeadSourceForFollowUp(lead);
+                            // Calculate smart next follow-up date
+                            const daysMap = {
+                              'no_answer': 2, 'left_voicemail': 3, 'needs_time': 14,
+                              'comparing_prices': 7, 'booked_measurement': null, 'sent_quote': 5,
+                              'not_interested': null, 'other': 7,
+                            };
+                            const nextDays = daysMap[outcome];
+                            const nextDate = nextDays ? new Date(Date.now() + nextDays * 86400000).toISOString().split('T')[0] : null;
 
-                        {/* Activity Timeline — fetched inline */}
-                        <FollowUpTimeline
-                          leadId={lead.entityId}
-                          leadSource={getLeadSourceForFollowUp(lead)}
-                        />
-                      </div>
-                    )}
-                    {lead.source !== 'order' && !lead.email && (
-                      <p className="text-xs text-slate-400 italic">No email on file — follow-up requires an email address</p>
+                            const res = await fetch('/api/admin/send-followup', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                leadId: lead.entityId,
+                                leadSource: supabaseLeadSource,
+                                to: lead.email || 'no-email@logged.internal',
+                                template: 'general_checkin',
+                                customSubject: `${method === 'call' ? 'Call' : method === 'text' ? 'Text' : 'Note'}: ${outcome.replace(/_/g, ' ')}`,
+                                customBody: `<p>Logged ${method}: ${outcome.replace(/_/g, ' ')}${notes ? '. ' + notes : ''}</p>`,
+                                vars: getFollowUpVars(lead),
+                                nextFollowUpDate: nextDate,
+                                notes: notes || outcome.replace(/_/g, ' '),
+                                skipEmail: true,
+                                method: method,
+                              }),
+                            });
+                            // Also update lead status if appropriate
+                            if (['booked_measurement', 'sent_quote'].includes(outcome)) {
+                              await updateLeadStatus(lead, outcome === 'booked_measurement' ? 'booked' : 'quoted');
+                            } else if (outcome !== 'not_interested' && lead.status === 'new') {
+                              await updateLeadStatus(lead, 'contacted');
+                            } else if (outcome === 'not_interested') {
+                              await updateLeadStatus(lead, 'lost', { lost_reason: 'Ghosted / no response' });
+                            }
+                            refreshAll();
+                            toast.success(`Logged ${method} — ${outcome.replace(/_/g, ' ')}${nextDate ? ` · Next follow-up: ${nextDate}` : ''}`);
+                          } catch (err) {
+                            toast.error('Failed to log: ' + err.message);
+                          }
+                        }}
+                      />
                     )}
 
                     {/* ── ACTION BUTTONS ───────────────────────────── */}
@@ -1726,33 +1756,279 @@ function FollowUpTimeline({ leadId, leadSource }) {
   if (loading) return <p className="text-xs text-slate-400">Loading activity...</p>;
   if (followUps.length === 0) return null;
 
+  const methodIcons = { email: Mail, call: Phone, text: MessageSquare, note: StickyNote };
+  const methodColors = {
+    email: 'bg-blue-50 border-blue-200 text-blue-800',
+    call: 'bg-green-50 border-green-200 text-green-800',
+    text: 'bg-purple-50 border-purple-200 text-purple-800',
+    note: 'bg-slate-50 border-slate-200 text-slate-700',
+  };
+
   return (
     <div>
       <Label className="text-xs font-semibold text-slate-500 flex items-center gap-1.5 mb-2">
-        <History className="w-3.5 h-3.5" /> Follow-Up History
+        <History className="w-3.5 h-3.5" /> Activity Timeline
       </Label>
       <div className="space-y-2">
-        {followUps.map((fu) => (
-          <div key={fu.id} className="bg-blue-50 border border-blue-200 rounded-lg p-2.5 text-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-blue-500" />
-                <span className="font-medium text-blue-800">{fu.subject || fu.template?.replace(/_/g, ' ')}</span>
+        {followUps.map((fu) => {
+          const IconComp = methodIcons[fu.method] || Mail;
+          const colorCls = methodColors[fu.method] || methodColors.email;
+          return (
+            <div key={fu.id} className={`${colorCls} border rounded-lg p-2.5 text-sm`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <IconComp className="w-3.5 h-3.5" />
+                  <span className="font-medium">{fu.subject || fu.template?.replace(/_/g, ' ')}</span>
+                </div>
+                <span className="text-xs text-slate-400">
+                  {fu.sent_at ? new Date(fu.sent_at).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
+                </span>
               </div>
-              <span className="text-xs text-slate-400">
-                {fu.sent_at ? new Date(fu.sent_at).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
-              </span>
+              {fu.recipient_email && fu.method === 'email' && (
+                <p className="text-xs text-slate-500 mt-1">Sent to {fu.recipient_email}</p>
+              )}
+              {fu.notes && fu.method !== 'email' && (
+                <p className="text-xs text-slate-500 mt-1">{fu.notes}</p>
+              )}
+              {fu.next_follow_up_date && (
+                <p className="text-xs text-amber-600 mt-1">
+                  <Calendar className="w-3 h-3 inline mr-1" />
+                  Next: {new Date(fu.next_follow_up_date + 'T12:00:00').toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}
+                </p>
+              )}
             </div>
-            <p className="text-xs text-slate-500 mt-1">Sent to {fu.recipient_email}</p>
-            {fu.next_follow_up_date && (
-              <p className="text-xs text-amber-600 mt-1">
-                <Calendar className="w-3 h-3 inline mr-1" />
-                Next follow-up: {new Date(fu.next_follow_up_date + 'T12:00:00').toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}
-              </p>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
+    </div>
+  );
+}
+
+// ── LEAD PLAYBOOK COMPONENT ─────────────────────────────────────────────
+
+const INTERACTION_OUTCOMES = [
+  { key: 'no_answer', label: 'No Answer', icon: '📵', nextDays: 2 },
+  { key: 'left_voicemail', label: 'Left Voicemail', icon: '📬', nextDays: 3 },
+  { key: 'needs_time', label: 'Needs More Time', icon: '⏳', nextDays: 14 },
+  { key: 'comparing_prices', label: 'Comparing Prices', icon: '📊', nextDays: 7 },
+  { key: 'booked_measurement', label: 'Booked Measurement!', icon: '🎉', nextDays: null },
+  { key: 'sent_quote', label: 'Sent Quote', icon: '💰', nextDays: 5 },
+  { key: 'not_interested', label: 'Not Interested', icon: '❌', nextDays: null },
+  { key: 'other', label: 'Other', icon: '📝', nextDays: 7 },
+];
+
+function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
+  const [activeTab, setActiveTab] = useState('call');
+  const [logOpen, setLogOpen] = useState(false);
+  const [logMethod, setLogMethod] = useState('call');
+  const [logNotes, setLogNotes] = useState('');
+  const [logging, setLogging] = useState(false);
+  const [copied, setCopied] = useState(null);
+
+  const o = lead.raw;
+  const firstName = (lead.name || 'there').split(' ')[0];
+  const product = o.product_name || 'flooring';
+  const sqft = o.square_footage || o.sqft || '';
+  const quoteTotal = lead.value > 0 ? `$${lead.value.toLocaleString('en-CA', { minimumFractionDigits: 0 })}` : '';
+  const address = o.customer_address || o.address || '';
+  const daysSince = lead.date ? Math.floor((Date.now() - new Date(lead.date)) / 86400000) : 0;
+
+  // ── Suggested next step logic
+  const getSuggestedStep = () => {
+    if (lead.status === 'new' && daysSince < 1) {
+      return { urgency: 'red', icon: '🚨', text: `Call ${firstName} now — ${quoteTotal || product} quote, just came in!` };
+    }
+    if (lead.status === 'new' && daysSince < 3) {
+      return { urgency: 'red', icon: '🔴', text: `Call ${firstName} — ${quoteTotal || product}, ${daysSince}d without contact` };
+    }
+    if (lead.status === 'new' && daysSince >= 3) {
+      return { urgency: 'amber', icon: '⚠️', text: `${firstName} has been waiting ${daysSince} days. Try a text — less intrusive than a call at this point.` };
+    }
+    if (lead.status === 'contacted' && daysSince < 7) {
+      return { urgency: 'blue', icon: '💬', text: `Follow up with ${firstName} — contacted but no commitment yet. ${lead.value >= 10000 ? 'High value — stay on it.' : ''}` };
+    }
+    if (lead.status === 'contacted' && daysSince >= 7) {
+      return { urgency: 'amber', icon: '🧊', text: `It's been ${daysSince} days since contact. Send a re-engagement text or email.` };
+    }
+    if (lead.source === 'booking') {
+      return { urgency: 'green', icon: '📏', text: `Measurement ${o.status === 'confirmed' ? 'confirmed' : 'pending'}. ${o.status === 'completed' ? 'Ask for a Google review!' : 'Confirm details before the visit.'}` };
+    }
+    return { urgency: 'slate', icon: '📝', text: `Check in with ${firstName} — see where they're at with their project.` };
+  };
+
+  const suggested = getSuggestedStep();
+  const urgencyColors = {
+    red: 'bg-red-50 border-red-300 text-red-900',
+    amber: 'bg-amber-50 border-amber-300 text-amber-900',
+    blue: 'bg-blue-50 border-blue-300 text-blue-900',
+    green: 'bg-green-50 border-green-300 text-green-900',
+    slate: 'bg-slate-50 border-slate-200 text-slate-700',
+  };
+
+  // ── Generate scripts
+  const callScript = `Hey ${firstName}, it's Abram from BBS Flooring. ${lead.status === 'new'
+    ? `You were looking at ${product}${sqft ? ` for about ${sqft} square feet` : ''} on our site — just wanted to check in and see if you had any questions.`
+    : `Just following up on your ${product} project — wanted to see how things are going.`
+  }\n\nIf they're comparing prices:\n“We beat any written quote by 5%. Bring it in and we'll match it — guaranteed.”\n\nIf they need more time:\n“No rush at all. Want me to hold that pricing for you?”\n\nIf they're ready:\n“Great! I can book a free measurement this week — what day works best?”`;
+
+  const textScript = `Hey ${firstName}! It's Abram from BBS Flooring. ${lead.status === 'new'
+    ? `Just following up on your ${product} quote${quoteTotal ? ` (${quoteTotal})` : ''}. Happy to answer any questions or book a free measurement whenever works 👍`
+    : `Checking in on your ${product} project — let me know if you need anything!`
+  } bbsflooring.ca`;
+
+  const copyToClipboard = (text, label) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(label);
+      setTimeout(() => setCopied(null), 2000);
+    });
+  };
+
+  const handleLog = async (outcome) => {
+    setLogging(true);
+    try {
+      await onLogInteraction(logMethod, outcome, logNotes);
+      setLogOpen(false);
+      setLogNotes('');
+    } catch (e) {
+      // handled by parent
+    } finally {
+      setLogging(false);
+    }
+  };
+
+  return (
+    <div className="space-y-3">
+      {/* Suggested Next Step */}
+      <div className={`${urgencyColors[suggested.urgency]} border rounded-xl p-3`}>
+        <p className="text-sm font-semibold">
+          <span className="mr-1.5">{suggested.icon}</span>
+          {suggested.text}
+        </p>
+      </div>
+
+      {/* Tabs: Call / Text / Email */}
+      <div className="border rounded-xl overflow-hidden">
+        <div className="flex border-b bg-slate-50">
+          {[{ key: 'call', label: '📞 Call', show: !!lead.phone },
+            { key: 'text', label: '📱 Text', show: !!lead.phone },
+            { key: 'email', label: '✉️ Email', show: !!lead.email },
+          ].filter(t => t.show).map(tab => (
+            <button key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
+                activeTab === tab.key
+                  ? 'bg-white text-slate-900 border-b-2 border-amber-500'
+                  : 'text-slate-500 hover:text-slate-700'
+              }`}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="p-3">
+          {/* Call Tab */}
+          {activeTab === 'call' && lead.phone && (
+            <div className="space-y-3">
+              <pre className="text-sm whitespace-pre-wrap bg-green-50 border border-green-200 rounded-lg p-3 leading-relaxed">{callScript}</pre>
+              <div className="flex gap-2">
+                <a href={`tel:${lead.phone}`} className="flex-1">
+                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
+                    <Phone className="w-4 h-4 mr-2" /> Call {lead.phone}
+                  </Button>
+                </a>
+                <Button variant="outline" size="sm"
+                  onClick={() => copyToClipboard(callScript, 'call')}>
+                  {copied === 'call' ? '✅' : '📋'}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Text Tab */}
+          {activeTab === 'text' && lead.phone && (
+            <div className="space-y-3">
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                <p className="text-sm leading-relaxed">{textScript}</p>
+              </div>
+              <div className="flex gap-2">
+                <a href={`sms:${lead.phone}?body=${encodeURIComponent(textScript)}`} className="flex-1">
+                  <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                    <MessageSquare className="w-4 h-4 mr-2" /> Open in Messages
+                  </Button>
+                </a>
+                <Button variant="outline" size="sm"
+                  onClick={() => copyToClipboard(textScript, 'text')}>
+                  {copied === 'text' ? '✅' : '📋'}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Email Tab */}
+          {activeTab === 'email' && lead.email && (
+            <div className="space-y-3">
+              <p className="text-sm text-slate-600">Opens the follow-up email composer with a pre-written template personalized to this lead.</p>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={onSendEmail}>
+                <MailPlus className="w-4 h-4 mr-2" /> Compose Follow-Up Email
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Log Interaction */}
+      {!logOpen ? (
+        <Button variant="outline" className="w-full border-dashed" onClick={() => { setLogOpen(true); setLogMethod(activeTab === 'email' ? 'email' : activeTab); }}>
+          <CheckCircle className="w-4 h-4 mr-2" /> Log What Happened
+        </Button>
+      ) : (
+        <div className="border rounded-xl p-3 space-y-3 bg-slate-50">
+          <Label className="text-sm font-semibold">What happened?</Label>
+
+          {/* Method toggle */}
+          <div className="flex gap-2">
+            {[{ key: 'call', label: '📞 Called' }, { key: 'text', label: '📱 Texted' }, { key: 'note', label: '📝 Note' }].map(m => (
+              <button key={m.key}
+                onClick={() => setLogMethod(m.key)}
+                className={`flex-1 py-1.5 text-xs font-medium rounded-lg border transition-all ${
+                  logMethod === m.key ? 'bg-white border-slate-400 shadow-sm' : 'border-transparent text-slate-500'
+                }`}>
+                {m.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Outcome buttons */}
+          <div className="grid grid-cols-2 gap-2">
+            {INTERACTION_OUTCOMES.map(oc => (
+              <button key={oc.key}
+                onClick={() => handleLog(oc.key)}
+                disabled={logging}
+                className="text-left p-2.5 rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-white transition-all text-sm">
+                <span className="mr-1.5">{oc.icon}</span>
+                {oc.label}
+                {oc.nextDays && <span className="text-xs text-slate-400 block mt-0.5">Follow up in {oc.nextDays}d</span>}
+              </button>
+            ))}
+          </div>
+
+          {/* Optional note */}
+          <Input placeholder="Add a note (optional)..." value={logNotes}
+            onChange={(e) => setLogNotes(e.target.value)} className="text-sm" />
+
+          <Button variant="ghost" size="sm" className="w-full text-slate-400"
+            onClick={() => { setLogOpen(false); setLogNotes(''); }}>
+            Cancel
+          </Button>
+        </div>
+      )}
+
+      {/* Activity Timeline */}
+      <FollowUpTimeline
+        leadId={lead.entityId}
+        leadSource={lead.entityType === 'SavedQuote' ? 'saved_quote' : lead.source === 'quote' ? 'quote' : lead.source === 'booking' ? 'booking' : 'contact'}
+      />
     </div>
   );
 }
