@@ -39,7 +39,7 @@ const WIX_REDIRECTS = new Map([
 const SLUG_REDIRECTS = new Map([
   ['/products/chocolate-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring', '/products/chocolate-vidar-design-flooring-american-black-walnut-engineered-hardwood-flooring'],
   ['/products/chocolate-vidar-5-american-white-oak-engineered-hardwood-herringbone-character-abcd', '/products/chocolate-vidar-5-american-black-walnut-engineered-hardwood-herringbone-character-abcd'],
-  ['/products/clear-vidar-design-flooring-european-white-oakash-engineered-hardwood-flooring', '/products/clear-vidar-design-flooring-european-white-ash-engineered-hardwood-flooring'],
+  ['/products/clear-vidar-design-flooring-european-white-oakash-engineered-hardwood-flooring', '/products/clear-vidar-design-flooring-european-white-oak-engineered-hardwood-flooring'],
   ['/products/clear-vidar-7-5-european-white-oak-engineered-hardwood-character-abcd', '/products/clear-vidar-7-5-european-white-ash-engineered-hardwood-character-abcd'],
   ['/products/clear-vidar-7-5-european-white-oak-engineered-hardwood-select-abc', '/products/clear-vidar-7-5-european-white-ash-engineered-hardwood-select-abc'],
   ['/products/macaroon-vidar-design-flooring-american-white-oakash-engineered-hardwood-flooring', '/products/macaroon-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring'],

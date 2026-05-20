@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
 import ProductDetailClient from '@/components/ProductDetailClient';
 import { entities } from '@/lib/base44-compat-server';
 import { getSupabaseServerClient } from '@/lib/supabase';
@@ -58,7 +59,10 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const product = await getProduct(slug);
   if (!product) {
-    return { title: 'Product Not Found' };
+    return {
+      title: 'Product Not Found | BBS Flooring',
+      robots: { index: false, follow: true },
+    };
   }
   // Fetch child variants for dynamic meta descriptions on parent products
   const childVariants = product.is_parent_product
@@ -91,6 +95,11 @@ export async function generateMetadata({ params }) {
 export default async function ProductDetailPage({ params }) {
   const { slug } = await params;
   const product = await getProduct(slug);
+
+  // Return proper 404 for missing products (not a soft 404 with 200 status)
+  if (!product) {
+    notFound();
+  }
 
   // Fetch child variants server-side for ProductGroup JSON-LD
   const childVariants = product?.is_parent_product
