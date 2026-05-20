@@ -234,11 +234,11 @@ export default function AdminCRMClient() {
   });
 
   const scheduleDateMutation = useMutation({
-    mutationFn: async ({ orderId, scheduledDate, scheduledNote: note }) => {
+    mutationFn: async ({ orderId, scheduledDate, scheduledNote: note, sendConfirmation }) => {
       const r = await fetch('/api/orders/schedule', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId, scheduledDate, scheduledNote: note }),
+        body: JSON.stringify({ orderId, scheduledDate, scheduledNote: note, sendConfirmation }),
       });
       if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
       return r.json();
@@ -1160,7 +1160,7 @@ export default function AdminCRMClient() {
                                     updatePickupAddressMutation.mutate(
                                       { orderId: o.id, pickupAddress: pickupAddress.trim(), pickupReference: pickupReference.trim() },
                                       { onSuccess: () => {
-                                        scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
+                                        scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim(), sendConfirmation: true });
                                       }}
                                     );
                                   }
@@ -1216,7 +1216,7 @@ export default function AdminCRMClient() {
                                   <Button size="sm" onClick={() => {
                                     if (!scheduleDate) { toast.error('Pick a date'); return; }
                                     if (confirm(`Schedule delivery for ${scheduleDate}? Customer will be emailed.`)) {
-                                      scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim() });
+                                      scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim(), sendConfirmation: true });
                                     }
                                   }} disabled={scheduleDateMutation.isPending || !scheduleDate} className="bg-blue-600 hover:bg-blue-700">
                                     <Mail className="w-4 h-4 mr-1" /> {scheduleDateMutation.isPending ? 'Sending...' : 'Send'}
