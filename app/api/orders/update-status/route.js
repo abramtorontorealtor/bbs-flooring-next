@@ -86,6 +86,8 @@ export async function POST(request) {
     // "shipped" (Ready for Pickup) is now silent — pickup email sent via Send Pickup Confirmation button
     // "delivered" sends thank-you + review request email
     const emailTransitions = ['delivered'];
+    let emailSent = false;
+    let emailError = null;
     if (emailTransitions.includes(newStatus) && order.customer_email) {
       // Re-fetch order to get latest pickup_address, scheduled_date, etc.
       const { data: freshOrder } = await supabase
@@ -95,16 +97,20 @@ export async function POST(request) {
         .single();
 
       try {
-        await sendOrderStatusUpdate({
+        const emailResult = await sendOrderStatusUpdate({
           order: { ...(freshOrder || order), status: newStatus },
           oldStatus,
         });
+        emailSent = emailResult?.success !== false;
+        if (!emailSent) emailError = emailResult?.error || emailResult?.reason || 'unknown';
+        console.log(`[UpdateStatus] Email result for ${newStatus}:`, JSON.stringify(emailResult));
       } catch (emailErr) {
+        emailError = emailErr.message || String(emailErr);
         console.error('[UpdateStatus] Email send error (non-fatal):', emailErr);
       }
     }
 
-    return NextResponse.json({ success: true, oldStatus, newStatus });
+    return NextResponse.json({ success: true, oldStatus, newStatus, emailSent, emailError });
   } catch (error) {
     console.error('Update status error:', error);
     return NextResponse.json({ error: error.message || 'Failed to update status' }, { status: 500 });

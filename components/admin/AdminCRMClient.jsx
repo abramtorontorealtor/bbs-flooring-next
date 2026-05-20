@@ -215,7 +215,13 @@ export default function AdminCRMClient() {
       if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
       return r.json();
     },
-    onSuccess: (data) => { refreshAll(); toast.success(`Status: ${data.oldStatus} → ${data.newStatus}${data.newStatus === 'processing' ? '' : ' — customer emailed'}`); },
+    onSuccess: (data) => {
+      refreshAll();
+      const emailNote = data.newStatus === 'delivered'
+        ? (data.emailSent ? ' — thank you + review email sent!' : ` — ⚠️ email failed: ${data.emailError || 'unknown'}`)
+        : '';
+      toast.success(`Status: ${data.oldStatus} → ${data.newStatus}${emailNote}`);
+    },
     onError: (err) => toast.error('Status update failed: ' + err.message),
   });
 
