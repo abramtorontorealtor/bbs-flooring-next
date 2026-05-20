@@ -233,6 +233,20 @@ export default function AdminCRMClient() {
     onError: (err) => toast.error('Save failed: ' + err.message),
   });
 
+  const sendPickupConfirmationMutation = useMutation({
+    mutationFn: async ({ orderId, pickupAddress, pickupReference, scheduledDate, scheduledNote }) => {
+      const r = await fetch('/api/orders/send-pickup-confirmation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, pickupAddress, pickupReference, scheduledDate, scheduledNote }),
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
+      return r.json();
+    },
+    onSuccess: (data) => { refreshAll(); toast.success(data.emailSent ? '📧 Pickup confirmation emailed to customer!' : '⚠️ Details saved but email failed — follow up manually'); },
+    onError: (err) => toast.error('Failed: ' + err.message),
+  });
+
   const scheduleDateMutation = useMutation({
     mutationFn: async ({ orderId, scheduledDate, scheduledNote: note, sendConfirmation }) => {
       const r = await fetch('/api/orders/schedule', {
@@ -1156,18 +1170,18 @@ export default function AdminCRMClient() {
                                   if (!pickupAddress.trim()) { toast.error('Enter warehouse address'); return; }
                                   if (!scheduleDate) { toast.error('Pick a date'); return; }
                                   if (confirm(`Send pickup confirmation to customer?\n\n📍 ${pickupAddress.trim()}\n🔖 ${pickupReference.trim() || '(none)'}\n📅 ${scheduleDate} ${scheduleNote.trim()}`)) {
-                                    // Save pickup details first, then schedule (which sends the email)
-                                    updatePickupAddressMutation.mutate(
-                                      { orderId: o.id, pickupAddress: pickupAddress.trim(), pickupReference: pickupReference.trim() },
-                                      { onSuccess: () => {
-                                        scheduleDateMutation.mutate({ orderId: o.id, scheduledDate: scheduleDate, scheduledNote: scheduleNote.trim(), sendConfirmation: true });
-                                      }}
-                                    );
+                                    sendPickupConfirmationMutation.mutate({
+                                      orderId: o.id,
+                                      pickupAddress: pickupAddress.trim(),
+                                      pickupReference: pickupReference.trim(),
+                                      scheduledDate: scheduleDate,
+                                      scheduledNote: scheduleNote.trim(),
+                                    });
                                   }
                                 }}
-                                  disabled={updatePickupAddressMutation.isPending || scheduleDateMutation.isPending || !pickupAddress.trim() || !scheduleDate || !isPaid}
+                                  disabled={sendPickupConfirmationMutation.isPending || !pickupAddress.trim() || !scheduleDate || !isPaid}
                                   className="bg-amber-600 hover:bg-amber-700 w-full text-base py-5">
-                                  <Mail className="w-4 h-4 mr-2" /> {(updatePickupAddressMutation.isPending || scheduleDateMutation.isPending) ? 'Sending...' : 'Send Pickup Confirmation'}
+                                  <Mail className="w-4 h-4 mr-2" /> {sendPickupConfirmationMutation.isPending ? 'Sending...' : 'Send Pickup Confirmation'}
                                 </Button>
                                 <p className="text-xs text-slate-500 text-center">Saves address + reference + date and emails the customer ONE confirmation</p>
 
