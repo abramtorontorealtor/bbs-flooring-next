@@ -34,7 +34,7 @@ const WIX_REDIRECTS = new Map([
   ['/stairs-flooring-renovation-gallery', '/stairs'],
   ['/why-bbs-flooring', '/about'],
   // Added May 20 2026 — GSC crawled-not-indexed audit
-  ['/faq', '/about'],
+  // /faq removed — dedicated FAQ page now exists (May 20 session 6)
   ['/book-online/house-measurement-visit-laminate-floor', '/free-measurement'],
 ]);
 

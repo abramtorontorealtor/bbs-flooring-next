@@ -159,6 +159,11 @@ export default function Footer() {
                   About Us
                 </Link>
               </li>
+              <li>
+                <Link href="/faq" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 
