@@ -10,6 +10,9 @@ import { createServerClient } from '@supabase/ssr';
 
 // Wix legacy paths → new paths
 const WIX_REDIRECTS = new Map([
+  ['/home', '/'],
+  ['/allproducts', '/products'],
+  ['/flooring-brands', '/products'],
   ['/flooring', '/products'],
   ['/flooring-clearance-sale', '/clearance'],
   ['/about-us', '/about'],
