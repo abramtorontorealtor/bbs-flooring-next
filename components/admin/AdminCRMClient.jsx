@@ -366,13 +366,7 @@ export default function AdminCRMClient() {
     if (isEt && (ps === 'pending' || s === 'pending_payment') && active) {
       actions.push({ key: 'confirm-et', label: '🏦 Confirm E-Transfer Received', cls: 'bg-blue-600 hover:bg-blue-700 text-white', action: () => handleConfirmEtransfer(o.id) });
     }
-    if (['pending', 'confirmed', 'paid'].includes(s)) {
-      actions.push({ key: 'processing', label: '📦 Mark as Preparing', cls: 'bg-purple-600 hover:bg-purple-700 text-white', action: () => handleStatusAdvance(o.id, 'processing', o.delivery_preference) });
-    }
-    if (s === 'processing') {
-      actions.push({ key: 'shipped', label: isPickup ? '🏪 Mark Ready for Pickup' : '🚚 Mark as Shipped', cls: 'bg-indigo-600 hover:bg-indigo-700 text-white', action: () => handleStatusAdvance(o.id, 'shipped', o.delivery_preference) });
-    }
-    if (s === 'shipped') {
+    if (['pending', 'confirmed', 'paid', 'processing', 'shipped'].includes(s)) {
       actions.push({ key: 'delivered', label: isPickup ? '✅ Mark as Picked Up' : '✅ Mark as Delivered', cls: 'bg-emerald-600 hover:bg-emerald-700 text-white', action: () => handleStatusAdvance(o.id, 'delivered', o.delivery_preference) });
     }
     if (active && s !== 'delivered') {
@@ -1261,7 +1255,13 @@ export default function AdminCRMClient() {
                               )}
                               <div className="flex items-center gap-2 pt-1">
                                 <Package className="w-4 h-4 text-slate-400" />
-                                <span>{o.delivery_preference === 'pickup' ? 'Warehouse Pickup' : o.delivery_preference === 'inside' ? 'Inside Delivery' : o.delivery_preference === 'custom_freight' ? 'Custom Freight' : 'Garage Delivery'}</span>
+                                <span>{{
+                                  pickup: 'Warehouse Pickup',
+                                  delivery: 'Delivery',
+                                  inside: 'Inside Delivery',
+                                  garage: 'Garage Delivery',
+                                  custom_freight: 'Custom Freight',
+                                }[o.delivery_preference] || o.delivery_preference}</span>
                               </div>
                             </CardContent>
                           </Card>
