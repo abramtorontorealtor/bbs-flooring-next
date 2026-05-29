@@ -160,6 +160,14 @@ const SLUG_REDIRECTS = new Map([
   ['/products/sunset-european-white-ash', '/products/sunset-vidar-european-white-ash-engineered-hardwood-flooring'],
   ['/products/toffee-crunch-european-white-ash', '/products/toffee-crunch-vidar-european-white-ash-engineered-hardwood-flooring'],
   ['/products/toffee-crunch-european-white-oak', '/products/toffee-crunch-vidar-european-white-oak-engineered-hardwood-flooring'],
+  // Woden Lumine width fix: 7 1/2 → 6 1/2 (May 29, 2026)
+  ['/products/snowhaze-ab-woden-lumine-7-1-2-european-oak-engineered-hardwood-flooring', '/products/snowhaze-ab-woden-lumine-6-1-2-european-oak-engineered-hardwood-flooring'],
+  ['/products/snowhaze-abc-woden-lumine-7-1-2-european-oak-engineered-hardwood-flooring', '/products/snowhaze-abc-woden-lumine-6-1-2-european-oak-engineered-hardwood-flooring'],
+  ['/products/oatlight-ab-woden-lumine-7-1-2-european-oak-engineered-hardwood-flooring', '/products/oatlight-ab-woden-lumine-6-1-2-european-oak-engineered-hardwood-flooring'],
+  ['/products/oatlight-abc-woden-lumine-7-1-2-european-oak-engineered-hardwood-flooring', '/products/oatlight-abc-woden-lumine-6-1-2-european-oak-engineered-hardwood-flooring'],
+  ['/products/creamwood-woden-lumine-7-1-2-european-oak-engineered-hardwood-flooring', '/products/creamwood-woden-lumine-6-1-2-european-oak-engineered-hardwood-flooring'],
+  ['/products/silkstone-woden-lumine-7-1-2-european-oak-engineered-hardwood-flooring', '/products/silkstone-woden-lumine-6-1-2-european-oak-engineered-hardwood-flooring'],
+  ['/products/cloudbeam-woden-lumine-7-1-2-european-oak-engineered-hardwood-flooring', '/products/cloudbeam-woden-lumine-6-1-2-european-oak-engineered-hardwood-flooring'],
 ]);
 
 // Single-word PascalCase pages that need lowercase redirects.
