@@ -889,7 +889,7 @@ export default function AdminCRMClient() {
                         )}
                         {lead.source === 'order' && o.payment_method === 'etransfer' && o.payment_status === 'pending' && (
                           <button onClick={e => { e.stopPropagation();
-                            updateOrderMutation.mutate({ orderId: lead.entityId, updates: { payment_status: 'completed', status: 'paid' }}); }}
+                            handleConfirmEtransfer(lead.entityId); }}
                             className="flex items-center gap-1 text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1.5 rounded-md font-medium">
                             <DollarSign className="w-3.5 h-3.5" /> E-Transfer Received
                           </button>
@@ -1014,7 +1014,7 @@ export default function AdminCRMClient() {
                               {/* Order: E-transfer received */}
                               {lead.source === 'order' && o.payment_method === 'etransfer' && o.payment_status === 'pending' && (
                                 <Button size="sm" className="h-7 text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
-                                  onClick={() => updateOrderMutation.mutate({ orderId: lead.entityId, updates: { payment_status: 'completed', status: 'paid' }})}>
+                                  onClick={() => handleConfirmEtransfer(lead.entityId)}>
                                   <DollarSign className="w-3 h-3 mr-1" /> Paid
                                 </Button>
                               )}
@@ -1484,7 +1484,7 @@ export default function AdminCRMClient() {
                           {/* Mark e-transfer received */}
                           {o.payment_method === 'etransfer' && o.payment_status === 'pending' && (
                             <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
-                              onClick={() => updateOrderMutation.mutate({ orderId: lead.entityId, updates: { payment_status: 'completed', status: 'paid' }})}>
+                              onClick={() => handleConfirmEtransfer(lead.entityId)}>
                               ✅ Mark as Paid (E-Transfer Received)
                             </Button>
                           )}

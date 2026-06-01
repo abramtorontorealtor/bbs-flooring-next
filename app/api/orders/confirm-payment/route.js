@@ -33,8 +33,8 @@ export async function POST(request) {
     const { error: updateError } = await supabase
       .from('orders')
       .update({
-        status: 'confirmed',
-        payment_status: 'paid',
+        status: 'paid',
+        payment_status: 'completed',
       })
       .eq('id', orderId);
 
@@ -43,7 +43,7 @@ export async function POST(request) {
     // Send confirmation email to customer — don't let email failure tank the response
     let emailSent = false;
     try {
-      await sendOrderPaymentConfirmed({ order: { ...order, status: 'confirmed', payment_status: 'paid' } });
+      await sendOrderPaymentConfirmed({ order: { ...order, status: 'paid', payment_status: 'completed' } });
       emailSent = true;
     } catch (emailErr) {
       console.error('[ConfirmPayment] Email send failed (order still confirmed):', emailErr);
