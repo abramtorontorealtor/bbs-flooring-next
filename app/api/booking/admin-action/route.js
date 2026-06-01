@@ -6,6 +6,7 @@ import {
   sendBookingRescheduled,
   sendBookingCancelled,
 } from '@/lib/email';
+import { createCalendarEvent, updateCalendarEvent, deleteCalendarEvent } from '@/lib/google-calendar';
 
 /**
  * Admin actions for bookings: confirm, reschedule, cancel.
@@ -51,6 +52,14 @@ export async function POST(request) {
         console.log('[Booking Confirm] Sending email to:', updatedBooking.customer_email);
         emailResult = await sendBookingCustomerConfirmation({ booking: updatedBooking });
         console.log('[Booking Confirm] Email result:', JSON.stringify(emailResult));
+
+        // Create Google Calendar event (non-blocking)
+        createCalendarEvent(updatedBooking).then(async (calResult) => {
+          if (calResult.success && calResult.eventId) {
+            await supabase.from('bookings').update({ calendar_event_id: calResult.eventId }).eq('id', bookingId);
+            console.log('[Booking Confirm] Calendar event saved:', calResult.eventId);
+          }
+        }).catch(err => console.error('[Booking Confirm] Calendar error:', err));
         break;
       }
 
@@ -73,6 +82,16 @@ export async function POST(request) {
         if (error) throw error;
         updatedBooking = data;
         emailResult = await sendBookingRescheduled({ booking: updatedBooking, oldDate: booking.preferred_date, oldTime: booking.preferred_time });
+
+        // Update or create calendar event (non-blocking)
+        const calAction = booking.calendar_event_id
+          ? updateCalendarEvent(booking.calendar_event_id, updatedBooking)
+          : createCalendarEvent(updatedBooking);
+        calAction.then(async (calResult) => {
+          if (calResult.success && calResult.eventId && !booking.calendar_event_id) {
+            await supabase.from('bookings').update({ calendar_event_id: calResult.eventId }).eq('id', bookingId);
+          }
+        }).catch(err => console.error('[Booking Reschedule] Calendar error:', err));
         break;
       }
 
@@ -86,6 +105,11 @@ export async function POST(request) {
         if (error) throw error;
         updatedBooking = data;
         emailResult = await sendBookingCancelled({ booking: updatedBooking, reason: cancel_reason });
+
+        // Delete calendar event (non-blocking)
+        if (booking.calendar_event_id) {
+          deleteCalendarEvent(booking.calendar_event_id).catch(err => console.error('[Booking Cancel] Calendar error:', err));
+        }
         break;
       }
 
