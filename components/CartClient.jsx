@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
+import { getSupabaseBrowserClient } from '@/lib/supabase';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,29 @@ export default function CartClient() {
     queryKey: ['cart', sessionId],
     queryFn: () => sessionId ? entities.CartItem.filter({ session_id: sessionId }) : [],
     enabled: !!sessionId,
+  });
+
+  // Batch-fetch product slugs for cart item links
+  const productIds = useMemo(() => {
+    return [...new Set(cartItems.filter(i => i.product_id).map(i => i.product_id))];
+  }, [cartItems]);
+
+  const { data: slugMap = {} } = useQuery({
+    queryKey: ['cart-slugs', productIds],
+    queryFn: async () => {
+      if (!productIds.length) return {};
+      const supabase = getSupabaseBrowserClient();
+      if (!supabase) return {};
+      const { data } = await supabase
+        .from('products')
+        .select('id, slug')
+        .in('id', productIds);
+      const map = {};
+      (data || []).forEach(p => { map[p.id] = p.slug; });
+      return map;
+    },
+    enabled: productIds.length > 0,
+    staleTime: 10 * 60 * 1000,
   });
 
   // Separate products and transitions
@@ -207,7 +231,7 @@ export default function CartClient() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start gap-2">
                           <div className="flex-1 min-w-0">
-                            <Link href={`/products/${item.product_id}`} className="font-semibold text-slate-800 hover:text-amber-600 transition-colors block line-clamp-2">
+                            <Link href={`/products/${slugMap[item.product_id] || item.product_id}`} className="font-semibold text-slate-800 hover:text-amber-600 transition-colors block line-clamp-2">
                               {item.product_name}
                             </Link>
                             <p className="text-sm text-slate-500 mt-1 truncate">SKU: {item.sku}</p>
