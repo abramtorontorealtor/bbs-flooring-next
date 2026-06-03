@@ -37,7 +37,7 @@ export async function GET(request) {
     .range(0, limit - 1);
 
   if (category) query = query.eq('category', category);
-  if (clearance) query = query.eq('is_clearance', true);
+  if (clearance) query = query.or('is_clearance.eq.true,is_on_sale.eq.true').eq('hide_price', false);
   if (sale) query = query.eq('is_on_sale', true);
 
   // Default sort: smart tier sort (on-sale → regular → clearance → OOS), then newest within tier

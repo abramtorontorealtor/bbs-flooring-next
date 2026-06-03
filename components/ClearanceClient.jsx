@@ -37,9 +37,9 @@ const CLEARANCE_FAQS = [
       'Yes. We can hold clearance items for up to 48 hours with a deposit. Call (647) 428-1111 or visit our Markham showroom. We do not hold items without payment.',
   },
   {
-    question: 'What clearance categories do you carry?',
+    question: 'What brands and categories are on sale?',
     answer:
-      'Our clearance section includes engineered hardwood (Vidar, Wickham), luxury vinyl plank (SPC), and 12mm laminate. Brands and quantities change weekly — visit in store or call (647) 428-1111 for current stock.',
+      'Our sale and clearance section includes engineered hardwood (Canadian Standard, Northernest, NAF, Woden, Vidar, Wickham), luxury vinyl plank (SPC), and 12mm laminate. Brands and deals change regularly — visit in store or call (647) 428-1111 for current stock.',
   },
 ];
 
@@ -323,8 +323,8 @@ export default function ClearanceClient() {
           Flooring Clearance
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
-          In-stock overruns, discontinued colours, and limited-quantity lots at 30–60% off.
-          First-quality products — same warranty, better price. When it's gone, it's gone.
+          Sale pricing, overstock deals, discontinued colours, and limited-quantity lots — up to 60% off.
+          First-quality products — same warranty, better price.
         </p>
       </div>
 
@@ -335,8 +335,8 @@ export default function ClearanceClient() {
           <h2 className="font-bold text-slate-800 mb-1">What Is BBS Clearance Flooring?</h2>
           <p className="text-slate-700 text-sm leading-relaxed">
             These are <strong>brand-new, first-quality products</strong> — not seconds or defects.
-            Clearance items are overstock shipments, discontinued lines, or end-of-lot quantities
-            from premium brands like Vidar and Wickham. Inventory changes weekly.
+            Sale and clearance items include promotional pricing, overstock shipments, discontinued lines,
+            and end-of-lot quantities from premium brands. Inventory and pricing change regularly.
           </p>
         </div>
         <div className="flex-shrink-0">
