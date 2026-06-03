@@ -215,7 +215,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
   // Unified category awareness — works for both single-category and mixed-brand pages
   const showSpecies = isHardwood || hasHardwood;
   const showGrades = isHardwood || hasHardwood;
-  const showWearLayer = isVinyl || hasVinyl;
+  const showWearLayer = isVinyl || hasVinyl || isHardwood || hasHardwood;
   const showAcRating = isLaminate || hasLaminate;
 
   // ── Dynamic filter options with counts ──
@@ -330,7 +330,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     filters.thicknesses.forEach(t => pills.push({ key: `thickness-${t}`, label: t, clear: () => setFilters(f => ({ ...f, thicknesses: f.thicknesses.filter(x => x !== t) })) }));
     filters.finishes.forEach(fi => pills.push({ key: `finish-${fi}`, label: fi, clear: () => setFilters(f => ({ ...f, finishes: f.finishes.filter(x => x !== fi) })) }));
     filters.grades.forEach(g => pills.push({ key: `grade-${g}`, label: g, clear: () => setFilters(f => ({ ...f, grades: f.grades.filter(x => x !== g) })) }));
-    filters.wearLayers.forEach(w => pills.push({ key: `wl-${w}`, label: `${w} Wear Layer`, clear: () => setFilters(f => ({ ...f, wearLayers: f.wearLayers.filter(x => x !== w) })) }));
+    filters.wearLayers.forEach(w => pills.push({ key: `wl-${w}`, label: `${w} ${(isHardwood || hasHardwood) && !(isVinyl || hasVinyl) ? 'Veneer' : 'Wear Layer'}`, clear: () => setFilters(f => ({ ...f, wearLayers: f.wearLayers.filter(x => x !== w) })) }));
     filters.acRatings.forEach(a => pills.push({ key: `ac-${a}`, label: a, clear: () => setFilters(f => ({ ...f, acRatings: f.acRatings.filter(x => x !== a) })) }));
     const CAT_LABELS = { vinyl: 'Vinyl', engineered_hardwood: 'Engineered Hardwood', solid_hardwood: 'Solid Hardwood', laminate: 'Laminate' };
     filters.categories.forEach(c => pills.push({ key: `cat-${c}`, label: CAT_LABELS[c] || c, clear: () => setFilters(f => ({ ...f, categories: f.categories.filter(x => x !== c) })) }));
@@ -563,9 +563,9 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
         </FilterSection>
       )}
 
-      {/* Wear Layer — vinyl only */}
+      {/* Wear Layer / Veneer Thickness */}
       {filterOptions.wearLayers.length > 0 && (
-        <FilterSection title="Wear Layer" defaultOpen={filters.wearLayers.length > 0}>
+        <FilterSection title={(isHardwood || hasHardwood) && !(isVinyl || hasVinyl) ? 'Veneer Thickness' : 'Wear Layer'} defaultOpen={filters.wearLayers.length > 0}>
           <CheckboxFilterList
             options={filterOptions.wearLayers}
             selected={filters.wearLayers}
