@@ -67,10 +67,9 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
             <Image
               src={getImageUrl(product.image_url)}
               alt={product.image_alt_text || product.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
-              width={400}
-              height={300}
+              fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               quality={75}
             />

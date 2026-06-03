@@ -149,9 +149,8 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
                   <Image
                     src={img.url}
                     alt={img.alt}
-                    className="w-full h-full object-cover"
-                    width={72}
-                    height={72}
+                    className="object-cover"
+                    fill
                     sizes="72px"
                   />
                 </button>
@@ -180,11 +179,10 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
               <Image
                 src={current.url}
                 alt={current.alt}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                className={`object-cover transition-opacity duration-300 ${
                   isZoomHover ? 'opacity-0' : 'opacity-100'
                 }`}
-                width={1200}
-                height={1200}
+                fill
                 priority={activeIdx === 0}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                 onLoad={() => setMainLoaded(true)}
@@ -276,9 +274,8 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
                     <Image
                       src={img.url}
                       alt={img.alt}
-                      className="w-full h-full object-cover"
-                      width={64}
-                      height={64}
+                      className="object-cover"
+                      fill
                       sizes="64px"
                     />
                   </button>
@@ -362,9 +359,8 @@ export default function ProductImageGallery({ images = [], badges = [], activeId
                   <Image
                     src={img.url}
                     alt={img.alt}
-                    className="w-full h-full object-cover"
-                    width={48}
-                    height={48}
+                    className="object-cover"
+                    fill
                     sizes="48px"
                   />
                 </button>
