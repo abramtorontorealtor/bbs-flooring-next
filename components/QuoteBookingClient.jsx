@@ -147,6 +147,12 @@ export default function QuoteBookingClient() {
         quote_value: estimate ? parseFloat(estimate) : undefined,
         product_name: productName || undefined,
       });
+      // Direct Google Ads conversion tracking
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
+        value: 75.0,
+        currency: 'CAD',
+      });
     }
     // Meta Pixel — Schedule event
     if (typeof window !== 'undefined' && typeof window.fbq === 'function') {

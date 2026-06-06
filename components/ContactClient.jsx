@@ -63,6 +63,12 @@ export default function ContactClient() {
           value: 0,
           currency: 'CAD',
         });
+        // Direct Google Ads conversion tracking
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
+          value: 50.0,
+          currency: 'CAD',
+        });
       }
       // Meta Pixel — Lead event
       if (typeof window !== 'undefined' && typeof window.fbq === 'function') {

@@ -64,6 +64,7 @@ export default function RemovalEstimator({
       // GA4
       if (typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: source, value: displayTotal });
+        window.gtag('event', 'conversion', { send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C', value: 50.0, currency: 'CAD' });
       }
       // Meta Pixel
       if (typeof window !== 'undefined' && typeof window.fbq === 'function') {

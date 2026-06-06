@@ -3,6 +3,8 @@
 // Google Analytics 4 + Google Ads Conversion Helper Functions
 
 const GOOGLE_ADS_ID = 'AW-700910775';
+const LEAD_CONVERSION_LABEL = 'AW-700910775/PQ1CCNmSn7ocELeZnM4C';
+const PHONE_CONVERSION_LABEL = 'AW-700910775/ZUi8CIO8-NEaELeZnM4C';
 
 /**
  * Initialize GA4 + Google Ads
@@ -44,6 +46,16 @@ export const Analytics = {
     trackEvent('click_call', 'contact', location);
   },
 
+  trackLeadConversion: (source = 'unknown', value = 50.0) => {
+    if (typeof window === 'undefined' || !window.gtag) return;
+    window.gtag('event', 'conversion', {
+      send_to: LEAD_CONVERSION_LABEL,
+      value: value,
+      currency: 'CAD',
+      event_label: source,
+    });
+  },
+
   trackQuoteSubmit: (productName = '', value = 0, currency = 'CAD') => {
     if (typeof window === 'undefined' || !window.gtag) return;
     window.gtag('event', 'submit_quote', {
@@ -51,6 +63,12 @@ export const Analytics = {
       event_label: productName,
       value: value,
       currency: currency,
+    });
+    // Also fire direct Google Ads conversion
+    window.gtag('event', 'conversion', {
+      send_to: LEAD_CONVERSION_LABEL,
+      value: value || 50.0,
+      currency: 'CAD',
     });
   },
 

@@ -149,6 +149,12 @@ export default function FreeMeasurementClient() {
         value: 75,
         currency: 'CAD',
       });
+      // Direct Google Ads conversion tracking
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
+        value: 75.0,
+        currency: 'CAD',
+      });
     }
     if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
       window.fbq('track', 'Schedule', { content_name: 'Free Measurement' });

@@ -62,6 +62,12 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
           event_label: product.name,
           items: [{ item_id: product.sku || product.id, item_name: product.name }],
         });
+        // Direct Google Ads conversion tracking
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
+          value: 50.0,
+          currency: 'CAD',
+        });
       }
       if (typeof window.fbq === 'function') {
         window.fbq('track', 'Lead', {

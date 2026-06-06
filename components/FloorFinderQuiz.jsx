@@ -175,6 +175,12 @@ export default function FloorFinderQuiz() {
         value: 10.0,
         currency: 'CAD',
       });
+      // Direct Google Ads conversion tracking
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
+        value: 10.0,
+        currency: 'CAD',
+      });
     }
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'Lead', { content_name: 'floor_finder_quiz', value: 10.0, currency: 'CAD' });
