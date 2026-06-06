@@ -8,6 +8,7 @@ import { getProductsForGrid, getCategoryPriceStats } from '@/lib/products-server
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
+import CityLinks from '@/components/CityLinks';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -223,6 +224,7 @@ export default async function EngineeredHardwoodPage() {
               </Link>
             ))}
           </div>
+          <CityLinks category="engineered-hardwood" productLabel="Engineered Hardwood" />
         </div>
       </div>
     </>
