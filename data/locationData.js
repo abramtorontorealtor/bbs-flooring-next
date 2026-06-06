@@ -356,8 +356,8 @@ export const locationData = {
   },
   stouffville: {
     city: "Stouffville",
-    title: "Flooring Installation Stouffville | Hardwood & Vinyl From $1.49/sqft",
-    description: "BBS Flooring serves Stouffville — hardwood, vinyl & laminate from $1.49/sqft. 15 min from our showroom. Free estimates. Call (647) 428-1111.",
+    title: "Flooring Store Serving Stouffville | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    description: "BBS Flooring serves Stouffville — 700+ hardwood, vinyl & laminate options from $1.49/sqft. 15 min from showroom. Free estimates. (647) 428-1111.",
     content: "Transform your Stouffville home with premium flooring from BBS Flooring, just a 15-minute drive from our Highway 7 showroom. Stouffville's spacious family homes — from established properties along Main Street to newer builds in the Bloom and Heritage Hills communities — are perfect for wide-plank engineered hardwood and luxury vinyl plank. Ballantrae's estate homes call for solid hardwood and grand staircase refinishing, while Musselman's Lake cottages benefit from waterproof LVP that handles seasonal moisture. Our installers are in Whitchurch-Stouffville weekly, and we understand the open-concept layouts and large basements common in this area. Whether you're upgrading a heritage property or finishing a brand-new build, BBS delivers showroom-quality results.",
     landmarks: ["Main Street Stouffville", "Ballantrae", "Musselman's Lake", "Heritage Hills", "Bloom"],
     services: [
@@ -408,9 +408,44 @@ export const locationData = {
       {
         q: "How long does flooring installation take in Stouffville?",
         a: "Most rooms take 1-2 days for professional installation. A typical Stouffville home (1,500-2,000 sqft) can be completed in 3-5 days. BBS Flooring coordinates everything from subfloor prep to final trim — call (647) 428-1111 to schedule."
+      },
+      {
+        q: "Can you install flooring in rural properties near Stouffville?",
+        a: "Yes — BBS Flooring serves all of Whitchurch-Stouffville including rural properties, farms, and estate homes in Ballantrae and surrounding areas. We coordinate delivery logistics for rural locations and handle unique subfloor conditions common in older country properties. Call (647) 428-1111."
+      },
+      {
+        q: "What's the best flooring for Stouffville basements?",
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Stouffville basements — it handles moisture, looks like real hardwood, and starts from $1.49/sqft at BBS Flooring. Especially important for Musselman's Lake area homes where seasonal humidity can be higher. Call (647) 428-1111."
+      },
+      {
+        q: "Is BBS Flooring cheaper than big-box stores for Stouffville homeowners?",
+        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.49/sqft and engineered hardwood at $3.69/sqft — typically 20-40% below Home Depot or Lowe's for comparable quality. Our Markham showroom is just 15 minutes from Stouffville. Call (647) 428-1111."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46061.76344583649!2d-79.29427014605174!3d43.96969561085292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d52ca702672b1d%3A0xe549520775d71837!2sWhitchurch-Stouffville%2C%20ON!5e0!3m2!1sen!2sca!4v1708795100000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46061.76344583649!2d-79.29427014605174!3d43.96969561085292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d52ca702672b1d%3A0xe549520775d71837!2sWhitchurch-Stouffville%2C%20ON!5e0!3m2!1sen!2sca!4v1708795100000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Stouffville Main Street",
+        slug: "stouffville-main",
+        description: "The heart of Stouffville along Main Street features a charming mix of heritage homes, post-war bungalows, and newer infill properties. Heritage home owners often choose solid hardwood refinishing to preserve original character, while newer builds benefit from wide-plank engineered hardwood that complements the area's blend of old and new. Stouffville's growing young-family demographic also drives strong demand for scratch-resistant luxury vinyl plank in busy living areas and playrooms.",
+        housingTypes: "Heritage homes, post-war bungalows, newer infill, townhomes",
+        topProducts: "Hardwood refinishing, engineered hardwood, scratch-resistant LVP, laminate"
+      },
+      {
+        name: "Ballantrae & Musselman's Lake",
+        slug: "ballantrae",
+        description: "Ballantrae's estate-style properties on large rural lots and Musselman's Lake's cottage and year-round homes present unique flooring opportunities. The larger homes demand premium wide-plank hardwood throughout expansive main floors, while lakeside properties need waterproof vinyl plank that handles seasonal humidity. BBS Flooring regularly installs in this area, understanding the specific requirements of rural properties including longer delivery logistics and subfloor conditions unique to older builds.",
+        housingTypes: "Estate homes on large lots, lakeside cottages, year-round detached, newer builds",
+        topProducts: "Premium engineered hardwood, waterproof LVP for lakeside, solid hardwood, stair refinishing"
+      },
+      {
+        name: "Heritage Hills & Bloom",
+        slug: "heritage-hills",
+        description: "Heritage Hills and the Bloom community represent Stouffville's newest growth areas, with modern detached homes and townhomes featuring open-concept layouts and 9-foot ceilings. These new builds are prime candidates for builder-grade flooring upgrades — many homeowners replace the stock laminate within the first year. BBS Flooring carries the premium engineered hardwood and luxury vinyl plank that transform these modern floor plans from builder-basic to magazine-worthy.",
+        housingTypes: "New-build detached (2015+), freehold townhomes, stacked townhomes",
+        topProducts: "Engineered hardwood (builder-grade upgrade), LVP for basements, laminate for bedrooms"
+      }
+    ]
   },
   "richmond-hill": {
     city: "Richmond Hill",
@@ -600,8 +635,8 @@ export const locationData = {
   },
   ajax: {
     city: "Ajax",
-    title: "Flooring Installation Ajax | Hardwood & Vinyl From $1.49/sqft",
-    description: "BBS Flooring serves Ajax — hardwood, vinyl & laminate from $1.49/sqft. Professional installation. Free estimates. Call (647) 428-1111.",
+    title: "Flooring Store Serving Ajax | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    description: "BBS Flooring serves Ajax — 700+ hardwood, vinyl & laminate options from $1.49/sqft. Professional installation. Free estimates. (647) 428-1111.",
     content: "Looking for reliable flooring installation in Ajax? BBS Flooring delivers quality craftsmanship at wholesale prices, just a 20-minute drive from our Markham showroom. Ajax's family-friendly neighbourhoods — from established areas near the Ajax Waterfront and downtown to newer developments in Salem and Richardson Point — feature the split-level homes and open-concept layouts that our installers excel at. Laminate flooring is a popular choice for Ajax families with kids and pets, offering scratch resistance and easy maintenance from just $1.49/sqft. For main floors, our engineered hardwood collections from NAF, Triforest, and Wickham deliver the upscale look Ajax homeowners want. We handle everything from subfloor leveling to the final trim.",
     landmarks: ["Ajax Waterfront", "RioCan Durham Centre", "Downtown Ajax", "Salem", "Richardson Point"],
     services: [
@@ -652,14 +687,38 @@ export const locationData = {
       {
         q: "Can you install laminate flooring in my Ajax basement?",
         a: "We recommend waterproof luxury vinyl plank over laminate for basements due to Ajax's moisture conditions. LVP looks identical to hardwood, handles humidity, and starts from $1.49/sqft at BBS Flooring. Call (647) 428-1111 for basement-specific recommendations."
+      },
+      {
+        q: "How far is BBS Flooring from Ajax?",
+        a: "Our showroom at 6061 Highway 7 in Markham is about 20 minutes from Ajax via Highway 401 or Taunton Road. We carry over 700 flooring options in stock — visit us Monday to Saturday, or call (647) 428-1111 to book a free in-home estimate in Ajax."
+      },
+      {
+        q: "Can you install flooring in Ajax condos?",
+        a: "Yes — BBS Flooring installs in Ajax condos and apartments. We carry sound-rated SPC vinyl and engineered hardwood with cork underlayment that meets building sound-transmission requirements. We handle insurance certificates and elevator bookings. Call (647) 428-1111."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46152.08375618454!2d-79.06828945484807!3d43.84752495804362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4dfbd8540c497%3A0x5037b28c7231b40!2sAjax%2C%20ON!5e0!3m2!1sen!2sca!4v1708795400000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46152.08375618454!2d-79.06828945484807!3d43.84752495804362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4dfbd8540c497%3A0x5037b28c7231b40!2sAjax%2C%20ON!5e0!3m2!1sen!2sca!4v1708795400000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Downtown Ajax & Waterfront",
+        slug: "downtown-ajax",
+        description: "Downtown Ajax and the waterfront area along Lake Ontario feature a mix of established homes, newer condos, and revitalized commercial spaces. The area's family homes from the 1970s-90s are prime candidates for carpet-to-hardwood conversions, while waterfront proximity means basements benefit from waterproof LVP. Ajax's growing downtown core also includes newer condo and townhome developments where sound-rated flooring is essential for building code compliance.",
+        housingTypes: "Established detached (1970s-90s), newer condos, townhomes, semi-detached",
+        topProducts: "Carpet-to-hardwood conversions, waterproof LVP, sound-rated vinyl for condos"
+      },
+      {
+        name: "Salem & Richardson Point",
+        slug: "salem",
+        description: "Salem and Richardson Point in north Ajax represent the newest growth areas, with modern subdivisions featuring open-concept homes that look stunning with wide-plank engineered hardwood. Builder-grade flooring upgrades are the most common project here — homeowners swapping stock laminate for premium products within the first couple of years. BBS Flooring's installers know these floor plans well and can typically complete a full main-floor upgrade in 2-3 days.",
+        housingTypes: "New-build detached (2015+), freehold townhomes, stacked townhomes",
+        topProducts: "Engineered hardwood (builder-grade upgrade), LVP for basements, laminate"
+      }
+    ]
   },
   whitby: {
     city: "Whitby",
-    title: "Flooring Installation Whitby | Hardwood & Vinyl From $1.49/sqft",
-    description: "BBS Flooring serves Whitby & Brooklin — hardwood, vinyl & laminate from $1.49/sqft. Free in-home estimates. Call (647) 428-1111.",
+    title: "Flooring Store Serving Whitby | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    description: "BBS Flooring serves Whitby & Brooklin — 700+ hardwood, vinyl & laminate options from $1.49/sqft. Free in-home estimates. (647) 428-1111.",
     content: "BBS Flooring extends our expert services to Whitby and Brooklin, approximately 25 minutes from our Markham showroom via Highway 407. Whitby's growing community features everything from charming century homes near Port Whitby to sprawling new builds in Brooklin — and each requires different flooring expertise. Scratch-resistant vinyl plank is ideal for Whitby's busy family homes, while engineered hardwood adds elegance to Brooklin's newer executive properties. We also specialize in staircase refinishing and recapping, a popular upgrade for Whitby's two-storey homes. Our Durham Region installation crews deliver the same precision and care as if you lived next door to our showroom.",
     landmarks: ["Brooklin", "Port Whitby", "Whitby Centrum", "Thickson Point", "Downtown Whitby"],
     services: [
@@ -710,9 +769,33 @@ export const locationData = {
       {
         q: "How do I choose between vinyl and laminate for my Whitby home?",
         a: "For Whitby homes, we typically recommend vinyl plank for basements and bathrooms (it's 100% waterproof) and laminate for bedrooms and living areas (it's more affordable). Both start from $1.49/sqft at BBS Flooring. Call (647) 428-1111 for personalized advice."
+      },
+      {
+        q: "What's the best flooring for new builds in Brooklin?",
+        a: "Engineered hardwood is the top choice for Brooklin's new builds — it's dimensionally stable over concrete subfloors, compatible with radiant heating, and available in wide-plank formats that suit modern open-concept layouts. BBS Flooring carries premium options from $3.69/sqft. Call (647) 428-1111."
+      },
+      {
+        q: "How much does flooring cost for a Whitby home?",
+        a: "At BBS Flooring, materials start from $1.49/sqft for vinyl plank and laminate, and $3.69/sqft for engineered hardwood. A typical Whitby home (1,500-2,500 sqft) costs $2,500-$9,000 for materials. We provide free in-home estimates with detailed pricing. Call (647) 428-1111."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92330.15570887327!2d-78.99583485573434!3d43.90565860471239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51c4a00445f1b%3A0x280e8e4a1a5b46e0!2sWhitby%2C%20ON!5e0!3m2!1sen!2sca!4v1708795500000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92330.15570887327!2d-78.99583485573434!3d43.90565860471239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51c4a00445f1b%3A0x280e8e4a1a5b46e0!2sWhitby%2C%20ON!5e0!3m2!1sen!2sca!4v1708795500000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Brooklin",
+        slug: "brooklin",
+        description: "Brooklin is one of Durham Region's hottest growth communities, with thousands of new-build homes going up over the last decade. These modern properties with open-concept main floors and 9-foot ceilings are perfect for wide-plank engineered hardwood that creates a spacious, contemporary feel. Builder-grade laminate upgrades are extremely common — many Brooklin homeowners visit our Markham showroom within the first year of ownership to select premium flooring. Our installers are very familiar with Brooklin's popular floor plans.",
+        housingTypes: "New-build detached (2015+), freehold townhomes, executive homes",
+        topProducts: "Engineered hardwood (builder-grade upgrade), LVP for basements, laminate for bedrooms"
+      },
+      {
+        name: "Port Whitby & Downtown",
+        slug: "port-whitby",
+        description: "Port Whitby and downtown Whitby feature charming established homes — century properties near the harbour, post-war bungalows, and mature two-storey family homes. These older homes are renovation goldmines: replacing worn carpet with engineered hardwood, refinishing original hardwood floors to restore their lustre, and finishing basements with waterproof vinyl plank. Our hardwood refinishing service is particularly popular in Port Whitby's character homes, preserving decades of history while modernizing the look.",
+        housingTypes: "Century homes, post-war bungalows, mature detached (1960s-80s), some newer infill",
+        topProducts: "Hardwood refinishing, engineered hardwood, carpet removal, LVP for basements"
+      }
+    ]
   },
   vaughan: {
     city: "Vaughan",
@@ -816,8 +899,8 @@ export const locationData = {
   },
   woodbridge: {
     city: "Woodbridge",
-    title: "Flooring Installation Woodbridge | Hardwood & Stairs From $3.69/sqft",
-    description: "BBS Flooring serves Woodbridge — engineered hardwood from $3.69/sqft, stair refinishing, vinyl from $1.49/sqft. Call (647) 428-1111.",
+    title: "Flooring Store Serving Woodbridge | Hardwood & Stairs From $3.69/sqft | BBS Flooring",
+    description: "BBS Flooring serves Woodbridge — 700+ hardwood, vinyl & laminate options. Stair refinishing specialists. Free estimates. (647) 428-1111.",
     content: "Enhance your Woodbridge home with premium flooring from BBS Flooring. We understand Woodbridge homeowners' high standards — from the Mediterranean-inspired estates along Hwy 27 to elegant custom builds near Kortright Centre. Woodbridge's signature style demands quality: hand-scraped hardwood, wide-plank oak, and grand staircase renovations that make a statement. Our engineered hardwood collections from Vidar, NAF, and Appalachian are among the most popular choices for Woodbridge's executive homes. We also carry luxury vinyl plank for finished basements and family areas — a practical upgrade that doesn't sacrifice the upscale look Woodbridge is known for. Our showroom is a 20-minute drive east on Highway 7.",
     landmarks: ["Market Lane", "Hwy 7 & Weston", "Kortright Centre", "Pine Valley", "Islington & Hwy 7"],
     services: [
@@ -868,14 +951,38 @@ export const locationData = {
       {
         q: "What warranty do you offer on Woodbridge installations?",
         a: "BBS Flooring provides warranty coverage on all professional installations, backed by manufacturer warranties on materials. We stand behind our work in Woodbridge and across the GTA. Call (647) 428-1111 to discuss warranty details for your specific project."
+      },
+      {
+        q: "How much does hardwood flooring cost in Woodbridge?",
+        a: "At BBS Flooring, engineered hardwood starts from $3.69/sqft and solid hardwood from $4.29/sqft. A typical Woodbridge home (2,500-4,000 sqft) costs $9,000-$16,000 for materials. We offer free in-home estimates with no obligation. Call (647) 428-1111."
+      },
+      {
+        q: "Do you install flooring in Woodbridge condos?",
+        a: "Yes — BBS Flooring installs in Woodbridge condos, including the newer developments along Highway 7. We carry sound-rated SPC vinyl and engineered hardwood with cork underlayment that meets building requirements. Call (647) 428-1111."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46175.05052981525!2d-79.6288898950567!3d43.79512316462719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3d3600f6889d%3A0x280145c3639424c0!2sWoodbridge%2C%20Vaughan%2C%20ON!5e0!3m2!1sen!2sca!4v1708795700000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46175.05052981525!2d-79.6288898950567!3d43.79512316462719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3d3600f6889d%3A0x280145c3639424c0!2sWoodbridge%2C%20Vaughan%2C%20ON!5e0!3m2!1sen!2sca!4v1708795700000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Woodbridge Core & Market Lane",
+        slug: "woodbridge-core",
+        description: "The heart of Woodbridge around Market Lane and Kipling Avenue features a mix of established Italian-Canadian family homes and newer developments. These well-maintained properties often feature impressive foyers and formal living rooms that demand premium flooring — wide-plank engineered hardwood in warm tones is the neighbourhood standard. Grand staircase refinishing is particularly popular here, with homeowners transforming builder-grade carpeted stairs into hardwood showpieces that complement their Mediterranean-inspired interiors.",
+        housingTypes: "Custom-built family homes, established detached (1980s-2000s), some newer condos",
+        topProducts: "Wide-plank engineered hardwood, grand staircase refinishing, solid hardwood, LVP for basements"
+      },
+      {
+        name: "Pine Valley & Hwy 27 Corridor",
+        slug: "pine-valley",
+        description: "The Pine Valley and Highway 27 corridor in north Woodbridge features executive homes on larger lots — some of Vaughan's most impressive residential properties outside of Kleinburg. These homes often exceed 4,000 sqft with multiple staircases, formal dining rooms, and expansive basement entertainment areas. BBS Flooring regularly completes full-home installations in this area, coordinating multi-room projects that may take a week or more. Premium brands like Vidar and Wickham are the top sellers here.",
+        housingTypes: "Executive detached (3,000-5,000+ sqft), custom builds, estate-style homes",
+        topProducts: "Premium engineered hardwood (Vidar, Wickham), multi-staircase refinishing, basement LVP"
+      }
+    ]
   },
   newmarket: {
     city: "Newmarket",
-    title: "Flooring Installation Newmarket | Laminate & Hardwood From $1.49/sqft",
-    description: "BBS Flooring serves Newmarket — laminate from $1.49/sqft, engineered hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.",
+    title: "Flooring Store Serving Newmarket | Laminate & Hardwood From $1.49/sqft | BBS Flooring",
+    description: "BBS Flooring serves Newmarket — 700+ laminate, vinyl & hardwood options from $1.49/sqft. Free in-home estimates. (647) 428-1111.",
     content: "BBS Flooring is a trusted name in Newmarket for quality flooring upgrades, serving homeowners from the Upper Canada Mall area to historic Main Street South and the growing communities near Mulock Drive. Newmarket's mix of established bungalows, mature two-storey homes, and newer townhome developments means we install across every price point — affordable laminate for rental units and starter homes, luxury vinyl plank for family areas, and premium engineered hardwood for dream renovations. Our Markham showroom is 25 minutes south via Highway 404, and our installers are in Newmarket regularly. Whether you're refreshing a single room or renovating an entire house, BBS delivers showroom-quality results at wholesale prices.",
     landmarks: ["Upper Canada Mall", "Main Street South", "Magna Centre", "Mulock Drive", "Davis Drive corridor"],
     services: [
@@ -926,14 +1033,38 @@ export const locationData = {
       {
         q: "Do you offer flooring for Newmarket townhomes and condos?",
         a: "Absolutely. BBS Flooring supplies and installs flooring for Newmarket townhomes and condos — including vinyl plank that meets sound-rating requirements. We can advise on condo-board-friendly options from $1.49/sqft. Call (647) 428-1111."
+      },
+      {
+        q: "What's the best flooring for Newmarket basements?",
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Newmarket basements — it handles moisture, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+      },
+      {
+        q: "Can you upgrade builder-grade flooring in new Newmarket homes?",
+        a: "Yes — builder-grade upgrades are very common in Newmarket's newer subdivisions near Mulock Drive. We replace stock laminate with premium engineered hardwood or luxury vinyl plank. Most main-floor upgrades are completed in 2-3 days. BBS Flooring carries 700+ options. Call (647) 428-1111."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45999.03080183057!2d-79.49724129532588!3d44.05368415779774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882ad20d58847c23%3A0x6c6276856002f542!2sNewmarket%2C%20ON!5e0!3m2!1sen!2sca!4v1708795800000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45999.03080183057!2d-79.49724129532588!3d44.05368415779774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882ad20d58847c23%3A0x6c6276856002f542!2sNewmarket%2C%20ON!5e0!3m2!1sen!2sca!4v1708795800000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Upper Canada Mall Area",
+        slug: "upper-canada",
+        description: "The Upper Canada Mall area and surrounding residential streets in central Newmarket feature well-maintained family homes from the 1970s-90s — split-levels, backsplits, and two-storey detached properties on mature, tree-lined streets. These homes are in their prime renovation years, with carpet-to-hardwood conversions and full-floor upgrades being the most popular projects. BBS Flooring's mid-range engineered hardwood collections are the sweet spot here — quality materials that add lasting value without overinvesting relative to home values.",
+        housingTypes: "Split-levels, backsplits, two-storey detached (1970s-90s), some semi-detached",
+        topProducts: "Engineered hardwood, carpet-to-hardwood conversions, LVP for basements, stair refinishing"
+      },
+      {
+        name: "Mulock & Davis Drive Corridor",
+        slug: "mulock-davis",
+        description: "The Mulock Drive and Davis Drive corridors represent Newmarket's newest growth, with modern subdivisions and townhome communities pushing north and east. These new builds feature the open-concept layouts and 9-foot ceilings that look best with wide-plank engineered hardwood. Builder-grade flooring upgrades are the most common project — homeowners replacing stock laminate with quality materials from BBS within the first 1-2 years. We also see strong demand for waterproof LVP in Newmarket's finished basements, which are often used as home offices and entertainment spaces.",
+        housingTypes: "New-build detached (2015+), freehold townhomes, stacked townhomes",
+        topProducts: "Engineered hardwood (builder-grade upgrade), waterproof LVP, laminate for secondary rooms"
+      }
+    ]
   },
   aurora: {
     city: "Aurora",
-    title: "Flooring Installation Aurora | Hardwood & Vinyl From $1.49/sqft",
-    description: "BBS Flooring serves Aurora — hardwood, vinyl & laminate from $1.49/sqft. Professional installation. Free estimates. Call (647) 428-1111.",
+    title: "Flooring Store Serving Aurora | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    description: "BBS Flooring serves Aurora — 700+ hardwood, vinyl & laminate options from $1.49/sqft. 20 min from showroom. Free estimates. (647) 428-1111.",
     content: "We bring the showroom to you in Aurora with our free in-home measurement service. BBS Flooring serves Aurora homeowners from established properties in Aurora Village and St. Andrew's Valley to executive homes near Bayview Wellington and newer builds along Leslie Street. Aurora's mature, tree-lined neighbourhoods are home to some of York Region's most beautiful properties — and our premium engineered hardwood and solid hardwood collections complement them perfectly. We specialize in seamless room-to-room transitions, custom stair refinishing, and hardwood refinishing that breathes new life into existing floors. Our Markham showroom is just 20 minutes south via Highway 404, with over 700 flooring options to browse in person.",
     landmarks: ["Aurora Village", "St. Andrew's Valley", "Bayview Wellington", "Town Park", "Henderson Drive"],
     services: [
@@ -984,9 +1115,33 @@ export const locationData = {
       {
         q: "How long does a full-home flooring installation take in Aurora?",
         a: "A typical Aurora home (1,500-2,500 sqft) takes 3-5 days for professional installation including subfloor prep and trim work. BBS Flooring coordinates the entire process from delivery to completion — call (647) 428-1111 to get started."
+      },
+      {
+        q: "What's the best flooring for Aurora basements?",
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Aurora basements — it handles Ontario's seasonal moisture swings, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+      },
+      {
+        q: "How much does a full-home flooring renovation cost in Aurora?",
+        a: "At BBS Flooring, a typical Aurora home (2,000-3,500 sqft) costs $7,000-$14,000 for materials — engineered hardwood from $3.69/sqft is the most popular choice for Aurora's executive homes. Installation rates quoted separately. Free in-home estimates. Call (647) 428-1111."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46039.26190678663!2d-79.48911224578136!3d44.00030275988165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882ad290076a0841%3A0xc3f62243d630d760!2sAurora%2C%20ON!5e0!3m2!1sen!2sca!4v1708795900000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46039.26190678663!2d-79.48911224578136!3d44.00030275988165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882ad290076a0841%3A0xc3f62243d630d760!2sAurora%2C%20ON!5e0!3m2!1sen!2sca!4v1708795900000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Aurora Village & Town Park",
+        slug: "aurora-village",
+        description: "Aurora Village and the historic Town Park area feature some of York Region's most charming heritage homes and mature residential streets. Original hardwood floors in these character homes are often candidates for our dustless refinishing service, restoring decades of patina while bringing floors back to like-new condition. For additions and renovations, we match species and stain colours to create seamless transitions between old and new. The neighbourhood's established character means homeowners invest in quality — solid hardwood and premium engineered hardwood outsell budget options here.",
+        housingTypes: "Heritage homes, post-war bungalows, mature detached (1960s-80s), modern infill",
+        topProducts: "Hardwood refinishing, solid hardwood, premium engineered hardwood, stair refinishing"
+      },
+      {
+        name: "Bayview Wellington & St. Andrew's",
+        slug: "bayview-wellington",
+        description: "Bayview Wellington and St. Andrew's Valley are Aurora's premier executive neighbourhoods, with spacious family homes on generous lots. These properties — typically 2,500-4,000+ sqft — are ideal for wide-plank engineered hardwood that creates a cohesive, elegant look across open-concept main floors. Grand staircase refinishing is a signature service here, and we regularly complete full-home installations that include matching all staircases to the new main-floor flooring. BBS Flooring's attention to detail matches the neighbourhood's high standards.",
+        housingTypes: "Executive detached (2,500-4,000+ sqft), custom builds, some newer townhomes",
+        topProducts: "Wide-plank engineered hardwood, grand staircase refinishing, LVP for basements"
+      }
+    ]
   },
   scarborough: {
     city: "Scarborough",
@@ -1094,8 +1249,8 @@ export const locationData = {
   },
   oshawa: {
     city: "Oshawa",
-    title: "Flooring Installation Oshawa | Hardwood & Vinyl From $1.49/sqft",
-    description: "BBS Flooring serves Oshawa & Durham — vinyl from $1.49/sqft, hardwood from $3.69/sqft. Professional installation. Call (647) 428-1111.",
+    title: "Flooring Store Serving Oshawa | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    description: "BBS Flooring serves Oshawa & Durham — 700+ vinyl, hardwood & laminate options from $1.49/sqft. Professional installation. (647) 428-1111.",
     content: "BBS Flooring proudly serves Oshawa and the wider Durham Region with top-quality flooring solutions. Whether you're renovating a family home near Lakeview Park, upgrading a property in north Oshawa, or fitting out a student rental near Durham College, our licensed installers deliver precision craftsmanship at contractor-friendly pricing. Oshawa's affordable housing market makes it a renovation hotspot — and flooring upgrades are the highest-ROI improvement you can make. Laminate and luxury vinyl plank are our most popular products for Oshawa, offering durability and style from just $1.49/sqft. For established homes in central Oshawa and Taunton, our engineered hardwood and stair refinishing services add significant value. Our showroom is 30 minutes west via Highway 401.",
     landmarks: ["Oshawa Centre", "Lakeview Park", "Durham College area", "Taunton", "North Oshawa"],
     services: [
@@ -1146,14 +1301,38 @@ export const locationData = {
       {
         q: "Do you offer flooring installation in north Oshawa and Taunton?",
         a: "Absolutely. BBS Flooring serves all of Oshawa including Taunton, north Oshawa, Lakeview, and the Durham College area. Our installers are in Durham Region weekly. Call (647) 428-1111 to book your free estimate."
+      },
+      {
+        q: "What's the best flooring for Oshawa basements?",
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Oshawa basements — it handles moisture, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+      },
+      {
+        q: "Do you offer bulk pricing for Oshawa rental properties?",
+        a: "Yes — BBS Flooring offers wholesale-direct pricing and bulk discounts for landlords and property investors in Oshawa. Our durable laminate and vinyl plank stand up to tenant wear and start from just $1.49/sqft. Call (647) 428-1111 to discuss your multi-unit project."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92376.5165!2d-78.8659!3d43.8971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51b9c2e3b64d9%3A0x5037b28c7231d40!2sOshawa%2C%20ON!5e0!3m2!1sen!2sca!4v1710532900000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92376.5165!2d-78.8659!3d43.8971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51b9c2e3b64d9%3A0x5037b28c7231d40!2sOshawa%2C%20ON!5e0!3m2!1sen!2sca!4v1710532900000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Central Oshawa & Taunton",
+        slug: "central-oshawa",
+        description: "Central Oshawa and the Taunton Road corridor feature established residential neighbourhoods with a mix of bungalows, raised ranches, and two-storey family homes. Many of these properties were built in the 1960s-80s and are now prime candidates for complete flooring upgrades — tired carpet being replaced with modern luxury vinyl plank, and dated hardwood being refinished or replaced with contemporary engineered options. Oshawa's affordable home prices make these renovations high-ROI investments, often adding more value than the renovation cost.",
+        housingTypes: "Bungalows, raised ranches, two-storey detached (1960s-80s), some semi-detached",
+        topProducts: "LVP (replacing carpet), engineered hardwood, hardwood refinishing, stair refinishing"
+      },
+      {
+        name: "North Oshawa & Durham College Area",
+        slug: "north-oshawa",
+        description: "North Oshawa's rapidly growing communities near Durham College and Windfields Farm feature modern subdivisions alongside established neighbourhoods. The newer builds are ideal for builder-grade flooring upgrades, while the proximity to Durham College and Ontario Tech University creates a robust rental market where durable, affordable laminate and vinyl plank are in constant demand. BBS Flooring works with both homeowners doing personal renovations and investors outfitting rental properties — our wholesale pricing makes investor-grade projects economical.",
+        housingTypes: "New-build detached, established family homes, student rentals, townhomes",
+        topProducts: "Affordable LVP, tenant-grade laminate, engineered hardwood, builder-grade upgrades"
+      }
+    ]
   },
   durham: {
     city: "Durham Region",
-    title: "Flooring Services Durham Region | Hardwood & Vinyl From $1.49/sqft",
-    description: "BBS Flooring serves all of Durham Region — Pickering to Oshawa. Vinyl from $1.49/sqft. Free estimates. Call (647) 428-1111.",
+    title: "Flooring Services Durham Region | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    description: "BBS Flooring serves all of Durham Region — Pickering to Oshawa. 700+ options from $1.49/sqft. Free estimates. (647) 428-1111.",
     content: "BBS Flooring is Durham Region's go-to flooring partner, serving every community from Pickering to Oshawa with premium hardwood, luxury vinyl plank, and laminate installation. Our Markham showroom is just minutes from Durham via Highway 407, and our installers are in the region daily. Durham Region's booming housing market — from new builds in Seaton to renovations in Brooklin and established homes in Whitby — keeps our crews busy year-round. We carry over 700 flooring products from 15+ brands, all at wholesale pricing that Durham homeowners and contractors love. Whether you need a single room of vinyl plank or a full-home hardwood installation, BBS delivers the same quality and attention to detail across every Durham community.",
     landmarks: ["Pickering", "Ajax", "Whitby", "Oshawa", "Courtice", "Brooklin"],
     services: [
@@ -1204,8 +1383,32 @@ export const locationData = {
       {
         q: "Can you install flooring in Courtice and Bowmanville?",
         a: "Absolutely. BBS Flooring serves the entire Durham Region including Courtice and Bowmanville. While our showroom is in Markham (30-35 min via Hwy 401), we offer free in-home estimates and regular installation schedules in eastern Durham. Call (647) 428-1111."
+      },
+      {
+        q: "What's the best flooring for Durham Region basements?",
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Durham Region basements — it handles moisture, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+      },
+      {
+        q: "Do you offer free delivery to Durham Region?",
+        a: "BBS Flooring offers free warehouse pickup at our Markham showroom, plus affordable delivery throughout Durham Region. For larger orders, delivery fees are often waived. Call (647) 428-1111 to discuss delivery options for your project."
       }
     ],
-    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d184632.1234!2d-79.0312!3d43.9089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51c1de7e1e71f%3A0x3b0e2e43ed23cf6e!2sDurham%20Region%2C%20ON!5e0!3m2!1sen!2sca!4v1710533000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
+    mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d184632.1234!2d-79.0312!3d43.9089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51c1de7e1e71f%3A0x3b0e2e43ed23cf6e!2sDurham%20Region%2C%20ON!5e0!3m2!1sen!2sca!4v1710533000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+    neighbourhoods: [
+      {
+        name: "Courtice & Bowmanville",
+        slug: "courtice",
+        description: "Courtice and Bowmanville in eastern Durham Region are experiencing rapid residential growth, with new subdivisions offering modern family homes at prices more affordable than western Durham. These new builds feature the open-concept layouts that look best with wide-plank engineered hardwood, and builder-grade flooring upgrades are a booming market. BBS Flooring delivers and installs in eastern Durham on a regular schedule — our wholesale pricing makes the 30-35 minute drive from our Markham showroom well worth it for the savings.",
+        housingTypes: "New-build detached, established family homes, townhomes, some rural properties",
+        topProducts: "Engineered hardwood (builder-grade upgrade), LVP for basements, affordable laminate"
+      },
+      {
+        name: "Whitby & Brooklin",
+        slug: "whitby-brooklin",
+        description: "Whitby and Brooklin together form Durham's largest and most active renovation market. Whitby's established neighbourhoods near the waterfront offer mature homes ready for full flooring upgrades, while Brooklin's explosive new construction drives constant demand for builder-grade replacements. BBS Flooring serves both markets — premium engineered hardwood for Brooklin's executive new builds and value-conscious LVP and laminate for Whitby's established family homes. Our installers are in this area multiple times per week.",
+        housingTypes: "New builds (Brooklin), established detached (Whitby), century homes (Port Whitby), townhomes",
+        topProducts: "Engineered hardwood, LVP, carpet-to-hardwood conversions, stair refinishing"
+      }
+    ]
   }
 };
