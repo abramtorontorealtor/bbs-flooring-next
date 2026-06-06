@@ -1,6 +1,7 @@
 import { getSupabaseServerClient } from '@/lib/supabase';
 import { locationData } from '@/data/locationData';
 import { getAllCityProductSlugs } from '@/data/cityProductData';
+import { stairsImages, flooringImages, commercialImages } from '@/data/galleryImages';
 
 // Force dynamic rendering so Supabase queries run at request time (not build time)
 export const dynamic = 'force-dynamic';
@@ -84,12 +85,26 @@ export default async function sitemap() {
   ];
 
   for (const page of staticPages) {
-    entries.push({
+    const entry = {
       url: `${SITE_URL}${page.path}`,
       lastModified: now,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
-    });
+    };
+
+    // Add gallery images to the /gallery page
+    if (page.path === '/gallery') {
+      const galleryUrls = [
+        ...stairsImages.map(img => img.url),
+        ...flooringImages.map(img => img.url),
+        ...commercialImages.map(img => img.url),
+      ].filter(Boolean);
+      if (galleryUrls.length > 0) {
+        entry.images = galleryUrls;
+      }
+    }
+
+    entries.push(entry);
   }
 
   // ── Location pages ──
@@ -112,25 +127,55 @@ export default async function sitemap() {
     });
   }
 
-  // ── Product pages (from Supabase) ──
+  // ── Product pages (from Supabase) — with images ──
   try {
     const supabase = getSupabaseServerClient();
     if (supabase) {
       const { data: products } = await supabase
         .from('products')
-        .select('slug, updated_at')
+        .select('slug, updated_at, image_url, additional_images')
         .not('slug', 'is', null)
         .eq('is_variant', false)
         .order('updated_at', { ascending: false });
 
       if (products) {
         for (const product of products) {
-          entries.push({
+          const images = [];
+
+          // Primary product image
+          if (product.image_url) {
+            images.push(product.image_url);
+          }
+
+          // Additional images (room scenes, plank strips, etc.)
+          if (product.additional_images) {
+            try {
+              const additional = typeof product.additional_images === 'string'
+                ? JSON.parse(product.additional_images)
+                : product.additional_images;
+              if (Array.isArray(additional)) {
+                for (const img of additional) {
+                  const url = typeof img === 'string' ? img : img?.url;
+                  if (url) images.push(url);
+                }
+              }
+            } catch {
+              // Skip malformed additional_images
+            }
+          }
+
+          const entry = {
             url: `${SITE_URL}/products/${product.slug}`,
             lastModified: product.updated_at || now,
             changeFrequency: 'weekly',
             priority: 0.6,
-          });
+          };
+
+          if (images.length > 0) {
+            entry.images = images;
+          }
+
+          entries.push(entry);
         }
       }
     }
@@ -138,25 +183,31 @@ export default async function sitemap() {
     console.warn('Sitemap: could not fetch products from Supabase', e.message);
   }
 
-  // ── Blog posts (from Supabase) ──
+  // ── Blog posts (from Supabase) — with featured images ──
   try {
     const supabase = getSupabaseServerClient();
     if (supabase) {
       const { data: posts } = await supabase
         .from('blog_posts')
-        .select('slug, updated_at')
+        .select('slug, updated_at, featured_image')
         .eq('status', 'published')
         .not('slug', 'is', null)
         .order('published_at', { ascending: false });
 
       if (posts) {
         for (const post of posts) {
-          entries.push({
+          const entry = {
             url: `${SITE_URL}/blog/${post.slug}`,
             lastModified: post.updated_at || now,
             changeFrequency: 'monthly',
             priority: 0.5,
-          });
+          };
+
+          if (post.featured_image) {
+            entry.images = [post.featured_image];
+          }
+
+          entries.push(entry);
         }
       }
     }

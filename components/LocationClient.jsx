@@ -40,23 +40,7 @@ export default function LocationClient({ citySlug }) {
 
   return (
     <>
-      {/* FAQPage JSON-LD Schema */}
-      {data.faqs && data.faqs.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: data.faqs.map(f => ({
-                "@type": "Question",
-                name: f.q,
-                acceptedAnswer: { "@type": "Answer", text: f.a }
-              }))
-            })
-          }}
-        />
-      )}
+      {/* FAQPage JSON-LD now rendered in server page.jsx — removed client-side duplicate */}
 
       <div className="max-w-7xl mx-auto px-4 py-12">
         <Breadcrumbs items={getLocationBreadcrumbs(data.city)} />
