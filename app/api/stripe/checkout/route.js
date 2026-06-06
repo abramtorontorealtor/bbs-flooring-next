@@ -92,7 +92,7 @@ export async function POST(request) {
       },
 
       customer_email: customerEmail,
-      expires_at: Math.floor(Date.now() / 1000) + 1800, // 30 min expiry → triggers checkout.session.expired webhook
+      expires_at: Math.floor(Date.now() / 1000) + 3600, // 60 min expiry → triggers checkout.session.expired webhook
 
       line_items: [{
         price_data: {

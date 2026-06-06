@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { X, Calculator, Mail, ArrowRight } from 'lucide-react';
+import { X, Calculator, Mail, ArrowRight, Sparkles } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { entities } from '@/lib/base44-compat';
 
@@ -160,11 +160,19 @@ export default function ExitIntentPopup() {
 
               <button
                 onClick={goToQuote}
-                className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+                className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 mb-2.5"
               >
                 <Calculator className="w-5 h-5" />
                 Get My Free Estimate
                 <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => { close(); router.push('/floor-finder'); }}
+                className="w-full py-3 border-2 border-amber-200 hover:border-amber-400 text-amber-700 font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
+              >
+                <Sparkles className="w-4 h-4" />
+                Not sure? Take the Floor Finder Quiz
               </button>
 
               <div className="flex items-center gap-3 my-5">

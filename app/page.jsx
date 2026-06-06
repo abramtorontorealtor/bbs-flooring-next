@@ -272,6 +272,22 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ FLOOR FINDER CTA — Conversion optimizer ═══ */}
+      <section className="py-10 md:py-14 px-4 sm:px-6 bg-gradient-to-r from-amber-500 to-amber-600">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Not Sure Which Floor Is Right?</h2>
+            <p className="text-amber-100 text-base md:text-lg">Take our 60-second quiz and get personalized recommendations from 700+ products.</p>
+          </div>
+          <Link
+            href="/floor-finder"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-amber-700 font-bold rounded-full text-lg shadow-lg hover:-translate-y-0.5 transition-all whitespace-nowrap"
+          >
+            Find My Floor <ArrowIcon />
+          </Link>
+        </div>
+      </section>
+
       {/* ═══ PRODUCT SHOWCASE + CLEARANCE — Client (interactive tabs) ═══ */}
       <Suspense fallback={<div className="min-h-[400px]" />}>
         <ProductShowcase />
