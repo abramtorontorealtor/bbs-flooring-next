@@ -30,6 +30,18 @@ const NAV_ITEMS = [
       { name: 'Gallery', path: '/gallery' },
     ],
   },
+  {
+    name: 'Service Areas',
+    submenu: [
+      { name: 'Markham', path: '/flooring-in/markham' },
+      { name: 'Toronto', path: '/flooring-in/toronto' },
+      { name: 'Scarborough', path: '/flooring-in/scarborough' },
+      { name: 'Richmond Hill', path: '/flooring-in/richmond-hill' },
+      { name: 'Vaughan', path: '/flooring-in/vaughan' },
+      { name: 'Pickering', path: '/flooring-in/pickering' },
+      { name: 'All Service Areas', path: '/flooring-in/markham#other-areas' },
+    ],
+  },
   { name: 'Quote Calculator', path: '/quote-calculator' },
   { name: 'Financing', path: '/financing' },
   { name: 'Blog', path: '/blog' },
