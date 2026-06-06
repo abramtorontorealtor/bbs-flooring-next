@@ -226,7 +226,7 @@ export default function StairRenovationGuideClient() {
 
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
             <p className="text-blue-800 font-semibold mb-2">💡 Pro Tip: The Carpet Mystery</p>
-            <p className="text-blue-700 text-sm">If your stairs are carpeted, you won&apos;t know what&apos;s underneath until the carpet comes off. In our experience across hundreds of Markham and Toronto homes, about 60% of carpeted stairs have acceptable hardwood treads underneath — refinishable at $125/step. The other 40% have MDF or damaged wood that needs replacement. Our free in-home estimate includes peeling back a corner of carpet to check before you commit.</p>
+            <p className="text-blue-700 text-sm">If your stairs are carpeted, you won&apos;t know what&apos;s underneath until the carpet comes off. In our experience across Markham and Toronto homes, about 60% of carpeted stairs have acceptable hardwood treads underneath — refinishable at $125/step. The other 40% have MDF or damaged wood that needs replacement. Our free in-home estimate includes peeling back a corner of carpet to check before you commit.</p>
           </div>
         </section>
 

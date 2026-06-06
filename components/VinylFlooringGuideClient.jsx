@@ -755,7 +755,7 @@ export default function VinylFlooringGuideClient() {
               ],
               [
                 'Does BBS Flooring do vinyl flooring installation?',
-                'Yes. Professional vinyl and LVP installation across the GTA at $2.00/sqft (all-inclusive — furniture moving, transitions, and trim). Our WSIB-insured installers have done thousands of vinyl installs in Markham, Scarborough, Richmond Hill, Ajax, and surrounding areas. Call (647) 428-1111 or book a free measurement online.'
+                'Yes. Professional vinyl and LVP installation across the GTA at $2.00/sqft (all-inclusive — furniture moving, transitions, and trim). Our WSIB-insured installers work across Markham, Scarborough, Richmond Hill, Ajax, and surrounding areas. Call (647) 428-1111 or book a free measurement online.'
               ],
             ].map(([q, a]) => (
               <details key={q} className="border border-slate-200 rounded-lg group">

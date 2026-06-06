@@ -217,7 +217,7 @@ export const stairRefinishingData = {
   content: [
     {
       heading: 'Staircase Refinishing Services in Markham',
-      body: `<p>Tired of worn carpet, squeaky treads, or dated oak stairs? BBS Flooring specializes in <strong>complete staircase transformations</strong> — from simple refinishing to full carpet-to-hardwood conversions. We've renovated hundreds of staircases across the GTA since 2012.</p>
+      body: `<p>Tired of worn carpet, squeaky treads, or dated oak stairs? BBS Flooring specializes in <strong>complete staircase transformations</strong> — from simple refinishing to full carpet-to-hardwood conversions. We've renovated staircases across the GTA since 2012.</p>
 <p>Our services include:</p>
 <ul>
 <li><strong>Stair Recapping:</strong> Install new hardwood or vinyl treads over your existing staircase structure — faster and more affordable than full replacement.</li>
@@ -461,7 +461,7 @@ export const contractorFlooringData = {
   content: [
     {
       heading: 'The BBS Contractor Advantage',
-      body: `<p>If you're a general contractor, renovation specialist, or property manager, you need a flooring supplier that works at your speed. BBS Flooring serves <strong>hundreds of trade professionals</strong> across the GTA with a program built for the way you work:</p>
+      body: `<p>If you're a general contractor, renovation specialist, or property manager, you need a flooring supplier that works at your speed. BBS Flooring serves <strong>trade professionals</strong> across the GTA with a program built for the way you work:</p>
 <ul>
 <li><strong>Member Trade Pricing:</strong> Exclusive discounts on our full catalog — hardwood, vinyl, laminate, and stair materials. Your margin stays healthy.</li>
 <li><strong>Bulk Order Discounts:</strong> Multi-unit projects, condo flips, rental portfolios — volume pricing on large orders.</li>

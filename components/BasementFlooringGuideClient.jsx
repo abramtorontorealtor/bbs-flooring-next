@@ -608,7 +608,7 @@ export default function BasementFlooringGuideClient() {
         <section id="how-we-install">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">How BBS Installs Basement Flooring (Step by Step)</h2>
           <p className="text-stone-600 text-lg leading-relaxed mb-8">
-            We&apos;ve installed thousands of basement floors across the Greater Toronto Area since 2012. Here&apos;s exactly what happens from your first call to walking on your new floor.
+            We&apos;ve been installing basement floors across the Greater Toronto Area since 2012. Here&apos;s exactly what happens from your first call to walking on your new floor.
           </p>
 
           <div className="space-y-5 mb-8">

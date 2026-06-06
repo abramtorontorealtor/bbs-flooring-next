@@ -49,7 +49,7 @@ export const nafFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Is NAF Flooring a good brand?', answer: 'NAF is a well-established flooring manufacturer distributed across Canada. They produce vinyl, engineered hardwood, and laminate — all built for Canadian climate conditions. BBS Flooring carries 164 NAF products and has installed thousands of square feet of NAF flooring across the GTA.' },
+    { question: 'Is NAF Flooring a good brand?', answer: 'NAF is a well-established flooring manufacturer distributed across Canada. They produce vinyl, engineered hardwood, and laminate — all built for Canadian climate conditions. BBS Flooring carries 164 NAF products and installs NAF flooring regularly across the GTA.' },
     { question: 'How much does NAF vinyl flooring cost?', answer: 'NAF vinyl plank at BBS Flooring ranges from $2.99 to $4.29 per square foot depending on thickness and underpad type. The 7mm options with cork underpad are the most popular for homes. Call (647) 428-1111 for current pricing on specific products.' },
     { question: 'Is NAF vinyl flooring waterproof?', answer: 'Yes. All NAF vinyl plank flooring is 100% waterproof with an SPC (Stone Polymer Composite) core. It can be installed in basements, kitchens, bathrooms, and laundry rooms without moisture concerns.' },
     { question: 'Where can I buy NAF Flooring in Markham?', answer: 'BBS Flooring at 6061 Highway 7, Unit B carries 164 NAF products in stock — vinyl, engineered hardwood, and laminate. Walk-ins welcome Monday–Saturday. We also offer free in-home measurements across the GTA.' },

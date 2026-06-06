@@ -15,14 +15,14 @@ export default function AboutClient() {
       <div className="text-center mb-16 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">About BBS Flooring</h1>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-          Family-owned and operated since 2010, we're Markham's trusted flooring destination. We believe every home deserves beautiful, durable floors — without the retail markup.
+          Family-owned and operated since 2012, we're Markham's trusted flooring destination. We believe every home deserves beautiful, durable floors — without the retail markup.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
         {[
-          { icon: Calendar, label: 'In Business', value: 'Since 2010' },
-          { icon: Home, label: 'Projects Completed', value: '5,000+' },
+          { icon: Calendar, label: 'In Business', value: 'Since 2012' },
+          { icon: Home, label: 'Projects Completed', value: '2,000+' },
           { icon: Star, label: 'Google Rating', value: '4.7★ on Google' },
           { icon: Users, label: 'Team Members', value: '15+' },
         ].map(({ icon: Icon, label, value }) => (
@@ -55,7 +55,7 @@ export default function AboutClient() {
             height={192}
             className="mx-auto mb-6"
           />
-          <p className="text-slate-500 text-sm">Serving Markham, Toronto & Durham since 2010</p>
+          <p className="text-slate-500 text-sm">Serving Markham, Toronto & Durham since 2012</p>
         </div>
       </div>
 

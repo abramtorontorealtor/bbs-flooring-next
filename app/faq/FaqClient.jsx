@@ -165,7 +165,7 @@ export default function FaqClient() {
         <p>
           <MapPin className="w-4 h-4 inline-block mr-1" />
           6061 Highway 7, Unit B, Markham, ON L3P 3B2 —{' '}
-          <span className="font-medium">Family-owned since 2010</span>
+          <span className="font-medium">Family-owned since 2012</span>
         </p>
       </div>
     </div>

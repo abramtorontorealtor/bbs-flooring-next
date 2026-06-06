@@ -78,7 +78,7 @@ export const cityProductPages = {
 
 Our SPC (Stone Polymer Composite) vinyl planks feature a rigid core that resists dents and impacts, with realistic wood-grain textures that are nearly indistinguishable from real hardwood. Every plank is 100% waterproof — not water-resistant, waterproof. Spills, pet accidents, even minor flooding won't damage your floors.`,
 
-      localExpertise: `As Markham's local flooring showroom since 2010, we've installed vinyl flooring in thousands of homes across the city. Our installers know the specific challenges of Markham properties:
+      localExpertise: `As Markham's local flooring showroom since 2012, we've installed vinyl flooring across the city. Our installers know the specific challenges of Markham properties:
 
 • **Unionville & Markham Village** heritage homes often have uneven subfloors — our click-lock LVP floats over imperfections without glue or nails.
 • **Cornell & Wismer** open-concept layouts benefit from our wide-plank vinyl options (up to 9" wide) for a seamless look across large spaces.
@@ -159,7 +159,7 @@ Engineered hardwood is the most popular choice in Markham — and for good reaso
 
 For established Markham homes with wood subfloors — particularly in Unionville, Markham Village, and Cachet — solid hardwood remains a premium choice. Our solid hardwood collection features 3/4" thick planks in oak, maple, and hickory that can be sanded and refinished multiple times over decades.`,
 
-      localExpertise: `We've been installing hardwood floors in Markham since 2010. Our team understands the local housing stock inside and out:
+      localExpertise: `We've been installing hardwood floors in Markham since 2012. Our team understands the local housing stock inside and out:
 
 • **Unionville & Markham Village** — Character homes with existing hardwood benefit from our refinishing service, or can be upgraded with wider, modern planks that complement the home's heritage charm.
 • **Cornell & Wismer** — Open-concept new builds need wide-plank engineered hardwood (7" to 9" widths) for that seamless, contemporary look. We carry brushed, wire-brushed, and hand-scraped finishes.
@@ -467,10 +467,10 @@ Delivery available across Vaughan — free warehouse pickup or delivery from $14
     title: 'Flooring Installation Markham | Professional Install from $1.49/sqft',
     metaDescription: 'Professional flooring installation in Markham — hardwood, vinyl, laminate from $1.49/sqft. Expert installers, free in-home estimates. Visit our Highway 7 showroom. Call (647) 428-1111.',
     h1: 'Professional Flooring Installation in Markham',
-    heroSubtitle: 'Expert installation for hardwood, vinyl, and laminate — supply + install packages from $1.49/sqft. Your local Markham flooring company since 2010.',
+    heroSubtitle: 'Expert installation for hardwood, vinyl, and laminate — supply + install packages from $1.49/sqft. Your local Markham flooring company since 2012.',
     isInstallationPage: true, // Flag to show all product types
     content: {
-      intro: `BBS Flooring is Markham's trusted name for professional flooring installation. Located right on Highway 7 at 6061, Unit B, we've been installing floors in Markham homes since 2010. From a single bedroom refresh to a full-home renovation, our experienced installation crews deliver precision craftsmanship across all flooring types — vinyl, hardwood, laminate, and more.`,
+      intro: `BBS Flooring is Markham's trusted name for professional flooring installation. Located right on Highway 7 at 6061, Unit B, we've been installing floors in Markham homes since 2012. From a single bedroom refresh to a full-home renovation, our experienced installation crews deliver precision craftsmanship across all flooring types — vinyl, hardwood, laminate, and more.`,
 
       whyVinylHere: `What makes BBS different from other Markham flooring installers? We're not just installers — we're a full showroom with over 700 flooring products in stock. That means:
 
@@ -482,7 +482,7 @@ Delivery available across Vaughan — free warehouse pickup or delivery from $14
 
 **Fast turnaround:** With 700+ products in stock, we can typically start installation within a week of your free in-home estimate — not the 4-6 weeks some Markham competitors require for special orders.`,
 
-      localExpertise: `We've installed floors in thousands of Markham homes. Our crews know the local housing stock:
+      localExpertise: `Our crews know Markham's housing stock inside and out:
 
 • **Unionville & Markham Village** — Heritage homes with uneven subfloors, lath-and-plaster walls, and original hardwood that needs matching or refinishing.
 • **Cornell, Wismer & Cathedraltown** — Open-concept new builds requiring seamless transitions between rooms, proper expansion gaps, and trim work.

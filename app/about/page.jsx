@@ -2,8 +2,8 @@ import AboutClient from '@/components/AboutClient';
 import { JsonLd } from '@/lib/schemas';
 
 export const metadata = {
-  title: 'About Us | Family-Owned Flooring Since 2010 | Markham',
-  description: 'Family-owned flooring company in Markham serving Toronto & Durham since 2010. 794+ products, expert installation. Visit our showroom at 6061 Highway 7.',
+  title: 'About Us | Family-Owned Flooring Since 2012 | Markham',
+  description: 'Family-owned flooring company in Markham serving Toronto & Durham since 2012. 794+ products, expert installation. Visit our showroom at 6061 Highway 7.',
   alternates: { canonical: '/about' },
 };
 

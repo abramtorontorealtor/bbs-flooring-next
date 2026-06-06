@@ -79,7 +79,7 @@ export default function CityProductClient({ pageData, productType, initialProduc
           { label: 'Products In Stock', value: `${priceStats.count}+` },
           { label: 'Starting From', value: `$${priceStats.lowPrice}/sqft` },
           { label: 'Google Rating', value: '4.7★' },
-          { label: 'Serving Since', value: '2010' },
+          { label: 'Serving Since', value: '2012' },
         ].map((item, i) => (
           <div key={i} className="bg-white rounded-xl border border-slate-200 p-4 text-center">
             <div className="text-2xl font-bold text-amber-600">{item.value}</div>

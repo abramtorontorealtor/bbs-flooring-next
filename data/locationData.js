@@ -3,8 +3,8 @@ export const locationData = {
     city: "Markham",
     isFlagship: true,
     title: "Flooring Store in Markham | Showroom, Installation & Prices | BBS Flooring",
-    description: "BBS Flooring — Markham's local flooring store since 2010. 700+ hardwood, vinyl & laminate options from $1.49/sqft. Visit our Highway 7 showroom. Free estimates. (647) 428-1111.",
-    content: "BBS Flooring is Markham's premier flooring specialist, located right on Highway 7 at Unit B, 6061. Since 2010, we've served thousands of Markham homeowners — from heritage homes in Unionville and family properties in Cornell to modern condos in Downtown Markham and executive homes in Cachet. Markham's diverse housing stock means we install everything from waterproof luxury vinyl plank in finished basements to wide-plank engineered hardwood in open-concept main floors. As your local showroom, we carry over 700 floors in stock and offer same-week installation for most products. Whether you're in Markham Village, Berczy, Wismer, or Cathedraltown, our installers know the area and deliver precision craftsmanship every time.",
+    description: "BBS Flooring — Markham's local flooring store since 2012. 700+ hardwood, vinyl & laminate options from $1.49/sqft. Visit our Highway 7 showroom. Free estimates. (647) 428-1111.",
+    content: "BBS Flooring is Markham's premier flooring specialist, located right on Highway 7 at Unit B, 6061. Since 2012, we've served Markham homeowners — from heritage homes in Unionville and family properties in Cornell to modern condos in Downtown Markham and executive homes in Cachet. Markham's diverse housing stock means we install everything from waterproof luxury vinyl plank in finished basements to wide-plank engineered hardwood in open-concept main floors. As your local showroom, we carry over 700 floors in stock and offer same-week installation for most products. Whether you're in Markham Village, Berczy, Wismer, or Cathedraltown, our installers know the area and deliver precision craftsmanship every time.",
     landmarks: ["Unionville", "Downtown Markham", "Markville Mall", "Cornell", "Cachet", "Cathedraltown"],
     services: [
       {
@@ -149,10 +149,10 @@ export const locationData = {
         },
         {
           heading: "Expert Advice from Flooring Specialists",
-          detail: "Need help choosing between 12mm and 14mm engineered hardwood? Wondering if your concrete subfloor needs a moisture barrier? Our team has installed flooring in thousands of Markham homes — we know what works and what doesn't."
+          detail: "Need help choosing between 12mm and 14mm engineered hardwood? Wondering if your concrete subfloor needs a moisture barrier? Our team has installed flooring in Markham homes for over a decade — we know what works and what doesn't."
         },
         {
-          heading: "Markham-Based Since 2010",
+          heading: "Markham-Based Since 2012",
           detail: "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on 15 years of serving our neighbours — backed by 41+ five-star Google reviews."
         }
       ]
@@ -313,7 +313,7 @@ export const locationData = {
       {
         name: "West End (Junction, High Park, Bloor West)",
         slug: "west-end",
-        description: "Toronto's west end — from the Junction Triangle through High Park to Bloor West Village — is home to some of the city's most character-rich housing. Edwardian semis and detached homes with original hardwood floors line the streets of Roncesvalles and High Park, where refinishing demand is consistently high. The Junction's growing young-family demographic drives demand for durable, kid-friendly luxury vinyl plank and scratch-resistant laminate. Baby Point's executive homes call for premium engineered hardwood that matches the neighbourhood's elegance. Our crews navigate west-end parking and narrow rowhouse layouts with ease — we've installed flooring in hundreds of these homes.",
+        description: "Toronto's west end — from the Junction Triangle through High Park to Bloor West Village — is home to some of the city's most character-rich housing. Edwardian semis and detached homes with original hardwood floors line the streets of Roncesvalles and High Park, where refinishing demand is consistently high. The Junction's growing young-family demographic drives demand for durable, kid-friendly luxury vinyl plank and scratch-resistant laminate. Baby Point's executive homes call for premium engineered hardwood that matches the neighbourhood's elegance. Our crews navigate west-end parking and narrow rowhouse layouts with ease — we've installed flooring throughout these neighbourhoods.",
         housingTypes: "Edwardian semis, detached homes, Victorian rowhouses, modern condos, executive homes",
         topProducts: "Hardwood refinishing, LVP for young families, engineered hardwood, stair refinishing"
       }
@@ -349,7 +349,7 @@ export const locationData = {
       },
       {
         q: "Do you handle condo board paperwork for Toronto installations?",
-        a: "Yes — BBS Flooring manages all condo board requirements for Toronto installations. We provide insurance certificates, coordinate freight elevator bookings, schedule after-hours work when required, and use only materials that meet your building's sound-transmission specifications. We've installed in hundreds of Toronto condos and know the process inside out. Call (647) 428-1111 to get started."
+        a: "Yes — BBS Flooring manages all condo board requirements for Toronto installations. We provide insurance certificates, coordinate freight elevator bookings, schedule after-hours work when required, and use only materials that meet your building's sound-transmission specifications. We've installed in many Toronto condos and know the process inside out. Call (647) 428-1111 to get started."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d184552.6739!2d-79.5428!3d43.7182!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb90d7c63ba5%3A0x323555502ab4c477!2sToronto%2C%20ON!5e0!3m2!1sen!2sca!4v1710533100000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
@@ -451,7 +451,7 @@ export const locationData = {
     city: "Richmond Hill",
     title: "Flooring Store Serving Richmond Hill | Hardwood & Vinyl Installation | BBS Flooring",
     description: "BBS Flooring serves Richmond Hill — 700+ engineered hardwood, vinyl & laminate options. 10 min from showroom. Free in-home estimates. (647) 428-1111.",
-    content: "BBS Flooring is Richmond Hill's trusted flooring partner, located just 10 minutes east on Highway 7. From executive homes in Oak Ridges and South Richvale to family properties near Hillcrest Mall and newer developments around Elgin Mills, we deliver premium flooring solutions tailored to Richmond Hill's upscale housing market. Richmond Hill is one of York Region's most desirable communities, and its homeowners expect quality that matches their investment. Engineered hardwood is our most popular product here — Richmond Hill homeowners love the wide-plank European oak look from brands like Vidar and Wickham, available from $3.69/sqft. We also specialize in dustless staircase refinishing and custom hardwood installation that adds lasting value to your property. Lake Wilcox area homes with walkout basements are ideal candidates for our waterproof LVP options starting from $1.79/sqft. Whether you're upgrading a new-build with builder-grade laminate or renovating a mature South Richvale home, BBS delivers precision craftsmanship and wholesale-direct pricing that Richmond Hill homeowners have trusted since 2010.",
+    content: "BBS Flooring is Richmond Hill's trusted flooring partner, located just 10 minutes east on Highway 7. From executive homes in Oak Ridges and South Richvale to family properties near Hillcrest Mall and newer developments around Elgin Mills, we deliver premium flooring solutions tailored to Richmond Hill's upscale housing market. Richmond Hill is one of York Region's most desirable communities, and its homeowners expect quality that matches their investment. Engineered hardwood is our most popular product here — Richmond Hill homeowners love the wide-plank European oak look from brands like Vidar and Wickham, available from $3.69/sqft. We also specialize in dustless staircase refinishing and custom hardwood installation that adds lasting value to your property. Lake Wilcox area homes with walkout basements are ideal candidates for our waterproof LVP options starting from $1.79/sqft. Whether you're upgrading a new-build with builder-grade laminate or renovating a mature South Richvale home, BBS delivers precision craftsmanship and wholesale-direct pricing that Richmond Hill homeowners have trusted since 2012.",
     landmarks: ["Oak Ridges", "Hillcrest Mall", "Lake Wilcox", "South Richvale", "Elgin Mills"],
     services: [
       {
@@ -870,7 +870,7 @@ export const locationData = {
       {
         name: "Kleinburg",
         slug: "kleinburg",
-        description: "Kleinburg is Vaughan's most exclusive enclave — home to the McMichael Canadian Art Collection and some of the GTA's most impressive custom-built estates. Properties here regularly exceed 5,000 sqft with grand foyers, sweeping staircases, and formal living spaces that demand the finest flooring materials. Hand-scraped solid hardwood, premium wide-plank European oak, and custom stair refinishing with intricate baluster work are our top sellers in Kleinburg. BBS Flooring has completed full-home installations in Kleinburg estates that required weeks of precision work — and we take pride in meeting this neighbourhood's exacting standards.",
+        description: "Kleinburg is Vaughan's most exclusive enclave — home to the McMichael Canadian Art Collection and some of the GTA's most impressive custom-built estates. Properties here regularly exceed 5,000 sqft with grand foyers, sweeping staircases, and formal living spaces that demand the finest flooring materials. Hand-scraped solid hardwood, premium wide-plank European oak, and custom stair refinishing with intricate baluster work are our top sellers in Kleinburg. BBS Flooring serves Kleinburg homeowners who expect the highest quality — and we take pride in meeting those exacting standards.",
         housingTypes: "Custom-built estates (5,000-10,000+ sqft), luxury detached, executive homes on large lots",
         topProducts: "Premium solid hardwood, wide-plank European oak, grand staircase refinishing, hardwood refinishing"
       },
