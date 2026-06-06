@@ -5,13 +5,13 @@ import { Phone, Clock, Shield, Truck } from 'lucide-react';
 
 export const metadata = {
   title: 'Floor Finder Quiz — Find Your Perfect Flooring in 60 Seconds',
-  description: 'Answer 5 quick questions and get personalized flooring recommendations from BBS Flooring. 700+ options in vinyl, hardwood, laminate & engineered hardwood. Free estimates in Markham, Toronto & GTA.',
+  description: 'Answer 5 quick questions and get personalized flooring recommendations from BBS Flooring. 1,000+ options in vinyl, hardwood, laminate & engineered hardwood. Free estimates in Markham, Toronto & GTA.',
   alternates: {
     canonical: 'https://bbsflooring.ca/floor-finder',
   },
   openGraph: {
     title: 'Floor Finder Quiz — Find Your Perfect Flooring in 60 Seconds',
-    description: 'Answer 5 quick questions and get personalized flooring recommendations from 700+ options.',
+    description: 'Answer 5 quick questions and get personalized flooring recommendations from 1,000+ options.',
     url: 'https://bbsflooring.ca/floor-finder',
     type: 'website',
   },
@@ -30,7 +30,7 @@ export default function FloorFinderPage() {
               Find Your Perfect Floor
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8">
-              Answer 5 quick questions and we&apos;ll recommend the best flooring for your home from our collection of <strong>700+ products</strong>.
+              Answer 5 quick questions and we&apos;ll recommend the best flooring for your home from our collection of <strong>1,000+ products</strong>.
             </p>
 
             {/* Trust signals */}
@@ -74,7 +74,7 @@ export default function FloorFinderPage() {
                 <span className="text-xl font-bold text-amber-600">2</span>
               </div>
               <h3 className="font-semibold text-slate-900 mb-1">Get Matched</h3>
-              <p className="text-sm text-slate-500">Our algorithm picks the best products from 700+ options based on your needs.</p>
+              <p className="text-sm text-slate-500">Our algorithm picks the best products from 1,000+ options based on your needs.</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3">

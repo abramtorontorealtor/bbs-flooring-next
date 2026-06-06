@@ -27,7 +27,7 @@ const BENEFITS = [
   {
     emoji: '💰',
     title: 'Member Trade Pricing',
-    desc: 'Exclusive contractor rates on our full 600+ product catalog. Your margin stays healthy on every project.',
+    desc: 'Exclusive contractor rates on our full 1,000+ product catalog. Your margin stays healthy on every project.',
   },
   {
     emoji: '📦',
@@ -59,7 +59,7 @@ const BENEFITS = [
 /* ── How It Works Steps ── */
 const STEPS = [
   { num: '01', title: 'Register', desc: 'Fill out the form below or call us. We\'ll set up your trade account within one business day.' },
-  { num: '02', title: 'Get Pricing', desc: 'Unlock exclusive member rates on 600+ products — hardwood, vinyl, laminate, and stair materials.' },
+  { num: '02', title: 'Get Pricing', desc: 'Unlock exclusive member rates on 1,000+ products — hardwood, vinyl, laminate, and stair materials.' },
   { num: '03', title: 'Order & Schedule', desc: 'Place orders online, by phone, or in-person. We\'ll coordinate pickup or delivery to your timeline.' },
   { num: '04', title: 'Grow Together', desc: 'Dedicated rep, priority scheduling, and volume discounts that increase as your business scales.' },
 ];
@@ -95,7 +95,7 @@ const PRODUCT_CATEGORIES = [
 /* ── Why BBS Over Big Box ── */
 const BIG_BOX_COMPARISON = [
   { bbs: 'Dedicated account rep who knows your projects', bigBox: 'Minimum-wage floor staff, different person every visit' },
-  { bbs: '600+ products in stock — same-day pickup', bigBox: '2-4 week backorders on most specialty items' },
+  { bbs: '1,000+ products in stock — same-day pickup', bigBox: '2-4 week backorders on most specialty items' },
   { bbs: 'Trade pricing with no annual fees or minimums', bigBox: 'Same price as every homeowner' },
   { bbs: 'Professional installation crew available', bigBox: 'Subcontracted installers you\'ve never met' },
   { bbs: 'Moisture testing, subfloor assessment, product guidance', bigBox: 'Self-serve — you figure it out' },
@@ -120,7 +120,7 @@ const FAQ_ITEMS = [
   { question: 'How quickly can I pick up material?', answer: 'In-stock products are available for same-day pickup at our Markham warehouse during business hours. For large orders, we stage material and have it ready — just call ahead. GTA-wide delivery is also available.' },
   { question: 'What areas do you serve?', answer: 'We supply contractors across the entire GTA: Markham, Toronto, Scarborough, North York, Richmond Hill, Vaughan, Stouffville, Pickering, Ajax, Whitby, Oshawa, and all of Durham Region. Delivery available to any job site.' },
   { question: 'Do you price match other flooring stores?', answer: 'Our prices are already contractor-direct — we\'re the source, not a middleman. If you find the exact same product cheaper elsewhere in the GTA, bring the quote and we\'ll talk. Most contractors find we\'re already the lowest once they compare apples to apples.' },
-  { question: 'What brands do you carry?', answer: 'We stock 15+ brands including Vidar, Wickham, NAF, Triforest, Northernest, Woden, Falcon, Canadian Standard, and more. Over 600 products in stock at our Markham warehouse — engineered hardwood, SPC vinyl, laminate, and solid hardwood.' },
+  { question: 'What brands do you carry?', answer: 'We stock 15+ brands including Vidar, Wickham, NAF, Triforest, Northernest, Woden, Falcon, Canadian Standard, and more. Over 1,000 products in stock at our Markham warehouse — engineered hardwood, SPC vinyl, laminate, and solid hardwood.' },
   { question: 'Is there a minimum order for contractor pricing?', answer: 'No minimum commitment and no annual fees. Your trade pricing is active from your very first order. Volume discounts kick in on larger projects — the more you buy, the better the rates.' },
 ];
 
@@ -166,7 +166,7 @@ export default function ContractorFlooringClient() {
               🏗️ WSIB Insured
             </span>
             <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium px-3 py-1.5 rounded-full">
-              📦 600+ Products In Stock
+              📦 1,000+ Products In Stock
             </span>
             <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium px-3 py-1.5 rounded-full">
               ⚡ Same-Day Pickup
@@ -287,7 +287,7 @@ export default function ContractorFlooringClient() {
             Products Our Contractors Trust
           </h2>
           <p className="text-slate-600 text-center max-w-2xl mx-auto mb-10 text-lg">
-            15+ brands, 600+ products in stock. Need something specific? We source specialty products and custom orders for trade accounts.
+            15+ brands, 1,000+ products in stock. Need something specific? We source specialty products and custom orders for trade accounts.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {PRODUCT_CATEGORIES.map((cat, i) => (

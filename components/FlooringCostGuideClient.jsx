@@ -63,7 +63,7 @@ export default function FlooringCostGuideClient() {
         <section id="material-costs">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Material Costs by Flooring Type</h2>
           <p className="text-stone-600 text-lg leading-relaxed mb-8">
-            Every price below is what you&apos;ll actually pay for materials at BBS Flooring — no MSRP inflation, no &quot;starting from&quot; bait-and-switch. These are real prices from our 807+ in-stock products, updated for April 2026.
+            Every price below is what you&apos;ll actually pay for materials at BBS Flooring — no MSRP inflation, no &quot;starting from&quot; bait-and-switch. These are real prices from our 1,000+ in-stock products, updated for April 2026.
           </p>
 
           <div className="overflow-x-auto rounded-xl border border-stone-200">
@@ -79,10 +79,10 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '258+ options', '$3.19–$7.59/sqft', '$4.89/sqft', 'Lee ($3.19) · Woden ($3.99) · Falcon ($3.89)'],
-                  ['Solid Hardwood', '75+ options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
-                  ['Vinyl (LVP/SPC)', '188+ options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($2.49) · Woden ($2.79)'],
-                  ['Laminate', '99+ options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
+                  ['Engineered Hardwood', '572 options', '$3.19–$7.59/sqft', '$4.89/sqft', 'Lee ($3.19) · Woden ($3.99) · Falcon ($3.89)'],
+                  ['Solid Hardwood', '83 options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
+                  ['Vinyl (LVP/SPC)', '241 options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($2.49) · Woden ($2.79)'],
+                  ['Laminate', '145 options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
                 ].map(([type, options, range, avg, value], i) => (
                   <tr key={type} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{type}</td>
@@ -240,7 +240,7 @@ export default function FlooringCostGuideClient() {
               ['🍳 Kitchen', '~150 sqft', 'Vinyl (LVP/SPC)', '$629–$839 installed', 'Waterproof protection for spills and high traffic. Best ROI for the room most used in the house.'],
               ['🏠 Living Room', '~300 sqft', 'Engineered Hardwood', '$1,422–$3,672 installed', 'The room where flooring matters most for aesthetics and resale value. White Oak wide-plank is the 2026 standard.'],
               ['🛏️ Master Bedroom', '~200 sqft', 'Engineered Hardwood or Laminate', '$698–$2,448 installed', 'Low traffic = any type works. Hardwood for resale value, laminate from $698 total if budget-conscious.'],
-              ['🏚️ Basement', '~600 sqft', 'Vinyl (LVP/SPC)', '$2,514–$3,354 installed', '100% waterproof is non-negotiable below grade. 233 vinyl options handle Ontario basement moisture.'],
+              ['🏚️ Basement', '~600 sqft', 'Vinyl (LVP/SPC)', '$2,514–$3,354 installed', '100% waterproof is non-negotiable below grade. 241 vinyl options handle Ontario basement moisture.'],
               ['🏡 Whole House', '~1,200 sqft', 'Mixed (EH + Vinyl)', '$5,688–$14,688 installed', 'Most homeowners: engineered hardwood in living areas + vinyl in basement/kitchen. BBS installs transitions between types.'],
             ].map(([room, size, type, cost, desc]) => (
               <div key={room} className="bg-stone-50 border border-stone-200 rounded-xl p-6">
@@ -378,7 +378,7 @@ export default function FlooringCostGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Get Your Exact Flooring Cost</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            Every home is different. Book a free in-home measurement and get a detailed, no-obligation quote with material, labour, and all extras itemized. Or browse 600+ in-stock products online and use our quote calculator.
+            Every home is different. Book a free in-home measurement and get a detailed, no-obligation quote with material, labour, and all extras itemized. Or browse 1,000+ in-stock products online and use our quote calculator.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/products" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">

@@ -33,7 +33,7 @@ const faqItems = [
   },
   {
     question: 'Should I choose engineered or solid hardwood?',
-    answer: 'Choose engineered if: installing over concrete, using radiant heat, in a condo, or want wider planks at lower cost. Choose solid if: you want maximum refinish potential (5–7 times), prefer the traditional feel, and have a wood subfloor. BBS carries 447 engineered and 81 solid hardwood options.',
+    answer: 'Choose engineered if: installing over concrete, using radiant heat, in a condo, or want wider planks at lower cost. Choose solid if: you want maximum refinish potential (5–7 times), prefer the traditional feel, and have a wood subfloor. BBS carries 572 engineered and 83 solid hardwood options.',
   },
   {
     question: 'Does BBS Flooring install engineered hardwood?',
@@ -47,11 +47,11 @@ const faqItems = [
 
 export const metadata = {
   title: 'Engineered Hardwood Buying Guide 2026 | Prices, Brands & Installation | BBS Flooring',
-  description: 'Complete guide to buying engineered hardwood flooring in Canada. Compare 447+ options from 7 brands ($2.49–$9.29/sqft), installation costs, species, and grades. Based in Markham, serving the GTA.',
+  description: 'Complete guide to buying engineered hardwood flooring in Canada. Compare 572 options from 8 brands ($2.49–$9.29/sqft), installation costs, species, and grades. Based in Markham, serving the GTA.',
   alternates: { canonical: '/engineered-hardwood-guide' },
   openGraph: {
     title: 'Engineered Hardwood Buying Guide 2026 | BBS Flooring',
-    description: 'Compare 447+ engineered hardwood options from 7 brands. Real pricing, installation costs, and expert advice from BBS Flooring in Markham.',
+    description: 'Compare 572 engineered hardwood options from 8 brands. Real pricing, installation costs, and expert advice from BBS Flooring in Markham.',
     url: 'https://bbsflooring.ca/engineered-hardwood-guide',
     type: 'article',
   },

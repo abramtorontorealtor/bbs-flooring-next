@@ -320,7 +320,7 @@ export default function HardwoodRefinishingClient() {
               { emoji: '🎨', title: 'Stain Matching', desc: 'We match your refinished floors to existing trim, stairs, and adjacent rooms — seamless colour throughout.' },
               { emoji: '🛡️', title: 'WSIB Insured', desc: 'Full WSIB workplace insurance + commercial liability. You\'re never liable during our work in your home.' },
               { emoji: '🏠', title: 'Floors + Stairs Together', desc: 'Refinish floors and stairs in one project for the best pricing and a perfectly coordinated look.' },
-              { emoji: '📐', title: '13+ Years Experience', desc: 'Over 2,000 refinishing and installation projects completed across the GTA since 2012.' },
+              { emoji: '📐', title: 'Since 2012', desc: 'Over 2,000 refinishing and installation projects completed across the GTA since 2012.' },
               { emoji: '💰', title: '0% Financing Available', desc: 'Spread the cost with 0% financing options. Combine refinishing + new flooring for the best monthly payment.' },
             ].map(item => (
               <div key={item.title} className="bg-white border border-slate-200 rounded-xl p-5">

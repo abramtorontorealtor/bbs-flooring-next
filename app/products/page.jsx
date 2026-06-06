@@ -26,7 +26,7 @@ export default async function ProductsPage() {
       <div className="mb-3 sm:mb-5">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800">All Products</h1>
         <p className="text-slate-600 mt-2 max-w-3xl">
-          Browse 700+ flooring products from 15+ brands — engineered hardwood, solid hardwood, luxury vinyl plank,
+          Browse 1,000+ flooring products from 15+ brands — engineered hardwood, solid hardwood, luxury vinyl plank,
           and laminate. All available from our Markham showroom at 6061 Highway 7, with professional installation
           across the GTA. Use the filters to narrow by category, brand, species, price, and more.
         </p>
@@ -62,7 +62,7 @@ export default async function ProductsPage() {
         <h2 className="text-xl font-bold text-slate-800 mb-3">Premium Flooring in Markham &amp; the GTA</h2>
         <div className="space-y-2 text-slate-600 leading-relaxed text-sm">
           <p>
-            BBS Flooring stocks over 700 products across{' '}
+            BBS Flooring stocks over 1,000 products across{' '}
             <Link href="/solid-hardwood" className="text-amber-600 hover:underline">solid hardwood</Link>,{' '}
             <Link href="/engineered-hardwood" className="text-amber-600 hover:underline">engineered hardwood</Link>,{' '}
             <Link href="/vinyl" className="text-amber-600 hover:underline">luxury vinyl plank</Link>,{' '}

@@ -22,8 +22,8 @@ export default function EngineeredHardwoodGuideClient() {
             Everything you need to know — species, brands, costs, installation methods, and how to choose the right engineered hardwood for every room in your home.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-stone-400">
-            <span>✔ 447 options in stock</span>
-            <span>✔ 7 brands compared</span>
+            <span>✔ 572 options in stock</span>
+            <span>✔ 8 brands compared</span>
             <span>✔ Real Canadian pricing</span>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function EngineeredHardwoodGuideClient() {
           Quick Answer: Best Engineered Hardwood in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 258+ engineered hardwood options from $3.19&#8211;$7.59/sqft across 8 brands (plus 192 premium Vidar options). Species include White Oak, Hickory, Maple, Walnut, and more. Widths from 3&#188;&quot; to 9&#189;&quot;. Professional installation from $2.25/sqft (nail-down) or $3.25/sqft (glue-down). Free in-home measurement: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring stocks 572 engineered hardwood options from $3.19&#8211;$7.59/sqft across 8 brands (including 240 premium Vidar call-for-pricing options). Species include White Oak, Hickory, Maple, Walnut, and more. Widths from 3&#188;&quot; to 9&#189;&quot;. Professional installation from $2.25/sqft (nail-down) or $3.25/sqft (glue-down). Free in-home measurement: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -117,7 +117,7 @@ export default function EngineeredHardwoodGuideClient() {
               <tbody>
                 {[
                   ['Price at BBS', '$2.49–$9.29/sqft', '$5.10–$7.25/sqft'],
-                  ['Options at BBS', '447 products, 7 brands', '81 products, 4 brands'],
+                  ['Options at BBS', '572 products, 8 brands', '81 products, 4 brands'],
                   ['Construction', 'Multi-layer (veneer + plywood core)', 'Single piece of wood, 3/4" thick'],
                   ['Install over concrete', '✅ Yes — glue-down or floating', '❌ No — nail-down on wood only'],
                   ['Radiant heat compatible', '✅ Yes', '❌ Not recommended'],
@@ -290,7 +290,7 @@ export default function EngineeredHardwoodGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Brand Comparison</h2>
           <p className="text-stone-600 text-lg leading-relaxed mb-8">
-            BBS Flooring carries engineered hardwood from 7 brands. Here&apos;s how they compare on price, selection, and what they&apos;re best for.
+            BBS Flooring carries engineered hardwood from 8 brands. Here&apos;s how they compare on price, selection, and what they&apos;re best for.
           </p>
 
           <div className="overflow-x-auto rounded-xl border border-stone-200">
@@ -501,7 +501,7 @@ export default function EngineeredHardwoodGuideClient() {
               ['What\'s the best wood species for high-traffic areas?', 'Hickory (Janka hardness 1820) is the hardest common species and most dent-resistant. White Oak (Janka 1360) is a close second and more aesthetically versatile. Avoid Walnut (Janka 1010) in hallways and kitchens.'],
               ['How much does engineered hardwood cost in Toronto?', 'At BBS Flooring, engineered hardwood materials range from $2.49–$9.29/sqft. With professional installation ($2.25–$4.25/sqft labour), total installed cost is $4.74–$13.54/sqft. A 500-square-foot room costs $2,370–$6,770 fully installed. Free in-home measurement included.'],
               ['What width is most popular in 2026?', 'Wide plank (7"–9½") dominates new installations in 2026. The trend is toward fewer seams and a more open, modern look. However, 5" remains the most versatile and best-selling width overall in Ontario.'],
-              ['Should I choose engineered or solid hardwood?', 'Choose engineered if: installing over concrete, using radiant heat, in a condo, or you want wide planks at lower cost. Choose solid if: you have a wood subfloor and want maximum refinishing potential (5–7 times over the floor\'s life). BBS carries 447 engineered and 81 solid hardwood options.'],
+              ['Should I choose engineered or solid hardwood?', 'Choose engineered if: installing over concrete, using radiant heat, in a condo, or you want wide planks at lower cost. Choose solid if: you have a wood subfloor and want maximum refinishing potential (5–7 times over the floor\'s life). BBS carries 572 engineered and 83 solid hardwood options.'],
               ['Does BBS Flooring install engineered hardwood?', 'Yes. BBS provides professional installation with WSIB-insured contractors throughout the Greater Toronto Area. Nail-down: $2.25/sqft, glue-down: $3.25/sqft, herringbone: $4.25/sqft. Same-week installation is often available. Call (647) 428-1111 or book a free in-home measurement online.'],
               ['What\'s the difference between flooring grades?', 'Grade describes appearance, not quality. Select grade: uniform, minimal knots. #1 Common/Natural: moderate character. Rustic/Character: heavy knots and variation. All grades are structurally identical. Rustic grades are often less expensive and trending in 2026 farmhouse aesthetics.'],
             ].map(([q, a]) => (
@@ -520,11 +520,11 @@ export default function EngineeredHardwoodGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Choose Your Engineered Hardwood?</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            BBS Flooring stocks 447 engineered hardwood options from 7 brands, starting at $2.49/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
+            BBS Flooring stocks 572 engineered hardwood options from 8 brands, starting at $2.49/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/engineered-hardwood-flooring" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">
-              Browse 447+ Options
+              Browse 572 Options
             </Link>
             <Link href="/free-measurement" className="bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">
               Book Free Measurement

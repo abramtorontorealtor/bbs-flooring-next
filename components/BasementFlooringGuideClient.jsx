@@ -57,7 +57,7 @@ export default function BasementFlooringGuideClient() {
           Quick Answer: Best Basement Flooring in Ontario
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Vinyl/SPC flooring is the best choice for Ontario basements &#8212; 100% waterproof, installs over concrete, handles temperature swings and moisture. BBS Flooring in Markham carries 188 vinyl options from $1.79/sqft with professional installation at $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          Vinyl/SPC flooring is the best choice for Ontario basements &#8212; 100% waterproof, installs over concrete, handles temperature swings and moisture. BBS Flooring in Markham carries 241 vinyl options from $1.79/sqft with professional installation at $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 

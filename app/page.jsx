@@ -7,14 +7,14 @@ import { recentProjectsShowcase } from '@/data/galleryImages';
 import { createPageUrl } from '@/lib/routes';
 
 export const metadata = {
-  title: 'Flooring Store Markham, Toronto & Durham | 700+ Floors from $1.49/sqft',
-  description: '700+ hardwood, vinyl, and laminate floors from $1.49/sqft. Free in-home measurements, expert installation. Visit our Markham showroom or call (647) 428-1111.',
+  title: 'Flooring Store Markham, Toronto & Durham | 1,000+ Floors from $1.49/sqft',
+  description: '1,000+ hardwood, vinyl, and laminate floors from $1.49/sqft. Free in-home measurements, expert installation. Visit our Markham showroom or call (647) 428-1111.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Premium Flooring in Markham, Toronto & Durham',
-    description: 'Premium flooring in Markham, Toronto & Durham. 600+ products, expert installation. Free measurements.',
+    description: 'Premium flooring in Markham, Toronto & Durham. 1,000+ products, expert installation. Free measurements.',
     images: [
       {
         url: 'https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp',
@@ -96,8 +96,8 @@ const SERVICES = [
 ];
 
 const STATS = [
-  { value: '700+', label: 'Products In Stock' },
-  { value: '13+', label: 'Years in Markham' },
+  { value: '1,000+', label: 'Products In Stock' },
+  { value: '14+', label: 'Years in Markham' },
   { value: '4.7★', label: 'Google Reviews' },
   { value: '0%', label: 'Financing Available' },
 ];
@@ -151,11 +151,11 @@ export default function HomePage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-5 md:mb-8">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-              <span className="text-amber-400 text-xs md:text-sm font-medium">4.7★ Google · 13+ Years in Markham</span>
+              <span className="text-amber-400 text-xs md:text-sm font-medium">4.7★ Google · Since 2012 in Markham</span>
             </div>
             <h1 className="text-[2.5rem] leading-[1.08] sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white md:leading-[1.05] mb-5 md:mb-8 tracking-tight">
               Markham Flooring Store.{' '}
-              <span className="text-amber-500">700+ Floors. Wholesale Prices.</span>
+              <span className="text-amber-500">1,000+ Floors. Wholesale Prices.</span>
             </h1>
             <p className="text-base md:text-2xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
               Hardwood, vinyl, and laminate from $1.49/sqft. Free in-home measurements across Markham, Toronto &amp; Durham. Expert installation by our own crew — not subcontractors.
@@ -277,7 +277,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Not Sure Which Floor Is Right?</h2>
-            <p className="text-amber-100 text-base md:text-lg">Take our 60-second quiz and get personalized recommendations from 700+ products.</p>
+            <p className="text-amber-100 text-base md:text-lg">Take our 60-second quiz and get personalized recommendations from 1,000+ products.</p>
           </div>
           <Link
             href="/floor-finder"
@@ -308,7 +308,7 @@ export default function HomePage() {
                 {[
                   { text: 'Professional installation by experienced local experts', strong: '100+ five-star installs' },
                   { text: 'Free in-home measurements with clear, honest quotes', strong: 'No surprises' },
-                  { text: '700+ flooring options in our Markham showroom', strong: 'See it in person' },
+                  { text: '1,000+ flooring options in our Markham showroom', strong: 'See it in person' },
                   { text: 'Transparent pricing — no hidden fees, ever', strong: 'Wholesale direct' },
                   { text: '100% satisfaction guaranteed on every project', strong: 'Our promise' },
                 ].map((item, index) => (

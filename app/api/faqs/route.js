@@ -39,7 +39,7 @@ const CATEGORY_FAQS = {
 
 const DEFAULT_FAQS = [
   { question: "Do you offer free measurements?", answer: "Yes! We provide free in-home measurements anywhere in Markham, Toronto, Scarborough, Richmond Hill, and Durham Region. Call (647) 428-1111 to book your appointment." },
-  { question: "What brands of flooring do you carry?", answer: "We carry over 600 products from top brands including Vidar Flooring, Triforest, and many more. Visit our showroom at 6061 Highway 7, Markham to see samples." },
+  { question: "What brands of flooring do you carry?", answer: "We carry over 1,000 products from top brands including Vidar Flooring, Triforest, and many more. Visit our showroom at 6061 Highway 7, Markham to see samples." },
   { question: "Do you offer installation services?", answer: "Yes, we provide professional installation for all flooring types. Hardwood installation from $2.25/sqft, vinyl and laminate from $2.00/sqft. Free measurements included." },
   { question: "What areas do you serve?", answer: "We serve all GTA including Markham, Toronto, Scarborough, North York, Richmond Hill, Vaughan, Whitby, Oshawa, Ajax, Pickering, and surrounding areas." },
   { question: "How soon can my project start?", answer: "Most projects can start within 1-2 weeks of your free measurement. Call (647) 428-1111 to check current availability." }

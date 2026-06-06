@@ -164,7 +164,7 @@ export const flooringInstallationCostData = {
 export const flooringShowroomMarkhamData = {
   route: 'FlooringShowroomMarkham',
   title: 'Flooring Store Markham | Showroom | 6061 Hwy 7',
-  description: 'Visit BBS Flooring showroom in Markham. 600+ products, hardwood, vinyl, laminate. 6061 Highway 7. Mon-Sat. Free measurements. Call (647) 428-1111.',
+  description: 'Visit BBS Flooring showroom in Markham. 1,000+ products, hardwood, vinyl, laminate. 6061 Highway 7. Mon-Sat. Free measurements. Call (647) 428-1111.',
   h1: 'BBS Flooring Showroom — Markham',
   subtitle: '600+ flooring products on display. Expert advice, free measurements, and honest pricing since 2012.',
   schemaType: 'showroom',
@@ -174,7 +174,7 @@ export const flooringShowroomMarkhamData = {
   content: [
     {
       heading: 'Your Local Flooring Experts on Highway 7',
-      body: `<p>BBS Flooring has been Markham's trusted flooring destination since 2012. Our showroom at 6061 Highway 7 features over 600 products you can see, touch, and take home as samples.</p>
+      body: `<p>BBS Flooring has been Markham's trusted flooring destination since 2012. Our showroom at 6061 Highway 7 features over 1,000 products you can see, touch, and take home as samples.</p>
 <p><strong>📍 Address:</strong> 6061 Highway 7, Unit B, Markham, ON L3P 3A7<br/>
 <strong>📞 Phone:</strong> <a href="tel:+16474281111">(647) 428-1111</a><br/>
 <strong>🕐 Hours:</strong> Monday–Saturday 10am–5pm | Sunday Closed</p>`
@@ -494,7 +494,7 @@ export const contractorFlooringData = {
     {
       heading: 'Why Contractors Choose BBS Over Big Box Stores',
       body: `<p>✅ <strong>Real expertise:</strong> Our team knows flooring — subfloor prep, moisture testing, product compatibility. No minimum-wage advice.</p>
-<p>✅ <strong>Reliable supply:</strong> 600+ products in stock at our Markham warehouse. No waiting weeks for back-ordered material.</p>
+<p>✅ <strong>Reliable supply:</strong> 1,000+ products in stock at our Markham warehouse. No waiting weeks for back-ordered material.</p>
 <p>✅ <strong>Installation crew available:</strong> Need labour? Our experienced installers can handle your project or supplement your team.</p>
 <p>✅ <strong>GTA-wide delivery:</strong> <a href="/Location?city=Markham">Markham</a>, Toronto, <a href="/Location?city=Pickering">Pickering</a>, <a href="/Location?city=Richmond Hill">Richmond Hill</a>, <a href="/Location?city=Ajax">Durham Region</a>, and beyond.</p>`
     },

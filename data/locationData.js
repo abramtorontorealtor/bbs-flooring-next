@@ -3,8 +3,8 @@ export const locationData = {
     city: "Markham",
     isFlagship: true,
     title: "Flooring Store in Markham | Showroom, Installation & Prices | BBS Flooring",
-    description: "BBS Flooring — Markham's local flooring store since 2012. 700+ hardwood, vinyl & laminate options from $1.49/sqft. Visit our Highway 7 showroom. Free estimates. (647) 428-1111.",
-    content: "BBS Flooring is Markham's premier flooring specialist, located right on Highway 7 at Unit B, 6061. Since 2012, we've served Markham homeowners — from heritage homes in Unionville and family properties in Cornell to modern condos in Downtown Markham and executive homes in Cachet. Markham's diverse housing stock means we install everything from waterproof luxury vinyl plank in finished basements to wide-plank engineered hardwood in open-concept main floors. As your local showroom, we carry over 700 floors in stock and offer same-week installation for most products. Whether you're in Markham Village, Berczy, Wismer, or Cathedraltown, our installers know the area and deliver precision craftsmanship every time.",
+    description: "BBS Flooring — Markham's local flooring store since 2012. 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. Visit our Highway 7 showroom. Free estimates. (647) 428-1111.",
+    content: "BBS Flooring is Markham's premier flooring specialist, located right on Highway 7 at Unit B, 6061. Since 2012, we've served Markham homeowners — from heritage homes in Unionville and family properties in Cornell to modern condos in Downtown Markham and executive homes in Cachet. Markham's diverse housing stock means we install everything from waterproof luxury vinyl plank in finished basements to wide-plank engineered hardwood in open-concept main floors. As your local showroom, we carry over 1,000 floors in stock and offer same-week installation for most products. Whether you're in Markham Village, Berczy, Wismer, or Cathedraltown, our installers know the area and deliver precision craftsmanship every time.",
     landmarks: ["Unionville", "Downtown Markham", "Markville Mall", "Cornell", "Cachet", "Cathedraltown"],
     services: [
       {
@@ -137,7 +137,7 @@ export const locationData = {
       points: [
         {
           heading: "See & Feel 700+ Options In Person",
-          detail: "Big box stores carry 30-50 flooring SKUs per location. BBS Flooring stocks over 700 products from 15+ premium brands — all available to see, touch, and compare in our Highway 7 showroom. No guessing from a tiny sample chip."
+          detail: "Big box stores carry 30-50 flooring SKUs per location. BBS Flooring stocks over 1,000 products from 15+ premium brands — all available to see, touch, and compare in our Highway 7 showroom. No guessing from a tiny sample chip."
         },
         {
           heading: "Wholesale Pricing, Retail Service",
@@ -153,7 +153,7 @@ export const locationData = {
         },
         {
           heading: "Markham-Based Since 2012",
-          detail: "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on 15 years of serving our neighbours — backed by five-star Google reviews from real homeowners."
+          detail: "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on 14 years of serving our neighbours — backed by five-star Google reviews from real homeowners."
         }
       ]
     },
@@ -206,7 +206,7 @@ export const locationData = {
       },
       {
         q: "Can I visit the BBS Flooring showroom in Markham?",
-        a: "Yes — our showroom at 6061 Highway 7, Unit B is open Monday to Saturday, 10am–5pm, and Sundays by appointment. We carry over 700 flooring options in stock so you can see and feel samples before buying. Call (647) 428-1111 to book a consultation."
+        a: "Yes — our showroom at 6061 Highway 7, Unit B is open Monday to Saturday, 10am–5pm, and Sundays by appointment. We carry over 1,000 flooring options in stock so you can see and feel samples before buying. Call (647) 428-1111 to book a consultation."
       },
       {
         q: "What's the best flooring for Markham basements?",
@@ -234,7 +234,7 @@ export const locationData = {
       },
       {
         q: "What brands of flooring does BBS carry for Markham customers?",
-        a: "BBS Flooring stocks 15+ premium brands including Vidar, NAF, Wickham, Appalachian, Triforest, Woden, Simba, Canadian Standard, Lee, and more — over 700 products total. Visit our Markham showroom at 6061 Highway 7 to browse the full selection in person."
+        a: "BBS Flooring stocks 15+ premium brands including Vidar, NAF, Wickham, Appalachian, Triforest, Woden, Simba, Canadian Standard, Lee, and more — over 1,000 products total. Visit our Markham showroom at 6061 Highway 7 to browse the full selection in person."
       },
       {
         q: "Is BBS Flooring the cheapest flooring store in Markham?",
@@ -246,8 +246,8 @@ export const locationData = {
   toronto: {
     city: "Toronto",
     title: "Flooring Store Serving Toronto | Hardwood, Vinyl & Laminate Installation | BBS Flooring",
-    description: "BBS Flooring serves all of Toronto — 700+ hardwood, vinyl & laminate options from $1.49/sqft. Condo specialists. 4.7★ Google. Free in-home estimates. (647) 428-1111.",
-    content: "BBS Flooring serves homeowners across the entire City of Toronto — from Victorian semis in the Annex and Leslieville to modern condos in North York and family homes in Etobicoke. Toronto is the most diverse housing market in Canada, and that diversity demands genuine flooring expertise. Century homes in Cabbagetown and Riverdale need dustless hardwood refinishing that preserves original character. Downtown condos at CityPlace and the Harbourfront require sound-rated underlayment and condo-board-compliant installation. North York's executive homes call for wide-plank engineered hardwood in European oak. East York's post-war bungalows are prime candidates for full-home carpet-to-hardwood conversions. Our Markham showroom is a quick 25-minute drive from Midtown Toronto via the DVP, and our installation crews work in Toronto every single day. We carry over 700 flooring products from 15+ premium brands — all at wholesale-direct pricing that's typically 20-40% below what you'll find at Toronto big-box stores. Whether you're renovating a single room or transforming an entire home, BBS Flooring understands Toronto building codes, condo regulations, heritage home requirements, and the unique challenges of older properties with uneven subfloors.",
+    description: "BBS Flooring serves all of Toronto — 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. Condo specialists. 4.7★ Google. Free in-home estimates. (647) 428-1111.",
+    content: "BBS Flooring serves homeowners across the entire City of Toronto — from Victorian semis in the Annex and Leslieville to modern condos in North York and family homes in Etobicoke. Toronto is the most diverse housing market in Canada, and that diversity demands genuine flooring expertise. Century homes in Cabbagetown and Riverdale need dustless hardwood refinishing that preserves original character. Downtown condos at CityPlace and the Harbourfront require sound-rated underlayment and condo-board-compliant installation. North York's executive homes call for wide-plank engineered hardwood in European oak. East York's post-war bungalows are prime candidates for full-home carpet-to-hardwood conversions. Our Markham showroom is a quick 25-minute drive from Midtown Toronto via the DVP, and our installation crews work in Toronto every single day. We carry over 1,000 flooring products from 15+ premium brands — all at wholesale-direct pricing that's typically 20-40% below what you'll find at Toronto big-box stores. Whether you're renovating a single room or transforming an entire home, BBS Flooring understands Toronto building codes, condo regulations, heritage home requirements, and the unique challenges of older properties with uneven subfloors.",
     landmarks: ["North York", "Etobicoke", "East York", "Scarborough", "Midtown", "Downtown"],
     services: [
       {
@@ -329,7 +329,7 @@ export const locationData = {
       },
       {
         q: "How far is the BBS Flooring showroom from Toronto?",
-        a: "Our showroom at 6061 Highway 7 in Markham is about 25 minutes from Midtown Toronto via the DVP, and 15 minutes from Scarborough. We carry over 700 flooring products in stock — visit us Monday to Saturday, 10am-5pm. We also offer free in-home estimates across all of Toronto — call (647) 428-1111 to book."
+        a: "Our showroom at 6061 Highway 7 in Markham is about 25 minutes from Midtown Toronto via the DVP, and 15 minutes from Scarborough. We carry over 1,000 flooring products in stock — visit us Monday to Saturday, 10am-5pm. We also offer free in-home estimates across all of Toronto — call (647) 428-1111 to book."
       },
       {
         q: "Do you offer flooring installation in North York and Etobicoke?",
@@ -357,7 +357,7 @@ export const locationData = {
   stouffville: {
     city: "Stouffville",
     title: "Flooring Store Serving Stouffville | Flooring From $1.49/sqft | BBS Flooring",
-    description: "BBS Flooring serves Stouffville — 700+ hardwood, vinyl & laminate options from $1.49/sqft. 15 min from showroom. Free estimates. (647) 428-1111.",
+    description: "BBS Flooring serves Stouffville — 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. 15 min from showroom. Free estimates. (647) 428-1111.",
     content: "Transform your Stouffville home with premium flooring from BBS Flooring, just a 15-minute drive from our Highway 7 showroom. Stouffville's spacious family homes — from established properties along Main Street to newer builds in the Bloom and Heritage Hills communities — are perfect for wide-plank engineered hardwood and luxury vinyl plank. Ballantrae's estate homes call for solid hardwood and grand staircase refinishing, while Musselman's Lake cottages benefit from waterproof LVP that handles seasonal moisture. Our installers are in Whitchurch-Stouffville weekly, and we understand the open-concept layouts and large basements common in this area. Whether you're upgrading a heritage property or finishing a brand-new build, BBS delivers showroom-quality results.",
     landmarks: ["Main Street Stouffville", "Ballantrae", "Musselman's Lake", "Heritage Hills", "Bloom"],
     services: [
@@ -496,7 +496,7 @@ export const locationData = {
       },
       {
         q: "How far is BBS Flooring from Richmond Hill?",
-        a: "Our showroom at 6061 Highway 7, Unit B in Markham is just a 10-minute drive east from Richmond Hill along Highway 7. We carry over 700 flooring options in stock — visit us Monday to Saturday, 10am–5pm, or call (647) 428-1111."
+        a: "Our showroom at 6061 Highway 7, Unit B in Markham is just a 10-minute drive east from Richmond Hill along Highway 7. We carry over 1,000 flooring options in stock — visit us Monday to Saturday, 10am–5pm, or call (647) 428-1111."
       },
       {
         q: "Can you install flooring in Oak Ridges and South Richvale?",
@@ -512,7 +512,7 @@ export const locationData = {
       },
       {
         q: "Can you upgrade builder-grade flooring in new Richmond Hill homes?",
-        a: "Yes — builder-grade upgrades are one of our most common Richmond Hill projects. We replace stock laminate with premium engineered hardwood or luxury vinyl plank, transforming the look and feel of your new home. Many Richmond Hill homeowners upgrade within the first 1-2 years. BBS Flooring carries 700+ options from $1.49/sqft. Call (647) 428-1111."
+        a: "Yes — builder-grade upgrades are one of our most common Richmond Hill projects. We replace stock laminate with premium engineered hardwood or luxury vinyl plank, transforming the look and feel of your new home. Many Richmond Hill homeowners upgrade within the first 1-2 years. BBS Flooring carries 1,000+ options from $1.49/sqft. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92193.30396071746!2d-79.51622340277873!3d43.89679627725916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2a60dfc220b3%3A0x77d12d4d38563a66!2sRichmond%20Hill%2C%20ON!5e0!3m2!1sen!2sca!4v1708795200000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -544,7 +544,7 @@ export const locationData = {
     city: "Pickering",
     title: "Flooring Store Serving Pickering | Hardwood & Vinyl Installation | BBS Flooring",
     description: "BBS Flooring serves Pickering — 700+ vinyl, hardwood & laminate options from $1.49/sqft. Professional installation. Free estimates. (647) 428-1111.",
-    content: "BBS Flooring proudly serves Pickering and the western Durham Region, just a 20-minute drive from our Markham showroom via Highway 401. Pickering sits at the gateway to Durham Region, and its housing market reflects both established GTA living and exciting new growth. Waterfront properties near the Nautilus and Frenchman's Bay, family homes in Amberlea and Liverpool, and brand-new construction in Seaton and Duffin Heights all demand different flooring expertise — and BBS delivers on all of them. Waterproof luxury vinyl plank is extremely popular here, especially for lakeside homes and finished basements prone to humidity. For Pickering's newer subdivisions, we regularly upgrade builder-grade laminate to premium engineered hardwood that transforms the look and feel of open-concept main floors. Our installation crews are in Durham Region weekly, and we coordinate everything from delivery to final trim. With over 700 products at wholesale-direct pricing, BBS gives Pickering homeowners big-city selection without big-city markups.",
+    content: "BBS Flooring proudly serves Pickering and the western Durham Region, just a 20-minute drive from our Markham showroom via Highway 401. Pickering sits at the gateway to Durham Region, and its housing market reflects both established GTA living and exciting new growth. Waterfront properties near the Nautilus and Frenchman's Bay, family homes in Amberlea and Liverpool, and brand-new construction in Seaton and Duffin Heights all demand different flooring expertise — and BBS delivers on all of them. Waterproof luxury vinyl plank is extremely popular here, especially for lakeside homes and finished basements prone to humidity. For Pickering's newer subdivisions, we regularly upgrade builder-grade laminate to premium engineered hardwood that transforms the look and feel of open-concept main floors. Our installation crews are in Durham Region weekly, and we coordinate everything from delivery to final trim. With over 1,000 products at wholesale-direct pricing, BBS gives Pickering homeowners big-city selection without big-city markups.",
     landmarks: ["Pickering Town Centre", "Nautilus", "Rouge Park", "Amberlea", "Frenchman's Bay"],
     services: [
       {
@@ -636,7 +636,7 @@ export const locationData = {
   ajax: {
     city: "Ajax",
     title: "Flooring Store Serving Ajax | Flooring From $1.49/sqft | BBS Flooring",
-    description: "BBS Flooring serves Ajax — 700+ hardwood, vinyl & laminate options from $1.49/sqft. Professional installation. Free estimates. (647) 428-1111.",
+    description: "BBS Flooring serves Ajax — 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. Professional installation. Free estimates. (647) 428-1111.",
     content: "Looking for reliable flooring installation in Ajax? BBS Flooring delivers quality craftsmanship at wholesale prices, just a 20-minute drive from our Markham showroom. Ajax's family-friendly neighbourhoods — from established areas near the Ajax Waterfront and downtown to newer developments in Salem and Richardson Point — feature the split-level homes and open-concept layouts that our installers excel at. Laminate flooring is a popular choice for Ajax families with kids and pets, offering scratch resistance and easy maintenance from just $1.49/sqft. For main floors, our engineered hardwood collections from NAF, Triforest, and Wickham deliver the upscale look Ajax homeowners want. We handle everything from subfloor leveling to the final trim.",
     landmarks: ["Ajax Waterfront", "RioCan Durham Centre", "Downtown Ajax", "Salem", "Richardson Point"],
     services: [
@@ -690,7 +690,7 @@ export const locationData = {
       },
       {
         q: "How far is BBS Flooring from Ajax?",
-        a: "Our showroom at 6061 Highway 7 in Markham is about 20 minutes from Ajax via Highway 401 or Taunton Road. We carry over 700 flooring options in stock — visit us Monday to Saturday, or call (647) 428-1111 to book a free in-home estimate in Ajax."
+        a: "Our showroom at 6061 Highway 7 in Markham is about 20 minutes from Ajax via Highway 401 or Taunton Road. We carry over 1,000 flooring options in stock — visit us Monday to Saturday, or call (647) 428-1111 to book a free in-home estimate in Ajax."
       },
       {
         q: "Can you install flooring in Ajax condos?",
@@ -718,7 +718,7 @@ export const locationData = {
   whitby: {
     city: "Whitby",
     title: "Flooring Store Serving Whitby | Flooring From $1.49/sqft | BBS Flooring",
-    description: "BBS Flooring serves Whitby & Brooklin — 700+ hardwood, vinyl & laminate options from $1.49/sqft. Free in-home estimates. (647) 428-1111.",
+    description: "BBS Flooring serves Whitby & Brooklin — 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. Free in-home estimates. (647) 428-1111.",
     content: "BBS Flooring extends our expert services to Whitby and Brooklin, approximately 25 minutes from our Markham showroom via Highway 407. Whitby's growing community features everything from charming century homes near Port Whitby to sprawling new builds in Brooklin — and each requires different flooring expertise. Scratch-resistant vinyl plank is ideal for Whitby's busy family homes, while engineered hardwood adds elegance to Brooklin's newer executive properties. We also specialize in staircase refinishing and recapping, a popular upgrade for Whitby's two-storey homes. Our Durham Region installation crews deliver the same precision and care as if you lived next door to our showroom.",
     landmarks: ["Brooklin", "Port Whitby", "Whitby Centrum", "Thickson Point", "Downtown Whitby"],
     services: [
@@ -760,7 +760,7 @@ export const locationData = {
       },
       {
         q: "What flooring brands does BBS carry for Whitby homeowners?",
-        a: "BBS Flooring carries 15+ premium brands including Vidar, NAF, Triforest, Wickham, Appalachian, and more — over 700 flooring options in total. Visit our Markham showroom (25 min via Hwy 407) to see samples in person, or call (647) 428-1111."
+        a: "BBS Flooring carries 15+ premium brands including Vidar, NAF, Triforest, Wickham, Appalachian, and more — over 1,000 flooring options in total. Visit our Markham showroom (25 min via Hwy 407) to see samples in person, or call (647) 428-1111."
       },
       {
         q: "Can you refinish hardwood stairs in Whitby?",
@@ -800,8 +800,8 @@ export const locationData = {
   vaughan: {
     city: "Vaughan",
     title: "Flooring Store Serving Vaughan | Hardwood & Luxury Vinyl Installation | BBS Flooring",
-    description: "BBS Flooring serves Vaughan — 700+ hardwood, vinyl & laminate options. Kleinburg, Maple, Concord, Woodbridge. Free estimates. (647) 428-1111.",
-    content: "Serving the vibrant communities of Vaughan — including Maple, Concord, Kleinburg, Thornhill Woods, and Woodbridge — BBS Flooring brings high-end flooring options and meticulous installation standards to York Region's fastest-growing city. With a population exceeding 330,000, Vaughan's housing market spans from Kleinburg's custom-built estates to Maple's new-construction subdivisions and Concord's established family neighbourhoods. This diversity demands premium materials and genuine expertise: wide-plank European oak engineered hardwood for executive homes, hand-scraped solid hardwood for heritage-style interiors, luxury vinyl plank for modern townhomes and finished basements, and custom stair refinishing that transforms builder-grade carpeted stairs into hardwood showpieces. Our Markham showroom is 20 minutes east via Highway 7, and our installers work in Vaughan multiple days per week. We carry over 700 flooring products from 15+ premium brands — all at wholesale-direct pricing that's typically 20-40% below big-box stores. From grand staircase transformations in Kleinburg to full-home installations in new Vaughan Metropolitan Centre condos, BBS delivers results that match Vaughan's high standards.",
+    description: "BBS Flooring serves Vaughan — 1,000+ hardwood, vinyl & laminate options. Kleinburg, Maple, Concord, Woodbridge. Free estimates. (647) 428-1111.",
+    content: "Serving the vibrant communities of Vaughan — including Maple, Concord, Kleinburg, Thornhill Woods, and Woodbridge — BBS Flooring brings high-end flooring options and meticulous installation standards to York Region's fastest-growing city. With a population exceeding 330,000, Vaughan's housing market spans from Kleinburg's custom-built estates to Maple's new-construction subdivisions and Concord's established family neighbourhoods. This diversity demands premium materials and genuine expertise: wide-plank European oak engineered hardwood for executive homes, hand-scraped solid hardwood for heritage-style interiors, luxury vinyl plank for modern townhomes and finished basements, and custom stair refinishing that transforms builder-grade carpeted stairs into hardwood showpieces. Our Markham showroom is 20 minutes east via Highway 7, and our installers work in Vaughan multiple days per week. We carry over 1,000 flooring products from 15+ premium brands — all at wholesale-direct pricing that's typically 20-40% below big-box stores. From grand staircase transformations in Kleinburg to full-home installations in new Vaughan Metropolitan Centre condos, BBS delivers results that match Vaughan's high standards.",
     landmarks: ["Vaughan Mills", "Canada's Wonderland area", "Kleinburg", "Maple", "Concord"],
     services: [
       {
@@ -900,7 +900,7 @@ export const locationData = {
   woodbridge: {
     city: "Woodbridge",
     title: "Flooring Store Serving Woodbridge | Hardwood & Stairs From $3.19/sqft | BBS Flooring",
-    description: "BBS Flooring serves Woodbridge — 700+ hardwood, vinyl & laminate options. Stair refinishing specialists. Free estimates. (647) 428-1111.",
+    description: "BBS Flooring serves Woodbridge — 1,000+ hardwood, vinyl & laminate options. Stair refinishing specialists. Free estimates. (647) 428-1111.",
     content: "Enhance your Woodbridge home with premium flooring from BBS Flooring. We understand Woodbridge homeowners' high standards — from the Mediterranean-inspired estates along Hwy 27 to elegant custom builds near Kortright Centre. Woodbridge's signature style demands quality: hand-scraped hardwood, wide-plank oak, and grand staircase renovations that make a statement. Our engineered hardwood collections from Vidar, NAF, and Appalachian are among the most popular choices for Woodbridge's executive homes. We also carry luxury vinyl plank for finished basements and family areas — a practical upgrade that doesn't sacrifice the upscale look Woodbridge is known for. Our showroom is a 20-minute drive east on Highway 7.",
     landmarks: ["Market Lane", "Hwy 7 & Weston", "Kortright Centre", "Pine Valley", "Islington & Hwy 7"],
     services: [
@@ -1028,7 +1028,7 @@ export const locationData = {
       },
       {
         q: "How far is BBS Flooring from Newmarket?",
-        a: "Our showroom at 6061 Highway 7 in Markham is about 25 minutes south of Newmarket via Highway 404. We carry over 700 flooring options — visit us Monday to Saturday, or call (647) 428-1111 to book a free in-home estimate in Newmarket."
+        a: "Our showroom at 6061 Highway 7 in Markham is about 25 minutes south of Newmarket via Highway 404. We carry over 1,000 flooring options — visit us Monday to Saturday, or call (647) 428-1111 to book a free in-home estimate in Newmarket."
       },
       {
         q: "Do you offer flooring for Newmarket townhomes and condos?",
@@ -1040,7 +1040,7 @@ export const locationData = {
       },
       {
         q: "Can you upgrade builder-grade flooring in new Newmarket homes?",
-        a: "Yes — builder-grade upgrades are very common in Newmarket's newer subdivisions near Mulock Drive. We replace stock laminate with premium engineered hardwood or luxury vinyl plank. Most main-floor upgrades are completed in 2-3 days. BBS Flooring carries 700+ options. Call (647) 428-1111."
+        a: "Yes — builder-grade upgrades are very common in Newmarket's newer subdivisions near Mulock Drive. We replace stock laminate with premium engineered hardwood or luxury vinyl plank. Most main-floor upgrades are completed in 2-3 days. BBS Flooring carries 1,000+ options. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45999.03080183057!2d-79.49724129532588!3d44.05368415779774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882ad20d58847c23%3A0x6c6276856002f542!2sNewmarket%2C%20ON!5e0!3m2!1sen!2sca!4v1708795800000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -1064,8 +1064,8 @@ export const locationData = {
   aurora: {
     city: "Aurora",
     title: "Flooring Store Serving Aurora | Flooring From $1.49/sqft | BBS Flooring",
-    description: "BBS Flooring serves Aurora — 700+ hardwood, vinyl & laminate options from $1.49/sqft. 20 min from showroom. Free estimates. (647) 428-1111.",
-    content: "We bring the showroom to you in Aurora with our free in-home measurement service. BBS Flooring serves Aurora homeowners from established properties in Aurora Village and St. Andrew's Valley to executive homes near Bayview Wellington and newer builds along Leslie Street. Aurora's mature, tree-lined neighbourhoods are home to some of York Region's most beautiful properties — and our premium engineered hardwood and solid hardwood collections complement them perfectly. We specialize in seamless room-to-room transitions, custom stair refinishing, and hardwood refinishing that breathes new life into existing floors. Our Markham showroom is just 20 minutes south via Highway 404, with over 700 flooring options to browse in person.",
+    description: "BBS Flooring serves Aurora — 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. 20 min from showroom. Free estimates. (647) 428-1111.",
+    content: "We bring the showroom to you in Aurora with our free in-home measurement service. BBS Flooring serves Aurora homeowners from established properties in Aurora Village and St. Andrew's Valley to executive homes near Bayview Wellington and newer builds along Leslie Street. Aurora's mature, tree-lined neighbourhoods are home to some of York Region's most beautiful properties — and our premium engineered hardwood and solid hardwood collections complement them perfectly. We specialize in seamless room-to-room transitions, custom stair refinishing, and hardwood refinishing that breathes new life into existing floors. Our Markham showroom is just 20 minutes south via Highway 404, with over 1,000 flooring options to browse in person.",
     landmarks: ["Aurora Village", "St. Andrew's Valley", "Bayview Wellington", "Town Park", "Henderson Drive"],
     services: [
       {
@@ -1296,7 +1296,7 @@ export const locationData = {
       },
       {
         q: "How far is BBS Flooring from Oshawa?",
-        a: "Our Markham showroom is about 30 minutes west of Oshawa via Highway 401. We carry over 700 flooring options in stock. Can't visit? We offer free in-home estimates throughout Oshawa and Durham Region. Call (647) 428-1111."
+        a: "Our Markham showroom is about 30 minutes west of Oshawa via Highway 401. We carry over 1,000 flooring options in stock. Can't visit? We offer free in-home estimates throughout Oshawa and Durham Region. Call (647) 428-1111."
       },
       {
         q: "Do you offer flooring installation in north Oshawa and Taunton?",
@@ -1332,8 +1332,8 @@ export const locationData = {
   durham: {
     city: "Durham Region",
     title: "Flooring Services Durham Region | Flooring From $1.49/sqft | BBS Flooring",
-    description: "BBS Flooring serves all of Durham Region — Pickering to Oshawa. 700+ options from $1.49/sqft. Free estimates. (647) 428-1111.",
-    content: "BBS Flooring is Durham Region's go-to flooring partner, serving every community from Pickering to Oshawa with premium hardwood, luxury vinyl plank, and laminate installation. Our Markham showroom is just minutes from Durham via Highway 407, and our installers are in the region daily. Durham Region's booming housing market — from new builds in Seaton to renovations in Brooklin and established homes in Whitby — keeps our crews busy year-round. We carry over 700 flooring products from 15+ brands, all at wholesale pricing that Durham homeowners and contractors love. Whether you need a single room of vinyl plank or a full-home hardwood installation, BBS delivers the same quality and attention to detail across every Durham community.",
+    description: "BBS Flooring serves all of Durham Region — Pickering to Oshawa. 1,000+ options from $1.49/sqft. Free estimates. (647) 428-1111.",
+    content: "BBS Flooring is Durham Region's go-to flooring partner, serving every community from Pickering to Oshawa with premium hardwood, luxury vinyl plank, and laminate installation. Our Markham showroom is just minutes from Durham via Highway 407, and our installers are in the region daily. Durham Region's booming housing market — from new builds in Seaton to renovations in Brooklin and established homes in Whitby — keeps our crews busy year-round. We carry over 1,000 flooring products from 15+ brands, all at wholesale pricing that Durham homeowners and contractors love. Whether you need a single room of vinyl plank or a full-home hardwood installation, BBS delivers the same quality and attention to detail across every Durham community.",
     landmarks: ["Pickering", "Ajax", "Whitby", "Oshawa", "Courtice", "Brooklin"],
     services: [
       {

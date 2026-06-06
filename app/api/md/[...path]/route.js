@@ -107,7 +107,7 @@ const SERVICES = {
   },
   'contractor-flooring': {
     title: 'Contractor & Builder Flooring',
-    desc: 'Volume pricing for contractors, builders, and property managers. 812+ products in stock for immediate pickup.',
+    desc: 'Volume pricing for contractors, builders, and property managers. 1,000+ products in stock for immediate pickup.',
     pricing: ['Volume discounts available — call (647) 428-1111'],
   },
 };
@@ -185,14 +185,14 @@ export async function GET(request, { params }) {
   if (!pagePath || pagePath === 'index.html') {
     return mdResponse(`# BBS Flooring — Markham, Toronto & GTA
 
-> Family-owned flooring supplier and installer serving the entire Greater Toronto Area since 2012. 812 products in stock. Direct-from-manufacturer pricing. Full installation services.
+> Family-owned flooring supplier and installer serving the entire Greater Toronto Area since 2012. 1,000+ products in stock. Direct-from-manufacturer pricing. Full installation services.
 
 ## Quick Facts
-- **812 products** in stock from 15 brands
-- **Engineered Hardwood:** 258 options from $3.19/sqft (+ 192 Vidar premium call-for-pricing)
-- **Vinyl/SPC:** 188 options from $1.79/sqft — 100% waterproof
+- **1,000+ products** in stock from 15 brands
+- **Engineered Hardwood:** 572 options from $3.19/sqft (including 240 Vidar premium call-for-pricing)
+- **Vinyl/SPC:** 241 options from $1.79/sqft — 100% waterproof
 - **Laminate:** 99 options from $1.49/sqft
-- **Solid Hardwood:** 75 options from $5.10/sqft
+- **Solid Hardwood:** 83 options from $5.10/sqft
 - **Installation:** from $2.00/sqft labour (WSIB-insured, own crew)
 - **Free in-home measurement** anywhere in the GTA
 
@@ -223,7 +223,7 @@ For comprehensive AI reference: https://bbsflooring.ca/llms-full.txt
 BBS Flooring was founded in 2012 with a simple mission: bring quality flooring to the GTA at fair prices. By buying directly from 15 manufacturers — mostly Canadian — we cut out the distributor middleman and pass 20-40% savings to our customers.
 
 ## Key Facts
-- **812 products** physically in stock (not ordered — in our warehouse)
+- **1,000+ products** physically in stock (not ordered — in our warehouse)
 - **15 brands** including Vidar, Wickham, NAF, Northernest, Canadian Standard, and more
 - **Own installation crew** — WSIB insured, no subcontractors
 - **Showroom:** 6061 Highway 7, Unit B, Markham, ON L3P 3B2
@@ -325,10 +325,10 @@ The entire Greater Toronto Area: Markham, Toronto, Scarborough, Pickering, Ajax,
     if (CITIES.includes(city)) {
       return mdResponse(`# Flooring Store Serving ${cityName} — BBS Flooring
 
-> BBS Flooring supplies and installs hardwood, vinyl, laminate, and solid hardwood flooring for ${cityName} homeowners. 812 products in stock. Direct-from-manufacturer pricing. Free in-home measurement in ${cityName}.
+> BBS Flooring supplies and installs hardwood, vinyl, laminate, and solid hardwood flooring for ${cityName} homeowners. 1,000+ products in stock. Direct-from-manufacturer pricing. Free in-home measurement in ${cityName}.
 
 ## Why ${cityName} Homeowners Choose BBS
-- **812 products in stock** — see, touch, and take home samples the same day
+- **1,000+ products in stock** — see, touch, and take home samples the same day
 - **Direct pricing:** Engineered hardwood from $3.19/sqft, vinyl from $1.79/sqft, laminate from $1.49/sqft
 - **Free in-home measurement** in ${cityName} — no obligation
 - **Professional installation** by our own WSIB-insured crew

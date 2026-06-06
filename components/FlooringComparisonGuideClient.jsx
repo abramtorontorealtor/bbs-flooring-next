@@ -19,10 +19,10 @@ export default function FlooringComparisonGuideClient() {
             Hardwood vs Vinyl vs Laminate: Which Flooring Should You Choose?
           </h1>
           <p className="text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed">
-            An honest, data-driven comparison using real pricing from 807+ in-stock products. Room-by-room recommendations for Ontario homeowners.
+            An honest, data-driven comparison using real pricing from 1,000+ in-stock products. Room-by-room recommendations for Ontario homeowners.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-stone-400">
-            <span>✔ 807+ products compared</span>
+            <span>✔ 1,000+ products compared</span>
             <span>✔ 4 flooring types</span>
             <span>✔ Real Canadian pricing</span>
           </div>
@@ -55,7 +55,7 @@ export default function FlooringComparisonGuideClient() {
           Quick Answer: Hardwood vs Vinyl vs Laminate &#8212; Which Is Best?
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          It depends on your room and budget. Vinyl/SPC ($1.79&#8211;$3.59/sqft) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($3.19&#8211;$7.59/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.29/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 812 products in stock. Free comparison visit: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          It depends on your room and budget. Vinyl/SPC ($1.79&#8211;$3.59/sqft) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($3.19&#8211;$7.59/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.29/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 1,000+ products in stock. Free comparison visit: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -141,7 +141,7 @@ export default function FlooringComparisonGuideClient() {
             Engineered hardwood is the most popular flooring category at BBS — and the most popular in Canada, period. It delivers authentic wood look and feel at better dimensional stability than solid hardwood. The construction is a real hardwood veneer (2–6mm thick) bonded to a cross-ply plywood or HDF core. That layered core resists the expansion and contraction that causes solid wood to cup and gap during Ontario&apos;s extreme humidity swings.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS stocks 348 engineered hardwood products from 8 brands: Northernest (71), NAF (63), Canadian Standard (48), Woden (46), Simba (45), Vidar (36), Falcon (25), and Lee (14). Species range from White Oak and Hickory to European Oak, Maple, Walnut, and Birch. Widths span 3¼" to 9½" — with wide plank (7"+) dominating 2026 sales.
+            BBS stocks 572 engineered hardwood products from 8 brands: Vidar (240), NAF (83), Northernest (71), Canadian Standard (48), Woden (46), Simba (45), Falcon (25), and Lee (14). Species range from White Oak and Hickory to European Oak, Maple, Walnut, and Birch. Widths span 3¼" to 9½" — with wide plank (7"+) dominating 2026 sales.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             A popular entry point is the{' '}
@@ -192,7 +192,7 @@ export default function FlooringComparisonGuideClient() {
             Solid hardwood is a single piece of wood from top to bottom — typically ¾" thick. It&apos;s the original, the benchmark, and still the gold standard for homes with wood subfloors. Nothing matches its longevity: a solid hardwood floor can be sanded and refinished 5–7 times over its life, meaning it can literally last a century.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS carries 81 solid hardwood options from 4 Canadian brands: Wickham (29 options, $5.50–$7.25/sqft), Appalachian (18 options, $5.99–$6.39/sqft), Northernest (18 options, $5.10–$6.50/sqft), and Sherwood Forest Products (16 options, $5.99–$6.99/sqft). Species include White Oak, Red Oak, Hard Maple, and Hickory.
+            BBS carries 83 solid hardwood options from 4 Canadian brands: Wickham (31 options, $5.50–$7.25/sqft), Appalachian (18 options, $5.99–$6.39/sqft), Northernest (18 options, $5.10–$6.50/sqft), and Sherwood Forest Products (16 options, $5.99–$6.99/sqft). Species include White Oak, Red Oak, Hard Maple, and Hickory.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             The{' '}
@@ -243,7 +243,7 @@ export default function FlooringComparisonGuideClient() {
             Vinyl flooring has undergone a revolution. Today&apos;s luxury vinyl plank (LVP) and stone polymer composite (SPC) products look remarkably like real wood, are 100% waterproof through the core, and handle the abuse of pets, kids, and heavy foot traffic without showing damage. It&apos;s the single most practical flooring type for Canadian families — and at $1.79–$3.59/sqft, it&apos;s more affordable than hardwood.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS stocks 233 vinyl options from 6 brands: NAF (69 options, $2.49–$3.59/sqft), Woden (49, $2.29–$3.19/sqft), Triforest (44, $2.29–$3.19/sqft), Simba (42, $2.29–$3.59/sqft), Falcon (19, $1.79–$2.59/sqft), and Lee (10, $2.29/sqft). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
+            BBS stocks 241 vinyl options from 6 brands: NAF (77 options, $2.49–$3.59/sqft), Woden (49, $2.29–$3.19/sqft), Triforest (44, $2.29–$3.19/sqft), Simba (42, $2.29–$3.59/sqft), Falcon (19, $1.79–$2.59/sqft), and Lee (10, $2.29/sqft). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             At the entry level, the{' '}
@@ -279,7 +279,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-sky-50 border border-sky-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Basements, kitchens, bathrooms, laundry rooms, rental properties, pet-owner homes, and anyone on a budget. The practical all-rounder. <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 233 options →</Link></p>
+            <p className="text-stone-600 text-sm">Basements, kitchens, bathrooms, laundry rooms, rental properties, pet-owner homes, and anyone on a budget. The practical all-rounder. <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 241 options →</Link></p>
           </div>
         </section>
 
@@ -551,7 +551,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="space-y-3">
             {[
-              ['What is the most durable type of flooring?', 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For day-to-day scratch and water resistance, vinyl (LVP/SPC) is the toughest. BBS carries 81 solid hardwood options from $5.10/sqft and 233 vinyl options from $1.79/sqft.'],
+              ['What is the most durable type of flooring?', 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For day-to-day scratch and water resistance, vinyl (LVP/SPC) is the toughest. BBS carries 83 solid hardwood options from $5.10/sqft and 241 vinyl options from $1.79/sqft.'],
               ['Is hardwood or vinyl better value for money?', 'Vinyl offers the best upfront value at $1.79–$3.59/sqft material + $2.00/sqft installation. Hardwood costs more upfront but adds more resale value and lasts longer. For a 500 sqft room: vinyl costs $2,095–$2,795 installed vs $2,370–$6,620 for engineered hardwood.'],
               ['What is the cheapest flooring option at BBS?', 'Laminate from Tosca Floors starts at $1.49/sqft. With installation at $2.00/sqft, total cost starts around $3.49/sqft — about $1,745 for a 500 sqft room. Vinyl starts at $1.79/sqft material.'],
               ['Can you mix flooring types in the same house?', 'Absolutely — most GTA homeowners do. Engineered hardwood in living areas, vinyl in basements and kitchens, laminate in bedrooms or rental units. BBS installs transition strips between different flooring types for a clean look.'],
@@ -560,7 +560,7 @@ export default function FlooringComparisonGuideClient() {
               ['Is vinyl flooring really 100% waterproof?', 'Yes. SPC (stone polymer composite) vinyl is waterproof through the core — surface, core, and backing will not absorb water. This makes it ideal for basements, kitchens, and bathrooms. BBS stocks 233 waterproof vinyl options from $1.79/sqft.'],
               ['How long does each flooring type last?', 'Solid hardwood: 50–100 years (refinishable 5–7 times). Engineered hardwood: 25–50 years (refinishable 1–3 times). Vinyl: 15–25 years. Laminate: 10–20 years. Longevity depends on quality, foot traffic, and maintenance.'],
               ['What flooring is best for a rental property?', 'Vinyl (LVP/SPC) — waterproof, extremely durable, affordable at $1.79–$3.59/sqft, and tenants can\u2019t easily damage it. Laminate ($1.49–$3.29/sqft) is the budget alternative. Avoid expensive hardwood in rentals unless targeting premium tenants.'],
-              ['Does BBS carry all four flooring types?', 'Yes. BBS stocks 807+ products: 348 engineered hardwood, 81 solid hardwood, 233 vinyl (LVP/SPC), and 145 laminate from 15 brands. Showroom: 6061 Highway 7, Unit B, Markham. Or browse online at bbsflooring.ca/products.'],
+              ['Does BBS carry all four flooring types?', 'Yes. BBS stocks 1,000+ products: 572 engineered hardwood, 83 solid hardwood, 241 vinyl (LVP/SPC), and 145 laminate from 15 brands. Showroom: 6061 Highway 7, Unit B, Markham. Or browse online at bbsflooring.ca/products.'],
             ].map(([q, a]) => (
               <details key={q} className="border border-stone-200 rounded-lg group">
                 <summary className="p-4 cursor-pointer font-medium text-stone-800 hover:bg-stone-50 flex justify-between items-center">
@@ -577,7 +577,7 @@ export default function FlooringComparisonGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Choose Your Flooring?</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            BBS Flooring stocks 807+ options across hardwood, vinyl, and laminate — starting at $1.49/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
+            BBS Flooring stocks 1,000+ options across hardwood, vinyl, and laminate — starting at $1.49/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/products" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">

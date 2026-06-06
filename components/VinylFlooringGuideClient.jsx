@@ -57,7 +57,7 @@ export default function VinylFlooringGuideClient() {
           Quick Answer: Best Vinyl Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 188 luxury vinyl plank (LVP/SPC) options from $1.79&#8211;$3.59/sqft &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include Woden, NAF, Triforest, Simba, Falcon, and Lee. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring carries 241 luxury vinyl plank (LVP/SPC) options from $1.79&#8211;$3.59/sqft &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include Woden, NAF, Triforest, Simba, Falcon, and Lee. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -114,7 +114,7 @@ export default function VinylFlooringGuideClient() {
           <p className="text-slate-600 leading-relaxed">
             Not sure if vinyl is right for your space? Our{' '}
             <Link href="/waterproof-flooring" className="text-amber-700 underline hover:text-amber-800">waterproof flooring collection</Link>{' '}
-            covers all 233 options, or{' '}
+            covers all 241 options, or{' '}
             <Link href="/free-measurement" className="text-amber-700 underline hover:text-amber-800">book a free in-home measurement</Link>{' '}
             and we&apos;ll walk you through your best choices in person.
           </p>
@@ -305,7 +305,7 @@ export default function VinylFlooringGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Vinyl Brands at BBS Flooring — Compared</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            We carry 233 vinyl products across 6 brands. Here&apos;s how they stack up:
+            We carry 241 vinyl products across 6 brands. Here&apos;s how they stack up:
           </p>
 
           <div className="overflow-x-auto mb-6">
@@ -361,7 +361,7 @@ export default function VinylFlooringGuideClient() {
 
           <p className="text-slate-500 text-sm italic mb-4">
             Prices current as of April 2026.{' '}
-            <Link href="/vinyl-flooring" className="text-blue-600 hover:underline">Browse all 233 vinyl products →</Link>
+            <Link href="/vinyl-flooring" className="text-blue-600 hover:underline">Browse all 241 vinyl products →</Link>
           </p>
 
           <p className="text-slate-600 text-sm">
@@ -773,7 +773,7 @@ export default function VinylFlooringGuideClient() {
         <section className="bg-gradient-to-r from-slate-800 to-blue-900 rounded-2xl p-8 md:p-12 text-white text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to See Vinyl In Person?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
-            Visit our Markham showroom to touch and compare all 233 vinyl options. Or book a free measurement and we&apos;ll bring samples to your home.
+            Visit our Markham showroom to touch and compare all 241 vinyl options. Or book a free measurement and we&apos;ll bring samples to your home.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
             <Link href="/free-measurement" className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors">

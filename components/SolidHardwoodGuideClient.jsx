@@ -54,7 +54,7 @@ export default function SolidHardwoodGuideClient() {
           Quick Answer: Best Solid Hardwood Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 75 solid hardwood options from $5.10&#8211;$7.25/sqft. Four Canadian brands: Wickham, Appalachian, Sherwood Forest, and Northernest. &#190;&quot; thick solid planks that can be refinished 5&#8211;7 times. Professional nail-down installation from $2.25/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring carries 83 solid hardwood options from $5.10&#8211;$7.25/sqft. Four Canadian brands: Wickham, Appalachian, Sherwood Forest, and Northernest. &#190;&quot; thick solid planks that can be refinished 5&#8211;7 times. Professional nail-down installation from $2.25/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -823,7 +823,7 @@ export default function SolidHardwoodGuideClient() {
               { q: 'How often does solid hardwood need to be refinished?', a: 'Typically every 10–15 years for heavily used floors, or every 20–25 years for bedrooms and low-traffic areas. A screen-and-recoat (lighter process) can be done every 5–7 years to maintain the finish before a full sand is needed. Solid hardwood\'s ¾" thickness allows 5–10 full refinishing cycles.' },
               { q: 'Does solid hardwood increase home value?', a: 'Yes. Real estate professionals consistently rank hardwood as the #1 flooring for resale value. Solid hardwood commands a premium over engineered, vinyl, and laminate in the GTA market.' },
               { q: 'How long does installation take?', a: 'A standard 500 sqft room takes 2–3 days including subfloor prep. Acclimation (3–7 days before install) is separate. Larger projects scale proportionally. BBS handles everything in one visit — removal, prep, install, baseboards.' },
-              { q: 'What brands of solid hardwood do you carry?', a: 'Wickham (29 options, $5.50–$7.25), Appalachian (18, $5.99–$6.39), Northernest (18, $5.10–$6.50), and Sherwood Forest (16, $5.99–$6.99). All are ¾" thick, pre-finished, tongue-and-groove. Visit our Markham showroom.' },
+              { q: 'What brands of solid hardwood do you carry?', a: 'Wickham (31 options, $5.50–$7.25), Appalachian (18, $5.99–$6.39), Northernest (18, $5.10–$6.50), and Sherwood Forest (16, $5.99–$6.99). All are ¾" thick, pre-finished, tongue-and-groove. Visit our Markham showroom.' },
             ].map((faq, i) => (
               <details key={i} className="group border border-slate-200 rounded-xl">
                 <summary className="p-5 cursor-pointer font-semibold text-slate-800 group-open:border-b group-open:border-slate-200 list-none flex justify-between items-center">

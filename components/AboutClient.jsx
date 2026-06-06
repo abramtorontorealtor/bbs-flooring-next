@@ -41,7 +41,7 @@ export default function AboutClient() {
             BBS Flooring started with a simple idea: give homeowners access to the same wholesale-quality flooring that contractors get — at fair, transparent prices. No showroom markups. No pushy sales tactics. Just honest advice and expert installation.
           </p>
           <p className="text-slate-600 mb-4 leading-relaxed">
-            Located on Highway 7 in Markham, our 4,000+ sq ft showroom carries over 600 products — from solid and engineered hardwood to luxury vinyl plank, laminate, and everything in between.
+            Located on Highway 7 in Markham, our 4,000+ sq ft showroom carries over 1,000 products — from solid and engineered hardwood to luxury vinyl plank, laminate, and everything in between.
           </p>
           <p className="text-slate-600 leading-relaxed">
             Whether you're renovating a single room or an entire home, our team will guide you from product selection through installation. We treat every home like our own.

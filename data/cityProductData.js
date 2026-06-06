@@ -472,7 +472,7 @@ Delivery available across Vaughan — free warehouse pickup or delivery from $14
     content: {
       intro: `BBS Flooring is Markham's trusted name for professional flooring installation. Located right on Highway 7 at 6061, Unit B, we've been installing floors in Markham homes since 2012. From a single bedroom refresh to a full-home renovation, our experienced installation crews deliver precision craftsmanship across all flooring types — vinyl, hardwood, laminate, and more.`,
 
-      whyVinylHere: `What makes BBS different from other Markham flooring installers? We're not just installers — we're a full showroom with over 700 flooring products in stock. That means:
+      whyVinylHere: `What makes BBS different from other Markham flooring installers? We're not just installers — we're a full showroom with over 1,000 flooring products in stock. That means:
 
 **One-stop shop:** Select your flooring and book installation in the same visit. No waiting for special orders from third parties.
 
@@ -480,7 +480,7 @@ Delivery available across Vaughan — free warehouse pickup or delivery from $14
 
 **Quality control:** Because we sell and install, we stand behind the entire project. No finger-pointing between the store and the installer when something goes wrong.
 
-**Fast turnaround:** With 700+ products in stock, we can typically start installation within a week of your free in-home estimate — not the 4-6 weeks some Markham competitors require for special orders.`,
+**Fast turnaround:** With 1,000+ products in stock, we can typically start installation within a week of your free in-home estimate — not the 4-6 weeks some Markham competitors require for special orders.`,
 
       localExpertise: `Our crews know Markham's housing stock inside and out:
 
@@ -566,13 +566,13 @@ Professional installation pricing is quoted during your free in-home estimate, b
     heroSubtitle: 'Expert flooring installation across Vaughan — vinyl, hardwood, and laminate. Free in-home estimates. 20 minutes east on Highway 7 from our showroom.',
     isInstallationPage: true,
     content: {
-      intro: `BBS Flooring provides professional flooring installation across all of Vaughan — from Maple to Vaughan Metropolitan Centre and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is 20 minutes east on Highway 7, carrying over 700 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
+      intro: `BBS Flooring provides professional flooring installation across all of Vaughan — from Maple to Vaughan Metropolitan Centre and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is 20 minutes east on Highway 7, carrying over 1,000 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
 
 Vaughan is York Region's fastest-growing city, with housing ranging from VMC's modern towers to Kleinburg's country estates. Whether you're upgrading a single room or renovating an entire home, our installation team handles everything: old floor removal, subfloor preparation, precise installation, and final trim work. We're in Vaughan multiple times per week and can usually schedule your project within 7-10 days of your free estimate.`,
 
       whyVinylHere: `Why do Vaughan homeowners choose BBS Flooring for installation? Three reasons: selection, pricing, and craftsmanship.
 
-**Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Vaughan home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Vaughan home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
 **Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
@@ -655,13 +655,13 @@ Professional installation pricing is quoted during your free in-home estimate, b
     heroSubtitle: 'Expert flooring installation across Scarborough — vinyl, hardwood, and laminate. Free in-home estimates. 15 minutes via the 401 from our showroom.',
     isInstallationPage: true,
     content: {
-      intro: `BBS Flooring provides professional flooring installation across all of Scarborough — from Agincourt to Guildwood and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is just 15 minutes north via the 401, carrying over 700 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
+      intro: `BBS Flooring provides professional flooring installation across all of Scarborough — from Agincourt to Guildwood and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is just 15 minutes north via the 401, carrying over 1,000 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
 
 Scarborough is one of the most diverse housing markets in the GTA, from postwar bungalows to modern high-rises. Whether you're upgrading a single room or renovating an entire home, our installation team handles everything: old floor removal, subfloor preparation, precise installation, and final trim work. We're in Scarborough multiple times per week and can usually schedule your project within 7-10 days of your free estimate.`,
 
       whyVinylHere: `Why do Scarborough homeowners choose BBS Flooring for installation? Three reasons: selection, pricing, and craftsmanship.
 
-**Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Scarborough home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Scarborough home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
 **Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
@@ -744,13 +744,13 @@ Professional installation pricing is quoted during your free in-home estimate, b
     heroSubtitle: 'Expert flooring installation across Newmarket — vinyl, hardwood, and laminate. Free in-home estimates. 25 minutes via the 404 from our showroom.',
     isInstallationPage: true,
     content: {
-      intro: `BBS Flooring provides professional flooring installation across all of Newmarket — from Upper Canada Mall area to Stonehaven and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 25 minutes south via Highway 404, carrying over 700 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
+      intro: `BBS Flooring provides professional flooring installation across all of Newmarket — from Upper Canada Mall area to Stonehaven and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 25 minutes south via Highway 404, carrying over 1,000 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
 
 Newmarket is one of York Region's most established communities, blending historic character with modern development. Whether you're upgrading a single room or renovating an entire home, our installation team handles everything: old floor removal, subfloor preparation, precise installation, and final trim work. We're in Newmarket multiple times per week and can usually schedule your project within 7-10 days of your free estimate.`,
 
       whyVinylHere: `Why do Newmarket homeowners choose BBS Flooring for installation? Three reasons: selection, pricing, and craftsmanship.
 
-**Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Newmarket home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Newmarket home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
 **Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
@@ -833,13 +833,13 @@ Professional installation pricing is quoted during your free in-home estimate, b
     heroSubtitle: 'Expert flooring installation across Richmond Hill — vinyl, hardwood, and laminate. Free in-home estimates. 10 minutes on Highway 7 from our showroom.',
     isInstallationPage: true,
     content: {
-      intro: `BBS Flooring provides professional flooring installation across all of Richmond Hill — from Oak Ridges to Observatory and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is just 10 minutes east on Highway 7, carrying over 700 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
+      intro: `BBS Flooring provides professional flooring installation across all of Richmond Hill — from Oak Ridges to Observatory and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is just 10 minutes east on Highway 7, carrying over 1,000 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
 
 Richmond Hill is one of the GTA's most desirable residential communities, known for its upscale housing market. Whether you're upgrading a single room or renovating an entire home, our installation team handles everything: old floor removal, subfloor preparation, precise installation, and final trim work. We're in Richmond Hill multiple times per week and can usually schedule your project within 7-10 days of your free estimate.`,
 
       whyVinylHere: `Why do Richmond Hill homeowners choose BBS Flooring for installation? Three reasons: selection, pricing, and craftsmanship.
 
-**Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Richmond Hill home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Richmond Hill home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
 **Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
@@ -922,13 +922,13 @@ Professional installation pricing is quoted during your free in-home estimate, b
     heroSubtitle: 'Expert flooring installation across Pickering — vinyl, hardwood, and laminate. Free in-home estimates. 20 minutes via the 401 from our showroom.',
     isInstallationPage: true,
     content: {
-      intro: `BBS Flooring provides professional flooring installation across all of Pickering — from Nautilus to Rouge Park and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 20 minutes east via Highway 401, carrying over 700 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
+      intro: `BBS Flooring provides professional flooring installation across all of Pickering — from Nautilus to Rouge Park and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 20 minutes east via Highway 401, carrying over 1,000 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
 
 Pickering is western Durham Region's gateway community, with waterfront living and rapidly expanding new developments. Whether you're upgrading a single room or renovating an entire home, our installation team handles everything: old floor removal, subfloor preparation, precise installation, and final trim work. We're in Pickering multiple times per week and can usually schedule your project within 7-10 days of your free estimate.`,
 
       whyVinylHere: `Why do Pickering homeowners choose BBS Flooring for installation? Three reasons: selection, pricing, and craftsmanship.
 
-**Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Pickering home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Pickering home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
 **Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
@@ -1011,13 +1011,13 @@ Professional installation pricing is quoted during your free in-home estimate, b
     heroSubtitle: 'Expert flooring installation across Ajax — vinyl, hardwood, and laminate. Free in-home estimates. 20 minutes via the 401 from our showroom.',
     isInstallationPage: true,
     content: {
-      intro: `BBS Flooring provides professional flooring installation across all of Ajax — from Ajax Waterfront to Pickering Village and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 20 minutes east via Highway 401, carrying over 700 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
+      intro: `BBS Flooring provides professional flooring installation across all of Ajax — from Ajax Waterfront to Pickering Village and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 20 minutes east via Highway 401, carrying over 1,000 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
 
 Ajax is a growing Durham Region community known for family-friendly neighbourhoods and lakefront living. Whether you're upgrading a single room or renovating an entire home, our installation team handles everything: old floor removal, subfloor preparation, precise installation, and final trim work. We're in Ajax multiple times per week and can usually schedule your project within 7-10 days of your free estimate.`,
 
       whyVinylHere: `Why do Ajax homeowners choose BBS Flooring for installation? Three reasons: selection, pricing, and craftsmanship.
 
-**Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Ajax home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Ajax home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
 **Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
@@ -1791,13 +1791,13 @@ Professional installation and stair matching quoted during your free in-home est
     heroSubtitle: 'Expert flooring installation across Oshawa — vinyl, hardwood, and laminate. Free in-home estimates. 30 minutes via the 401 from our showroom.',
     isInstallationPage: true,
     content: {
-      intro: `BBS Flooring provides professional flooring installation across all of Oshawa — from Lakeview Park to Courtice and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 30 minutes west via Highway 401, carrying over 700 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
+      intro: `BBS Flooring provides professional flooring installation across all of Oshawa — from Lakeview Park to Courtice and every neighbourhood in between. Our Markham showroom at 6061 Highway 7, Unit B is approximately 30 minutes west via Highway 401, carrying over 1,000 flooring options including vinyl, hardwood, and laminate — all available with expert installation by our experienced crews.
 
 Oshawa is Durham Region's most affordable major city, making it a renovation hotspot with excellent ROI on flooring upgrades. Whether you're upgrading a single room or renovating an entire home, our installation team handles everything: old floor removal, subfloor preparation, precise installation, and final trim work. We're in Oshawa multiple times per week and can usually schedule your project within 7-10 days of your free estimate.`,
 
       whyVinylHere: `Why do Oshawa homeowners choose BBS Flooring for installation? Three reasons: selection, pricing, and craftsmanship.
 
-**Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Oshawa home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Oshawa home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
 **Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 

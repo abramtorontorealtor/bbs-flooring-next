@@ -25,7 +25,7 @@ export default function QuoteCalculatorPage() {
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">Get Your Custom Installation Quote</h1>
         <p className="text-base text-slate-600 max-w-xl mx-auto">
           Accurate pricing in 60 seconds. Materials, installation, and extras — all included.
-          Choose from over 600 flooring products including engineered hardwood, solid hardwood,
+          Choose from over 1,000 flooring products including engineered hardwood, solid hardwood,
           vinyl, and laminate from top brands like Vidar, Wickham, NAF, and more.
         </p>
         <div className="mt-3 inline-block bg-green-50 border border-green-200 text-green-800 text-sm font-medium px-4 py-1.5 rounded-full">
@@ -83,7 +83,7 @@ export default function QuoteCalculatorPage() {
         <p className="text-slate-600 text-sm leading-relaxed mb-4">
           Our free flooring quote calculator gives you an instant, transparent estimate for your entire
           project — including material costs, professional installation, old floor removal, baseboards,
-          and delivery. Select from over 600 in-stock products, enter your room&apos;s square footage, and
+          and delivery. Select from over 1,000 in-stock products, enter your room&apos;s square footage, and
           get an itemized breakdown in under 60 seconds.
         </p>
         <p className="text-slate-600 text-sm leading-relaxed">

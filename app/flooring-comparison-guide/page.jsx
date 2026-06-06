@@ -5,7 +5,7 @@ import { faqSchema, JsonLd } from '@/lib/schemas';
 const faqItems = [
   {
     question: 'What is the most durable type of flooring?',
-    answer: 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For scratch and water resistance, vinyl (LVP/SPC) is the most durable day-to-day option. BBS carries 81 solid hardwood options from $5.10/sqft and 233 vinyl options from $1.79/sqft.',
+    answer: 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For scratch and water resistance, vinyl (LVP/SPC) is the most durable day-to-day option. BBS carries 83 solid hardwood options from $5.10/sqft and 241 vinyl options from $1.79/sqft.',
   },
   {
     question: 'Is hardwood or vinyl flooring better value?',
@@ -41,17 +41,17 @@ const faqItems = [
   },
   {
     question: 'Does BBS Flooring carry all three types?',
-    answer: 'Yes. BBS stocks 807+ flooring products across all types: 348 engineered hardwood, 81 solid hardwood, 233 vinyl (LVP/SPC), and 145 laminate options from 15 brands. Visit the Markham showroom at 6061 Highway 7, Unit B, or browse online at bbsflooring.ca.',
+    answer: 'Yes. BBS stocks 1,000+ flooring products across all types: 572 engineered hardwood, 83 solid hardwood, 241 vinyl (LVP/SPC), and 145 laminate options from 15 brands. Visit the Markham showroom at 6061 Highway 7, Unit B, or browse online at bbsflooring.ca.',
   },
 ];
 
 export const metadata = {
   title: 'Hardwood vs Vinyl vs Laminate: Which Flooring to Choose? (2026) | BBS Flooring',
-  description: 'Complete comparison of hardwood, vinyl, and laminate flooring with real 2026 pricing from BBS Flooring. 807+ options compared — costs, durability, best uses, and room-by-room recommendations for GTA homeowners.',
+  description: 'Complete comparison of hardwood, vinyl, and laminate flooring with real 2026 pricing from BBS Flooring. 1,000+ options compared — costs, durability, best uses, and room-by-room recommendations for GTA homeowners.',
   alternates: { canonical: '/flooring-comparison-guide' },
   openGraph: {
     title: 'Hardwood vs Vinyl vs Laminate Flooring Comparison (2026) | BBS Flooring',
-    description: 'Compare 807+ flooring options with real Canadian pricing. Hardwood, vinyl, and laminate — head-to-head on cost, durability, and room suitability.',
+    description: 'Compare 1,000+ flooring options with real Canadian pricing. Hardwood, vinyl, and laminate — head-to-head on cost, durability, and room suitability.',
     url: 'https://bbsflooring.ca/flooring-comparison-guide',
     type: 'article',
   },

@@ -51,7 +51,7 @@ export const metadata = {
   alternates: { canonical: '/vinyl-flooring-guide' },
   openGraph: {
     title: 'Vinyl Flooring Buying Guide 2026 | LVP & SPC Explained | BBS Flooring',
-    description: '233 vinyl options from $1.79/sqft. SPC vs WPC, wear layers, costs, and installation explained. Real Canadian pricing from BBS Flooring Markham.',
+    description: '241 vinyl options from $1.79/sqft. SPC vs WPC, wear layers, costs, and installation explained. Real Canadian pricing from BBS Flooring Markham.',
     url: 'https://bbsflooring.ca/vinyl-flooring-guide',
     type: 'article',
   },
