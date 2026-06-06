@@ -161,6 +161,99 @@ export default async function LocationPage({ params }) {
           </div>
         </div>
 
+        {/* ── SSR Neighbourhood Breakdown (Flagship only) ── */}
+        {data.neighbourhoods && data.neighbourhoods.length > 0 && (
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-slate-800 mb-2">Flooring for Every Markham Neighbourhood</h2>
+            <p className="text-slate-600 mb-8">Markham is one of the GTA's most diverse cities, and every neighbourhood has unique homes that call for different flooring solutions. Here's what we recommend based on 15 years of installing in your area.</p>
+            <div className="grid md:grid-cols-2 gap-6">
+              {data.neighbourhoods.map((nb, i) => (
+                <div key={i} className="bg-white rounded-xl border border-slate-200 p-6 hover:border-amber-300 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-800 mb-2">{nb.name}</h3>
+                  <p className="text-slate-600 mb-4 leading-relaxed">{nb.description}</p>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex gap-2">
+                      <span className="font-medium text-slate-500 shrink-0">🏠 Housing:</span>
+                      <span className="text-slate-600">{nb.housingTypes}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="font-medium text-slate-500 shrink-0">⭐ Top Picks:</span>
+                      <span className="text-slate-600">{nb.topProducts}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── SSR Commercial Section (Flagship only) ── */}
+        {data.commercial && (
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-slate-800 mb-2">{data.commercial.title}</h2>
+            <p className="text-slate-600 mb-8 leading-relaxed max-w-4xl">{data.commercial.content}</p>
+            {data.commercial.sectors && (
+              <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                {data.commercial.sectors.map((sector, i) => (
+                  <div key={i} className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                    <h3 className="font-semibold text-slate-800 mb-1">{sector.name}</h3>
+                    <p className="text-sm text-slate-600">{sector.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── SSR Why BBS Section (Flagship only) ── */}
+        {data.whyBBS && (
+          <div className="mb-16 bg-amber-50 rounded-2xl p-8 md:p-12">
+            <h2 className="text-3xl font-bold text-slate-800 mb-8 text-center">{data.whyBBS.title}</h2>
+            <div className="space-y-6 max-w-3xl mx-auto">
+              {data.whyBBS.points.map((point, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold shrink-0 text-lg">{i + 1}</div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-lg mb-1">{point.heading}</h3>
+                    <p className="text-slate-600 leading-relaxed">{point.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── SSR Pricing Comparison (Flagship only) ── */}
+        {data.pricingComparison && (
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-slate-800 mb-2">{data.pricingComparison.title}</h2>
+            <p className="text-slate-600 mb-8">{data.pricingComparison.subtitle}</p>
+            <div className="overflow-x-auto">
+              <table className="w-full bg-white rounded-xl border border-slate-200 overflow-hidden">
+                <thead>
+                  <tr className="bg-slate-50">
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-slate-600">Flooring Type</th>
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-amber-600">🏆 BBS Flooring</th>
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-slate-600">Big Box Stores</th>
+                    <th className="text-left px-6 py-4 text-sm font-semibold text-slate-600">Specialty Stores</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {data.pricingComparison.rows.map((row, i) => (
+                    <tr key={i} className="hover:bg-amber-50/50 transition-colors">
+                      <td className="px-6 py-4 font-medium text-slate-800">{row.type}</td>
+                      <td className="px-6 py-4 text-amber-600 font-bold">{row.bbs}</td>
+                      <td className="px-6 py-4 text-slate-500">{row.bigBox}</td>
+                      <td className="px-6 py-4 text-slate-500">{row.specialty}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-slate-500 mt-4">* Prices are per square foot for materials only. Installation rates provided with free in-home estimate. Big box and specialty prices are typical ranges observed in the Markham area as of 2026.</p>
+          </div>
+        )}
+
         {/* ── SSR Services Section ── */}
         {data.services && data.services.length > 0 && (
           <div className="mb-16">
