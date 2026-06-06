@@ -154,11 +154,11 @@ export default function HomePage() {
               <span className="text-amber-400 text-xs md:text-sm font-medium">4.7★ Google · 13+ Years in Markham</span>
             </div>
             <h1 className="text-[2.5rem] leading-[1.08] sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white md:leading-[1.05] mb-5 md:mb-8 tracking-tight">
-              700+ Floors.{' '}
-              <span className="text-amber-500">Wholesale Prices.</span>
+              Markham Flooring Store.{' '}
+              <span className="text-amber-500">700+ Floors. Wholesale Prices.</span>
             </h1>
             <p className="text-base md:text-2xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
-              Hardwood, vinyl, and laminate from $1.49/sqft. Free in-home measurements. Expert installation by our own crew — not subcontractors.
+              Hardwood, vinyl, and laminate from $1.49/sqft. Free in-home measurements across Markham, Toronto &amp; Durham. Expert installation by our own crew — not subcontractors.
             </p>
             {/* Phone number directly in hero — unmissable */}
             <a
