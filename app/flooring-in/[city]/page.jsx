@@ -164,8 +164,8 @@ export default async function LocationPage({ params }) {
         {/* ── SSR Neighbourhood Breakdown (Flagship only) ── */}
         {data.neighbourhoods && data.neighbourhoods.length > 0 && (
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-slate-800 mb-2">Flooring for Every Markham Neighbourhood</h2>
-            <p className="text-slate-600 mb-8">Markham is one of the GTA's most diverse cities, and every neighbourhood has unique homes that call for different flooring solutions. Here's what we recommend based on 15 years of installing in your area.</p>
+            <h2 className="text-3xl font-bold text-slate-800 mb-2">Flooring for Every {data.city} Neighbourhood</h2>
+            <p className="text-slate-600 mb-8">{data.city} has diverse neighbourhoods with unique homes that call for different flooring solutions. Here's what we recommend based on our experience installing in your area.</p>
             <div className="grid md:grid-cols-2 gap-6">
               {data.neighbourhoods.map((nb, i) => (
                 <div key={i} className="bg-white rounded-xl border border-slate-200 p-6 hover:border-amber-300 transition-colors">
