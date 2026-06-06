@@ -585,7 +585,7 @@ export const locationData = {
       },
       {
         q: "Do you deliver flooring to Pickering?",
-        a: "Yes — BBS Flooring delivers to all of Pickering and Durham Region. Warehouse pickup at our Markham showroom is free, and we offer affordable delivery to your door. Call (647) 428-1111 to arrange delivery with your order."
+        a: "Yes — BBS Flooring delivers to all of Pickering and Durham Region. Free warehouse pickup at our Markham showroom, or delivery starting at $140 (garage) / $200 (inside house). Call (647) 428-1111 to arrange delivery with your order."
       },
       {
         q: "How much does vinyl flooring cost in Pickering?",
@@ -1389,8 +1389,8 @@ export const locationData = {
         a: "Waterproof luxury vinyl plank (LVP) is the top choice for Durham Region basements — it handles moisture, is warm underfoot, and starts from $1.79/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
       },
       {
-        q: "Do you offer free delivery to Durham Region?",
-        a: "BBS Flooring offers free warehouse pickup at our Markham showroom, plus affordable delivery throughout Durham Region. For larger orders, delivery fees are often waived. Call (647) 428-1111 to discuss delivery options for your project."
+        q: "Do you deliver to Durham Region?",
+        a: "Yes — BBS Flooring delivers throughout Durham Region. Free warehouse pickup is available at our Markham showroom, or we deliver to your door starting at $140 (garage) or $200 (inside house). Call (647) 428-1111 to arrange delivery with your order."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d184632.1234!2d-79.0312!3d43.9089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51c1de7e1e71f%3A0x3b0e2e43ed23cf6e!2sDurham%20Region%2C%20ON!5e0!3m2!1sen!2sca!4v1710533000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',

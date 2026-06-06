@@ -335,7 +335,7 @@ For Scarborough's bungalows and backsplits in West Hill and Highland Creek, wide
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
 | Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Bungalows, heritage homes, wood subfloors |
 
-Free delivery to all of Scarborough on qualifying orders. Professional installation quoted during your free in-home estimate.`,
+Delivery available across Scarborough — free warehouse pickup or delivery from $140. Professional installation quoted during your free in-home estimate.`,
     },
     neighbourhoods: ['Agincourt', 'Birch Cliff', 'The Bluffs', 'Malvern', 'West Hill', 'Highland Creek', 'Woburn', 'Morningside', 'Scarborough Town Centre', 'Guildwood'],
     faqs: [
@@ -415,7 +415,7 @@ Vaughan's finished basements are where vinyl truly shines. The 100% waterproof c
 | Mid-Range SPC (8mm) | $2.29 – $2.99/sqft | Main floors, kitchens, family rooms |
 | Premium SPC (9mm+) | $2.99 – $3.59/sqft | Whole-home, luxury finishes, executive homes |
 
-Free delivery to all of Vaughan on qualifying orders. Professional installation is quoted during your free in-home estimate — call (647) 428-1111.`,
+Delivery available across Vaughan — free warehouse pickup or delivery from $140. Professional installation is quoted during your free in-home estimate — call (647) 428-1111.`,
     },
     neighbourhoods: ['Maple', 'Woodbridge', 'Kleinburg', 'Concord', 'Thornhill', 'Vaughan Metropolitan Centre', 'Pine Valley', 'Islington & Hwy 7'],
     faqs: [

@@ -45,7 +45,7 @@ export default function FloorFinderPage() {
               </span>
               <span className="flex items-center gap-1.5">
                 <Truck className="w-4 h-4 text-amber-500" />
-                Free delivery available
+                GTA-wide delivery
               </span>
             </div>
           </div>
