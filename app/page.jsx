@@ -426,6 +426,87 @@ export default function HomePage() {
         <GeneralFAQSection />
       </Suspense>
 
+      {/* ═══ SERVICE AREAS & BRANDS — Internal linking for SEO ═══ */}
+      <section className="py-12 md:py-20 px-4 sm:px-6 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto">
+          {/* Service Areas */}
+          <div className="mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">Flooring Installation Across the GTA</h2>
+            <p className="text-slate-600 mb-6 max-w-3xl">BBS Flooring serves homeowners across Markham, Toronto, and the Greater Toronto Area with professional flooring installation, stair refinishing, and hardwood refinishing services.</p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+              {[
+                { city: 'Markham', slug: 'markham' },
+                { city: 'Toronto', slug: 'toronto' },
+                { city: 'Scarborough', slug: 'scarborough' },
+                { city: 'Richmond Hill', slug: 'richmond-hill' },
+                { city: 'Vaughan', slug: 'vaughan' },
+                { city: 'Pickering', slug: 'pickering' },
+                { city: 'Ajax', slug: 'ajax' },
+                { city: 'Whitby', slug: 'whitby' },
+                { city: 'Woodbridge', slug: 'woodbridge' },
+                { city: 'Newmarket', slug: 'newmarket' },
+                { city: 'Aurora', slug: 'aurora' },
+                { city: 'Stouffville', slug: 'stouffville' },
+                { city: 'Oshawa', slug: 'oshawa' },
+                { city: 'Durham Region', slug: 'durham' },
+              ].map(area => (
+                <Link key={area.slug} href={`/flooring-in/${area.slug}`} className="text-slate-700 hover:text-amber-600 transition-colors font-medium">
+                  Flooring in {area.city} →
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Popular Flooring by City */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Popular Flooring by City</h3>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              {[
+                { label: 'Vinyl Flooring Markham', href: '/vinyl-flooring-markham' },
+                { label: 'Hardwood Flooring Toronto', href: '/hardwood-flooring-toronto' },
+                { label: 'Engineered Hardwood Markham', href: '/engineered-hardwood-flooring-markham' },
+                { label: 'Laminate Flooring Scarborough', href: '/laminate-flooring-scarborough' },
+                { label: 'Vinyl Flooring Richmond Hill', href: '/vinyl-flooring-richmond-hill' },
+                { label: 'Hardwood Flooring Vaughan', href: '/hardwood-flooring-vaughan' },
+                { label: 'Vinyl Flooring Toronto', href: '/vinyl-flooring-toronto' },
+                { label: 'Laminate Flooring Markham', href: '/laminate-flooring-markham' },
+                { label: 'Engineered Hardwood Toronto', href: '/engineered-hardwood-flooring-toronto' },
+                { label: 'Hardwood Flooring Pickering', href: '/hardwood-flooring-pickering' },
+                { label: 'Vinyl Flooring Scarborough', href: '/vinyl-flooring-scarborough' },
+                { label: 'Laminate Flooring Vaughan', href: '/laminate-flooring-vaughan' },
+              ].map(link => (
+                <Link key={link.href} href={link.href} className="text-slate-500 hover:text-amber-600 transition-colors">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Popular Brands */}
+          <div>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Shop by Brand</h3>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              {[
+                { label: 'Vidar Flooring', href: '/vidar-flooring' },
+                { label: 'NAF Flooring', href: '/naf-flooring' },
+                { label: 'Wickham Flooring', href: '/wickham-flooring' },
+                { label: 'Appalachian Flooring', href: '/appalachian-flooring' },
+                { label: 'Triforest Flooring', href: '/triforest-flooring' },
+                { label: 'Woden Flooring', href: '/woden-flooring' },
+                { label: 'Simba Flooring', href: '/simba-flooring' },
+                { label: 'Canadian Standard Flooring', href: '/canadian-standard-flooring' },
+                { label: 'Northernest Flooring', href: '/northernest-flooring' },
+                { label: 'Lee Flooring', href: '/lee-flooring' },
+              ].map(link => (
+                <Link key={link.href} href={link.href} className="text-slate-500 hover:text-amber-600 transition-colors">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ FINAL CTA — Warm amber gradient ═══ */}
       <section className="py-14 md:py-28 px-4 sm:px-6 bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700">
         <div className="max-w-4xl mx-auto text-center">
