@@ -70,7 +70,10 @@ export function LocalBusinessJsonLd() {
     },
     sameAs: [
       'https://www.facebook.com/bbsflooring',
-      'https://www.instagram.com/bbsflooring'
+      'https://www.instagram.com/bbsflooring',
+      'https://g.co/kgs/N1qmHvP',
+      'https://www.yelp.ca/biz/bbs-flooring-markham',
+      'https://homestars.com/companies/2830587-bbs-flooring'
     ]
   };
 
@@ -91,6 +94,27 @@ export function LocalBusinessJsonLd() {
     }
   };
 
+  // Site navigation schema — helps Google understand site structure
+  const siteNavigation = {
+    '@context': 'https://schema.org',
+    '@type': 'SiteNavigationElement',
+    name: 'Main Navigation',
+    hasPart: [
+      { '@type': 'SiteNavigationElement', name: 'Vinyl Flooring', url: 'https://bbsflooring.ca/vinyl' },
+      { '@type': 'SiteNavigationElement', name: 'Laminate Flooring', url: 'https://bbsflooring.ca/laminate' },
+      { '@type': 'SiteNavigationElement', name: 'Solid Hardwood', url: 'https://bbsflooring.ca/solid-hardwood' },
+      { '@type': 'SiteNavigationElement', name: 'Engineered Hardwood', url: 'https://bbsflooring.ca/engineered-hardwood' },
+      { '@type': 'SiteNavigationElement', name: 'Stairs', url: 'https://bbsflooring.ca/stairs' },
+      { '@type': 'SiteNavigationElement', name: 'Installation', url: 'https://bbsflooring.ca/installation' },
+      { '@type': 'SiteNavigationElement', name: 'Flooring in Markham', url: 'https://bbsflooring.ca/flooring-in/markham' },
+      { '@type': 'SiteNavigationElement', name: 'Flooring in Toronto', url: 'https://bbsflooring.ca/flooring-in/toronto' },
+      { '@type': 'SiteNavigationElement', name: 'Flooring in Scarborough', url: 'https://bbsflooring.ca/flooring-in/scarborough' },
+      { '@type': 'SiteNavigationElement', name: 'Quote Calculator', url: 'https://bbsflooring.ca/quote-calculator' },
+      { '@type': 'SiteNavigationElement', name: 'Blog', url: 'https://bbsflooring.ca/blog' },
+      { '@type': 'SiteNavigationElement', name: 'Contact', url: 'https://bbsflooring.ca/contact' },
+    ],
+  };
+
   return (
     <>
       <script
@@ -104,6 +128,10 @@ export function LocalBusinessJsonLd() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webSite) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigation) }}
       />
     </>
   );
