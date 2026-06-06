@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { sherwoodFlooringData } from '@/data/brandPages';
-import BrandLandingClient from '@/components/BrandLandingClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
@@ -14,10 +14,16 @@ export const metadata = {
 
 export default async function SherwoodFlooringPage() {
   const products = await getProductsForGrid({ brand: 'Sherwood' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(sherwoodFlooringData.faqItems)} />
-      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="sherwood" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <BrandLandingServer
+        {...sherwoodFlooringData}
+        brandKey="sherwood"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
     </>
   );
 }

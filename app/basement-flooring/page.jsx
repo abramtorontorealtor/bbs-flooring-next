@@ -1,24 +1,29 @@
 import { Suspense } from 'react';
 import { basementFlooringData } from '@/data/landingPages';
-import BasementFlooringClient from '@/components/BasementFlooringClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
 
-export const revalidate = 300; // 5-minute ISR
+export const revalidate = 300;
 
 export const metadata = {
   title: basementFlooringData.title,
   description: basementFlooringData.description,
-  alternates: { canonical: '/basement-flooring' },
 };
 
 export default async function BasementFlooringPage() {
-  const products = await getProductsForGrid();
+  const products = await getProductsForGrid({ category: 'vinyl' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(basementFlooringData.faqItems)} />
-      <Suspense fallback={<ProductGridServer products={products} />}><BasementFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <BrandLandingServer
+        {...basementFlooringData}
+        brandKey="basement"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
     </>
   );
 }

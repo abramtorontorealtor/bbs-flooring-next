@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { vidarFlooringData } from '@/data/landingPages';
-import BrandLandingClient from '@/components/BrandLandingClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
@@ -13,11 +13,17 @@ export const metadata = {
 };
 
 export default async function VidarFlooringPage() {
-  const products = await getProductsForGrid({ brand: 'Vidar' });
+  const products = await getProductsForGrid({ brand: 'Vidar Design Flooring' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(vidarFlooringData.faqItems)} />
-      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="vidar" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <BrandLandingServer
+        {...vidarFlooringData}
+        brandKey="vidar"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
     </>
   );
 }

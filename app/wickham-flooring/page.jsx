@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { wickhamFlooringData } from '@/data/landingPages';
-import BrandLandingClient from '@/components/BrandLandingClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
@@ -14,10 +14,16 @@ export const metadata = {
 
 export default async function WickhamFlooringPage() {
   const products = await getProductsForGrid({ brand: 'Wickham' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(wickhamFlooringData.faqItems)} />
-      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="wickham" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <BrandLandingServer
+        {...wickhamFlooringData}
+        brandKey="wickham"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
     </>
   );
 }

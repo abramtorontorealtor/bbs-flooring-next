@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { leeFlooringData } from '@/data/brandPages';
-import BrandLandingClient from '@/components/BrandLandingClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
@@ -14,10 +14,16 @@ export const metadata = {
 
 export default async function LeeFlooringPage() {
   const products = await getProductsForGrid({ brand: 'Lee' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(leeFlooringData.faqItems)} />
-      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="lee" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <BrandLandingServer
+        {...leeFlooringData}
+        brandKey="lee"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
     </>
   );
 }

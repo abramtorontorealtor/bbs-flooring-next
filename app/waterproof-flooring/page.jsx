@@ -1,24 +1,29 @@
 import { Suspense } from 'react';
 import { waterproofFlooringData } from '@/data/landingPages';
-import WaterproofFlooringClient from '@/components/WaterproofFlooringClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
 
-export const revalidate = 300; // 5-minute ISR
+export const revalidate = 300;
 
 export const metadata = {
   title: waterproofFlooringData.title,
   description: waterproofFlooringData.description,
-  alternates: { canonical: '/waterproof-flooring' },
 };
 
 export default async function WaterproofFlooringPage() {
-  const products = await getProductsForGrid();
+  const products = await getProductsForGrid({ limit: 100 });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(waterproofFlooringData.faqItems)} />
-      <Suspense fallback={<ProductGridServer products={products} />}><WaterproofFlooringClient initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <BrandLandingServer
+        {...waterproofFlooringData}
+        brandKey="waterproof"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
     </>
   );
 }

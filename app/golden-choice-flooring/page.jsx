@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { goldenChoiceFlooringData } from '@/data/brandPages';
-import BrandLandingClient from '@/components/BrandLandingClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
@@ -14,10 +14,16 @@ export const metadata = {
 
 export default async function GoldenChoiceFlooringPage() {
   const products = await getProductsForGrid({ brand: 'Golden Choice' });
+  const serverGrid = <ProductGridServer products={products} />;
   return (
     <>
       <JsonLd data={faqSchema(goldenChoiceFlooringData.faqItems)} />
-      <Suspense fallback={<ProductGridServer products={products} />}><BrandLandingClient brandKey="golden-choice" initialProducts={products} serverGrid={<ProductGridServer products={products} />} /></Suspense>
+      <BrandLandingServer
+        {...goldenChoiceFlooringData}
+        brandKey="golden-choice"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
     </>
   );
 }

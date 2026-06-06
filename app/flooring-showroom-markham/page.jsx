@@ -1,6 +1,5 @@
-import { Suspense } from 'react';
 import { flooringShowroomMarkhamData } from '@/data/landingPages';
-import FlooringShowroomMarkhamClient from '@/components/FlooringShowroomMarkhamClient';
+import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 
 export const metadata = {
@@ -9,14 +8,13 @@ export const metadata = {
 };
 
 export default function FlooringShowroomMarkhamPage() {
-  const schemas = [
-    faqSchema(flooringShowroomMarkhamData.faqItems),
-  ].filter(Boolean);
-
   return (
     <>
-      <JsonLd data={schemas} />
-      <Suspense><FlooringShowroomMarkhamClient /></Suspense>
+      <JsonLd data={faqSchema(flooringShowroomMarkhamData.faqItems)} />
+      <BrandLandingServer
+        {...flooringShowroomMarkhamData}
+        brandKey="showroom"
+      />
     </>
   );
 }
