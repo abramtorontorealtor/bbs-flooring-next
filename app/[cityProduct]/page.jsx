@@ -116,7 +116,7 @@ export default async function CityProductPage({ params }) {
       offers: {
         '@type': 'AggregateOffer',
         priceCurrency: 'CAD',
-        lowPrice: '1.49',
+        lowPrice: productType === 'vinyl' ? '1.79' : productType === 'laminate' ? '1.49' : '2.49',
         availability: 'https://schema.org/InStock',
       },
     });

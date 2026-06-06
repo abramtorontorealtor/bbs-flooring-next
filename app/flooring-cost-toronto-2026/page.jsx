@@ -5,7 +5,7 @@ import { faqSchema, JsonLd } from '@/lib/schemas';
 const faqItems = [
   {
     question: 'What is the cheapest type of flooring?',
-    answer: 'Laminate is the cheapest flooring type at BBS Flooring, starting at $1.49/sqft for materials (Tosca Floors). With installation at $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $2.19/sqft material, making it the second most affordable.',
+    answer: 'Laminate is the cheapest flooring type at BBS Flooring, starting at $1.49/sqft for materials (Tosca Floors). With installation at $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $1.79/sqft material, making it the second most affordable.',
   },
   {
     question: 'How much does it cost to floor 1,000 square feet?',
@@ -17,7 +17,7 @@ const faqItems = [
   },
   {
     question: 'Is hardwood flooring worth the extra cost vs vinyl?',
-    answer: 'For primary residences — usually yes. Hardwood adds 3–5% to home value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $2.49/sqft, while vinyl starts at $2.19/sqft. For rentals or basements, vinyl is the smarter investment.',
+    answer: 'For primary residences — usually yes. Hardwood adds 3–5% to home value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $2.49/sqft, while vinyl starts at $1.79/sqft. For rentals or basements, vinyl is the smarter investment.',
   },
   {
     question: 'Is installation included in BBS flooring prices?',

@@ -17,7 +17,7 @@ export const GENERAL_FAQ_SECTIONS = [
     faqs: [
       {
         question: 'What types of flooring does BBS Flooring carry?',
-        answer: 'We carry over 1,000 flooring products across four main categories: engineered hardwood (550+ products from $2.49/sqft), vinyl/LVP (233 products from $2.19/sqft), laminate (145 products from $1.49/sqft), and solid hardwood (81 products from $5.10/sqft). We stock 15 brands including Vidar Design Flooring, NAF Flooring, Northernest, Simba, Woden, Triforest, Falcon, Canadian Standard, and more.',
+        answer: 'We carry over 1,000 flooring products across four main categories: engineered hardwood (550+ products from $2.49/sqft), vinyl/LVP (233 products from $1.79/sqft), laminate (145 products from $1.49/sqft), and solid hardwood (81 products from $5.10/sqft). We stock 15 brands including Vidar Design Flooring, NAF Flooring, Northernest, Simba, Woden, Triforest, Falcon, Canadian Standard, and more.',
       },
       {
         question: 'What brands do you carry?',
@@ -25,7 +25,7 @@ export const GENERAL_FAQ_SECTIONS = [
       },
       {
         question: 'How much does flooring cost per square foot?',
-        answer: 'Material prices at BBS Flooring: Laminate starts at $1.49/sqft (12mm waterproof from $2.39/sqft). Vinyl/LVP ranges from $2.19 to $3.59/sqft. Engineered hardwood ranges from $2.49 to $8.99/sqft (Vidar premium products are priced by consultation). Solid hardwood ranges from $5.10 to $7.25/sqft. All prices are listed on our website — no hidden fees.',
+        answer: 'Material prices at BBS Flooring: Laminate starts at $1.49/sqft (12mm waterproof from $2.39/sqft). Vinyl/LVP ranges from $1.79 to $3.59/sqft. Engineered hardwood ranges from $2.49 to $8.99/sqft (Vidar premium products are priced by consultation). Solid hardwood ranges from $5.10 to $7.25/sqft. All prices are listed on our website — no hidden fees.',
       },
       {
         question: 'Do you have clearance or sale items?',

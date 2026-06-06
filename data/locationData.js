@@ -163,7 +163,7 @@ export const locationData = {
       rows: [
         {
           type: "Luxury Vinyl Plank (LVP)",
-          bbs: "From $1.49",
+          bbs: "From $1.79",
           bigBox: "$2.99 – $5.99",
           specialty: "$3.49 – $6.99"
         },
@@ -202,7 +202,7 @@ export const locationData = {
     faqs: [
       {
         q: "How much does flooring installation cost in Markham?",
-        a: "At BBS Flooring, vinyl plank starts from $1.49/sqft and engineered hardwood from $3.69/sqft, with professional installation available at competitive rates. Visit our Markham showroom at 6061 Highway 7 for a free in-person quote tailored to your project."
+        a: "At BBS Flooring, vinyl plank starts from $1.79/sqft and engineered hardwood from $3.69/sqft, with professional installation available at competitive rates. Visit our Markham showroom at 6061 Highway 7 for a free in-person quote tailored to your project."
       },
       {
         q: "Can I visit the BBS Flooring showroom in Markham?",
@@ -210,7 +210,7 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Markham basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Markham basements — it handles moisture, looks like real hardwood, and starts from $1.49/sqft at BBS Flooring. We also carry rigid-core SPC flooring with built-in underlayment for even easier installation."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Markham basements — it handles moisture, looks like real hardwood, and starts from $1.79/sqft at BBS Flooring. We also carry rigid-core SPC flooring with built-in underlayment for even easier installation."
       },
       {
         q: "Do you offer free in-home estimates in Markham?",
@@ -218,7 +218,7 @@ export const locationData = {
       },
       {
         q: "What flooring is best for Markham homes with pets?",
-        a: "For pet-friendly flooring in Markham, we recommend waterproof luxury vinyl plank (LVP) or scratch-resistant laminate. Both handle paw traffic, resist scratches, and are easy to clean. LVP starts from $1.49/sqft at BBS Flooring — visit our Highway 7 showroom to see samples."
+        a: "For pet-friendly flooring in Markham, we recommend waterproof luxury vinyl plank (LVP) or scratch-resistant laminate. Both handle paw traffic, resist scratches, and are easy to clean. LVP starts from $1.79/sqft at BBS Flooring — visit our Highway 7 showroom to see samples."
       },
       {
         q: "How long does a full-home flooring installation take in Markham?",
@@ -238,7 +238,7 @@ export const locationData = {
       },
       {
         q: "Is BBS Flooring the cheapest flooring store in Markham?",
-        a: "BBS Flooring offers wholesale-direct pricing that's typically 20-40% below big box stores like Home Depot and Lowe's. Our vinyl plank starts at $1.49/sqft and engineered hardwood at $3.69/sqft. We buy directly from manufacturers and pass the savings to Markham homeowners — no membership fees, no hidden markups."
+        a: "BBS Flooring offers wholesale-direct pricing that's typically 20-40% below big box stores like Home Depot and Lowe's. Our vinyl plank starts at $1.79/sqft and engineered hardwood at $3.69/sqft. We buy directly from manufacturers and pass the savings to Markham homeowners — no membership fees, no hidden markups."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2878.871587606354!2d-79.25622102326802!3d43.85905624535496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4d7647895e557%3A0x8956973e89c67623!2sBBS%20Flooring!5e0!3m2!1sen!2sca!4v1708795000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
@@ -337,11 +337,11 @@ export const locationData = {
       },
       {
         q: "What flooring is best for Toronto basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the clear winner for Toronto basements — it handles the moisture and humidity common in below-grade spaces, looks like real hardwood, and starts from just $1.49/sqft at BBS Flooring. We also carry rigid-core SPC flooring with built-in underlayment for even easier installation over concrete. Avoid solid hardwood and traditional laminate in basements — they can't handle Toronto's seasonal moisture swings."
+        a: "Waterproof luxury vinyl plank (LVP) is the clear winner for Toronto basements — it handles the moisture and humidity common in below-grade spaces, looks like real hardwood, and starts from just $1.79/sqft at BBS Flooring. We also carry rigid-core SPC flooring with built-in underlayment for even easier installation over concrete. Avoid solid hardwood and traditional laminate in basements — they can't handle Toronto's seasonal moisture swings."
       },
       {
         q: "How much does a full-home flooring installation cost in Toronto?",
-        a: "At BBS Flooring, a typical Toronto home (1,200-2,000 sqft) costs $2,500-$8,000 for materials depending on your flooring choice — vinyl plank from $1.49/sqft, laminate from $1.49/sqft, or engineered hardwood from $3.69/sqft. Installation rates are quoted separately based on your subfloor condition and layout. We provide free in-home estimates with detailed pricing — no surprises. Call (647) 428-1111."
+        a: "At BBS Flooring, a typical Toronto home (1,200-2,000 sqft) costs $2,500-$8,000 for materials depending on your flooring choice — vinyl plank from $1.79/sqft, laminate from $1.49/sqft, or engineered hardwood from $3.69/sqft. Installation rates are quoted separately based on your subfloor condition and layout. We provide free in-home estimates with detailed pricing — no surprises. Call (647) 428-1111."
       },
       {
         q: "Can you match existing hardwood in my Toronto home?",
@@ -356,7 +356,7 @@ export const locationData = {
   },
   stouffville: {
     city: "Stouffville",
-    title: "Flooring Store Serving Stouffville | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    title: "Flooring Store Serving Stouffville | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves Stouffville — 700+ hardwood, vinyl & laminate options from $1.49/sqft. 15 min from showroom. Free estimates. (647) 428-1111.",
     content: "Transform your Stouffville home with premium flooring from BBS Flooring, just a 15-minute drive from our Highway 7 showroom. Stouffville's spacious family homes — from established properties along Main Street to newer builds in the Bloom and Heritage Hills communities — are perfect for wide-plank engineered hardwood and luxury vinyl plank. Ballantrae's estate homes call for solid hardwood and grand staircase refinishing, while Musselman's Lake cottages benefit from waterproof LVP that handles seasonal moisture. Our installers are in Whitchurch-Stouffville weekly, and we understand the open-concept layouts and large basements common in this area. Whether you're upgrading a heritage property or finishing a brand-new build, BBS delivers showroom-quality results.",
     landmarks: ["Main Street Stouffville", "Ballantrae", "Musselman's Lake", "Heritage Hills", "Bloom"],
@@ -415,11 +415,11 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Stouffville basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Stouffville basements — it handles moisture, looks like real hardwood, and starts from $1.49/sqft at BBS Flooring. Especially important for Musselman's Lake area homes where seasonal humidity can be higher. Call (647) 428-1111."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Stouffville basements — it handles moisture, looks like real hardwood, and starts from $1.79/sqft at BBS Flooring. Especially important for Musselman's Lake area homes where seasonal humidity can be higher. Call (647) 428-1111."
       },
       {
         q: "Is BBS Flooring cheaper than big-box stores for Stouffville homeowners?",
-        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.49/sqft and engineered hardwood at $3.69/sqft — typically 20-40% below Home Depot or Lowe's for comparable quality. Our Markham showroom is just 15 minutes from Stouffville. Call (647) 428-1111."
+        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.79/sqft and engineered hardwood at $3.69/sqft — typically 20-40% below Home Depot or Lowe's for comparable quality. Our Markham showroom is just 15 minutes from Stouffville. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46061.76344583649!2d-79.29427014605174!3d43.96969561085292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d52ca702672b1d%3A0xe549520775d71837!2sWhitchurch-Stouffville%2C%20ON!5e0!3m2!1sen!2sca!4v1708795100000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -451,7 +451,7 @@ export const locationData = {
     city: "Richmond Hill",
     title: "Flooring Store Serving Richmond Hill | Hardwood & Vinyl Installation | BBS Flooring",
     description: "BBS Flooring serves Richmond Hill — 700+ engineered hardwood, vinyl & laminate options. 10 min from showroom. Free in-home estimates. (647) 428-1111.",
-    content: "BBS Flooring is Richmond Hill's trusted flooring partner, located just 10 minutes east on Highway 7. From executive homes in Oak Ridges and South Richvale to family properties near Hillcrest Mall and newer developments around Elgin Mills, we deliver premium flooring solutions tailored to Richmond Hill's upscale housing market. Richmond Hill is one of York Region's most desirable communities, and its homeowners expect quality that matches their investment. Engineered hardwood is our most popular product here — Richmond Hill homeowners love the wide-plank European oak look from brands like Vidar and Wickham, available from $3.69/sqft. We also specialize in dustless staircase refinishing and custom hardwood installation that adds lasting value to your property. Lake Wilcox area homes with walkout basements are ideal candidates for our waterproof LVP options starting from $1.49/sqft. Whether you're upgrading a new-build with builder-grade laminate or renovating a mature South Richvale home, BBS delivers precision craftsmanship and wholesale-direct pricing that Richmond Hill homeowners have trusted since 2010.",
+    content: "BBS Flooring is Richmond Hill's trusted flooring partner, located just 10 minutes east on Highway 7. From executive homes in Oak Ridges and South Richvale to family properties near Hillcrest Mall and newer developments around Elgin Mills, we deliver premium flooring solutions tailored to Richmond Hill's upscale housing market. Richmond Hill is one of York Region's most desirable communities, and its homeowners expect quality that matches their investment. Engineered hardwood is our most popular product here — Richmond Hill homeowners love the wide-plank European oak look from brands like Vidar and Wickham, available from $3.69/sqft. We also specialize in dustless staircase refinishing and custom hardwood installation that adds lasting value to your property. Lake Wilcox area homes with walkout basements are ideal candidates for our waterproof LVP options starting from $1.79/sqft. Whether you're upgrading a new-build with builder-grade laminate or renovating a mature South Richvale home, BBS delivers precision craftsmanship and wholesale-direct pricing that Richmond Hill homeowners have trusted since 2010.",
     landmarks: ["Oak Ridges", "Hillcrest Mall", "Lake Wilcox", "South Richvale", "Elgin Mills"],
     services: [
       {
@@ -504,7 +504,7 @@ export const locationData = {
       },
       {
         q: "What flooring is best for Richmond Hill basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Richmond Hill basements — especially walkout basements in the Oak Ridges and Lake Wilcox areas. LVP handles moisture, looks like real hardwood, and starts from $1.49/sqft at BBS Flooring. We also carry rigid-core SPC with built-in underlayment for concrete subfloors. Call (647) 428-1111."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Richmond Hill basements — especially walkout basements in the Oak Ridges and Lake Wilcox areas. LVP handles moisture, looks like real hardwood, and starts from $1.79/sqft at BBS Flooring. We also carry rigid-core SPC with built-in underlayment for concrete subfloors. Call (647) 428-1111."
       },
       {
         q: "How much does a full-home flooring renovation cost in Richmond Hill?",
@@ -581,7 +581,7 @@ export const locationData = {
     faqs: [
       {
         q: "What's the best waterproof flooring for Pickering homes?",
-        a: "Luxury vinyl plank (LVP) and rigid-core SPC flooring are the best waterproof options for Pickering — especially for basements and lakeside properties near Frenchman's Bay. BBS Flooring carries premium waterproof options starting from $1.49/sqft. Call (647) 428-1111 for a free estimate."
+        a: "Luxury vinyl plank (LVP) and rigid-core SPC flooring are the best waterproof options for Pickering — especially for basements and lakeside properties near Frenchman's Bay. BBS Flooring carries premium waterproof options starting from $1.79/sqft. Call (647) 428-1111 for a free estimate."
       },
       {
         q: "Do you deliver flooring to Pickering?",
@@ -589,7 +589,7 @@ export const locationData = {
       },
       {
         q: "How much does vinyl flooring cost in Pickering?",
-        a: "At BBS Flooring, luxury vinyl plank starts from $1.49/sqft — significantly less than big-box stores. We carry over 200 vinyl flooring options. Visit our Markham showroom (20 minutes via Hwy 401) or call (647) 428-1111 for a free quote."
+        a: "At BBS Flooring, luxury vinyl plank starts from $1.79/sqft — significantly less than big-box stores. We carry over 200 vinyl flooring options. Visit our Markham showroom (20 minutes via Hwy 401) or call (647) 428-1111 for a free quote."
       },
       {
         q: "Do you serve Seaton and Duffin Heights in Pickering?",
@@ -605,7 +605,7 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Pickering basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Pickering basements, especially near Frenchman's Bay where humidity levels can be higher. LVP handles moisture, looks like real hardwood, and starts from $1.49/sqft at BBS Flooring. We also carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Pickering basements, especially near Frenchman's Bay where humidity levels can be higher. LVP handles moisture, looks like real hardwood, and starts from $1.79/sqft at BBS Flooring. We also carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92376.51658428178!2d-79.16853606626604!3d43.85489815037146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4de1937318041%3A0x5037b28c7231c60!2sPickering%2C%20ON!5e0!3m2!1sen!2sca!4v1708795300000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -635,7 +635,7 @@ export const locationData = {
   },
   ajax: {
     city: "Ajax",
-    title: "Flooring Store Serving Ajax | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    title: "Flooring Store Serving Ajax | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves Ajax — 700+ hardwood, vinyl & laminate options from $1.49/sqft. Professional installation. Free estimates. (647) 428-1111.",
     content: "Looking for reliable flooring installation in Ajax? BBS Flooring delivers quality craftsmanship at wholesale prices, just a 20-minute drive from our Markham showroom. Ajax's family-friendly neighbourhoods — from established areas near the Ajax Waterfront and downtown to newer developments in Salem and Richardson Point — feature the split-level homes and open-concept layouts that our installers excel at. Laminate flooring is a popular choice for Ajax families with kids and pets, offering scratch resistance and easy maintenance from just $1.49/sqft. For main floors, our engineered hardwood collections from NAF, Triforest, and Wickham deliver the upscale look Ajax homeowners want. We handle everything from subfloor leveling to the final trim.",
     landmarks: ["Ajax Waterfront", "RioCan Durham Centre", "Downtown Ajax", "Salem", "Richardson Point"],
@@ -674,11 +674,11 @@ export const locationData = {
     faqs: [
       {
         q: "What's the best flooring for Ajax homes with kids and pets?",
-        a: "Laminate and luxury vinyl plank are the top choices for busy Ajax families — both are scratch-resistant, easy to clean, and start from just $1.49/sqft at BBS Flooring. We carry AC5-rated laminate that handles heavy foot traffic. Call (647) 428-1111 for a free estimate."
+        a: "Laminate and luxury vinyl plank are the top choices for busy Ajax families — both are scratch-resistant, easy to clean, and start from just $1.49/sqft (laminate) and $1.79/sqft (vinyl) at BBS Flooring. We carry AC5-rated laminate that handles heavy foot traffic. Call (647) 428-1111 for a free estimate."
       },
       {
         q: "How much does flooring installation cost in Ajax?",
-        a: "BBS Flooring offers competitive installation rates across Ajax. Vinyl and laminate start from $1.49/sqft for materials, and engineered hardwood from $3.69/sqft. We provide free in-home estimates with no obligation — call (647) 428-1111 to schedule."
+        a: "BBS Flooring offers competitive installation rates across Ajax. Laminate starts from $1.49/sqft and vinyl from $1.79/sqft for materials, and engineered hardwood from $3.69/sqft. We provide free in-home estimates with no obligation — call (647) 428-1111 to schedule."
       },
       {
         q: "Do you remove old carpet in Ajax before installing new flooring?",
@@ -686,7 +686,7 @@ export const locationData = {
       },
       {
         q: "Can you install laminate flooring in my Ajax basement?",
-        a: "We recommend waterproof luxury vinyl plank over laminate for basements due to Ajax's moisture conditions. LVP looks identical to hardwood, handles humidity, and starts from $1.49/sqft at BBS Flooring. Call (647) 428-1111 for basement-specific recommendations."
+        a: "We recommend waterproof luxury vinyl plank over laminate for basements due to Ajax's moisture conditions. LVP looks identical to hardwood, handles humidity, and starts from $1.79/sqft at BBS Flooring. Call (647) 428-1111 for basement-specific recommendations."
       },
       {
         q: "How far is BBS Flooring from Ajax?",
@@ -717,7 +717,7 @@ export const locationData = {
   },
   whitby: {
     city: "Whitby",
-    title: "Flooring Store Serving Whitby | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    title: "Flooring Store Serving Whitby | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves Whitby & Brooklin — 700+ hardwood, vinyl & laminate options from $1.49/sqft. Free in-home estimates. (647) 428-1111.",
     content: "BBS Flooring extends our expert services to Whitby and Brooklin, approximately 25 minutes from our Markham showroom via Highway 407. Whitby's growing community features everything from charming century homes near Port Whitby to sprawling new builds in Brooklin — and each requires different flooring expertise. Scratch-resistant vinyl plank is ideal for Whitby's busy family homes, while engineered hardwood adds elegance to Brooklin's newer executive properties. We also specialize in staircase refinishing and recapping, a popular upgrade for Whitby's two-storey homes. Our Durham Region installation crews deliver the same precision and care as if you lived next door to our showroom.",
     landmarks: ["Brooklin", "Port Whitby", "Whitby Centrum", "Thickson Point", "Downtown Whitby"],
@@ -768,7 +768,7 @@ export const locationData = {
       },
       {
         q: "How do I choose between vinyl and laminate for my Whitby home?",
-        a: "For Whitby homes, we typically recommend vinyl plank for basements and bathrooms (it's 100% waterproof) and laminate for bedrooms and living areas (it's more affordable). Both start from $1.49/sqft at BBS Flooring. Call (647) 428-1111 for personalized advice."
+        a: "For Whitby homes, we typically recommend vinyl plank for basements and bathrooms (it's 100% waterproof) and laminate for bedrooms and living areas (it's more affordable). Laminate starts from $1.49/sqft and vinyl from $1.79/sqft at BBS Flooring. Call (647) 428-1111 for personalized advice."
       },
       {
         q: "What's the best flooring for new builds in Brooklin?",
@@ -776,7 +776,7 @@ export const locationData = {
       },
       {
         q: "How much does flooring cost for a Whitby home?",
-        a: "At BBS Flooring, materials start from $1.49/sqft for vinyl plank and laminate, and $3.69/sqft for engineered hardwood. A typical Whitby home (1,500-2,500 sqft) costs $2,500-$9,000 for materials. We provide free in-home estimates with detailed pricing. Call (647) 428-1111."
+        a: "At BBS Flooring, materials start from $1.49/sqft for laminate and $1.79/sqft for vinyl plank, and $3.69/sqft for engineered hardwood. A typical Whitby home (1,500-2,500 sqft) costs $2,500-$9,000 for materials. We provide free in-home estimates with detailed pricing. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92330.15570887327!2d-78.99583485573434!3d43.90565860471239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51c4a00445f1b%3A0x280e8e4a1a5b46e0!2sWhitby%2C%20ON!5e0!3m2!1sen!2sca!4v1708795500000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -854,7 +854,7 @@ export const locationData = {
       },
       {
         q: "What flooring is best for Vaughan basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the best choice for Vaughan basements — it handles moisture, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. For Vaughan homes with walkout basements, LVP creates a seamless look from the living space to the lower level. We also carry rigid-core SPC with built-in underlayment for direct installation over concrete."
+        a: "Waterproof luxury vinyl plank (LVP) is the best choice for Vaughan basements — it handles moisture, is warm underfoot, and starts from $1.79/sqft at BBS Flooring. For Vaughan homes with walkout basements, LVP creates a seamless look from the living space to the lower level. We also carry rigid-core SPC with built-in underlayment for direct installation over concrete."
       },
       {
         q: "How much does hardwood flooring cost in Vaughan?",
@@ -981,7 +981,7 @@ export const locationData = {
   },
   newmarket: {
     city: "Newmarket",
-    title: "Flooring Store Serving Newmarket | Laminate & Hardwood From $1.49/sqft | BBS Flooring",
+    title: "Flooring Store Serving Newmarket | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves Newmarket — 700+ laminate, vinyl & hardwood options from $1.49/sqft. Free in-home estimates. (647) 428-1111.",
     content: "BBS Flooring is a trusted name in Newmarket for quality flooring upgrades, serving homeowners from the Upper Canada Mall area to historic Main Street South and the growing communities near Mulock Drive. Newmarket's mix of established bungalows, mature two-storey homes, and newer townhome developments means we install across every price point — affordable laminate for rental units and starter homes, luxury vinyl plank for family areas, and premium engineered hardwood for dream renovations. Our Markham showroom is 25 minutes south via Highway 404, and our installers are in Newmarket regularly. Whether you're refreshing a single room or renovating an entire house, BBS delivers showroom-quality results at wholesale prices.",
     landmarks: ["Upper Canada Mall", "Main Street South", "Magna Centre", "Mulock Drive", "Davis Drive corridor"],
@@ -1020,7 +1020,7 @@ export const locationData = {
     faqs: [
       {
         q: "What's the most affordable flooring option for Newmarket homes?",
-        a: "Laminate and vinyl plank flooring both start from $1.49/sqft at BBS Flooring — far below big-box store prices. Laminate is ideal for bedrooms and living rooms, while vinyl plank works everywhere including basements. Call (647) 428-1111 for a free quote."
+        a: "Laminate starts from $1.49/sqft and vinyl plank from $1.79/sqft at BBS Flooring — far below big-box store prices. Laminate is ideal for bedrooms and living rooms, while vinyl plank works everywhere including basements. Call (647) 428-1111 for a free quote."
       },
       {
         q: "Do you install flooring in older Newmarket homes near Main Street?",
@@ -1032,11 +1032,11 @@ export const locationData = {
       },
       {
         q: "Do you offer flooring for Newmarket townhomes and condos?",
-        a: "Absolutely. BBS Flooring supplies and installs flooring for Newmarket townhomes and condos — including vinyl plank that meets sound-rating requirements. We can advise on condo-board-friendly options from $1.49/sqft. Call (647) 428-1111."
+        a: "Absolutely. BBS Flooring supplies and installs flooring for Newmarket townhomes and condos — including vinyl plank that meets sound-rating requirements. We can advise on condo-board-friendly options from $1.79/sqft. Call (647) 428-1111."
       },
       {
         q: "What's the best flooring for Newmarket basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Newmarket basements — it handles moisture, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Newmarket basements — it handles moisture, is warm underfoot, and starts from $1.79/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
       },
       {
         q: "Can you upgrade builder-grade flooring in new Newmarket homes?",
@@ -1063,7 +1063,7 @@ export const locationData = {
   },
   aurora: {
     city: "Aurora",
-    title: "Flooring Store Serving Aurora | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    title: "Flooring Store Serving Aurora | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves Aurora — 700+ hardwood, vinyl & laminate options from $1.49/sqft. 20 min from showroom. Free estimates. (647) 428-1111.",
     content: "We bring the showroom to you in Aurora with our free in-home measurement service. BBS Flooring serves Aurora homeowners from established properties in Aurora Village and St. Andrew's Valley to executive homes near Bayview Wellington and newer builds along Leslie Street. Aurora's mature, tree-lined neighbourhoods are home to some of York Region's most beautiful properties — and our premium engineered hardwood and solid hardwood collections complement them perfectly. We specialize in seamless room-to-room transitions, custom stair refinishing, and hardwood refinishing that breathes new life into existing floors. Our Markham showroom is just 20 minutes south via Highway 404, with over 700 flooring options to browse in person.",
     landmarks: ["Aurora Village", "St. Andrew's Valley", "Bayview Wellington", "Town Park", "Henderson Drive"],
@@ -1118,7 +1118,7 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Aurora basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Aurora basements — it handles Ontario's seasonal moisture swings, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Aurora basements — it handles Ontario's seasonal moisture swings, is warm underfoot, and starts from $1.79/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
       },
       {
         q: "How much does a full-home flooring renovation cost in Aurora?",
@@ -1145,9 +1145,9 @@ export const locationData = {
   },
   scarborough: {
     city: "Scarborough",
-    title: "Flooring Store Serving Scarborough | Vinyl & Hardwood From $1.49/sqft | BBS Flooring",
+    title: "Flooring Store Serving Scarborough | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves all of Scarborough — 700+ vinyl, hardwood & laminate options from $1.49/sqft. 15 min from showroom. Free in-home estimates. (647) 428-1111.",
-    content: "BBS Flooring serves all of Scarborough with premium flooring installation — from the Bluffs to Agincourt, Malvern to West Hill, Highland Creek to Woburn. Just 15 minutes from our Markham showroom via Highway 401 or Steeles Avenue, Scarborough is one of our busiest and most consistent service areas. The neighbourhood's incredible diversity of housing — bungalows from the 1950s-70s, backsplits, semi-detached homes, high-rise condos, and newer townhome developments — means we install every type of flooring daily. Waterproof luxury vinyl plank is the top seller for Scarborough's finished basements and busy family homes, while engineered hardwood is the upgrade of choice for main-floor renovations in Agincourt and Birch Cliff. We also see high demand for carpet-to-hardwood conversions and stair refinishing in Scarborough's mature two-storey homes. Scarborough's value-conscious homeowners appreciate our wholesale-direct pricing: vinyl plank from $1.49/sqft and engineered hardwood from $3.69/sqft — typically 20-40% below what Home Depot or Lowe's charges for comparable quality. Our installation crews are in Scarborough almost every day, and we can usually schedule within a week.",
+    content: "BBS Flooring serves all of Scarborough with premium flooring installation — from the Bluffs to Agincourt, Malvern to West Hill, Highland Creek to Woburn. Just 15 minutes from our Markham showroom via Highway 401 or Steeles Avenue, Scarborough is one of our busiest and most consistent service areas. The neighbourhood's incredible diversity of housing — bungalows from the 1950s-70s, backsplits, semi-detached homes, high-rise condos, and newer townhome developments — means we install every type of flooring daily. Waterproof luxury vinyl plank is the top seller for Scarborough's finished basements and busy family homes, while engineered hardwood is the upgrade of choice for main-floor renovations in Agincourt and Birch Cliff. We also see high demand for carpet-to-hardwood conversions and stair refinishing in Scarborough's mature two-storey homes. Scarborough's value-conscious homeowners appreciate our wholesale-direct pricing: vinyl plank from $1.79/sqft and engineered hardwood from $3.69/sqft — typically 20-40% below what Home Depot or Lowe's charges for comparable quality. Our installation crews are in Scarborough almost every day, and we can usually schedule within a week.",
     landmarks: ["Scarborough Town Centre", "Agincourt", "The Bluffs", "Malvern", "West Hill"],
     services: [
       {
@@ -1192,7 +1192,7 @@ export const locationData = {
       {
         name: "Malvern & Rouge",
         slug: "malvern",
-        description: "Malvern and the Rouge community in northeast Scarborough feature spacious family homes and townhomes with large basements and open-concept main floors. This is one of Scarborough's best-value neighbourhoods for renovation, and flooring upgrades deliver the highest ROI. Luxury vinyl plank is the go-to product here — it's waterproof, scratch-resistant, handles heavy family foot traffic, and starts from just $1.49/sqft. For homeowners looking to add value before selling, our engineered hardwood installations transform Malvern homes from dated to modern in just 2-3 days.",
+        description: "Malvern and the Rouge community in northeast Scarborough feature spacious family homes and townhomes with large basements and open-concept main floors. This is one of Scarborough's best-value neighbourhoods for renovation, and flooring upgrades deliver the highest ROI. Luxury vinyl plank is the go-to product here — it's waterproof, scratch-resistant, handles heavy family foot traffic, and starts from just $1.79/sqft. For homeowners looking to add value before selling, our engineered hardwood installations transform Malvern homes from dated to modern in just 2-3 days.",
         housingTypes: "Detached family homes, semi-detached, freehold townhomes, stacked townhomes",
         topProducts: "Waterproof LVP, affordable engineered hardwood, laminate for bedrooms, carpet removal"
       },
@@ -1214,7 +1214,7 @@ export const locationData = {
     faqs: [
       {
         q: "How much does flooring cost in Scarborough?",
-        a: "At BBS Flooring, vinyl plank starts from $1.49/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft — typically 20-40% below Scarborough big-box stores. A typical Scarborough home (1,200-1,800 sqft) costs $2,000-$7,000 for materials depending on your choice. We offer free in-home estimates across all of Scarborough. Call (647) 428-1111."
+        a: "At BBS Flooring, vinyl plank starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft — typically 20-40% below Scarborough big-box stores. A typical Scarborough home (1,200-1,800 sqft) costs $2,000-$7,000 for materials depending on your choice. We offer free in-home estimates across all of Scarborough. Call (647) 428-1111."
       },
       {
         q: "Do you replace carpet with hardwood in Scarborough?",
@@ -1226,7 +1226,7 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Scarborough basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the best choice for Scarborough basements — it handles the moisture and humidity common in below-grade spaces, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We also carry rigid-core SPC with built-in underlayment for even easier installation over concrete. Avoid solid hardwood in Scarborough basements — moisture will cause warping and cupping."
+        a: "Waterproof luxury vinyl plank (LVP) is the best choice for Scarborough basements — it handles the moisture and humidity common in below-grade spaces, is warm underfoot, and starts from $1.79/sqft at BBS Flooring. We also carry rigid-core SPC with built-in underlayment for even easier installation over concrete. Avoid solid hardwood in Scarborough basements — moisture will cause warping and cupping."
       },
       {
         q: "How long does flooring installation take in Scarborough?",
@@ -1234,7 +1234,7 @@ export const locationData = {
       },
       {
         q: "Is BBS Flooring cheaper than Home Depot for Scarborough homeowners?",
-        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.49/sqft (vs $2.99-$5.99 at Home Depot) and our engineered hardwood starts at $3.69/sqft (vs $5.99-$9.99). Plus you get expert advice from flooring specialists, not general retail staff. Visit our Markham showroom — just 15 minutes from Scarborough — to compare."
+        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.79/sqft (vs $2.99-$5.99 at Home Depot) and our engineered hardwood starts at $3.69/sqft (vs $5.99-$9.99). Plus you get expert advice from flooring specialists, not general retail staff. Visit our Markham showroom — just 15 minutes from Scarborough — to compare."
       },
       {
         q: "Do you install in Scarborough condos and apartments?",
@@ -1249,9 +1249,9 @@ export const locationData = {
   },
   oshawa: {
     city: "Oshawa",
-    title: "Flooring Store Serving Oshawa | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    title: "Flooring Store Serving Oshawa | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves Oshawa & Durham — 700+ vinyl, hardwood & laminate options from $1.49/sqft. Professional installation. (647) 428-1111.",
-    content: "BBS Flooring proudly serves Oshawa and the wider Durham Region with top-quality flooring solutions. Whether you're renovating a family home near Lakeview Park, upgrading a property in north Oshawa, or fitting out a student rental near Durham College, our licensed installers deliver precision craftsmanship at contractor-friendly pricing. Oshawa's affordable housing market makes it a renovation hotspot — and flooring upgrades are the highest-ROI improvement you can make. Laminate and luxury vinyl plank are our most popular products for Oshawa, offering durability and style from just $1.49/sqft. For established homes in central Oshawa and Taunton, our engineered hardwood and stair refinishing services add significant value. Our showroom is 30 minutes west via Highway 401.",
+    content: "BBS Flooring proudly serves Oshawa and the wider Durham Region with top-quality flooring solutions. Whether you're renovating a family home near Lakeview Park, upgrading a property in north Oshawa, or fitting out a student rental near Durham College, our licensed installers deliver precision craftsmanship at contractor-friendly pricing. Oshawa's affordable housing market makes it a renovation hotspot — and flooring upgrades are the highest-ROI improvement you can make. Laminate (from $1.49/sqft) and luxury vinyl plank (from $1.79/sqft) are our most popular products for Oshawa, offering durability and style at wholesale-direct pricing. For established homes in central Oshawa and Taunton, our engineered hardwood and stair refinishing services add significant value. Our showroom is 30 minutes west via Highway 401.",
     landmarks: ["Oshawa Centre", "Lakeview Park", "Durham College area", "Taunton", "North Oshawa"],
     services: [
       {
@@ -1288,11 +1288,11 @@ export const locationData = {
     faqs: [
       {
         q: "What's the most cost-effective flooring for Oshawa homes?",
-        a: "Luxury vinyl plank and laminate both start from just $1.49/sqft at BBS Flooring — making them ideal for Oshawa's value-conscious homeowners. Both are durable, easy to maintain, and available in realistic wood-look finishes. Call (647) 428-1111 for a free estimate."
+        a: "Laminate starts from $1.49/sqft and luxury vinyl plank from $1.79/sqft at BBS Flooring — making them ideal for Oshawa's value-conscious homeowners. Both are durable, easy to maintain, and available in realistic wood-look finishes. Call (647) 428-1111 for a free estimate."
       },
       {
         q: "Do you install flooring in rental properties in Oshawa?",
-        a: "Yes — BBS Flooring works with Oshawa landlords and property investors. We offer durable, scratch-resistant laminate and vinyl that stands up to tenant wear, starting from $1.49/sqft. Bulk pricing available for multi-unit projects. Call (647) 428-1111."
+        a: "Yes — BBS Flooring works with Oshawa landlords and property investors. We offer durable, scratch-resistant laminate (from $1.49/sqft) and vinyl (from $1.79/sqft) that stands up to tenant wear. Bulk pricing available for multi-unit projects. Call (647) 428-1111."
       },
       {
         q: "How far is BBS Flooring from Oshawa?",
@@ -1304,11 +1304,11 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Oshawa basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Oshawa basements — it handles moisture, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Oshawa basements — it handles moisture, is warm underfoot, and starts from $1.79/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
       },
       {
         q: "Do you offer bulk pricing for Oshawa rental properties?",
-        a: "Yes — BBS Flooring offers wholesale-direct pricing and bulk discounts for landlords and property investors in Oshawa. Our durable laminate and vinyl plank stand up to tenant wear and start from just $1.49/sqft. Call (647) 428-1111 to discuss your multi-unit project."
+        a: "Yes — BBS Flooring offers wholesale-direct pricing and bulk discounts for landlords and property investors in Oshawa. Our durable laminate (from $1.49/sqft) and vinyl plank (from $1.79/sqft) that stand up to tenant wear. Call (647) 428-1111 to discuss your multi-unit project."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92376.5165!2d-78.8659!3d43.8971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51b9c2e3b64d9%3A0x5037b28c7231d40!2sOshawa%2C%20ON!5e0!3m2!1sen!2sca!4v1710532900000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
@@ -1331,7 +1331,7 @@ export const locationData = {
   },
   durham: {
     city: "Durham Region",
-    title: "Flooring Services Durham Region | Hardwood & Vinyl From $1.49/sqft | BBS Flooring",
+    title: "Flooring Services Durham Region | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves all of Durham Region — Pickering to Oshawa. 700+ options from $1.49/sqft. Free estimates. (647) 428-1111.",
     content: "BBS Flooring is Durham Region's go-to flooring partner, serving every community from Pickering to Oshawa with premium hardwood, luxury vinyl plank, and laminate installation. Our Markham showroom is just minutes from Durham via Highway 407, and our installers are in the region daily. Durham Region's booming housing market — from new builds in Seaton to renovations in Brooklin and established homes in Whitby — keeps our crews busy year-round. We carry over 700 flooring products from 15+ brands, all at wholesale pricing that Durham homeowners and contractors love. Whether you need a single room of vinyl plank or a full-home hardwood installation, BBS delivers the same quality and attention to detail across every Durham community.",
     landmarks: ["Pickering", "Ajax", "Whitby", "Oshawa", "Courtice", "Brooklin"],
@@ -1378,7 +1378,7 @@ export const locationData = {
       },
       {
         q: "What flooring is best for new builds in Durham Region?",
-        a: "Engineered hardwood (from $3.69/sqft) is the top choice for Durham's new builds — it's stable over concrete subfloors and compatible with radiant heating. For basements and secondary areas, waterproof vinyl plank from $1.49/sqft is ideal. Call BBS Flooring at (647) 428-1111."
+        a: "Engineered hardwood (from $3.69/sqft) is the top choice for Durham's new builds — it's stable over concrete subfloors and compatible with radiant heating. For basements and secondary areas, waterproof vinyl plank from $1.79/sqft is ideal. Call BBS Flooring at (647) 428-1111."
       },
       {
         q: "Can you install flooring in Courtice and Bowmanville?",
@@ -1386,7 +1386,7 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Durham Region basements?",
-        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Durham Region basements — it handles moisture, is warm underfoot, and starts from $1.49/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
+        a: "Waterproof luxury vinyl plank (LVP) is the top choice for Durham Region basements — it handles moisture, is warm underfoot, and starts from $1.79/sqft at BBS Flooring. We carry rigid-core SPC with built-in underlayment for easy installation over concrete. Call (647) 428-1111."
       },
       {
         q: "Do you offer free delivery to Durham Region?",

@@ -100,7 +100,7 @@ export default function FloorFinderPage() {
             </p>
             <h3>Popular Flooring Types</h3>
             <ul>
-              <li><strong>Vinyl / SPC Flooring</strong> — Waterproof, scratch-resistant, budget-friendly. From $2.19/sqft. Perfect for kitchens, bathrooms, and basements.</li>
+              <li><strong>Vinyl / SPC Flooring</strong> — Waterproof, scratch-resistant, budget-friendly. From $1.79/sqft. Perfect for kitchens, bathrooms, and basements.</li>
               <li><strong>Laminate Flooring</strong> — Durable, affordable, easy to install. From $1.49/sqft. Great for bedrooms and living rooms.</li>
               <li><strong>Engineered Hardwood</strong> — Real wood beauty with enhanced stability. From $3.69/sqft. Ideal for any room except wet areas.</li>
               <li><strong>Solid Hardwood</strong> — Timeless, refinishable, premium. From $5.10/sqft. Best for living rooms, dining rooms, and bedrooms.</li>
@@ -124,7 +124,7 @@ export default function FloorFinderPage() {
               <Phone className="w-5 h-5" />
               Call (647) 428-1111 for Expert Help
             </a>
-            <p className="text-sm text-slate-400 mt-3">Mon–Sat 10am–7pm · Free estimates</p>
+            <p className="text-sm text-slate-400 mt-3">Mon–Sat 10am–5pm · Free estimates</p>
           </div>
         </div>
       </section>
@@ -142,7 +142,7 @@ export default function FloorFinderPage() {
                 name: 'What is the best flooring for kitchens?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Vinyl (SPC) flooring is the best choice for kitchens because it is 100% waterproof, scratch-resistant, and easy to clean. BBS Flooring offers vinyl starting from $2.19/sqft with professional installation across the GTA.',
+                  text: 'Vinyl (SPC) flooring is the best choice for kitchens because it is 100% waterproof, scratch-resistant, and easy to clean. BBS Flooring offers vinyl starting from $1.79/sqft with professional installation across the GTA.',
                 },
               },
               {
@@ -158,7 +158,7 @@ export default function FloorFinderPage() {
                 name: 'What is the cheapest flooring option?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Laminate flooring starts from $1.49/sqft at BBS Flooring, making it the most affordable option. Vinyl flooring starts from $2.19/sqft and offers waterproof protection at a budget-friendly price.',
+                  text: 'Laminate flooring starts from $1.49/sqft at BBS Flooring, making it the most affordable option. Vinyl flooring starts from $1.79/sqft and offers waterproof protection at a budget-friendly price.',
                 },
               },
               {

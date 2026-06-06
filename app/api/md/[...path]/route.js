@@ -190,7 +190,7 @@ export async function GET(request, { params }) {
 ## Quick Facts
 - **812 products** in stock from 15 brands
 - **Engineered Hardwood:** 258 options from $3.69/sqft (+ 192 Vidar premium call-for-pricing)
-- **Vinyl/SPC:** 188 options from $2.19/sqft — 100% waterproof
+- **Vinyl/SPC:** 188 options from $1.79/sqft — 100% waterproof
 - **Laminate:** 99 options from $1.49/sqft
 - **Solid Hardwood:** 75 options from $5.10/sqft
 - **Installation:** from $2.00/sqft labour (WSIB-insured, own crew)
@@ -199,7 +199,7 @@ export async function GET(request, { params }) {
 ## Contact
 - Phone: (647) 428-1111
 - Showroom: 6061 Highway 7, Unit B, Markham, ON L3P 3B2
-- Hours: Mon–Fri 9am–6pm, Sat 10am–5pm
+- Hours: Mon–Sat 10am–5pm
 - Website: https://bbsflooring.ca
 
 ## Why Choose BBS
@@ -228,7 +228,7 @@ BBS Flooring was founded in 2012 with a simple mission: bring quality flooring t
 - **Own installation crew** — WSIB insured, no subcontractors
 - **Showroom:** 6061 Highway 7, Unit B, Markham, ON L3P 3B2
 - **Phone:** (647) 428-1111
-- **Hours:** Monday–Friday 9am–6pm, Saturday 10am–5pm
+- **Hours:** Monday–Saturday 10am–5pm
 
 ## Services
 - Flooring supply and sales
@@ -329,7 +329,7 @@ The entire Greater Toronto Area: Markham, Toronto, Scarborough, Pickering, Ajax,
 
 ## Why ${cityName} Homeowners Choose BBS
 - **812 products in stock** — see, touch, and take home samples the same day
-- **Direct pricing:** Engineered hardwood from $3.69/sqft, vinyl from $2.19/sqft, laminate from $1.49/sqft
+- **Direct pricing:** Engineered hardwood from $3.69/sqft, vinyl from $1.79/sqft, laminate from $1.49/sqft
 - **Free in-home measurement** in ${cityName} — no obligation
 - **Professional installation** by our own WSIB-insured crew
 - **Same-week installation** available for in-stock products

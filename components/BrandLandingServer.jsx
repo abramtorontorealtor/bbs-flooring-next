@@ -183,7 +183,7 @@ export default function BrandLandingServer({
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-amber-600">🕐</span>
-                <span>Mon–Fri 9am–6pm · Sat 10am–5pm</span>
+                <span>Mon–Sat 10am–5pm</span>
               </div>
             </div>
           </div>

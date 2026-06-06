@@ -25,7 +25,7 @@ const faqItems = [
   },
   {
     question: 'How much does vinyl flooring cost installed in Toronto?',
-    answer: 'At BBS Flooring, vinyl materials range from $2.19–$3.59/sqft. Installation is $2.00/sqft for click-lock LVP. For a typical 500 sqft project, total installed cost is approximately $2,095–$2,795. We offer free in-home measurements and no hidden fees.',
+    answer: 'At BBS Flooring, vinyl materials range from $1.79–$3.59/sqft. Installation is $2.00/sqft for click-lock LVP. For a typical 500 sqft project, total installed cost is approximately $2,095–$2,795. We offer free in-home measurements and no hidden fees.',
   },
   {
     question: 'Is vinyl flooring good for basements?',
@@ -47,11 +47,11 @@ const faqItems = [
 
 export const metadata = {
   title: 'Vinyl Flooring Buying Guide 2026 | LVP & SPC Explained | BBS Flooring',
-  description: 'Complete guide to vinyl flooring in Canada. SPC vs WPC, wear layers, costs, installation, and the best LVP brands. 233 options from $2.19/sqft at BBS Flooring Markham.',
+  description: 'Complete guide to vinyl flooring in Canada. SPC vs WPC, wear layers, costs, installation, and the best LVP brands. 233 options from $1.79/sqft at BBS Flooring Markham.',
   alternates: { canonical: '/vinyl-flooring-guide' },
   openGraph: {
     title: 'Vinyl Flooring Buying Guide 2026 | LVP & SPC Explained | BBS Flooring',
-    description: '233 vinyl options from $2.19/sqft. SPC vs WPC, wear layers, costs, and installation explained. Real Canadian pricing from BBS Flooring Markham.',
+    description: '233 vinyl options from $1.79/sqft. SPC vs WPC, wear layers, costs, and installation explained. Real Canadian pricing from BBS Flooring Markham.',
     url: 'https://bbsflooring.ca/vinyl-flooring-guide',
     type: 'article',
   },

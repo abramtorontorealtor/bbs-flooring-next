@@ -162,15 +162,15 @@ export const wodenFlooringData = {
 export const falconFlooringData = {
   route: 'FalconFlooring',
   title: 'Falcon Flooring Markham | Affordable Hardwood, Vinyl & Laminate',
-  description: 'Shop Falcon Flooring in Markham — 56 products from $2.19/sqft. Engineered hardwood, vinyl, and waterproof laminate. Free measurements. Call (647) 428-1111.',
+  description: 'Shop Falcon Flooring in Markham — 56 products from $1.79/sqft. Engineered hardwood, vinyl, and waterproof laminate. Free measurements. Call (647) 428-1111.',
   h1: 'Falcon Flooring — Hardwood, Vinyl & Laminate',
-  subtitle: '56 Falcon products from $2.19/sqft. Real hardwood, waterproof vinyl, and 12mm laminate — quality floors at prices that make renovations actually affordable.',
+  subtitle: '56 Falcon products from $1.79/sqft. Real hardwood, waterproof vinyl, and 12mm laminate — quality floors at prices that make renovations actually affordable.',
   parentPage: null,
   schemaType: 'product',
   content: [
     {
       heading: 'Quality Flooring at Honest Prices',
-      body: `<p>Falcon is the brand we recommend when the budget matters but you're not willing to compromise on what goes under your feet. Their pricing is among the lowest in our showroom — <strong>vinyl from $2.19/sqft, laminate from $2.69/sqft, engineered hardwood from $3.89/sqft</strong> — without the quality corners you'd expect at these prices.</p>
+      body: `<p>Falcon is the brand we recommend when the budget matters but you're not willing to compromise on what goes under your feet. Their pricing is among the lowest in our showroom — <strong>vinyl from $1.79/sqft, laminate from $2.69/sqft, engineered hardwood from $3.89/sqft</strong> — without the quality corners you'd expect at these prices.</p>
 <p>They cover all three major flooring categories, which makes them ideal for whole-home renovations where you need different flooring types in different rooms but want to keep the total cost manageable.</p>`
     },
     {
@@ -179,8 +179,8 @@ export const falconFlooringData = {
 <p>Hickory is worth a special mention — it's the hardest North American wood species commercially available, making it the smart choice for homes with kids, dogs, or heavy foot traffic.</p>`
     },
     {
-      heading: 'Falcon Vinyl — 19 Options from $2.19/sqft',
-      body: `<p>Starting at <strong>$2.19/sqft</strong>, Falcon vinyl is the most affordable waterproof option in our showroom. Available in 6mm and 7mm thicknesses, including <strong>condo-approved options with integrated underpad</strong>.</p>
+      heading: 'Falcon Vinyl — 19 Options from $1.79/sqft',
+      body: `<p>Starting at <strong>$1.79/sqft</strong>, Falcon vinyl is the most affordable waterproof option in our showroom. Available in 6mm and 7mm thicknesses, including <strong>condo-approved options with integrated underpad</strong>.</p>
 <p>The 7mm condo-approved vinyl is particularly popular — it meets the sound transmission requirements that most condo boards mandate, eliminating the need for separate underlay.</p>`
     },
     {
@@ -189,7 +189,7 @@ export const falconFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Is Falcon Flooring affordable?', answer: 'Yes. Falcon is one of the most competitively priced brands at BBS Flooring. Vinyl starts at $2.19/sqft, laminate at $2.69/sqft, and engineered hardwood at $3.89/sqft. Despite the low prices, quality is consistent — we have installed Falcon flooring across the GTA without complaints.' },
+    { question: 'Is Falcon Flooring affordable?', answer: 'Yes. Falcon is one of the most competitively priced brands at BBS Flooring. Vinyl starts at $1.79/sqft, laminate at $2.69/sqft, and engineered hardwood at $3.89/sqft. Despite the low prices, quality is consistent — we have installed Falcon flooring across the GTA without complaints.' },
     { question: 'Does Falcon make condo-approved flooring?', answer: 'Yes. Falcon offers 7mm vinyl plank with integrated condo-approved underpad (5.5mm + 1.5mm) that meets the sound transmission requirements of most condo boards in the GTA. Check with your property management for specific STC/IIC requirements.' },
     { question: 'What hardwood species does Falcon offer?', answer: 'Falcon engineered hardwood comes in hickory, maple, and red oak — all in 6½" plank widths. Hickory is the hardest of the three and best suited for high-traffic areas. Available at BBS Flooring\'s Markham showroom.' },
     { question: 'Is Falcon laminate waterproof?', answer: 'Falcon offers 12mm waterproof laminate. Unlike traditional laminate which swells when exposed to moisture, waterproof laminate uses a water-resistant core that handles spills and splashes. Suitable for kitchens, entryways, and main living areas.' },

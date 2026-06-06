@@ -188,7 +188,7 @@ export default function AdLandingTemplate({
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-amber-600 flex-shrink-0" />
-                <span>Mon–Fri 9am–6pm · Sat 10am–5pm</span>
+                <span>Mon–Sat 10am–5pm</span>
               </div>
             </div>
           </div>

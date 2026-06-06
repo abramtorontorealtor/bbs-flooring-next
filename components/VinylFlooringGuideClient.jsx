@@ -57,7 +57,7 @@ export default function VinylFlooringGuideClient() {
           Quick Answer: Best Vinyl Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 188 luxury vinyl plank (LVP/SPC) options from $2.19&#8211;$3.59/sqft &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include Woden, NAF, Triforest, Simba, Falcon, and Lee. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring carries 188 luxury vinyl plank (LVP/SPC) options from $1.79&#8211;$3.59/sqft &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include Woden, NAF, Triforest, Simba, Falcon, and Lee. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -144,7 +144,7 @@ export default function VinylFlooringGuideClient() {
                 <tr className="border-b"><td className="p-4 font-medium">Sound absorption</td><td className="p-4">Moderate (needs underpad)</td><td className="p-4">Better natural sound dampening</td></tr>
                 <tr className="border-b bg-slate-50"><td className="p-4 font-medium">Thickness range</td><td className="p-4">4mm–6.5mm</td><td className="p-4">5.5mm–8mm</td></tr>
                 <tr className="border-b"><td className="p-4 font-medium">Temperature stability</td><td className="p-4">Excellent — minimal expansion</td><td className="p-4">Good — slightly more expansion</td></tr>
-                <tr className="border-b bg-slate-50"><td className="p-4 font-medium">Price range (BBS)</td><td className="p-4">$2.19–$3.59/sqft</td><td className="p-4">$2.79–$3.59/sqft</td></tr>
+                <tr className="border-b bg-slate-50"><td className="p-4 font-medium">Price range (BBS)</td><td className="p-4">$1.79–$3.59/sqft</td><td className="p-4">$2.79–$3.59/sqft</td></tr>
                 <tr><td className="p-4 font-medium">Best for</td><td className="p-4 font-semibold text-blue-700">Basements, kitchens, high-traffic</td><td className="p-4 font-semibold text-emerald-700">Bedrooms, living rooms, condos</td></tr>
               </tbody>
             </table>
@@ -157,7 +157,7 @@ export default function VinylFlooringGuideClient() {
 
           <p className="text-slate-600 leading-relaxed">
             A popular SPC entry point is the{' '}
-            <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside by Falcon (6mm SPC) at $2.19/sqft</Link>{' '}
+            <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside by Falcon (6mm SPC) at $1.79/sqft</Link>{' '}
             — an ideal budget option for basements and rental properties. For a mid-range 7mm SPC with more colour options, check out{' '}
             <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar by NAF Classic (7mm) at $2.79/sqft</Link>.
           </p>
@@ -232,7 +232,7 @@ export default function VinylFlooringGuideClient() {
               <div>
                 <p className="font-semibold text-slate-800 mb-1">Standard Residential — The Most Popular Thickness</p>
                 <p className="text-slate-600 text-sm leading-relaxed">The dominant thickness for residential vinyl in Canada. Solid underfoot feel, hides typical subfloor variation, and pairs well with attached IXPE underpad. The{' '}
-                  <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside Falcon 6mm at $2.19/sqft</Link>{' '}
+                  <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside Falcon 6mm at $1.79/sqft</Link>{' '}
                   is our best-selling entry product at this thickness. Works in kitchens, living rooms, basements, and bedrooms equally well.</p>
               </div>
             </div>
@@ -346,7 +346,7 @@ export default function VinylFlooringGuideClient() {
                 <tr className="border-b">
                   <td className="p-3 font-medium"><Link href="/falcon-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Flooring</Link></td>
                   <td className="p-3 text-center">19</td>
-                  <td className="p-3 text-center">$2.19–$2.59</td>
+                  <td className="p-3 text-center">$1.79–$2.59</td>
                   <td className="p-3">Best budget option, reliable basics for rentals and basements</td>
                 </tr>
                 <tr>
@@ -385,7 +385,7 @@ export default function VinylFlooringGuideClient() {
               <div className="bg-slate-100 px-6 py-3 flex items-center justify-between">
                 <div>
                   <span className="font-bold text-slate-800 text-lg">Budget Tier</span>
-                  <span className="ml-3 text-slate-500 text-sm font-medium">$2.19 – $2.49 / sqft</span>
+                  <span className="ml-3 text-slate-500 text-sm font-medium">$1.79 – $2.49 / sqft</span>
                 </div>
                 <span className="bg-slate-500 text-white text-xs font-bold px-3 py-1 rounded-full">ENTRY</span>
               </div>
@@ -395,7 +395,7 @@ export default function VinylFlooringGuideClient() {
                   <p className="text-xs font-semibold text-slate-500 uppercase mb-2">Example Product</p>
                   <p className="text-sm text-slate-700">
                     <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">Cliffside — Falcon Floors 6mm SPC</Link>
-                    {' '}— $2.19/sqft · 12mil wear layer · 100% waterproof · Click-lock over concrete
+                    {' '}— $1.79/sqft · 12mil wear layer · 100% waterproof · Click-lock over concrete
                   </p>
                 </div>
               </div>
@@ -497,7 +497,7 @@ export default function VinylFlooringGuideClient() {
             <div className="border-2 border-slate-200 rounded-xl p-6 hover:border-amber-400 transition-colors">
               <div className="flex items-center justify-between mb-3">
                 <span className="bg-slate-700 text-white text-xs font-bold px-3 py-1 rounded-full">BEST BUDGET</span>
-                <span className="text-amber-700 font-bold text-lg">$2.19/sqft</span>
+                <span className="text-amber-700 font-bold text-lg">$1.79/sqft</span>
               </div>
               <h3 className="font-bold text-slate-900 text-lg mb-1">
                 <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside — Falcon Floors 6mm</Link>
@@ -695,7 +695,7 @@ export default function VinylFlooringGuideClient() {
                 <tr className="border-b"><td className="p-3 font-medium">Scratch resistance</td><td className="p-3 text-center">Excellent</td><td className="p-3 text-center">Moderate</td><td className="p-3 text-center">Good</td></tr>
                 <tr className="border-b bg-slate-50"><td className="p-3 font-medium">Basement safe</td><td className="p-3 text-center">✅ Yes</td><td className="p-3 text-center">⚠️ With moisture test</td><td className="p-3 text-center">❌ Not recommended</td></tr>
                 <tr className="border-b"><td className="p-3 font-medium">Lifespan</td><td className="p-3 text-center">20–30 years</td><td className="p-3 text-center">25–50 years</td><td className="p-3 text-center">15–25 years</td></tr>
-                <tr className="border-b bg-slate-50"><td className="p-3 font-medium">Material cost (BBS)</td><td className="p-3 text-center">$2.19–$3.59</td><td className="p-3 text-center">$2.49–$9.29</td><td className="p-3 text-center">$1.49–$2.99</td></tr>
+                <tr className="border-b bg-slate-50"><td className="p-3 font-medium">Material cost (BBS)</td><td className="p-3 text-center">$1.79–$3.59</td><td className="p-3 text-center">$2.49–$9.29</td><td className="p-3 text-center">$1.49–$2.99</td></tr>
                 <tr className="border-b"><td className="p-3 font-medium">Installation cost</td><td className="p-3 text-center">$2.00/sqft</td><td className="p-3 text-center">$2.25–$4.25/sqft</td><td className="p-3 text-center">$2.00/sqft</td></tr>
                 <tr><td className="p-3 font-medium">Resale value impact</td><td className="p-3 text-center">Good</td><td className="p-3 text-center">Excellent</td><td className="p-3 text-center">Neutral</td></tr>
               </tbody>
@@ -731,7 +731,7 @@ export default function VinylFlooringGuideClient() {
               ],
               [
                 'How much does vinyl flooring cost installed in the GTA?',
-                'At BBS: budget vinyl ($2.19/sqft material) + $2.00/sqft installation = ~$4.19/sqft total. A 500 sqft main floor runs $2,095–$2,795 depending on product tier. Mid-range (7mm, 20mil) comes in around $4.79/sqft all-in. Premium 9mm vinyl with installation is ~$5.49/sqft. Book a free measurement for your exact quote — no obligation.'
+                'At BBS: budget vinyl ($1.79/sqft material) + $2.00/sqft installation = ~$4.19/sqft total. A 500 sqft main floor runs $2,095–$2,795 depending on product tier. Mid-range (7mm, 20mil) comes in around $4.79/sqft all-in. Premium 9mm vinyl with installation is ~$5.49/sqft. Book a free measurement for your exact quote — no obligation.'
               ],
               [
                 'Can you install vinyl flooring over existing flooring?',

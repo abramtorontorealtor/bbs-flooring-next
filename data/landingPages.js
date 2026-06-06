@@ -90,7 +90,7 @@ export const basementFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'What is the best flooring for a basement in Ontario?', answer: 'SPC (Stone Polymer Composite) vinyl plank is the best choice for Ontario basements. It\'s 100% waterproof, handles temperature swings, and installs directly over concrete. BBS Flooring carries 100+ waterproof vinyl options starting from $2.49/sqft.' },
+    { question: 'What is the best flooring for a basement in Ontario?', answer: 'SPC (Stone Polymer Composite) vinyl plank is the best choice for Ontario basements. It\'s 100% waterproof, handles temperature swings, and installs directly over concrete. BBS Flooring carries 100+ waterproof vinyl options starting from $1.79/sqft.' },
     { question: 'Can you put vinyl plank flooring in a basement?', answer: 'Yes — vinyl plank is ideal for basements. SPC vinyl is fully waterproof, doesn\'t need a moisture barrier in most cases (though we always test), and floats over concrete without glue. It\'s the most popular basement flooring we install.' },
     { question: 'How much does basement flooring cost in Markham?', answer: 'Waterproof vinyl plank for basements ranges from $1.79–$5.00/sqft for material. Installation adds $2.00–$2.25/sqft depending on prep needed. Call (647) 428-1111 or use our Quote Calculator for your exact cost.' },
     { question: 'Is SPC vinyl better than laminate for basements?', answer: 'Yes. While some laminate claims water resistance, only SPC vinyl is truly 100% waterproof. In a below-grade basement where moisture risk is higher, SPC is the safer long-term choice. It also doesn\'t require as much subfloor prep.' },
@@ -177,7 +177,7 @@ export const flooringShowroomMarkhamData = {
       body: `<p>BBS Flooring has been Markham's trusted flooring destination since 2012. Our <strong>5,000 sqft showroom</strong> at 6061 Highway 7 features over 600 products you can see, touch, and take home as samples.</p>
 <p><strong>📍 Address:</strong> 6061 Highway 7, Unit B, Markham, ON L3P 3A7<br/>
 <strong>📞 Phone:</strong> <a href="tel:+16474281111">(647) 428-1111</a><br/>
-<strong>🕐 Hours:</strong> Monday–Friday 9am–6pm | Saturday 10am–5pm | Sunday Closed</p>`
+<strong>🕐 Hours:</strong> Monday–Saturday 10am–5pm | Sunday Closed</p>`
     },
     {
       heading: 'What You\'ll Find In Our Showroom',

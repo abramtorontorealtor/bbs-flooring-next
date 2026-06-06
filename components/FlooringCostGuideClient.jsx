@@ -81,7 +81,7 @@ export default function FlooringCostGuideClient() {
                 {[
                   ['Engineered Hardwood', '258+ options', '$3.69–$7.59/sqft', '$4.89/sqft', 'Lee ($3.69) · Woden ($3.99) · Falcon ($3.89)'],
                   ['Solid Hardwood', '75+ options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
-                  ['Vinyl (LVP/SPC)', '188+ options', '$2.19–$3.59/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($2.49) · Woden ($2.79)'],
+                  ['Vinyl (LVP/SPC)', '188+ options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($2.49) · Woden ($2.79)'],
                   ['Laminate', '99+ options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
                 ].map(([type, options, range, avg, value], i) => (
                   <tr key={type} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
@@ -107,7 +107,7 @@ export default function FlooringCostGuideClient() {
             <h3 className="text-xl font-bold text-stone-900 mb-4">Our Top Picks at Each Price Point</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="border border-stone-200 rounded-xl p-5">
-                <p className="text-sm font-semibold text-amber-600 mb-1">💰 Budget Vinyl — $2.19/sqft</p>
+                <p className="text-sm font-semibold text-amber-600 mb-1">💰 Budget Vinyl — $1.79/sqft</p>
                 <p className="text-stone-700"><Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside by Falcon</Link> — 6mm SPC, 100% waterproof, click-lock install. Perfect for basements and rentals.</p>
               </div>
               <div className="border border-stone-200 rounded-xl p-5">
@@ -352,10 +352,10 @@ export default function FlooringCostGuideClient() {
 
           <div className="space-y-3">
             {[
-              ['What is the cheapest type of flooring?', 'Laminate is the cheapest at BBS, starting at $1.49/sqft (Tosca Floors). With installation at $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $2.19/sqft material — the second most affordable option.'],
+              ['What is the cheapest type of flooring?', 'Laminate is the cheapest at BBS, starting at $1.49/sqft (Tosca Floors). With installation at $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $1.79/sqft material — the second most affordable option.'],
               ['How much does it cost to floor 1,000 square feet?', 'At BBS Flooring: Laminate $3,490–$5,290 installed. Vinyl $4,190–$5,590 installed. Engineered hardwood $4,740–$12,240 installed. Solid hardwood $7,350–$10,500 installed. These include material + professional installation.'],
               ['Does BBS Flooring offer free estimates?', 'Yes. BBS provides free in-home measurements across the GTA. A technician measures every room, checks subfloor conditions, and provides a detailed quote — no obligation. Book at bbsflooring.ca/free-measurement or call (647) 428-1111.'],
-              ['Is hardwood flooring worth the extra cost over vinyl?', 'For primary residences — usually yes. Hardwood adds more resale value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $2.49/sqft while vinyl starts at $2.19/sqft. For rentals or basements, vinyl wins on practicality.'],
+              ['Is hardwood flooring worth the extra cost over vinyl?', 'For primary residences — usually yes. Hardwood adds more resale value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $2.49/sqft while vinyl starts at $1.79/sqft. For rentals or basements, vinyl wins on practicality.'],
               ['Is installation included in BBS flooring prices?', 'Material and labour are quoted separately for transparency. Material prices are per square foot on the website. Installation starts at $2.00/sqft for vinyl/laminate and $2.25/sqft for hardwood. This lets you compare material costs fairly.'],
               ['How should I budget for a flooring project?', 'Rule of thumb: material cost × 2 covers materials + installation + most extras. For precision, add: material + labour + old floor removal ($1.00–$3.00/sqft) + baseboards ($3.61/linear ft) + delivery ($140–$200) + 10% waste factor. BBS provides free detailed quotes.'],
               ['How much do stairs cost?', 'At BBS: Stair refinishing is $125/step. New straight hardwood treads are $185/step. Specialty stairs (open/curved) are $225/step. Pickets are $25/piece. A typical 13-step straight staircase costs $1,625–$2,405 for new treads.'],

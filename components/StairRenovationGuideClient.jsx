@@ -333,7 +333,7 @@ export default function StairRenovationGuideClient() {
               <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>The existing tread structure is solid but cosmetically worn</li>
               <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>Rental property renovation — maximum durability, minimum cost</li>
             </ul>
-            <p className="text-stone-600 text-sm mt-4">Considering vinyl for the whole project? Match your stair caps to your <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">vinyl plank flooring</Link> — options like the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum</Link> ($3.49/sqft) or budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon 6mm</Link> ($2.19/sqft) have coordinating stair cap options.</p>
+            <p className="text-stone-600 text-sm mt-4">Considering vinyl for the whole project? Match your stair caps to your <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">vinyl plank flooring</Link> — options like the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum</Link> ($3.49/sqft) or budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon 6mm</Link> ($1.79/sqft) have coordinating stair cap options.</p>
           </div>
         </section>
 

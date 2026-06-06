@@ -427,7 +427,7 @@ export default function EngineeredHardwoodGuideClient() {
 
           <div className="space-y-6">
             {[
-              ['🏠 Basements', 'Click-lock engineered hardwood over a quality underlayment with vapour barrier. Avoid nail-down (no wood subfloor in basements). Budget picks: Woden from $2.49/sqft, Falcon from $3.89/sqft. For extra moisture protection, consider vinyl (LVP) — 233 waterproof options from $2.19/sqft at BBS.'],
+              ['🏠 Basements', 'Click-lock engineered hardwood over a quality underlayment with vapour barrier. Avoid nail-down (no wood subfloor in basements). Budget picks: Woden from $2.49/sqft, Falcon from $3.89/sqft. For extra moisture protection, consider vinyl (LVP) — 233 waterproof options from $1.79/sqft at BBS.'],
               ['🏢 Condos', 'Glue-down installation over concrete is the standard for Toronto condos. Check your building\'s acoustic requirements — some require specific underlayments or STC/IIC ratings. Engineered hardwood is condo-friendly by design. BBS installs glue-down at $3.25/sqft.'],
               ['♨️ Radiant Heat', 'Engineered hardwood is the only real wood option for radiant heat. Thinner profiles (1/2") conduct heat better than 3/4". Avoid very wide planks (9"+) over radiant — more expansion movement. White Oak handles heat well. Solid hardwood is not recommended over radiant systems.'],
               ['🐾 Pets & Kids', 'Hickory (Janka 1820) is the hardest species — best for scratches and dents. Wire-brushed or hand-scraped finishes hide wear between maintenance. Matte finishes show less scratching than gloss. Avoid softer species like Walnut.'],
@@ -454,7 +454,7 @@ export default function EngineeredHardwoodGuideClient() {
               <h3 className="font-semibold text-stone-800 mb-2">❌ Basements with Active Moisture or Water History</h3>
               <p className="text-stone-600 text-sm">If your basement has ever flooded, shows efflorescence (white mineral deposits on concrete), or reads above 75% relative humidity on a moisture metre — engineered hardwood is not safe. Wood of any kind will swell, buckle, and delaminate under prolonged moisture exposure. Choose a{' '}
                 <Link href="/waterproof-flooring" className="text-amber-700 underline hover:text-amber-800">100% waterproof vinyl (LVP/SPC) floor</Link>{' '}
-                instead. BBS stocks 233 waterproof vinyl options from $2.19/sqft.
+                instead. BBS stocks 233 waterproof vinyl options from $1.79/sqft.
               </p>
             </div>
 
@@ -495,7 +495,7 @@ export default function EngineeredHardwoodGuideClient() {
           <div className="space-y-3">
             {[
               ['Can engineered hardwood be refinished?', 'Yes. Engineered hardwood with a wear layer of 2mm or more can be refinished. A 1/2" board with a 2–3mm wear layer typically allows 1–2 refinishes. Premium 3/4" boards with 4–6mm wear layers can be refinished 2–3 times — approaching solid hardwood territory.'],
-              ['Is engineered hardwood waterproof?', 'No. Engineered hardwood is more moisture-resistant than solid hardwood due to its plywood core, but it is not waterproof. Spills should be cleaned promptly. For wet areas or flood-prone basements, vinyl (LVP/SPC) flooring is the better choice — BBS carries 233 waterproof vinyl options from $2.19/sqft.'],
+              ['Is engineered hardwood waterproof?', 'No. Engineered hardwood is more moisture-resistant than solid hardwood due to its plywood core, but it is not waterproof. Spills should be cleaned promptly. For wet areas or flood-prone basements, vinyl (LVP/SPC) flooring is the better choice — BBS carries 233 waterproof vinyl options from $1.79/sqft.'],
               ['How long does engineered hardwood last?', 'With proper care, engineered hardwood lasts 25–50 years. Premium products with thick wear layers and quality finishes can last a lifetime. Key factors: wear layer thickness, species hardness, finish quality, and maintenance habits.'],
               ['Can you install engineered hardwood over concrete?', 'Yes — this is one of its biggest advantages. Use glue-down installation ($3.25/sqft labour at BBS) or a floating click-lock system ($2.00/sqft). Always moisture-test the concrete first. Solid hardwood cannot be installed over concrete.'],
               ['What\'s the best wood species for high-traffic areas?', 'Hickory (Janka hardness 1820) is the hardest common species and most dent-resistant. White Oak (Janka 1360) is a close second and more aesthetically versatile. Avoid Walnut (Janka 1010) in hallways and kitchens.'],
