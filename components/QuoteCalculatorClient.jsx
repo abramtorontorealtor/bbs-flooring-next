@@ -16,15 +16,14 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent } from '@/components/ui/card';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calculator, CheckCircle2, Info, Lock, ArrowRight, ArrowLeft, BookmarkCheck, Footprints } from 'lucide-react';
+import { CheckCircle2, Info, Lock, ArrowRight, ArrowLeft, BookmarkCheck, Footprints } from 'lucide-react';
 import { toast } from 'sonner';
 import { createPageUrl } from '@/lib/routes';
 import { useAuth } from '@/lib/auth-context';
-import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
+
 import { Analytics } from '@/components/analytics';
 import { validatePhone } from '@/lib/validations';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+
 
 // ─── Constants ───
 const CATEGORY_FILTERS = [
@@ -457,20 +456,7 @@ export default function QuoteCalculatorClient() {
 
   // ─── Render ───
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 md:py-12" ref={topRef}>
-      <Breadcrumbs items={getStaticBreadcrumbs('/quote-calculator')} />
-
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-14 h-14 bg-amber-100 rounded-full mb-3">
-          <Calculator className="w-7 h-7 text-amber-600" />
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">Get Your Custom Installation Quote</h1>
-        <p className="text-base text-slate-600 max-w-xl mx-auto">Accurate pricing in 60 seconds. Materials, installation, and extras — all included.</p>
-        <div className="mt-3 inline-block bg-green-50 border border-green-200 text-green-800 text-sm font-medium px-4 py-1.5 rounded-full">
-          ✅ We beat any written quote by 5%
-        </div>
-      </div>
+    <div ref={topRef}>
 
       {/* Resumed quote banner */}
       {resumedQuote && (
@@ -919,30 +905,6 @@ export default function QuoteCalculatorClient() {
         </div>
       )}
 
-      {/* Why Choose BBS Installation */}
-      <div className="mt-12">
-        <Card className="bg-slate-900 text-white border-0">
-          <CardContent className="p-6 md:p-8">
-            <h3 className="text-xl font-bold text-white mb-6">Why Choose BBS Installation?</h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { icon: '🏅', title: 'Certified Local Installers', desc: 'Vetted, experienced professionals serving Markham and the GTA.' },
-                { icon: '🛡️', title: '2-Year Labour Warranty', desc: 'We stand behind our work with a full 2-year labour warranty.' },
-                { icon: '🚛', title: 'Old Floor Removal Included', desc: 'We handle tear-out, haul-away, and cleanup before we install.' },
-              ].map((item) => (
-                <div key={item.title} className="flex gap-4 items-start">
-                  <span className="text-2xl">{item.icon}</span>
-                  <div><p className="font-semibold text-white mb-1">{item.title}</p><p className="text-sm text-slate-400">{item.desc}</p></div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="mt-8 max-w-xl mx-auto">
-        <GoogleReviewsBanner variant="compact" />
-      </div>
     </div>
   );
 }
