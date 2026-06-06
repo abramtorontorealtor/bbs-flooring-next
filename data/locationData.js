@@ -141,7 +141,7 @@ export const locationData = {
         },
         {
           heading: "Wholesale Pricing, Retail Service",
-          detail: "We buy directly from manufacturers and pass the savings to you. Our engineered hardwood starts at $3.69/sqft — often 20-40% below what you'd pay at Home Depot or Lowe's for comparable quality. No membership fees, no hidden costs."
+          detail: "We buy directly from manufacturers and pass the savings to you. Our engineered hardwood starts at $3.19/sqft — often 20-40% below what you'd pay at Home Depot or Lowe's for comparable quality. No membership fees, no hidden costs."
         },
         {
           heading: "Our Own Installation Crews (Not Subcontractors)",
@@ -153,7 +153,7 @@ export const locationData = {
         },
         {
           heading: "Markham-Based Since 2012",
-          detail: "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on 15 years of serving our neighbours — backed by 41+ five-star Google reviews."
+          detail: "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on 15 years of serving our neighbours — backed by five-star Google reviews from real homeowners."
         }
       ]
     },
@@ -175,13 +175,13 @@ export const locationData = {
         },
         {
           type: "Engineered Hardwood",
-          bbs: "From $3.69",
+          bbs: "From $3.19",
           bigBox: "$5.99 – $9.99",
           specialty: "$6.99 – $12.99"
         },
         {
           type: "Solid Hardwood",
-          bbs: "From $4.29",
+          bbs: "From $5.10",
           bigBox: "$6.99 – $11.99",
           specialty: "$8.99 – $14.99"
         },
@@ -202,7 +202,7 @@ export const locationData = {
     faqs: [
       {
         q: "How much does flooring installation cost in Markham?",
-        a: "At BBS Flooring, vinyl plank starts from $1.79/sqft and engineered hardwood from $3.69/sqft, with professional installation available at competitive rates. Visit our Markham showroom at 6061 Highway 7 for a free in-person quote tailored to your project."
+        a: "At BBS Flooring, vinyl plank starts from $1.79/sqft and engineered hardwood from $3.19/sqft, with professional installation available at competitive rates. Visit our Markham showroom at 6061 Highway 7 for a free in-person quote tailored to your project."
       },
       {
         q: "Can I visit the BBS Flooring showroom in Markham?",
@@ -238,7 +238,7 @@ export const locationData = {
       },
       {
         q: "Is BBS Flooring the cheapest flooring store in Markham?",
-        a: "BBS Flooring offers wholesale-direct pricing that's typically 20-40% below big box stores like Home Depot and Lowe's. Our vinyl plank starts at $1.79/sqft and engineered hardwood at $3.69/sqft. We buy directly from manufacturers and pass the savings to Markham homeowners — no membership fees, no hidden markups."
+        a: "BBS Flooring offers wholesale-direct pricing that's typically 20-40% below big box stores like Home Depot and Lowe's. Our vinyl plank starts at $1.79/sqft and engineered hardwood at $3.19/sqft. We buy directly from manufacturers and pass the savings to Markham homeowners — no membership fees, no hidden markups."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2878.871587606354!2d-79.25622102326802!3d43.85905624535496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4d7647895e557%3A0x8956973e89c67623!2sBBS%20Flooring!5e0!3m2!1sen!2sca!4v1708795000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
@@ -325,7 +325,7 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for older Toronto homes?",
-        a: "For Toronto's century and heritage homes, engineered hardwood is typically the best choice — it handles the slight subfloor unevenness common in older homes better than solid hardwood, and it's available in classic oak and maple species from $3.69/sqft. For homes with original hardwood in good condition, our dustless refinishing service can restore floors to like-new condition at a fraction of replacement cost. Call BBS Flooring at (647) 428-1111 for a free assessment."
+        a: "For Toronto's century and heritage homes, engineered hardwood is typically the best choice — it handles the slight subfloor unevenness common in older homes better than solid hardwood, and it's available in classic oak and maple species from $3.19/sqft. For homes with original hardwood in good condition, our dustless refinishing service can restore floors to like-new condition at a fraction of replacement cost. Call BBS Flooring at (647) 428-1111 for a free assessment."
       },
       {
         q: "How far is the BBS Flooring showroom from Toronto?",
@@ -341,7 +341,7 @@ export const locationData = {
       },
       {
         q: "How much does a full-home flooring installation cost in Toronto?",
-        a: "At BBS Flooring, a typical Toronto home (1,200-2,000 sqft) costs $2,500-$8,000 for materials depending on your flooring choice — vinyl plank from $1.79/sqft, laminate from $1.49/sqft, or engineered hardwood from $3.69/sqft. Installation rates are quoted separately based on your subfloor condition and layout. We provide free in-home estimates with detailed pricing — no surprises. Call (647) 428-1111."
+        a: "At BBS Flooring, a typical Toronto home (1,200-2,000 sqft) costs $2,500-$8,000 for materials depending on your flooring choice — vinyl plank from $1.79/sqft, laminate from $1.49/sqft, or engineered hardwood from $3.19/sqft. Installation rates are quoted separately based on your subfloor condition and layout. We provide free in-home estimates with detailed pricing — no surprises. Call (647) 428-1111."
       },
       {
         q: "Can you match existing hardwood in my Toronto home?",
@@ -395,11 +395,11 @@ export const locationData = {
     faqs: [
       {
         q: "How much does hardwood flooring cost in Stouffville?",
-        a: "At BBS Flooring, engineered hardwood starts from $3.69/sqft and solid hardwood from $4.29/sqft — both popular choices for Stouffville's spacious homes. We offer free in-home estimates throughout Stouffville. Call (647) 428-1111 to get a quote for your project."
+        a: "At BBS Flooring, engineered hardwood starts from $3.19/sqft and solid hardwood from $5.10/sqft — both popular choices for Stouffville's spacious homes. We offer free in-home estimates throughout Stouffville. Call (647) 428-1111 to get a quote for your project."
       },
       {
         q: "What's the best flooring for new builds in Stouffville?",
-        a: "Engineered hardwood is the top choice for Stouffville's newer builds — it's dimensionally stable over concrete subfloors and looks stunning in open-concept layouts. BBS Flooring carries premium brands like Vidar, NAF, and Wickham starting from $3.69/sqft."
+        a: "Engineered hardwood is the top choice for Stouffville's newer builds — it's dimensionally stable over concrete subfloors and looks stunning in open-concept layouts. BBS Flooring carries premium brands like Vidar, NAF, and Wickham starting from $3.19/sqft."
       },
       {
         q: "Do you serve Ballantrae and Musselman's Lake?",
@@ -419,7 +419,7 @@ export const locationData = {
       },
       {
         q: "Is BBS Flooring cheaper than big-box stores for Stouffville homeowners?",
-        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.79/sqft and engineered hardwood at $3.69/sqft — typically 20-40% below Home Depot or Lowe's for comparable quality. Our Markham showroom is just 15 minutes from Stouffville. Call (647) 428-1111."
+        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.79/sqft and engineered hardwood at $3.19/sqft — typically 20-40% below Home Depot or Lowe's for comparable quality. Our Markham showroom is just 15 minutes from Stouffville. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46061.76344583649!2d-79.29427014605174!3d43.96969561085292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d52ca702672b1d%3A0xe549520775d71837!2sWhitchurch-Stouffville%2C%20ON!5e0!3m2!1sen!2sca!4v1708795100000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -451,7 +451,7 @@ export const locationData = {
     city: "Richmond Hill",
     title: "Flooring Store Serving Richmond Hill | Hardwood & Vinyl Installation | BBS Flooring",
     description: "BBS Flooring serves Richmond Hill — 700+ engineered hardwood, vinyl & laminate options. 10 min from showroom. Free in-home estimates. (647) 428-1111.",
-    content: "BBS Flooring is Richmond Hill's trusted flooring partner, located just 10 minutes east on Highway 7. From executive homes in Oak Ridges and South Richvale to family properties near Hillcrest Mall and newer developments around Elgin Mills, we deliver premium flooring solutions tailored to Richmond Hill's upscale housing market. Richmond Hill is one of York Region's most desirable communities, and its homeowners expect quality that matches their investment. Engineered hardwood is our most popular product here — Richmond Hill homeowners love the wide-plank European oak look from brands like Vidar and Wickham, available from $3.69/sqft. We also specialize in dustless staircase refinishing and custom hardwood installation that adds lasting value to your property. Lake Wilcox area homes with walkout basements are ideal candidates for our waterproof LVP options starting from $1.79/sqft. Whether you're upgrading a new-build with builder-grade laminate or renovating a mature South Richvale home, BBS delivers precision craftsmanship and wholesale-direct pricing that Richmond Hill homeowners have trusted since 2012.",
+    content: "BBS Flooring is Richmond Hill's trusted flooring partner, located just 10 minutes east on Highway 7. From executive homes in Oak Ridges and South Richvale to family properties near Hillcrest Mall and newer developments around Elgin Mills, we deliver premium flooring solutions tailored to Richmond Hill's upscale housing market. Richmond Hill is one of York Region's most desirable communities, and its homeowners expect quality that matches their investment. Engineered hardwood is our most popular product here — Richmond Hill homeowners love the wide-plank European oak look from brands like Vidar and Wickham, available from $3.19/sqft. We also specialize in dustless staircase refinishing and custom hardwood installation that adds lasting value to your property. Lake Wilcox area homes with walkout basements are ideal candidates for our waterproof LVP options starting from $1.79/sqft. Whether you're upgrading a new-build with builder-grade laminate or renovating a mature South Richvale home, BBS delivers precision craftsmanship and wholesale-direct pricing that Richmond Hill homeowners have trusted since 2012.",
     landmarks: ["Oak Ridges", "Hillcrest Mall", "Lake Wilcox", "South Richvale", "Elgin Mills"],
     services: [
       {
@@ -488,7 +488,7 @@ export const locationData = {
     faqs: [
       {
         q: "What's the most popular flooring in Richmond Hill?",
-        a: "Engineered hardwood is by far the most popular choice in Richmond Hill — especially wide-plank European oak in natural or matte finishes. BBS Flooring carries top brands like Vidar, NAF, and Wickham from $3.69/sqft. Visit our showroom just 10 minutes away on Highway 7."
+        a: "Engineered hardwood is by far the most popular choice in Richmond Hill — especially wide-plank European oak in natural or matte finishes. BBS Flooring carries top brands like Vidar, NAF, and Wickham from $3.19/sqft. Visit our showroom just 10 minutes away on Highway 7."
       },
       {
         q: "Do you offer stair refinishing in Richmond Hill?",
@@ -508,7 +508,7 @@ export const locationData = {
       },
       {
         q: "How much does a full-home flooring renovation cost in Richmond Hill?",
-        a: "At BBS Flooring, a typical Richmond Hill home (2,000-3,500 sqft) costs $7,000-$14,000 for materials depending on your flooring choice — engineered hardwood from $3.69/sqft is the most popular for Richmond Hill's executive homes. Installation rates are quoted separately based on your layout. We provide free in-home estimates with detailed pricing. Call (647) 428-1111."
+        a: "At BBS Flooring, a typical Richmond Hill home (2,000-3,500 sqft) costs $7,000-$14,000 for materials depending on your flooring choice — engineered hardwood from $3.19/sqft is the most popular for Richmond Hill's executive homes. Installation rates are quoted separately based on your layout. We provide free in-home estimates with detailed pricing. Call (647) 428-1111."
       },
       {
         q: "Can you upgrade builder-grade flooring in new Richmond Hill homes?",
@@ -678,7 +678,7 @@ export const locationData = {
       },
       {
         q: "How much does flooring installation cost in Ajax?",
-        a: "BBS Flooring offers competitive installation rates across Ajax. Laminate starts from $1.49/sqft and vinyl from $1.79/sqft for materials, and engineered hardwood from $3.69/sqft. We provide free in-home estimates with no obligation — call (647) 428-1111 to schedule."
+        a: "BBS Flooring offers competitive installation rates across Ajax. Laminate starts from $1.49/sqft and vinyl from $1.79/sqft for materials, and engineered hardwood from $3.19/sqft. We provide free in-home estimates with no obligation — call (647) 428-1111 to schedule."
       },
       {
         q: "Do you remove old carpet in Ajax before installing new flooring?",
@@ -756,7 +756,7 @@ export const locationData = {
     faqs: [
       {
         q: "Do you install flooring in Brooklin, Ontario?",
-        a: "Yes — BBS Flooring serves all of Whitby including Brooklin, Port Whitby, and surrounding areas. Brooklin's newer homes are ideal for our engineered hardwood collections starting from $3.69/sqft. Call (647) 428-1111 for a free in-home estimate."
+        a: "Yes — BBS Flooring serves all of Whitby including Brooklin, Port Whitby, and surrounding areas. Brooklin's newer homes are ideal for our engineered hardwood collections starting from $3.19/sqft. Call (647) 428-1111 for a free in-home estimate."
       },
       {
         q: "What flooring brands does BBS carry for Whitby homeowners?",
@@ -772,11 +772,11 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for new builds in Brooklin?",
-        a: "Engineered hardwood is the top choice for Brooklin's new builds — it's dimensionally stable over concrete subfloors, compatible with radiant heating, and available in wide-plank formats that suit modern open-concept layouts. BBS Flooring carries premium options from $3.69/sqft. Call (647) 428-1111."
+        a: "Engineered hardwood is the top choice for Brooklin's new builds — it's dimensionally stable over concrete subfloors, compatible with radiant heating, and available in wide-plank formats that suit modern open-concept layouts. BBS Flooring carries premium options from $3.19/sqft. Call (647) 428-1111."
       },
       {
         q: "How much does flooring cost for a Whitby home?",
-        a: "At BBS Flooring, materials start from $1.49/sqft for laminate and $1.79/sqft for vinyl plank, and $3.69/sqft for engineered hardwood. A typical Whitby home (1,500-2,500 sqft) costs $2,500-$9,000 for materials. We provide free in-home estimates with detailed pricing. Call (647) 428-1111."
+        a: "At BBS Flooring, materials start from $1.49/sqft for laminate and $1.79/sqft for vinyl plank, and $3.19/sqft for engineered hardwood. A typical Whitby home (1,500-2,500 sqft) costs $2,500-$9,000 for materials. We provide free in-home estimates with detailed pricing. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92330.15570887327!2d-78.99583485573434!3d43.90565860471239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51c4a00445f1b%3A0x280e8e4a1a5b46e0!2sWhitby%2C%20ON!5e0!3m2!1sen!2sca!4v1708795500000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -838,7 +838,7 @@ export const locationData = {
     faqs: [
       {
         q: "What's the best hardwood flooring for Vaughan's luxury homes?",
-        a: "Wide-plank engineered hardwood in European white oak is the top choice for Vaughan's upscale homes — available in matte, brushed, and wire-brushed finishes. BBS Flooring carries premium brands like Vidar and Wickham starting from $3.69/sqft. Visit our showroom or call (647) 428-1111."
+        a: "Wide-plank engineered hardwood in European white oak is the top choice for Vaughan's upscale homes — available in matte, brushed, and wire-brushed finishes. BBS Flooring carries premium brands like Vidar and Wickham starting from $3.19/sqft. Visit our showroom or call (647) 428-1111."
       },
       {
         q: "Do you install flooring in Kleinburg and Maple?",
@@ -858,7 +858,7 @@ export const locationData = {
       },
       {
         q: "How much does hardwood flooring cost in Vaughan?",
-        a: "At BBS Flooring, engineered hardwood starts from $3.69/sqft and solid hardwood from $4.29/sqft. A typical Vaughan home (2,500-4,000 sqft) costs $9,000-$16,000 for materials. We offer free in-home estimates with detailed pricing — no surprises. Call (647) 428-1111."
+        a: "At BBS Flooring, engineered hardwood starts from $3.19/sqft and solid hardwood from $5.10/sqft. A typical Vaughan home (2,500-4,000 sqft) costs $9,000-$16,000 for materials. We offer free in-home estimates with detailed pricing — no surprises. Call (647) 428-1111."
       },
       {
         q: "Do you serve Thornhill and Vaughan Metropolitan Centre?",
@@ -899,7 +899,7 @@ export const locationData = {
   },
   woodbridge: {
     city: "Woodbridge",
-    title: "Flooring Store Serving Woodbridge | Hardwood & Stairs From $3.69/sqft | BBS Flooring",
+    title: "Flooring Store Serving Woodbridge | Hardwood & Stairs From $3.19/sqft | BBS Flooring",
     description: "BBS Flooring serves Woodbridge — 700+ hardwood, vinyl & laminate options. Stair refinishing specialists. Free estimates. (647) 428-1111.",
     content: "Enhance your Woodbridge home with premium flooring from BBS Flooring. We understand Woodbridge homeowners' high standards — from the Mediterranean-inspired estates along Hwy 27 to elegant custom builds near Kortright Centre. Woodbridge's signature style demands quality: hand-scraped hardwood, wide-plank oak, and grand staircase renovations that make a statement. Our engineered hardwood collections from Vidar, NAF, and Appalachian are among the most popular choices for Woodbridge's executive homes. We also carry luxury vinyl plank for finished basements and family areas — a practical upgrade that doesn't sacrifice the upscale look Woodbridge is known for. Our showroom is a 20-minute drive east on Highway 7.",
     landmarks: ["Market Lane", "Hwy 7 & Weston", "Kortright Centre", "Pine Valley", "Islington & Hwy 7"],
@@ -938,7 +938,7 @@ export const locationData = {
     faqs: [
       {
         q: "What flooring matches Woodbridge's Mediterranean home style?",
-        a: "Wide-plank engineered hardwood in warm tones — walnut, rustic oak, or hickory — complements Woodbridge's Mediterranean-inspired homes beautifully. BBS Flooring carries hand-scraped and wire-brushed options from $3.69/sqft. Visit our showroom or call (647) 428-1111."
+        a: "Wide-plank engineered hardwood in warm tones — walnut, rustic oak, or hickory — complements Woodbridge's Mediterranean-inspired homes beautifully. BBS Flooring carries hand-scraped and wire-brushed options from $3.19/sqft. Visit our showroom or call (647) 428-1111."
       },
       {
         q: "Do you offer free estimates in Woodbridge?",
@@ -954,7 +954,7 @@ export const locationData = {
       },
       {
         q: "How much does hardwood flooring cost in Woodbridge?",
-        a: "At BBS Flooring, engineered hardwood starts from $3.69/sqft and solid hardwood from $4.29/sqft. A typical Woodbridge home (2,500-4,000 sqft) costs $9,000-$16,000 for materials. We offer free in-home estimates with no obligation. Call (647) 428-1111."
+        a: "At BBS Flooring, engineered hardwood starts from $3.19/sqft and solid hardwood from $5.10/sqft. A typical Woodbridge home (2,500-4,000 sqft) costs $9,000-$16,000 for materials. We offer free in-home estimates with no obligation. Call (647) 428-1111."
       },
       {
         q: "Do you install flooring in Woodbridge condos?",
@@ -1106,7 +1106,7 @@ export const locationData = {
       },
       {
         q: "What's the best flooring for Aurora's climate?",
-        a: "Engineered hardwood is ideal for Aurora's seasonal temperature swings — it's more dimensionally stable than solid hardwood, handling Ontario's humid summers and dry winters without gapping or cupping. BBS Flooring carries top brands from $3.69/sqft. Call (647) 428-1111."
+        a: "Engineered hardwood is ideal for Aurora's seasonal temperature swings — it's more dimensionally stable than solid hardwood, handling Ontario's humid summers and dry winters without gapping or cupping. BBS Flooring carries top brands from $3.19/sqft. Call (647) 428-1111."
       },
       {
         q: "Do you offer free in-home estimates in Aurora?",
@@ -1122,7 +1122,7 @@ export const locationData = {
       },
       {
         q: "How much does a full-home flooring renovation cost in Aurora?",
-        a: "At BBS Flooring, a typical Aurora home (2,000-3,500 sqft) costs $7,000-$14,000 for materials — engineered hardwood from $3.69/sqft is the most popular choice for Aurora's executive homes. Installation rates quoted separately. Free in-home estimates. Call (647) 428-1111."
+        a: "At BBS Flooring, a typical Aurora home (2,000-3,500 sqft) costs $7,000-$14,000 for materials — engineered hardwood from $3.19/sqft is the most popular choice for Aurora's executive homes. Installation rates quoted separately. Free in-home estimates. Call (647) 428-1111."
       }
     ],
     mapEmbed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46039.26190678663!2d-79.48911224578136!3d44.00030275988165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882ad290076a0841%3A0xc3f62243d630d760!2sAurora%2C%20ON!5e0!3m2!1sen!2sca!4v1708795900000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowFullScreen="" loading="lazy"></iframe>',
@@ -1147,7 +1147,7 @@ export const locationData = {
     city: "Scarborough",
     title: "Flooring Store Serving Scarborough | Flooring From $1.49/sqft | BBS Flooring",
     description: "BBS Flooring serves all of Scarborough — 700+ vinyl, hardwood & laminate options from $1.49/sqft. 15 min from showroom. Free in-home estimates. (647) 428-1111.",
-    content: "BBS Flooring serves all of Scarborough with premium flooring installation — from the Bluffs to Agincourt, Malvern to West Hill, Highland Creek to Woburn. Just 15 minutes from our Markham showroom via Highway 401 or Steeles Avenue, Scarborough is one of our busiest and most consistent service areas. The neighbourhood's incredible diversity of housing — bungalows from the 1950s-70s, backsplits, semi-detached homes, high-rise condos, and newer townhome developments — means we install every type of flooring daily. Waterproof luxury vinyl plank is the top seller for Scarborough's finished basements and busy family homes, while engineered hardwood is the upgrade of choice for main-floor renovations in Agincourt and Birch Cliff. We also see high demand for carpet-to-hardwood conversions and stair refinishing in Scarborough's mature two-storey homes. Scarborough's value-conscious homeowners appreciate our wholesale-direct pricing: vinyl plank from $1.79/sqft and engineered hardwood from $3.69/sqft — typically 20-40% below what Home Depot or Lowe's charges for comparable quality. Our installation crews are in Scarborough almost every day, and we can usually schedule within a week.",
+    content: "BBS Flooring serves all of Scarborough with premium flooring installation — from the Bluffs to Agincourt, Malvern to West Hill, Highland Creek to Woburn. Just 15 minutes from our Markham showroom via Highway 401 or Steeles Avenue, Scarborough is one of our busiest and most consistent service areas. The neighbourhood's incredible diversity of housing — bungalows from the 1950s-70s, backsplits, semi-detached homes, high-rise condos, and newer townhome developments — means we install every type of flooring daily. Waterproof luxury vinyl plank is the top seller for Scarborough's finished basements and busy family homes, while engineered hardwood is the upgrade of choice for main-floor renovations in Agincourt and Birch Cliff. We also see high demand for carpet-to-hardwood conversions and stair refinishing in Scarborough's mature two-storey homes. Scarborough's value-conscious homeowners appreciate our wholesale-direct pricing: vinyl plank from $1.79/sqft and engineered hardwood from $3.19/sqft — typically 20-40% below what Home Depot or Lowe's charges for comparable quality. Our installation crews are in Scarborough almost every day, and we can usually schedule within a week.",
     landmarks: ["Scarborough Town Centre", "Agincourt", "The Bluffs", "Malvern", "West Hill"],
     services: [
       {
@@ -1214,7 +1214,7 @@ export const locationData = {
     faqs: [
       {
         q: "How much does flooring cost in Scarborough?",
-        a: "At BBS Flooring, vinyl plank starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft — typically 20-40% below Scarborough big-box stores. A typical Scarborough home (1,200-1,800 sqft) costs $2,000-$7,000 for materials depending on your choice. We offer free in-home estimates across all of Scarborough. Call (647) 428-1111."
+        a: "At BBS Flooring, vinyl plank starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft — typically 20-40% below Scarborough big-box stores. A typical Scarborough home (1,200-1,800 sqft) costs $2,000-$7,000 for materials depending on your choice. We offer free in-home estimates across all of Scarborough. Call (647) 428-1111."
       },
       {
         q: "Do you replace carpet with hardwood in Scarborough?",
@@ -1234,7 +1234,7 @@ export const locationData = {
       },
       {
         q: "Is BBS Flooring cheaper than Home Depot for Scarborough homeowners?",
-        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.79/sqft (vs $2.99-$5.99 at Home Depot) and our engineered hardwood starts at $3.69/sqft (vs $5.99-$9.99). Plus you get expert advice from flooring specialists, not general retail staff. Visit our Markham showroom — just 15 minutes from Scarborough — to compare."
+        a: "Yes — BBS Flooring buys directly from manufacturers and passes the savings to you. Our vinyl plank starts at $1.79/sqft (vs $2.99-$5.99 at Home Depot) and our engineered hardwood starts at $3.19/sqft (vs $5.99-$9.99). Plus you get expert advice from flooring specialists, not general retail staff. Visit our Markham showroom — just 15 minutes from Scarborough — to compare."
       },
       {
         q: "Do you install in Scarborough condos and apartments?",
@@ -1378,7 +1378,7 @@ export const locationData = {
       },
       {
         q: "What flooring is best for new builds in Durham Region?",
-        a: "Engineered hardwood (from $3.69/sqft) is the top choice for Durham's new builds — it's stable over concrete subfloors and compatible with radiant heating. For basements and secondary areas, waterproof vinyl plank from $1.79/sqft is ideal. Call BBS Flooring at (647) 428-1111."
+        a: "Engineered hardwood (from $3.19/sqft) is the top choice for Durham's new builds — it's stable over concrete subfloors and compatible with radiant heating. For basements and secondary areas, waterproof vinyl plank from $1.79/sqft is ideal. Call BBS Flooring at (647) 428-1111."
       },
       {
         q: "Can you install flooring in Courtice and Bowmanville?",

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { locationData } from '@/data/locationData';
 import { getProductsForGrid } from '@/lib/products-server';
 import { JsonLd, faqSchema } from '@/lib/schemas';
+import { GOOGLE_REVIEW_COUNT } from '@/lib/service-constants';
 import LocationProductGrid from '@/components/LocationProductGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getLocationBreadcrumbs } from '@/lib/breadcrumbs';
@@ -73,7 +74,7 @@ export default async function LocationPage({ params }) {
             aggregateRating: {
               '@type': 'AggregateRating',
               ratingValue: '4.7',
-              reviewCount: '41',
+              reviewCount: String(GOOGLE_REVIEW_COUNT),
             },
           },
         ]} />

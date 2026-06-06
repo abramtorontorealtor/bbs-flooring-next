@@ -101,7 +101,7 @@ const SERVICES = {
     desc: 'Complete cost breakdown for flooring installation in Toronto and the GTA. Material + labour pricing with real examples.',
     pricing: [
       'Vinyl/laminate total: ~$4.19–$5.59/sqft (material + install)',
-      'Engineered hardwood total: ~$5.94–$9.24/sqft (material + install)',
+      'Engineered hardwood total: ~$5.44–$9.24/sqft (material + install)',
       'Solid hardwood total: ~$7.35–$9.50/sqft (material + install)',
     ],
   },
@@ -189,7 +189,7 @@ export async function GET(request, { params }) {
 
 ## Quick Facts
 - **812 products** in stock from 15 brands
-- **Engineered Hardwood:** 258 options from $3.69/sqft (+ 192 Vidar premium call-for-pricing)
+- **Engineered Hardwood:** 258 options from $3.19/sqft (+ 192 Vidar premium call-for-pricing)
 - **Vinyl/SPC:** 188 options from $1.79/sqft — 100% waterproof
 - **Laminate:** 99 options from $1.49/sqft
 - **Solid Hardwood:** 75 options from $5.10/sqft
@@ -329,7 +329,7 @@ The entire Greater Toronto Area: Markham, Toronto, Scarborough, Pickering, Ajax,
 
 ## Why ${cityName} Homeowners Choose BBS
 - **812 products in stock** — see, touch, and take home samples the same day
-- **Direct pricing:** Engineered hardwood from $3.69/sqft, vinyl from $1.79/sqft, laminate from $1.49/sqft
+- **Direct pricing:** Engineered hardwood from $3.19/sqft, vinyl from $1.79/sqft, laminate from $1.49/sqft
 - **Free in-home measurement** in ${cityName} — no obligation
 - **Professional installation** by our own WSIB-insured crew
 - **Same-week installation** available for in-stock products

@@ -174,7 +174,7 @@ export const flooringShowroomMarkhamData = {
   content: [
     {
       heading: 'Your Local Flooring Experts on Highway 7',
-      body: `<p>BBS Flooring has been Markham's trusted flooring destination since 2012. Our <strong>5,000 sqft showroom</strong> at 6061 Highway 7 features over 600 products you can see, touch, and take home as samples.</p>
+      body: `<p>BBS Flooring has been Markham's trusted flooring destination since 2012. Our showroom at 6061 Highway 7 features over 600 products you can see, touch, and take home as samples.</p>
 <p><strong>📍 Address:</strong> 6061 Highway 7, Unit B, Markham, ON L3P 3A7<br/>
 <strong>📞 Phone:</strong> <a href="tel:+16474281111">(647) 428-1111</a><br/>
 <strong>🕐 Hours:</strong> Monday–Saturday 10am–5pm | Sunday Closed</p>`

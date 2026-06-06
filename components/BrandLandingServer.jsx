@@ -16,7 +16,7 @@ const PHONE = '(647) 428-1111';
 const ADDRESS = '6061 Highway 7, Unit B, Markham, ON';
 
 const TRUST_BADGES = [
-  { emoji: '⭐', label: 'Google 4.7★', sub: '41+ Reviews' },
+  { emoji: '⭐', label: 'Google 4.7★', sub: 'Verified Reviews' },
   { emoji: '🛡️', label: 'Licensed & Insured', sub: 'Since 2012' },
   { emoji: '🚚', label: 'Free Measurements', sub: 'GTA-wide' },
   { emoji: '📞', label: 'Same-Day Quotes', sub: PHONE },

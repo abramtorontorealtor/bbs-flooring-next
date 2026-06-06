@@ -55,7 +55,7 @@ export default function FlooringComparisonGuideClient() {
           Quick Answer: Hardwood vs Vinyl vs Laminate &#8212; Which Is Best?
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          It depends on your room and budget. Vinyl/SPC ($1.79&#8211;$3.59/sqft) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($3.69&#8211;$7.59/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.29/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 812 products in stock. Free comparison visit: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          It depends on your room and budget. Vinyl/SPC ($1.79&#8211;$3.59/sqft) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($3.19&#8211;$7.59/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.29/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 812 products in stock. Free comparison visit: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -146,7 +146,7 @@ export default function FlooringComparisonGuideClient() {
           <p className="text-stone-600 leading-relaxed mb-6">
             A popular entry point is the{' '}
             <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee</Link>
-            {' '}— a 6.5" SELECT grade European Oak at $3.69/sqft with genuine warmth and character. For a wider-plank statement floor, the{' '}
+            {' '}— a 6.5" SELECT grade European Oak at $3.19/sqft with genuine warmth and character. For a wider-plank statement floor, the{' '}
             <Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Arizona by NAF Elegant</Link>
             {' '}(7.5" Oak, $4.69/sqft) is one of our best-selling wide-plank options for open-concept main floors in 2026.
           </p>

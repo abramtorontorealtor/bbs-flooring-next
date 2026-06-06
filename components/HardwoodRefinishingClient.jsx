@@ -23,7 +23,7 @@ const SPOKE_LINKS = [
   { route: 'StairRefinishing', label: 'Stair Refinishing & Renovation', description: 'Match your freshly refinished floors with beautifully restored staircases' },
   { route: 'Installation', label: 'Flooring Installation Services', description: 'New flooring installation from $2.00/sqft — hardwood, vinyl, laminate' },
   { route: 'EngineeredHardwood', label: 'Engineered Hardwood Flooring', description: 'Browse 200+ engineered hardwood styles if replacement is the right call' },
-  { route: 'SolidHardwood', label: 'Solid Hardwood Flooring', description: 'Premium solid hardwood starting from $5.69/sqft' },
+  { route: 'SolidHardwood', label: 'Solid Hardwood Flooring', description: 'Premium solid hardwood starting from $5.10/sqft' },
   { route: 'Gallery', label: 'Project Gallery', description: 'Browse completed flooring and staircase projects across the GTA' },
 ];
 

@@ -102,7 +102,7 @@ export default function FloorFinderPage() {
             <ul>
               <li><strong>Vinyl / SPC Flooring</strong> — Waterproof, scratch-resistant, budget-friendly. From $1.79/sqft. Perfect for kitchens, bathrooms, and basements.</li>
               <li><strong>Laminate Flooring</strong> — Durable, affordable, easy to install. From $1.49/sqft. Great for bedrooms and living rooms.</li>
-              <li><strong>Engineered Hardwood</strong> — Real wood beauty with enhanced stability. From $3.69/sqft. Ideal for any room except wet areas.</li>
+              <li><strong>Engineered Hardwood</strong> — Real wood beauty with enhanced stability. From $3.19/sqft. Ideal for any room except wet areas.</li>
               <li><strong>Solid Hardwood</strong> — Timeless, refinishable, premium. From $5.10/sqft. Best for living rooms, dining rooms, and bedrooms.</li>
             </ul>
             <h3>Free Measurement & Installation</h3>

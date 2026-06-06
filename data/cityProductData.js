@@ -28,7 +28,7 @@ export const PRODUCT_TYPES = {
     shortLabel: 'Hardwood',
     dbCategory: 'engineered_hardwood', // Most "hardwood" searches = engineered
     categoryPage: '/engineered-hardwood',
-    priceFrom: '$3.69',
+    priceFrom: '$3.19',
     icon: 'Hammer',
     features: ['Real Wood Top Layer', 'Dimensionally Stable', 'Can Be Refinished', 'Wide-Plank Options Available'],
     bestFor: ['Living Rooms', 'Dining Rooms', 'Bedrooms', 'Open-Concept Main Floors', 'Home Value'],
@@ -48,7 +48,7 @@ export const PRODUCT_TYPES = {
     shortLabel: 'Engineered Hardwood',
     dbCategory: 'engineered_hardwood',
     categoryPage: '/engineered-hardwood',
-    priceFrom: '$3.69',
+    priceFrom: '$3.19',
     icon: 'Hammer',
     features: ['Multi-Layer Construction', 'Works Over Concrete & Radiant Heat', 'Real Hardwood Top Layer', 'Less Seasonal Movement'],
     bestFor: ['Condos', 'Over Concrete Subfloors', 'Radiant Heating', 'Open-Concept Layouts', 'Main Floor Renovations'],
@@ -146,10 +146,10 @@ All prices include the flooring material. Professional installation is available
     productType: 'hardwood',
     citySlug: 'markham',
     city: 'Markham',
-    title: 'Hardwood Flooring Markham | Engineered & Solid from $3.69/sqft',
-    metaDescription: 'Shop hardwood flooring in Markham from $3.69/sqft. Engineered & solid hardwood — oak, maple, hickory. 300+ options in stock at our Highway 7 showroom. Free estimates. Call (647) 428-1111.',
+    title: 'Hardwood Flooring Markham | Engineered & Solid from $3.19/sqft',
+    metaDescription: 'Shop hardwood flooring in Markham from $3.19/sqft. Engineered & solid hardwood — oak, maple, hickory. 300+ options in stock at our Highway 7 showroom. Free estimates. Call (647) 428-1111.',
     h1: 'Hardwood Flooring in Markham',
-    heroSubtitle: 'Premium engineered and solid hardwood from $3.69/sqft — over 300 styles in stock at our Markham showroom.',
+    heroSubtitle: 'Premium engineered and solid hardwood from $3.19/sqft — over 300 styles in stock at our Markham showroom.',
     content: {
       intro: `BBS Flooring is Markham's destination for premium hardwood flooring. With over 300 engineered and solid hardwood options in stock at our showroom on Highway 7, we offer the largest selection in York Region at prices that beat the big-box stores. From wide-plank European white oak to classic Canadian maple, every plank is hand-selected from trusted manufacturers like Vidar, NAF, Wickham, and Appalachian.`,
 
@@ -171,9 +171,9 @@ For established Markham homes with wood subfloors — particularly in Unionville
 
 | Product Type | Price Range | Best For |
 |---|---|---|
-| Engineered Hardwood (12mm) | $3.69 – $4.99/sqft | Main floors, condos, radiant heat |
+| Engineered Hardwood (12mm) | $3.19 – $4.99/sqft | Main floors, condos, radiant heat |
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
-| Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
+| Solid Hardwood (3/4") | $5.10 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation is available and quoted during your free in-home estimate. We also offer stair matching — custom treads and risers to match your new hardwood floors.`,
     },
@@ -181,7 +181,7 @@ Professional installation is available and quoted during your free in-home estim
     faqs: [
       {
         question: 'How much does hardwood flooring cost in Markham?',
-        answer: 'At BBS Flooring in Markham, engineered hardwood starts from $3.69/sqft and solid hardwood from $4.29/sqft. Premium wide-plank and hand-scraped options range from $4.99 to $6.99/sqft. These prices beat most Markham competitors because we sell direct — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
+        answer: 'At BBS Flooring in Markham, engineered hardwood starts from $3.19/sqft and solid hardwood from $5.10/sqft. Premium wide-plank and hand-scraped options range from $4.99 to $6.99/sqft. These prices beat most Markham competitors because we sell direct — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
       },
       {
         question: 'What is the best hardwood flooring for Markham homes?',
@@ -306,10 +306,10 @@ Note: For truly waterproof applications (basements, bathrooms), we recommend vin
     productType: 'hardwood',
     citySlug: 'scarborough',
     city: 'Scarborough',
-    title: 'Hardwood Flooring Scarborough | Engineered & Solid from $3.69/sqft',
-    metaDescription: 'Shop hardwood flooring for Scarborough homes from $3.69/sqft. Engineered oak, maple, hickory — 300+ options. Expert installation. Just 15 min from our showroom. Call (647) 428-1111.',
+    title: 'Hardwood Flooring Scarborough | Engineered & Solid from $3.19/sqft',
+    metaDescription: 'Shop hardwood flooring for Scarborough homes from $3.19/sqft. Engineered oak, maple, hickory — 300+ options. Expert installation. Just 15 min from our showroom. Call (647) 428-1111.',
     h1: 'Hardwood Flooring in Scarborough',
-    heroSubtitle: 'Premium engineered and solid hardwood from $3.69/sqft — expert installation across Scarborough. Just 15 minutes from our showroom.',
+    heroSubtitle: 'Premium engineered and solid hardwood from $3.19/sqft — expert installation across Scarborough. Just 15 minutes from our showroom.',
     content: {
       intro: `Looking for hardwood flooring in Scarborough? BBS Flooring serves all of Scarborough — from Agincourt to the Bluffs, Malvern to West Hill — with over 300 hardwood options in stock at our Markham showroom, just 15 minutes north. We carry the GTA's best selection of engineered and solid hardwood from premium brands like Vidar, NAF, Wickham, and Appalachian, all at wholesale-to-public pricing.`,
 
@@ -323,7 +323,7 @@ For Scarborough's bungalows and backsplits in West Hill and Highland Creek, wide
 
 • **Agincourt** — Mature two-storey homes benefit from carpet-to-hardwood conversions with matching stair treads. Engineered hardwood in natural or matte oak is the top seller here.
 • **The Bluffs & Birch Cliff** — Character homes near the lake need dimensionally stable engineered hardwood that handles lakeside humidity without cupping or gapping.
-• **Malvern & Morningside** — Family homes get the most value from our mid-range engineered hardwood ($3.69-$4.99/sqft) in durable, scratch-resistant finishes.
+• **Malvern & Morningside** — Family homes get the most value from our mid-range engineered hardwood ($3.19-$4.99/sqft) in durable, scratch-resistant finishes.
 • **West Hill & Highland Creek** — Bungalow renovations pair wide-plank hardwood on the main floor with waterproof vinyl in the finished basement for a cohesive look.
 • **Scarborough Town Centre area** — Condo installations with sound-rated engineered hardwood and proper underlayment.`,
 
@@ -331,9 +331,9 @@ For Scarborough's bungalows and backsplits in West Hill and Highland Creek, wide
 
 | Product Type | Price Range | Best For |
 |---|---|---|
-| Engineered Hardwood (12mm) | $3.69 – $4.99/sqft | Main floors, carpet replacements |
+| Engineered Hardwood (12mm) | $3.19 – $4.99/sqft | Main floors, carpet replacements |
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
-| Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Bungalows, heritage homes, wood subfloors |
+| Solid Hardwood (3/4") | $5.10 – $7.25/sqft | Bungalows, heritage homes, wood subfloors |
 
 Delivery available across Scarborough — free warehouse pickup or delivery from $140. Professional installation quoted during your free in-home estimate.`,
     },
@@ -341,7 +341,7 @@ Delivery available across Scarborough — free warehouse pickup or delivery from
     faqs: [
       {
         question: 'How much does hardwood flooring cost in Scarborough?',
-        answer: 'BBS Flooring offers hardwood flooring for Scarborough homes starting from $3.69/sqft for engineered and $4.29/sqft for solid hardwood. We sell at wholesale-to-public pricing — no middleman markup. Our Markham showroom is just 15 minutes from Scarborough via the 401. Call (647) 428-1111 for a free quote.',
+        answer: 'BBS Flooring offers hardwood flooring for Scarborough homes starting from $3.19/sqft for engineered and $5.10/sqft for solid hardwood. We sell at wholesale-to-public pricing — no middleman markup. Our Markham showroom is just 15 minutes from Scarborough via the 401. Call (647) 428-1111 for a free quote.',
       },
       {
         question: 'Do you install hardwood flooring in Agincourt and Malvern?',
@@ -353,7 +353,7 @@ Delivery available across Scarborough — free warehouse pickup or delivery from
       },
       {
         question: 'What hardwood works best for Scarborough bungalows?',
-        answer: 'For Scarborough bungalows, wide-plank engineered hardwood (7-9" widths) in light or natural finishes creates the illusion of more space. Oak in matte or wire-brushed finish is the most popular choice. BBS Flooring carries these from $3.69/sqft. Call (647) 428-1111 for a free in-home consultation.',
+        answer: 'For Scarborough bungalows, wide-plank engineered hardwood (7-9" widths) in light or natural finishes creates the illusion of more space. Oak in matte or wire-brushed finish is the most popular choice. BBS Flooring carries these from $3.19/sqft. Call (647) 428-1111 for a free in-home consultation.',
       },
       {
         question: 'How far is BBS Flooring from Scarborough?',
@@ -498,8 +498,8 @@ Every installation includes: professional subfloor assessment, old flooring remo
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | $1.79/sqft | Basements, kitchens, whole-home |
 | Laminate | $1.49/sqft | Bedrooms, living rooms, budget renos |
-| Engineered Hardwood | $3.69/sqft | Main floors, executive homes |
-| Solid Hardwood | $4.29/sqft | Heritage homes, wood subfloors |
+| Engineered Hardwood | $3.19/sqft | Main floors, executive homes |
+| Solid Hardwood | $5.10/sqft | Heritage homes, wood subfloors |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -507,7 +507,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Markham?',
-        answer: 'BBS Flooring in Markham offers supply + install packages starting from $1.49/sqft for laminate and $1.79/sqft for vinyl. Hardwood installation starts from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate — it varies based on subfloor condition and project scope. Call (647) 428-1111.',
+        answer: 'BBS Flooring in Markham offers supply + install packages starting from $1.49/sqft for laminate and $1.79/sqft for vinyl. Hardwood installation starts from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate — it varies based on subfloor condition and project scope. Call (647) 428-1111.',
       },
       {
         question: 'Do you offer free estimates for flooring installation in Markham?',
@@ -561,7 +561,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     citySlug: 'vaughan',
     city: 'Vaughan',
     title: 'Flooring Installation Vaughan | Hardwood, Vinyl & Laminate',
-    metaDescription: 'Professional flooring installation in Vaughan. Vinyl from $1.79/sqft, hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.',
+    metaDescription: 'Professional flooring installation in Vaughan. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
     h1: 'Flooring Installation in Vaughan',
     heroSubtitle: 'Expert flooring installation across Vaughan — vinyl, hardwood, and laminate. Free in-home estimates. 20 minutes east on Highway 7 from our showroom.',
     isInstallationPage: true,
@@ -574,7 +574,7 @@ Vaughan is York Region's fastest-growing city, with housing ranging from VMC's m
 
 **Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Vaughan home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
-**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
+**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
 **Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle grand staircase refinishing and whole-home hardwood installations with the precision that Vaughan homeowners expect. Every installation includes proper acclimation of materials, subfloor moisture testing, and attention to transitions and trim details that separate professional work from DIY.`,
 
@@ -595,8 +595,8 @@ Every installation project starts with a free in-home estimate. Our team will as
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
 | Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
-| Engineered Hardwood | From $3.69/sqft | Main floors, open-concept, executive homes |
-| Solid Hardwood | From $4.29/sqft | Heritage homes, wood subfloors, long-term value |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -604,7 +604,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Vaughan?',
-        answer: 'BBS Flooring offers Vaughan homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+        answer: 'BBS Flooring offers Vaughan homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
       },      {
         question: 'Do you offer free estimates for flooring installation in Vaughan?',
         answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Vaughan. Our team will assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
@@ -650,7 +650,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     citySlug: 'scarborough',
     city: 'Scarborough',
     title: 'Flooring Installation Scarborough | Hardwood, Vinyl & Laminate',
-    metaDescription: 'Professional flooring installation in Scarborough. Vinyl from $1.79/sqft, hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.',
+    metaDescription: 'Professional flooring installation in Scarborough. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
     h1: 'Flooring Installation in Scarborough',
     heroSubtitle: 'Expert flooring installation across Scarborough — vinyl, hardwood, and laminate. Free in-home estimates. 15 minutes via the 401 from our showroom.',
     isInstallationPage: true,
@@ -663,7 +663,7 @@ Scarborough is one of the most diverse housing markets in the GTA, from postwar 
 
 **Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Scarborough home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
-**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
+**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
 **Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle carpet-to-hardwood conversions and basement finishing with the precision that Scarborough homeowners expect. Every installation includes proper acclimation of materials, subfloor moisture testing, and attention to transitions and trim details that separate professional work from DIY.`,
 
@@ -684,8 +684,8 @@ Every installation project starts with a free in-home estimate. Our team will as
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
 | Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
-| Engineered Hardwood | From $3.69/sqft | Main floors, open-concept, executive homes |
-| Solid Hardwood | From $4.29/sqft | Heritage homes, wood subfloors, long-term value |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -693,7 +693,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Scarborough?',
-        answer: 'BBS Flooring offers Scarborough homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+        answer: 'BBS Flooring offers Scarborough homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
       },      {
         question: 'Do you offer free estimates for flooring installation in Scarborough?',
         answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Scarborough. Our team will assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
@@ -739,7 +739,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     citySlug: 'newmarket',
     city: 'Newmarket',
     title: 'Flooring Installation Newmarket | Hardwood, Vinyl & Laminate',
-    metaDescription: 'Professional flooring installation in Newmarket. Vinyl from $1.79/sqft, hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.',
+    metaDescription: 'Professional flooring installation in Newmarket. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
     h1: 'Flooring Installation in Newmarket',
     heroSubtitle: 'Expert flooring installation across Newmarket — vinyl, hardwood, and laminate. Free in-home estimates. 25 minutes via the 404 from our showroom.',
     isInstallationPage: true,
@@ -752,7 +752,7 @@ Newmarket is one of York Region's most established communities, blending histori
 
 **Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Newmarket home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
-**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
+**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
 **Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle whole-home renovations and townhome flooring upgrades with the precision that Newmarket homeowners expect. Every installation includes proper acclimation of materials, subfloor moisture testing, and attention to transitions and trim details that separate professional work from DIY.`,
 
@@ -773,8 +773,8 @@ Every installation project starts with a free in-home estimate. Our team will as
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
 | Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
-| Engineered Hardwood | From $3.69/sqft | Main floors, open-concept, executive homes |
-| Solid Hardwood | From $4.29/sqft | Heritage homes, wood subfloors, long-term value |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -782,7 +782,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Newmarket?',
-        answer: 'BBS Flooring offers Newmarket homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+        answer: 'BBS Flooring offers Newmarket homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
       },      {
         question: 'Do you offer free estimates for flooring installation in Newmarket?',
         answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Newmarket. Our team will assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
@@ -828,7 +828,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     citySlug: 'richmond-hill',
     city: 'Richmond Hill',
     title: 'Flooring Installation Richmond Hill | Hardwood, Vinyl & Laminate',
-    metaDescription: 'Professional flooring installation in Richmond Hill. Vinyl from $1.79/sqft, hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.',
+    metaDescription: 'Professional flooring installation in Richmond Hill. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
     h1: 'Flooring Installation in Richmond Hill',
     heroSubtitle: 'Expert flooring installation across Richmond Hill — vinyl, hardwood, and laminate. Free in-home estimates. 10 minutes on Highway 7 from our showroom.',
     isInstallationPage: true,
@@ -841,7 +841,7 @@ Richmond Hill is one of the GTA's most desirable residential communities, known 
 
 **Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Richmond Hill home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
-**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
+**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
 **Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle wide-plank engineered hardwood and staircase refinishing with the precision that Richmond Hill homeowners expect. Every installation includes proper acclimation of materials, subfloor moisture testing, and attention to transitions and trim details that separate professional work from DIY.`,
 
@@ -862,8 +862,8 @@ Every installation project starts with a free in-home estimate. Our team will as
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
 | Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
-| Engineered Hardwood | From $3.69/sqft | Main floors, open-concept, executive homes |
-| Solid Hardwood | From $4.29/sqft | Heritage homes, wood subfloors, long-term value |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -871,7 +871,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Richmond Hill?',
-        answer: 'BBS Flooring offers Richmond Hill homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+        answer: 'BBS Flooring offers Richmond Hill homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
       },      {
         question: 'Do you offer free estimates for flooring installation in Richmond Hill?',
         answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Richmond Hill. Our team will assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
@@ -917,7 +917,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     citySlug: 'pickering',
     city: 'Pickering',
     title: 'Flooring Installation Pickering | Hardwood, Vinyl & Laminate',
-    metaDescription: 'Professional flooring installation in Pickering. Vinyl from $1.79/sqft, hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.',
+    metaDescription: 'Professional flooring installation in Pickering. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
     h1: 'Flooring Installation in Pickering',
     heroSubtitle: 'Expert flooring installation across Pickering — vinyl, hardwood, and laminate. Free in-home estimates. 20 minutes via the 401 from our showroom.',
     isInstallationPage: true,
@@ -930,7 +930,7 @@ Pickering is western Durham Region's gateway community, with waterfront living a
 
 **Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Pickering home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
-**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
+**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
 **Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle basement finishing and new-build flooring upgrades with the precision that Pickering homeowners expect. Every installation includes proper acclimation of materials, subfloor moisture testing, and attention to transitions and trim details that separate professional work from DIY.`,
 
@@ -951,8 +951,8 @@ Every installation project starts with a free in-home estimate. Our team will as
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
 | Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
-| Engineered Hardwood | From $3.69/sqft | Main floors, open-concept, executive homes |
-| Solid Hardwood | From $4.29/sqft | Heritage homes, wood subfloors, long-term value |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -960,7 +960,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Pickering?',
-        answer: 'BBS Flooring offers Pickering homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+        answer: 'BBS Flooring offers Pickering homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
       },      {
         question: 'Do you offer free estimates for flooring installation in Pickering?',
         answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Pickering. Our team will assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
@@ -1006,7 +1006,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     citySlug: 'ajax',
     city: 'Ajax',
     title: 'Flooring Installation Ajax | Hardwood, Vinyl & Laminate',
-    metaDescription: 'Professional flooring installation in Ajax. Vinyl from $1.79/sqft, hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.',
+    metaDescription: 'Professional flooring installation in Ajax. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
     h1: 'Flooring Installation in Ajax',
     heroSubtitle: 'Expert flooring installation across Ajax — vinyl, hardwood, and laminate. Free in-home estimates. 20 minutes via the 401 from our showroom.',
     isInstallationPage: true,
@@ -1019,7 +1019,7 @@ Ajax is a growing Durham Region community known for family-friendly neighbourhoo
 
 **Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Ajax home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
-**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
+**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
 **Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle split-level renovations and carpet-to-hardwood conversions with the precision that Ajax homeowners expect. Every installation includes proper acclimation of materials, subfloor moisture testing, and attention to transitions and trim details that separate professional work from DIY.`,
 
@@ -1039,8 +1039,8 @@ Every installation project starts with a free in-home estimate. Our team will as
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
 | Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
-| Engineered Hardwood | From $3.69/sqft | Main floors, open-concept, executive homes |
-| Solid Hardwood | From $4.29/sqft | Heritage homes, wood subfloors, long-term value |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -1048,7 +1048,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Ajax?',
-        answer: 'BBS Flooring offers Ajax homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+        answer: 'BBS Flooring offers Ajax homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
       },      {
         question: 'Do you offer free estimates for flooring installation in Ajax?',
         answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Ajax. Our team will assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
@@ -1093,10 +1093,10 @@ Professional installation pricing is quoted during your free in-home estimate, b
     productType: 'hardwood',
     citySlug: 'toronto',
     city: 'Toronto',
-    title: 'Hardwood Flooring Toronto | Engineered & Solid from $3.69/sqft',
-    metaDescription: 'Shop hardwood flooring in Toronto from $3.69/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
+    title: 'Hardwood Flooring Toronto | Engineered & Solid from $3.19/sqft',
+    metaDescription: 'Shop hardwood flooring in Toronto from $3.19/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
     h1: 'Hardwood Flooring in Toronto',
-    heroSubtitle: 'Premium engineered and solid hardwood from $3.69/sqft — over 300 styles in stock. 25 minutes from Midtown from our showroom.',
+    heroSubtitle: 'Premium engineered and solid hardwood from $3.19/sqft — over 300 styles in stock. 25 minutes from Midtown from our showroom.',
     content: {
       intro: `BBS Flooring is Toronto's destination for premium hardwood flooring. With over 300 engineered and solid hardwood options in stock at our Markham showroom on Highway 7 — approximately 25 minutes from Midtown via the DVP — we offer one of the largest selections in the GTA at wholesale-to-public pricing. From wide-plank European white oak to classic Canadian maple, every plank comes from trusted manufacturers like Vidar, NAF, Wickham, and Appalachian.
 
@@ -1127,9 +1127,9 @@ Our installation team handles everything from subfloor preparation and moisture 
 
 | Product Type | Price Range | Best For |
 |---|---|---|
-| Engineered Hardwood (12mm) | $3.69 – $4.99/sqft | Main floors, condos, radiant heat |
+| Engineered Hardwood (12mm) | $3.19 – $4.99/sqft | Main floors, condos, radiant heat |
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
-| Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
+| Solid Hardwood (3/4") | $5.10 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation and stair matching quoted during your free in-home estimate. Premium brands in stock: Vidar, NAF, Wickham, Appalachian, Triforest, Woden, Canadian Standard, Northernest.`,
     },
@@ -1137,7 +1137,7 @@ Professional installation and stair matching quoted during your free in-home est
     faqs: [
       {
         question: 'How much does hardwood flooring cost in Toronto?',
-        answer: 'At BBS Flooring, engineered hardwood for Toronto homes starts from $3.69/sqft and solid hardwood from $4.29/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
+        answer: 'At BBS Flooring, engineered hardwood for Toronto homes starts from $3.19/sqft and solid hardwood from $5.10/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
       },      {
         question: 'What is the best hardwood flooring for Toronto homes?',
         answer: 'Engineered hardwood is the most popular choice for Toronto homes — it handles Ontario\'s seasonal humidity swings and works over both wood and concrete subfloors. Wide-plank European white oak in matte or brushed finish is our top seller. Visit BBS Flooring at 6061 Highway 7 to see our full collection.',
@@ -1181,10 +1181,10 @@ Professional installation and stair matching quoted during your free in-home est
     productType: 'hardwood',
     citySlug: 'vaughan',
     city: 'Vaughan',
-    title: 'Hardwood Flooring Vaughan | Engineered & Solid from $3.69/sqft',
-    metaDescription: 'Shop hardwood flooring in Vaughan from $3.69/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
+    title: 'Hardwood Flooring Vaughan | Engineered & Solid from $3.19/sqft',
+    metaDescription: 'Shop hardwood flooring in Vaughan from $3.19/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
     h1: 'Hardwood Flooring in Vaughan',
-    heroSubtitle: 'Premium engineered and solid hardwood from $3.69/sqft — over 300 styles in stock. 20 minutes east on Highway 7 from our showroom.',
+    heroSubtitle: 'Premium engineered and solid hardwood from $3.19/sqft — over 300 styles in stock. 20 minutes east on Highway 7 from our showroom.',
     content: {
       intro: `BBS Flooring is Vaughan's destination for premium hardwood flooring. With over 300 engineered and solid hardwood options in stock at our Markham showroom on Highway 7 — 20 minutes east on Highway 7 — we offer one of the largest selections in the GTA at wholesale-to-public pricing. From wide-plank European white oak to classic Canadian maple, every plank comes from trusted manufacturers like Vidar, NAF, Wickham, and Appalachian.
 
@@ -1215,9 +1215,9 @@ Our installation team handles everything from subfloor preparation and moisture 
 
 | Product Type | Price Range | Best For |
 |---|---|---|
-| Engineered Hardwood (12mm) | $3.69 – $4.99/sqft | Main floors, condos, radiant heat |
+| Engineered Hardwood (12mm) | $3.19 – $4.99/sqft | Main floors, condos, radiant heat |
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
-| Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
+| Solid Hardwood (3/4") | $5.10 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation and stair matching quoted during your free in-home estimate. Premium brands in stock: Vidar, NAF, Wickham, Appalachian, Triforest, Woden, Canadian Standard, Northernest.`,
     },
@@ -1225,7 +1225,7 @@ Professional installation and stair matching quoted during your free in-home est
     faqs: [
       {
         question: 'How much does hardwood flooring cost in Vaughan?',
-        answer: 'At BBS Flooring, engineered hardwood for Vaughan homes starts from $3.69/sqft and solid hardwood from $4.29/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
+        answer: 'At BBS Flooring, engineered hardwood for Vaughan homes starts from $3.19/sqft and solid hardwood from $5.10/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
       },      {
         question: 'What is the best hardwood flooring for Vaughan homes?',
         answer: 'Engineered hardwood is the most popular choice for Vaughan homes — it handles Ontario\'s seasonal humidity swings and works over both wood and concrete subfloors. Wide-plank European white oak in matte or brushed finish is our top seller. Visit BBS Flooring at 6061 Highway 7 to see our full collection.',
@@ -1354,10 +1354,10 @@ All prices are for material. Professional installation is quoted during your fre
     productType: 'hardwood',
     citySlug: 'richmond-hill',
     city: 'Richmond Hill',
-    title: 'Hardwood Flooring Richmond Hill | Engineered & Solid from $3.69/sqft',
-    metaDescription: 'Shop hardwood flooring in Richmond Hill from $3.69/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
+    title: 'Hardwood Flooring Richmond Hill | Engineered & Solid from $3.19/sqft',
+    metaDescription: 'Shop hardwood flooring in Richmond Hill from $3.19/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
     h1: 'Hardwood Flooring in Richmond Hill',
-    heroSubtitle: 'Premium engineered and solid hardwood from $3.69/sqft — over 300 styles in stock. 10 minutes on Highway 7 from our showroom.',
+    heroSubtitle: 'Premium engineered and solid hardwood from $3.19/sqft — over 300 styles in stock. 10 minutes on Highway 7 from our showroom.',
     content: {
       intro: `BBS Flooring is Richmond Hill's destination for premium hardwood flooring. With over 300 engineered and solid hardwood options in stock at our Markham showroom on Highway 7 — just 10 minutes east on Highway 7 — we offer one of the largest selections in the GTA at wholesale-to-public pricing. From wide-plank European white oak to classic Canadian maple, every plank comes from trusted manufacturers like Vidar, NAF, Wickham, and Appalachian.
 
@@ -1388,9 +1388,9 @@ Our installation team handles everything from subfloor preparation and moisture 
 
 | Product Type | Price Range | Best For |
 |---|---|---|
-| Engineered Hardwood (12mm) | $3.69 – $4.99/sqft | Main floors, condos, radiant heat |
+| Engineered Hardwood (12mm) | $3.19 – $4.99/sqft | Main floors, condos, radiant heat |
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
-| Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
+| Solid Hardwood (3/4") | $5.10 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation and stair matching quoted during your free in-home estimate. Premium brands in stock: Vidar, NAF, Wickham, Appalachian, Triforest, Woden, Canadian Standard, Northernest.`,
     },
@@ -1398,7 +1398,7 @@ Professional installation and stair matching quoted during your free in-home est
     faqs: [
       {
         question: 'How much does hardwood flooring cost in Richmond Hill?',
-        answer: 'At BBS Flooring, engineered hardwood for Richmond Hill homes starts from $3.69/sqft and solid hardwood from $4.29/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
+        answer: 'At BBS Flooring, engineered hardwood for Richmond Hill homes starts from $3.19/sqft and solid hardwood from $5.10/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
       },      {
         question: 'What is the best hardwood flooring for Richmond Hill homes?',
         answer: 'Engineered hardwood is the most popular choice for Richmond Hill homes — it handles Ontario\'s seasonal humidity swings and works over both wood and concrete subfloors. Wide-plank European white oak in matte or brushed finish is our top seller. Visit BBS Flooring at 6061 Highway 7 to see our full collection.',
@@ -1698,10 +1698,10 @@ All prices are for material. Professional installation is quoted during your fre
     productType: 'hardwood',
     citySlug: 'ajax',
     city: 'Ajax',
-    title: 'Hardwood Flooring Ajax | Engineered & Solid from $3.69/sqft',
-    metaDescription: 'Shop hardwood flooring in Ajax from $3.69/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
+    title: 'Hardwood Flooring Ajax | Engineered & Solid from $3.19/sqft',
+    metaDescription: 'Shop hardwood flooring in Ajax from $3.19/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
     h1: 'Hardwood Flooring in Ajax',
-    heroSubtitle: 'Premium engineered and solid hardwood from $3.69/sqft — over 300 styles in stock. 20 minutes via the 401 from our showroom.',
+    heroSubtitle: 'Premium engineered and solid hardwood from $3.19/sqft — over 300 styles in stock. 20 minutes via the 401 from our showroom.',
     content: {
       intro: `BBS Flooring is Ajax's destination for premium hardwood flooring. With over 300 engineered and solid hardwood options in stock at our Markham showroom on Highway 7 — approximately 20 minutes east via Highway 401 — we offer one of the largest selections in the GTA at wholesale-to-public pricing. From wide-plank European white oak to classic Canadian maple, every plank comes from trusted manufacturers like Vidar, NAF, Wickham, and Appalachian.
 
@@ -1731,9 +1731,9 @@ Our installation team handles everything from subfloor preparation and moisture 
 
 | Product Type | Price Range | Best For |
 |---|---|---|
-| Engineered Hardwood (12mm) | $3.69 – $4.99/sqft | Main floors, condos, radiant heat |
+| Engineered Hardwood (12mm) | $3.19 – $4.99/sqft | Main floors, condos, radiant heat |
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
-| Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
+| Solid Hardwood (3/4") | $5.10 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation and stair matching quoted during your free in-home estimate. Premium brands in stock: Vidar, NAF, Wickham, Appalachian, Triforest, Woden, Canadian Standard, Northernest.`,
     },
@@ -1741,7 +1741,7 @@ Professional installation and stair matching quoted during your free in-home est
     faqs: [
       {
         question: 'How much does hardwood flooring cost in Ajax?',
-        answer: 'At BBS Flooring, engineered hardwood for Ajax homes starts from $3.69/sqft and solid hardwood from $4.29/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
+        answer: 'At BBS Flooring, engineered hardwood for Ajax homes starts from $3.19/sqft and solid hardwood from $5.10/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
       },      {
         question: 'What is the best hardwood flooring for Ajax homes?',
         answer: 'Engineered hardwood is the most popular choice for Ajax homes — it handles Ontario\'s seasonal humidity swings and works over both wood and concrete subfloors. Wide-plank European white oak in matte or brushed finish is our top seller. Visit BBS Flooring at 6061 Highway 7 to see our full collection.',
@@ -1786,7 +1786,7 @@ Professional installation and stair matching quoted during your free in-home est
     citySlug: 'oshawa',
     city: 'Oshawa',
     title: 'Flooring Installation Oshawa | Hardwood, Vinyl & Laminate',
-    metaDescription: 'Professional flooring installation in Oshawa. Vinyl from $1.79/sqft, hardwood from $3.69/sqft. Free estimates. Call (647) 428-1111.',
+    metaDescription: 'Professional flooring installation in Oshawa. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
     h1: 'Flooring Installation in Oshawa',
     heroSubtitle: 'Expert flooring installation across Oshawa — vinyl, hardwood, and laminate. Free in-home estimates. 30 minutes via the 401 from our showroom.',
     isInstallationPage: true,
@@ -1799,7 +1799,7 @@ Oshawa is Durham Region's most affordable major city, making it a renovation hot
 
 **Selection:** With 700+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor for your Oshawa home at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation — all in one visit.
 
-**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
+**Pricing:** We sell direct at wholesale-to-public pricing. No middleman, no showroom markup games. Our vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, and there are no surprise add-ons.
 
 **Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle rental property renovations and affordable whole-home upgrades with the precision that Oshawa homeowners expect. Every installation includes proper acclimation of materials, subfloor moisture testing, and attention to transitions and trim details that separate professional work from DIY.`,
 
@@ -1820,8 +1820,8 @@ Every installation project starts with a free in-home estimate. Our team will as
 |---|---|---|
 | Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
 | Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
-| Engineered Hardwood | From $3.69/sqft | Main floors, open-concept, executive homes |
-| Solid Hardwood | From $4.29/sqft | Heritage homes, wood subfloors, long-term value |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
     },
@@ -1829,7 +1829,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
     faqs: [
       {
         question: 'How much does flooring installation cost in Oshawa?',
-        answer: 'BBS Flooring offers Oshawa homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.69/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+        answer: 'BBS Flooring offers Oshawa homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
       },      {
         question: 'Do you offer free estimates for flooring installation in Oshawa?',
         answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Oshawa. Our team will assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
@@ -1874,10 +1874,10 @@ Professional installation pricing is quoted during your free in-home estimate, b
     productType: 'hardwood',
     citySlug: 'oshawa',
     city: 'Oshawa',
-    title: 'Hardwood Flooring Oshawa | Engineered & Solid from $3.69/sqft',
-    metaDescription: 'Shop hardwood flooring in Oshawa from $3.69/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
+    title: 'Hardwood Flooring Oshawa | Engineered & Solid from $3.19/sqft',
+    metaDescription: 'Shop hardwood flooring in Oshawa from $3.19/sqft. 300+ engineered & solid options. Expert installation. Call (647) 428-1111.',
     h1: 'Hardwood Flooring in Oshawa',
-    heroSubtitle: 'Premium engineered and solid hardwood from $3.69/sqft — over 300 styles in stock. 30 minutes via the 401 from our showroom.',
+    heroSubtitle: 'Premium engineered and solid hardwood from $3.19/sqft — over 300 styles in stock. 30 minutes via the 401 from our showroom.',
     content: {
       intro: `BBS Flooring is Oshawa's destination for premium hardwood flooring. With over 300 engineered and solid hardwood options in stock at our Markham showroom on Highway 7 — approximately 30 minutes west via Highway 401 — we offer one of the largest selections in the GTA at wholesale-to-public pricing. From wide-plank European white oak to classic Canadian maple, every plank comes from trusted manufacturers like Vidar, NAF, Wickham, and Appalachian.
 
@@ -1908,9 +1908,9 @@ Our installation team handles everything from subfloor preparation and moisture 
 
 | Product Type | Price Range | Best For |
 |---|---|---|
-| Engineered Hardwood (12mm) | $3.69 – $4.99/sqft | Main floors, condos, radiant heat |
+| Engineered Hardwood (12mm) | $3.19 – $4.99/sqft | Main floors, condos, radiant heat |
 | Premium Engineered (15mm+) | $4.99 – $6.99/sqft | Executive homes, wide-plank, luxury finishes |
-| Solid Hardwood (3/4") | $4.29 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
+| Solid Hardwood (3/4") | $5.10 – $7.25/sqft | Heritage homes, wood subfloors, long-term value |
 
 Professional installation and stair matching quoted during your free in-home estimate. Premium brands in stock: Vidar, NAF, Wickham, Appalachian, Triforest, Woden, Canadian Standard, Northernest.`,
     },
@@ -1918,7 +1918,7 @@ Professional installation and stair matching quoted during your free in-home est
     faqs: [
       {
         question: 'How much does hardwood flooring cost in Oshawa?',
-        answer: 'At BBS Flooring, engineered hardwood for Oshawa homes starts from $3.69/sqft and solid hardwood from $4.29/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
+        answer: 'At BBS Flooring, engineered hardwood for Oshawa homes starts from $3.19/sqft and solid hardwood from $5.10/sqft. Premium wide-plank options range from $4.99 to $6.99/sqft. We sell at wholesale-to-public pricing — no middleman markup. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
       },      {
         question: 'What is the best hardwood flooring for Oshawa homes?',
         answer: 'Engineered hardwood is the most popular choice for Oshawa homes — it handles Ontario\'s seasonal humidity swings and works over both wood and concrete subfloors. Wide-plank European white oak in matte or brushed finish is our top seller. Visit BBS Flooring at 6061 Highway 7 to see our full collection.',

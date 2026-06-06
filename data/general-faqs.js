@@ -137,7 +137,7 @@ export const GENERAL_FAQ_SECTIONS = [
       },
       {
         question: 'Do you have reviews I can read?',
-        answer: 'Yes — BBS Flooring has a 4.7-star rating with 41 Google reviews from verified customers. You can read them on our Google Business Profile or visit our showroom to see photos of completed projects.',
+        answer: 'Yes — BBS Flooring has a 4.7-star Google rating from verified customers. You can read our reviews on our Google Business Profile or visit our showroom to see photos of completed projects.',
       },
     ],
   },

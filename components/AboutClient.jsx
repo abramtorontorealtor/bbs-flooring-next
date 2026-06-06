@@ -68,7 +68,7 @@ export default function AboutClient() {
             { icon: Heart, title: 'Family Values', desc: 'We treat every customer like family. Your satisfaction is our reputation.' },
             { icon: CheckCircle, title: 'Quality Guaranteed', desc: 'Every installation backed by our workmanship guarantee.' },
             { icon: MapPin, title: 'Local Experts', desc: 'We know Markham, Toronto, and Durham homes. Local problems, local solutions.' },
-            { icon: Star, title: '4.7★ Google Rating', desc: '41 verified reviews from homeowners just like you.' },
+            { icon: Star, title: '4.7★ Google Rating', desc: 'Verified reviews from homeowners just like you.' },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex gap-4">
               <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">

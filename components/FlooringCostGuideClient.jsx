@@ -53,7 +53,7 @@ export default function FlooringCostGuideClient() {
           Quick Answer: Flooring Installation Cost in Toronto &amp; GTA (2026)
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Total cost (material + labour) at BBS Flooring: Laminate from $3.49/sqft, Vinyl/SPC from $4.19/sqft, Engineered hardwood from $5.94/sqft, Solid hardwood from $7.35/sqft. A typical 500 sqft room costs $1,745&#8211;$4,750 depending on material. BBS buys direct from manufacturers &#8212; 20&#8211;40% less than big-box stores. Free in-home measurement: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          Total cost (material + labour) at BBS Flooring: Laminate from $3.49/sqft, Vinyl/SPC from $4.19/sqft, Engineered hardwood from $5.44/sqft, Solid hardwood from $7.35/sqft. A typical 500 sqft room costs $1,745&#8211;$4,750 depending on material. BBS buys direct from manufacturers &#8212; 20&#8211;40% less than big-box stores. Free in-home measurement: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -79,7 +79,7 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '258+ options', '$3.69–$7.59/sqft', '$4.89/sqft', 'Lee ($3.69) · Woden ($3.99) · Falcon ($3.89)'],
+                  ['Engineered Hardwood', '258+ options', '$3.19–$7.59/sqft', '$4.89/sqft', 'Lee ($3.19) · Woden ($3.99) · Falcon ($3.89)'],
                   ['Solid Hardwood', '75+ options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
                   ['Vinyl (LVP/SPC)', '188+ options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($2.49) · Woden ($2.79)'],
                   ['Laminate', '99+ options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
@@ -98,7 +98,7 @@ export default function FlooringCostGuideClient() {
 
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
             <p className="text-stone-700 font-medium">
-              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $3.69/sqft (like the <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee Flooring</Link>) when big-box stores start at $5.00+ for comparable European Oak. Same quality, fewer markups.
+              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $3.19/sqft (like the <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee Flooring</Link>) when big-box stores start at $5.00+ for comparable European Oak. Same quality, fewer markups.
             </p>
           </div>
 
@@ -206,7 +206,7 @@ export default function FlooringCostGuideClient() {
                   ['Laminate (premium)', '$5.29', '$1,058', '$2,645', '$4,232', '$5,290', '$7,935'],
                   ['Vinyl (budget)', '$4.19', '$838', '$2,095', '$3,352', '$4,190', '$6,285'],
                   ['Vinyl (premium)', '$5.59', '$1,118', '$2,795', '$4,472', '$5,590', '$8,385'],
-                  ['Engineered HW (budget)', '$4.74', '$948', '$2,370', '$3,792', '$4,740', '$7,110'],
+                  ['Engineered HW (budget)', '$5.44', '$1,088', '$2,720', '$4,352', '$5,440', '$8,160'],
                   ['Engineered HW (mid)', '$7.27', '$1,454', '$3,635', '$5,816', '$7,270', '$10,905'],
                   ['Engineered HW (premium)', '$12.24', '$2,448', '$6,120', '$9,792', '$12,240', '$18,360'],
                   ['Solid Hardwood (std)', '$7.35', '$1,470', '$3,675', '$5,880', '$7,350', '$11,025'],
