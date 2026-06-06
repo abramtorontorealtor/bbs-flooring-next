@@ -20,7 +20,7 @@ export default async function ProductsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 pb-12 pt-10 md:pt-14">
-      <Breadcrumbs items={[{ label: 'Home', url: '/' }, { label: 'All Products' }]} />
+      <Suspense><Breadcrumbs items={[{ label: 'Home', url: '/' }, { label: 'All Products' }]} /></Suspense>
 
       {/* ── SSR Page Header ── */}
       <div className="mb-3 sm:mb-5">

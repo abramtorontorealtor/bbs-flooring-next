@@ -85,14 +85,14 @@ export default async function SolidHardwoodPage() {
       ]} />
 
       <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
-        <Breadcrumbs
+        <Suspense><Breadcrumbs
           items={[
             { label: 'Home', url: '/' },
             { label: 'Solid Hardwood', url: '/solid-hardwood' },
           ]}
-        />
+        /></Suspense>
 
-        <QuoteContextBanner />
+        <Suspense><QuoteContextBanner /></Suspense>
 
         {/* ── SSR Page Header ── */}
         <div className="mb-8">

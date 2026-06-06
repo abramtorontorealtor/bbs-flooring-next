@@ -80,7 +80,7 @@ export default async function LocationPage({ params }) {
       )}
 
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <Breadcrumbs items={getLocationBreadcrumbs(data.city)} />
+        <Suspense><Breadcrumbs items={getLocationBreadcrumbs(data.city)} /></Suspense>
 
         {/* ── SSR Hero Section ── */}
         <div className="text-center mb-16">

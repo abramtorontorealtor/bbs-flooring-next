@@ -81,14 +81,14 @@ export default async function VinylPage() {
       ]} />
 
       <div className="max-w-7xl mx-auto px-4 pt-10 pb-12 md:pt-14 md:pb-16">
-        <Breadcrumbs
+        <Suspense><Breadcrumbs
           items={[
             { label: 'Home', url: '/' },
             { label: 'Vinyl Flooring', url: '/vinyl' },
           ]}
-        />
+        /></Suspense>
 
-        <QuoteContextBanner />
+        <Suspense><QuoteContextBanner /></Suspense>
 
         {/* ── SSR Page Header ── */}
         <div className="mb-8">
