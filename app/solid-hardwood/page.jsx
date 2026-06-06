@@ -168,7 +168,7 @@ export default async function SolidHardwoodPage() {
                 <strong>Choose Engineered if:</strong> You have a concrete slab, radiant heat, or
                 want a wider plank (over 5&quot;). Engineered handles humidity swings better.
               </p>
-              <p>Starting from <strong>$5.69/sqft</strong>. Installation from <strong>$2.25/sqft</strong>.</p>
+              <p>Starting from <strong>$5.10/sqft</strong>. Installation from <strong>$2.25/sqft</strong>.</p>
             </div>
             <Link
               href={createPageUrl('EngineeredHardwood')}

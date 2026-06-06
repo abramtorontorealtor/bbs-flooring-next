@@ -29,7 +29,7 @@ const faqItems = [
   },
   {
     question: 'Is vinyl flooring really waterproof?',
-    answer: 'Yes. SPC (stone polymer composite) and WPC (wood polymer composite) vinyl are 100% waterproof through the core. The surface, core, and backing will not absorb water. This makes vinyl ideal for basements, kitchens, and bathrooms. BBS carries 233 waterproof vinyl options from $1.79/sqft.',
+    answer: 'Yes. SPC (stone polymer composite) and WPC (wood polymer composite) vinyl are 100% waterproof through the core. The surface, core, and backing will not absorb water. This makes vinyl ideal for basements, kitchens, and bathrooms. BBS carries 241 waterproof vinyl options from $1.79/sqft.',
   },
   {
     question: 'How long does each flooring type last?',

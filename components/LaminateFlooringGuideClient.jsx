@@ -258,7 +258,7 @@ export default function LaminateFlooringGuideClient() {
           </div>
 
           <p className="text-slate-500 text-sm">
-            Need true waterproof performance? See our <Link href="/vinyl-flooring-guide" className="text-blue-600 hover:underline">Vinyl Flooring Guide</Link> — 233 options from $1.79/sqft, 100% waterproof.
+            Need true waterproof performance? See our <Link href="/vinyl-flooring-guide" className="text-blue-600 hover:underline">Vinyl Flooring Guide</Link> — 241 options from $1.79/sqft, 100% waterproof.
           </p>
         </section>
 

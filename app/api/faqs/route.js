@@ -25,7 +25,7 @@ const CATEGORY_FAQS = {
     { question: "How long does laminate flooring last?", answer: "Quality laminate flooring typically lasts 15-25 years with proper care. The wear layer thickness (AC rating) determines durability — we recommend AC4 or higher for residential use in busy households." },
     { question: "Can laminate be refinished?", answer: "No, laminate flooring cannot be sanded or refinished. When the surface wears through, the planks need to be replaced. This is why choosing a quality product with a thick wear layer matters." },
     { question: "What's the best laminate flooring for a busy household?", answer: "Look for laminate with an AC4 or AC5 wear rating, 12mm thickness, and attached underlayment. These features provide better durability, sound absorption, and comfort underfoot. Visit our Markham showroom to see options." },
-    { question: "How much does laminate flooring cost in Markham?", answer: "Laminate flooring at BBS starts from $2.39/sqft for the material. Installation typically adds $2.00-$2.25/sqft. We offer complete packages including materials, installation, and old floor removal." }
+    { question: "How much does laminate flooring cost in Markham?", answer: "Laminate flooring at BBS starts from $1.49/sqft for the material. Installation typically adds $2.00-$2.25/sqft. We offer complete packages including materials, installation, and old floor removal." }
   ],
   vinyl: [
     { question: "What is luxury vinyl plank (LVP) flooring?", answer: "Luxury vinyl plank (LVP) is a 100% waterproof flooring that realistically mimics hardwood. It consists of multiple layers including a rigid core (SPC or WPC), a high-definition print layer, and a protective wear layer — ideal for any room in your GTA home." },
@@ -33,7 +33,7 @@ const CATEGORY_FAQS = {
     { question: "What's the difference between SPC and WPC vinyl?", answer: "SPC (Stone Plastic Composite) has a rigid stone-polymer core — it's denser, more durable, and better for high-traffic areas. WPC (Wood Plastic Composite) has a wood-polymer core that's slightly softer and warmer underfoot. Both are 100% waterproof." },
     { question: "How long does vinyl plank flooring last?", answer: "Quality vinyl plank flooring lasts 20-25+ years with proper care. The wear layer thickness (12 mil for residential, 20+ mil for commercial) is the key durability factor. We carry products with up to 30-mil wear layers." },
     { question: "Can vinyl flooring go over existing floors?", answer: "Often yes, depending on the existing floor's condition and height. LVP can typically be installed over concrete, existing vinyl, and even some tile. Our team will assess your subfloor during your free in-home measurement." },
-    { question: "How much does vinyl flooring cost in Markham?", answer: "Vinyl flooring at BBS starts from $2.49/sqft for the material. Installation is typically $2.00-$2.25/sqft. Call (647) 428-1111 or book a free measurement for an accurate project quote." }
+    { question: "How much does vinyl flooring cost in Markham?", answer: "Vinyl flooring at BBS starts from $1.79/sqft for the material. Installation is typically $2.00-$2.25/sqft. Call (647) 428-1111 or book a free measurement for an accurate project quote." }
   ]
 };
 

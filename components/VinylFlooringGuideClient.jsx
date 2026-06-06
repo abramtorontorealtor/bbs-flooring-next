@@ -22,7 +22,7 @@ export default function VinylFlooringGuideClient() {
             Everything you need to know about luxury vinyl plank — SPC vs WPC, wear layers, thickness, waterproof performance, costs, and how to choose the right vinyl for every room.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-slate-400">
-            <span>✔ 233 options in stock</span>
+            <span>✔ 241 options in stock</span>
             <span>✔ 6 brands compared</span>
             <span>✔ Real Canadian pricing</span>
           </div>
@@ -552,7 +552,7 @@ export default function VinylFlooringGuideClient() {
 
           <div className="mt-6 text-center">
             <Link href="/vinyl-flooring" className="inline-block bg-slate-800 hover:bg-slate-900 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
-              Browse All 233 Vinyl Products →
+              Browse All 241 Vinyl Products →
             </Link>
           </div>
         </section>
@@ -642,7 +642,7 @@ export default function VinylFlooringGuideClient() {
           <div className="space-y-4 mb-8">
             {[
               { step: '1', title: 'Free In-Home Measurement', desc: 'We measure every room, assess your subfloor, and provide a no-obligation quote within 24 hours.' },
-              { step: '2', title: 'Material Selection', desc: 'Choose your vinyl at our Markham showroom (233 options to see and touch) or from our online catalog.' },
+              { step: '2', title: 'Material Selection', desc: 'Choose your vinyl at our Markham showroom (241 options to see and touch) or from our online catalog.' },
               { step: '3', title: 'Subfloor Preparation', desc: 'Old flooring removal (if needed), levelling compounds for dips/bumps, and moisture testing on concrete.' },
               { step: '4', title: 'Click-Lock Installation', desc: 'Planks click together without glue. A 500 sqft room typically takes 1 day. We handle furniture moving, transitions, and trim.' },
               { step: '5', title: 'Final Walkthrough', desc: 'We inspect every seam, clean up all debris, move furniture back, and review the finished project with you.' },
@@ -695,7 +695,7 @@ export default function VinylFlooringGuideClient() {
                 <tr className="border-b"><td className="p-3 font-medium">Scratch resistance</td><td className="p-3 text-center">Excellent</td><td className="p-3 text-center">Moderate</td><td className="p-3 text-center">Good</td></tr>
                 <tr className="border-b bg-slate-50"><td className="p-3 font-medium">Basement safe</td><td className="p-3 text-center">✅ Yes</td><td className="p-3 text-center">⚠️ With moisture test</td><td className="p-3 text-center">❌ Not recommended</td></tr>
                 <tr className="border-b"><td className="p-3 font-medium">Lifespan</td><td className="p-3 text-center">20–30 years</td><td className="p-3 text-center">25–50 years</td><td className="p-3 text-center">15–25 years</td></tr>
-                <tr className="border-b bg-slate-50"><td className="p-3 font-medium">Material cost (BBS)</td><td className="p-3 text-center">$1.79–$3.59</td><td className="p-3 text-center">$2.49–$9.29</td><td className="p-3 text-center">$1.49–$2.99</td></tr>
+                <tr className="border-b bg-slate-50"><td className="p-3 font-medium">Material cost (BBS)</td><td className="p-3 text-center">$1.79–$3.59</td><td className="p-3 text-center">$2.49–$8.99</td><td className="p-3 text-center">$1.49–$2.99</td></tr>
                 <tr className="border-b"><td className="p-3 font-medium">Installation cost</td><td className="p-3 text-center">$2.00/sqft</td><td className="p-3 text-center">$2.25–$4.25/sqft</td><td className="p-3 text-center">$2.00/sqft</td></tr>
                 <tr><td className="p-3 font-medium">Resale value impact</td><td className="p-3 text-center">Good</td><td className="p-3 text-center">Excellent</td><td className="p-3 text-center">Neutral</td></tr>
               </tbody>
@@ -780,7 +780,7 @@ export default function VinylFlooringGuideClient() {
               Book Free Measurement
             </Link>
             <Link href="/vinyl-flooring" className="border-2 border-white/30 hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
-              Browse 233 Vinyl Products
+              Browse 241 Vinyl Products
             </Link>
             <Link href="/quote-calculator" className="border-2 border-white/30 hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
               Get a Quick Quote

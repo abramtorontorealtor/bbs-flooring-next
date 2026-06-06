@@ -79,9 +79,9 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '572 options', '$3.19–$7.59/sqft', '$4.89/sqft', 'Lee ($3.19) · Woden ($3.99) · Falcon ($3.89)'],
+                  ['Engineered Hardwood', '572 options', '$2.49–$8.99/sqft', '$4.89/sqft', 'Lee ($3.19) · Woden ($2.49) · Falcon ($3.89)'],
                   ['Solid Hardwood', '83 options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
-                  ['Vinyl (LVP/SPC)', '241 options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($2.49) · Woden ($2.79)'],
+                  ['Vinyl (LVP/SPC)', '241 options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($2.49) · Woden ($2.29)'],
                   ['Laminate', '145 options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
                 ].map(([type, options, range, avg, value], i) => (
                   <tr key={type} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>

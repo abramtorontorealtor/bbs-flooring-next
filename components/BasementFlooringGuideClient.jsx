@@ -20,10 +20,10 @@ export default function BasementFlooringGuideClient() {
             Best Flooring for Basements in Ontario
           </h1>
           <p className="text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed">
-            Moisture, concrete subfloors, and Ontario&apos;s climate make basements the hardest room to floor. This guide covers what works, what doesn&apos;t, and what it costs — with 233 waterproof options in stock.
+            Moisture, concrete subfloors, and Ontario&apos;s climate make basements the hardest room to floor. This guide covers what works, what doesn&apos;t, and what it costs — with 241 waterproof options in stock.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-stone-400">
-            <span>✔ 233 waterproof options</span>
+            <span>✔ 241 waterproof options</span>
             <span>✔ From $1.79/sqft</span>
             <span>✔ Ontario-specific advice</span>
           </div>
@@ -100,7 +100,7 @@ export default function BasementFlooringGuideClient() {
             <div className="border-2 border-amber-400 rounded-xl p-6 bg-amber-50/30">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-amber-600 text-white text-sm font-bold px-3 py-1 rounded-full">#1 BEST OVERALL</span>
-                <span className="text-stone-400 text-sm">233 options · $1.79–$3.59/sqft</span>
+                <span className="text-stone-400 text-sm">241 options · $1.79–$3.59/sqft</span>
               </div>
               <h3 className="text-2xl font-bold text-stone-900 mb-3">Vinyl (LVP/SPC)</h3>
               <p className="text-stone-600 leading-relaxed mb-4">
@@ -154,7 +154,7 @@ export default function BasementFlooringGuideClient() {
             <div className="border border-stone-200 rounded-xl p-6">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-stone-600 text-white text-sm font-bold px-3 py-1 rounded-full">#3 PREMIUM LOOK</span>
-                <span className="text-stone-400 text-sm">348 options · $2.49–$8.99/sqft</span>
+                <span className="text-stone-400 text-sm">335 options · $2.49–$8.99/sqft</span>
               </div>
               <h3 className="text-2xl font-bold text-stone-900 mb-3">Engineered Hardwood</h3>
               <p className="text-stone-600 leading-relaxed mb-4">
@@ -164,7 +164,7 @@ export default function BasementFlooringGuideClient() {
                 <strong>However, engineered hardwood is NOT waterproof.</strong> Any standing water will damage the wood veneer and core. Only use engineered hardwood in basements that are: (a) completely dry with verified low moisture readings, (b) finished and climate-controlled year-round, and (c) protected by a proper moisture barrier between the concrete and the flooring. If your basement has ANY history of water intrusion, choose vinyl.
               </p>
               <p className="text-stone-600 text-sm">
-                For dry basements on a budget, the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Blizzard</Link> ($3.99/sqft) or <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Linen Red Oak</Link> ($3.89/sqft) offer real hardwood beauty at accessible prices. Premium options include <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link> (call for pricing) and <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Canadian Standard Lucid Pure</Link> ($7.59/sqft). Browse all 348 options on our <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link> page.
+                For dry basements on a budget, the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Blizzard</Link> ($3.99/sqft) or <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Linen Red Oak</Link> ($3.89/sqft) offer real hardwood beauty at accessible prices. Premium options include <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link> (call for pricing) and <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Canadian Standard Lucid Pure</Link> ($7.59/sqft). Browse all 335 options on our <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link> page.
               </p>
             </div>
 
@@ -696,7 +696,7 @@ export default function BasementFlooringGuideClient() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link href="/vinyl-flooring-guide" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
               <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Vinyl Flooring Guide 2026</h3>
-              <p className="text-stone-500 text-sm">SPC vs WPC, wear layers, thickness, costs, and how to choose the right vinyl. 233 options compared.</p>
+              <p className="text-stone-500 text-sm">SPC vs WPC, wear layers, thickness, costs, and how to choose the right vinyl. 241 options compared.</p>
               <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                 Read guide <ArrowRight className="w-3 h-3" />
               </span>
@@ -745,7 +745,7 @@ export default function BasementFlooringGuideClient() {
 
           <div className="space-y-3">
             {[
-              ['What is the best waterproof flooring for a basement?', 'Vinyl (LVP/SPC) — 100% waterproof through the core. BBS carries 233 waterproof vinyl options from $1.79–$3.59/sqft. SPC vinyl is slightly better for basements than WPC due to its denser, more stable core. Brands like NAF, Woden, and Triforest are top sellers for basements.'],
+              ['What is the best waterproof flooring for a basement?', 'Vinyl (LVP/SPC) — 100% waterproof through the core. BBS carries 241 waterproof vinyl options from $1.79–$3.59/sqft. SPC vinyl is slightly better for basements than WPC due to its denser, more stable core. Brands like NAF, Woden, and Triforest are top sellers for basements.'],
               ['Can you put hardwood in a basement?', 'Engineered hardwood can work in dry, finished basements with proper moisture testing and barriers. Use glue-down ($3.25/sqft) or floating installation. Never use solid hardwood in a basement — it cannot handle concrete subfloors or basement moisture levels.'],
               ['What is the cheapest basement flooring?', 'Laminate from Tosca Floors at $1.49/sqft + $2.00/sqft installation = $3.49/sqft total. A 600 sqft basement costs about $2,094. But laminate is NOT waterproof — only use in dry basements. Vinyl from $1.79/sqft is $420 more for 600 sqft but gives you 100% waterproof protection.'],
               ['How do you handle moisture in a basement before installing flooring?', 'Step 1: Test moisture (calcium chloride or RH test). Step 2: Install a 6mil polyethylene vapour barrier over the concrete. Step 3: For problem basements, use DRIcore subfloor panels ($3–$5/sqft). Step 4: Run a dehumidifier year-round at 45–50% RH. BBS tests moisture free during in-home measurements.'],
@@ -771,7 +771,7 @@ export default function BasementFlooringGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Floor Your Basement?</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            BBS Flooring stocks 233 waterproof vinyl options from $1.79/sqft — perfect for Ontario basements. Free moisture testing and in-home measurement included.
+            BBS Flooring stocks 241 waterproof vinyl options from $1.79/sqft — perfect for Ontario basements. Free moisture testing and in-home measurement included.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/waterproof-flooring" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">

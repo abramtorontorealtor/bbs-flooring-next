@@ -5,7 +5,7 @@ import { faqSchema, JsonLd } from '@/lib/schemas';
 const faqItems = [
   {
     question: 'What is the best waterproof flooring for a basement?',
-    answer: 'Vinyl (LVP/SPC) is the best waterproof basement flooring. It is 100% waterproof through the core, installs directly over concrete, and handles basement humidity and temperature swings. BBS Flooring carries 233 waterproof vinyl options from $1.79–$3.59/sqft from brands like NAF, Woden, Triforest, and Simba.',
+    answer: 'Vinyl (LVP/SPC) is the best waterproof basement flooring. It is 100% waterproof through the core, installs directly over concrete, and handles basement humidity and temperature swings. BBS Flooring carries 241 waterproof vinyl options from $1.79–$3.59/sqft from brands like NAF, Woden, Triforest, and Simba.',
   },
   {
     question: 'Can you put hardwood in a basement?',
@@ -55,11 +55,11 @@ const faqItems = [
 
 export const metadata = {
   title: 'Best Flooring for Basements in Ontario (2026) | Waterproof Options | BBS Flooring',
-  description: 'Complete guide to basement flooring in Ontario. 233 waterproof vinyl options from $1.79/sqft, moisture barrier advice, cost breakdowns, and installation tips for concrete subfloors. Based in Markham, serving the GTA.',
+  description: 'Complete guide to basement flooring in Ontario. 241 waterproof vinyl options from $1.79/sqft, moisture barrier advice, cost breakdowns, and installation tips for concrete subfloors. Based in Markham, serving the GTA.',
   alternates: { canonical: '/basement-flooring-guide' },
   openGraph: {
     title: 'Best Basement Flooring in Ontario (2026) | BBS Flooring',
-    description: '233 waterproof options from $1.79/sqft. Vinyl, laminate, and engineered hardwood compared for basements. Real pricing and Ontario-specific advice.',
+    description: '241 waterproof options from $1.79/sqft. Vinyl, laminate, and engineered hardwood compared for basements. Real pricing and Ontario-specific advice.',
     url: 'https://bbsflooring.ca/basement-flooring-guide',
     type: 'article',
   },

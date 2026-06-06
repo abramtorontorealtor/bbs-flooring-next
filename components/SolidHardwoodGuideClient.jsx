@@ -19,7 +19,7 @@ export default function SolidHardwoodGuideClient() {
             Species comparison, grade explained, real pricing, and everything you need to choose the right solid hardwood for your home.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-amber-200">
-            <span>✔ 81 options in stock</span>
+            <span>✔ 83 options in stock</span>
             <span>✔ 4 premium brands</span>
             <span>✔ From $5.10/sqft</span>
           </div>
@@ -353,7 +353,7 @@ export default function SolidHardwoodGuideClient() {
                 <tr>
                   <td className="p-3 font-medium text-slate-800">Price at BBS</td>
                   <td className="p-3 text-slate-600 font-medium">$5.10–$7.25/sqft</td>
-                  <td className="p-3 text-slate-600 font-medium">$2.49–$9.29/sqft</td>
+                  <td className="p-3 text-slate-600 font-medium">$2.49–$8.99/sqft</td>
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-medium text-slate-800">Installation</td>
@@ -383,7 +383,7 @@ export default function SolidHardwoodGuideClient() {
                   <h3 className="text-lg font-semibold text-slate-900">
                     <Link href="/wickham-flooring" className="text-amber-700 underline hover:text-amber-800">Wickham Hardwood Flooring</Link>
                   </h3>
-                  <p className="text-slate-500 text-sm">29 options · Made in Quebec</p>
+                  <p className="text-slate-500 text-sm">31 options · Made in Quebec</p>
                 </div>
                 <span className="text-amber-700 font-bold">$5.50–$7.25/sqft</span>
               </div>
@@ -844,7 +844,7 @@ export default function SolidHardwoodGuideClient() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/solid-hardwood-flooring" className="bg-white text-amber-900 px-6 py-3 rounded-lg font-semibold hover:bg-amber-50 transition">
-              Browse 81 Options →
+              Browse 83 Options →
             </Link>
             <Link href="/free-measurement" className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
               Free In-Home Measurement

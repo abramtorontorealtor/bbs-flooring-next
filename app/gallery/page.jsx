@@ -80,7 +80,7 @@ export default function GalleryPage() {
         <h2 className="text-xl font-bold text-slate-800 mb-3">Professional Flooring Installation Across the GTA</h2>
         <p className="text-slate-600 text-sm leading-relaxed">
           BBS Flooring has been serving Markham, Toronto, Scarborough, Richmond Hill, Vaughan, Pickering,
-          Ajax, Whitby, and Durham Region for over 13 years. Our in-house installation team specializes in
+          Ajax, Whitby, and Durham Region since 2012. Our in-house installation team specializes in
           engineered hardwood, solid hardwood, luxury vinyl plank (LVP), laminate flooring, and staircase
           refinishing. Every project in our gallery was completed by our own crew — never subcontractors.
         </p>

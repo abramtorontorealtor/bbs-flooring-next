@@ -25,7 +25,7 @@ const faqItems = [
   },
   {
     question: 'How much does engineered hardwood cost in Toronto?',
-    answer: 'At BBS Flooring, engineered hardwood ranges from $2.49–$9.29/sqft for materials. Including installation ($2.25–$4.25/sqft labour depending on method), total installed cost is $4.75–$13.50/sqft. Budget options start around $4.50/sqft total installed.',
+    answer: 'At BBS Flooring, engineered hardwood ranges from $2.49–$8.99/sqft for materials. Including installation ($2.25–$4.25/sqft labour depending on method), total installed cost is $4.75–$13.50/sqft. Budget options start around $4.50/sqft total installed.',
   },
   {
     question: 'What width engineered hardwood is most popular in 2026?',
@@ -47,7 +47,7 @@ const faqItems = [
 
 export const metadata = {
   title: 'Engineered Hardwood Buying Guide 2026 | Prices, Brands & Installation | BBS Flooring',
-  description: 'Complete guide to buying engineered hardwood flooring in Canada. Compare 572 options from 8 brands ($2.49–$9.29/sqft), installation costs, species, and grades. Based in Markham, serving the GTA.',
+  description: 'Complete guide to buying engineered hardwood flooring in Canada. Compare 572 options from 8 brands ($2.49–$8.99/sqft), installation costs, species, and grades. Based in Markham, serving the GTA.',
   alternates: { canonical: '/engineered-hardwood-guide' },
   openGraph: {
     title: 'Engineered Hardwood Buying Guide 2026 | BBS Flooring',

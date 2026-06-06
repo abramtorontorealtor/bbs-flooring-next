@@ -12,7 +12,7 @@ const GENERAL_FAQS = [
   { question: "What brands of flooring do you carry?", answer: "We carry over 1,000 products from top brands including Vidar Flooring, Triforest, and many more. Visit our showroom at 6061 Highway 7, Markham to see samples." },
   { question: "How much does flooring installation cost?", answer: "Pricing varies by material. Hardwood installation: $2.25/sqft. Vinyl installation: $2.00-2.25/sqft. Laminate installation: $2.00-2.25/sqft. Call (647) 428-1111 for an accurate quote based on your project." },
   { question: "Do you install flooring in Toronto and Durham Region?", answer: "Yes, we serve all GTA including Markham, Toronto, Scarborough, North York, Richmond Hill, Vaughan, Whitby, Oshawa, Ajax, Pickering, and surrounding areas." },
-  { question: "Can I visit your showroom without an appointment?", answer: "Absolutely! Walk-ins welcome Mon-Sat 10am-5pm. We're located at 6061 Highway 7, Unit B in Markham. Closed Sundays." },
+  { question: "Can I visit your showroom without an appointment?", answer: "Absolutely! Walk-ins welcome Mon-Sat 10am-5pm. We're located at 6061 Highway 7, Unit B in Markham. Sunday by appointment only." },
   { question: "Do you offer financing for flooring projects?", answer: "Contact us at (647) 428-1111 to discuss payment options and financing available for your flooring project." },
   { question: "How long does flooring installation take?", answer: "Most residential projects take 1-3 days depending on square footage. We'll provide a detailed timeline during your free in-home measurement." },
   { question: "Do you remove old flooring?", answer: "Yes, we handle everything including old flooring removal, disposal, subfloor preparation, and new floor installation. Complete full-service flooring." },

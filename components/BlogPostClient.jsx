@@ -197,7 +197,7 @@ export default function BlogPostClient({ slug, initialPost = null }) {
       {post.category && (() => {
         const linkMap = {
           flooring_tips: [
-            { href: '/products', label: 'Browse 794+ Flooring Products', icon: '🏠' },
+            { href: '/products', label: 'Browse 1,000+ Flooring Products', icon: '🏠' },
             { href: '/quote-calculator', label: 'Get an Instant Quote', icon: '💰' },
             { href: '/compare', label: 'Compare Flooring Types', icon: '⚖️' },
           ],
@@ -251,7 +251,7 @@ export default function BlogPostClient({ slug, initialPost = null }) {
       <div className="mt-12 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-7 sm:p-8 md:p-10 text-white">
         <h2 className="text-2xl md:text-3xl font-bold mb-2">Ready to Transform Your Floors?</h2>
         <p className="text-slate-300 mb-6 text-sm sm:text-base max-w-xl">
-          Get expert advice and a free in-home measurement. 794+ products in stock, professional installation, and the best prices in the GTA.
+          Get expert advice and a free in-home measurement. 1,000+ products in stock, professional installation, and the best prices in the GTA.
         </p>
         <div className="flex flex-wrap gap-2.5">
           <Link href="/free-measurement" className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl transition-colors text-sm sm:text-base">

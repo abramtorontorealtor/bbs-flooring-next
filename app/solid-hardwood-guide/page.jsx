@@ -41,13 +41,13 @@ const faqItems = [
   },
   {
     question: 'What brands of solid hardwood do you carry?',
-    answer: 'BBS Flooring carries 83 solid hardwood products from 4 premium Canadian brands: Wickham Hardwood Flooring (29 options, $5.50–$7.25/sqft), Appalachian Flooring (18 options, $5.99–$6.39/sqft), Northernest (18 options, $5.10–$6.50/sqft), and Sherwood Forest Products (16 options, $5.99–$6.99/sqft). Visit our Markham showroom to see samples.',
+    answer: 'BBS Flooring carries 83 solid hardwood products from 4 premium Canadian brands: Wickham Hardwood Flooring (31 options, $5.50–$7.25/sqft), Appalachian Flooring (18 options, $5.99–$6.39/sqft), Northernest (18 options, $5.10–$6.50/sqft), and Sherwood Forest Products (16 options, $5.99–$6.99/sqft). Visit our Markham showroom to see samples.',
   },
 ];
 
 export const metadata = {
   title: 'Solid Hardwood Flooring Guide 2026 | Species, Grades & Pricing | BBS Flooring',
-  description: 'Complete guide to solid hardwood flooring in Canada. Compare oak, maple, hickory species, understand grades, and see real 2026 pricing. 81 options from $5.10/sqft at BBS Flooring Markham.',
+  description: 'Complete guide to solid hardwood flooring in Canada. Compare oak, maple, hickory species, understand grades, and see real 2026 pricing. 83 options from $5.10/sqft at BBS Flooring Markham.',
   alternates: { canonical: '/solid-hardwood-guide' },
 };
 
