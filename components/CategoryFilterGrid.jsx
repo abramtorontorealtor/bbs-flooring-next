@@ -288,9 +288,39 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
 
     // Sort
     switch (filters.sortBy) {
-      case 'recommended':
+      case 'recommended': {
+        // Brand-diversity interleaving: sort by score within each brand,
+        // then round-robin across brands so no single brand dominates page 1.
+        // Brands are ordered by their top product's score.
+        const brandBuckets = new Map();
+        // First sort all products by score
         result.sort((a, b) => (b.sort_score || 0) - (a.sort_score || 0));
+        // Group into brand buckets (preserving score order within each)
+        for (const p of result) {
+          const brand = p.brand || 'Other';
+          if (!brandBuckets.has(brand)) brandBuckets.set(brand, []);
+          brandBuckets.get(brand).push(p);
+        }
+        // Sort brands by their top product's score (highest first)
+        const sortedBrands = [...brandBuckets.entries()]
+          .sort(([, a], [, b]) => (b[0].sort_score || 0) - (a[0].sort_score || 0));
+        // Round-robin interleave: pick one from each brand in rotation
+        const interleaved = [];
+        const cursors = new Map(sortedBrands.map(([brand]) => [brand, 0]));
+        let remaining = result.length;
+        while (remaining > 0) {
+          for (const [brand, products] of sortedBrands) {
+            const cursor = cursors.get(brand);
+            if (cursor < products.length) {
+              interleaved.push(products[cursor]);
+              cursors.set(brand, cursor + 1);
+              remaining--;
+            }
+          }
+        }
+        result = interleaved;
         break;
+      }
       case 'price_low':
         result.sort((a, b) => (a.sale_price_per_sqft || a.price_per_sqft || 0) - (b.sale_price_per_sqft || b.price_per_sqft || 0));
         break;
