@@ -372,21 +372,9 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
 
               {gate !== 'unlocked' ? (
                 gate === 'locked' ? (
-                  /* ── Locked: blurred total + unlock form ── */
+                  /* ── Lead capture: send the visible estimate ── */
                   <div className="space-y-3">
-                    <div className="relative rounded-lg border border-stone-200 overflow-hidden">
-                      <div className="p-4 space-y-2 blur-sm select-none pointer-events-none">
-                        <div className="flex justify-between text-sm"><span className="text-stone-500">Treads &amp; stairs</span><span className="font-medium">C$████</span></div>
-                        <div className="flex justify-between text-sm"><span className="text-stone-500">Railing &amp; pickets</span><span className="font-medium">C$████</span></div>
-                        <div className="flex justify-between text-sm font-bold border-t pt-2"><span>Your Total</span><span className="text-amber-600 text-lg">C$██████</span></div>
-                      </div>
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/75 backdrop-blur-[2px]">
-                        <span className="text-2xl mb-1">🔒</span>
-                        <p className="text-sm font-semibold text-stone-800">Unlock your estimate</p>
-                        <p className="text-xs text-stone-500">Takes 10 seconds</p>
-                      </div>
-                    </div>
-                    <p className="text-sm font-semibold text-stone-800">Where should we send your stair quote?</p>
+                    <p className="text-sm font-semibold text-stone-800">📋 Send this estimate to your phone & email</p>
                     <div>
                       <input type="text" placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.name ? 'border-red-400' : 'border-stone-300'}`} />
                       {formErrors.name && <p className="text-xs text-red-500 mt-1">{formErrors.name}</p>}
@@ -400,7 +388,7 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                       {formErrors.email && <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>}
                     </div>
                     {submitError && <p className="text-xs text-red-600 bg-red-50 p-2 rounded">{submitError}</p>}
-                    <button type="button" onClick={async (e) => {
+                    <button type="button" onClick={async (e) => { // eslint-disable-line no-unused-vars
                       if (!validateForm()) return;
                       setSubmitting(true);
                       setSubmitError('');
@@ -426,12 +414,12 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                         setSubmitError('Something went wrong — please try again or call (647) 428-1111.');
                       } finally { setSubmitting(false); }
                     }} disabled={submitting} className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm">
-                      {submitting ? 'Sending…' : '🔓 Unlock My Stair Quote →'}
+                      {submitting ? 'Sending…' : '📋 Send Me This Estimate →'}
                     </button>
                     {/* Social proof */}
                     <div className="flex items-center justify-center gap-1.5">
                       <div className="flex">{[...Array(5)].map((_, i) => <svg key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
-                      <span className="text-xs text-stone-500">{GOOGLE_RATING}/5 · {GOOGLE_REVIEW_COUNT} Google reviews</span>
+                      <span className="text-xs text-stone-500">{GOOGLE_RATING}/5 · Google reviews</span>
                     </div>
                     <p className="text-xs text-stone-400 text-center">A team member will call within 2 hours to confirm your quote and schedule your free measurement.</p>
                   </div>
