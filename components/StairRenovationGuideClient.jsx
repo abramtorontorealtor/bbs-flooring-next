@@ -823,8 +823,8 @@ export default function StairRenovationGuideClient() {
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
               <h3 className="text-xl font-bold text-amber-800 mb-4">🔄 Replace If...</h3>
               <ul className="space-y-2 text-stone-600 text-sm">
-                <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>Treads are carpet-covered and you don&apos;t know what&apos;s underneath</li>
-                <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>Existing treads are MDF, particleboard, or composite</li>
+                <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>Existing treads are plywood, MDF, particleboard, or composite (cannot be refinished)</li>
+                <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>Treads are carpet-covered and you\'re not sure what\'s underneath (we check at the free assessment)</li>
                 <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>Treads have deep gouges, structural cracks, or are too thin to sand</li>
                 <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>You want a different wood species (e.g. pine stairs → white oak)</li>
                 <li className="flex gap-2"><span className="text-amber-500 shrink-0">→</span>You want stained stringers (only possible with new treads)</li>
@@ -834,7 +834,7 @@ export default function StairRenovationGuideClient() {
 
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
             <p className="text-blue-800 font-semibold mb-2">💡 The Carpet Mystery</p>
-            <p className="text-blue-700 text-sm">If your stairs are carpeted, you won&apos;t know what&apos;s underneath until the carpet comes off. In our experience across Markham and Toronto homes, about 60% of carpeted stairs have acceptable hardwood treads underneath — refinishable at $125/step. The other 40% have MDF or damaged wood that needs replacement at $185/step. Our free in-home estimate includes peeling back a corner of carpet to check before you commit to anything.</p>
+            <p className="text-blue-700 text-sm">If your stairs are carpeted, you won&apos;t know what&apos;s underneath until the carpet comes off. Older GTA homes often have solid hardwood treads under the carpet — refinishable at $125/step. Most newer builds have plywood treads, which cannot be refinished and need new hardwood recapping at $185/step (carpet removal included). Our free in-home estimate includes peeling back a corner of carpet to check before you commit to anything.</p>
           </div>
         </section>
 
@@ -950,7 +950,7 @@ export default function StairRenovationGuideClient() {
 
           <div className="space-y-4 mb-8">
             {[
-              { step: '1', title: 'Free In-Home Assessment', desc: 'We peel back a corner of carpet to check what\'s underneath before you commit. About 60% of carpeted stairs in GTA homes have acceptable hardwood treads — refinishable at $125/step instead of new treads at $185/step. We\'ll tell you upfront.' },
+              { step: '1', title: 'Free In-Home Assessment', desc: 'We peel back a corner of carpet to check what\'s underneath before you commit. Solid hardwood treads can be refinished at $125/step. Plywood or MDF treads need new hardwood at $185/step (carpet removal included). We\'ll tell you upfront — no guessing.' },
               { step: '2', title: 'Carpet & Tack Strip Removal', desc: 'We remove all carpet, padding, tack strips, and staples from every step. This is included in the new tread price — no separate carpet removal charge.' },
               { step: '3', title: 'Subfloor Assessment', desc: 'If existing treads are usable → refinish (sand, stain, finish). If treads are MDF or damaged → install new solid hardwood treads at $185/step.' },
               { step: '4', title: 'Tread Work (Refinish or Install)', desc: 'Refinishing: 2–3 sand passes, custom stain, 2–3 finish coats. New treads: cut to width, fasten securely, fill nail holes, finish with matching stain and sealer.' },

@@ -29,8 +29,8 @@ const SPOKE_LINKS = [
 
 const PROCESS_STEPS = [
   { step: '01', title: 'Carpet Removal', desc: 'We rip out all carpet, underpad, tack strips, and staples. The substructure is cleaned and inspected.', icon: '✂️' },
-  { step: '02', title: 'Structure Assessment', desc: 'We check every stringer, tread, and riser. About 60% of the time, the wood underneath is salvageable.', icon: '🔍' },
-  { step: '03', title: 'New Treads & Risers', desc: 'If the wood underneath isn\'t salvageable, we install new hardwood treads and risers — recapped right over the structure.', icon: '🪜' },
+  { step: '02', title: 'Structure Assessment', desc: 'We check what\'s under the carpet. If the existing treads are solid hardwood in good condition, they can be refinished. Plywood or MDF treads always need recapping with new hardwood.', icon: '🔍' },
+  { step: '03', title: 'New Treads & Risers (if needed)', desc: 'New solid hardwood treads are installed over the existing structure — faster and cheaper than a full staircase rebuild and looks identical.', icon: '🪜' },
   { step: '04', title: 'Custom Staining', desc: 'Choose from dozens of stain colours. We apply test patches on your actual stairs so you approve the exact shade.', icon: '🎨' },
   { step: '05', title: 'Finish & Protect', desc: '2-3 coats of commercial-grade polyurethane. Your new hardwood stairs are durable, beautiful, and built to last.', icon: '✨' },
 ];
@@ -39,7 +39,7 @@ const FAQ_ITEMS = [
   { question: 'How much does it cost to convert carpet stairs to hardwood?', answer: 'New hardwood stair treads cost $185/step (straight) or $225/step (pie/bullnose) — carpet removal is included in that price. A typical 13-step carpet-to-hardwood conversion (new treads + nosing) runs $2,600–$3,000. Add iron pickets ($25/piece), railing work ($25–$50/lf), or posts ($150 each) for a full renovation. Call (647) 428-1111 for a free quote.' },
   { question: 'How long does carpet to hardwood stair conversion take?', answer: 'Most standard 13-step staircases take 2–3 days. This includes carpet removal, prep, installation, staining, and at least one coat of polyurethane. An additional day of drying may be needed before heavy use.' },
   { question: 'Can you match stair treads to my existing hardwood floors?', answer: 'Yes. We custom-stain stair treads to match your existing floors. If you\'re doing floors and stairs together, we guarantee a perfect match since we\'re using the same materials and stain.' },
-  { question: 'What\'s under my carpet stairs?', answer: 'About 60% of the time, there\'s salvageable plywood or hardwood underneath. In either case, we can make your stairs beautiful — either by refinishing the existing wood or recapping with new hardwood treads. We assess this during the free in-home visit.' },
+  { question: 'What\'s under my carpet stairs?', answer: 'It depends on when your home was built. Older homes often have solid hardwood treads under carpet — these can be refinished at $125/step. Most newer homes have plywood treads, which cannot be refinished and need new hardwood treads installed at $185/step (carpet removal included). We check during the free in-home visit before you commit to anything.' },
   { question: 'Do you serve Pickering and Toronto for stair renovations?', answer: 'Yes. BBS Flooring installs stairs across the GTA including Markham, Pickering, Ajax, Toronto, Scarborough, Richmond Hill, Vaughan, and Durham Region.' },
   { question: 'Can I get vinyl stair caps instead of hardwood?', answer: 'Yes. Vinyl stair caps are a more budget-friendly option that still looks great. They\'re especially popular when the main floors are vinyl plank — everything matches perfectly. Ask about vinyl stair options during your free assessment.' },
 ];
@@ -113,17 +113,16 @@ export default function CarpetToHardwoodStairsClient() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">What&apos;s Under Your Carpet?</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
-            About <strong>60% of the time</strong>, there&apos;s usable wood underneath carpet stairs — plywood stringers or even original hardwood treads.
-            The other 40% have damaged or low-grade wood that needs recapping.
+            Older homes often have solid hardwood treads under that carpet — refinishable at $125/step. Most newer homes have plywood treads, which can\'t be refinished and need new hardwood recapping at $185/step. Either way, the structure stays and we build beautiful stairs over it.
           </p>
           <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
             <div className="bg-white border border-amber-200 rounded-xl p-5">
-              <p className="text-amber-600 font-bold text-lg mb-1">60% — Salvageable</p>
-              <p className="text-sm text-slate-500">Sand, stain & finish the existing wood. Most affordable option.</p>
+              <p className="text-amber-600 font-bold text-lg mb-1">Solid Hardwood Treads</p>
+              <p className="text-sm text-slate-500">Sand, stain &amp; finish the existing wood. $125/step — most affordable option. Common in older GTA homes.</p>
             </div>
             <div className="bg-white border border-amber-200 rounded-xl p-5">
-              <p className="text-amber-600 font-bold text-lg mb-1">40% — Needs Recapping</p>
-              <p className="text-sm text-slate-500">New hardwood treads installed over the structure. Still faster & cheaper than full rebuild.</p>
+              <p className="text-amber-600 font-bold text-lg mb-1">Plywood or MDF Treads</p>
+              <p className="text-sm text-slate-500">New hardwood treads installed over the structure. $185/step (carpet removal included). Common in newer builds.</p>
             </div>
           </div>
           <p className="text-sm text-slate-400 mt-4">We assess this during the free in-home visit — no commitment required.</p>
@@ -147,7 +146,7 @@ export default function CarpetToHardwoodStairsClient() {
             {[
               { service: 'New Straight Treads (Recapping)', price: '$185/step', note: 'New hardwood treads installed over structure' },
               { service: 'New Pie / Triangle / Bullnose Steps', price: '$225/step', note: 'Specialty step shapes' },
-              { service: 'Refinish Existing Treads (if salvageable)', price: '$125/step', note: 'Sand, stain & finish — if solid hardwood under carpet' },
+              { service: 'Refinish Existing Treads', price: '$125/step', note: 'Only if solid hardwood treads underneath — not plywood or MDF' },
               { service: 'Custom Staining', price: 'Included', note: 'Colour-matched to your existing floors' },
               { service: 'Railing Upgrades (iron spindles)', price: '$25/picket installed', note: 'Modern iron pickets with material included' },
               { service: 'New Nosing', price: '$30/ft', note: 'Stair nose transition to match flooring' },
