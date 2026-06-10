@@ -143,10 +143,11 @@ function Toggle({ checked, onChange }) {
 // ─── Main exported widget ──────────────────────────────────────────────────────
 export default function StairCalculatorWidget({ embedded = false, onTotalChange = null }) {
   const [s, setS] = useState(DEFAULT_STATE);
+  const [gate, setGate] = useState('locked'); // 'locked' | 'unlocked'
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
   const [formErrors, setFormErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  // submitted state handled via gate ('unlocked')
   const [submitError, setSubmitError] = useState('');
   const calcRef = useRef(null);
 
@@ -172,55 +173,6 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
     else if (!validatePhone(form.phone)) errs.phone = 'Enter a valid phone number';
     setFormErrors(errs);
     return Object.keys(errs).length === 0;
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (!validateForm()) return;
-    setSubmitting(true);
-    setSubmitError('');
-    try {
-      const quote = {
-        customer_name: form.name.trim(),
-        customer_email: form.email.trim(),
-        customer_phone: form.phone.trim(),
-        product_name: 'Stair Renovation',
-        notes: buildNotesString(s),
-        total,
-        subtotal: total,
-        tax: 0,
-        square_footage: null,
-        stair_tread_count: s.straightTreads,
-        stair_pie_count: s.pieTreads,
-        stair_refinish: s.treadMode === 'refinish',
-        stair_posts: s.posts,
-        stair_pickets: s.pickets,
-        stair_stringers: { count: s.stringerCount, type: s.stringerType },
-        stair_nosing: { lf: s.nosingLf, type: s.nosingType },
-        stair_railing: s.railingLf > 0 ? { lf: s.railingLf, type: s.railingType } : null,
-        stair_landing: s.landingEnabled ? { size: s.landingSize } : null,
-        stair_species: s.species,
-        stair_total: total,
-      };
-      const res = await fetch('/api/quotes/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quote }),
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error || 'Server error');
-      setSubmitted(true);
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'conversion', { send_to: 'AW-11095246827/BBS_Lead_Form_Submit' });
-      }
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', { content_name: 'Stair Calculator', value: total, currency: 'CAD' });
-      }
-    } catch (err) {
-      setSubmitError('Something went wrong — please try again or call (647) 428-1111.');
-    } finally {
-      setSubmitting(false);
-    }
   }
 
   return (
@@ -418,46 +370,97 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                 </a>
               ) : null; })()}
 
-              {!submitted ? (
-                <form onSubmit={handleSubmit} className="space-y-3">
-                  <p className="text-sm font-semibold text-stone-800">Get your exact quote + book a free in-home measurement:</p>
-                  <div>
-                    <input type="text" placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.name ? 'border-red-400' : 'border-stone-300'}`} />
-                    {formErrors.name && <p className="text-xs text-red-500 mt-1">{formErrors.name}</p>}
-                  </div>
-                  <div>
-                    <input type="tel" placeholder="Phone number *" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.phone ? 'border-red-400' : 'border-stone-300'}`} />
-                    {formErrors.phone && <p className="text-xs text-red-500 mt-1">{formErrors.phone}</p>}
-                  </div>
-                  <div>
-                    <input type="email" placeholder="Email address *" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.email ? 'border-red-400' : 'border-stone-300'}`} />
-                    {formErrors.email && <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>}
-                  </div>
-                  {submitError && <p className="text-xs text-red-600 bg-red-50 p-2 rounded">{submitError}</p>}
-                  <button type="submit" disabled={submitting} className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm">
-                    {submitting ? 'Sending…' : 'Send My Quote →'}
-                  </button>
-                  {/* Social proof */}
-                  <div className="flex items-center justify-center gap-1.5 pt-1">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <svg key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                      ))}
+              {gate !== 'unlocked' ? (
+                gate === 'locked' ? (
+                  /* ── Locked: blurred total + unlock form ── */
+                  <div className="space-y-3">
+                    <div className="relative rounded-lg border border-stone-200 overflow-hidden">
+                      <div className="p-4 space-y-2 blur-sm select-none pointer-events-none">
+                        <div className="flex justify-between text-sm"><span className="text-stone-500">Treads &amp; stairs</span><span className="font-medium">C$████</span></div>
+                        <div className="flex justify-between text-sm"><span className="text-stone-500">Railing &amp; pickets</span><span className="font-medium">C$████</span></div>
+                        <div className="flex justify-between text-sm font-bold border-t pt-2"><span>Your Total</span><span className="text-amber-600 text-lg">C$██████</span></div>
+                      </div>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/75 backdrop-blur-[2px]">
+                        <span className="text-2xl mb-1">🔒</span>
+                        <p className="text-sm font-semibold text-stone-800">Unlock your estimate</p>
+                        <p className="text-xs text-stone-500">Takes 10 seconds</p>
+                      </div>
                     </div>
-                    <span className="text-xs text-stone-500">{GOOGLE_RATING}/5 · {GOOGLE_REVIEW_COUNT} Google reviews</span>
+                    <p className="text-sm font-semibold text-stone-800">Where should we send your stair quote?</p>
+                    <div>
+                      <input type="text" placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.name ? 'border-red-400' : 'border-stone-300'}`} />
+                      {formErrors.name && <p className="text-xs text-red-500 mt-1">{formErrors.name}</p>}
+                    </div>
+                    <div>
+                      <input type="tel" placeholder="Phone number *" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.phone ? 'border-red-400' : 'border-stone-300'}`} />
+                      {formErrors.phone && <p className="text-xs text-red-500 mt-1">{formErrors.phone}</p>}
+                    </div>
+                    <div>
+                      <input type="email" placeholder="Email address *" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.email ? 'border-red-400' : 'border-stone-300'}`} />
+                      {formErrors.email && <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>}
+                    </div>
+                    {submitError && <p className="text-xs text-red-600 bg-red-50 p-2 rounded">{submitError}</p>}
+                    <button type="button" onClick={async (e) => {
+                      if (!validateForm()) return;
+                      setSubmitting(true);
+                      setSubmitError('');
+                      try {
+                        const quote = {
+                          customer_name: form.name.trim(), customer_email: form.email.trim(), customer_phone: form.phone.trim(),
+                          product_name: 'Stair Renovation', notes: buildNotesString(s), total, subtotal: total, tax: 0,
+                          square_footage: null, stair_tread_count: s.straightTreads, stair_pie_count: s.pieTreads,
+                          stair_refinish: s.treadMode === 'refinish', stair_posts: s.posts, stair_pickets: s.pickets,
+                          stair_stringers: { count: s.stringerCount, type: s.stringerType },
+                          stair_nosing: { lf: s.nosingLf, type: s.nosingType },
+                          stair_railing: s.railingLf > 0 ? { lf: s.railingLf, type: s.railingType } : null,
+                          stair_landing: s.landingEnabled ? { size: s.landingSize } : null,
+                          stair_species: s.species, stair_total: total,
+                        };
+                        const res = await fetch('/api/quotes/send', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ quote }) });
+                        const data = await res.json();
+                        if (!data.success) throw new Error(data.error || 'Server error');
+                        setGate('unlocked');
+                        if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'conversion', { send_to: 'AW-11095246827/BBS_Lead_Form_Submit' });
+                        if (typeof window !== 'undefined' && typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: 'Stair Calculator', value: total, currency: 'CAD' });
+                      } catch (err) {
+                        setSubmitError('Something went wrong — please try again or call (647) 428-1111.');
+                      } finally { setSubmitting(false); }
+                    }} disabled={submitting} className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                      {submitting ? 'Sending…' : '🔓 Unlock My Stair Quote →'}
+                    </button>
+                    {/* Social proof */}
+                    <div className="flex items-center justify-center gap-1.5">
+                      <div className="flex">{[...Array(5)].map((_, i) => <svg key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}</div>
+                      <span className="text-xs text-stone-500">{GOOGLE_RATING}/5 · {GOOGLE_REVIEW_COUNT} Google reviews</span>
+                    </div>
+                    <p className="text-xs text-stone-400 text-center">A team member will call within 2 hours to confirm your quote and schedule your free measurement.</p>
                   </div>
-                  <p className="text-xs text-stone-400 text-center">A team member will call within 2 hours to confirm your quote and schedule your free measurement.</p>
-                </form>
-              ) : (
-                <div className="text-center">
-                  <div className="text-4xl mb-2">✅</div>
-                  <p className="font-bold text-stone-800 mb-1">Quote sent!</p>
-                  <p className="text-stone-500 text-sm mb-4">A team member will call you within 2 hours to confirm your quote and schedule your free in-home measurement.</p>
-                  <Link href="/free-measurement" className="inline-block bg-stone-900 hover:bg-stone-800 text-white font-semibold px-6 py-2 rounded-lg text-sm transition-colors">
-                    Book Measurement Online
-                  </Link>
-                </div>
-              )}
+                ) : (
+                  /* ── Unlocked: show full breakdown ── */
+                  <div className="space-y-3">
+                    {breakdown.length > 0 && (
+                      <div className="space-y-2 mb-2">
+                        {breakdown.map((row, i) => (
+                          <div key={i} className="flex justify-between text-sm">
+                            <span className="text-stone-600">{row.label}</span>
+                            <span className="font-semibold text-stone-800">${row.amount.toLocaleString()}</span>
+                          </div>
+                        ))}
+                        <div className="border-t border-stone-200 pt-3 flex justify-between">
+                          <span className="font-bold text-stone-900">Estimated Total</span>
+                          <span className="font-bold text-2xl text-amber-600">${total.toLocaleString()}</span>
+                        </div>
+                      </div>
+                    )}
+                    <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-sm text-green-800">
+                      ✅ Quote sent to {form.email} — a team member will call within 2 hours.
+                    </div>
+                    <a href="/free-measurement" className="block w-full text-center bg-stone-900 hover:bg-stone-800 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-colors">
+                      Book Measurement Online →
+                    </a>
+                  </div>
+                )
+              ) : null}
             </div>
           </div>
         </div>
