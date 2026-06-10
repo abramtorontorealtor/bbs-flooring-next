@@ -48,6 +48,18 @@ export async function POST(request) {
         total: quote.total,
         resume_token: resumeToken,
         status: 'sent',
+        // Stair-specific fields
+        stair_tread_count: quote.stair_tread_count || null,
+        stair_pie_count: quote.stair_pie_count || null,
+        stair_refinish: quote.stair_refinish || false,
+        stair_posts: quote.stair_posts || null,
+        stair_pickets: quote.stair_pickets || null,
+        stair_stringers: quote.stair_stringers || null,
+        stair_nosing: quote.stair_nosing || null,
+        stair_railing: quote.stair_railing || null,
+        stair_landing: quote.stair_landing || null,
+        stair_species: quote.stair_species || null,
+        stair_total: quote.total && !quote.flooring_cost ? quote.total : (quote.stair_total || null),
       })
       .select()
       .single();

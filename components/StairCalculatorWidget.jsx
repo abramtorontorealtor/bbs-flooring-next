@@ -199,6 +199,8 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
         stair_nosing: { lf: s.nosingLf, type: s.nosingType },
         stair_railing: s.railingLf > 0 ? { lf: s.railingLf, type: s.railingType } : null,
         stair_landing: s.landingEnabled ? { size: s.landingSize } : null,
+        stair_species: s.species,
+        stair_total: total,
       };
       const res = await fetch('/api/quotes/send', {
         method: 'POST',
