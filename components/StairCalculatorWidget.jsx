@@ -343,7 +343,7 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
               <p className="text-lg font-bold text-stone-800 mb-4">Your Stair Estimate</p>
               {breakdown.length === 0 ? (
                 <p className="text-stone-400 text-sm italic">Configure your staircase on the left to see pricing.</p>
-              ) : (
+              ) : gate === 'unlocked' ? (
                 <div className="space-y-2 mb-4">
                   {breakdown.map((row, i) => (
                     <div key={i} className="flex justify-between text-sm">
@@ -356,7 +356,7 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                     <span className="font-bold text-2xl text-amber-600">${total.toLocaleString()}</span>
                   </div>
                 </div>
-              )}
+              ) : null)
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-xs text-amber-800">
                 ⚠️ Estimate only — final price confirmed at free in-home measurement. Carpet removal included with new treads.
               </div>
@@ -372,9 +372,21 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
 
               {gate !== 'unlocked' ? (
                 gate === 'locked' ? (
-                  /* ── Lead capture: send the visible estimate ── */
+                  /* ── Locked: blurred total + unlock form ── */
                   <div className="space-y-3">
-                    <p className="text-sm font-semibold text-stone-800">📋 Send this estimate to your phone & email</p>
+                    <div className="relative rounded-lg border border-stone-200 overflow-hidden">
+                      <div className="p-4 space-y-2 blur-sm select-none pointer-events-none">
+                        <div className="flex justify-between text-sm"><span className="text-stone-500">Treads &amp; stairs</span><span className="font-medium">C$████</span></div>
+                        <div className="flex justify-between text-sm"><span className="text-stone-500">Railing &amp; pickets</span><span className="font-medium">C$████</span></div>
+                        <div className="flex justify-between text-sm font-bold border-t pt-2"><span>Your Total</span><span className="text-amber-600 text-lg">C$██████</span></div>
+                      </div>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/75 backdrop-blur-[2px]">
+                        <span className="text-2xl mb-1">🔒</span>
+                        <p className="text-sm font-semibold text-stone-800">Unlock your estimate</p>
+                        <p className="text-xs text-stone-500">Takes 10 seconds</p>
+                      </div>
+                    </div>
+                    <p className="text-sm font-semibold text-stone-800">Where should we send your stair quote?</p>
                     <div>
                       <input type="text" placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.name ? 'border-red-400' : 'border-stone-300'}`} />
                       {formErrors.name && <p className="text-xs text-red-500 mt-1">{formErrors.name}</p>}
@@ -414,7 +426,7 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                         setSubmitError('Something went wrong — please try again or call (647) 428-1111.');
                       } finally { setSubmitting(false); }
                     }} disabled={submitting} className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm">
-                      {submitting ? 'Sending…' : '📋 Send Me This Estimate →'}
+                      {submitting ? 'Sending…' : '🔓 Unlock My Stair Quote →'}
                     </button>
                     {/* Social proof */}
                     <div className="flex items-center justify-center gap-1.5">
