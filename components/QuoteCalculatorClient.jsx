@@ -23,6 +23,7 @@ import { useAuth } from '@/lib/auth-context';
 
 import { Analytics } from '@/components/analytics';
 import { validatePhone } from '@/lib/validations';
+import StairCalculatorWidget from '@/components/StairCalculatorWidget';
 
 
 // ─── Constants ───
@@ -198,6 +199,7 @@ export default function QuoteCalculatorClient() {
   const [step, setStep] = useState(1);
   const [quote, setQuote] = useState(null);
   const [quoteState, setQuoteState] = useState('idle'); // idle | locked | unlocked
+  const [stairTotal, setStairTotal] = useState(0);
   const [leadCaptured, setLeadCaptured] = useState(false);
   const [productSearchOpen, setProductSearchOpen] = useState(false);
   const { user: authUser, isLoadingAuth } = useAuth();
@@ -673,19 +675,27 @@ export default function QuoteCalculatorClient() {
             </div>
 
             {/* Stairs checkbox */}
-            <div className="flex items-start space-x-3">
-              <Checkbox id="stairs" checked={formData.includes_stairs}
-                onCheckedChange={(checked) => setFormData(f => ({ ...f, includes_stairs: checked }))} />
-              <div className="grid gap-1 leading-none">
-                <label htmlFor="stairs" className="text-sm font-medium cursor-pointer flex items-center gap-1.5">
-                  <Footprints className="w-4 h-4 text-slate-500" /> My project includes stairs
-                </label>
-                {formData.includes_stairs && (
-                  <p className="text-xs text-amber-600 mt-1 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                    Stair pricing depends on your specific layout (number of steps, pickets, nosing, and style). We&apos;ll include a detailed stair quote during your <strong>free in-home measurement</strong>.
-                  </p>
-                )}
+            <div className="space-y-3">
+              <div className="flex items-start space-x-3">
+                <Checkbox id="stairs" checked={formData.includes_stairs}
+                  onCheckedChange={(checked) => setFormData(f => ({ ...f, includes_stairs: checked }))} />
+                <div className="grid gap-1 leading-none">
+                  <label htmlFor="stairs" className="text-sm font-medium cursor-pointer flex items-center gap-1.5">
+                    <Footprints className="w-4 h-4 text-slate-500" /> My project includes stairs
+                  </label>
+                  <p className="text-xs text-slate-500">Configure your staircase below for an instant estimate</p>
+                </div>
               </div>
+              {formData.includes_stairs && (
+                <div className="border border-amber-200 rounded-xl overflow-hidden">
+                  <div className="bg-amber-50 px-4 py-2 border-b border-amber-200">
+                    <p className="text-xs font-semibold text-amber-800">🧮 Stair Cost Estimator — configure your staircase below</p>
+                  </div>
+                  <div className="p-4">
+                    <StairCalculatorWidget embedded={true} onTotalChange={setStairTotal} />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Delivery Note */}
@@ -792,6 +802,9 @@ export default function QuoteCalculatorClient() {
                   {quote.baseboardCost > 0 && <div className="flex justify-between gap-2 text-sm"><span className="text-slate-600">Baseboards ({quote.linearFeet.toFixed(0)} lin ft)</span><span className="font-medium">C${quote.baseboardCost.toFixed(2)}</span></div>}
                   {quote.shoeMouldingCost > 0 && <div className="flex justify-between gap-2 text-sm"><span className="text-slate-600">Shoe Moulding ({quote.linearFeet.toFixed(0)} lin ft)</span><span className="font-medium">C${quote.shoeMouldingCost.toFixed(2)}</span></div>}
                   <div className="flex justify-between gap-2 text-sm"><span className="text-slate-600">Delivery</span><span className="font-medium">C${quote.deliveryCost.toFixed(2)}</span></div>
+                  {formData.includes_stairs && stairTotal > 0 && (
+                    <div className="flex justify-between gap-2 text-sm"><span className="text-slate-600 flex items-center gap-1"><Footprints className="w-3.5 h-3.5" /> Stair Renovation (est.)</span><span className="font-medium">~C${stairTotal.toLocaleString()}</span></div>
+                  )}
                   <div className="flex justify-between gap-2 text-sm text-slate-500"><span>HST (13%)</span><span>C${quote.tax.toFixed(2)}</span></div>
                 </div>
 
@@ -799,7 +812,7 @@ export default function QuoteCalculatorClient() {
                 <div className="border-t-2 border-slate-200 pt-3">
                   <div className="flex justify-between items-center gap-2">
                     <span className="text-base font-bold text-slate-800">Estimated Total</span>
-                    <span className="text-2xl font-bold text-amber-600">C${quote.displayTotal.toFixed(2)}</span>
+                    <span className="text-2xl font-bold text-amber-600">C${(quote.displayTotal + (formData.includes_stairs ? stairTotal : 0)).toLocaleString('en-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                   </div>
                   {quote.minimumApplied && (
                     <p className="text-xs text-slate-500 mt-1">* $500 minimum project charge applies</p>
@@ -807,10 +820,10 @@ export default function QuoteCalculatorClient() {
                 </div>
 
                 {/* Stairs note */}
-                {formData.includes_stairs && (
+                {formData.includes_stairs && stairTotal > 0 && (
                   <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-sm text-amber-800 flex items-start gap-2">
                     <Footprints className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                    <span><strong>Stair pricing</strong> will be included in your in-home measurement quote — every staircase is unique.</span>
+                    <span><strong>Stair estimate:</strong> ~C${stairTotal.toLocaleString()} added from your stair calculator configuration. Final price confirmed at free in-home measurement.</span>
                   </div>
                 )}
 

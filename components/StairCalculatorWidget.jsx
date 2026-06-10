@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { validatePhone } from '@/lib/validations';
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/lib/service-constants';
+import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
 // ─── Pricing constants (single source of truth) ───────────────────────────────
 const P = {
@@ -21,6 +23,12 @@ const P = {
   landing_large: 600,
 };
 
+const SPECIES_OPTIONS = [
+  { value: 'red_oak', label: 'Red Oak (Standard)', note: '' },
+  { value: 'white_oak', label: 'White Oak', note: 'Contact us for pricing' },
+  { value: 'maple', label: 'Maple', note: 'Contact us for pricing' },
+];
+
 const DEFAULT_STATE = {
   treadMode: 'new',
   straightTreads: 13,
@@ -35,6 +43,7 @@ const DEFAULT_STATE = {
   railingType: 'new',
   landingEnabled: false,
   landingSize: 'small',
+  species: 'red_oak',
 };
 
 function calcTotal(s) {
@@ -99,6 +108,8 @@ function buildNotesString(s) {
   if (s.nosingLf) parts.push(`${s.nosingLf}lf nosing (${s.nosingType})`);
   if (s.railingLf) parts.push(`${s.railingLf}lf railing (${s.railingType})`);
   if (s.landingEnabled) parts.push(`${s.landingSize} landing`);
+  const speciesLabel = SPECIES_OPTIONS.find(o => o.value === s.species)?.label || 'Red Oak';
+  parts.push(`wood species: ${speciesLabel}`);
   return `Stair Calculator estimate — ${parts.join(', ')} — Est. total: $${calcTotal(s).toLocaleString()}`;
 }
 
@@ -130,9 +141,8 @@ function Toggle({ checked, onChange }) {
 }
 
 // ─── Main exported widget ──────────────────────────────────────────────────────
-export default function StairCalculatorWidget() {
+export default function StairCalculatorWidget({ embedded = false, onTotalChange = null }) {
   const [s, setS] = useState(DEFAULT_STATE);
-  const [showGate, setShowGate] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
   const [formErrors, setFormErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -148,6 +158,11 @@ export default function StairCalculatorWidget() {
 
   const total = calcTotal(s);
   const breakdown = buildBreakdown(s);
+
+  // Notify parent (QuoteCalculator) when total changes
+  React.useEffect(() => {
+    if (onTotalChange) onTotalChange(total);
+  }, [total, onTotalChange]);
 
   function validateForm() {
     const errs = {};
@@ -196,6 +211,9 @@ export default function StairCalculatorWidget() {
       if (typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'conversion', { send_to: 'AW-11095246827/BBS_Lead_Form_Submit' });
       }
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'Stair Calculator', value: total, currency: 'CAD' });
+      }
     } catch (err) {
       setSubmitError('Something went wrong — please try again or call (647) 428-1111.');
     } finally {
@@ -205,13 +223,15 @@ export default function StairCalculatorWidget() {
 
   return (
     <div ref={calcRef} id="calculator" className="bg-gradient-to-br from-stone-50 to-amber-50 border border-amber-200 rounded-2xl p-6 md:p-8 shadow-sm">
-      <div className="flex items-center gap-3 mb-6">
-        <span className="text-3xl">🧮</span>
-        <div>
-          <h2 className="text-2xl font-bold text-stone-900">Stair Renovation Cost Calculator</h2>
-          <p className="text-stone-500 text-sm">Adjust below — your estimate updates live. No account needed.</p>
+      {!embedded && (
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-3xl">🧮</span>
+          <div>
+            <h2 className="text-2xl font-bold text-stone-900">Stair Renovation Cost Calculator</h2>
+            <p className="text-stone-500 text-sm">Adjust below — your estimate updates live. No account needed.</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* ── Left: Inputs ── */}
@@ -287,6 +307,24 @@ export default function StairCalculatorWidget() {
                 <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">⚠️ Stained stringers require new treads. Refinishing mode locks stringers to white.</p>
               )}
             </div>
+          </div>
+
+          {/* Wood Species */}
+          <div className="bg-white rounded-xl border border-stone-200 p-5">
+            <p className="font-semibold text-stone-800 mb-1">Wood Species</p>
+            <p className="text-xs text-stone-400 mb-3">All calculator prices are for red oak (standard). Other species available — we'll confirm pricing on your call.</p>
+            <div className="flex flex-wrap gap-2">
+              {SPECIES_OPTIONS.map(opt => (
+                <RadioPill key={opt.value} checked={s.species === opt.value} onChange={() => set('species', opt.value)}>
+                  {opt.label}
+                </RadioPill>
+              ))}
+            </div>
+            {s.species !== 'red_oak' && (
+              <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3">
+                💡 White oak and maple pricing confirmed during your free in-home measurement.
+              </p>
+            )}
           </div>
 
           {/* Nosing */}
@@ -365,51 +403,59 @@ export default function StairCalculatorWidget() {
                   </div>
                 </div>
               )}
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-5 text-xs text-amber-800">
-                ⚠️ This is an estimate. Final price confirmed at free in-home measurement. Carpet removal is included when installing new treads.
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-xs text-amber-800">
+                ⚠️ Estimate only — final price confirmed at free in-home measurement. Carpet removal included with new treads.
               </div>
+
+              {/* Financing nudge */}
+              {total >= 1000 && getMonthlyPayment && (() => { const mo = getMonthlyPayment(total); return mo ? (
+                <a href={FINANCEIT_LINKS?.freeProgram || '#'} target="_blank" rel="noopener noreferrer" className="block bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-center hover:bg-blue-100 transition-colors">
+                  <p className="text-xs font-semibold text-blue-600 mb-0.5">💳 Finance it</p>
+                  <p className="text-xl font-extrabold text-blue-700">~${mo}<span className="text-sm font-semibold text-blue-400">/mo</span></p>
+                  <p className="text-xs text-blue-400">OAC · Apply in 2 min →</p>
+                </a>
+              ) : null; })()}
+
               {!submitted ? (
-                <>
-                  {!showGate ? (
-                    <button type="button" onClick={() => setShowGate(true)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl transition-colors text-sm">
-                      Get My Full Quote →
-                    </button>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-3">
-                      <p className="text-sm font-semibold text-stone-800 mb-1">We'll send your quote + schedule your free in-home measurement</p>
-                      <div>
-                        <input type="text" placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.name ? 'border-red-400' : 'border-stone-300'}`} />
-                        {formErrors.name && <p className="text-xs text-red-500 mt-1">{formErrors.name}</p>}
-                      </div>
-                      <div>
-                        <input type="tel" placeholder="Phone number *" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.phone ? 'border-red-400' : 'border-stone-300'}`} />
-                        {formErrors.phone && <p className="text-xs text-red-500 mt-1">{formErrors.phone}</p>}
-                      </div>
-                      <div>
-                        <input type="email" placeholder="Email address *" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.email ? 'border-red-400' : 'border-stone-300'}`} />
-                        {formErrors.email && <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>}
-                      </div>
-                      {submitError && <p className="text-xs text-red-600 bg-red-50 p-2 rounded">{submitError}</p>}
-                      <button type="submit" disabled={submitting} className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm">
-                        {submitting ? 'Sending…' : 'Send My Quote →'}
-                      </button>
-                      <p className="text-xs text-stone-400 text-center">No spam. We'll respond within 24 hours.</p>
-                    </form>
-                  )}
-                </>
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <p className="text-sm font-semibold text-stone-800">Get your exact quote + book a free in-home measurement:</p>
+                  <div>
+                    <input type="text" placeholder="Your name *" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.name ? 'border-red-400' : 'border-stone-300'}`} />
+                    {formErrors.name && <p className="text-xs text-red-500 mt-1">{formErrors.name}</p>}
+                  </div>
+                  <div>
+                    <input type="tel" placeholder="Phone number *" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.phone ? 'border-red-400' : 'border-stone-300'}`} />
+                    {formErrors.phone && <p className="text-xs text-red-500 mt-1">{formErrors.phone}</p>}
+                  </div>
+                  <div>
+                    <input type="email" placeholder="Email address *" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className={`w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-400 focus:outline-none ${formErrors.email ? 'border-red-400' : 'border-stone-300'}`} />
+                    {formErrors.email && <p className="text-xs text-red-500 mt-1">{formErrors.email}</p>}
+                  </div>
+                  {submitError && <p className="text-xs text-red-600 bg-red-50 p-2 rounded">{submitError}</p>}
+                  <button type="submit" disabled={submitting} className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                    {submitting ? 'Sending…' : 'Send My Quote →'}
+                  </button>
+                  {/* Social proof */}
+                  <div className="flex items-center justify-center gap-1.5 pt-1">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      ))}
+                    </div>
+                    <span className="text-xs text-stone-500">{GOOGLE_RATING}/5 · {GOOGLE_REVIEW_COUNT} Google reviews</span>
+                  </div>
+                  <p className="text-xs text-stone-400 text-center">A team member will call within 2 hours to confirm your quote and schedule your free measurement.</p>
+                </form>
               ) : (
                 <div className="text-center">
                   <div className="text-4xl mb-2">✅</div>
                   <p className="font-bold text-stone-800 mb-1">Quote sent!</p>
-                  <p className="text-stone-500 text-sm mb-4">Check your email. We'll follow up within 24 hours to schedule your free in-home measurement.</p>
+                  <p className="text-stone-500 text-sm mb-4">A team member will call you within 2 hours to confirm your quote and schedule your free in-home measurement.</p>
                   <Link href="/free-measurement" className="inline-block bg-stone-900 hover:bg-stone-800 text-white font-semibold px-6 py-2 rounded-lg text-sm transition-colors">
                     Book Measurement Online
                   </Link>
                 </div>
               )}
-            </div>
-            <div className="mt-4 bg-stone-50 border border-stone-200 rounded-xl p-4 text-xs text-stone-500">
-              <span className="font-semibold text-stone-700">Wood species note:</span> All calculator prices are for red oak (our standard). White oak and maple are available — contact us for pricing.
             </div>
           </div>
         </div>

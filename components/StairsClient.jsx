@@ -89,6 +89,13 @@ export default function StairsClient() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-16">
+        {/* Stair Cost Calculator — moved up for immediate engagement */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-slate-800 mb-4">Free Stair Cost Calculator</h2>
+          <p className="text-slate-600 mb-6">Get an instant estimate for your staircase renovation. Configure your exact project below — no account needed.</p>
+          <StairCalculatorWidget />
+        </div>
+
         {/* Introduction */}
         <div className="max-w-4xl mb-16">
           <h2 className="text-3xl font-bold text-slate-800 mb-6">Transform Your Staircase With Expert Craftsmanship</h2>
@@ -230,13 +237,6 @@ export default function StairsClient() {
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Stair Cost Calculator */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-slate-800 mb-4">Free Stair Cost Calculator</h2>
-          <p className="text-slate-600 mb-6">Get an instant estimate for your staircase renovation. Configure your exact project below — no account needed.</p>
-          <StairCalculatorWidget />
         </div>
 
         {/* Why Choose Us */}
