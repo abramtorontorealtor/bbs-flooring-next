@@ -425,7 +425,7 @@ function StairCalculator() {
               )}
 
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-5 text-xs text-amber-800">
-                ⚠️ This is an estimate. Final price confirmed at free in-home measurement. Carpet removal quoted separately.
+                ⚠️ This is an estimate. Final price confirmed at free in-home measurement. Carpet removal is included when installing new treads.
               </div>
 
               {!submitted ? (
@@ -726,7 +726,7 @@ export default function StairRenovationGuideClient() {
               <div className="flex justify-between items-start border-b border-stone-200 pb-3">
                 <div>
                   <p className="font-semibold text-stone-800">New treads — carpet-to-hardwood conversion</p>
-                  <p className="text-stone-500 text-sm">13 straight treads × $185 + 10 lf new nosing × $25 + 1 stringer (white) × $350</p>
+                  <p className="text-stone-500 text-sm">13 straight treads × $185 (carpet removal included) + 10 lf new nosing × $25 + 1 stringer (white) × $350</p>
                 </div>
                 <span className="font-bold text-amber-700 shrink-0 ml-4">~$2,955</span>
               </div>
@@ -741,7 +741,7 @@ export default function StairRenovationGuideClient() {
           </div>
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-            <p className="text-amber-800 text-sm"><span className="font-semibold">Note:</span> All prices include labour and standard materials. Carpet removal is quoted separately. Species upgrades (white oak, maple) available — contact us for pricing. Final price confirmed at free in-home measurement.</p>
+            <p className="text-amber-800 text-sm"><span className="font-semibold">Note:</span> All prices include labour and standard materials. Carpet removal is included when installing new treads. Species upgrades (white oak, maple) available — contact us for pricing. Final price confirmed at free in-home measurement.</p>
           </div>
         </section>
 
@@ -951,7 +951,7 @@ export default function StairRenovationGuideClient() {
           <div className="space-y-4 mb-8">
             {[
               { step: '1', title: 'Free In-Home Assessment', desc: 'We peel back a corner of carpet to check what\'s underneath before you commit. About 60% of carpeted stairs in GTA homes have acceptable hardwood treads — refinishable at $125/step instead of new treads at $185/step. We\'ll tell you upfront.' },
-              { step: '2', title: 'Carpet & Tack Strip Removal', desc: 'We remove all carpet, padding, tack strips, and staples from every step. This is billed separately from the tread work — quoted at the in-home assessment.' },
+              { step: '2', title: 'Carpet & Tack Strip Removal', desc: 'We remove all carpet, padding, tack strips, and staples from every step. This is included in the new tread price — no separate carpet removal charge.' },
               { step: '3', title: 'Subfloor Assessment', desc: 'If existing treads are usable → refinish (sand, stain, finish). If treads are MDF or damaged → install new solid hardwood treads at $185/step.' },
               { step: '4', title: 'Tread Work (Refinish or Install)', desc: 'Refinishing: 2–3 sand passes, custom stain, 2–3 finish coats. New treads: cut to width, fasten securely, fill nail holes, finish with matching stain and sealer.' },
               { step: '5', title: 'Risers, Nosings & Stringers', desc: 'New risers (painted white is standard), nosing installation or refinishing ($20–$25/lf), and stringer work if included in scope.' },
@@ -1008,7 +1008,7 @@ export default function StairRenovationGuideClient() {
 
           <div className="space-y-4">
             {[
-              { q: 'How much does a staircase renovation cost in Toronto?', a: 'Refinishing runs $125/step; new straight treads $185/step; pie/bullnose steps $225/step; iron or wood pickets $25/piece; new posts $150 each; railing refinish $25/lf; new railing $50/lf; stringers from $350/side. A full 13-step carpet-to-hardwood conversion with new treads runs $2,700–$3,200. A complete renovation with new rails, pickets, and posts runs $4,500–$6,000+. Use the calculator above or call for a free in-home estimate.' },
+              { q: 'How much does a staircase renovation cost in Toronto?', a: 'Refinishing runs $125/step; new straight treads $185/step; pie/bullnose steps $225/step; iron or wood pickets $25/piece; new posts $150 each; railing refinish $25/lf; new railing $50/lf; stringers from $350/side. A full 13-step carpet-to-hardwood conversion with new treads (carpet removal included) runs $2,600–$3,000. A complete renovation with new rails, pickets, and posts runs $4,500–$6,000+. Use the calculator above or call for a free in-home estimate.' },
               { q: 'How much does it cost to replace a banister in Toronto?', a: 'Banister replacement at BBS Flooring: new posts $150 each, new railing $50/lf, new iron or wood pickets $25/piece. A typical banister upgrade on a 13-step staircase (2 posts + 26 pickets + 10 lf new rail) runs approximately $1,450–$1,700 installed. Refinishing an existing wood railing is $25/lf — a 10 lf railing is $250.' },
               { q: 'What is a stringer on stairs and how much does it cost?', a: 'The stringer is the angled side board that runs along the length of the staircase and supports the treads. BBS Flooring installs new stringers at $350/side (white painted) or $900/side (stained to match treads). Stained stringers are only available when installing new treads — refinishing mode locks stringers to white.' },
               { q: 'How much does a stair landing cost to install?', a: 'Stair landing installation at BBS Flooring: small landing (3×3 ft) is $300, large landing (6×3 ft) is $600. We use hardwood stained on-site to match your treads.' },
