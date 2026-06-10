@@ -108,9 +108,6 @@ const GoogleReviewsBanner = lazy(() => import('@/components/GoogleReviewsBanner'
 const GeneralFAQSection = lazy(() => import('@/components/GeneralFAQSection'));
 
 export default function HomePage() {
-  const featuredCategories = CATEGORIES.filter(c => c.featured);
-  const standardCategories = CATEGORIES.filter(c => !c.featured);
-
   const galleryImages = recentProjectsShowcase.slice(0, 6);
   const galleryAlts = [
     'Premium flooring installation project by BBS Flooring',
@@ -211,22 +208,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ CATEGORIES — Featured 2 large + 4 standard grid ═══ */}
-      <section className="py-12 md:py-28 px-4 sm:px-6 bg-white">
+      {/* ═══ CATEGORIES — Clean card grid ═══ */}
+      <section className="py-12 md:py-20 px-4 sm:px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 md:mb-20">
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-2 md:mb-4">Shop by Category</h2>
-            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">Explore our wide selection of premium flooring options</p>
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-3">Shop by Category</h2>
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">15+ brands, 1,000+ products in stock. Find the perfect floor for every room and budget.</p>
           </div>
-          {/* Top row: 2 featured categories — large hero cards */}
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-6 mb-3 md:mb-6">
-            {featuredCategories.map((cat) => (
-              <CategoryCardServer key={cat.category} {...cat} size="large" />
-            ))}
-          </div>
-          {/* Bottom row: 4 standard categories */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-            {standardCategories.map((cat) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
+            {CATEGORIES.map((cat) => (
               <CategoryCardServer key={cat.category} {...cat} />
             ))}
           </div>

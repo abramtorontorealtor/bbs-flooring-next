@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import StairCalculatorWidget from '@/components/StairCalculatorWidget';
 import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
 import { CheckCircle, Star, ArrowRight, DollarSign, Shield } from 'lucide-react';
@@ -229,6 +230,13 @@ export default function StairsClient() {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Stair Cost Calculator */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-slate-800 mb-4">Free Stair Cost Calculator</h2>
+          <p className="text-slate-600 mb-6">Get an instant estimate for your staircase renovation. Configure your exact project below — no account needed.</p>
+          <StairCalculatorWidget />
         </div>
 
         {/* Why Choose Us */}
