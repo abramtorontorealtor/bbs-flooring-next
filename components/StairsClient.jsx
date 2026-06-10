@@ -153,11 +153,19 @@ export default function StairsClient() {
                   <span className="text-slate-700 font-medium">Sand & Restain Rails</span>
                   <span className="text-xl font-bold text-amber-600">$25/ft</span>
                 </div>
-                <div className="flex justify-between items-center py-3">
+                <div className="flex justify-between items-center py-3 border-b border-slate-100">
+                  <span className="text-slate-700 font-medium">New Handrail (Installed)</span>
+                  <span className="text-xl font-bold text-amber-600">$50/ft</span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-slate-100">
                   <span className="text-slate-700 font-medium">New Iron or Wood Pickets</span>
                   <span className="text-xl font-bold text-amber-600">$25/piece</span>
                 </div>
-                <p className="text-sm text-slate-500 italic">Installed with material included</p>
+                <div className="flex justify-between items-center py-3">
+                  <span className="text-slate-700 font-medium">New Post (3¼")</span>
+                  <span className="text-xl font-bold text-amber-600">$150/post</span>
+                </div>
+                <p className="text-sm text-slate-500 italic">All railing prices include material & labour</p>
               </div>
             </div>
 
@@ -170,11 +178,11 @@ export default function StairsClient() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-3 border-b border-slate-100">
                   <span className="text-slate-700 font-medium">Sand & Restain Nosing</span>
-                  <span className="text-xl font-bold text-amber-600">$25/ft</span>
+                  <span className="text-xl font-bold text-amber-600">$20/ft</span>
                 </div>
                 <div className="flex justify-between items-center py-3">
                   <span className="text-slate-700 font-medium">New Nosing</span>
-                  <span className="text-xl font-bold text-amber-600">$30/ft</span>
+                  <span className="text-xl font-bold text-amber-600">$25/ft</span>
                 </div>
               </div>
             </div>
@@ -193,11 +201,11 @@ export default function StairsClient() {
                 </div>
                 <div className="flex justify-between">
                   <span>Nosing refinish (~12ft)</span>
-                  <span className="font-semibold">$300</span>
+                  <span className="font-semibold">$240</span>
                 </div>
                 <div className="flex justify-between pt-3 border-t border-amber-300">
                   <span className="font-bold text-lg">Full Refinish Estimate</span>
-                  <span className="font-bold text-lg text-amber-700">~$2,225</span>
+                  <span className="font-bold text-lg text-amber-700">~$2,165</span>
                 </div>
               </div>
               <Link href={createPageUrl('FreeMeasurement')} className="block w-full mt-6 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-center py-3 rounded-xl transition-colors">

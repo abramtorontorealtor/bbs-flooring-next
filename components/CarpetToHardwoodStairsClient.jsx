@@ -36,7 +36,7 @@ const PROCESS_STEPS = [
 ];
 
 const FAQ_ITEMS = [
-  { question: 'How much does it cost to convert carpet stairs to hardwood?', answer: 'A full carpet-to-hardwood conversion costs $200–$400 per step, including carpet removal, new hardwood treads and risers, staining, and finish. A typical 13-step staircase runs $2,600–$5,200 total. Call (647) 428-1111 for a free quote.' },
+  { question: 'How much does it cost to convert carpet stairs to hardwood?', answer: 'New hardwood stair treads cost $185/step (straight) or $225/step (pie/bullnose). Carpet removal is quoted separately. A typical 13-step carpet-to-hardwood conversion (new treads + carpet removal + nosing) runs $2,700–$3,200. Add iron pickets ($25/piece), railing work ($25–$50/lf), or posts ($150 each) to get a full renovation. Call (647) 428-1111 for a free quote.' },
   { question: 'How long does carpet to hardwood stair conversion take?', answer: 'Most standard 13-step staircases take 2–3 days. This includes carpet removal, prep, installation, staining, and at least one coat of polyurethane. An additional day of drying may be needed before heavy use.' },
   { question: 'Can you match stair treads to my existing hardwood floors?', answer: 'Yes. We custom-stain stair treads to match your existing floors. If you\'re doing floors and stairs together, we guarantee a perfect match since we\'re using the same materials and stain.' },
   { question: 'What\'s under my carpet stairs?', answer: 'About 60% of the time, there\'s salvageable plywood or hardwood underneath. In either case, we can make your stairs beautiful — either by refinishing the existing wood or recapping with new hardwood treads. We assess this during the free in-home visit.' },
@@ -77,9 +77,9 @@ export default function CarpetToHardwoodStairsClient() {
         titleLine2="Stair Conversion"
         subtitle="Ditch the dust-trapping carpet and reveal (or install) beautiful hardwood treads. Professional results, honest pricing, 2-3 day turnaround."
         pricingPills={[
-          { value: '$200', label: 'per step (full conversion)' },
-          { value: '$185', label: 'per step (recapping)' },
-          { value: '~$2,600', label: 'typical 13-step staircase' },
+          { value: '$185', label: 'per step (new treads)' },
+          { value: '$125', label: 'per step (refinish existing)' },
+          { value: '~$2,700', label: 'typical 13-step conversion' },
         ]}
         primaryCTA={{ text: 'Get a Free Stair Quote', route: 'FreeMeasurement' }}
       />
@@ -145,8 +145,9 @@ export default function CarpetToHardwoodStairsClient() {
 
           <div className="space-y-3">
             {[
-              { service: 'Basic Recapping (over existing structure)', price: '$185–$300/step', note: 'New hardwood treads + risers installed over structure' },
-              { service: 'Full Conversion (carpet removal + hardwood)', price: '$200–$400/step', note: 'Demo + prep + new treads + stain + finish' },
+              { service: 'New Straight Treads (Recapping)', price: '$185/step', note: 'New hardwood treads installed over structure' },
+              { service: 'New Pie / Triangle / Bullnose Steps', price: '$225/step', note: 'Specialty step shapes' },
+              { service: 'Refinish Existing Treads (if salvageable)', price: '$125/step', note: 'Sand, stain & finish — if solid hardwood under carpet' },
               { service: 'Custom Staining', price: 'Included', note: 'Colour-matched to your existing floors' },
               { service: 'Railing Upgrades (iron spindles)', price: '$25/picket installed', note: 'Modern iron pickets with material included' },
               { service: 'New Nosing', price: '$30/ft', note: 'Stair nose transition to match flooring' },
@@ -165,10 +166,10 @@ export default function CarpetToHardwoodStairsClient() {
           <div className="mt-8 bg-slate-800 text-white rounded-2xl p-6">
             <h3 className="font-bold text-lg mb-3">📝 Example: Typical 13-Step Staircase</h3>
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between"><span className="text-slate-300">13 steps × $200 (full conversion)</span><span className="font-semibold">$2,600</span></div>
-              <div className="flex justify-between"><span className="text-slate-300">Custom stain (included)</span><span className="font-semibold">$0</span></div>
+              <div className="flex justify-between"><span className="text-slate-300">13 steps × $185 (new treads)</span><span className="font-semibold">$2,405</span></div>
+              <div className="flex justify-between"><span className="text-slate-300">10 lf new nosing × $25</span><span className="font-semibold">$250</span></div>
               <div className="flex justify-between"><span className="text-slate-300">26 iron pickets × $25</span><span className="font-semibold">$650</span></div>
-              <div className="flex justify-between border-t border-slate-600 pt-2 mt-2"><span className="font-bold text-amber-400">Total estimate</span><span className="font-bold text-amber-400 text-lg">$3,250</span></div>
+              <div className="flex justify-between border-t border-slate-600 pt-2 mt-2"><span className="font-bold text-amber-400">Total estimate</span><span className="font-bold text-amber-400 text-lg">$3,305</span></div>
             </div>
             <p className="text-xs text-slate-400 mt-3">Actual pricing varies based on step shape (straight vs. pie), material choice, and railing scope. Free in-home quote provided.</p>
           </div>

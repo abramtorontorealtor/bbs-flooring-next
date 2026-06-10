@@ -35,10 +35,12 @@ const PROCESS_STEPS = [
 ];
 
 const PRICING = [
-  { service: 'Stair Recapping (hardwood treads)', price: '$185–$225/step', note: 'Railings, pickets, posts & nosing extra' },
-  { service: 'Custom Staining & Refinishing', price: '$125–$150/step', note: 'Includes sanding + 2-3 coats poly' },
-  { service: 'Full Carpet-to-Hardwood Conversion', price: '$200–$400/step', note: 'Demo + new treads + stain + finish' },
-  { service: 'Railing & Spindle Replacement', price: '$1,500–$5,000+', note: 'Depends on material (iron, glass, wood)' },
+  { service: 'Stair Tread Refinishing (Sand & Restain)', price: '$125/step', note: 'Existing solid hardwood in good condition' },
+  { service: 'New Straight Treads (Installed)', price: '$185/step', note: 'Includes labour & standard material' },
+  { service: 'New Pie / Triangle / Bullnose Steps', price: '$225/step', note: 'Specialty step shapes' },
+  { service: 'New Posts (3¼") / Pickets (iron or wood)', price: '$150/post · $25/piece', note: 'Installed with material included' },
+  { service: 'Handrail Refinish / New Handrail', price: '$25/lf · $50/lf', note: 'Sand & restain or full replacement' },
+  { service: 'Stringers', price: '$350–$900/side', note: 'White painted $350 · Stained $900 (new treads only)' },
 ];
 
 const FAQ_ITEMS = [
@@ -126,7 +128,7 @@ export default function StairRefinishingClient() {
       <section className="py-12 md:py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-3 text-center">Transparent Pricing</h2>
-          <p className="text-slate-500 text-center mb-8 max-w-xl mx-auto">Per-step pricing. No hidden fees. A typical 13-step staircase runs $2,000–$4,500.</p>
+          <p className="text-slate-500 text-center mb-8 max-w-xl mx-auto">Per-step pricing. No hidden fees. A typical 13-step staircase refinish runs ~$1,875. New treads + railing upgrade runs $3,500–$5,500+.</p>
 
           <div className="space-y-3">
             {PRICING.map((item, i) => (
