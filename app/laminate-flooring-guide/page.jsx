@@ -21,7 +21,7 @@ const faqItems = [
   },
   {
     question: 'Is 12mm laminate better than 8mm?',
-    answer: 'Yes, for most applications. 12mm laminate is more durable, feels more solid underfoot, produces less hollow sound when walked on, and better hides minor subfloor imperfections. At BBS Flooring, all our laminate is 12mm or thicker — we don\'t carry thin, low-quality laminate. Our premium NAF line is 14mm with pre-attached IXPE underpad.',
+    answer: 'Yes, for most applications. 12mm laminate is more durable, feels more solid underfoot, produces less hollow sound when walked on, and better hides minor subfloor imperfections. At BBS Flooring, all our laminate is 12mm or thicker — we don\'t carry thin, low-quality laminate. Our premium NAF 14mm Waterproof Laminate PRO has a 2mm EVA underpad built in.',
   },
   {
     question: 'Can laminate be installed in a basement?',
@@ -29,7 +29,7 @@ const faqItems = [
   },
   {
     question: 'Does laminate flooring need underlay?',
-    answer: 'Yes — unless the laminate has pre-attached underpad (like our NAF 14mm line with IXPE). Underlay provides sound absorption, moisture barrier, and thermal insulation. We recommend 3mm foam or cork underlay for most installations. Never double up underlays — it causes the click-lock joints to fail.',
+    answer: 'Yes — unless the laminate has pre-attached underpad (like our NAF 14mm PRO with EVA underpad). Underlay provides sound absorption, moisture barrier, and thermal insulation. We recommend 3mm foam or cork underlay for most installations. Never double up underlays — it causes the click-lock joints to fail.',
   },
   {
     question: 'How long does laminate installation take?',
@@ -41,7 +41,7 @@ const faqItems = [
   },
   {
     question: 'What brands of laminate do you carry?',
-    answer: 'BBS Flooring carries 145 laminate options from 9 brands: NAF Flooring (32 options, 14mm premium), Tosca Floors (21, from $1.49/sqft — our value leader), Northernest (18), Simba (18), Triforest (16), Evergreen (16, 12mm waterproof), Falcon (12), Woden (6), and Golden Choice (6). Visit our Markham showroom to see samples.',
+    answer: 'BBS Flooring carries 145 laminate options from 9 brands: NAF Flooring (42 options, including 14mm Waterproof PRO), Tosca Floors (21, from $1.49/sqft — our value leader), Northernest (18), Simba (18), Triforest (16), Evergreen (16, 12mm waterproof), Falcon (12), Woden (6), and Golden Choice (6). Visit our Markham showroom to see samples.',
   },
 ];
 

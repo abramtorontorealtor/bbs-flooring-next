@@ -15,8 +15,8 @@ export const revalidate = 300; // 5-minute ISR
 export async function generateMetadata() {
   const stats = await getCategoryPriceStats('laminate');
   return {
-    title: `Laminate Flooring Markham | 12mm from $${stats.lowPrice}/sqft`,
-    description: `Shop premium 12mm laminate flooring in Markham. AC4/AC5 rated, water-resistant, from $${stats.lowPrice}/sqft. 500 sqft installed from $${(500 * parseFloat(stats.lowPrice) + 1000).toLocaleString('en-CA', { maximumFractionDigits: 0 })}. Free measurements. Call (647) 428-1111.`,
+    title: `Laminate Flooring Markham | 12mm–14mm from $${stats.lowPrice}/sqft`,
+    description: `Shop premium 12mm–14mm laminate flooring in Markham. AC4/AC5 rated, waterproof options, from $${stats.lowPrice}/sqft. NEW: NAF 14mm PRO with attached underpad. Free measurements. Call (647) 428-1111.`,
     alternates: { canonical: '/laminate' },
   };
 }
@@ -73,11 +73,11 @@ export default async function LaminatePage() {
         {/* ── SSR Page Header ── */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
-            Laminate Flooring in Markham | 12mm From ${low}/sqft
+            Laminate Flooring in Markham | 12mm–14mm From ${low}/sqft
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl">
-            Maximum floor for minimum budget. Premium 12mm laminate from{' '}
-            <strong>${low}/sqft</strong> — AC4/AC5 rated, water-resistant, and perfect for
+            Maximum floor for minimum budget. Premium 12mm–14mm laminate from{' '}
+            <strong>${low}/sqft</strong> — AC4/AC5 rated, waterproof options, and perfect for
             high-traffic areas. In stock at our Markham showroom (6061 Hwy 7) with professional
             installation available across the GTA. A 500 sqft main floor costs as little as{' '}
             <strong>${(500 * parseFloat(low) + 1000).toLocaleString('en-CA', { maximumFractionDigits: 0 })} fully installed</strong>.
@@ -86,18 +86,36 @@ export default async function LaminatePage() {
 
         {/* ── SSR Content Boxes ── */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-6 relative">
+            <span className="absolute -top-3 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">NEW</span>
+            <h2 className="text-lg font-bold text-slate-800 mb-3">⭐ 14mm Waterproof Laminate PRO</h2>
+            <p className="text-slate-700 text-sm leading-relaxed mb-2">
+              NAF&apos;s thickest laminate — 14mm with a built-in 2mm EVA underpad. AC5 commercial-grade surface,
+              Välinge 5G drop-lock click, and FloorScore certified. No separate underlay needed.
+            </p>
+            <ul className="text-slate-700 text-sm space-y-1">
+              <li>✅ 14mm thick — quietest laminate in our showroom</li>
+              <li>✅ AC5 commercial-grade + 100% waterproof</li>
+              <li>✅ Attached 2mm EVA underpad (IIC 72dB)</li>
+              <li>✅ 10 colours from $3.19/sqft</li>
+            </ul>
+            <Link href="/products/horizon-naf-14mm-waterproof-laminate" className="inline-block mt-3 text-emerald-700 font-semibold text-sm hover:underline">
+              Browse 14mm PRO Collection →
+            </Link>
+          </div>
+
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-slate-800 mb-3">📐 Why 12mm Laminate?</h2>
+            <h2 className="text-lg font-bold text-slate-800 mb-3">📐 Why 12mm+ Laminate?</h2>
             <p className="text-slate-700 text-sm leading-relaxed mb-2">
               Thickness matters with laminate. Thin 7–8mm flooring sounds hollow and feels cheap
-              underfoot. Our 12mm options feel solid, quiet, and premium — comparable to engineered
+              underfoot. Our 12mm–14mm options feel solid, quiet, and premium — comparable to engineered
               hardwood at a fraction of the cost.
             </p>
             <ul className="text-slate-700 text-sm space-y-1">
               <li>✅ Solid, quiet underfoot (HDF core)</li>
               <li>✅ AC4/AC5 wear rating for heavy traffic</li>
-              <li>✅ Water-resistant edges on most styles</li>
-              <li>✅ 25-year residential warranty</li>
+              <li>✅ Waterproof options available</li>
+              <li>✅ 25–30 year residential warranty</li>
             </ul>
           </div>
 
@@ -120,7 +138,7 @@ export default async function LaminatePage() {
             <div className="text-slate-700 text-sm space-y-2">
               <p><strong>Entry 12mm:</strong> From $1.49/sqft — AC4 rated, 20+ colour options.</p>
               <p><strong>Mid-Range 12mm:</strong> $1.99–$2.99/sqft — wider planks, premium finishes.</p>
-              <p><strong>Premium 12mm:</strong> $2.99–$4.99/sqft — embossed in register, AC5 commercial grade.</p>
+              <p><strong>Premium 14mm PRO:</strong> $3.19/sqft — NAF 14mm with attached underpad, AC5 commercial.</p>
               <p><strong>Installation:</strong> $2.00–$2.25/sqft including subfloor prep and transitions.</p>
             </div>
             <Link href={createPageUrl('QuoteCalculator')} className="inline-block mt-3 text-amber-700 font-semibold text-sm hover:underline">

@@ -15,10 +15,10 @@ const has = (str, sub) => lc(str).includes(lc(sub));
 
 export const nafFlooringData = {
   route: 'NafFlooring',
-  title: 'NAF Flooring Markham | Vinyl, Hardwood & Laminate',
-  description: 'Shop NAF Flooring in Markham — 164 products in stock. Vinyl plank, engineered hardwood, and laminate from $2.89/sqft. Free measurements. Call (647) 428-1111.',
+  title: 'NAF Flooring Markham | Vinyl, Hardwood & Laminate | BBS Flooring',
+  description: 'Shop NAF Flooring in Markham — 170+ products in stock including the NEW 14mm Waterproof Laminate PRO. Vinyl, hardwood & laminate from $2.39/sqft. Call (647) 428-1111.',
   h1: 'NAF Flooring — Vinyl, Hardwood & Laminate',
-  subtitle: '164 NAF products in stock at our Markham showroom. From waterproof vinyl to European oak engineered hardwood — one brand covers every room in your home.',
+  subtitle: '170+ NAF products in stock at our Markham showroom — including the NEW 14mm Waterproof Laminate PRO with attached underpad. One brand covers every room in your home.',
   parentPage: null,
   schemaType: 'product',
   content: [
@@ -43,17 +43,19 @@ export const nafFlooringData = {
 <p>Engineered construction means these are <strong>radiant heat compatible</strong> and more dimensionally stable than solid hardwood — critical in GTA homes where humidity swings from 20% in January to 80% in August.</p>`
     },
     {
-      heading: 'NAF Laminate — 32 Options from $2.89/sqft',
-      body: `<p>NAF's 12mm laminate line includes both standard and <strong>waterproof options</strong>. At 12mm thick, these feel substantial underfoot — not the hollow, cheap-sounding laminate you might remember from the early 2000s.</p>
-<p>Waterproof laminate is becoming the go-to for homeowners who want the look of hardwood in high-traffic areas without the maintenance anxiety.</p>`
+      heading: 'NAF Laminate — 42 Options from $2.39/sqft',
+      body: `<p>NAF's laminate lineup spans three tiers: <strong>Standard 12mm</strong> ($2.39–$2.59/sqft), <strong>12mm Waterproof</strong> ($2.79–$3.09/sqft), and the all-new <strong><a href="/products/horizon-naf-14mm-waterproof-laminate">14mm Waterproof Laminate PRO</a></strong> ($3.19/sqft) — our thickest, quietest laminate with an attached 2mm EVA underpad and AC5 commercial-grade surface.</p>
+<p>The 14mm PRO line comes in 10 colours from whitewashed grey to deep espresso walnut, with Välinge 5G drop-lock installation — no glue, no nails, no separate underlay needed. It's the closest a laminate gets to real hardwood feel at a fraction of the price.</p>
+<p>Every NAF laminate is 12mm+ thick. We don't carry thin, hollow-sounding laminate. See the full range at our Markham showroom.</p>`
     },
   ],
   faqItems: [
     { question: 'Is NAF Flooring a good brand?', answer: 'NAF is a well-established flooring manufacturer distributed across Canada. They produce vinyl, engineered hardwood, and laminate — all built for Canadian climate conditions. BBS Flooring carries 164 NAF products and installs NAF flooring regularly across the GTA.' },
     { question: 'How much does NAF vinyl flooring cost?', answer: 'NAF vinyl plank at BBS Flooring ranges from $2.99 to $4.29 per square foot depending on thickness and underpad type. The 7mm options with cork underpad are the most popular for homes. Call (647) 428-1111 for current pricing on specific products.' },
     { question: 'Is NAF vinyl flooring waterproof?', answer: 'Yes. All NAF vinyl plank flooring is 100% waterproof with an SPC (Stone Polymer Composite) core. It can be installed in basements, kitchens, bathrooms, and laundry rooms without moisture concerns.' },
-    { question: 'Where can I buy NAF Flooring in Markham?', answer: 'BBS Flooring at 6061 Highway 7, Unit B carries 164 NAF products in stock — vinyl, engineered hardwood, and laminate. Walk-ins welcome Monday–Saturday. We also offer free in-home measurements across the GTA.' },
+    { question: 'Where can I buy NAF Flooring in Markham?', answer: 'BBS Flooring at 6061 Highway 7, Unit B carries 170+ NAF products in stock — vinyl, engineered hardwood, and laminate including the new 14mm PRO line. Walk-ins welcome Monday–Saturday. We also offer free in-home measurements across the GTA.' },
     { question: 'Does NAF engineered hardwood work with radiant heat?', answer: 'Yes. NAF engineered hardwood is compatible with radiant heating systems. The multi-layer construction provides dimensional stability that solid hardwood cannot match over heated subfloors. Our installers follow manufacturer specifications for all radiant heat installations.' },
+    { question: 'What is NAF 14mm Waterproof Laminate PRO?', answer: 'NAF\'s premium laminate tier — 14mm thick with a built-in 2mm EVA underpad (IIC 72dB), AC5 commercial-grade surface, Välinge 5G drop-lock click, and FloorScore certification. Available in 10 colours at $3.19/sqft. No separate underlay needed. See all 10 colours at BBS Flooring in Markham.' },
   ],
   hideBrandFilter: true,
   productFilter: (p) => has(p.brand, 'naf'),

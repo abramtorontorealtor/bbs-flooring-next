@@ -19,7 +19,7 @@ export default function LaminateFlooringGuideClient() {
             AC ratings decoded, thickness compared, waterproof options explained, and real Canadian pricing — everything you need to choose the right laminate for your home.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-slate-400">
-            <span>✔ 145 options in stock</span>
+            <span>✔ 155+ options in stock</span>
             <span>✔ 9 brands compared</span>
             <span>✔ From $1.49/sqft</span>
           </div>
@@ -52,7 +52,7 @@ export default function LaminateFlooringGuideClient() {
           Quick Answer: Best Laminate Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 99 laminate options from $1.49&#8211;$3.29/sqft &#8212; the most affordable flooring option. 8 brands including Tosca (from $1.49/sqft), Evergreen (AC5 commercial-grade), and Triforest. Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring stocks 155+ laminate options from $1.49&#8211;$3.19/sqft &#8212; the most affordable flooring option. 9 brands including NAF (14mm Waterproof PRO from $3.19), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -62,7 +62,7 @@ export default function LaminateFlooringGuideClient() {
         <section id="what-is-laminate">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">What Is Laminate Flooring?</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            Laminate is a multi-layer flooring product that mimics the look of hardwood (or stone) using a high-resolution photographic print layer protected by a tough wear coating. Modern laminate has come a long way — with embossed-in-register (EIR) textures and realistic grain, quality laminate is almost indistinguishable from real wood. Browse our full <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">laminate flooring collection</Link> to see 145 options starting from $1.49/sqft.
+            Laminate is a multi-layer flooring product that mimics the look of hardwood (or stone) using a high-resolution photographic print layer protected by a tough wear coating. Modern laminate has come a long way — with embossed-in-register (EIR) textures and realistic grain, quality laminate is almost indistinguishable from real wood. Browse our full <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">laminate flooring collection</Link> to see 155+ options starting from $1.49/sqft.
           </p>
 
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
@@ -93,7 +93,7 @@ export default function LaminateFlooringGuideClient() {
                 <div className="w-4 h-4 rounded-full bg-emerald-200 mt-1 shrink-0" />
                 <div>
                   <p className="font-semibold text-slate-800">Backing Layer</p>
-                  <p className="text-slate-600 text-sm">Moisture barrier that stabilizes the plank and prevents warping. Premium products (like our NAF 14mm line) include pre-attached IXPE underpad for additional sound absorption and thermal insulation.</p>
+                  <p className="text-slate-600 text-sm">Moisture barrier that stabilizes the plank and prevents warping. Premium products (like our <Link href="/products/horizon-naf-14mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">NAF 14mm PRO</Link>) include a pre-attached 2mm EVA underpad for sound absorption (IIC 72dB) and thermal insulation.</p>
                 </div>
               </div>
             </div>
@@ -266,7 +266,7 @@ export default function LaminateFlooringGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Brand &amp; Price Comparison</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            BBS Flooring carries 145 laminate products from 9 brands. Here&apos;s how they compare:
+            BBS Flooring carries 155+ laminate products from 9 brands. Here&apos;s how they compare:
           </p>
 
           <div className="overflow-x-auto mb-8">
@@ -285,10 +285,10 @@ export default function LaminateFlooringGuideClient() {
                   <td className="p-3 font-semibold text-emerald-800">
                     <Link href="/naf-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Flooring</Link>
                   </td>
-                  <td className="p-3 text-center">32</td>
-                  <td className="p-3 text-slate-600">14mm (12+2mm IXPE)</td>
-                  <td className="p-3 text-slate-600 font-medium">$2.39–$3.09/sqft</td>
-                  <td className="p-3 text-slate-600">Premium feel, no separate underlay needed. See <Link href="/products/space-grey-naf-12mm-laminate-flooring" className="text-amber-700 underline hover:text-amber-800">Space Grey NAF 12mm</Link> ($2.59)</td>
+                  <td className="p-3 text-center">42</td>
+                  <td className="p-3 text-slate-600">12mm – 14mm</td>
+                  <td className="p-3 text-slate-600 font-medium">$2.39–$3.19/sqft</td>
+                  <td className="p-3 text-slate-600">Only brand with 14mm PRO (AC5, attached underpad). See <Link href="/products/horizon-naf-14mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">Horizon 14mm PRO</Link> ($3.19)</td>
                 </tr>
                 <tr>
                   <td className="p-3 font-semibold text-slate-800">
@@ -488,7 +488,7 @@ export default function LaminateFlooringGuideClient() {
                 <tr>
                   <td className="p-3 font-medium text-slate-800">Underlay (if not pre-attached)</td>
                   <td className="p-3 text-slate-600">$0.30–$0.60/sqft</td>
-                  <td className="p-3 text-slate-500">Not needed for NAF 14mm (IXPE pre-attached)</td>
+                  <td className="p-3 text-slate-500">Not needed for NAF 14mm PRO (2mm EVA pre-attached)</td>
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-medium text-slate-800">Old flooring removal</td>
@@ -535,7 +535,7 @@ export default function LaminateFlooringGuideClient() {
             </div>
             <div className="mt-4 space-y-3 text-sm border-t border-slate-300 pt-4">
               <div className="flex justify-between">
-                <span className="text-slate-600">Material (NAF 14mm Premium @ $2.79/sqft × 525 sqft)</span>
+                <span className="text-slate-600">Material (NAF 14mm PRO @ $3.19/sqft × 525 sqft)</span>
                 <span className="font-semibold text-slate-800">$1,465</span>
               </div>
               <div className="flex justify-between">
@@ -619,7 +619,7 @@ export default function LaminateFlooringGuideClient() {
                 <tr>
                   <td className="p-3 font-medium text-slate-800">Feel underfoot</td>
                   <td className="p-3 text-slate-600">Firm, slightly hollow (12mm helps)</td>
-                  <td className="p-3 text-slate-600">Warm, cushioned (IXPE pad)</td>
+                  <td className="p-3 text-slate-600">Warm, cushioned (EVA underpad)</td>
                   <td className="p-3 text-green-600 font-semibold">Solid, natural warmth</td>
                 </tr>
                 <tr className="bg-slate-50">
@@ -759,7 +759,7 @@ export default function LaminateFlooringGuideClient() {
               { q: 'Does laminate need underlay?', a: 'Yes, unless pre-attached (NAF 14mm). Underlay absorbs sound, adds comfort, and provides a moisture barrier. Never double-layer underlay — it weakens click-lock joints.' },
               { q: 'How long does installation take?', a: 'Laminate installs in 1 day for a standard 500 sqft room. Floating click-lock is the fastest flooring method — no drying time, walkable immediately. BBS handles removal, prep, install, and baseboards in one visit.' },
               { q: 'Is laminate good for pets?', a: 'Excellent. AC4+ laminate resists pet claw scratches better than real hardwood. It doesn\'t absorb odours like carpet. Choose textured (EIR) surfaces for better traction.' },
-              { q: 'What brands do you carry?', a: 'NAF (32, 14mm premium), Tosca (21, from $1.49), Northernest (18), Simba (18), Triforest (16), Evergreen (16, waterproof), Falcon (12), Woden (6), Golden Choice (6) — 145 total options at our Markham showroom.' },
+              { q: 'What brands do you carry?', a: 'NAF (42, including 14mm Waterproof PRO), Tosca (21, from $1.49), Northernest (18), Simba (18), Triforest (16), Evergreen (16, waterproof), Falcon (12), Woden (6), Golden Choice (6) — 155+ total options at our Markham showroom.' },
             ].map((faq, i) => (
               <details key={i} className="group border border-slate-200 rounded-xl">
                 <summary className="p-5 cursor-pointer font-semibold text-slate-800 group-open:border-b group-open:border-slate-200 list-none flex justify-between items-center">
