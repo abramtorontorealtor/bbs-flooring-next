@@ -356,7 +356,7 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                     <span className="font-bold text-2xl text-amber-600">${total.toLocaleString()}</span>
                   </div>
                 </div>
-              ) : null)
+              ) : null}
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-xs text-amber-800">
                 ⚠️ Estimate only — final price confirmed at free in-home measurement. Carpet removal included with new treads.
               </div>
