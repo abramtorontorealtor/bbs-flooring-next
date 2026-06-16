@@ -1,7 +1,115 @@
+import Link from 'next/link';
 import { getSupabaseAdminClient, getSupabaseServerClient } from '@/lib/supabase';
 import BlogPostClient from '@/components/BlogPostClient';
 import { JsonLd } from '@/lib/schemas';
 import Breadcrumbs from '@/components/Breadcrumbs';
+
+// --- Server-side internal-link computation (Phase A: blog -> money pages) ---
+// Only cities with a live /flooring-in/{slug} page.
+const NEIGHBOURHOOD_TO_CITY = {
+  // Markham neighbourhoods
+  'Markham': 'markham', 'Unionville': 'markham', 'Cornell': 'markham', 'Cachet': 'markham',
+  'Cathedraltown': 'markham', 'Markham Village': 'markham', 'Old Markham Village': 'markham',
+  'Berczy Village': 'markham', 'Wismer': 'markham', 'Downtown Markham': 'markham',
+  'Milliken': 'markham', 'Greensborough': 'markham', 'Angus Glen': 'markham',
+  'Box Grove': 'markham', 'Raymerville': 'markham', 'Legacy': 'markham',
+  'Markville': 'markham', 'Bullock': 'markham', 'Vinegar Hill': 'markham',
+  'Sherwood-Amberglen': 'markham', 'Vinegar Hill ': 'markham',
+  // Scarborough
+  'Agincourt': 'scarborough', 'Malvern': 'scarborough',
+  // Richmond Hill
+  'Oak Ridges': 'richmond-hill', 'Elgin Mills': 'richmond-hill',
+  // Vaughan
+  'Kleinburg': 'vaughan', 'Maple': 'vaughan', 'Concord': 'vaughan', 'Thornhill': 'vaughan',
+  // Whitchurch-Stouffville → stouffville page exists
+  'Ballantrae': 'stouffville', 'Stonehaven': 'stouffville', 'Vinegar Hill, Stouffville': 'stouffville',
+  // Toronto
+  'Bridle Path': 'toronto',
+};
+
+// Live city×product pages (data/cityProductData.js). Only link if the cell exists.
+const LIVE_CITY_PRODUCT = new Set([
+  'engineered-hardwood', // category, always live
+  'flooring-installation-ajax', 'flooring-installation-markham', 'flooring-installation-newmarket',
+  'flooring-installation-oshawa', 'flooring-installation-pickering', 'flooring-installation-richmond-hill',
+  'flooring-installation-scarborough', 'flooring-installation-vaughan',
+  'hardwood-flooring-ajax', 'hardwood-flooring-markham', 'hardwood-flooring-oshawa',
+  'hardwood-flooring-richmond-hill', 'hardwood-flooring-scarborough', 'hardwood-flooring-toronto',
+  'hardwood-flooring-vaughan',
+  'laminate-flooring-markham', 'laminate-flooring-newmarket', 'laminate-flooring-richmond-hill',
+  'laminate-flooring-scarborough',
+  'vinyl-flooring-ajax', 'vinyl-flooring-markham', 'vinyl-flooring-pickering',
+  'vinyl-flooring-richmond-hill', 'vinyl-flooring-scarborough', 'vinyl-flooring-toronto',
+  'vinyl-flooring-vaughan',
+]);
+
+const PRODUCT_CATEGORY_PAGE = {
+  vinyl: '/vinyl',
+  hardwood: '/engineered-hardwood',
+  'solid-hardwood': '/solid-hardwood',
+  laminate: '/laminate',
+  stair: '/stairs',
+};
+const PRODUCT_LABEL = {
+  vinyl: 'Vinyl', hardwood: 'Engineered Hardwood', 'solid-hardwood': 'Solid Hardwood',
+  laminate: 'Laminate', stair: 'Stairs',
+};
+const CITY_DISPLAY = {
+  markham: 'Markham', scarborough: 'Scarborough', 'richmond-hill': 'Richmond Hill',
+  vaughan: 'Vaughan', toronto: 'Toronto', stouffville: 'Stouffville',
+};
+
+function inferProductType(post) {
+  const s = `${post?.title || ''} ${post?.slug || ''}`.toLowerCase();
+  if (s.includes('solid hardwood')) return 'solid-hardwood';
+  if (s.includes('engineered') || s.includes('hardwood')) return 'hardwood';
+  if (s.includes('vinyl') || s.includes('lvp') || s.includes('luxury vinyl')) return 'vinyl';
+  if (s.includes('laminate')) return 'laminate';
+  if (s.includes('stair')) return 'stair';
+  return null;
+}
+
+// city×product slug uses 'hardwood' for engineered HW pages
+function cityProductSlug(productType, citySlug) {
+  if (!citySlug) return null;
+  const seg = productType === 'hardwood' ? 'hardwood-flooring'
+    : productType === 'vinyl' ? 'vinyl-flooring'
+    : productType === 'laminate' ? 'laminate-flooring'
+    : null; // solid-hardwood & stair have no city pages yet
+  if (!seg) return null;
+  const slug = `${seg}-${citySlug}`;
+  return LIVE_CITY_PRODUCT.has(slug) ? slug : null;
+}
+
+function buildInternalLinks(post) {
+  if (!post) return [];
+  const citySlug = NEIGHBOURHOOD_TO_CITY[post.neighbourhood] || null;
+  const productType = inferProductType(post);
+  const links = [];
+
+  if (citySlug) {
+    links.push({
+      href: `/flooring-in/${citySlug}`,
+      label: `Flooring in ${CITY_DISPLAY[citySlug] || citySlug} — Local Showroom & Prices`,
+    });
+    const cps = cityProductSlug(productType, citySlug);
+    if (cps) {
+      links.push({
+        href: `/${cps}`,
+        label: `${PRODUCT_LABEL[productType]} Flooring in ${CITY_DISPLAY[citySlug] || citySlug}`,
+      });
+    }
+  }
+  if (productType && PRODUCT_CATEGORY_PAGE[productType]) {
+    links.push({
+      href: PRODUCT_CATEGORY_PAGE[productType],
+      label: `Browse All ${PRODUCT_LABEL[productType]} Flooring`,
+    });
+  }
+  // De-dupe by href, cap at 3
+  const seen = new Set();
+  return links.filter((l) => (seen.has(l.href) ? false : (seen.add(l.href), true))).slice(0, 3);
+}
 
 // ISR: revalidate blog posts every hour
 export const revalidate = 3600;
@@ -108,10 +216,36 @@ export default async function BlogPostPage({ params }) {
     ],
   } : null;
 
+  const internalLinks = buildInternalLinks(post);
+
   return (
     <>
       {articleSchema && <JsonLd data={[articleSchema, breadcrumbSchema]} />}
       <BlogPostClient slug={slug} initialPost={post} />
+      {internalLinks.length > 0 && (
+        <nav
+          aria-label="Related local flooring pages"
+          className="max-w-3xl mx-auto px-4 sm:px-6 -mt-4 mb-12"
+        >
+          <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
+            <h2 className="text-base font-bold text-slate-800 mb-3">
+              Local Flooring Near You
+            </h2>
+            <ul className="space-y-2">
+              {internalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-amber-700 hover:text-amber-900 font-medium underline underline-offset-2"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      )}
     </>
   );
 }
