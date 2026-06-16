@@ -46,7 +46,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'Hardwood vs Vinyl vs Laminate: Which Flooring to Choose? (2026) | BBS Flooring',
+  title: 'Hardwood vs Vinyl vs Laminate: Which Flooring to Choose? (2026)',
   description: 'Complete comparison of hardwood, vinyl, and laminate flooring with real 2026 pricing from BBS Flooring. 1,000+ options compared — costs, durability, best uses, and room-by-room recommendations for GTA homeowners.',
   alternates: { canonical: '/flooring-comparison-guide' },
   openGraph: {

@@ -46,7 +46,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'Laminate Flooring Guide 2026 | AC Ratings, Costs & Best Brands | BBS Flooring',
+  title: 'Laminate Flooring Guide 2026 | AC Ratings, Costs & Best Brands',
   description: 'Complete guide to laminate flooring in Canada. AC ratings explained, 12mm vs 14mm, waterproof options, real 2026 pricing. 145 options from $1.49/sqft at BBS Flooring Markham.',
   alternates: { canonical: '/laminate-flooring-guide' },
 };

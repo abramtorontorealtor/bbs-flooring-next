@@ -46,7 +46,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'Solid Hardwood Flooring Guide 2026 | Species, Grades & Pricing | BBS Flooring',
+  title: 'Solid Hardwood Flooring Guide 2026 | Species, Grades & Pricing',
   description: 'Complete guide to solid hardwood flooring in Canada. Compare oak, maple, hickory species, understand grades, and see real 2026 pricing. 83 options from $5.10/sqft at BBS Flooring Markham.',
   alternates: { canonical: '/solid-hardwood-guide' },
 };

@@ -62,7 +62,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'Stair Renovation Cost in Toronto & GTA (2026) | From $125/Step | BBS Flooring',
+  title: 'Stair Renovation Cost in Toronto & GTA (2026) | From $125/Step',
   description: 'Staircase renovation costs in Toronto & Markham: treads from $125/step, new hardwood from $185/step, banister/railing from $25/lf, stringers from $350/side. Use our free stair cost calculator for an instant estimate.',
   alternates: { canonical: '/stair-renovation-guide' },
 };

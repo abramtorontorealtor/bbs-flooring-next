@@ -46,7 +46,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'How Much Does Flooring Cost in Toronto & the GTA? (2026) | BBS Flooring',
+  title: 'How Much Does Flooring Cost in Toronto & the GTA? (2026)',
   description: 'Complete 2026 flooring cost guide for Toronto and the GTA. Real prices: material from $1.49/sqft, installation from $2.00/sqft. Room-by-room budgets, hidden costs, and money-saving tips from BBS Flooring.',
   alternates: { canonical: '/flooring-cost-toronto-2026' },
   openGraph: {
