@@ -83,7 +83,7 @@ export async function POST(request) {
       ];
     } else {
       emailPromises = [
-        sendContactAdminNotification({ name, email, phone, message, source }),
+        sendContactAdminNotification({ name, email, phone, message, source, smsConsent }),
         sendContactCustomerConfirmation({ name, email }),
       ];
     }
@@ -104,7 +104,7 @@ export async function POST(request) {
     // Fire Telegram alert — AWAIT so the serverless function doesn't terminate
     // before the fetch completes (unawaited promises get killed on Vercel).
     try {
-      await sendTelegramAlert(formatContactAlert({ name, email, phone, message, source }));
+      await sendTelegramAlert(formatContactAlert({ name, email, phone, message, source, smsConsent }));
     } catch (e) {
       console.error('[Contact] Telegram alert failed:', e?.message);
     }

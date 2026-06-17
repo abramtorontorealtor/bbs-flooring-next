@@ -1366,24 +1366,62 @@ export default function AdminCRMClient() {
 
                           {/* Booking-specific */}
                           {lead.source === 'booking' && (
-                            <>
-                              {(o.customer_address || o.address) && <div className="flex justify-between pt-1 border-t"><span className="text-slate-500">Address</span><span>{o.customer_address || o.address}</span></div>}
+                            <div className="pt-1 border-t text-xs space-y-1">
+                              {(o.customer_address || o.address) && <div className="flex justify-between"><span className="text-slate-500">Address</span><span className="text-right">{[o.customer_address || o.address, o.postal_code].filter(Boolean).join(', ')}</span></div>}
                               {o.preferred_date && <div className="flex justify-between"><span className="text-slate-500">Appointment</span><span>{new Date(o.preferred_date + 'T00:00:00').toLocaleDateString()} {o.preferred_time || ''}</span></div>}
-                            </>
+                              {o.service_type && <div className="flex justify-between"><span className="text-slate-500">Service</span><span className="capitalize">{String(o.service_type).replace(/_/g, ' ')}</span></div>}
+                              {o.flooring_type && <div className="flex justify-between"><span className="text-slate-500">Flooring</span><span>{o.flooring_type}</span></div>}
+                              {o.product_name && <div className="flex justify-between"><span className="text-slate-500">Product</span><span className="text-right">{o.product_name}</span></div>}
+                              {o.square_footage > 0 && <div className="flex justify-between"><span className="text-slate-500">Area</span><span>{o.square_footage} sqft</span></div>}
+                              {o.quote_total > 0 && <div className="flex justify-between"><span className="text-slate-500">Est. Total</span><span>C${Number(o.quote_total).toFixed(2)}</span></div>}
+                              {o.notes && <div className="pt-1"><span className="text-slate-500">Notes</span><pre className="mt-1 whitespace-pre-wrap bg-slate-50 border rounded p-2">{o.notes}</pre></div>}
+                            </div>
                           )}
 
                           {/* Quote-specific */}
-                          {lead.source === 'quote' && o.square_footage && (
-                            <div className="pt-1 border-t grid grid-cols-2 gap-2 text-xs">
-                              {o.flooring_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Flooring</span><span>C${o.flooring_cost?.toFixed(2)}</span></div>}
-                              {o.installation_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Install</span><span>C${o.installation_cost?.toFixed(2)}</span></div>}
-                              {o.removal_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Removal{o.removal_type && o.removal_type !== 'none' ? ` (${o.removal_type})` : ''}</span><span>C${o.removal_cost?.toFixed(2)}</span></div>}
-                              {o.baseboard_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Baseboards</span><span>C${o.baseboard_cost?.toFixed(2)}</span></div>}
-                              {o.needs_baseboards === false && !o.baseboard_cost && <div className="flex justify-between"><span className="text-slate-400">Baseboards</span><span className="text-slate-400">No</span></div>}
-                              {o.shoe_moulding_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Shoe Moulding</span><span>C${o.shoe_moulding_cost?.toFixed(2)}</span></div>}
-                              {o.needs_shoe_moulding === false && !o.shoe_moulding_cost && <div className="flex justify-between"><span className="text-slate-400">Shoe Moulding</span><span className="text-slate-400">No</span></div>}
-                              {o.delivery_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Delivery</span><span>C${o.delivery_cost?.toFixed(2)}</span></div>}
-                            </div>
+                          {lead.source === 'quote' && (
+                            <>
+                              {/* Customer-entered contact / appointment / notes */}
+                              {(o.customer_address || o.preferred_date || o.preferred_time || o.is_member) && (
+                                <div className="pt-1 border-t text-xs space-y-1">
+                                  {o.customer_address && <div className="flex justify-between"><span className="text-slate-500">Address</span><span className="text-right">{o.customer_address}</span></div>}
+                                  {(o.preferred_date || o.preferred_time) && <div className="flex justify-between"><span className="text-slate-500">Preferred</span><span>{o.preferred_date ? new Date(o.preferred_date + 'T00:00:00').toLocaleDateString() : ''} {o.preferred_time || ''}</span></div>}
+                                  {o.is_member && <div className="flex justify-between"><span className="text-slate-500">Member</span><span className="text-amber-600 font-medium">⭐ Yes</span></div>}
+                                </div>
+                              )}
+
+                              {/* Stair configuration */}
+                              {(o.stair_tread_count > 0 || o.stair_pie_count > 0 || o.stair_posts > 0 || o.stair_pickets > 0 || o.stair_nosing?.lf > 0 || o.stair_railing?.lf > 0 || o.stair_stringers?.count > 0 || o.stair_landing) && (
+                                <div className="pt-1 border-t text-xs">
+                                  <span className="text-slate-500 font-semibold">🪜 Stair Configuration</span>
+                                  <div className="mt-1 space-y-1">
+                                    {o.stair_tread_count > 0 && <div className="flex justify-between"><span className="text-slate-500">Treads ({o.stair_tread_count})</span><span>{o.stair_refinish ? 'Refinish' : 'New'}</span></div>}
+                                    {o.stair_pie_count > 0 && <div className="flex justify-between"><span className="text-slate-500">Pie treads</span><span>{o.stair_pie_count}</span></div>}
+                                    {o.stair_posts > 0 && <div className="flex justify-between"><span className="text-slate-500">Posts</span><span>{o.stair_posts}</span></div>}
+                                    {o.stair_pickets > 0 && <div className="flex justify-between"><span className="text-slate-500">Pickets</span><span>{o.stair_pickets}</span></div>}
+                                    {o.stair_stringers?.count > 0 && <div className="flex justify-between"><span className="text-slate-500">Stringers ({o.stair_stringers.count})</span><span>{o.stair_stringers.type}</span></div>}
+                                    {o.stair_nosing?.lf > 0 && <div className="flex justify-between"><span className="text-slate-500">Nosing ({o.stair_nosing.lf} lf)</span><span>{o.stair_nosing.type}</span></div>}
+                                    {o.stair_railing?.lf > 0 && <div className="flex justify-between"><span className="text-slate-500">Railing ({o.stair_railing.lf} lf)</span><span>{o.stair_railing.type}</span></div>}
+                                    {o.stair_landing && <div className="flex justify-between"><span className="text-slate-500">Landing</span><span>{o.stair_landing.size}</span></div>}
+                                    {o.stair_species && o.stair_species !== 'red_oak' && <div className="flex justify-between"><span className="text-slate-500">Species</span><span>{String(o.stair_species).replace('_', ' ')}</span></div>}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Cost breakdown */}
+                              {o.square_footage > 0 && (
+                                <div className="pt-1 border-t grid grid-cols-2 gap-2 text-xs">
+                                  {o.flooring_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Flooring</span><span>C${o.flooring_cost?.toFixed(2)}</span></div>}
+                                  {o.installation_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Install</span><span>C${o.installation_cost?.toFixed(2)}</span></div>}
+                                  {o.removal_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Removal{o.removal_type && o.removal_type !== 'none' ? ` (${o.removal_type})` : ''}</span><span>C${o.removal_cost?.toFixed(2)}</span></div>}
+                                  {o.baseboard_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Baseboards</span><span>C${o.baseboard_cost?.toFixed(2)}</span></div>}
+                                  {o.needs_baseboards === false && !o.baseboard_cost && <div className="flex justify-between"><span className="text-slate-400">Baseboards</span><span className="text-slate-400">No</span></div>}
+                                  {o.shoe_moulding_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Shoe Moulding</span><span>C${o.shoe_moulding_cost?.toFixed(2)}</span></div>}
+                                  {o.needs_shoe_moulding === false && !o.shoe_moulding_cost && <div className="flex justify-between"><span className="text-slate-400">Shoe Moulding</span><span className="text-slate-400">No</span></div>}
+                                  {o.delivery_cost > 0 && <div className="flex justify-between"><span className="text-slate-500">Delivery</span><span>C${o.delivery_cost?.toFixed(2)}</span></div>}
+                                </div>
+                              )}
+                            </>
                           )}
                         </div>
                       </>

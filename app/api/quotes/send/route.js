@@ -87,7 +87,7 @@ export async function POST(request) {
     // Fire Telegram alert — AWAIT so the serverless function doesn't terminate
     // before the fetch completes (unawaited promises get killed on Vercel).
     try {
-      await sendTelegramAlert(formatQuoteAlert(emailQuote));
+      await sendTelegramAlert(formatQuoteAlert({ ...emailQuote, is_member: is_member || false }));
     } catch (e) {
       console.error('[Quote] Telegram alert failed:', e?.message);
     }

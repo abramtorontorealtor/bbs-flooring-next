@@ -84,6 +84,13 @@ export default function AdminQuotesClient() {
                         </div>
                       )}
                     </div>
+                    {(quote.customer_address || quote.preferred_date || quote.preferred_time || quote.is_member) && (
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-slate-600">
+                        {quote.customer_address && <span>📍 {quote.customer_address}</span>}
+                        {(quote.preferred_date || quote.preferred_time) && <span>📅 {quote.preferred_date ? new Date(quote.preferred_date + 'T00:00:00').toLocaleDateString() : ''} {quote.preferred_time || ''}</span>}
+                        {quote.is_member && <span className="text-amber-600 font-medium">⭐ Member</span>}
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge className="bg-amber-100 text-amber-800 border-0">
@@ -113,10 +120,12 @@ export default function AdminQuotesClient() {
                         <span className="text-slate-500">Product:</span>
                         <p className="font-medium">{quote.product_name || 'N/A'}</p>
                       </div>
-                      <div>
-                        <span className="text-slate-500">Square Footage:</span>
-                        <p className="font-medium">{quote.square_footage} sq.ft</p>
-                      </div>
+                      {quote.square_footage > 0 && (
+                        <div>
+                          <span className="text-slate-500">Square Footage:</span>
+                          <p className="font-medium">{quote.square_footage} sq.ft</p>
+                        </div>
+                      )}
                       {quote.removal_type && quote.removal_type !== 'none' && (
                         <div>
                           <span className="text-slate-500">Removal:</span>
@@ -137,6 +146,28 @@ export default function AdminQuotesClient() {
                           </Badge>
                         )}
                       </div>
+                      {(quote.stair_tread_count > 0 || quote.stair_pie_count > 0 || quote.stair_posts > 0 || quote.stair_pickets > 0 || quote.stair_nosing?.lf > 0 || quote.stair_railing?.lf > 0 || quote.stair_stringers?.count > 0 || quote.stair_landing) && (
+                        <div className="pt-2 border-t">
+                          <span className="text-slate-500">🪜 Stair Configuration:</span>
+                          <ul className="mt-1 ml-1 space-y-0.5 text-xs text-slate-700">
+                            {quote.stair_tread_count > 0 && <li>{quote.stair_tread_count} straight treads ({quote.stair_refinish ? 'refinish' : 'new'})</li>}
+                            {quote.stair_pie_count > 0 && <li>{quote.stair_pie_count} pie/triangle treads</li>}
+                            {quote.stair_posts > 0 && <li>{quote.stair_posts} post(s)</li>}
+                            {quote.stair_pickets > 0 && <li>{quote.stair_pickets} pickets</li>}
+                            {quote.stair_stringers?.count > 0 && <li>{quote.stair_stringers.count} stringer(s) — {quote.stair_stringers.type}</li>}
+                            {quote.stair_nosing?.lf > 0 && <li>Nosing {quote.stair_nosing.lf} lf ({quote.stair_nosing.type})</li>}
+                            {quote.stair_railing?.lf > 0 && <li>Railing {quote.stair_railing.lf} lf ({quote.stair_railing.type})</li>}
+                            {quote.stair_landing && <li>Landing: {quote.stair_landing.size}</li>}
+                            {quote.stair_species && quote.stair_species !== 'red_oak' && <li>Species: {String(quote.stair_species).replace('_', ' ')}</li>}
+                          </ul>
+                        </div>
+                      )}
+                      {quote.notes && (
+                        <div className="pt-2 border-t">
+                          <span className="text-slate-500">Customer Notes:</span>
+                          <p className="mt-1 text-xs whitespace-pre-wrap bg-amber-50 border border-amber-200 rounded p-2">{quote.notes}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
