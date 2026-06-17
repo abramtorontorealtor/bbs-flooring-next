@@ -62,7 +62,7 @@ export async function POST(request) {
 
     // Fire Telegram alert — AWAIT so the serverless function doesn't terminate first.
     try {
-      await sendTelegramAlert(formatContractorAlert({ contact_name, email, phone, company_name, trade_type, monthly_volume }));
+      await sendTelegramAlert(formatContractorAlert({ contact_name, email, phone, company_name, trade_type, monthly_volume, message }));
     } catch (e) {
       console.error('[Contractor] Telegram alert failed:', e?.message);
     }
