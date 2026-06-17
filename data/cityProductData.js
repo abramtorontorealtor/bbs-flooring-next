@@ -53,6 +53,16 @@ export const PRODUCT_TYPES = {
     features: ['Multi-Layer Construction', 'Works Over Concrete & Radiant Heat', 'Real Hardwood Top Layer', 'Less Seasonal Movement'],
     bestFor: ['Condos', 'Over Concrete Subfloors', 'Radiant Heating', 'Open-Concept Layouts', 'Main Floor Renovations'],
   },
+  'solid-hardwood': {
+    label: 'Solid Hardwood Flooring',
+    shortLabel: 'Solid Hardwood',
+    dbCategory: 'solid_hardwood',
+    categoryPage: '/solid-hardwood',
+    priceFrom: '$5.10',
+    icon: 'Hammer',
+    features: ['Solid 3/4" Wood', 'Sand & Refinish for Decades', 'Timeless Resale Value', 'Wide-Plank & Hand-Scraped Options'],
+    bestFor: ['Heritage Homes', 'Main Floors', 'Living & Dining Rooms', 'Long-Term Value', 'Wood Subfloors'],
+  },
 };
 
 // ── City × Product page data ─────────────────────────────────────────────────
@@ -2291,6 +2301,456 @@ Professional installation quoted during your free in-home estimate. Popular bran
       { label: 'Laminate Flooring Markham', url: '/laminate-flooring-markham' },
       { label: 'Vinyl Flooring Richmond Hill', url: '/vinyl-flooring-richmond-hill' },
       { label: 'Hardwood Flooring Richmond Hill', url: '/hardwood-flooring-richmond-hill' },
+      { label: 'Vinyl Flooring Markham', url: '/vinyl-flooring-markham' },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // SOLID HARDWOOD FLOORING × MARKHAM  (first solid-HW city page)
+  // ══════════════════════════════════════════════════════════════════════════
+  'solid-hardwood-flooring-markham': {
+    productType: 'solid-hardwood',
+    citySlug: 'markham',
+    city: 'Markham',
+    title: 'Solid Hardwood Flooring Markham | From $5.10/sqft',
+    metaDescription: 'Shop solid hardwood flooring in Markham from $5.10/sqft. Real 3/4" wood, refinishable for decades, oak/maple/hickory. 80+ options at our Highway 7 showroom. Free estimate — (647) 428-1111.',
+    h1: 'Solid Hardwood Flooring in Markham',
+    heroSubtitle: 'Real 3/4" solid hardwood from $5.10/sqft — refinishable for generations. See 80+ options at our Markham showroom on Highway 7.',
+    content: {
+      intro: `Looking for genuine solid hardwood flooring in Markham? BBS Flooring stocks 80+ solid 3/4" hardwood floors at our showroom at 6061 Highway 7, Unit B. Unlike engineered or laminate, solid hardwood can be sanded and refinished multiple times over its lifetime — which is why it remains the choice for Markham's heritage homes and homeowners building for the long term.`,
+
+      whyVinylHere: `Solid hardwood is the premium, permanent flooring choice — and in Markham it suits a very specific kind of home. The century homes of Unionville and Old Markham Village frequently have original plank subfloors that are ideal for solid hardwood nailed directly down, preserving the character buyers pay a premium for. Estate properties in Cachet and Angus Glen choose solid oak and maple for the resale value and the depth of grain you simply can't fake.
+
+Because solid hardwood is milled from a single piece of wood, it can be refinished 4-6 times across its life — a 25-year-old floor can be brought back to new. That makes it the lowest lifetime-cost flooring for an owner staying in their home for decades, even though the upfront price is higher than engineered or vinyl. The trade-off: solid hardwood needs a wood subfloor (not concrete) and a climate-controlled space, which is why it's a main-floor and upper-floor product, not a basement one.`,
+
+      localExpertise: `BBS Flooring has supplied and installed solid hardwood across Markham's older and high-end neighbourhoods:
+
+• **Unionville & Old Markham Village** — Heritage homes with original wood subfloors are perfect candidates for nail-down solid oak; we colour-match to existing rooms when you're extending a floor.
+• **Cachet & Angus Glen** — Estate homes favour wide-plank solid maple and hickory in natural and wire-brushed finishes for that custom-build look.
+• **Cornell & Wismer** — Newer builds with plywood subfloors on upper floors take solid hardwood beautifully in bedrooms and hallways.
+• **Berczy & Markham Village** — We handle on-site sand-and-finish so the floor is sealed to your exact sheen after install.
+
+We'll tell you honestly when engineered is the smarter call (over concrete, in condos, or with radiant heat) — solid hardwood is the right answer for the right home, not every home.`,
+
+      pricingSection: `Solid hardwood pricing at BBS Flooring starts from $5.10/sqft for the material. Here's the range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Solid Oak (3/4", strip) | $5.10 – $6.25/sqft | Heritage homes, classic looks, refinishing later |
+| Solid Maple / Birch | $5.75 – $6.75/sqft | Bright modern interiors, durability |
+| Wide-Plank Solid Hickory | $6.25 – $7.25/sqft | Estate homes, statement floors, hardest wear |
+
+Prices are for material. Nail-down installation and on-site sanding/finishing are quoted at your free in-home estimate. Solid hardwood also pairs with matching custom stair treads — ask us about whole-home continuity.`,
+    },
+    neighbourhoods: ['Unionville', 'Old Markham Village', 'Cachet', 'Angus Glen', 'Cornell', 'Wismer', 'Berczy', 'Markham Village', 'Cathedraltown', 'Greensborough'],
+    faqs: [
+      {
+        question: 'How much does solid hardwood flooring cost in Markham?',
+        answer: 'At BBS Flooring in Markham, solid hardwood starts from $5.10/sqft for the material. Solid oak runs $5.10–$6.25, maple and birch $5.75–$6.75, and wide-plank hickory $6.25–$7.25/sqft. Nail-down installation and on-site finishing are quoted separately. Visit our showroom at 6061 Highway 7 or call (647) 428-1111.',
+      },
+      {
+        question: 'Is solid hardwood better than engineered hardwood for Markham homes?',
+        answer: 'It depends on the home. Solid hardwood is best for heritage homes in Unionville and Markham Village with wood subfloors, and for owners who want to refinish the floor for decades. Engineered hardwood is better over concrete, in condos, and with radiant heating. BBS Flooring carries both and will give you an honest recommendation. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can solid hardwood be installed in a Markham basement?',
+        answer: 'No — solid hardwood needs a wood subfloor and a climate-controlled, above-grade space. For Markham basements we recommend waterproof vinyl plank or engineered hardwood instead. Solid hardwood is ideal for main floors and upper levels. Visit our Highway 7 showroom and we\'ll match the right product to each room.',
+      },
+      {
+        question: 'How many times can solid hardwood be refinished?',
+        answer: 'Solid 3/4" hardwood can typically be sanded and refinished 4–6 times over its lifetime, meaning a properly maintained floor can last 50+ years. That refinishability is the main reason Markham homeowners choose solid over engineered for forever homes. BBS Flooring offers refinishing as well — call (647) 428-1111.',
+      },
+      {
+        question: 'Do you offer matching solid hardwood stairs in Markham?',
+        answer: 'Yes. We custom-match solid hardwood stair treads and risers to your new floors for a seamless look throughout your Markham home. Stair recapping and refinishing is one of our most-requested services. Call BBS Flooring at (647) 428-1111 for a free staircase estimate.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Solid Hardwood', url: '/solid-hardwood' },
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'Flooring in Markham', url: '/flooring-in/markham' },
+      { label: 'Stair Refinishing', url: '/stair-refinishing' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Solid Hardwood Flooring Toronto', url: '/solid-hardwood-flooring-toronto' },
+      { label: 'Hardwood Flooring Markham', url: '/hardwood-flooring-markham' },
+      { label: 'Hardwood Flooring Richmond Hill', url: '/hardwood-flooring-richmond-hill' },
+      { label: 'Laminate Flooring Markham', url: '/laminate-flooring-markham' },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // SOLID HARDWOOD FLOORING × TORONTO
+  // ══════════════════════════════════════════════════════════════════════════
+  'solid-hardwood-flooring-toronto': {
+    productType: 'solid-hardwood',
+    citySlug: 'toronto',
+    city: 'Toronto',
+    title: 'Solid Hardwood Flooring Toronto | From $5.10/sqft',
+    metaDescription: 'Solid hardwood flooring for Toronto homes from $5.10/sqft. Real 3/4" oak, maple & hickory — refinishable for decades, ideal for century homes. 80+ options. Free estimate — (647) 428-1111.',
+    h1: 'Solid Hardwood Flooring in Toronto',
+    heroSubtitle: 'Genuine 3/4" solid hardwood from $5.10/sqft — built for Toronto\'s century homes and forever homes. 80+ options to choose from.',
+    content: {
+      intro: `Toronto's older housing stock and solid hardwood were made for each other. BBS Flooring supplies 80+ solid 3/4" hardwood floors — real oak, maple, and hickory — to Toronto homeowners from our Markham showroom, with delivery and installation across the city. If you own a century home or you're renovating for the long haul, solid hardwood is the floor that lasts generations.`,
+
+      whyVinylHere: `Toronto is a city of old houses, and old houses are where solid hardwood shines. The Victorian and Edwardian homes of Cabbagetown, Riverdale, and Leslieville often have original plank subfloors — the ideal base for nail-down solid hardwood that can be refinished again and again as the home changes hands. In Rosedale and Forest Hill, solid oak and quarter-sawn options aren't just flooring, they're part of the property's value story.
+
+Unlike engineered hardwood (a real-wood veneer over a plywood core), solid hardwood is one piece of wood top to bottom, so it can be sanded back to bare wood and refinished 4-6 times. For a Toronto homeowner planning to stay put — or protecting resale in a heritage neighbourhood — that lifetime refinishability is the whole point. The catch is that solid hardwood wants a wood subfloor and a stable, above-grade interior, so it's a main-floor and upper-floor product, not a basement or below-grade one.`,
+
+      localExpertise: `BBS Flooring has supplied solid hardwood to Toronto homes across the core and beyond:
+
+• **Cabbagetown, Riverdale & Leslieville** — Victorian/Edwardian homes with original plank subfloors are perfect for nail-down solid oak; we match new boards to rooms you're keeping.
+• **Rosedale & Forest Hill** — Estate homes favour wide-plank and quarter-sawn solid oak for the grain and the resale value.
+• **The Beaches & East York** — Character homes take solid maple and birch beautifully in main living spaces.
+• **North York & Etobicoke** — Mid-century and newer homes with plywood upper floors are great candidates for solid hardwood in bedrooms and halls.
+
+For condos, concrete subfloors, or radiant heat anywhere in Toronto, we'll point you to engineered hardwood instead — solid is the right floor for the right home.`,
+
+      pricingSection: `Solid hardwood for Toronto homes starts from $5.10/sqft (material). The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Solid Oak (3/4", strip) | $5.10 – $6.25/sqft | Century homes, classic Toronto interiors |
+| Solid Maple / Birch | $5.75 – $6.75/sqft | Bright modern renovations |
+| Wide-Plank Solid Hickory | $6.25 – $7.25/sqft | Statement floors, hardest wear |
+
+Prices are for material; nail-down install and on-site sand-and-finish are quoted at your free estimate. We deliver across Toronto and handle stair matching for whole-home continuity.`,
+    },
+    neighbourhoods: ['Cabbagetown', 'Riverdale', 'Leslieville', 'Rosedale', 'Forest Hill', 'The Beaches', 'East York', 'North York', 'Etobicoke', 'Midtown'],
+    faqs: [
+      {
+        question: 'How much does solid hardwood flooring cost in Toronto?',
+        answer: 'At BBS Flooring, solid hardwood for Toronto homes starts from $5.10/sqft for material. Solid oak is $5.10–$6.25, maple/birch $5.75–$6.75, and wide-plank hickory $6.25–$7.25/sqft. Installation and finishing are quoted separately. We deliver across Toronto — call (647) 428-1111 for a free estimate.',
+      },
+      {
+        question: 'Is solid hardwood good for Toronto century homes?',
+        answer: 'Yes — Toronto\'s Victorian and Edwardian homes in Cabbagetown, Riverdale, and Leslieville often have original wood subfloors that are ideal for nail-down solid hardwood, and solid wood protects resale value in heritage neighbourhoods. BBS Flooring matches new boards to existing rooms. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can solid hardwood go in a Toronto condo?',
+        answer: 'Usually not — condos have concrete subfloors and sound-rating rules that suit engineered hardwood far better than solid. BBS Flooring carries condo-approved engineered hardwood that meets IIC/STC requirements. For houses with wood subfloors, solid hardwood is the better long-term choice. Call (647) 428-1111 to discuss your space.',
+      },
+      {
+        question: 'Do you deliver and install solid hardwood in Toronto?',
+        answer: 'Yes. BBS Flooring delivers across Toronto and installs in all neighbourhoods including Rosedale, Forest Hill, The Beaches, Riverdale, and North York. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 to book a free in-home measurement.',
+      },
+      {
+        question: 'How long does solid hardwood last?',
+        answer: 'Properly maintained solid hardwood can last 50+ years because it can be sanded and refinished 4–6 times. That refinishability is why Toronto homeowners in forever homes choose solid over engineered. BBS Flooring also offers refinishing of existing floors — call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Solid Hardwood', url: '/solid-hardwood' },
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'Hardwood Flooring Toronto', url: '/hardwood-flooring-toronto' },
+      { label: 'Stair Refinishing', url: '/stair-refinishing' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Solid Hardwood Flooring Markham', url: '/solid-hardwood-flooring-markham' },
+      { label: 'Hardwood Flooring Toronto', url: '/hardwood-flooring-toronto' },
+      { label: 'Vinyl Flooring Toronto', url: '/vinyl-flooring-toronto' },
+      { label: 'Engineered Hardwood Flooring Toronto', url: '/engineered-hardwood-flooring-toronto' },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // ENGINEERED HARDWOOD FLOORING × TORONTO  (exact-match slug)
+  // ══════════════════════════════════════════════════════════════════════════
+  'engineered-hardwood-flooring-toronto': {
+    productType: 'engineered-hardwood',
+    citySlug: 'toronto',
+    city: 'Toronto',
+    title: 'Engineered Hardwood Flooring Toronto | From $3.19/sqft',
+    metaDescription: 'Engineered hardwood flooring for Toronto homes & condos from $3.19/sqft. Real-wood top layer, works over concrete & radiant heat. 250+ options. Free estimate — (647) 428-1111.',
+    h1: 'Engineered Hardwood Flooring in Toronto',
+    heroSubtitle: 'Real-wood engineered hardwood from $3.19/sqft — perfect for Toronto condos and homes over concrete. 250+ styles.',
+    content: {
+      intro: `Engineered hardwood is the most practical real-wood floor for Toronto — and BBS Flooring carries 250+ options from $3.19/sqft. With a genuine hardwood top layer over a dimensionally stable core, engineered hardwood works where solid wood can't: over concrete, in condos, and with radiant heating. We supply and install across Toronto from our Markham showroom.`,
+
+      whyVinylHere: `Toronto's vertical growth has made engineered hardwood the default real-wood floor. The condo towers of the downtown core, CityPlace, and North York sit on concrete slabs where solid hardwood simply can't be nailed down — engineered hardwood floats or glues over concrete and meets the IIC/STC sound ratings condo boards require. In renovated homes across Leslieville, Riverdale, and Etobicoke, engineered hardwood handles Toronto's humid summers and dry winters with far less seasonal gapping and cupping than solid wood.
+
+You still get a real hardwood surface — oak, maple, walnut, hickory — in the same wide-plank, wire-brushed, and matte finishes as solid, often with a top layer thick enough to refinish once or twice. For most Toronto buyers, engineered delivers the look and feel of hardwood with the stability the city's housing actually needs.`,
+
+      localExpertise: `BBS Flooring supplies engineered hardwood throughout Toronto:
+
+• **Downtown core, CityPlace & North York condos** — Sound-rated engineered hardwood that passes condo board requirements; we handle insurance certificates and paperwork.
+• **Leslieville, Riverdale & East York** — Renovated homes over mixed subfloors take floating or glue-down engineered hardwood cleanly.
+• **Etobicoke & North York houses** — Wide-plank European white oak is the top seller for open-concept main floors.
+• **Midtown & Forest Hill** — Premium engineered options with thick wear layers for owners who want a refinishable real-wood floor without solid's subfloor demands.
+
+Where a home has wood subfloors and the owner wants maximum lifespan, we'll show solid hardwood too — but for Toronto's condos and concrete, engineered is the answer.`,
+
+      pricingSection: `Engineered hardwood for Toronto starts from $3.19/sqft (material). The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Entry Engineered (mid-wear-layer) | $3.19 – $4.49/sqft | Condos, rentals, budget renovations |
+| Wide-Plank White Oak | $4.49 – $5.99/sqft | Main floors, open-concept, resale |
+| Premium Engineered (thick wear layer) | $5.99 – $7.59/sqft | Executive homes, refinishable real wood |
+
+Prices are material; installation is quoted at your free estimate. We deliver across Toronto and meet condo board documentation requirements.`,
+    },
+    neighbourhoods: ['North York', 'Etobicoke', 'East York', 'Midtown', 'CityPlace', 'Leslieville', 'Riverdale', 'The Beaches', 'Forest Hill', 'Downtown Core'],
+    faqs: [
+      {
+        question: 'How much does engineered hardwood cost in Toronto?',
+        answer: 'At BBS Flooring, engineered hardwood for Toronto starts from $3.19/sqft for material. Entry options run $3.19–$4.49, wide-plank white oak $4.49–$5.99, and premium thick-wear-layer engineered $5.99–$7.59/sqft. Installation is quoted separately. We deliver across Toronto — call (647) 428-1111.',
+      },
+      {
+        question: 'Is engineered hardwood good for Toronto condos?',
+        answer: 'Yes — engineered hardwood is the ideal real-wood floor for Toronto condos. It installs over concrete slabs, and our sound-rated options meet the IIC/STC requirements condo boards enforce. BBS Flooring handles the insurance certificates and paperwork condos require. Call (647) 428-1111 to discuss your tower.',
+      },
+      {
+        question: 'Can engineered hardwood go over concrete in Toronto?',
+        answer: 'Absolutely — that\'s one of engineered hardwood\'s biggest advantages over solid. It floats or glues directly over concrete subfloors common in Toronto condos and basements (above grade with proper moisture control). BBS Flooring carries 250+ engineered options. Visit our Markham showroom or call (647) 428-1111.',
+      },
+      {
+        question: 'What is the difference between engineered and solid hardwood?',
+        answer: 'Engineered hardwood has a real-wood top layer over a stable plywood core — it works over concrete, in condos, and with radiant heat, with less seasonal movement. Solid hardwood is one piece of wood, refinishable more times, but needs a wood subfloor. For most Toronto homes and all condos, engineered is the practical choice. BBS Flooring carries both — call (647) 428-1111.',
+      },
+      {
+        question: 'Do you install engineered hardwood across Toronto?',
+        answer: 'Yes. BBS Flooring delivers and installs engineered hardwood in all Toronto neighbourhoods including the downtown core, North York, Etobicoke, Leslieville, Riverdale, and The Beaches. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free measurement.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'Engineered Hardwood Guide', url: '/engineered-hardwood-guide' },
+      { label: 'Hardwood Flooring Toronto', url: '/hardwood-flooring-toronto' },
+      { label: 'Solid Hardwood Flooring Toronto', url: '/solid-hardwood-flooring-toronto' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Solid Hardwood Flooring Toronto', url: '/solid-hardwood-flooring-toronto' },
+      { label: 'Vinyl Flooring Toronto', url: '/vinyl-flooring-toronto' },
+      { label: 'Hardwood Flooring Toronto', url: '/hardwood-flooring-toronto' },
+      { label: 'Laminate Flooring Toronto', url: '/laminate-flooring-toronto' },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // LAMINATE FLOORING × TORONTO
+  // ══════════════════════════════════════════════════════════════════════════
+  'laminate-flooring-toronto': {
+    productType: 'laminate',
+    citySlug: 'toronto',
+    city: 'Toronto',
+    title: 'Laminate Flooring Toronto | From $1.49/sqft',
+    metaDescription: 'Laminate flooring for Toronto homes & rentals from $1.49/sqft. AC5 scratch-resistant, realistic wood-look. 140+ styles. Delivery across Toronto. Free estimate — (647) 428-1111.',
+    h1: 'Laminate Flooring in Toronto',
+    heroSubtitle: 'Durable AC5 laminate from $1.49/sqft — the best-value wood-look floor for Toronto homes, condos and rentals. 140+ styles.',
+    content: {
+      intro: `For Toronto homeowners and landlords who want a beautiful wood-look floor without the hardwood price, laminate is the answer — and BBS Flooring carries 140+ options from $1.49/sqft. Today's laminate has high-definition wood-grain textures that pass for real hardwood, with a melamine wear layer that shrugs off scratches from pets, kids, and tenant turnover. We deliver across Toronto from our Markham showroom.`,
+
+      whyVinylHere: `Toronto's rental market and budget-conscious renovators are where laminate earns its keep. The city's huge stock of rental houses, basement apartments, and student units in areas like the Annex, East York, and Scarborough needs flooring that looks sharp in listing photos, survives heavy turnover, and is cheap to replace plank-by-plank if damaged. Laminate's AC4 and AC5 wear ratings make it harder to scratch than most real hardwood.
+
+For owner-occupiers in North York and Etobicoke, laminate is the smart pick for kids' rooms, playrooms, and home offices — spaces where you want a wood look but don't want to baby the floor. Modern laminate also clicks together as a floating floor, so it goes down fast over most existing subfloors without glue or nails. The one place to avoid it is wet areas; for Toronto basements and bathrooms we steer customers to waterproof vinyl instead.`,
+
+      localExpertise: `BBS Flooring supplies laminate across Toronto:
+
+• **The Annex, East York & Scarborough rentals** — Landlords choose our $1.49/sqft AC4–AC5 range for durability and easy plank replacement between tenants.
+• **North York & Etobicoke homes** — Wide-plank laminate mimics premium engineered hardwood at a third of the cost for bedrooms and family rooms.
+• **Leslieville & Riverdale renovations** — Hand-scraped and distressed laminate patterns suit character homes on a budget.
+• **Student & investment units across the core** — Fast-installing floating laminate minimizes downtime between tenants.
+
+For Toronto basements, bathrooms, and laundry rooms we recommend waterproof vinyl over laminate — we'll match the right product to each room.`,
+
+      pricingSection: `Laminate for Toronto homes starts from $1.49/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget Laminate (8mm, AC4) | $1.49 – $1.99/sqft | Rentals, basements (dry), budget renos |
+| Mid-Range (12mm, AC5) | $1.99 – $2.79/sqft | Family homes, high-traffic areas |
+| Premium Wide-Plank (AC5) | $2.79 – $3.29/sqft | Owner-occupied, wood-look statement floors |
+
+Prices are for material. Installation is quoted at your free estimate. We deliver across Toronto.`,
+    },
+    neighbourhoods: ['North York', 'Etobicoke', 'East York', 'Scarborough', 'The Annex', 'Leslieville', 'Riverdale', 'The Beaches', 'Midtown', 'Downtown Core'],
+    faqs: [
+      {
+        question: 'How much does laminate flooring cost in Toronto?',
+        answer: 'At BBS Flooring, laminate for Toronto starts from $1.49/sqft. Budget 8mm AC4 is $1.49–$1.99, mid-range 12mm AC5 $1.99–$2.79, and premium wide-plank $2.79–$3.29/sqft. Installation is quoted separately. We deliver across Toronto — call (647) 428-1111 for a free estimate.',
+      },
+      {
+        question: 'Is laminate good for Toronto rental properties?',
+        answer: 'Laminate is one of the best floors for Toronto rentals — AC4/AC5 wear ratings resist tenant wear, it photographs like hardwood for listings, and damaged planks can be swapped individually. At $1.49/sqft it costs a fraction of hardwood to replace. BBS Flooring supplies landlords across the city. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can laminate go in a Toronto basement?',
+        answer: 'Only in dry basements — standard laminate is not waterproof. For Toronto basements, which can see moisture, we recommend waterproof vinyl plank instead. BBS Flooring carries both and will match the right product to each room. Visit our Markham showroom or call (647) 428-1111.',
+      },
+      {
+        question: 'Does laminate look like real hardwood?',
+        answer: 'Modern laminate is remarkably realistic — high-definition printing and embossed textures mimic real wood grain closely, and wide-plank options look like premium engineered hardwood at a third of the price. Visit our Toronto-serving showroom at 6061 Highway 7 in Markham to compare side by side. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you deliver laminate flooring across Toronto?',
+        answer: 'Yes. BBS Flooring delivers laminate throughout Toronto including North York, Etobicoke, Scarborough, East York, and the downtown core, and offers professional installation. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 to get started.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Laminate Flooring', url: '/laminate' },
+      { label: 'Laminate Flooring Guide', url: '/laminate-flooring-guide' },
+      { label: 'Vinyl Flooring Toronto', url: '/vinyl-flooring-toronto' },
+      { label: 'Engineered Hardwood Flooring Toronto', url: '/engineered-hardwood-flooring-toronto' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Laminate Flooring Vaughan', url: '/laminate-flooring-vaughan' },
+      { label: 'Laminate Flooring Markham', url: '/laminate-flooring-markham' },
+      { label: 'Laminate Flooring Scarborough', url: '/laminate-flooring-scarborough' },
+      { label: 'Vinyl Flooring Toronto', url: '/vinyl-flooring-toronto' },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // LAMINATE FLOORING × VAUGHAN
+  // ══════════════════════════════════════════════════════════════════════════
+  'laminate-flooring-vaughan': {
+    productType: 'laminate',
+    citySlug: 'vaughan',
+    city: 'Vaughan',
+    title: 'Laminate Flooring Vaughan | From $1.49/sqft',
+    metaDescription: 'Laminate flooring in Vaughan from $1.49/sqft. AC5 scratch-resistant, realistic wood-look, 140+ styles. Serving Maple, Woodbridge, Kleinburg, Thornhill. Free estimate — (647) 428-1111.',
+    h1: 'Laminate Flooring in Vaughan',
+    heroSubtitle: 'Scratch-resistant AC5 laminate from $1.49/sqft — wood-look value for Vaughan homes. 140+ styles, delivery across the city.',
+    content: {
+      intro: `BBS Flooring brings 140+ laminate options from $1.49/sqft to Vaughan homeowners — beautiful, durable, wood-look flooring at the best value in York Region. Whether you're outfitting a new build in Maple, a family home in Woodbridge, or a rental in Concord, our AC4 and AC5 laminate handles it. We deliver and install across Vaughan from our Markham showroom.`,
+
+      whyVinylHere: `Vaughan's wave of newer construction makes it a natural fit for laminate. The large family homes in Maple, Vellore, and Patterson have wide open floors where our wide-plank laminate delivers the look of premium hardwood across big spaces at a fraction of the cost. Growing families across Woodbridge and Kleinburg need flooring that survives kids, pets, and toys — and AC5-rated laminate resists scratches and dents better than most real wood.
+
+Vaughan's many builder-grade homes also present an easy upgrade opportunity: swapping original builder carpet or low-end laminate for a quality 12mm AC5 floor instantly lifts a room without a hardwood budget. And because laminate clicks together as a floating floor, installation over existing subfloors is fast and clean. For below-grade rec rooms and bathrooms, we point Vaughan customers to waterproof vinyl instead.`,
+
+      localExpertise: `BBS Flooring installs laminate throughout Vaughan:
+
+• **Maple, Vellore & Patterson** — Large new builds get maximum impact from wide-plank laminate that reads like premium engineered hardwood.
+• **Woodbridge & Kleinburg** — Family homes choose AC5 12mm laminate for durability against kids and pets.
+• **Concord & Thornhill** — Rental and investment units use our $1.49/sqft range for turnover-proof, photogenic floors.
+• **Vaughan Metropolitan Centre condos** — Floating laminate installs fast over concrete (in dry areas) for budget condo refreshes.
+
+For Vaughan basements, bathrooms, and laundry rooms, we recommend waterproof vinyl plank — we'll match the right product to each space.`,
+
+      pricingSection: `Laminate for Vaughan homes starts from $1.49/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget Laminate (8mm, AC4) | $1.49 – $1.99/sqft | Rentals, dry basements, budget renos |
+| Mid-Range (12mm, AC5) | $1.99 – $2.79/sqft | Family homes, high-traffic main floors |
+| Premium Wide-Plank (AC5) | $2.79 – $3.29/sqft | New builds, wood-look statement floors |
+
+Prices are for material. Installation is quoted at your free in-home estimate. We deliver across Vaughan.`,
+    },
+    neighbourhoods: ['Maple', 'Woodbridge', 'Kleinburg', 'Concord', 'Thornhill', 'Vellore', 'Patterson', 'Vaughan Metropolitan Centre', 'Pine Valley', 'Islington & Hwy 7'],
+    faqs: [
+      {
+        question: 'How much does laminate flooring cost in Vaughan?',
+        answer: 'At BBS Flooring, laminate for Vaughan starts from $1.49/sqft. Budget 8mm AC4 is $1.49–$1.99, mid-range 12mm AC5 $1.99–$2.79, and premium wide-plank $2.79–$3.29/sqft. Installation is quoted separately. We deliver across Vaughan — call (647) 428-1111 for a free estimate.',
+      },
+      {
+        question: 'What is the best laminate for Vaughan new builds?',
+        answer: 'For Vaughan\'s newer homes in Maple, Vellore, and Patterson, wide-plank 12mm AC5 laminate is the top choice — it reads like premium engineered hardwood across large open floors at a fraction of the cost. BBS Flooring carries 140+ options. Visit our Markham showroom or call (647) 428-1111.',
+      },
+      {
+        question: 'Is laminate good for homes with kids and pets in Vaughan?',
+        answer: 'Yes — AC5-rated laminate resists scratches and dents from kids, pets, and furniture better than most real hardwood, and damaged planks can be replaced individually. It\'s a top choice for family homes in Woodbridge and Kleinburg. BBS Flooring stocks durable family-friendly laminate from $1.49/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can laminate go in a Vaughan basement?',
+        answer: 'Only in dry basements — standard laminate isn\'t waterproof. For Vaughan basements and rec rooms we recommend waterproof vinyl plank instead. BBS Flooring carries both and will match the right product to each room. Visit our showroom or call (647) 428-1111.',
+      },
+      {
+        question: 'Do you serve Maple, Woodbridge and Kleinburg?',
+        answer: 'Absolutely. BBS Flooring delivers and installs laminate across all of Vaughan including Maple, Woodbridge, Kleinburg, Concord, Thornhill, and Vaughan Metropolitan Centre. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free in-home estimate.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Laminate Flooring', url: '/laminate' },
+      { label: 'Laminate Flooring Guide', url: '/laminate-flooring-guide' },
+      { label: 'Vinyl Flooring Vaughan', url: '/vinyl-flooring-vaughan' },
+      { label: 'Hardwood Flooring Vaughan', url: '/hardwood-flooring-vaughan' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Laminate Flooring Toronto', url: '/laminate-flooring-toronto' },
+      { label: 'Laminate Flooring Markham', url: '/laminate-flooring-markham' },
+      { label: 'Vinyl Flooring Vaughan', url: '/vinyl-flooring-vaughan' },
+      { label: 'Hardwood Flooring Vaughan', url: '/hardwood-flooring-vaughan' },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // VINYL FLOORING × NEWMARKET
+  // ══════════════════════════════════════════════════════════════════════════
+  'vinyl-flooring-newmarket': {
+    productType: 'vinyl',
+    citySlug: 'newmarket',
+    city: 'Newmarket',
+    title: 'Vinyl Flooring Newmarket | LVP & SPC from $1.99/sqft',
+    metaDescription: 'Waterproof vinyl plank flooring in Newmarket from $1.99/sqft. 100% waterproof LVP & SPC, 200+ styles, ideal for basements & kitchens. Free estimate — (647) 428-1111.',
+    h1: 'Vinyl Flooring in Newmarket',
+    heroSubtitle: '100% waterproof luxury vinyl plank from $1.99/sqft — 200+ styles for Newmarket homes. Delivery and installation across town.',
+    content: {
+      intro: `BBS Flooring brings 200+ waterproof luxury vinyl plank (LVP) and SPC options from $1.99/sqft to Newmarket homeowners. Whether you're finishing a basement near Magna Centre, updating a kitchen off Mulock Drive, or replacing builder-grade flooring in a Stonehaven home, our 100% waterproof vinyl handles Newmarket living. We deliver and install across town from our Markham showroom.`,
+
+      whyVinylHere: `Newmarket's mix of established neighbourhoods and newer subdivisions makes waterproof vinyl the most versatile floor in town. Many Newmarket homes have finished basements — and below grade, moisture is the enemy of hardwood and laminate. Rigid-core SPC vinyl is 100% waterproof, so a finished basement near Davis Drive or Stonehaven stays beautiful even if a pipe leaks or humidity spikes.
+
+Newmarket's family homes also benefit from vinyl's toughness: SPC planks resist dents from dropped toys and scratches from pets and furniture, and the wear layer wipes clean of mud tracked in from the backyard. For kitchens and mudrooms — high-spill, high-traffic zones in any Newmarket home — waterproof vinyl outperforms both hardwood and laminate. And because it clicks together as a floating floor, installation is fast over most existing subfloors.`,
+
+      localExpertise: `BBS Flooring installs vinyl across Newmarket:
+
+• **Stonehaven & Summerhill** — Executive homes with finished basements choose premium SPC with built-in underlayment for warmth and quiet underfoot.
+• **Magna Centre & Mulock Drive areas** — Family homes use waterproof vinyl in kitchens, mudrooms, and rec rooms where spills and traffic are constant.
+• **Main Street South & historic core** — Older homes with uneven subfloors take floating click-lock LVP without glue or nails.
+• **Davis Drive corridor** — Rental and investment units use our $1.99/sqft range for durable, photogenic, low-maintenance floors.
+
+We'll help you choose the right thickness and wear layer for each room during your free estimate.`,
+
+      pricingSection: `Vinyl plank for Newmarket homes starts from $1.99/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget LVP (6mm) | $1.99 – $2.49/sqft | Rentals, dry basements, budget renos |
+| Mid-Range SPC (8mm) | $2.49 – $2.99/sqft | Kitchens, family rooms, main floors |
+| Premium SPC (9mm+) | $2.99 – $3.59/sqft | Whole-home, finished basements, executive properties |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Newmarket.`,
+    },
+    neighbourhoods: ['Stonehaven', 'Summerhill', 'Magna Centre', 'Mulock Drive', 'Davis Drive', 'Main Street South', 'Glenway', 'Woodland Hill', 'Bristol-London', 'Quaker Hill'],
+    faqs: [
+      {
+        question: 'How much does vinyl flooring cost in Newmarket?',
+        answer: 'At BBS Flooring, waterproof vinyl plank for Newmarket starts from $1.99/sqft. Budget 6mm LVP is $1.99–$2.49, mid-range 8mm SPC $2.49–$2.99, and premium 9mm+ SPC $2.99–$3.59/sqft. Installation is quoted separately. We deliver across Newmarket — call (647) 428-1111.',
+      },
+      {
+        question: 'What is the best vinyl flooring for Newmarket basements?',
+        answer: 'Rigid-core SPC vinyl plank is the best choice for Newmarket basements — it\'s 100% waterproof, handles humidity and temperature swings, and won\'t swell from moisture. We recommend 8mm+ options with built-in underlayment for comfort below grade. BBS Flooring carries 200+ vinyl options. Call (647) 428-1111.',
+      },
+      {
+        question: 'Is vinyl flooring good for Newmarket kitchens?',
+        answer: 'Vinyl is one of the best kitchen floors for Newmarket homes — SPC vinyl plank is 100% waterproof, handles dropped pots and heavy traffic, and looks like real hardwood while staying warmer underfoot than tile. BBS Flooring stocks kitchen-rated vinyl from $1.99/sqft. Visit our Markham showroom or call (647) 428-1111.',
+      },
+      {
+        question: 'Do you deliver and install vinyl flooring in Newmarket?',
+        answer: 'Yes. BBS Flooring delivers and installs vinyl flooring across Newmarket including Stonehaven, Summerhill, the Magna Centre and Mulock Drive areas, and the historic core. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free in-home estimate.',
+      },
+      {
+        question: 'Is vinyl plank or laminate better for Newmarket homes?',
+        answer: 'For wet areas — basements, kitchens, mudrooms, bathrooms — waterproof vinyl is the better choice because it\'s 100% waterproof. For dry bedrooms and budget renovations, laminate can be more affordable. BBS Flooring carries both and will match the right product to each room. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Vinyl Flooring', url: '/vinyl' },
+      { label: 'Flooring Installation Newmarket', url: '/flooring-installation-newmarket' },
+      { label: 'Laminate Flooring Newmarket', url: '/laminate-flooring-newmarket' },
+      { label: 'Hardwood Flooring Richmond Hill', url: '/hardwood-flooring-richmond-hill' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Vinyl Flooring Richmond Hill', url: '/vinyl-flooring-richmond-hill' },
+      { label: 'Laminate Flooring Newmarket', url: '/laminate-flooring-newmarket' },
+      { label: 'Flooring Installation Newmarket', url: '/flooring-installation-newmarket' },
       { label: 'Vinyl Flooring Markham', url: '/vinyl-flooring-markham' },
     ],
   },
