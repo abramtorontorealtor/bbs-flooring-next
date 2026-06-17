@@ -169,6 +169,29 @@ export const VINYL_FAQS = [
   },
 ];
 
+export const COMMERCIAL_VINYL_FAQS = [
+  {
+    question: 'What is loose-lay vinyl flooring and how is it different from glue-down?',
+    answer: 'Loose-lay vinyl (like NAF AquaLuuuz 5mm) installs with no adhesive, nails, or click-lock — a heavy, dimensionally stable plank with a friction-grip backing holds it flat against the subfloor. That makes installation fast and individual boards easy to lift and replace. Glue-down (dry-back) vinyl like the NAF Aqua Commercial line is bonded permanently with pressure-sensitive adhesive for maximum stability in the highest-traffic commercial spaces.',
+  },
+  {
+    question: 'Is loose-lay vinyl good for commercial and high-traffic spaces?',
+    answer: 'Yes. Our NAF commercial vinyl carries an AC5 commercial wear rating with a 20mil wear layer, FloorScore certification, and acoustic ratings of IIC 73 / STC 72. It is rated for on, above, or below grade — ideal for retail, offices, restaurants, rental units, and multi-unit buildings across the GTA.',
+  },
+  {
+    question: 'How much does commercial loose-lay and dry-back vinyl cost in Markham?',
+    answer: 'At BBS Flooring, NAF AquaLuuuz 5mm loose-lay is $3.49/sqft, NAF Aqua Commercial 5mm dry-back is $3.29/sqft, and the high-yield 3mm dry-back is $2.69/sqft. Contractor and volume pricing is available — call (647) 428-1111 for a project quote.',
+  },
+  {
+    question: 'Is this vinyl waterproof?',
+    answer: 'Yes — every NAF Aqua commercial plank we carry is 100% waterproof, which is why contractors specify it for basements, washrooms, kitchens, and below-grade commercial floors.',
+  },
+  {
+    question: 'Do you offer contractor pricing and bulk orders?',
+    answer: 'We do. BBS Flooring supplies GTA contractors and commercial clients directly with volume pricing, fast availability, and professional installation. Visit our Markham showroom at 6061 Highway 7 Unit B or call (647) 428-1111 to set up a contractor account.',
+  },
+];
+
 export const LAMINATE_FAQS = [
   {
     question: 'What is laminate flooring?',

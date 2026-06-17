@@ -24,6 +24,11 @@ export async function generateMetadata() {
 
 const SPOKE_LINKS = [
   {
+    route: 'CommercialVinyl',
+    label: 'Commercial Vinyl Flooring (Loose Lay & Dry Back)',
+    description: 'Contractor-grade AC5 vinyl — NAF loose-lay & glue-down planks from $2.69/sqft.',
+  },
+  {
     route: 'BasementFlooring',
     label: 'Best Vinyl Flooring for Basements',
     description: 'Waterproof SPC vinyl is the #1 choice for basement floors — see why.',

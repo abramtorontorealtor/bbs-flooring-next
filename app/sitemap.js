@@ -22,6 +22,7 @@ export default async function sitemap() {
     { path: '/engineered-hardwood', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/solid-hardwood', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/vinyl', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/commercial-vinyl-flooring', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/laminate', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/waterproof-flooring', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/white-oak-flooring', priority: 0.7, changeFrequency: 'weekly' },
