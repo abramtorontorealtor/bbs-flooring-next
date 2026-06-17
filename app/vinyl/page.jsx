@@ -98,10 +98,7 @@ export default async function VinylPage() {
             Vinyl Plank Flooring in Markham | LVP &amp; SPC
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl">
-            100% waterproof, scratch-resistant, and built for real life. Shop 100+ SPC and LVP vinyl
-            plank styles from <strong>${low}/sqft</strong> at our Markham showroom (6061 Hwy 7).
-            Serving Toronto, Scarborough, Vaughan, and all of Durham Region — free in-home
-            measurements included.
+            100% waterproof, scratch-resistant SPC &amp; LVP vinyl plank from <strong>${low}/sqft</strong> — shop online or visit our Markham showroom.
           </p>
         </div>
 
@@ -115,8 +112,16 @@ export default async function VinylPage() {
           </Suspense>
         </div>
 
+        {/* ── SSR Long-form intro (moved below grid — SEO text preserved) ── */}
+        <p className="text-slate-600 max-w-3xl mt-14 mb-8">
+          BBS Flooring carries 100+ SPC and LVP vinyl plank styles, all 100% waterproof and built
+          for real life. Shop from <strong>${low}/sqft</strong> at our Markham showroom (6061 Hwy 7),
+          serving Toronto, Scarborough, Vaughan, and all of Durham Region — free in-home measurements
+          included.
+        </p>
+
         {/* ── SSR Content Boxes (moved below grid — text preserved for SEO) ── */}
-        <div className="grid md:grid-cols-3 gap-6 mt-12 mb-10">
+        <div className="grid md:grid-cols-3 gap-6 mb-10">
           {/* Box 1 — SPC Technology */}
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
             <h2 className="text-lg font-bold text-slate-800 mb-3">🛡️ SPC — The Gold Standard</h2>
