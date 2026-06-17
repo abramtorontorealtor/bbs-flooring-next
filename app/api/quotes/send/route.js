@@ -84,8 +84,13 @@ export async function POST(request) {
       console.warn('[Quote] Customer email failed:', customerResult.reason || customerResult.value);
     }
 
-    // Fire Telegram alert immediately (non-blocking)
-    sendTelegramAlert(formatQuoteAlert(emailQuote)).catch(() => {});
+    // Fire Telegram alert — AWAIT so the serverless function doesn't terminate
+    // before the fetch completes (unawaited promises get killed on Vercel).
+    try {
+      await sendTelegramAlert(formatQuoteAlert(emailQuote));
+    } catch (e) {
+      console.error('[Quote] Telegram alert failed:', e?.message);
+    }
 
     return NextResponse.json({
       success: true,

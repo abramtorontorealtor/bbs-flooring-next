@@ -108,7 +108,7 @@ export async function POST(request) {
             sendOrderCustomerConfirmation({ order: emailOrder }),
             sendOrderAdminNotification({ order: emailOrder }),
           ]);
-          sendTelegramAlert(formatOrderAlert({ order: { ...emailOrder, payment_method: 'credit_card' } })).catch(() => {});
+          await sendTelegramAlert(formatOrderAlert({ order: { ...emailOrder, payment_method: 'credit_card' } }));
           console.log(`[Stripe Webhook] Confirmation emails sent for ${orderNumber || orderId}`);
         } catch (emailErr) {
           console.error('[Stripe Webhook] Email send error (non-fatal):', emailErr);

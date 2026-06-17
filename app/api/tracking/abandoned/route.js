@@ -61,9 +61,13 @@ export async function POST(request) {
       console.warn('Failed to log abandoned checkout:', error);
     }
 
-    // Fire Telegram alert for every new abandoned cart (non-blocking)
+    // Fire Telegram alert for every new abandoned cart — AWAIT so it isn't dropped.
     if (!alreadyEmailed) {
-      sendTelegramAlert(formatAbandonedCartAlert({ customerName, customerEmail, cartValue, cartItems })).catch(() => {});
+      try {
+        await sendTelegramAlert(formatAbandonedCartAlert({ customerName, customerEmail, cartValue, cartItems }));
+      } catch (e) {
+        console.error('[Abandoned] Telegram alert failed:', e?.message);
+      }
     }
 
     // Send recovery email if not already emailed and within rate limit

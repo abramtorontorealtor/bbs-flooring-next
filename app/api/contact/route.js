@@ -97,8 +97,13 @@ export async function POST(request) {
       });
     });
 
-    // Fire Telegram alert immediately (non-blocking)
-    sendTelegramAlert(formatContactAlert({ name, email, phone, message, source })).catch(() => {});
+    // Fire Telegram alert — AWAIT so the serverless function doesn't terminate
+    // before the fetch completes (unawaited promises get killed on Vercel).
+    try {
+      await sendTelegramAlert(formatContactAlert({ name, email, phone, message, source }));
+    } catch (e) {
+      console.error('[Contact] Telegram alert failed:', e?.message);
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

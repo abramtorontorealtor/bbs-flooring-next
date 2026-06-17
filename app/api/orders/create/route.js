@@ -103,8 +103,12 @@ export async function POST(request) {
         .catch(() => {});
     }
 
-    // Telegram alert fires for ALL orders immediately (CC orders show as awaiting payment)
-    sendTelegramAlert(formatOrderAlert({ order: emailOrder })).catch(() => {});
+    // Telegram alert fires for ALL orders — AWAIT so it isn't dropped on Vercel.
+    try {
+      await sendTelegramAlert(formatOrderAlert({ order: emailOrder }));
+    } catch (e) {
+      console.error('[Order] Telegram alert failed:', e?.message);
+    }
 
     return NextResponse.json({
       success: true,

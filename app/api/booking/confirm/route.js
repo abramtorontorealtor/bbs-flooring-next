@@ -70,8 +70,12 @@ export async function POST(request) {
       console.warn('[Booking] Customer email failed:', customerResult.reason || customerResult.value);
     }
 
-    // Fire Telegram alert immediately (non-blocking)
-    sendTelegramAlert(formatBookingAlert(emailBooking)).catch(() => {});
+    // Fire Telegram alert — AWAIT so the serverless function doesn't terminate first.
+    try {
+      await sendTelegramAlert(formatBookingAlert(emailBooking));
+    } catch (e) {
+      console.error('[Booking] Telegram alert failed:', e?.message);
+    }
 
     return NextResponse.json({
       success: true,
