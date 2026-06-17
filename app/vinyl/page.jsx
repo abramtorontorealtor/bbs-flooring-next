@@ -9,6 +9,7 @@ import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 import CityLinks from '@/components/CityLinks';
+import CategoryShopBar from '@/components/CategoryShopBar';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -104,8 +105,18 @@ export default async function VinylPage() {
           </p>
         </div>
 
-        {/* ── SSR Content Boxes ── */}
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
+        {/* ── SSR Shop-intent + trust bar (surfaces shopping above SEO copy) ── */}
+        <CategoryShopBar count={stats.count ? `${stats.count}+` : '100+'} low={low} label="Vinyl Flooring" />
+
+        {/* ── Interactive Product Grid (client island) — moved up so shopping is immediate ── */}
+        <div id="shop" className="scroll-mt-24">
+          <Suspense fallback={serverGrid}>
+            <VinylClient initialProducts={products} serverGrid={serverGrid} priceStats={stats} />
+          </Suspense>
+        </div>
+
+        {/* ── SSR Content Boxes (moved below grid — text preserved for SEO) ── */}
+        <div className="grid md:grid-cols-3 gap-6 mt-12 mb-10">
           {/* Box 1 — SPC Technology */}
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
             <h2 className="text-lg font-bold text-slate-800 mb-3">🛡️ SPC — The Gold Standard</h2>
@@ -177,11 +188,6 @@ export default async function VinylPage() {
             </Link>
           </div>
         </div>
-
-        {/* ── Interactive Product Grid (client island) ── */}
-        <Suspense fallback={serverGrid}>
-          <VinylClient initialProducts={products} serverGrid={serverGrid} priceStats={stats} />
-        </Suspense>
 
         {/* ── SSR Financing Banner ── */}
         <div className="my-10 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-700 text-white px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-5">
