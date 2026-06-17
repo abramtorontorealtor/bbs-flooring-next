@@ -9,6 +9,7 @@ import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 import CityLinks from '@/components/CityLinks';
+import CategoryShopBar from '@/components/CategoryShopBar';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -101,14 +102,29 @@ export default async function SolidHardwoodPage() {
             Solid Hardwood Flooring in Markham | Oak, Maple &amp; More
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl">
-            The gold standard in flooring — ¾&quot; pure hardwood from{' '}
-            <strong>${low}/sqft</strong> that can be refinished 5+ times and lasts a lifetime.
-            In stock at our Markham showroom (6061 Hwy 7) in red oak, white oak, maple, hickory,
-            and more. Professional nail-down installation across Markham, Toronto, and the GTA.
+            The gold standard — ¾&quot; pure hardwood from <strong>${low}/sqft</strong>, refinishable 5+ times. Shop online or visit our Markham showroom.
           </p>
         </div>
 
-        {/* ── SSR Content Boxes ── */}
+        {/* ── SSR Shop-intent + trust bar ── */}
+        <CategoryShopBar count={stats.count ? `${stats.count}+` : '50+'} low={low} label="Solid Hardwood" />
+
+        {/* ── Interactive Product Grid (client island) — moved up so shopping is immediate ── */}
+        <div id="shop" className="scroll-mt-24">
+          <Suspense fallback={serverGrid}>
+            <SolidHardwoodClient initialProducts={products} serverGrid={serverGrid} priceStats={stats} />
+          </Suspense>
+        </div>
+
+        {/* ── SSR Long-form intro (moved below grid — SEO text preserved) ── */}
+        <p className="text-slate-600 max-w-3xl mt-14 mb-8">
+          The gold standard in flooring — ¾&quot; pure hardwood from{' '}
+          <strong>${low}/sqft</strong> that can be refinished 5+ times and lasts a lifetime.
+          In stock at our Markham showroom (6061 Hwy 7) in red oak, white oak, maple, hickory,
+          and more. Professional nail-down installation across Markham, Toronto, and the GTA.
+        </p>
+
+        {/* ── SSR Content Boxes (moved below grid — text preserved for SEO) ── */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
           {/* Box 1 — Species */}
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
@@ -178,11 +194,6 @@ export default async function SolidHardwoodPage() {
             </Link>
           </div>
         </div>
-
-        {/* ── Interactive Product Grid (client island) ── */}
-        <Suspense fallback={serverGrid}>
-          <SolidHardwoodClient initialProducts={products} serverGrid={serverGrid} priceStats={stats} />
-        </Suspense>
 
         {/* ── SSR Financing Banner ── */}
         <div className="my-10 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-700 text-white px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-5">

@@ -9,6 +9,7 @@ import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 import CityLinks from '@/components/CityLinks';
+import CategoryShopBar from '@/components/CategoryShopBar';
 
 export const revalidate = 300; // 5-minute ISR
 
@@ -76,15 +77,30 @@ export default async function LaminatePage() {
             Laminate Flooring in Markham | 12mm–14mm From ${low}/sqft
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl">
-            Maximum floor for minimum budget. Premium 12mm–14mm laminate from{' '}
-            <strong>${low}/sqft</strong> — AC4/AC5 rated, waterproof options, and perfect for
-            high-traffic areas. In stock at our Markham showroom (6061 Hwy 7) with professional
-            installation available across the GTA. A 500 sqft main floor costs as little as{' '}
-            <strong>${(500 * parseFloat(low) + 1000).toLocaleString('en-CA', { maximumFractionDigits: 0 })} fully installed</strong>.
+            Premium 12mm–14mm laminate from <strong>${low}/sqft</strong> — AC4/AC5 rated, waterproof options. Shop online or visit our Markham showroom.
           </p>
         </div>
 
-        {/* ── SSR Content Boxes ── */}
+        {/* ── SSR Shop-intent + trust bar ── */}
+        <CategoryShopBar count={stats.count ? `${stats.count}+` : '100+'} low={low} label="Laminate Flooring" />
+
+        {/* ── Interactive Product Grid (client island) — moved up so shopping is immediate ── */}
+        <div id="shop" className="scroll-mt-24">
+          <Suspense fallback={serverGrid}>
+            <LaminateClient initialProducts={products} serverGrid={serverGrid} priceStats={stats} />
+          </Suspense>
+        </div>
+
+        {/* ── SSR Long-form intro (moved below grid — SEO text preserved) ── */}
+        <p className="text-slate-600 max-w-3xl mt-14 mb-8">
+          Maximum floor for minimum budget. Premium 12mm–14mm laminate from{' '}
+          <strong>${low}/sqft</strong> — AC4/AC5 rated, waterproof options, and perfect for
+          high-traffic areas. In stock at our Markham showroom (6061 Hwy 7) with professional
+          installation available across the GTA. A 500 sqft main floor costs as little as{' '}
+          <strong>${(500 * parseFloat(low) + 1000).toLocaleString('en-CA', { maximumFractionDigits: 0 })} fully installed</strong>.
+        </p>
+
+        {/* ── SSR Content Boxes (moved below grid — text preserved for SEO) ── */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
           <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-6 relative">
             <span className="absolute -top-3 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">NEW</span>
@@ -146,11 +162,6 @@ export default async function LaminatePage() {
             </Link>
           </div>
         </div>
-
-        {/* ── Interactive Product Grid (client island) ── */}
-        <Suspense fallback={serverGrid}>
-          <LaminateClient initialProducts={products} serverGrid={serverGrid} priceStats={stats} />
-        </Suspense>
 
         {/* ── SSR Financing Banner ── */}
         <div className="my-10 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-700 text-white px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-5">
