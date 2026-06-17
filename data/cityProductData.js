@@ -2754,6 +2754,439 @@ All prices include the flooring material. Installation is quoted at your free in
       { label: 'Vinyl Flooring Markham', url: '/vinyl-flooring-markham' },
     ],
   },
+
+  // ── Phase B batch 2a (Jun 17, 2026) ───────────────────────────────────────
+  'laminate-flooring-pickering': {
+    productType: 'laminate',
+    citySlug: 'pickering',
+    city: 'Pickering',
+    title: 'Laminate Flooring Pickering | AC5 Wood-Look from $1.49/sqft',
+    metaDescription: 'Durable AC5 laminate flooring in Pickering from $1.49/sqft. Realistic wood-look, scratch-resistant, easy click installation. Free estimate — (647) 428-1111.',
+    h1: 'Laminate Flooring in Pickering',
+    heroSubtitle: 'Tough AC5 wood-look laminate from $1.49/sqft — affordable, scratch-resistant floors for Pickering homes. Delivery and installation from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring brings realistic AC5 wood-look laminate from $1.49/sqft to Pickering homeowners. Whether you're refreshing a bedroom in Amberlea, updating a main floor in Liverpool, or outfitting a rental near the Pickering Town Centre, our scratch-resistant laminate gives you the look of hardwood at a fraction of the price. We deliver and install across Pickering from our Markham showroom on Highway 7.`,
+
+      whyVinylHere: `Pickering homes span 1970s-era subdivisions, lakeside properties near Frenchman's Bay, and newer Seaton developments — and laminate suits all of them. Modern AC5-rated laminate handles the daily wear of busy family homes: it resists scratches from pets, dents from furniture, and fading from the sun that pours into south-facing Bay Ridges living rooms.
+
+For Pickering's many semi-detached and townhome owners watching their renovation budget, laminate delivers a convincing hardwood look for a fraction of the cost of real wood. It clicks together as a floating floor over most existing subfloors, so installation is fast and clean. And because the wear layer wipes clean easily, it's ideal for the high-traffic entryways and hallways that take a beating in any Pickering family home.`,
+
+      localExpertise: `BBS Flooring installs laminate across Pickering:
+
+• **Amberlea & Highbush** — Established family homes upgrade dated carpet to warm, wood-look laminate in bedrooms and living areas.
+• **Liverpool & Town Centre area** — Condos and townhomes choose AC5 laminate for durable, photogenic main floors.
+• **Bay Ridges & Frenchman's Bay** — Lakeside homes use scratch-resistant laminate that handles sand, sun, and constant foot traffic.
+• **Seaton & new developments** — Newer builds upgrade builder-grade flooring with thicker, quieter laminate underlayment.
+
+We'll help you match the right AC rating and thickness to each room during your free estimate.`,
+
+      pricingSection: `Laminate flooring for Pickering homes starts from $1.49/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget AC4 (8mm) | $1.49 – $1.99/sqft | Bedrooms, rentals, budget renos |
+| Mid-Range AC5 (10mm) | $1.99 – $2.49/sqft | Living rooms, hallways, main floors |
+| Premium AC5 (12mm + pad) | $2.49 – $2.99/sqft | Whole-home, high-traffic, water-resistant cores |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Pickering.`,
+    },
+    neighbourhoods: ['Amberlea', 'Highbush', 'Liverpool', 'Bay Ridges', 'Frenchman\'s Bay', 'Rougemount', 'Dunbarton', 'West Shore', 'Brock Ridge', 'Seaton'],
+    faqs: [
+      {
+        question: 'How much does laminate flooring cost in Pickering?',
+        answer: 'At BBS Flooring, AC5 laminate for Pickering starts from $1.49/sqft. Budget 8mm is $1.49–$1.99, mid-range 10mm AC5 $1.99–$2.49, and premium 12mm with attached pad $2.49–$2.99/sqft. Installation is quoted separately. We deliver across Pickering — call (647) 428-1111.',
+      },
+      {
+        question: 'Is laminate good for Pickering homes near the lake?',
+        answer: 'Water-resistant AC5 laminate works well in most Pickering rooms, including homes near Frenchman\'s Bay and Bay Ridges. For genuinely wet areas like basements and bathrooms we recommend waterproof vinyl instead, but for bedrooms, living rooms, and hallways, modern laminate handles humidity and traffic beautifully. Call (647) 428-1111.',
+      },
+      {
+        question: 'What is the difference between laminate and vinyl for Pickering renos?',
+        answer: 'Laminate has a denser, more rigid wood-look surface and is typically more affordable for dry rooms, while vinyl is 100% waterproof and better for basements and kitchens. BBS Flooring carries both and will match the right product to each Pickering room during your free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you install laminate flooring in Pickering?',
+        answer: 'Yes. BBS Flooring delivers and installs laminate across Pickering including Amberlea, Liverpool, Bay Ridges, and the Seaton developments. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free in-home estimate.',
+      },
+      {
+        question: 'How durable is AC5 laminate for a busy Pickering family home?',
+        answer: 'AC5 is the highest residential durability rating — it resists scratches, dents, and fading even in high-traffic entryways and hallways. It\'s an excellent choice for Pickering homes with kids and pets. BBS Flooring stocks AC5 laminate from $1.49/sqft. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Laminate Flooring', url: '/laminate' },
+      { label: 'Vinyl Flooring Pickering', url: '/vinyl-flooring-pickering' },
+      { label: 'Engineered Hardwood Pickering', url: '/engineered-hardwood-flooring-pickering' },
+      { label: 'Flooring Installation Pickering', url: '/flooring-installation-pickering' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Laminate Flooring Ajax', url: '/laminate-flooring-ajax' },
+      { label: 'Vinyl Flooring Pickering', url: '/vinyl-flooring-pickering' },
+      { label: 'Hardwood Flooring Ajax', url: '/hardwood-flooring-ajax' },
+      { label: 'Laminate Flooring Scarborough', url: '/laminate-flooring-scarborough' },
+    ],
+  },
+
+  'laminate-flooring-ajax': {
+    productType: 'laminate',
+    citySlug: 'ajax',
+    city: 'Ajax',
+    title: 'Laminate Flooring Ajax | AC5 Wood-Look from $1.49/sqft',
+    metaDescription: 'Affordable AC5 laminate flooring in Ajax from $1.49/sqft. Scratch-resistant wood-look, easy click installation, 100+ styles. Free estimate — (647) 428-1111.',
+    h1: 'Laminate Flooring in Ajax',
+    heroSubtitle: 'Durable AC5 wood-look laminate from $1.49/sqft — affordable floors built for Ajax family homes. Delivery and installation from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring delivers realistic AC5 laminate from $1.49/sqft to Ajax homeowners. Whether you're updating a main floor in Pickering Village, refreshing bedrooms in a Nottingham subdivision, or flooring a rental near the GO station, our scratch-resistant laminate gives you a true hardwood look without the hardwood price. We deliver and install across Ajax from our Markham showroom on Highway 7.`,
+
+      whyVinylHere: `Ajax grew fast, and most of its housing stock is family-focused suburban homes from the 1990s onward — exactly where laminate shines. AC5-rated laminate stands up to the realities of a busy Ajax household: kids, pets, sports gear, and constant traffic through the front hall and kitchen-adjacent living spaces.
+
+For budget-conscious Ajax homeowners, laminate is the smart upgrade from worn builder carpet. It mimics oak, hickory, and walnut convincingly, installs as a fast floating floor over existing subfloors, and costs far less than real wood. The tough wear layer resists the scratches and scuffs that come with active family life near Lake Ontario, and it wipes clean of the sand and salt tracked in from the beach and winter sidewalks alike.`,
+
+      localExpertise: `BBS Flooring installs laminate across Ajax:
+
+• **Pickering Village & Historic Ajax** — Older homes upgrade dated flooring with warm, wide-plank laminate in living and dining rooms.
+• **Nottingham & Central Ajax** — Family subdivisions replace builder carpet with durable AC5 laminate throughout the main floor.
+• **Lakeside & Discovery Bay** — Waterfront-adjacent homes choose water-resistant laminate that handles humidity and sandy foot traffic.
+• **Audley & North Ajax** — Newer builds upgrade to thicker laminate with quieter underlayment for second floors and bedrooms.
+
+We'll help you choose the right AC rating and plank width for each room during your free estimate.`,
+
+      pricingSection: `Laminate flooring for Ajax homes starts from $1.49/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget AC4 (8mm) | $1.49 – $1.99/sqft | Bedrooms, rentals, budget renos |
+| Mid-Range AC5 (10mm) | $1.99 – $2.49/sqft | Living rooms, hallways, main floors |
+| Premium AC5 (12mm + pad) | $2.49 – $2.99/sqft | Whole-home, high-traffic, water-resistant cores |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Ajax.`,
+    },
+    neighbourhoods: ['Pickering Village', 'Nottingham', 'Central Ajax', 'Discovery Bay', 'Audley', 'Riverside', 'Applecroft', 'Hermitage', 'Lakeside', 'South Ajax'],
+    faqs: [
+      {
+        question: 'How much does laminate flooring cost in Ajax?',
+        answer: 'At BBS Flooring, AC5 laminate for Ajax starts from $1.49/sqft. Budget 8mm is $1.49–$1.99, mid-range 10mm AC5 $1.99–$2.49, and premium 12mm with attached pad $2.49–$2.99/sqft. Installation is quoted separately. We deliver across Ajax — call (647) 428-1111.',
+      },
+      {
+        question: 'Is laminate a good upgrade from builder carpet in Ajax?',
+        answer: 'Yes — laminate is one of the most cost-effective upgrades from worn builder-grade carpet in Ajax homes. It gives a real hardwood look, is easy to clean, and resists the scratches and traffic of a busy family home. BBS Flooring carries 100+ laminate styles from $1.49/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'What laminate is best for an Ajax home near the lake?',
+        answer: 'For Ajax homes near Lake Ontario, water-resistant AC5 laminate handles humidity and tracked-in sand well in living areas and bedrooms. For basements or bathrooms we recommend waterproof vinyl instead. BBS Flooring will match the right product to each room. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you deliver and install laminate flooring in Ajax?',
+        answer: 'Yes. BBS Flooring delivers and installs laminate across Ajax including Pickering Village, Nottingham, Discovery Bay, and Audley. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free in-home estimate.',
+      },
+      {
+        question: 'How long does laminate installation take in an Ajax home?',
+        answer: 'Most Ajax laminate installations are completed in one to two days depending on square footage and subfloor prep, since laminate clicks together as a floating floor. BBS Flooring will give you an exact timeline at your free in-home estimate. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Laminate Flooring', url: '/laminate' },
+      { label: 'Hardwood Flooring Ajax', url: '/hardwood-flooring-ajax' },
+      { label: 'Vinyl Flooring Ajax', url: '/vinyl-flooring-ajax' },
+      { label: 'Flooring Installation Ajax', url: '/flooring-installation-ajax' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Laminate Flooring Pickering', url: '/laminate-flooring-pickering' },
+      { label: 'Vinyl Flooring Ajax', url: '/vinyl-flooring-ajax' },
+      { label: 'Hardwood Flooring Ajax', url: '/hardwood-flooring-ajax' },
+      { label: 'Flooring Installation Oshawa', url: '/flooring-installation-oshawa' },
+    ],
+  },
+
+  'vinyl-flooring-oshawa': {
+    productType: 'vinyl',
+    citySlug: 'oshawa',
+    city: 'Oshawa',
+    title: 'Vinyl Flooring Oshawa | Waterproof LVP & SPC from $1.99/sqft',
+    metaDescription: 'Waterproof vinyl plank flooring in Oshawa from $1.99/sqft. 100% waterproof LVP & SPC, 200+ styles, ideal for basements & kitchens. Free estimate — (647) 428-1111.',
+    h1: 'Vinyl Flooring in Oshawa',
+    heroSubtitle: '100% waterproof luxury vinyl plank from $1.99/sqft — 200+ styles built for Oshawa homes. Delivery and installation from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring brings 200+ waterproof luxury vinyl plank (LVP) and SPC options from $1.99/sqft to Oshawa homeowners. Whether you're finishing a basement in Windfields, updating a kitchen in a century home downtown, or flooring an investment property near Ontario Tech, our 100% waterproof vinyl handles whatever Oshawa living throws at it. We deliver and install across the city from our Markham showroom.`,
+
+      whyVinylHere: `Oshawa has one of the most varied housing stocks in Durham Region — from heritage homes south of King Street to fast-growing new subdivisions in the north end. Waterproof vinyl is the one floor that suits all of it. In older Oshawa homes, basements and main floors often sit over uneven or below-grade subfloors where moisture threatens hardwood and laminate; rigid-core SPC vinyl is 100% waterproof and floats right over them.
+
+For Oshawa's large student-rental and investment market near Ontario Tech and Durham College, vinyl's toughness and low maintenance make it the obvious choice — it resists dents, scratches, and water, and wipes clean between tenants. And for family homes in the growing north end, SPC vinyl handles kids, pets, and winter slush in kitchens and mudrooms better than any other floor.`,
+
+      localExpertise: `BBS Flooring installs vinyl across Oshawa:
+
+• **Windfields & North Oshawa** — New family homes near Ontario Tech choose premium SPC for durable, waterproof main floors and finished basements.
+• **Downtown & Old Oshawa** — Century homes with uneven subfloors take floating click-lock LVP without glue or nails.
+• **Donevan & Eastdale** — Established family neighbourhoods use waterproof vinyl in kitchens, mudrooms, and rec rooms.
+• **Lakeview & South Oshawa** — Investment and rental units use our $1.99/sqft range for tough, low-maintenance, photogenic floors.
+
+We'll help you choose the right thickness and wear layer for each room during your free estimate.`,
+
+      pricingSection: `Vinyl plank for Oshawa homes starts from $1.99/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget LVP (6mm) | $1.99 – $2.49/sqft | Rentals, dry basements, budget renos |
+| Mid-Range SPC (8mm) | $2.49 – $2.99/sqft | Kitchens, family rooms, main floors |
+| Premium SPC (9mm+) | $2.99 – $3.59/sqft | Whole-home, finished basements, executive properties |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Oshawa.`,
+    },
+    neighbourhoods: ['Windfields', 'North Oshawa', 'Donevan', 'Eastdale', 'Lakeview', 'Downtown Oshawa', 'Vanier', 'McLaughlin', 'Centennial', 'Samac'],
+    faqs: [
+      {
+        question: 'How much does vinyl flooring cost in Oshawa?',
+        answer: 'At BBS Flooring, waterproof vinyl plank for Oshawa starts from $1.99/sqft. Budget 6mm LVP is $1.99–$2.49, mid-range 8mm SPC $2.49–$2.99, and premium 9mm+ SPC $2.99–$3.59/sqft. Installation is quoted separately. We deliver across Oshawa — call (647) 428-1111.',
+      },
+      {
+        question: 'What is the best vinyl flooring for Oshawa basements?',
+        answer: 'Rigid-core SPC vinyl plank is the best choice for Oshawa basements — it\'s 100% waterproof, handles humidity and below-grade temperature swings, and won\'t swell from moisture. We recommend 8mm+ options with built-in underlayment for comfort. BBS Flooring carries 200+ vinyl options. Call (647) 428-1111.',
+      },
+      {
+        question: 'Is vinyl flooring good for Oshawa rental properties?',
+        answer: 'Yes — waterproof vinyl is ideal for Oshawa rentals and student housing near Ontario Tech and Durham College. It resists scratches, dents, and water, wipes clean between tenants, and looks great in listing photos. BBS Flooring stocks rental-friendly vinyl from $1.99/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you deliver and install vinyl flooring in Oshawa?',
+        answer: 'Yes. BBS Flooring delivers and installs vinyl across Oshawa including Windfields, North Oshawa, Donevan, and the downtown core. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free in-home estimate.',
+      },
+      {
+        question: 'Is vinyl plank good for century homes in downtown Oshawa?',
+        answer: 'Yes — floating click-lock vinyl plank is excellent for older Oshawa homes because it installs over uneven existing subfloors without glue or nails, and its waterproof core handles the moisture common in century-home basements and main floors. BBS Flooring will assess your subfloor at the free estimate. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Vinyl Flooring', url: '/vinyl' },
+      { label: 'Hardwood Flooring Oshawa', url: '/hardwood-flooring-oshawa' },
+      { label: 'Flooring Installation Oshawa', url: '/flooring-installation-oshawa' },
+      { label: 'Vinyl Flooring Whitby', url: '/vinyl-flooring-whitby' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Vinyl Flooring Whitby', url: '/vinyl-flooring-whitby' },
+      { label: 'Hardwood Flooring Oshawa', url: '/hardwood-flooring-oshawa' },
+      { label: 'Flooring Installation Oshawa', url: '/flooring-installation-oshawa' },
+      { label: 'Vinyl Flooring Ajax', url: '/vinyl-flooring-ajax' },
+    ],
+  },
+
+  'vinyl-flooring-whitby': {
+    productType: 'vinyl',
+    citySlug: 'whitby',
+    city: 'Whitby',
+    title: 'Vinyl Flooring Whitby | Waterproof LVP & SPC from $1.99/sqft',
+    metaDescription: 'Waterproof vinyl plank flooring in Whitby from $1.99/sqft. 100% waterproof LVP & SPC, 200+ styles, ideal for basements & kitchens. Free estimate — (647) 428-1111.',
+    h1: 'Vinyl Flooring in Whitby',
+    heroSubtitle: '100% waterproof luxury vinyl plank from $1.99/sqft — 200+ styles for Whitby homes. Delivery and installation from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring brings 200+ waterproof luxury vinyl plank (LVP) and SPC options from $1.99/sqft to Whitby homeowners. Whether you're finishing a basement in Brooklin, updating a kitchen in a Williamsburg family home, or flooring a rental near downtown Whitby, our 100% waterproof vinyl is built for real life. We deliver and install across Whitby from our Markham showroom.`,
+
+      whyVinylHere: `Whitby blends established lakeside neighbourhoods with one of Durham's fastest-growing family markets in Brooklin. Waterproof vinyl fits both. In Whitby's newer subdivisions, finished basements are standard — and below grade, rigid-core SPC vinyl is the only wood-look floor that's truly safe from moisture, since it's 100% waterproof and won't swell or warp.
+
+Whitby's family homes also put floors through constant use: kids, pets, sports, and slush tracked in from long Durham winters. SPC vinyl resists the dents and scratches that come with it, and the wear layer wipes clean in seconds. For kitchens, mudrooms, and main-floor open layouts — the heart of any Whitby home — waterproof vinyl outperforms hardwood and laminate on durability and water resistance, while still delivering a convincing real-wood look.`,
+
+      localExpertise: `BBS Flooring installs vinyl across Whitby:
+
+• **Brooklin** — Fast-growing executive subdivisions choose premium SPC for finished basements and durable main floors.
+• **Williamsburg & Rolling Acres** — Family homes use waterproof vinyl in kitchens, mudrooms, and rec rooms where spills and traffic never stop.
+• **Downtown Whitby & Port Whitby** — Older and lakeside homes take floating click-lock LVP over uneven existing subfloors.
+• **Pringle Creek & Blue Grass Meadows** — Established neighbourhoods upgrade dated flooring with photogenic, low-maintenance vinyl.
+
+We'll help you choose the right thickness and wear layer for each room during your free estimate.`,
+
+      pricingSection: `Vinyl plank for Whitby homes starts from $1.99/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget LVP (6mm) | $1.99 – $2.49/sqft | Rentals, dry basements, budget renos |
+| Mid-Range SPC (8mm) | $2.49 – $2.99/sqft | Kitchens, family rooms, main floors |
+| Premium SPC (9mm+) | $2.99 – $3.59/sqft | Whole-home, finished basements, executive properties |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Whitby.`,
+    },
+    neighbourhoods: ['Brooklin', 'Williamsburg', 'Rolling Acres', 'Pringle Creek', 'Blue Grass Meadows', 'Downtown Whitby', 'Port Whitby', 'Lynde Creek', 'Taunton North', 'Otter Creek'],
+    faqs: [
+      {
+        question: 'How much does vinyl flooring cost in Whitby?',
+        answer: 'At BBS Flooring, waterproof vinyl plank for Whitby starts from $1.99/sqft. Budget 6mm LVP is $1.99–$2.49, mid-range 8mm SPC $2.49–$2.99, and premium 9mm+ SPC $2.99–$3.59/sqft. Installation is quoted separately. We deliver across Whitby — call (647) 428-1111.',
+      },
+      {
+        question: 'What is the best vinyl flooring for Whitby and Brooklin basements?',
+        answer: 'Rigid-core SPC vinyl plank is the best choice for Whitby and Brooklin basements — it\'s 100% waterproof, handles humidity and temperature swings, and won\'t swell from moisture. We recommend 8mm+ options with built-in underlayment for warmth below grade. BBS Flooring carries 200+ vinyl options. Call (647) 428-1111.',
+      },
+      {
+        question: 'Is vinyl good for new Brooklin family homes?',
+        answer: 'Yes — waterproof SPC vinyl is ideal for Brooklin\'s new family homes. It stands up to kids, pets, and high traffic, is 100% waterproof for finished basements and kitchens, and looks like real hardwood. BBS Flooring stocks family-friendly vinyl from $1.99/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you deliver and install vinyl flooring in Whitby?',
+        answer: 'Yes. BBS Flooring delivers and installs vinyl across Whitby including Brooklin, Williamsburg, Rolling Acres, and the downtown core. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free in-home estimate.',
+      },
+      {
+        question: 'Is vinyl plank or laminate better for Whitby homes?',
+        answer: 'For wet areas — basements, kitchens, mudrooms, bathrooms — waterproof vinyl is the better choice because it\'s 100% waterproof. For dry bedrooms and budget renovations, laminate can be more affordable. BBS Flooring carries both and matches the right product to each room. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Vinyl Flooring', url: '/vinyl' },
+      { label: 'Vinyl Flooring Oshawa', url: '/vinyl-flooring-oshawa' },
+      { label: 'Hardwood Flooring Oshawa', url: '/hardwood-flooring-oshawa' },
+      { label: 'Flooring Installation Oshawa', url: '/flooring-installation-oshawa' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Vinyl Flooring Oshawa', url: '/vinyl-flooring-oshawa' },
+      { label: 'Vinyl Flooring Ajax', url: '/vinyl-flooring-ajax' },
+      { label: 'Hardwood Flooring Ajax', url: '/hardwood-flooring-ajax' },
+      { label: 'Laminate Flooring Ajax', url: '/laminate-flooring-ajax' },
+    ],
+  },
+
+  'engineered-hardwood-flooring-pickering': {
+    productType: 'engineered-hardwood',
+    citySlug: 'pickering',
+    city: 'Pickering',
+    title: 'Engineered Hardwood Pickering | Real Wood from $2.99/sqft',
+    metaDescription: 'Engineered hardwood flooring in Pickering from $2.99/sqft. Real oak top layer, works over concrete & radiant heat, 300+ styles. Free estimate — (647) 428-1111.',
+    h1: 'Engineered Hardwood Flooring in Pickering',
+    heroSubtitle: 'Real-wood engineered hardwood from $2.99/sqft — dimensionally stable, works over concrete and radiant heat. Delivery and installation from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring brings 300+ engineered hardwood floors from $2.99/sqft to Pickering homeowners. With a genuine oak, maple, or walnut top layer over a stable multi-layer core, engineered hardwood gives you real-wood warmth that handles Pickering's humidity swings, concrete condo subfloors, and radiant heating far better than solid wood. We deliver and install across Pickering from our Markham showroom on Highway 7.`,
+
+      whyVinylHere: `Pickering's housing mix — lakeside homes near Frenchman's Bay, condos and townhomes around the Town Centre, and newer Seaton builds over concrete slabs — makes engineered hardwood the smartest real-wood choice. Unlike solid hardwood, engineered planks are dimensionally stable: their cross-layered construction resists the gapping and cupping that humidity near Lake Ontario can cause.
+
+That stability also means engineered hardwood installs where solid wood can't — directly over concrete subfloors in Pickering condos and over radiant in-floor heating in newer builds. You still get a real hardwood surface that can be refinished and adds genuine resale value, but with fewer seasonal headaches. For Pickering homeowners who want the look and value of wood without the risk in a lakeside, humidity-prone climate, engineered hardwood is the answer.`,
+
+      localExpertise: `BBS Flooring installs engineered hardwood across Pickering:
+
+• **Amberlea & Highbush** — Established family homes choose wide-plank oak engineered hardwood for warm, refinishable main floors.
+• **Liverpool & Town Centre condos** — Units over concrete subfloors use engineered planks that glue or float directly over the slab.
+• **Bay Ridges & Frenchman's Bay** — Lakeside homes pick dimensionally stable engineered wood that resists humidity-driven movement.
+• **Seaton & new developments** — Newer builds with radiant heat use engineered hardwood rated for in-floor heating systems.
+
+We'll help you match the species, plank width, and core to each room during your free estimate.`,
+
+      pricingSection: `Engineered hardwood for Pickering homes starts from $2.99/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Entry Oak (2–3mm wear layer) | $2.99 – $3.59/sqft | Bedrooms, condos, budget-conscious main floors |
+| Mid-Range Oak (3–4mm wear layer) | $3.59 – $4.99/sqft | Living rooms, open-concept main floors |
+| Premium Wide-Plank (4mm+ wear layer) | $4.99 – $7.99/sqft | Whole-home, executive properties, multiple refinishes |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Pickering.`,
+    },
+    neighbourhoods: ['Amberlea', 'Highbush', 'Liverpool', 'Bay Ridges', 'Frenchman\'s Bay', 'Rougemount', 'Dunbarton', 'West Shore', 'Brock Ridge', 'Seaton'],
+    faqs: [
+      {
+        question: 'How much does engineered hardwood cost in Pickering?',
+        answer: 'At BBS Flooring, engineered hardwood for Pickering starts from $2.99/sqft. Entry oak with a 2–3mm wear layer is $2.99–$3.59, mid-range $3.59–$4.99, and premium wide-plank $4.99–$7.99/sqft. Installation is quoted separately. We deliver across Pickering — call (647) 428-1111.',
+      },
+      {
+        question: 'Can engineered hardwood go over concrete in a Pickering condo?',
+        answer: 'Yes — engineered hardwood is ideal over concrete subfloors in Pickering condos because its stable multi-layer core can be glued down or floated directly over the slab, unlike solid hardwood. BBS Flooring will confirm the right installation method at your free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Is engineered hardwood good for Pickering homes near the lake?',
+        answer: 'Yes — engineered hardwood is the best real-wood choice for lakeside Pickering homes near Frenchman\'s Bay. Its cross-layered construction resists the cupping and gapping that lake humidity can cause in solid wood. BBS Flooring carries 300+ engineered styles from $2.99/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can engineered hardwood be refinished?',
+        answer: 'Yes — engineered hardwood with a 3mm+ wear layer can typically be sanded and refinished once or twice, since it has a genuine hardwood top layer. Thicker wear layers allow more refinishes. BBS Flooring will help you choose the right wear layer for your goals. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you install engineered hardwood over radiant heating in Pickering?',
+        answer: 'Yes — many engineered hardwood products are rated for radiant in-floor heating, which is common in newer Pickering and Seaton builds. Engineered\'s stable core handles the temperature changes solid wood can\'t. BBS Flooring will confirm compatibility at your free estimate. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'Solid Hardwood Flooring', url: '/solid-hardwood' },
+      { label: 'Laminate Flooring Pickering', url: '/laminate-flooring-pickering' },
+      { label: 'Flooring Installation Pickering', url: '/flooring-installation-pickering' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Hardwood Flooring Ajax', url: '/hardwood-flooring-ajax' },
+      { label: 'Vinyl Flooring Pickering', url: '/vinyl-flooring-pickering' },
+      { label: 'Laminate Flooring Pickering', url: '/laminate-flooring-pickering' },
+      { label: 'Hardwood Flooring Oshawa', url: '/hardwood-flooring-oshawa' },
+    ],
+  },
+
+  'solid-hardwood-flooring-vaughan': {
+    productType: 'solid-hardwood',
+    citySlug: 'vaughan',
+    city: 'Vaughan',
+    title: 'Solid Hardwood Flooring Vaughan | Real Wood from $5.10/sqft',
+    metaDescription: 'Solid hardwood flooring in Vaughan from $5.10/sqft. Real 3/4" wood, sand and refinish for decades, timeless resale value. Free estimate — (647) 428-1111.',
+    h1: 'Solid Hardwood Flooring in Vaughan',
+    heroSubtitle: 'Real 3/4" solid hardwood from $5.10/sqft — refinishable for decades, timeless resale value for Vaughan homes. Delivery and installation from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring brings premium solid hardwood from $5.10/sqft to Vaughan homeowners. With genuine 3/4" solid oak, maple, and hickory that can be sanded and refinished for generations, solid hardwood is the floor of choice for Vaughan's luxury homes and heritage properties. We deliver and install across Vaughan — Woodbridge, Maple, Kleinburg, Thornhill, and Concord — from our Markham showroom on Highway 7.`,
+
+      whyVinylHere: `Vaughan is one of the GTA's premier luxury markets, and solid hardwood is what its high-end homes are built for. In the executive estates of Kleinburg and the established custom homes of Woodbridge, buyers expect real 3/4" hardwood — and they pay for it at resale. Solid hardwood's defining advantage is longevity: it can be sanded and refinished many times over decades, so a single floor outlasts every trend and can be restored to new repeatedly.
+
+Vaughan's solid, wood-subfloor construction in its detached and custom homes is ideal for nail-down solid hardwood installation. For main floors, living and dining rooms, and grand entryways in Vaughan's larger homes, solid hardwood delivers a depth, warmth, and authenticity that no engineered or laminate product can match — and it remains the single strongest flooring signal of quality to a luxury buyer.`,
+
+      localExpertise: `BBS Flooring installs solid hardwood across Vaughan:
+
+• **Kleinburg** — Executive estate homes choose wide-plank solid oak and hickory for grand main floors built to be refinished for generations.
+• **Woodbridge** — Established custom homes select traditional solid hardwood in living, dining, and formal entry spaces.
+• **Maple & Vellore Village** — Family homes upgrade to solid hardwood on main floors for warmth and long-term resale value.
+• **Thornhill & Concord** — Mature neighbourhoods restore or replace original hardwood with premium solid wood.
+
+We'll help you choose the species, grade, and plank width to match your home during your free estimate.`,
+
+      pricingSection: `Solid hardwood for Vaughan homes starts from $5.10/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Standard Oak (2 1/4"–3 1/4") | $5.10 – $6.49/sqft | Main floors, traditional layouts, resale value |
+| Wide-Plank Oak & Maple (4"–5") | $6.49 – $8.49/sqft | Living and dining rooms, open-concept homes |
+| Premium Hickory & Hand-Scraped | $8.49 – $11.99/sqft | Executive estates, statement floors, luxury renos |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Vaughan.`,
+    },
+    neighbourhoods: ['Kleinburg', 'Woodbridge', 'Maple', 'Vellore Village', 'Thornhill', 'Concord', 'Patterson', 'Sonoma Heights', 'Vaughan Mills', 'Carrville'],
+    faqs: [
+      {
+        question: 'How much does solid hardwood flooring cost in Vaughan?',
+        answer: 'At BBS Flooring, solid hardwood for Vaughan starts from $5.10/sqft. Standard oak is $5.10–$6.49, wide-plank oak and maple $6.49–$8.49, and premium hickory or hand-scraped $8.49–$11.99/sqft. Installation is quoted separately. We deliver across Vaughan — call (647) 428-1111.',
+      },
+      {
+        question: 'Is solid hardwood worth it for a Vaughan luxury home?',
+        answer: 'Yes — solid hardwood is the strongest flooring signal of quality to luxury buyers in markets like Kleinburg and Woodbridge. It can be refinished for decades and adds lasting resale value. BBS Flooring carries premium solid oak, maple, and hickory from $5.10/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'How many times can solid hardwood be refinished?',
+        answer: 'Genuine 3/4" solid hardwood can typically be sanded and refinished 5 to 7 times over its lifetime — often spanning many decades. That\'s what makes it the longest-lasting flooring choice for Vaughan homes. BBS Flooring will help you choose the right species and grade. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can solid hardwood be installed in any Vaughan home?',
+        answer: 'Solid hardwood is best installed over wood subfloors above grade, which is standard in Vaughan\'s detached and custom homes. For concrete subfloors or basements we recommend engineered hardwood instead. BBS Flooring will assess your subfloor at the free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you deliver and install solid hardwood in Vaughan?',
+        answer: 'Yes. BBS Flooring delivers and installs solid hardwood across Vaughan including Kleinburg, Woodbridge, Maple, Thornhill, and Concord. Our showroom is at 6061 Highway 7 in Markham. Call (647) 428-1111 for a free in-home estimate.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Solid Hardwood', url: '/solid-hardwood' },
+      { label: 'Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'Hardwood Flooring Vaughan', url: '/hardwood-flooring-vaughan' },
+      { label: 'Flooring Installation Vaughan', url: '/flooring-installation-vaughan' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Hardwood Flooring Vaughan', url: '/hardwood-flooring-vaughan' },
+      { label: 'Vinyl Flooring Vaughan', url: '/vinyl-flooring-vaughan' },
+      { label: 'Laminate Flooring Vaughan', url: '/laminate-flooring-vaughan' },
+      { label: 'Solid Hardwood Flooring Markham', url: '/solid-hardwood-flooring-markham' },
+    ],
+  },
 };
 
 // ── Helper: get all slugs for static generation ──────────────────────────────
