@@ -39,23 +39,26 @@ export async function POST(request) {
 
     if (error) throw error;
 
-    // Send emails (non-blocking — don't fail the form if email fails)
-    Promise.allSettled([
-      sendContactAdminNotification({
-        name: `[CONTRACTOR] ${contact_name} — ${company_name || 'No company'}`,
-        email,
-        phone,
-        message: `Trade: ${trade_type}\nVolume: ${monthly_volume}\n${message || ''}`,
-        source: 'contractor_registration',
-      }),
-      sendContractorCustomerConfirmation({ name: contact_name, email, company_name }),
-    ]).then(results => {
-      results.forEach((r, i) => {
+    // Send emails — AWAIT so the serverless function doesn't terminate before Brevo responds.
+    try {
+      const emailResults = await Promise.allSettled([
+        sendContactAdminNotification({
+          name: `[CONTRACTOR] ${contact_name} — ${company_name || 'No company'}`,
+          email,
+          phone,
+          message: `Trade: ${trade_type}\nVolume: ${monthly_volume}\n${message || ''}`,
+          source: 'contractor_registration',
+        }),
+        sendContractorCustomerConfirmation({ name: contact_name, email, company_name }),
+      ]);
+      emailResults.forEach((r, i) => {
         if (r.status === 'rejected' || (r.value && !r.value.success)) {
           console.warn(`[Contractor] Email ${i} failed:`, r.reason || r.value);
         }
       });
-    });
+    } catch (e) {
+      console.error('[Contractor] Email send error:', e?.message);
+    }
 
     // Fire Telegram alert — AWAIT so the serverless function doesn't terminate first.
     try {

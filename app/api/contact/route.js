@@ -88,14 +88,18 @@ export async function POST(request) {
       ];
     }
 
-    // Send email notifications (non-blocking — don't fail the form if email fails)
-    Promise.allSettled(emailPromises).then(results => {
-      results.forEach((r, i) => {
+    // Send email notifications — AWAIT so the serverless function doesn't terminate
+    // before Brevo responds (unawaited promises get dropped on Vercel). Never fails the form.
+    try {
+      const emailResults = await Promise.allSettled(emailPromises);
+      emailResults.forEach((r, i) => {
         if (r.status === 'rejected' || (r.value && !r.value.success)) {
           console.warn(`[Contact] Email ${i} failed:`, r.reason || r.value);
         }
       });
-    });
+    } catch (e) {
+      console.error('[Contact] Email send error:', e?.message);
+    }
 
     // Fire Telegram alert — AWAIT so the serverless function doesn't terminate
     // before the fetch completes (unawaited promises get killed on Vercel).
