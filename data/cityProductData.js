@@ -3187,6 +3187,388 @@ All prices include the flooring material. Installation is quoted at your free in
       { label: 'Solid Hardwood Flooring Markham', url: '/solid-hardwood-flooring-markham' },
     ],
   },
+
+  'laminate-flooring-stouffville': {
+    productType: 'laminate',
+    citySlug: 'stouffville',
+    city: 'Stouffville',
+    title: 'Laminate Flooring Stouffville | AC5 Wood-Look from $1.49/sqft',
+    metaDescription: 'Durable AC5 laminate flooring in Stouffville from $1.49/sqft. Realistic wood-look, scratch-resistant, easy click installation. Free estimate — (647) 428-1111.',
+    h1: 'Laminate Flooring in Stouffville',
+    heroSubtitle: 'Tough AC5 wood-look laminate from $1.49/sqft — affordable, durable floors for Stouffville homes. Delivery and installation just minutes away from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring brings realistic AC5 wood-look laminate from $1.49/sqft to Whitchurch-Stouffville homeowners. Whether you're finishing a basement in a Wheler's Mill new build, refreshing bedrooms in an older home off Main Street, or outfitting a family room in Ballantrae, our scratch-resistant laminate delivers the look of hardwood at a fraction of the cost. Stouffville is one of our closest service areas — just up Highway 48 from our Markham showroom — so delivery and installation are fast.`,
+
+      whyVinylHere: `Stouffville has been one of the GTA's fastest-growing towns, and its housing reflects that: row after row of newer detached and townhomes in Wheler's Mill and the areas around the GO station, plus established homes and rural properties out toward Ballantrae and Gormley. Laminate fits this profile perfectly.
+
+For Stouffville's many growing families in newer builds, AC5-rated laminate stands up to the daily punishment of kids, pets, and busy mudroom entries off the garage. It clicks together as a floating floor over the flat concrete and plywood subfloors common in newer construction, so installation is quick and clean. And because so many Stouffville buyers stretched their budgets to get into a detached home, laminate lets them upgrade builder-grade carpet to a convincing hardwood look without a hardwood price. The tough wear layer wipes clean — ideal for the open-concept main floors and second-floor hallways that take the most traffic in any Stouffville family home.`,
+
+      localExpertise: `BBS Flooring installs laminate across Whitchurch-Stouffville:
+
+• **Wheler's Mill & GO station area** — Newer detached and townhomes upgrade builder-grade carpet to warm, durable laminate on main floors and bedrooms.
+• **Old Stouffville & Main Street** — Established and century homes choose laminate that suits character interiors on a sensible budget.
+• **Ballantrae & Musselman's Lake** — Rural and lakeside properties pick scratch-resistant laminate that handles sand, pets, and seasonal use.
+• **Gormley & rural Whitchurch** — Larger country properties use laminate for high-traffic mudrooms, basements, and rec rooms.
+
+We'll help you match the right AC rating and thickness to each room during your free estimate.`,
+
+      pricingSection: `Laminate flooring for Stouffville homes starts from $1.49/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Budget AC4 (8mm) | $1.49 – $1.99/sqft | Bedrooms, rentals, budget renos |
+| Mid-Range AC5 (10mm) | $1.99 – $2.49/sqft | Living rooms, hallways, main floors |
+| Premium AC5 (12mm + pad) | $2.49 – $2.99/sqft | Whole-home, high-traffic, water-resistant cores |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. Stouffville is minutes from our Markham showroom — delivery is fast.`,
+    },
+    neighbourhoods: ['Wheler\'s Mill', 'Old Stouffville', 'Main Street', 'Ballantrae', 'Musselman\'s Lake', 'Gormley', 'Lemonville', 'Vandorf', 'Bethesda', 'Bloomington'],
+    faqs: [
+      {
+        question: 'How much does laminate flooring cost in Stouffville?',
+        answer: 'At BBS Flooring, AC5 laminate for Stouffville starts from $1.49/sqft. Budget 8mm is $1.49–$1.99, mid-range 10mm AC5 $1.99–$2.49, and premium 12mm with attached pad $2.49–$2.99/sqft. Installation is quoted separately. Stouffville is minutes from our Markham showroom — call (647) 428-1111.',
+      },
+      {
+        question: 'Is laminate good for newer Stouffville homes?',
+        answer: 'Yes — AC5 laminate is ideal for Stouffville\'s many new builds in Wheler\'s Mill and around the GO station. It floats over the flat plywood and concrete subfloors common in newer construction, and the tough wear layer handles the traffic of busy family main floors. BBS Flooring stocks AC5 laminate from $1.49/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'What is the difference between laminate and vinyl for Stouffville renos?',
+        answer: 'Laminate has a denser, more rigid wood-look surface and is typically more affordable for dry rooms, while vinyl is 100% waterproof and better for basements and kitchens. BBS Flooring carries both and will match the right product to each Stouffville room during your free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you install laminate flooring in Stouffville?',
+        answer: 'Yes. BBS Flooring delivers and installs laminate across Whitchurch-Stouffville including Wheler\'s Mill, Ballantrae, Gormley, and Musselman\'s Lake. Our showroom is at 6061 Highway 7 in Markham — minutes away via Highway 48. Call (647) 428-1111 for a free in-home estimate.',
+      },
+      {
+        question: 'How durable is AC5 laminate for a busy Stouffville family home?',
+        answer: 'AC5 is the highest residential durability rating — it resists scratches, dents, and fading even in high-traffic entryways and hallways. It\'s an excellent choice for Stouffville homes with kids and pets. BBS Flooring stocks AC5 laminate from $1.49/sqft. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Laminate Flooring', url: '/laminate' },
+      { label: 'Vinyl Flooring Markham', url: '/vinyl-flooring-markham' },
+      { label: 'Engineered Hardwood Stouffville', url: '/engineered-hardwood-flooring-stouffville' },
+      { label: 'Flooring Installation Markham', url: '/flooring-installation-markham' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Laminate Flooring Markham', url: '/laminate-flooring-markham' },
+      { label: 'Laminate Flooring Newmarket', url: '/laminate-flooring-newmarket' },
+      { label: 'Vinyl Flooring Markham', url: '/vinyl-flooring-markham' },
+      { label: 'Engineered Hardwood Stouffville', url: '/engineered-hardwood-flooring-stouffville' },
+    ],
+  },
+
+  'engineered-hardwood-flooring-newmarket': {
+    productType: 'engineered-hardwood',
+    citySlug: 'newmarket',
+    city: 'Newmarket',
+    title: 'Engineered Hardwood Newmarket | Real Wood from $2.99/sqft',
+    metaDescription: 'Engineered hardwood flooring in Newmarket from $2.99/sqft. Real oak top layer, works over concrete & radiant heat, 300+ styles. Free estimate — (647) 428-1111.',
+    h1: 'Engineered Hardwood Flooring in Newmarket',
+    heroSubtitle: 'Real-wood engineered hardwood from $2.99/sqft — dimensionally stable, works over concrete and radiant heat. Delivery and installation to Newmarket from our Markham showroom.',
+    content: {
+      intro: `BBS Flooring brings 300+ engineered hardwood floors from $2.99/sqft to Newmarket homeowners. With a genuine oak, maple, or walnut top layer over a stable multi-layer core, engineered hardwood gives you real-wood warmth that handles Newmarket's seasonal humidity swings, basement concrete, and radiant heating far better than solid wood. We deliver and install across Newmarket from our Markham showroom on Highway 7.`,
+
+      whyVinylHere: `Newmarket's housing runs from heritage homes around historic Main Street and the Old Town to sprawling family subdivisions in Stonehaven, Summerhill, and Woodland Hills, plus newer builds out toward Glenway. Engineered hardwood is the smartest real-wood choice across all of them.
+
+Unlike solid hardwood, engineered planks are dimensionally stable: their cross-layered construction resists the gapping and cupping that Newmarket's humid summers and dry, forced-air winters can cause. That stability also lets engineered hardwood install where solid wood can't — over the concrete basement slabs and radiant in-floor heating found in many Newmarket homes. Owners of the larger executive homes in Stonehaven and Woodland Hills get a refinishable, resale-boosting real-wood floor; budget-conscious families in older Old Town homes get genuine hardwood warmth starting at $2.99/sqft. For a four-season climate this far north in the GTA, engineered hardwood is the wood floor that holds up.`,
+
+      localExpertise: `BBS Flooring installs engineered hardwood across Newmarket:
+
+• **Stonehaven & Summerhill** — Larger executive homes choose wide-plank oak engineered hardwood for warm, refinishable main floors.
+• **Old Town & Main Street** — Heritage and century homes use engineered wood that suits character interiors and uneven subfloors.
+• **Woodland Hills & Glenway** — Newer builds over concrete and radiant heat use engineered planks rated for in-floor heating.
+• **Bristol-London & Gorham-College Manor** — Established family neighbourhoods upgrade builder-grade flooring to real engineered hardwood.
+
+We'll help you match the species, plank width, and core to each room during your free estimate.`,
+
+      pricingSection: `Engineered hardwood for Newmarket homes starts from $2.99/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Entry Oak (2–3mm wear layer) | $2.99 – $3.59/sqft | Bedrooms, budget-conscious main floors |
+| Mid-Range Oak (3–4mm wear layer) | $3.59 – $4.99/sqft | Living rooms, open-concept main floors |
+| Premium Wide-Plank (4mm+ wear layer) | $4.99 – $7.99/sqft | Whole-home, executive properties, multiple refinishes |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. We deliver across Newmarket.`,
+    },
+    neighbourhoods: ['Stonehaven', 'Summerhill', 'Old Town', 'Main Street', 'Woodland Hills', 'Glenway', 'Bristol-London', 'Gorham-College Manor', 'Huron Heights', 'Armitage'],
+    faqs: [
+      {
+        question: 'How much does engineered hardwood cost in Newmarket?',
+        answer: 'At BBS Flooring, engineered hardwood for Newmarket starts from $2.99/sqft. Entry oak with a 2–3mm wear layer is $2.99–$3.59, mid-range $3.59–$4.99, and premium wide-plank $4.99–$7.99/sqft. Installation is quoted separately. We deliver across Newmarket — call (647) 428-1111.',
+      },
+      {
+        question: 'Can engineered hardwood go over concrete or a Newmarket basement slab?',
+        answer: 'Yes — engineered hardwood is ideal over concrete because its stable multi-layer core can be glued down or floated directly over the slab, unlike solid hardwood. That makes it perfect for finished basements in Newmarket homes. BBS Flooring confirms the right method at your free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Is engineered hardwood good for Newmarket\'s climate?',
+        answer: 'Yes — engineered hardwood is the best real-wood choice for Newmarket\'s humid summers and dry winters. Its cross-layered construction resists the cupping and gapping that seasonal swings cause in solid wood. BBS Flooring carries 300+ engineered styles from $2.99/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can engineered hardwood be refinished?',
+        answer: 'Yes — engineered hardwood with a 3mm+ wear layer can typically be sanded and refinished once or twice, since it has a genuine hardwood top layer. Thicker wear layers allow more refinishes. BBS Flooring will help you choose the right wear layer. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you install engineered hardwood over radiant heating in Newmarket?',
+        answer: 'Yes — many engineered hardwood products are rated for radiant in-floor heating, common in newer Newmarket and Glenway builds. Engineered\'s stable core handles the temperature changes solid wood can\'t. BBS Flooring confirms compatibility at your free estimate. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'Solid Hardwood Flooring', url: '/solid-hardwood' },
+      { label: 'Laminate Flooring Newmarket', url: '/laminate-flooring-newmarket' },
+      { label: 'Flooring Installation Markham', url: '/flooring-installation-markham' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Vinyl Flooring Newmarket', url: '/vinyl-flooring-newmarket' },
+      { label: 'Laminate Flooring Newmarket', url: '/laminate-flooring-newmarket' },
+      { label: 'Engineered Hardwood Stouffville', url: '/engineered-hardwood-flooring-stouffville' },
+      { label: 'Hardwood Flooring Richmond Hill', url: '/hardwood-flooring-richmond-hill' },
+    ],
+  },
+
+  'engineered-hardwood-flooring-stouffville': {
+    productType: 'engineered-hardwood',
+    citySlug: 'stouffville',
+    city: 'Stouffville',
+    title: 'Engineered Hardwood Stouffville | Real Wood from $2.99/sqft',
+    metaDescription: 'Engineered hardwood flooring in Stouffville from $2.99/sqft. Real oak top layer, works over concrete & radiant heat, 300+ styles. Free estimate — (647) 428-1111.',
+    h1: 'Engineered Hardwood Flooring in Stouffville',
+    heroSubtitle: 'Real-wood engineered hardwood from $2.99/sqft — dimensionally stable, works over concrete and radiant heat. Minutes from our Markham showroom up Highway 48.',
+    content: {
+      intro: `BBS Flooring brings 300+ engineered hardwood floors from $2.99/sqft to Whitchurch-Stouffville homeowners. With a genuine oak, maple, or walnut top layer over a stable multi-layer core, engineered hardwood gives you real-wood warmth that handles Stouffville's seasonal humidity, concrete basement slabs, and radiant heating far better than solid wood. Stouffville is one of our closest service areas — just up Highway 48 — so delivery and installation are fast.`,
+
+      whyVinylHere: `Stouffville's explosive growth means a lot of newer detached homes in Wheler's Mill and around the GO station, built over concrete basement slabs and increasingly with radiant in-floor heating — exactly the conditions where engineered hardwood outperforms solid wood. Its cross-layered core is dimensionally stable, so it won't cup or gap the way solid planks can when a furnace dries the air all winter and humidity returns each summer.
+
+That stability also means engineered hardwood installs directly over the concrete slabs in Stouffville basements and over radiant heat in newer builds — places solid wood simply can't go. Buyers who stretched to get into a Stouffville detached home still get a genuine, refinishable hardwood surface that adds real resale value, starting at $2.99/sqft. And out toward Ballantrae and the rural properties, engineered hardwood's stability handles homes that sit empty or unconditioned for stretches far better than solid wood. It's the real-wood floor built for how Stouffville actually lives.`,
+
+      localExpertise: `BBS Flooring installs engineered hardwood across Whitchurch-Stouffville:
+
+• **Wheler's Mill & GO station area** — Newer detached homes over concrete and radiant heat use engineered planks rated for in-floor heating.
+• **Old Stouffville & Main Street** — Established and century homes choose engineered wood that suits character interiors and older subfloors.
+• **Ballantrae & Musselman's Lake** — Rural and lakeside properties pick dimensionally stable engineered wood for homes that see seasonal humidity swings.
+• **Gormley & rural Whitchurch** — Larger country properties use wide-plank engineered oak for warm, refinishable main floors.
+
+We'll help you match the species, plank width, and core to each room during your free estimate.`,
+
+      pricingSection: `Engineered hardwood for Stouffville homes starts from $2.99/sqft. The range:
+
+| Product Type | Price Range | Best For |
+|---|---|---|
+| Entry Oak (2–3mm wear layer) | $2.99 – $3.59/sqft | Bedrooms, budget-conscious main floors |
+| Mid-Range Oak (3–4mm wear layer) | $3.59 – $4.99/sqft | Living rooms, open-concept main floors |
+| Premium Wide-Plank (4mm+ wear layer) | $4.99 – $7.99/sqft | Whole-home, executive properties, multiple refinishes |
+
+All prices include the flooring material. Installation is quoted at your free in-home estimate. Stouffville is minutes from our Markham showroom — delivery is fast.`,
+    },
+    neighbourhoods: ['Wheler\'s Mill', 'Old Stouffville', 'Main Street', 'Ballantrae', 'Musselman\'s Lake', 'Gormley', 'Lemonville', 'Vandorf', 'Bethesda', 'Bloomington'],
+    faqs: [
+      {
+        question: 'How much does engineered hardwood cost in Stouffville?',
+        answer: 'At BBS Flooring, engineered hardwood for Stouffville starts from $2.99/sqft. Entry oak with a 2–3mm wear layer is $2.99–$3.59, mid-range $3.59–$4.99, and premium wide-plank $4.99–$7.99/sqft. Installation is quoted separately. Stouffville is minutes from our showroom — call (647) 428-1111.',
+      },
+      {
+        question: 'Can engineered hardwood go over concrete in a Stouffville new build?',
+        answer: 'Yes — engineered hardwood is ideal over the concrete basement slabs in Stouffville\'s newer Wheler\'s Mill and GO-station homes because its stable core can be glued or floated directly over the slab, unlike solid hardwood. BBS Flooring confirms the right method at your free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Is engineered hardwood good for Stouffville\'s climate?',
+        answer: 'Yes — engineered hardwood is the best real-wood choice for Stouffville\'s humid summers and dry winters. Its cross-layered construction resists the cupping and gapping that seasonal swings cause in solid wood. BBS Flooring carries 300+ engineered styles from $2.99/sqft. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you install engineered hardwood over radiant heating in Stouffville?',
+        answer: 'Yes — many engineered hardwood products are rated for radiant in-floor heating, increasingly common in newer Stouffville builds. Engineered\'s stable core handles the temperature changes solid wood can\'t. BBS Flooring confirms compatibility at your free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can engineered hardwood be refinished?',
+        answer: 'Yes — engineered hardwood with a 3mm+ wear layer can typically be sanded and refinished once or twice, since it has a genuine hardwood top layer. Thicker wear layers allow more refinishes. BBS Flooring will help you choose the right wear layer. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'Solid Hardwood Flooring', url: '/solid-hardwood' },
+      { label: 'Laminate Flooring Stouffville', url: '/laminate-flooring-stouffville' },
+      { label: 'Flooring Installation Markham', url: '/flooring-installation-markham' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Engineered Hardwood Newmarket', url: '/engineered-hardwood-flooring-newmarket' },
+      { label: 'Laminate Flooring Stouffville', url: '/laminate-flooring-stouffville' },
+      { label: 'Hardwood Flooring Markham', url: '/hardwood-flooring-markham' },
+      { label: 'Vinyl Flooring Markham', url: '/vinyl-flooring-markham' },
+    ],
+  },
+
+  'flooring-installation-toronto': {
+    productType: 'vinyl',
+    citySlug: 'toronto',
+    city: 'Toronto',
+    title: 'Flooring Installation Toronto | Hardwood, Vinyl & Laminate',
+    metaDescription: 'Professional flooring installation in Toronto. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
+    h1: 'Flooring Installation in Toronto',
+    heroSubtitle: 'Expert flooring installation across Toronto — vinyl, hardwood, and laminate. Free in-home estimates. 1,000+ floors in stock at our showroom.',
+    isInstallationPage: true,
+    content: {
+      intro: `BBS Flooring provides professional flooring installation across Toronto — from downtown condos to the established homes of North York, Scarborough, and Etobicoke. Our showroom at 6061 Highway 7, Unit B in Markham carries over 1,000 flooring options including vinyl, hardwood, and laminate, all available with expert installation by our experienced crews. We serve Toronto homeowners, landlords, and condo owners with honest, supply-and-install pricing.
+
+Toronto's housing stock is the most diverse in Canada — century homes in the Beaches and Riverdale, mid-century bungalows in North York, high-rise and stacked condos downtown, and post-war homes across Scarborough and Etobicoke. Each comes with its own flooring challenges, and our installers have seen them all: uneven plank subfloors in old homes, concrete slabs in condos, and the strict installation rules and elevator-booking realities of downtown buildings.`,
+
+      whyVinylHere: `Why do Toronto homeowners choose BBS Flooring for installation? Selection, honest pricing, and crews that know the city's housing.
+
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor at our Highway 7 showroom. No special-ordering, no waiting weeks. See it, feel it, take a sample home, and schedule installation in one visit.
+
+**Pricing:** We sell direct at wholesale-to-public pricing — no downtown-retailer markup. Vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Installation is quoted separately based on your specific project: subfloor condition, furniture moving, old floor removal, and trim work all factor in. For condos, we account for elevator booking, building hours, and noise rules in our scheduling.
+
+**Craftsmanship:** Our installers are flooring specialists, not general contractors. They handle the quirks of Toronto homes — leveling the sloped subfloors of a Cabbagetown Victorian, floating engineered hardwood over a King West condo slab, soundproofing underlayment for a stacked townhouse. Every installation includes proper material acclimation, subfloor moisture testing, and the transition and trim details that separate professional work from DIY.`,
+
+      localExpertise: `Our installation crews know Toronto's neighbourhoods and their housing:
+
+• **Downtown & Midtown condos** — Engineered hardwood and LVP floated over concrete slabs, scheduled around building elevator and noise rules.
+• **The Beaches, Riverdale & Leslieville** — Century homes needing subfloor leveling before hardwood or wide-plank installs.
+• **North York & Willowdale** — Mid-century bungalows and new infills upgrading to engineered hardwood and vinyl.
+• **Scarborough** — Post-war and suburban family homes choosing durable vinyl and laminate for high-traffic main floors.
+• **Etobicoke & The Kingsway** — Established homes and lakeside condos installing premium hardwood and quiet underlayment.
+
+Every project starts with a free in-home estimate. We assess your subfloor, measure precisely, recommend the right product, and quote with no obligation. Call (647) 428-1111 to schedule your free Toronto estimate.`,
+
+      pricingSection: `BBS Flooring offers Toronto homeowners competitive supply-and-install pricing across all flooring types:
+
+| Flooring Type | Material Price | Best For |
+|---|---|---|
+| Luxury Vinyl Plank (LVP) | From $1.79/sqft | Condos, basements, kitchens, rentals, high-traffic areas |
+| Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
+| Engineered Hardwood | From $3.19/sqft | Condos over concrete, main floors, open-concept |
+| Solid Hardwood | From $5.10/sqft | Century homes, wood subfloors, long-term value |
+
+Professional installation is quoted during your free in-home estimate, based on your project (subfloor condition, furniture moving, old floor removal, trim, and any condo building requirements). Call (647) 428-1111 to book.`,
+    },
+    neighbourhoods: ['Downtown', 'North York', 'Scarborough', 'Etobicoke', 'The Beaches', 'Riverdale', 'Leslieville', 'Willowdale', 'The Kingsway', 'Midtown'],
+    faqs: [
+      {
+        question: 'How much does flooring installation cost in Toronto?',
+        answer: 'BBS Flooring offers Toronto homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project and, for condos, building requirements. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you install flooring in Toronto condos?',
+        answer: 'Yes — BBS Flooring regularly installs in downtown and midtown Toronto condos. Engineered hardwood and luxury vinyl plank both work beautifully over concrete slabs, and we schedule around your building\'s elevator booking, work hours, and noise/underlayment rules. Call (647) 428-1111 for a free estimate.',
+      },
+      {
+        question: 'Do you offer free estimates for flooring installation in Toronto?',
+        answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across Toronto. We assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule.',
+      },
+      {
+        question: 'Can you level the subfloor in an old Toronto house?',
+        answer: 'Yes — sloped and uneven subfloors are common in Toronto\'s century homes in the Beaches, Riverdale, and Cabbagetown. Our installers level and prep the subfloor before installing hardwood, vinyl, or laminate so the finished floor is flat and lasts. Subfloor prep is quoted in your free estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'What areas of Toronto do you serve for flooring installation?',
+        answer: 'BBS Flooring serves all of Toronto including downtown, North York, Scarborough, Etobicoke, the Beaches, Riverdale, and Willowdale. Our showroom is at 6061 Highway 7, Unit B in Markham. Call (647) 428-1111 for a free estimate.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Vinyl Flooring', url: '/vinyl' },
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'All Laminate', url: '/laminate' },
+      { label: 'Installation Cost Guide', url: '/flooring-installation-cost' },
+      { label: 'Stair Refinishing', url: '/stair-refinishing' },
+      { label: 'Carpet Removal', url: '/carpet-removal' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Flooring Installation Scarborough', url: '/flooring-installation-scarborough' },
+      { label: 'Flooring Installation Vaughan', url: '/flooring-installation-vaughan' },
+      { label: 'Hardwood Flooring Toronto', url: '/hardwood-flooring-toronto' },
+      { label: 'Vinyl Flooring Toronto', url: '/vinyl-flooring-toronto' },
+    ],
+  },
+
+  'flooring-installation-whitby': {
+    productType: 'vinyl',
+    citySlug: 'whitby',
+    city: 'Whitby',
+    title: 'Flooring Installation Whitby | Hardwood, Vinyl & Laminate',
+    metaDescription: 'Professional flooring installation in Whitby. Vinyl from $1.79/sqft, hardwood from $3.19/sqft. Free estimates. Call (647) 428-1111.',
+    h1: 'Flooring Installation in Whitby',
+    heroSubtitle: 'Expert flooring installation across Whitby — vinyl, hardwood, and laminate. Free in-home estimates. Easy access via Highway 401 from our showroom.',
+    isInstallationPage: true,
+    content: {
+      intro: `BBS Flooring provides professional flooring installation across all of Whitby — from the historic homes of downtown and Brooklin to the newer family subdivisions of Williamsburg and Rolling Acres. Our Markham showroom at 6061 Highway 7, Unit B carries over 1,000 flooring options including vinyl, hardwood, and laminate, all available with expert installation by our experienced crews. We're in Durham Region multiple times a week and can usually schedule your Whitby project within 7-10 days of your free estimate.
+
+Whitby is one of Durham's most desirable communities, with strong renovation ROI and a mix of established homes and rapidly growing new neighbourhoods. Whether you're upgrading a single room or renovating a whole home, our team handles everything: old floor removal, subfloor prep, precise installation, and final trim work.`,
+
+      whyVinylHere: `Why do Whitby homeowners choose BBS Flooring for installation? Selection, pricing, and craftsmanship.
+
+**Selection:** With 1,000+ products in stock — over 200 vinyl options, 300+ hardwood styles, and 140+ laminate choices — you'll find exactly the right floor at our Highway 7 showroom. No ordering, no waiting weeks for delivery. See it, feel it, take a sample home, and schedule installation in one visit.
+
+**Pricing:** We sell direct at wholesale-to-public pricing. Vinyl starts from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft. Professional installation is quoted separately based on your specific project — subfloor condition, furniture moving, old floor removal, and trim work all factor in. We quote honestly, with no surprise add-ons.
+
+**Craftsmanship:** Our installers are specialists, not general contractors who happen to do flooring. They handle everything from updating a heritage home in downtown Whitby to flooring a brand-new build in Williamsburg with the precision homeowners expect. Every installation includes proper material acclimation, subfloor moisture testing, and the transition and trim details that separate professional work from DIY.`,
+
+      localExpertise: `Our installation crews know Whitby's housing stock:
+
+• **Downtown Whitby** — Established and heritage homes near the historic core, often needing subfloor leveling before install.
+• **Brooklin** — Growing family community blending older village homes with newer subdivisions.
+• **Williamsburg & Rolling Acres** — Newer family subdivisions upgrading builder-grade flooring to durable vinyl and engineered hardwood.
+• **Pringle Creek & Blue Grass Meadows** — Established neighbourhoods with strong renovation activity.
+• **Lynde Creek & Port Whitby** — Lakeside and waterfront-area homes choosing moisture-tolerant vinyl and stable engineered wood.
+
+Every project starts with a free in-home estimate. We assess your subfloor, measure precisely, recommend the right flooring, and provide a detailed no-obligation quote. Call (647) 428-1111 to schedule your free Whitby estimate.`,
+
+      pricingSection: `BBS Flooring offers Whitby homeowners competitive supply-and-install pricing across all flooring types:
+
+| Flooring Type | Material Price | Best For |
+|---|---|---|
+| Luxury Vinyl Plank (LVP) | From $1.79/sqft | Basements, kitchens, bathrooms, high-traffic areas |
+| Laminate | From $1.49/sqft | Bedrooms, living rooms, rentals, budget renovations |
+| Engineered Hardwood | From $3.19/sqft | Main floors, open-concept, executive homes |
+| Solid Hardwood | From $5.10/sqft | Heritage homes, wood subfloors, long-term value |
+
+Professional installation pricing is quoted during your free in-home estimate, based on your specific project (subfloor condition, furniture moving, old floor removal, trim work). Call (647) 428-1111 to book your free estimate.`,
+    },
+    neighbourhoods: ['Downtown Whitby', 'Brooklin', 'Williamsburg', 'Rolling Acres', 'Pringle Creek', 'Blue Grass Meadows', 'Lynde Creek', 'Port Whitby', 'Taunton North', 'Whitby Shores'],
+    faqs: [
+      {
+        question: 'How much does flooring installation cost in Whitby?',
+        answer: 'BBS Flooring offers Whitby homeowners competitive pricing: vinyl from $1.79/sqft, laminate from $1.49/sqft, and engineered hardwood from $3.19/sqft for materials. Installation labour is quoted during your free in-home estimate based on your specific project. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you offer free estimates for flooring installation in Whitby?',
+        answer: 'Yes — BBS Flooring provides free in-home measurements and installation estimates across all of Whitby including Brooklin and Williamsburg. We assess your subfloor, measure your space, recommend the best flooring, and provide a detailed no-obligation quote. Call (647) 428-1111.',
+      },
+      {
+        question: 'How long does flooring installation take in Whitby?',
+        answer: 'Timing depends on the project: a single room takes about 1 day, a full Whitby home (1,500 sqft) takes 3-5 days. This includes subfloor prep, installation, and trim work. We can usually start within a week of your estimate. Call (647) 428-1111.',
+      },
+      {
+        question: 'Do you remove old flooring before installation in Whitby?',
+        answer: 'Yes — BBS Flooring offers complete old flooring removal including carpet, hardwood, laminate, vinyl, and tile. Removal is quoted as part of your free estimate. We also offer standalone removal for Whitby homeowners. Call (647) 428-1111.',
+      },
+      {
+        question: 'Can you install flooring over concrete in Whitby homes?',
+        answer: 'Absolutely. Engineered hardwood and luxury vinyl plank both install beautifully over concrete subfloors — common in Whitby basements and newer Williamsburg builds. We use proper moisture barriers and underlayment. Solid hardwood is not recommended over concrete. Call (647) 428-1111.',
+      },
+    ],
+    relatedPages: [
+      { label: 'All Vinyl Flooring', url: '/vinyl' },
+      { label: 'All Engineered Hardwood', url: '/engineered-hardwood' },
+      { label: 'All Laminate', url: '/laminate' },
+      { label: 'Installation Cost Guide', url: '/flooring-installation-cost' },
+      { label: 'Stair Refinishing', url: '/stair-refinishing' },
+      { label: 'Carpet Removal', url: '/carpet-removal' },
+      { label: 'Free Measurement', url: '/free-measurement' },
+    ],
+    nearbyPages: [
+      { label: 'Flooring Installation Oshawa', url: '/flooring-installation-oshawa' },
+      { label: 'Flooring Installation Pickering', url: '/flooring-installation-pickering' },
+      { label: 'Vinyl Flooring Whitby', url: '/vinyl-flooring-whitby' },
+      { label: 'Vinyl Flooring Oshawa', url: '/vinyl-flooring-oshawa' },
+    ],
+  },
 };
 
 // ── Helper: get all slugs for static generation ──────────────────────────────
