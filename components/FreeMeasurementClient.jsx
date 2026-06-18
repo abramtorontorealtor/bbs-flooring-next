@@ -16,6 +16,33 @@ const PROJECT_TYPES = [
   { value: 'stairs', label: '🪜 Stairs' },
 ];
 
+// Multi-select flooring interests (Phase E). These fold into `notes`, which
+// already propagates to Telegram + admin email + CRM/DB.
+const FLOORING_INTERESTS = [
+  { value: 'Engineered Hardwood', label: 'Engineered Hardwood' },
+  { value: 'Vinyl / LVP', label: 'Vinyl / LVP' },
+  { value: 'Laminate', label: 'Laminate' },
+  { value: 'Solid Hardwood', label: 'Solid Hardwood' },
+  { value: 'Stairs', label: 'Stairs' },
+  { value: 'Not Sure Yet', label: 'Not Sure Yet' },
+];
+
+// Map a ?service= slug (passed by Phase D city-service CTAs) to a readable label.
+const SERVICE_LABELS = {
+  'hardwood-refinishing': 'Hardwood Refinishing',
+  'hardwood-refinishing-markham': 'Hardwood Refinishing (Markham)',
+  'stair-refinishing': 'Stair Refinishing',
+  'stair-refinishing-markham': 'Stair Refinishing (Markham)',
+  'carpet-removal': 'Carpet Removal',
+  'carpet-removal-markham': 'Carpet Removal (Markham)',
+  'installation': 'Flooring Installation',
+};
+
+function serviceLabelFromSlug(slug) {
+  if (!slug) return '';
+  return SERVICE_LABELS[slug] || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 function formatPostalCode(value) {
   const clean = value.replace(/\s/g, '').toUpperCase();
   if (clean.length <= 3) return clean;
@@ -59,6 +86,14 @@ export default function FreeMeasurementClient() {
   const [postalCode, setPostalCode] = useState('');
   const [projectType, setProjectType] = useState('');
   const [productsInterested, setProductsInterested] = useState('');
+  const [flooringInterests, setFlooringInterests] = useState([]);
+  const [serviceInterest, setServiceInterest] = useState('');
+
+  const toggleInterest = (value) => {
+    setFlooringInterests((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+  };
 
   const [formData, setFormData] = useState({
     customer_name: '',
@@ -77,6 +112,12 @@ export default function FreeMeasurementClient() {
     const productParam = searchParams?.get('product');
     if (productParam) {
       setProductsInterested(productParam);
+    }
+    // Phase D city-service pages link here with ?service=<slug>. Capture it so the
+    // service intent flows into the lead notes (Telegram + email + CRM).
+    const serviceParam = searchParams?.get('service');
+    if (serviceParam) {
+      setServiceInterest(serviceLabelFromSlug(serviceParam));
     }
   }, [searchParams]);
 
@@ -174,7 +215,12 @@ export default function FreeMeasurementClient() {
             preferred_date: formData.preferred_date,
             preferred_time: formData.preferred_time,
             flooring_type: projectType,
-            notes: [projectType && `Project Type: ${projectType}`, productsInterested && `Products interested in: ${productsInterested}`].filter(Boolean).join(' | '),
+            notes: [
+              projectType && `Project Type: ${projectType}`,
+              serviceInterest && `Service: ${serviceInterest}`,
+              flooringInterests.length && `Interested in: ${flooringInterests.join(', ')}`,
+              productsInterested && `Products interested in: ${productsInterested}`,
+            ].filter(Boolean).join(' | '),
           },
         }),
       });
@@ -204,7 +250,7 @@ export default function FreeMeasurementClient() {
               Thank you! We&apos;ll review your request and confirm your appointment within a few hours. Check your email for details.
             </p>
             <button
-              onClick={() => { setSubmitted(false); setStep(1); setPostalCode(''); setProjectType(''); setProductsInterested(''); setFormData({ customer_name: '', customer_email: '', customer_phone: '', customer_address: '', preferred_date: '', preferred_time: '' }); }}
+              onClick={() => { setSubmitted(false); setStep(1); setPostalCode(''); setProjectType(''); setProductsInterested(''); setFlooringInterests([]); setServiceInterest(''); setFormData({ customer_name: '', customer_email: '', customer_phone: '', customer_address: '', preferred_date: '', preferred_time: '' }); }}
               className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
             >
               Book Another Measurement
@@ -309,6 +355,35 @@ export default function FreeMeasurementClient() {
             <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-sm text-amber-800">
               <Clock className="w-4 h-4 flex-shrink-0" />
               <span><strong>Next Available:</strong> {nextAvailableDate}</span>
+            </div>
+            {serviceInterest && (
+              <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700">
+                <CheckCircle className="w-4 h-4 flex-shrink-0 text-amber-500" />
+                <span><strong>Service requested:</strong> {serviceInterest}</span>
+              </div>
+            )}
+            <div>
+              <Label className="font-semibold mb-1.5 block">What are you looking to floor? <span className="font-normal text-slate-400">(select all that apply)</span></Label>
+              <div className="grid grid-cols-2 gap-2">
+                {FLOORING_INTERESTS.map(({ value, label }) => {
+                  const active = flooringInterests.includes(value);
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => toggleInterest(value)}
+                      aria-pressed={active}
+                      className={`flex items-center gap-2 border-2 rounded-xl py-2 px-3 text-sm font-medium text-left transition-all ${active ? 'border-amber-500 bg-amber-50 text-amber-800' : 'border-slate-200 hover:border-amber-300 text-slate-700'}`}
+                    >
+                      <span className={`flex items-center justify-center w-4 h-4 rounded border ${active ? 'bg-amber-500 border-amber-500' : 'border-slate-300'}`}>
+                        {active && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                      </span>
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1">Helps us bring the right samples to your measurement.</p>
             </div>
             <div>
               <Label className="font-semibold">Products You&apos;re Interested In</Label>

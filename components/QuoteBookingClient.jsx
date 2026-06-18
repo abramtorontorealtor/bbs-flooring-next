@@ -56,6 +56,20 @@ export default function QuoteBookingClient() {
   const productName = searchParams.get('product') || quoteData.product_name || null;
   const sqft = searchParams.get('sqft') || quoteData.square_footage || null;
   const estimate = searchParams.get('estimate') || quoteData.total || null;
+  const serviceInterest = (() => {
+    const s = searchParams.get('service');
+    if (!s) return '';
+    const map = {
+      'hardwood-refinishing': 'Hardwood Refinishing',
+      'hardwood-refinishing-markham': 'Hardwood Refinishing (Markham)',
+      'stair-refinishing': 'Stair Refinishing',
+      'stair-refinishing-markham': 'Stair Refinishing (Markham)',
+      'carpet-removal': 'Carpet Removal',
+      'carpet-removal-markham': 'Carpet Removal (Markham)',
+      'installation': 'Flooring Installation',
+    };
+    return map[s] || s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  })();
 
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -64,6 +78,13 @@ export default function QuoteBookingClient() {
   const [showStickyBar, setShowStickyBar] = useState(false);
 
   const [postalCode, setPostalCode] = useState('');
+  const [flooringInterests, setFlooringInterests] = useState([]);
+
+  const toggleInterest = (value) => {
+    setFlooringInterests((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+  };
 
   const [formData, setFormData] = useState({
     customer_name: quoteData.customer_name || '',
@@ -183,6 +204,8 @@ export default function QuoteBookingClient() {
             productName && `Product: ${productName}`,
             sqft && `${sqft} sq ft`,
             estimate && `Estimate: C$${parseFloat(estimate).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+            serviceInterest && `Service: ${serviceInterest}`,
+            flooringInterests.length && `Interested in: ${flooringInterests.join(', ')}`,
             formData.notes,
           ].filter(Boolean).join(' · '),
         },
@@ -209,7 +232,11 @@ export default function QuoteBookingClient() {
                 customer_address: formData.customer_address,
                 preferred_date: formData.preferred_date,
                 preferred_time: formData.preferred_time,
-                notes: formData.notes,
+                notes: [
+                  serviceInterest && `Service: ${serviceInterest}`,
+                  flooringInterests.length && `Interested in: ${flooringInterests.join(', ')}`,
+                  formData.notes,
+                ].filter(Boolean).join(' · '),
               },
               is_member: !!quoteData.is_member,
             }),
@@ -449,6 +476,38 @@ export default function QuoteBookingClient() {
                         </div>
                       </div>
                     )}
+                  </div>
+
+                  {/* Flooring interests (Phase E) */}
+                  {serviceInterest && (
+                    <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700">
+                      <CheckCircle className="w-4 h-4 flex-shrink-0 text-amber-500" />
+                      <span><strong>Service requested:</strong> {serviceInterest}</span>
+                    </div>
+                  )}
+                  <div>
+                    <Label className="font-semibold text-slate-600 mb-1.5 block">What are you looking to floor? <span className="font-normal text-slate-400">(select all that apply)</span></Label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        'Engineered Hardwood', 'Vinyl / LVP', 'Laminate', 'Solid Hardwood', 'Stairs', 'Not Sure Yet',
+                      ].map((value) => {
+                        const active = flooringInterests.includes(value);
+                        return (
+                          <button
+                            key={value}
+                            type="button"
+                            onClick={() => toggleInterest(value)}
+                            aria-pressed={active}
+                            className={`flex items-center gap-2 border-2 rounded-xl py-2 px-3 text-sm font-medium text-left transition-all ${active ? 'border-amber-500 bg-amber-50 text-amber-800' : 'border-slate-200 hover:border-amber-300 text-slate-700'}`}
+                          >
+                            <span className={`flex items-center justify-center w-4 h-4 rounded border ${active ? 'bg-amber-500 border-amber-500' : 'border-slate-300'}`}>
+                              {active && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                            </span>
+                            {value}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   {/* Notes */}
