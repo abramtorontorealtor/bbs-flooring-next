@@ -19,6 +19,7 @@ import {
 const HERO_IMAGE = `${CDN_GALLERY}/stair-project-8.webp`;
 
 const SPOKE_LINKS = [
+  { href: '/stair-refinishing-markham', label: 'Stair Refinishing in Markham', description: 'Serving Markham — recapping carpeted builder stairs & refinishing. Local pricing & free estimate' },
   { route: 'CarpetToHardwoodStairs', label: 'Carpet to Hardwood Stairs', description: 'Replace worn carpet with beautiful hardwood treads — pricing & process guide' },
   { route: 'Stairs', label: 'Staircase Installation & Renovation', description: 'Full staircase renovation services including treads, railings, and pickets' },
   { route: 'HardwoodRefinishing', label: 'Hardwood Floor Refinishing', description: 'Match your refinished stairs with freshly refinished hardwood floors' },

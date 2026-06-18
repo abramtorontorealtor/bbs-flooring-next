@@ -168,7 +168,8 @@ export default function CarpetRemovalClient() {
       <section aria-label="Shop wholesale flooring after carpet removal" className="bg-white py-16 md:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-black text-slate-800 mb-2">Once Your Subfloor Is Ready, Explore Our Wholesale Flooring</h2>
-          <p className="text-slate-500 mb-8">Your clean slate is the perfect foundation. Shop our premium selection at wholesale prices.</p>
+          <p className="text-slate-500 mb-4">Your clean slate is the perfect foundation. Shop our premium selection at wholesale prices.</p>
+          <p className="text-slate-500 mb-8 text-sm">In Markham? See our <Link href="/carpet-removal-markham" className="text-amber-600 underline hover:text-amber-700">Markham carpet removal</Link> page for local pricing, neighbourhoods served, and a free quote.</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {NEXT_STEPS.map(({ label, href }) => (
               <Link

@@ -50,6 +50,10 @@ export default async function sitemap() {
     { path: '/hardwood-refinishing', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/carpet-removal', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/carpet-to-hardwood-stairs', priority: 0.7, changeFrequency: 'monthly' },
+    // City service pages (Phase D — Markham)
+    { path: '/hardwood-refinishing-markham', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/stair-refinishing-markham', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/carpet-removal-markham', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/free-measurement', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/floor-finder', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/flooring-installation-cost', priority: 0.8, changeFrequency: 'monthly' },

@@ -20,6 +20,7 @@ import {
 const HERO_IMAGE = `${CDN_GALLERY}/flooring-project-10.webp`;
 
 const SPOKE_LINKS = [
+  { href: '/hardwood-refinishing-markham', label: 'Hardwood Refinishing in Markham', description: 'Serving Markham — Unionville, Cornell, Cachet & more. Pricing, process & free local estimate' },
   { route: 'StairRefinishing', label: 'Stair Refinishing & Renovation', description: 'Match your freshly refinished floors with beautifully restored staircases' },
   { route: 'Installation', label: 'Flooring Installation Services', description: 'New flooring installation from $2.00/sqft — hardwood, vinyl, laminate' },
   { route: 'EngineeredHardwood', label: 'Engineered Hardwood Flooring', description: 'Browse 200+ engineered hardwood styles if replacement is the right call' },
