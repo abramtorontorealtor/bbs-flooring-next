@@ -8,6 +8,20 @@ export const dynamic = 'force-dynamic';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://bbsflooring.ca';
 
+// Google rejects the WHOLE sitemap with "Invalid URL" if any <image:loc> is not an
+// absolute http(s) URL. Product/blog image columns can contain relative paths
+// (e.g. "/images/product-placeholder.svg") or empty strings — normalize them:
+// absolute URLs pass through, root-relative paths get the site origin prepended,
+// and anything else (empty/null/data:) is dropped.
+function toAbsoluteImageUrl(raw) {
+  if (typeof raw !== 'string') return null;
+  const v = raw.trim();
+  if (!v) return null;
+  if (/^https?:\/\//i.test(v)) return v;
+  if (v.startsWith('/')) return `${SITE_URL}${v}`;
+  return null;
+}
+
 export default async function sitemap() {
   const entries = [];
   const now = new Date().toISOString();
@@ -108,7 +122,7 @@ export default async function sitemap() {
         ...stairsImages.map(img => img.url),
         ...flooringImages.map(img => img.url),
         ...commercialImages.map(img => img.url),
-      ].filter(Boolean);
+      ].map(toAbsoluteImageUrl).filter(Boolean);
       if (galleryUrls.length > 0) {
         entry.images = galleryUrls;
       }
@@ -153,8 +167,9 @@ export default async function sitemap() {
           const images = [];
 
           // Primary product image
-          if (product.image_url) {
-            images.push(product.image_url);
+          const primary = toAbsoluteImageUrl(product.image_url);
+          if (primary) {
+            images.push(primary);
           }
 
           // Additional images (room scenes, plank strips, etc.)
@@ -165,7 +180,7 @@ export default async function sitemap() {
                 : product.additional_images;
               if (Array.isArray(additional)) {
                 for (const img of additional) {
-                  const url = typeof img === 'string' ? img : img?.url;
+                  const url = toAbsoluteImageUrl(typeof img === 'string' ? img : img?.url);
                   if (url) images.push(url);
                 }
               }
@@ -213,8 +228,9 @@ export default async function sitemap() {
             priority: 0.5,
           };
 
-          if (post.featured_image) {
-            entry.images = [post.featured_image];
+          const featured = toAbsoluteImageUrl(post.featured_image);
+          if (featured) {
+            entry.images = [featured];
           }
 
           entries.push(entry);
