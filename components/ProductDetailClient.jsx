@@ -331,6 +331,14 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
   /* ── Derived display values ── */
   const hidePrice = product?.hide_price === true;
+  /* Phase F: care guide deep-link by category (only categories with a published guide) */
+  const careGuide = (() => {
+    const cat = (product?.category || '').toLowerCase();
+    if (cat.includes('engineered')) return { href: '/how-to-clean-engineered-hardwood', label: 'How to Clean Engineered Hardwood' };
+    if (cat.includes('vinyl')) return { href: '/how-to-clean-vinyl-plank-flooring', label: 'How to Clean Vinyl Plank Flooring' };
+    if (cat.includes('laminate')) return { href: '/how-to-clean-laminate-flooring', label: 'How to Clean Laminate Flooring' };
+    return null;
+  })();
   const isAdmin = currentUser?.email === 'info@bbsflooring.ca';
   const hasDiscount = !hidePrice && currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft;
   const displayPrice = hasDiscount ? currentPricing.sale_price_per_sqft : currentPricing.price_per_sqft;
@@ -837,6 +845,15 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           </div>
           )}
 
+          {/* ── Phase F: Book Free Measurement — product carried into the booking form (?product=) ── */}
+          <Link
+            href={product?.name ? `/free-measurement?product=${encodeURIComponent(product.name)}` : '/free-measurement'}
+            className="mt-4 flex items-center justify-center gap-2 p-3 bg-white rounded-xl border border-amber-300 text-amber-700 text-sm font-semibold hover:bg-amber-50 transition-colors"
+          >
+            <Ruler className="w-4 h-4" />
+            Book a Free In-Home Measurement
+          </Link>
+
           {/* ── Quick Contact (below buy box, not competing with it) ── */}
           <div className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
             <div className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0">
@@ -940,6 +957,15 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               <p className="text-xs text-slate-500 mt-0.5">Matching finishing touches</p>
             </div>
           </Link>
+          {careGuide && (
+            <Link href={careGuide.href} className="group flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-amber-300 hover:shadow-md transition-all">
+              <span className="text-2xl">🧽</span>
+              <div>
+                <h3 className="text-sm font-bold text-slate-800 group-hover:text-amber-600 transition-colors">Care &amp; Cleaning Guide</h3>
+                <p className="text-xs text-slate-500 mt-0.5">Keep this floor looking new</p>
+              </div>
+            </Link>
+          )}
         </div>
       </section>
 
