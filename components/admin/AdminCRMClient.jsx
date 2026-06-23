@@ -104,6 +104,7 @@ export default function AdminCRMClient() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState('date');
   const [sortDir, setSortDir] = useState('desc');
+  const [queueMode, setQueueMode] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
   const [noteText, setNoteText] = useState('');
   const [lostReason, setLostReason] = useState('');
@@ -554,6 +555,50 @@ export default function AdminCRMClient() {
     return { todayLeads, weekLeads, newLeads, urgentLeads, pendingCapture, pendingEtransfer, pipeline, weekOrders, weekRevenue };
   }, [allLeads]);
 
+  // ─── FOLLOW-UP QUEUE ───────────────────────────────────────────────────
+  // Leads needing a follow-up nudge, bucketed by urgency, biggest deal first.
+  // Mirrors scripts/crm-followup-digest.py so the in-app queue and the daily
+  // Telegram digest agree. Orders are excluded (they have their own pipeline).
+  const followUpQueue = useMemo(() => {
+    const COLD_STALE_DAYS = 3;
+    const today = todayStart();
+    const todayISO = today.toISOString().slice(0, 10);
+    const dead = ['lost', 'cancelled', 'completed', 'delivered', 'closed', 'won'];
+
+    const rows = allLeads
+      .filter(l => l.source !== 'order' && !dead.includes(l.status))
+      .map(l => {
+        const next = l.raw?.next_follow_up_date || null;
+        const created = l.date ? new Date(l.date) : null;
+        const ageDays = created ? Math.floor((today - new Date(created.getFullYear(), created.getMonth(), created.getDate())) / 86400000) : null;
+        let bucket = null;
+        if (next && next < todayISO) bucket = 'overdue';
+        else if (next === todayISO) bucket = 'due_today';
+        else if (!next && ['new', 'contacted'].includes(l.status) && ageDays !== null && ageDays >= COLD_STALE_DAYS) bucket = 'cold';
+        return { ...l, nextDate: next, ageDays, bucket };
+      })
+      .filter(l => l.bucket);
+
+    const rank = { overdue: 0, due_today: 1, cold: 2 };
+    rows.sort((a, b) => (rank[a.bucket] - rank[b.bucket]) || (b.value - a.value));
+    return {
+      rows,
+      overdue: rows.filter(r => r.bucket === 'overdue').length,
+      dueToday: rows.filter(r => r.bucket === 'due_today').length,
+      cold: rows.filter(r => r.bucket === 'cold').length,
+      value: Math.round(rows.reduce((s, r) => s + r.value, 0)),
+    };
+  }, [allLeads]);
+
+  // Mark a lead contacted AND schedule the next follow-up (+3d high-value, else +7d).
+  const markContactedAndSchedule = async (lead) => {
+    const days = lead.value >= 10000 ? 3 : 7;
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    const nextISO = d.toISOString().slice(0, 10);
+    await updateLeadStatus(lead, 'contacted', { next_follow_up_date: nextISO });
+  };
+
   // ─── LEAD STATUS UPDATE ────────────────────────────────────────────────
   const updateLeadStatus = async (lead, newStatus, extraFields = {}) => {
     try {
@@ -792,6 +837,18 @@ export default function AdminCRMClient() {
             </CardContent>
           </Card>
 
+          <Card
+            onClick={() => setQueueMode(v => !v)}
+            className={`cursor-pointer transition ${queueMode ? 'border-amber-500 bg-amber-50 ring-1 ring-amber-400' : (followUpQueue.overdue > 0 ? 'border-red-300 bg-red-50' : 'hover:bg-slate-50')}`}>
+            <CardContent className="p-4">
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">📋 Follow-Ups</p>
+              <p className={`text-2xl font-bold ${followUpQueue.overdue > 0 ? 'text-red-600' : 'text-slate-800'}`}>{followUpQueue.rows.length}</p>
+              <p className="text-xs text-slate-500">
+                {followUpQueue.overdue} overdue · {queueMode ? 'showing' : 'tap to view'}
+              </p>
+            </CardContent>
+          </Card>
+
           <Card>
             <CardContent className="p-4">
               <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">This Week</p>
@@ -802,6 +859,71 @@ export default function AdminCRMClient() {
             </CardContent>
           </Card>
         </div>
+
+        {/* ── FOLLOW-UP QUEUE ─────────────────────────────────────── */}
+        {queueMode && (
+          <Card className="mb-4 border-amber-300">
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <h2 className="text-lg font-bold text-slate-800">📋 Follow-Up Queue</h2>
+                  <p className="text-xs text-slate-500">
+                    {followUpQueue.overdue} overdue · {followUpQueue.dueToday} due today · {followUpQueue.cold} cold ·
+                    {' '}${followUpQueue.value.toLocaleString('en-CA')} pipeline
+                  </p>
+                </div>
+                <Button size="sm" variant="outline" onClick={() => setQueueMode(false)}>✕ Close</Button>
+              </div>
+              {followUpQueue.rows.length === 0 ? (
+                <div className="py-8 text-center text-slate-500">🎉 No follow-ups due. Inbox zero.</div>
+              ) : (
+                <div className="space-y-2">
+                  {followUpQueue.rows.map(lead => {
+                    const bCfg = {
+                      overdue: { dot: 'bg-red-500', label: 'Overdue', cls: 'text-red-700' },
+                      due_today: { dot: 'bg-amber-500', label: 'Due today', cls: 'text-amber-700' },
+                      cold: { dot: 'bg-sky-400', label: 'Cold', cls: 'text-sky-700' },
+                    }[lead.bucket];
+                    return (
+                      <div key={lead.id} className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 rounded-lg border bg-white">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className={`inline-block w-2 h-2 rounded-full ${bCfg.dot}`} />
+                            <span className="font-semibold text-slate-800 truncate">{lead.name}</span>
+                            {lead.value >= 10000 && <span title="High value">🔥</span>}
+                            <span className="text-sm font-bold text-slate-700">
+                              {lead.value > 0 ? `$${lead.value.toLocaleString('en-CA', { maximumFractionDigits: 0 })}` : ''}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 truncate">
+                            <span className={bCfg.cls}>{bCfg.label}</span>
+                            {' · '}{lead.source}{lead.ageDays != null ? ` · ${lead.ageDays}d old` : ''}
+                            {lead.nextDate ? ` · next ${lead.nextDate}` : ''}
+                            {lead.phone ? ` · ${lead.phone}` : ''}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {lead.phone && (
+                            <a href={`tel:${lead.phone}`}
+                              className="px-2.5 py-1.5 text-xs rounded-md bg-green-600 text-white hover:bg-green-700">📞 Call</a>
+                          )}
+                          {lead.email && (
+                            <button onClick={() => openFollowUpCompose(lead)}
+                              className="px-2.5 py-1.5 text-xs rounded-md bg-blue-600 text-white hover:bg-blue-700">📧 Email</button>
+                          )}
+                          <button onClick={() => markContactedAndSchedule(lead)}
+                            className="px-2.5 py-1.5 text-xs rounded-md bg-slate-200 text-slate-700 hover:bg-slate-300">✅ Done</button>
+                          <button onClick={() => setSelectedLead(lead)}
+                            className="px-2.5 py-1.5 text-xs rounded-md border text-slate-600 hover:bg-slate-50">Open</button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* ── FILTERS ─────────────────────────────────────────────── */}
         <Card className="mb-4">
