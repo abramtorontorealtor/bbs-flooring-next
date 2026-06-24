@@ -7,8 +7,8 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 export default function MobileMenu({ open, onOpenChange, navItems }) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-80">
-        <div className="flex flex-col gap-6 mt-8 overflow-y-auto max-h-[calc(100vh-120px)] pb-8">
+      <SheetContent side="right" className="w-80 flex flex-col">
+        <div className="flex flex-col gap-6 mt-8 overflow-y-auto flex-1 min-h-0 overscroll-contain pb-[max(2rem,env(safe-area-inset-bottom))]">
           {/* Free Measurement — prominent CTA */}
           <Link
             href="/free-measurement"
