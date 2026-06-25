@@ -34,25 +34,77 @@ export default function ExitIntentPopup() {
     if (typeof window !== 'undefined' && sessionStorage.getItem(STORAGE_KEY)) return;
 
     const pageLoadTime = Date.now();
-    const MIN_TIME_ON_PAGE_MS = 15000;
+
+    // ── Engagement gates (intelligent timing) ───────────────────────────────
+    // Don't bother people who just landed. Only treat a leave as "exit intent"
+    // once the visitor has actually engaged with the page.
+    const DESKTOP_MIN_TIME_MS = 25000;   // 25s minimum dwell before arming
+    const DESKTOP_ENGAGED_TIME_MS = 40000; // OR 40s = engaged regardless of scroll
+    const DESKTOP_SCROLL_PX = 400;       // OR scrolled a meaningful amount
+    const MOBILE_MIN_TIME_MS = 35000;    // mobile needs real dwell too
+    const MOBILE_SCROLL_RATIO = 0.45;    // ...and to have read ~half the page
+    const MOBILE_ENGAGED_TIME_MS = 70000; // OR a long dwell with some scroll
+
+    let maxScroll = 0;
+    let lastScrollY = window.scrollY || 0;
+    let lastDirection = 0; // 1 = down, -1 = up
+
+    const scrollDepthPx = () => maxScroll;
+    const scrollRatio = () => {
+      const doc = document.documentElement;
+      const scrollable = Math.max(1, doc.scrollHeight - window.innerHeight);
+      return Math.min(1, maxScroll / scrollable);
+    };
+
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      if (y > maxScroll) maxScroll = y;
+      lastDirection = y < lastScrollY ? -1 : y > lastScrollY ? 1 : lastDirection;
+      lastScrollY = y;
+    };
+
+    // Desktop exit-intent: cursor bolts to the top chrome (tabs/address bar),
+    // but only after genuine engagement.
+    const desktopEngaged = () => {
+      const t = Date.now() - pageLoadTime;
+      if (t < DESKTOP_MIN_TIME_MS) return false;
+      return t >= DESKTOP_ENGAGED_TIME_MS || scrollDepthPx() >= DESKTOP_SCROLL_PX;
+    };
 
     const handleMouseLeave = (e) => {
-      if (e.clientY <= 5 && Date.now() - pageLoadTime >= MIN_TIME_ON_PAGE_MS) {
+      if (e.clientY <= 5 && desktopEngaged()) {
         showPopup();
       }
     };
 
-    const mobileTimer = setTimeout(() => {
-      if (window.innerWidth < 1024) {
+    // Mobile exit signal: a fast flick back to the very top (the classic
+    // "I'm done, leaving" gesture) OR a back-navigation attempt — gated behind
+    // real engagement so we never interrupt an actively-reading visitor.
+    const mobileEngaged = () => {
+      const t = Date.now() - pageLoadTime;
+      if (t < MOBILE_MIN_TIME_MS) return false;
+      if (scrollRatio() >= MOBILE_SCROLL_RATIO) return true;
+      return t >= MOBILE_ENGAGED_TIME_MS && scrollDepthPx() > 200;
+    };
+
+    const onMobileScroll = () => {
+      if (window.innerWidth >= 1024) return;
+      // Idle guard: only consider it an exit gesture if they've stopped at the
+      // top after scrolling up — not mid-scroll.
+      const y = window.scrollY || 0;
+      if (lastDirection === -1 && y <= 4 && maxScroll > 600 && mobileEngaged()) {
         showPopup();
       }
-    }, 45000);
+    };
 
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onMobileScroll, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', onMobileScroll);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      clearTimeout(mobileTimer);
     };
   }, [isSuppressed, showPopup]);
 
