@@ -24,6 +24,7 @@ import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import RequestQuoteBox from '@/components/RequestQuoteBox';
+import SampleTrapModal from '@/components/SampleTrapModal';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
@@ -38,6 +39,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [sqftNeeded, setSqftNeeded] = useState('');
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(null);
+  const [sampleModalOpen, setSampleModalOpen] = useState(false);
   const [selectedVariantId, setSelectedVariantId] = useState(null);
   const [selectedJsonVariant, setSelectedJsonVariant] = useState(null);
   const [buyMode, setBuyMode] = useState('material');
@@ -854,6 +856,29 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             Book a Free In-Home Measurement
           </Link>
 
+          {/* ── See a Sample (in-person trap — no mailing) ── */}
+          <button
+            type="button"
+            onClick={() => setSampleModalOpen(true)}
+            className="mt-3 w-full flex items-center justify-center gap-2 p-3 bg-white rounded-xl border border-slate-300 text-slate-700 text-sm font-semibold hover:border-amber-300 hover:text-amber-700 transition-colors"
+          >
+            <Package className="w-4 h-4" />
+            See a Sample In Person
+          </button>
+
+          {/* ── Best Price Guarantee badge ── */}
+          <Link
+            href="/price-match"
+            className="mt-3 flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-200 hover:border-amber-400 transition-colors group"
+          >
+            <span className="text-xl">🛡️</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-slate-800 group-hover:text-amber-700">Best Price Guarantee</p>
+              <p className="text-[11px] text-slate-500">Found it cheaper locally? We&apos;ll beat the price.</p>
+            </div>
+            <ChevronDown className="w-4 h-4 text-amber-500 -rotate-90" />
+          </Link>
+
           {/* ── Quick Contact (below buy box, not competing with it) ── */}
           <div className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
             <div className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0">
@@ -1018,6 +1043,9 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         selectionSummary={selectionSummary}
         onScrollToQuote={hidePrice ? scrollToQuoteBox : null}
       />
+
+      {/* ── Sample-in-person trap modal ── */}
+      <SampleTrapModal open={sampleModalOpen} onOpenChange={setSampleModalOpen} product={product} />
     </div>
   );
 }
