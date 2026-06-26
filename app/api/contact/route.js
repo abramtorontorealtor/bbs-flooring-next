@@ -8,6 +8,7 @@ import {
 } from '@/lib/email';
 import { sendTelegramAlert, formatContactAlert } from '@/lib/telegram';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
+import { detectSpamLead } from '@/lib/spam-filter';
 
 // Rate limit: 5 contact submissions per IP per 15 minutes
 const RATE_LIMIT = { maxRequests: 5, windowMs: 15 * 60 * 1000 };
@@ -25,13 +26,22 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    const { name, email, phone, message, source, smsConsent } = body;
+    const { name, email, phone, message, source, smsConsent, honeypot, company } = body;
 
     if (!name || !email) {
       return NextResponse.json(
         { success: false, error: 'Name and email are required' },
         { status: 400 }
       );
+    }
+
+    // Silent spam filter — bot submissions get a fake 200 (so they don't adapt)
+    // but are never written to the CRM, emailed, or Telegram-alerted.
+    // `company` is the hidden honeypot field name used in the forms.
+    const spam = detectSpamLead({ name, email, phone, message, honeypot: honeypot || company });
+    if (spam.spam) {
+      console.warn(`[Contact] Dropped spam lead (${spam.reason}):`, { name, email, source });
+      return NextResponse.json({ success: true });
     }
 
     const supabase = getSupabaseAdminClient();

@@ -14,6 +14,7 @@ const initialFormData = {
   phone: '',
   message: '',
   smsConsent: false,
+  company: '', // honeypot — must stay empty; bots fill it
 };
 
 export default function ContactClient() {
@@ -176,6 +177,20 @@ export default function ContactClient() {
                       onChange={handleChange}
                       placeholder="(647) 555-0100"
                       className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+                    />
+                  </div>
+
+                  {/* Honeypot — hidden from real users, catches bots. Do not remove. */}
+                  <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }}>
+                    <label htmlFor="company">Company (leave blank)</label>
+                    <input
+                      id="company"
+                      name="company"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.company}
+                      onChange={handleChange}
                     />
                   </div>
 
