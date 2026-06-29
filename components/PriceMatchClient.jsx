@@ -116,11 +116,11 @@ export default function PriceMatchClient() {
       <section className="max-w-3xl mx-auto px-4 py-14">
         <h2 className="text-2xl font-bold text-slate-900 mb-5">The Fine Print (kept honest)</h2>
         <ul className="space-y-3 text-sm text-slate-600 leading-relaxed">
-          <li className="flex gap-2"><span className="text-amber-500 font-bold">•</span> The competing product must be the <strong>identical item</strong> — same brand and same SKU — and in stock.</li>
-          <li className="flex gap-2"><span className="text-amber-500 font-bold">•</span> The competitor must be a <strong>legitimate local flooring business</strong> in the GTA or Ontario.</li>
-          <li className="flex gap-2"><span className="text-amber-500 font-bold">•</span> We can&apos;t match <strong>used, clearance, liquidation, going-out-of-business, or marketplace listings</strong> (Kijiji, Facebook Marketplace, scratch-and-dent).</li>
-          <li className="flex gap-2"><span className="text-amber-500 font-bold">•</span> The guarantee covers the <strong>product price</strong>. Installation, measurement, and financing are added value, not part of the match.</li>
-          <li className="flex gap-2"><span className="text-amber-500 font-bold">•</span> Proof of the competitor&apos;s price (quote, ad, or screenshot) is <strong>preferred but not required</strong> — it just helps us verify and beat it faster.</li>
+          <li className="flex gap-2"><span className="text-amber-500 font-bold shrink-0">•</span><span>The competing product must be the <strong>identical item</strong> — same brand and same SKU — and in stock.</span></li>
+          <li className="flex gap-2"><span className="text-amber-500 font-bold shrink-0">•</span><span>The competitor must be a <strong>legitimate local flooring business</strong> in the GTA or Ontario.</span></li>
+          <li className="flex gap-2"><span className="text-amber-500 font-bold shrink-0">•</span><span>We can&apos;t match <strong>used, clearance, liquidation, going-out-of-business, or marketplace listings</strong> (Kijiji, Facebook Marketplace, scratch-and-dent).</span></li>
+          <li className="flex gap-2"><span className="text-amber-500 font-bold shrink-0">•</span><span>The guarantee covers the <strong>product price</strong>. Installation, measurement, and financing are added value, not part of the match.</span></li>
+          <li className="flex gap-2"><span className="text-amber-500 font-bold shrink-0">•</span><span>Proof of the competitor&apos;s price (quote, ad, or screenshot) is <strong>preferred but not required</strong> — it just helps us verify and beat it faster.</span></li>
         </ul>
       </section>
 
