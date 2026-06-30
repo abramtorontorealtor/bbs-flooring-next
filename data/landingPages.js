@@ -418,7 +418,7 @@ export const waterproofFlooringData = {
       body: `<p>Water damage is the #1 flooring killer. Protect your investment with flooring engineered to handle spills, splashes, and even minor flooding. BBS Flooring carries two waterproof categories:</p>
 <ul>
 <li><strong><a href="/Vinyl">SPC Luxury Vinyl Plank</a>:</strong> 100% waterproof stone-polymer core. Ideal for basements, kitchens, bathrooms, and laundry rooms. From $2.49/sqft.</li>
-<li><strong><a href="/Laminate">Water-Resistant Laminate</a>:</strong> Sealed edges and HDF core with wax treatment. Handles splashes for up to 72 hours. From $2.39/sqft.</li>
+<li><strong><a href="/Laminate">Waterproof Laminate</a>:</strong> Most of our laminate collection features sealed edges and a wax-treated HDF core that handles splashes for up to 72 hours. (Some older/budget laminates are water-resistant only — ask us which is which.) From $2.39/sqft.</li>
 </ul>
 <p>For fully below-grade basements, we strongly recommend SPC vinyl. For main-floor kitchens and living areas, either option works beautifully.</p>`
     },
@@ -433,7 +433,7 @@ export const waterproofFlooringData = {
   ],
   faqItems: [
     { question: 'What is the best waterproof flooring?', answer: 'SPC (Stone Polymer Composite) luxury vinyl plank is the best fully waterproof flooring. Its rigid stone-polymer core is 100% impervious to water, handles temperature swings, and installs over concrete without glue. BBS Flooring carries 100+ SPC options.' },
-    { question: 'Is waterproof laminate really waterproof?', answer: 'Water-resistant laminate can handle splashes and spills for up to 72 hours, but it is NOT fully submersible like SPC vinyl. For basements or bathrooms where standing water is possible, we recommend SPC vinyl instead.' },
+    { question: 'Is waterproof laminate really waterproof?', answer: 'Most of our laminate collection is rated to handle splashes and spills for up to 72 hours — a big upgrade over older laminate, which was only water-resistant for a few hours. But even 72-hour laminate is NOT fully submersible like SPC vinyl. For basements or bathrooms where standing water is possible, we recommend SPC vinyl instead. Ask us which laminates carry the full 72-hour rating.' },
     { question: 'How much does waterproof flooring cost?', answer: 'SPC vinyl: $2.49–$6.00/sqft. Water-resistant laminate: $2.39–$5.00/sqft. Installation adds $1.25–$3.00/sqft depending on type. Call (647) 428-1111 or use our Quote Calculator for your exact price.' },
   ],
   productFilter: (p) => {
