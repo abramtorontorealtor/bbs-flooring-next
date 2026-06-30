@@ -239,15 +239,15 @@ export default function HomePage() {
           {/* ═══ HERO RIGHT — Affective trust + one-tap human contact (desktop only) ═══ */}
           {/* Fills the dead right-half on wide screens. NO email form — WhatsApp/phone only. */}
           <div className="hidden lg:block">
-            <div className="ml-auto max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-8 xl:p-9">
-              <h2 className="text-2xl xl:text-3xl font-extrabold text-white leading-tight mb-2">
+            <div className="ml-auto max-w-lg xl:max-w-xl bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-9 xl:p-11">
+              <h2 className="text-3xl xl:text-4xl font-extrabold text-white leading-tight mb-3">
                 Talk to a real flooring expert —{' '}
                 <span className="text-amber-400">not a call centre.</span>
               </h2>
-              <p className="text-slate-300 text-base mb-6 leading-relaxed">
+              <p className="text-slate-200 text-lg mb-7 leading-relaxed">
                 Send us a photo of your room and we&apos;ll help you pick the right floor — honest advice, wholesale prices, installed by our own crew.
               </p>
-              <ul className="space-y-3 mb-7">
+              <ul className="space-y-4 mb-8">
                 {[
                   '4.7★ rated on Google',
                   'Family-owned in Markham since 2012',
@@ -255,8 +255,8 @@ export default function HomePage() {
                   'Free in-home measurement',
                 ].map((line) => (
                   <li key={line} className="flex items-start gap-3 text-slate-100">
-                    <CheckCircleIcon className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm xl:text-base font-medium">{line}</span>
+                    <CheckCircleIcon className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-base xl:text-lg font-medium">{line}</span>
                   </li>
                 ))}
               </ul>
@@ -264,19 +264,19 @@ export default function HomePage() {
                 href="https://wa.me/message/CQQRGZKI3U2VH1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2.5 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white px-6 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-green-600/30 hover:-translate-y-0.5 transition-all mb-3"
+                className="flex items-center justify-center gap-2.5 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white px-6 py-4 xl:py-5 rounded-2xl font-bold text-lg xl:text-xl shadow-lg shadow-green-600/30 hover:-translate-y-0.5 transition-all mb-3.5"
               >
-                <WhatsAppIcon className="w-6 h-6" />
+                <WhatsAppIcon className="w-6 h-6 xl:w-7 xl:h-7" />
                 Message us on WhatsApp
               </a>
               <a
                 href="tel:+16474281111"
-                className="flex items-center justify-center gap-2 w-full border-2 border-white/30 bg-white/5 hover:bg-white/15 text-white px-6 py-3.5 rounded-2xl font-semibold text-lg transition-all"
+                className="flex items-center justify-center gap-2 w-full border-2 border-white/30 bg-white/5 hover:bg-white/15 text-white px-6 py-4 rounded-2xl font-semibold text-lg xl:text-xl transition-all"
               >
-                <PhoneIcon className="w-5 h-5" />
+                <PhoneIcon className="w-5 h-5 xl:w-6 xl:h-6" />
                 (647) 428-1111
               </a>
-              <p className="text-center text-xs text-slate-400 mt-4">
+              <p className="text-center text-sm text-slate-200 mt-5 font-medium">
                 One tap. A real person replies — usually within minutes.
               </p>
             </div>
