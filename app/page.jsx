@@ -88,6 +88,16 @@ const CATEGORIES = [
   },
 ];
 
+/* Hero quick-nav: thumbnails reuse the category images; routes match CATEGORY_ROUTES. */
+const HERO_CATEGORY_NAV = [
+  { label: 'Hardwood', href: '/engineered-hardwood', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/engineered-hardwood.webp' },
+  { label: 'Vinyl', href: '/vinyl', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/vinyl.webp' },
+  { label: 'Laminate', href: '/laminate', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/laminate.webp' },
+  { label: 'Waterproof', href: '/waterproof-flooring', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/waterproof.webp' },
+  { label: 'Solid Hardwood', href: '/solid-hardwood', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/solid-hardwood.webp' },
+  { label: '🔥 Clearance', href: '/clearance', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/clearance.webp', accent: true },
+];
+
 const SERVICES = [
   { title: 'Flooring Installation', description: 'Hardwood, vinyl, laminate — expert installation with free in-home measurement.', href: '/installation', icon: '🔨' },
   { title: 'Stair Renovation', description: 'Custom treads, refinishing, iron pickets. Transform your staircase.', href: '/stairs', icon: '🪜' },
@@ -167,17 +177,52 @@ export default function HomePage() {
             </a>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link
-                href="/free-measurement"
+                href="/products"
                 className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-7 py-3.5 md:px-8 md:py-4 text-base md:text-lg rounded-full w-full sm:w-auto font-bold shadow-lg shadow-amber-600/30 hover:shadow-amber-600/40 hover:-translate-y-0.5 transition-all"
               >
-                Get Free In-Home Quote <ArrowIcon />
+                Shop All Floors <ArrowIcon />
               </Link>
-              <a
-                href="tel:+16474281111"
+              <Link
+                href="/free-measurement"
                 className="inline-flex items-center justify-center border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-7 py-3.5 md:px-8 md:py-4 text-base md:text-lg rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all"
               >
-                <PhoneIcon className="mr-2 w-5 h-5" /> Call Now
-              </a>
+                Get Free In-Home Quote
+              </Link>
+            </div>
+
+            {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 ═══ */}
+            {/* Mobile: horizontal scroll strip. Desktop: tidy pill row. Server-rendered, zero client JS. */}
+            <div className="mt-7 md:mt-9">
+              <p className="text-xs md:text-sm font-medium text-slate-400 uppercase tracking-wider mb-3">
+                Shop by category
+              </p>
+              <div className="flex gap-2.5 md:gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scrollbar-thin">
+                {HERO_CATEGORY_NAV.map((c) => (
+                  <Link
+                    key={c.href}
+                    href={c.href}
+                    className={`group shrink-0 snap-start inline-flex items-center gap-2.5 rounded-2xl border px-3.5 py-2.5 md:px-4 md:py-3 backdrop-blur-sm transition-all hover:-translate-y-0.5 ${
+                      c.accent
+                        ? 'bg-orange-500/20 border-orange-400/40 hover:bg-orange-500/30'
+                        : 'bg-white/10 border-white/20 hover:bg-white/20 hover:border-amber-400/50'
+                    }`}
+                  >
+                    <span className="relative w-9 h-9 md:w-10 md:h-10 rounded-xl overflow-hidden shrink-0 ring-1 ring-white/10">
+                      <Image
+                        src={c.image}
+                        alt={c.label}
+                        fill
+                        sizes="40px"
+                        quality={55}
+                        className="object-cover"
+                      />
+                    </span>
+                    <span className={`text-sm md:text-[0.95rem] font-semibold whitespace-nowrap ${c.accent ? 'text-orange-200' : 'text-white'}`}>
+                      {c.label}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
