@@ -131,7 +131,7 @@ export default function HomePage() {
   return (
     <div>
       {/* ═══ HERO — Full-viewport, immersive, mobile-first ═══ */}
-      <section className="relative min-h-[620px] md:h-[100svh] max-h-[1000px] flex items-end md:items-center overflow-hidden">
+      <section className="relative flex items-center md:min-h-[100svh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
@@ -154,7 +154,7 @@ export default function HomePage() {
             style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.7) 40%, rgba(15,23,42,0.3) 70%, transparent 100%)' }}
           />
         </div>
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-8 pt-28 md:py-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-24 pt-28 md:py-24 md:pb-24">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-5 md:mb-8">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
