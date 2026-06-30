@@ -131,7 +131,7 @@ export default function HomePage() {
   return (
     <div>
       {/* ═══ HERO — Full-viewport, immersive, mobile-first ═══ */}
-      <section className="relative min-h-[560px] md:h-[100svh] max-h-[1000px] flex items-end md:items-center overflow-hidden">
+      <section className="relative min-h-[620px] md:h-[100svh] max-h-[1000px] flex items-end md:items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
@@ -154,7 +154,7 @@ export default function HomePage() {
             style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.7) 40%, rgba(15,23,42,0.3) 70%, transparent 100%)' }}
           />
         </div>
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-12 pt-36 md:py-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-8 pt-28 md:py-20">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-5 md:mb-8">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
@@ -192,32 +192,38 @@ export default function HomePage() {
 
             {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 ═══ */}
             {/* Mobile: horizontal scroll strip. Desktop: tidy pill row. Server-rendered, zero client JS. */}
-            <div className="mt-7 md:mt-9">
-              <p className="text-xs md:text-sm font-medium text-slate-400 uppercase tracking-wider mb-3">
+            <div className="mt-6 md:mt-9">
+              <p className="text-xs md:text-sm font-medium text-slate-300 uppercase tracking-wider mb-2.5 md:mb-3">
                 Shop by category
               </p>
-              <div className="flex gap-2.5 md:gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scrollbar-thin">
+              <div className="flex gap-3 md:gap-4 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scrollbar-thin">
                 {HERO_CATEGORY_NAV.map((c) => (
                   <Link
                     key={c.href}
                     href={c.href}
-                    className={`group shrink-0 snap-start inline-flex items-center gap-2.5 rounded-2xl border px-3.5 py-2.5 md:px-4 md:py-3 backdrop-blur-sm transition-all hover:-translate-y-0.5 ${
+                    className={`group shrink-0 snap-start w-[112px] md:w-[130px] rounded-2xl overflow-hidden border-2 bg-slate-900/40 backdrop-blur-sm transition-all hover:-translate-y-1 hover:shadow-lg ${
                       c.accent
-                        ? 'bg-orange-500/20 border-orange-400/40 hover:bg-orange-500/30'
-                        : 'bg-white/10 border-white/20 hover:bg-white/20 hover:border-amber-400/50'
+                        ? 'border-orange-500 hover:border-orange-400 hover:shadow-orange-500/30'
+                        : 'border-amber-500/70 hover:border-amber-400 hover:shadow-amber-500/30'
                     }`}
                   >
-                    <span className="relative w-9 h-9 md:w-10 md:h-10 rounded-xl overflow-hidden shrink-0 ring-1 ring-white/10">
-                      <Image
-                        src={c.image}
-                        alt={c.label}
-                        fill
-                        sizes="40px"
-                        quality={55}
-                        className="object-cover"
-                      />
+                    <span className="relative block w-full h-[72px] md:h-[84px] overflow-hidden">
+                      {c.accent ? (
+                        <span className="flex items-center justify-center w-full h-full bg-gradient-to-br from-orange-500 to-orange-600 text-2xl">
+                          🔥
+                        </span>
+                      ) : (
+                        <Image
+                          src={c.image}
+                          alt={c.label}
+                          fill
+                          sizes="130px"
+                          quality={80}
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      )}
                     </span>
-                    <span className={`text-sm md:text-[0.95rem] font-semibold whitespace-nowrap ${c.accent ? 'text-orange-200' : 'text-white'}`}>
+                    <span className={`block text-center text-sm font-bold py-2 px-1 whitespace-nowrap ${c.accent ? 'text-orange-100 bg-orange-600/90' : 'text-white bg-slate-900/70'}`}>
                       {c.label}
                     </span>
                   </Link>
