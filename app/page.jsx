@@ -155,7 +155,7 @@ export default function HomePage() {
           />
         </div>
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-24 pt-32 md:py-20 md:pb-20">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl lg:max-w-4xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-4 md:mb-6">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
               <span className="text-amber-400 text-xs md:text-sm font-medium">4.7★ Google · Since 2012 in Markham</span>
@@ -192,16 +192,17 @@ export default function HomePage() {
 
             {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 ═══ */}
             {/* Mobile: horizontal scroll strip. Desktop: tidy pill row. Server-rendered, zero client JS. */}
-            <div className="mt-6 md:mt-9">
+            <div className="mt-6 md:mt-9 lg:max-w-3xl">
               <p className="text-xs md:text-sm font-medium text-slate-300 uppercase tracking-wider mb-2.5 md:mb-3">
                 Shop by category
               </p>
-              <div className="flex gap-3 md:gap-4 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scrollbar-thin">
+              {/* Mobile: horizontal snap-scroll. Desktop (md+): clean full-width row, no scroll. */}
+              <div className="flex gap-3 md:gap-4 overflow-x-auto md:overflow-visible pb-2 md:pb-0 -mx-1 px-1 snap-x snap-mandatory scrollbar-thin">
                 {HERO_CATEGORY_NAV.map((c) => (
                   <Link
                     key={c.href}
                     href={c.href}
-                    className={`group shrink-0 snap-start w-[112px] md:w-[130px] rounded-2xl overflow-hidden border-2 bg-slate-900/40 backdrop-blur-sm transition-all hover:-translate-y-1 hover:shadow-lg ${
+                    className={`group shrink-0 md:shrink md:flex-1 snap-start w-[112px] md:w-auto rounded-2xl overflow-hidden border-2 bg-slate-900/40 backdrop-blur-sm transition-all hover:-translate-y-1 hover:shadow-lg ${
                       c.accent
                         ? 'border-orange-500 hover:border-orange-400 hover:shadow-orange-500/30'
                         : 'border-amber-500/70 hover:border-amber-400 hover:shadow-amber-500/30'
