@@ -154,23 +154,23 @@ export default function HomePage() {
             style={{ background: 'linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.7) 40%, rgba(15,23,42,0.3) 70%, transparent 100%)' }}
           />
         </div>
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-24 pt-28 md:py-24 md:pb-24">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 w-full pb-24 pt-32 md:py-20 md:pb-20">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-5 md:mb-8">
+            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-4 md:mb-6">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
               <span className="text-amber-400 text-xs md:text-sm font-medium">4.7★ Google · Since 2012 in Markham</span>
             </div>
-            <h1 className="text-[2.5rem] leading-[1.08] sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white md:leading-[1.05] mb-5 md:mb-8 tracking-tight">
+            <h1 className="text-[2.25rem] leading-[1.1] sm:text-5xl md:text-6xl font-extrabold text-white md:leading-[1.05] mb-3 md:mb-5 tracking-tight">
               Markham Flooring Store.{' '}
               <span className="text-amber-500">1,000+ Floors. Wholesale Prices.</span>
             </h1>
-            <p className="text-base md:text-2xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
-              Hardwood, vinyl, and laminate from $1.49/sqft. Free in-home measurements across Markham, Toronto &amp; Durham. Expert installation by our own crew — not subcontractors.
+            <p className="text-base md:text-xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
+              Hardwood, vinyl &amp; laminate from $1.49/sqft. Free in-home measurements. Installed by our own crew.
             </p>
             {/* Phone number directly in hero — unmissable */}
             <a
               href="tel:+16474281111"
-              className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-lg md:text-xl font-bold mb-7 md:mb-10 transition-colors"
+              className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-lg md:text-xl font-bold mb-5 md:mb-7 transition-colors"
             >
               <PhoneIcon className="w-5 h-5 md:w-6 md:h-6" />
               (647) 428-1111
