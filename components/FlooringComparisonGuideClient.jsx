@@ -55,7 +55,7 @@ export default function FlooringComparisonGuideClient() {
           Quick Answer: Hardwood vs Vinyl vs Laminate &#8212; Which Is Best?
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          It depends on your room and budget. Vinyl/SPC ($1.79&#8211;$3.59/sqft) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($2.49&#8211;$8.99/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.29/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 1,000+ products in stock. Free comparison visit: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          It depends on your room and budget. Vinyl/SPC ($1.79&#8211;$3.59/sqft) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($2.49&#8211;$8.99/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.29/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 1,000+ products in stock. Free comparison visit: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 

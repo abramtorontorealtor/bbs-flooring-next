@@ -54,7 +54,7 @@ export default function SolidHardwoodGuideClient() {
           Quick Answer: Best Solid Hardwood Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 83 solid hardwood options from $5.10&#8211;$7.25/sqft. Four Canadian brands: Wickham, Appalachian, Sherwood Forest, and Northernest. &#190;&quot; thick solid planks that can be refinished 5&#8211;7 times. Professional nail-down installation from $2.25/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring carries 83 solid hardwood options from $5.10&#8211;$7.25/sqft. Four Canadian brands: Wickham, Appalachian, Sherwood Forest, and Northernest. &#190;&quot; thick solid planks that can be refinished 5&#8211;7 times. Professional nail-down installation from $2.25/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 

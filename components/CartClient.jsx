@@ -206,7 +206,7 @@ export default function CartClient() {
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8 text-xs text-slate-500">
         <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> Secure Checkout</span>
         <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5" /> GTA Delivery</span>
-        <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> <a href="tel:6474281111" className="hover:text-amber-600">(647) 428-1111</a></span>
+        <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> <a href="tel:6474281111" className="font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a></span>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">

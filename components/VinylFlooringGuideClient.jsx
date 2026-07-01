@@ -57,7 +57,7 @@ export default function VinylFlooringGuideClient() {
           Quick Answer: Best Vinyl Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 241 luxury vinyl plank (LVP/SPC) options from $1.79&#8211;$3.59/sqft &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include Woden, NAF, Triforest, Simba, Falcon, and Lee. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring carries 241 luxury vinyl plank (LVP/SPC) options from $1.79&#8211;$3.59/sqft &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include Woden, NAF, Triforest, Simba, Falcon, and Lee. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 

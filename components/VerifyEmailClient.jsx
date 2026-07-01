@@ -118,7 +118,7 @@ export default function VerifyEmailClient() {
                         Shop Member Pricing →
                       </Button>
                     </Link>
-                    <Link href="/account" className="block mt-4 text-sm text-slate-500 hover:text-amber-600">
+                    <Link href="/account" className="block mt-4 text-sm font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900">
                       Go to My Account
                     </Link>
                   </>

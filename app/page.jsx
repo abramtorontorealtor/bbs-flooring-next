@@ -582,7 +582,7 @@ export default function HomePage() {
                 { label: 'Vinyl Flooring Scarborough', href: '/vinyl-flooring-scarborough' },
                 { label: 'Laminate Flooring Vaughan', href: '/laminate-flooring-vaughan' },
               ].map(link => (
-                <Link key={link.href} href={link.href} className="text-slate-500 hover:text-amber-600 transition-colors">
+                <Link key={link.href} href={link.href} className="text-amber-700 underline underline-offset-2 decoration-amber-300 hover:text-amber-900 hover:decoration-amber-500 transition-colors">
                   {link.label}
                 </Link>
               ))}
@@ -605,7 +605,7 @@ export default function HomePage() {
                 { label: 'Northernest Flooring', href: '/northernest-flooring' },
                 { label: 'Lee Flooring', href: '/lee-flooring' },
               ].map(link => (
-                <Link key={link.href} href={link.href} className="text-slate-500 hover:text-amber-600 transition-colors">
+                <Link key={link.href} href={link.href} className="text-amber-700 underline underline-offset-2 decoration-amber-300 hover:text-amber-900 hover:decoration-amber-500 transition-colors">
                   {link.label}
                 </Link>
               ))}

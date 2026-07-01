@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getSupabaseAdminClient, getSupabaseServerClient } from '@/lib/supabase';
 import BlogPostClient from '@/components/BlogPostClient';
+import DeepPageCapture from '@/components/DeepPageCapture';
 import { JsonLd } from '@/lib/schemas';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
@@ -217,6 +218,7 @@ export default async function BlogPostPage({ params }) {
   } : null;
 
   const internalLinks = buildInternalLinks(post);
+  const captureProductType = post ? inferProductType(post) : null;
 
   return (
     <>
@@ -246,6 +248,7 @@ export default async function BlogPostPage({ params }) {
           </div>
         </nav>
       )}
+      {post && <DeepPageCapture productType={captureProductType} />}
     </>
   );
 }

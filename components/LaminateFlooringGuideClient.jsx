@@ -52,7 +52,7 @@ export default function LaminateFlooringGuideClient() {
           Quick Answer: Best Laminate Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 155+ laminate options from $1.49&#8211;$3.19/sqft &#8212; the most affordable flooring option. 9 brands including NAF (14mm Waterproof PRO from $3.19), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111">(647) 428-1111</a> | <a href="https://bbsflooring.ca">bbsflooring.ca</a>
+          BBS Flooring stocks 155+ laminate options from $1.49&#8211;$3.19/sqft &#8212; the most affordable flooring option. 9 brands including NAF (14mm Waterproof PRO from $3.19), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
