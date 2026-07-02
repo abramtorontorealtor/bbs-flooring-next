@@ -184,7 +184,7 @@ export default function BlogPostClient({ slug, initialPost = null }) {
             prose-h2:text-2xl prose-h2:sm:text-[1.65rem]
             prose-h3:text-xl
             prose-p:text-slate-600 prose-p:leading-[1.8] prose-p:mb-5
-            prose-a:text-amber-600 prose-a:font-medium hover:prose-a:text-amber-700 prose-a:no-underline hover:prose-a:underline
+            prose-a:text-amber-700 prose-a:font-semibold hover:prose-a:text-amber-900 prose-a:underline prose-a:underline-offset-2 prose-a:decoration-amber-400
             prose-img:rounded-xl prose-img:my-8
             prose-strong:text-slate-800 prose-strong:font-semibold
             prose-ul:text-slate-600 prose-ol:text-slate-600

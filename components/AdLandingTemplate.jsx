@@ -120,7 +120,7 @@ export default function AdLandingTemplate({
                 )}
                 {section.body && (
                   <div
-                    className="prose prose-slate prose-a:text-amber-700 prose-a:no-underline hover:prose-a:underline max-w-none text-slate-700"
+                    className="prose prose-slate prose-a:text-amber-700 prose-a:font-semibold prose-a:underline prose-a:underline-offset-2 prose-a:decoration-amber-400 hover:prose-a:text-amber-900 max-w-none text-slate-700"
                     dangerouslySetInnerHTML={{ __html: section.body }}
                   />
                 )}

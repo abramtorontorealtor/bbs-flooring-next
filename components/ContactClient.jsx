@@ -266,7 +266,7 @@ export default function ContactClient() {
                 <h3 className="font-semibold text-slate-900 mb-1">Phone</h3>
                 <a
                   href="tel:+16474281111"
-                  className="text-amber-600 hover:text-amber-700 font-medium text-lg transition-colors"
+                  className="text-amber-700 hover:text-amber-900 font-semibold text-lg underline underline-offset-2 transition-colors"
                 >
                   (647) 428-1111
                 </a>
@@ -287,7 +287,7 @@ export default function ContactClient() {
                   href="https://maps.google.com/?q=6061+Highway+7+Unit+B+Markham+Ontario+L3P+3B2"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-amber-600 hover:text-amber-700 text-sm mt-1 inline-block transition-colors"
+                  className="text-amber-700 hover:text-amber-900 text-sm mt-1 inline-block underline underline-offset-2 transition-colors"
                 >
                   Get Directions →
                 </a>

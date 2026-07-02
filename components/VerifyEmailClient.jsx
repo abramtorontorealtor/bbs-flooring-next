@@ -159,7 +159,7 @@ export default function VerifyEmailClient() {
 
         <div className="mt-8 pt-6 border-t border-slate-100 text-sm text-slate-400">
           Questions? Call us at{' '}
-          <a href="tel:6474281111" className="text-amber-600 font-medium">
+          <a href="tel:6474281111" className="text-amber-700 font-semibold underline underline-offset-2 hover:text-amber-900">
             (647) 428-1111
           </a>
         </div>
