@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import EngineeredHardwoodGuideClient from '@/components/EngineeredHardwoodGuideClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 const faqItems = [
   {
@@ -91,6 +92,7 @@ export default function EngineeredHardwoodGuidePage() {
     <>
       <JsonLd data={schemas} />
       <Suspense><EngineeredHardwoodGuideClient /></Suspense>
+      <DeepPageCapture productType="hardwood" />
     </>
   );
 }

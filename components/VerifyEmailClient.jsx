@@ -106,8 +106,8 @@ export default function VerifyEmailClient() {
             {signedIn ? (
               <>
                 <p className="text-slate-600 mb-4">
-                  Your member account is now active. You&apos;re signed in and ready to shop
-                  with exclusive member pricing.
+                  Your account is now active. You&apos;re signed in and ready to shop,
+                  save quotes, and track your orders.
                 </p>
                 {redirecting ? (
                   <p className="text-amber-600 font-medium animate-pulse">Taking you back…</p>
@@ -115,7 +115,7 @@ export default function VerifyEmailClient() {
                   <>
                     <Link href={createPageUrl('Products')}>
                       <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
-                        Shop Member Pricing →
+                        Start Shopping →
                       </Button>
                     </Link>
                     <Link href="/account" className="block mt-4 text-sm font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900">
@@ -127,12 +127,12 @@ export default function VerifyEmailClient() {
             ) : (
               <>
                 <p className="text-slate-600 mb-8">
-                  Your member account is now active. Sign in to access exclusive trade
-                  pricing across our full catalogue.
+                  Your account is now active. Sign in to browse our full catalogue,
+                  save quotes, and track your orders.
                 </p>
                 <Link href="/login">
                   <Button className="bg-amber-500 hover:bg-amber-600 text-white w-full py-6 text-base">
-                    Sign In to Shop Member Pricing
+                    Sign In to Start Shopping
                   </Button>
                 </Link>
               </>

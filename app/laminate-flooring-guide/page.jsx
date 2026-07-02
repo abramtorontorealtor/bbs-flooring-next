@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import LaminateFlooringGuideClient from '@/components/LaminateFlooringGuideClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 const faqItems = [
   {
@@ -58,6 +59,7 @@ export default function LaminateFlooringGuidePage() {
       <Suspense>
         <LaminateFlooringGuideClient />
       </Suspense>
+      <DeepPageCapture productType="laminate" />
     </>
   );
 }

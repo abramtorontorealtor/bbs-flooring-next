@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import StairRenovationGuideClient from '@/components/StairRenovationGuideClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 const faqItems = [
   {
@@ -74,6 +75,7 @@ export default function StairRenovationGuidePage() {
       <Suspense>
         <StairRenovationGuideClient />
       </Suspense>
+      <DeepPageCapture productType="stair" />
     </>
   );
 }

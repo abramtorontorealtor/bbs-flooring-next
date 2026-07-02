@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import VinylFlooringGuideClient from '@/components/VinylFlooringGuideClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 const faqItems = [
   {
@@ -93,6 +94,7 @@ export default function VinylFlooringGuidePage() {
       <Suspense>
         <VinylFlooringGuideClient />
       </Suspense>
+      <DeepPageCapture productType="vinyl" />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import FlooringComparisonGuideClient from '@/components/FlooringComparisonGuideClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 const faqItems = [
   {
@@ -91,6 +92,7 @@ export default function FlooringComparisonGuidePage() {
     <>
       <JsonLd data={schemas} />
       <Suspense><FlooringComparisonGuideClient /></Suspense>
+      <DeepPageCapture />
     </>
   );
 }

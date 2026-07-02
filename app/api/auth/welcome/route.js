@@ -69,7 +69,7 @@ export async function POST(request) {
       <p style="font-size:15px;color:#334155;line-height:1.6;">Hi ${esc(userName) || 'there'},</p>
       <p style="font-size:15px;color:#334155;line-height:1.6;">Your account is all set. Here's what you can do:</p>
       <ul style="font-size:14px;color:#334155;line-height:1.8;padding-left:20px;">
-        <li><strong>Member pricing</strong> — save on every order once verified</li>
+        <li><strong>Save your quotes</strong> — pick up right where you left off</li>
         <li><strong>Save products</strong> — heart any product to compare later</li>
         <li><strong>Quick quotes</strong> — get instant estimates with our calculator</li>
         <li><strong>Order history</strong> — track all your purchases in one place</li>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 export const metadata = {
   title: 'Hardwood Flooring Grade Guide | Character, Select & Select Better Explained',
@@ -530,6 +531,8 @@ export default function GradeGuidePage() {
             </Link>
           </div>
         </section>
+
+        <DeepPageCapture />
 
       </main>
     </>

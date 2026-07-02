@@ -71,7 +71,7 @@ export async function POST(request) {
     <div style="background:white;padding:32px;border-radius:0 0 16px 16px;border:1px solid #e2e8f0;border-top:none;">
       <h2 style="margin:0 0 16px;font-size:20px;color:#1e293b;">Verify Your Email</h2>
       <p style="font-size:15px;color:#334155;line-height:1.6;">Hi ${userName || 'there'},</p>
-      <p style="font-size:15px;color:#334155;line-height:1.6;">Thanks for creating your BBS Flooring account. Click the button below to verify your email and unlock member pricing:</p>
+      <p style="font-size:15px;color:#334155;line-height:1.6;">Thanks for creating your BBS Flooring account. Click the button below to verify your email and activate your account:</p>
       <div style="text-align:center;margin:32px 0;">
         <a href="${verifyUrl}" style="display:inline-block;background:#f59e0b;color:#1e293b;font-weight:700;padding:16px 40px;border-radius:12px;text-decoration:none;font-size:16px;">✓ Verify My Email</a>
       </div>

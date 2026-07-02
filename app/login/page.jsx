@@ -3,7 +3,7 @@ import LoginClient from '@/components/LoginClient';
 
 export const metadata = {
   title: 'Login',
-  description: 'Sign in to your BBS Flooring account to access member pricing, saved quotes, and order history.',
+  description: 'Sign in to your BBS Flooring account to access saved quotes, order history, and faster checkout.',
   robots: { index: false, follow: false },
 };
 

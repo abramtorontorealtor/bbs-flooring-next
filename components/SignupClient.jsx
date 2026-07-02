@@ -120,7 +120,7 @@ export default function SignupClient() {
             <span className="block text-sm font-semibold tracking-widest text-slate-400">FLOORING</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-800 mt-6">Create Your Account</h1>
-          <p className="text-slate-500 mt-1">Unlock member pricing and save your quotes</p>
+          <p className="text-slate-500 mt-1">Save your quotes, track orders, and check out faster</p>
         </div>
 
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">

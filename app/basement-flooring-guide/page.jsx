@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import BasementFlooringGuideClient from '@/components/BasementFlooringGuideClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 const faqItems = [
   {
@@ -99,6 +100,7 @@ export default function BasementFlooringGuidePage() {
     <>
       <JsonLd data={schemas} />
       <Suspense><BasementFlooringGuideClient /></Suspense>
+      <DeepPageCapture productType="vinyl" />
     </>
   );
 }

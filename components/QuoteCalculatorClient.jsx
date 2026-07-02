@@ -878,7 +878,7 @@ export default function QuoteCalculatorClient() {
                 {/* Guest sign-up */}
                 {!currentUser && (
                   <div className="bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                    <div className="flex-1 text-sm text-slate-600"><span className="font-semibold text-slate-800">Create a free account</span> to save this quote and unlock member pricing.</div>
+                    <div className="flex-1 text-sm text-slate-600"><span className="font-semibold text-slate-800">Create a free account</span> to save this quote and pick up right where you left off.</div>
                     <a href="/verify-email"
                       onClick={(e) => {
                         e.preventDefault();

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import SolidHardwoodGuideClient from '@/components/SolidHardwoodGuideClient';
 import { faqSchema, JsonLd } from '@/lib/schemas';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 const faqItems = [
   {
@@ -58,6 +59,7 @@ export default function SolidHardwoodGuidePage() {
       <Suspense>
         <SolidHardwoodGuideClient />
       </Suspense>
+      <DeepPageCapture productType="solid-hardwood" />
     </>
   );
 }

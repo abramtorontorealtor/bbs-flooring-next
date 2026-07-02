@@ -114,7 +114,7 @@ export default function AccountDashboardClient() {
         }),
       });
       setVerificationEmailSent(true);
-      toast.success('Verification email sent! Check your inbox to unlock Member Pricing.');
+      toast.success('Verification email sent! Check your inbox to confirm your account.');
     } catch {
       toast.error('Failed to resend. Please try again.');
     } finally {
@@ -186,10 +186,10 @@ export default function AccountDashboardClient() {
           <div className="mb-6 bg-amber-50 border border-amber-300 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <Clock className="w-8 h-8 text-amber-500 flex-shrink-0" />
             <div className="flex-1">
-              <h3 className="font-bold text-amber-900">Verify your email to unlock wholesale pricing</h3>
+              <h3 className="font-bold text-amber-900">Verify your email to activate your account</h3>
               {verificationEmailSent ? (
                 <p className="text-green-700 text-sm mt-1 font-medium">
-                  ✅ Verification email sent! Check your inbox to unlock Member Pricing.
+                  ✅ Verification email sent! Check your inbox to confirm your account.
                 </p>
               ) : (
                 <p className="text-amber-700 text-sm mt-1">
