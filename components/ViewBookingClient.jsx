@@ -222,7 +222,7 @@ export default function ViewBookingClient() {
 
           <div className="mt-6 text-center">
             <p className="text-slate-500 text-sm">Can&apos;t find your booking?</p>
-            <a href="tel:6474281111" className="text-amber-600 font-semibold hover:text-amber-700">Call (647) 428-1111</a>
+            <a href="tel:6474281111" className="text-amber-700 font-semibold underline underline-offset-2 hover:text-amber-900">Call (647) 428-1111</a>
           </div>
         </div>
       </div>
