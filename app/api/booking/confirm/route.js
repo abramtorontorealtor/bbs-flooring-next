@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendBookingRequestReceived, sendBookingAdminNotification } from '@/lib/email';
 import { sendTelegramAlert, formatBookingAlert } from '@/lib/telegram';
+import { createCalendarEvent } from '@/lib/google-calendar';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 
 // Rate limit: 3 booking submissions per IP per 15 minutes
@@ -56,6 +57,25 @@ export async function POST(request) {
     }
 
     const emailBooking = savedBooking || booking;
+
+    // Auto-create a Google Calendar event on submission (marked PENDING until confirmed).
+    // MUST be awaited — a fire-and-forget promise gets killed when the serverless fn returns.
+    if (savedBooking?.id) {
+      try {
+        const calResult = await createCalendarEvent(emailBooking);
+        if (calResult?.success && calResult.eventId) {
+          await supabase
+            .from('bookings')
+            .update({ calendar_event_id: calResult.eventId })
+            .eq('id', savedBooking.id);
+          console.log('[Booking] Calendar event created on submission:', calResult.eventId);
+        } else {
+          console.warn('[Booking] Calendar event not created:', JSON.stringify(calResult));
+        }
+      } catch (e) {
+        console.error('[Booking] Calendar create error:', e?.message);
+      }
+    }
 
     // Send "Request Received" email to customer + admin notification
     const results = await Promise.allSettled([

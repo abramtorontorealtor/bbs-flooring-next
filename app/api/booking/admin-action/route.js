@@ -53,13 +53,19 @@ export async function POST(request) {
         emailResult = await sendBookingCustomerConfirmation({ booking: updatedBooking });
         console.log('[Booking Confirm] Email result:', JSON.stringify(emailResult));
 
-        // Create Google Calendar event (non-blocking)
-        createCalendarEvent(updatedBooking).then(async (calResult) => {
-          if (calResult.success && calResult.eventId) {
+        // Update the existing (PENDING) calendar event created on submission, or create one
+        // if it's missing. MUST be awaited so it isn't killed when the serverless fn returns.
+        try {
+          const calResult = booking.calendar_event_id
+            ? await updateCalendarEvent(booking.calendar_event_id, updatedBooking)
+            : await createCalendarEvent(updatedBooking);
+          if (calResult?.success && calResult.eventId && !booking.calendar_event_id) {
             await supabase.from('bookings').update({ calendar_event_id: calResult.eventId }).eq('id', bookingId);
             console.log('[Booking Confirm] Calendar event saved:', calResult.eventId);
           }
-        }).catch(err => console.error('[Booking Confirm] Calendar error:', err));
+        } catch (err) {
+          console.error('[Booking Confirm] Calendar error:', err);
+        }
         break;
       }
 
@@ -83,15 +89,18 @@ export async function POST(request) {
         updatedBooking = data;
         emailResult = await sendBookingRescheduled({ booking: updatedBooking, oldDate: booking.preferred_date, oldTime: booking.preferred_time });
 
-        // Update or create calendar event (non-blocking)
-        const calAction = booking.calendar_event_id
-          ? updateCalendarEvent(booking.calendar_event_id, updatedBooking)
-          : createCalendarEvent(updatedBooking);
-        calAction.then(async (calResult) => {
-          if (calResult.success && calResult.eventId && !booking.calendar_event_id) {
+        // Move the existing calendar event to the new date/time (or create if missing).
+        // MUST be awaited so it isn't killed when the serverless fn returns.
+        try {
+          const calResult = booking.calendar_event_id
+            ? await updateCalendarEvent(booking.calendar_event_id, updatedBooking)
+            : await createCalendarEvent(updatedBooking);
+          if (calResult?.success && calResult.eventId && !booking.calendar_event_id) {
             await supabase.from('bookings').update({ calendar_event_id: calResult.eventId }).eq('id', bookingId);
           }
-        }).catch(err => console.error('[Booking Reschedule] Calendar error:', err));
+        } catch (err) {
+          console.error('[Booking Reschedule] Calendar error:', err);
+        }
         break;
       }
 
@@ -106,9 +115,14 @@ export async function POST(request) {
         updatedBooking = data;
         emailResult = await sendBookingCancelled({ booking: updatedBooking, reason: cancel_reason });
 
-        // Delete calendar event (non-blocking)
+        // Delete the calendar event. MUST be awaited so it isn't killed when the fn returns.
         if (booking.calendar_event_id) {
-          deleteCalendarEvent(booking.calendar_event_id).catch(err => console.error('[Booking Cancel] Calendar error:', err));
+          try {
+            await deleteCalendarEvent(booking.calendar_event_id);
+            await supabase.from('bookings').update({ calendar_event_id: null }).eq('id', bookingId);
+          } catch (err) {
+            console.error('[Booking Cancel] Calendar error:', err);
+          }
         }
         break;
       }
