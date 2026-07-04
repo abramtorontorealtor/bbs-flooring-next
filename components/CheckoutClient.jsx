@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+import TrustStrip from '@/components/TrustStrip';
 
 export default function CheckoutClient() {
   const queryClient = useQueryClient();
@@ -1044,12 +1045,8 @@ export default function CheckoutClient() {
                   </label>
                 </div>
 
-                {/* Trust signals above submit */}
-                <div className="flex flex-wrap items-center justify-center gap-4 py-3 px-4 bg-slate-50 rounded-lg border border-slate-200 text-xs text-slate-600">
-                  <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-600" /> Secure Checkout</span>
-                  <span className="flex items-center gap-1.5"><Phone className="w-4 h-4 text-amber-500" /> Questions? <a href="tel:6474281111" className="text-amber-600 font-medium hover:underline">(647) 428-1111</a></span>
-                  <span className="flex items-center gap-1.5"><MessageSquare className="w-4 h-4 text-green-500" /> <a href="https://wa.me/message/CQQRGZKI3U2VH1" target="_blank" rel="noopener noreferrer" className="text-green-600 font-medium hover:underline">WhatsApp Us</a></span>
-                </div>
+                {/* Trust / risk-reversal strip above submit — Stripe-secured, 14-day returns, price match, real phone */}
+                <TrustStrip variant="full" className="pt-1" />
 
                 <Button
                   type="submit"
@@ -1078,6 +1075,33 @@ export default function CheckoutClient() {
                       ? 'You will be directed to secure payment after placing your order.'
                       : 'After placing your order, you\'ll receive e-Transfer instructions via email.'}
                   </span>
+                </div>
+
+                {/* ── Order-by-phone fallback — many first-time buyers of a big-ticket item want a human ── */}
+                <div className="mt-2 flex flex-col sm:flex-row items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0 text-center sm:text-left">
+                    <p className="text-sm font-semibold text-slate-800">Prefer to order by phone?</p>
+                    <p className="text-xs text-slate-500">Big purchase? Talk to a real person and we&apos;ll take your order over the phone — Mon–Sat 10am–5pm.</p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <a
+                      href="tel:6474281111"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 px-3.5 py-2 text-sm font-semibold text-white transition-colors"
+                    >
+                      <Phone className="w-4 h-4" /> (647) 428-1111
+                    </a>
+                    <a
+                      href="https://wa.me/message/CQQRGZKI3U2VH1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-green-500 px-3 py-2 text-sm font-semibold text-green-600 hover:bg-green-50 transition-colors"
+                    >
+                      <MessageSquare className="w-4 h-4" /> WhatsApp
+                    </a>
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, ArrowLeft, Package, Check, Phone, Truck, Shield, Star, Award, Clock, CheckCircle2, ChevronDown, ChevronUp, Ruler, Wrench, Sparkles } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Package, Check, Phone, Star, Clock, CheckCircle2, ChevronDown, ChevronUp, Ruler, Wrench, Sparkles } from 'lucide-react';
 import VariantSelector from '@/components/VariantSelector';
 import SaveButton from '@/components/SaveButton';
 import { toast } from 'sonner';
@@ -25,6 +25,7 @@ import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import RequestQuoteBox from '@/components/RequestQuoteBox';
 import SampleTrapModal from '@/components/SampleTrapModal';
+import TrustStrip from '@/components/TrustStrip';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
@@ -838,12 +839,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               </div>
             )}
 
-            {/* Trust signals — compact, single row */}
-            <div className="flex items-center justify-center gap-4 pt-2 border-t border-slate-100">
-              <span className="flex items-center gap-1 text-[11px] text-slate-500"><Shield className="w-3 h-3" />25+ Year Warranty</span>
-              <span className="flex items-center gap-1 text-[11px] text-slate-500"><Truck className="w-3 h-3" />GTA Delivery</span>
-              <span className="flex items-center gap-1 text-[11px] text-slate-500"><Award className="w-3 h-3" />Authorized Dealer</span>
-            </div>
+            {/* Trust / risk-reversal strip — Stripe-secured, 14-day returns, price match, real phone */}
+            <TrustStrip variant="compact" />
           </div>
           )}
 
@@ -865,19 +862,6 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             <Package className="w-4 h-4" />
             See a Sample In Person
           </button>
-
-          {/* ── Best Price Guarantee badge ── */}
-          <Link
-            href="/price-match"
-            className="mt-3 flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-200 hover:border-amber-400 transition-colors group"
-          >
-            <span className="text-xl">🛡️</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-slate-800 group-hover:text-amber-700">Best Price Guarantee</p>
-              <p className="text-[11px] text-slate-500">Found it cheaper locally? We&apos;ll beat the price.</p>
-            </div>
-            <ChevronDown className="w-4 h-4 text-amber-500 -rotate-90" />
-          </Link>
 
           {/* ── Quick Contact (below buy box, not competing with it) ── */}
           <div className="mt-4 flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
