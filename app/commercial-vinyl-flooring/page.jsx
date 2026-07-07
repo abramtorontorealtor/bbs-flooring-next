@@ -14,9 +14,9 @@ const CANONICAL = 'https://bbsflooring.ca/commercial-vinyl-flooring';
 
 export async function generateMetadata() {
   return {
-    title: 'Commercial Vinyl Flooring Markham | Loose Lay & Dry Back from $2.69/sqft',
+    title: 'Commercial Vinyl Flooring Markham | Loose Lay, Dry Back & Stone-Look Tile from $2.69/sqft',
     description:
-      'Commercial-grade NAF vinyl flooring in Markham — AC5 rated, 100% waterproof, FloorScore certified. Loose-lay & glue-down planks from $2.69/sqft. Contractor pricing + GTA install. Call (647) 428-1111.',
+      'Commercial-grade NAF vinyl flooring in Markham — AC5 rated, 100% waterproof, FloorScore certified. Loose-lay & glue-down planks plus 18x36 stone-look tile from $2.69/sqft. Contractor pricing + GTA install. Call (647) 428-1111.',
     alternates: { canonical: '/commercial-vinyl-flooring' },
     openGraph: {
       title: 'Commercial Vinyl Flooring Markham | NAF Loose Lay & Dry Back',
@@ -38,7 +38,16 @@ const LINES = [
     colours: 'Beijing · Copenhagen · Istanbul · Zurich · Barcelona · New York · Shanghai · Prague',
   },
   {
-    title: 'NAF Aqua Commercial 5mm Dry Back Vinyl',
+    title: 'NAF Aqua Commercial 5mm Dry Back Tile (18" × 36")',
+    price: '3.49',
+    install: 'Glue-Down (pressure-sensitive adhesive)',
+    blurb:
+      'A large-format 18" × 36" stone-look luxury vinyl tile in realistic marble and concrete visuals. The premium choice for lobbies, reception areas, washrooms, and feature floors that need a designer finish with commercial durability.',
+    dims: '5mm × 457mm × 914mm (18" × 36") · 22.5 sq.ft/box',
+    colours: 'Cobalt · Graphite · Magnetite · Moonstone · Flint · Ivory · Flintstone',
+  },
+  {
+    title: 'NAF Aqua Commercial 5mm Dry Back Vinyl Plank',
     price: '3.29',
     install: 'Glue-Down (pressure-sensitive adhesive)',
     blurb:
@@ -47,7 +56,7 @@ const LINES = [
     colours: 'Mars · Pluto · Mercury · Earth · Saturn · Venus',
   },
   {
-    title: 'NAF Aqua Commercial 3mm Dry Back Vinyl',
+    title: 'NAF Aqua Commercial 3mm Dry Back Vinyl Plank',
     price: '2.69',
     install: 'Glue-Down (pressure-sensitive adhesive)',
     blurb:
@@ -55,6 +64,14 @@ const LINES = [
     dims: '3mm × 187mm × 1227mm (7.36" × 48.3") · 34.58 sq.ft/box',
     colours: 'Landmark · Lego · Ellisdon · Nordstrom · Duca · Aecon · Chevron',
   },
+];
+
+// Format comparison — structured for both human scanning and LLM/answer-engine extraction.
+const COMPARISON = [
+  { format: 'Loose Lay Plank', product: 'AquaLuuuz 5mm', size: '7.25" × 48"', install: 'No adhesive (friction-grip)', best: 'Fast installs, tenant turnovers, phased work', price: '3.49' },
+  { format: 'Stone-Look Tile', product: 'Aqua Commercial 5mm Tile', size: '18" × 36"', install: 'Full-spread glue-down', best: 'Lobbies, washrooms, reception, feature floors', price: '3.49' },
+  { format: 'Dry Back Plank', product: 'Aqua Commercial 5mm', size: '7.36" × 48.3"', install: 'Full-spread glue-down', best: 'Highest-traffic permanent commercial floors', price: '3.29' },
+  { format: 'Dry Back Plank', product: 'Aqua Commercial 3mm', size: '7.36" × 48.3"', install: 'Full-spread glue-down', best: 'Large-area buildouts (34.58 sq.ft/box)', price: '2.69' },
 ];
 
 const SPOKE_LINKS = [
@@ -65,7 +82,13 @@ const SPOKE_LINKS = [
 ];
 
 export default async function CommercialVinylPage() {
-  const products = await getProductsForGrid({ subcategory: 'Commercial Vinyl' });
+  const [planks, tiles] = await Promise.all([
+    getProductsForGrid({ subcategory: 'Commercial Vinyl' }),
+    getProductsForGrid({ subcategory: 'Luxury Vinyl Tile (LVT)' }),
+  ]);
+  // Only NAF Aqua Commercial tiles belong on this commercial page (not all LVT).
+  const commercialTiles = tiles.filter((p) => /aqua commercial/i.test(p.name || ''));
+  const products = [...planks, ...commercialTiles];
   const serverGrid = <ProductGridServer products={products} />;
   const count = products.length;
 
@@ -110,6 +133,18 @@ export default async function CommercialVinylPage() {
         },
         {
           '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'Commercial Vinyl Flooring Formats',
+          description: 'NAF commercial vinyl flooring available at BBS Flooring Markham, by installation format.',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'NAF AquaLuuuz 5mm Loose Lay Vinyl Plank' },
+            { '@type': 'ListItem', position: 2, name: 'NAF Aqua Commercial 5mm Dry Back Stone-Look Vinyl Tile (18x36)' },
+            { '@type': 'ListItem', position: 3, name: 'NAF Aqua Commercial 5mm Dry Back Vinyl Plank' },
+            { '@type': 'ListItem', position: 4, name: 'NAF Aqua Commercial 3mm Dry Back Vinyl Plank' },
+          ],
+        },
+        {
+          '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bbsflooring.ca/' },
@@ -135,9 +170,25 @@ export default async function CommercialVinylPage() {
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl">
             Contractor-grade NAF vinyl built for the toughest jobs — <strong>AC5 rated</strong>,
-            <strong> 100% waterproof</strong>, and <strong>FloorScore certified</strong>. Loose-lay and
-            glue-down planks from <strong>${lowPrice}/sqft</strong>, in stock at our Markham showroom and
-            installed across the GTA.
+            <strong> 100% waterproof</strong>, and <strong>FloorScore certified</strong>. Loose-lay planks,
+            glue-down planks, and 18&Prime;&times;36&Prime; stone-look tiles from <strong>${lowPrice}/sqft</strong>,
+            in stock at our Markham showroom and installed across the GTA.
+          </p>
+        </div>
+
+        {/* ── Citable definition block (optimized for AI answer engines / featured snippets) ── */}
+        <div className="mb-10 rounded-2xl bg-slate-50 border border-slate-200 p-6">
+          <p className="text-slate-700 leading-relaxed">
+            <strong>Commercial vinyl flooring</strong> is heavy-duty luxury vinyl engineered for high-traffic
+            business environments — retail stores, offices, restaurants, rental units, clinics, and multi-unit
+            buildings. BBS Flooring in Markham stocks the full <strong>NAF commercial vinyl range</strong> in three
+            installation formats: <strong>loose-lay planks</strong> (no adhesive, fast to install and replace),
+            <strong> glue-down dry-back planks</strong> (permanent, maximum-stability), and large-format
+            <strong> 18&Prime;&times;36&Prime; stone-look tiles</strong>. Every option is <strong>AC5 rated</strong>
+            (the top commercial wear class), <strong>100% waterproof</strong>, <strong>FloorScore certified</strong>
+            for low VOCs, rated for on/above/below grade, and backed by a <strong>15-year residential / 5-year
+            light-commercial warranty</strong>. Prices run from <strong>${lowPrice} to ${highPrice}/sqft</strong>
+            with contractor and volume pricing available.
           </p>
         </div>
 
@@ -155,8 +206,8 @@ export default async function CommercialVinylPage() {
           </a>
         </div>
 
-        {/* ── The three lines ── */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        {/* ── The four lines ── */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {LINES.map((l) => (
             <div key={l.title} className="bg-amber-50 border border-amber-200 rounded-2xl p-6 flex flex-col">
               <h2 className="text-lg font-bold text-slate-800 mb-1">{l.title}</h2>
@@ -167,6 +218,38 @@ export default async function CommercialVinylPage() {
               <p className="text-slate-600 text-xs mt-auto"><strong>Colours:</strong> {l.colours}</p>
             </div>
           ))}
+        </div>
+
+        {/* ── Format comparison table (human-scannable + LLM-extractable) ── */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-slate-800 mb-5">Commercial Vinyl Formats Compared</h2>
+          <div className="overflow-x-auto rounded-2xl border border-slate-200">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-slate-900 text-white">
+                <tr>
+                  <th className="px-4 py-3 font-semibold">Format</th>
+                  <th className="px-4 py-3 font-semibold">Product</th>
+                  <th className="px-4 py-3 font-semibold">Size</th>
+                  <th className="px-4 py-3 font-semibold">Installation</th>
+                  <th className="px-4 py-3 font-semibold">Best For</th>
+                  <th className="px-4 py-3 font-semibold whitespace-nowrap">Price/sqft</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {COMPARISON.map((r) => (
+                  <tr key={r.product} className="bg-white hover:bg-amber-50/50">
+                    <td className="px-4 py-3 font-semibold text-slate-800">{r.format}</td>
+                    <td className="px-4 py-3 text-slate-700">{r.product}</td>
+                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{r.size}</td>
+                    <td className="px-4 py-3 text-slate-600">{r.install}</td>
+                    <td className="px-4 py-3 text-slate-600">{r.best}</td>
+                    <td className="px-4 py-3 font-bold text-amber-700 whitespace-nowrap">${r.price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-slate-500 mt-2">All formats: NAF · 5mm · AC5 · 20mil wear layer · 100% waterproof · FloorScore certified · 15yr residential / 5yr light-commercial warranty.</p>
         </div>
 
         {/* ── Product grid ── */}

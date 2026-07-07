@@ -190,6 +190,22 @@ export const COMMERCIAL_VINYL_FAQS = [
     question: 'Do you offer contractor pricing and bulk orders?',
     answer: 'We do. BBS Flooring supplies GTA contractors and commercial clients directly with volume pricing, fast availability, and professional installation. Visit our Markham showroom at 6061 Highway 7 Unit B or call (647) 428-1111 to set up a contractor account.',
   },
+  {
+    question: 'What is the difference between commercial vinyl planks and vinyl tiles?',
+    answer: 'Planks are long and narrow (about 7.25" x 48") and reproduce a wood look — ideal for offices, retail floors, and corridors. The NAF Aqua Commercial vinyl tile is a large 18" x 36" format with a realistic stone and marble look (colours like Cobalt, Moonstone, Ivory, and Graphite) — a premium option for lobbies, washrooms, reception areas, and feature floors. Both are 5mm, AC5-rated, 100% waterproof, FloorScore certified, and glue-down for permanent commercial performance.',
+  },
+  {
+    question: 'What subfloor do I need for glue-down and loose-lay commercial vinyl?',
+    answer: 'Both loose-lay and dry-back glue-down commercial vinyl require a clean, dry, flat, and structurally sound subfloor (concrete or approved underlayment). Glue-down (dry-back) planks and the 18" x 36" tiles bond with a full-spread pressure-sensitive adhesive, so the substrate should be smooth and free of high spots. Loose-lay planks sit directly on the prepared subfloor with no adhesive. Our installers assess and prep the substrate as part of every GTA commercial job.',
+  },
+  {
+    question: 'What warranty comes with NAF commercial vinyl flooring?',
+    answer: 'Every NAF Aqua Commercial and AquaLuuuz product is backed by a 15-year residential and 5-year light-commercial limited warranty, with an AC5 commercial wear rating and a 20mil (0.5mm) wear layer for long service life in high-traffic environments.',
+  },
+  {
+    question: 'Can commercial vinyl be installed below grade or in basements?',
+    answer: 'Yes. All NAF Aqua Commercial and AquaLuuuz vinyl is rated for on, above, or below grade and is 100% waterproof, making it a reliable choice for basements, below-grade commercial units, washrooms, and moisture-prone spaces throughout Markham, Toronto, and the GTA.',
+  },
 ];
 
 export const LAMINATE_FAQS = [
