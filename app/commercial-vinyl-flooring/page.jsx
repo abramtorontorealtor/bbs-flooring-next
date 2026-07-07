@@ -89,7 +89,8 @@ export default async function CommercialVinylPage() {
   // Only NAF Aqua Commercial tiles belong on this commercial page (not all LVT).
   const commercialTiles = tiles.filter((p) => /aqua commercial/i.test(p.name || ''));
   const products = [...planks, ...commercialTiles];
-  const serverGrid = <ProductGridServer products={products} />;
+  // Curated, finite collection — show every SKU (default grid caps at 24 and would drop tiles).
+  const serverGrid = <ProductGridServer products={products} limit={100} />;
   const count = products.length;
 
   const prices = products.map((p) => Number(p.sale_price_per_sqft || p.price_per_sqft)).filter((n) => n > 0);

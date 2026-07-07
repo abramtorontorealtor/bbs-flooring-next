@@ -22,11 +22,11 @@ function sortProducts(products) {
   return [...products].sort((a, b) => (b.sort_score || 0) - (a.sort_score || 0));
 }
 
-export default function ProductGridServer({ products, viewMode = 'grid' }) {
+export default function ProductGridServer({ products, viewMode = 'grid', limit = ITEMS_PER_PAGE }) {
   if (!products || products.length === 0) return null;
 
   const filtered = sortProducts(filterProducts(products));
-  const visible = filtered.slice(0, ITEMS_PER_PAGE);
+  const visible = filtered.slice(0, limit);
 
   return (
     <div
