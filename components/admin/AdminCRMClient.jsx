@@ -1315,7 +1315,7 @@ export default function AdminCRMClient() {
                                 ) : isPaid ? (
                                   <p className="text-xs text-amber-600">Fill in all fields above to send pickup confirmation</p>
                                 ) : (
-                                  <p className="text-xs text-slate-400">Customer sees &quot;Pickup location will be confirmed after payment&quot;</p>
+                                  <p className="text-xs text-slate-400">Until you send this, the customer&apos;s order page shows &quot;Pickup location will be confirmed after payment.&quot;</p>
                                 )}
                               </CardContent>
                             </Card>
