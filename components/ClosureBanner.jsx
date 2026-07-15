@@ -42,7 +42,7 @@ export default function ClosureBanner() {
   return (
     <div
       role="alert"
-      className="relative bg-red-700 text-white"
+      className="relative bg-amber-600 text-white"
     >
       <div className="mx-auto max-w-7xl px-4 py-2.5 pr-10 sm:px-6 lg:px-8">
         <p className="text-center text-sm font-medium leading-snug sm:text-base">
