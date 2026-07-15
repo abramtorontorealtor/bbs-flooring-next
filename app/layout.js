@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { LocalBusinessJsonLd } from '@/components/LocalBusinessJsonLd';
 import { ClientProviders } from './providers';
 import FooterServer from '@/components/FooterServer';
+import ClosureBanner from '@/components/ClosureBanner';
 import { DeferredAnalytics } from '@/components/DeferredAnalytics';
 
 const inter = Inter({
@@ -81,6 +82,9 @@ export default function RootLayout({ children }) {
             `})();`,
           ].join('') }}
         />
+
+        {/* Temporary site-wide closure notice (self-expires end of Jul 15, 2026 ET) */}
+        <ClosureBanner />
 
         <ClientProviders>
           {children}
