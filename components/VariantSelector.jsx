@@ -95,9 +95,18 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     }
   }, [selectedWidth, selectedPattern]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Sync selections to URL
+  // Sync selections to URL.
+  // IMPORTANT: read the CURRENT query string from window.location (not the
+  // `searchParams` hook) and only call router.replace when the target string
+  // actually differs. Depending on `searchParams` here created a feedback loop:
+  // router.replace -> new searchParams reference -> callback recreated ->
+  // init effects re-read searchParams -> state churn -> router.replace again,
+  // never settling (the "glitches like crazy" infinite re-render). Guarding on a
+  // real diff makes the write idempotent and breaks the loop.
   const updateUrl = useCallback((pattern, width, grade) => {
-    const params = new URLSearchParams(searchParams.toString());
+    if (typeof window === 'undefined') return;
+    const current = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     if (pattern && patternOptions.length > 1) params.set('pattern', pattern);
     else params.delete('pattern');
     if (width && widthOptions.length > 1) params.set('width', width);
@@ -105,14 +114,16 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     if (grade && gradeOptions.length > 1) params.set('grade', grade);
     else params.delete('grade');
     const qs = params.toString();
+    // No-op if nothing changed — prevents the re-render loop.
+    if (qs === current.toString()) return;
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
-  }, [searchParams, pathname, router, patternOptions.length, widthOptions.length, gradeOptions.length]);
+  }, [pathname, router, patternOptions.length, widthOptions.length, gradeOptions.length]);
 
   useEffect(() => {
     if (selectedPattern || selectedWidth || selectedGrade) {
       updateUrl(selectedPattern, selectedWidth, selectedGrade);
     }
-  }, [selectedPattern, selectedWidth, selectedGrade]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedPattern, selectedWidth, selectedGrade, updateUrl]);
 
   const selectedVariant = useMemo(() => {
     return variants.find(v =>
