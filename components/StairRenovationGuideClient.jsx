@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StairCalculatorWidget from '@/components/StairCalculatorWidget';
+import DeepPageCapture from '@/components/DeepPageCapture';
 
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function StairRenovationGuideClient() {
@@ -29,11 +30,17 @@ export default function StairRenovationGuideClient() {
             <span>✔ WSIB insured</span>
             <span>✔ Markham showroom</span>
           </div>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <a href="#calculator" className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 py-3 rounded-xl transition-colors">
               Use the Stair Calculator ↓
             </a>
+            <a href="/free-measurement" className="inline-block border-2 border-white/40 hover:bg-white/10 text-white font-bold px-8 py-3 rounded-xl transition-colors">
+              Get My Stair Quote →
+            </a>
           </div>
+          <p className="mt-4 text-stone-400 text-sm">
+            Or text a photo of your stairs to <a href="https://wa.me/message/CQQRGZKI3U2VH1" target="_blank" rel="noopener noreferrer" className="text-amber-400 font-semibold underline underline-offset-2 hover:text-amber-300">WhatsApp</a> for a fast ballpark.
+          </p>
         </div>
       </section>
 
@@ -521,6 +528,9 @@ export default function StairRenovationGuideClient() {
             ))}
           </div>
         </section>
+
+        {/* Stair-specific deep-page capture — WhatsApp-photo path for high-intent readers */}
+        <DeepPageCapture productType="stair" className="!px-0 !mb-0 !max-w-none" />
 
         {/* CTA */}
         <section className="bg-gradient-to-r from-stone-900 to-amber-900 rounded-2xl p-8 md:p-12 text-white text-center">

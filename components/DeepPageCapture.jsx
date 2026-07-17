@@ -22,7 +22,7 @@ const CATEGORY = {
   hardwood: { label: 'Engineered Hardwood', href: '/engineered-hardwood', count: '400+', noun: 'engineered hardwood floors' },
   'solid-hardwood': { label: 'Solid Hardwood', href: '/solid-hardwood', count: '50+', noun: 'solid hardwood floors' },
   laminate: { label: 'Laminate', href: '/laminate', count: '100+', noun: 'laminate floors' },
-  stair: { label: 'Stairs', href: '/stairs', count: null, noun: 'stair options' },
+  stair: { label: 'Stairs', href: '/stairs', count: null, noun: 'stair renovation services' },
 };
 
 function WhatsAppIcon({ className }) {

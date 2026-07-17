@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 
 // Lazy-load non-critical layout components — none of these fire on initial render
 const StickyMobileCTA = lazy(() => import('@/components/StickyMobileCTA'));
-const WhatsAppButton = lazy(() => import('@/components/WhatsAppButton'));
+const DesktopStickyCTA = lazy(() => import('@/components/DesktopStickyCTA'));
 const ExitIntentPopup = lazy(() => import('@/components/ExitIntentPopup'));
 const CookieConsent = lazy(() => import('@/components/CookieConsent'));
 
@@ -93,7 +93,7 @@ export function ClientProviders({ children }) {
         {overlaysReady && (
           <Suspense fallback={null}>
             <StickyMobileCTA />
-            <WhatsAppButton />
+            <DesktopStickyCTA />
             <ExitIntentPopup />
             <CookieConsent />
             <LazyToaster richColors position="top-right" duration={4000} />
