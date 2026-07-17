@@ -7,6 +7,44 @@ import { getSupabaseBrowserClient } from '@/lib/supabase';
 import { Calendar, Clock, MapPin, ArrowLeft, Share2, Phone, Ruler, Star, ChevronRight } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getBlogPostBreadcrumbs } from '@/lib/breadcrumbs';
+import MidArticleCTA from '@/components/MidArticleCTA';
+
+// Mirror of inferProductType() in app/blog/[slug]/page.jsx so the mid-article
+// CTA speaks to the same category as the bottom DeepPageCapture. Keep in sync.
+function inferProductType(post) {
+  const s = `${post?.title || ''} ${post?.slug || ''}`.toLowerCase();
+  if (s.includes('solid hardwood')) return 'solid-hardwood';
+  if (s.includes('engineered') || s.includes('hardwood')) return 'hardwood';
+  if (s.includes('vinyl') || s.includes('lvp') || s.includes('lvt') || s.includes('luxury vinyl') || s.includes('spc') || s.includes('wpc')) return 'vinyl';
+  if (s.includes('laminate')) return 'laminate';
+  if (s.includes('stair')) return 'stair';
+  if (/(waterproof|water resistant|condo|basement|pet|dog|kitchen|bathroom|moisture|flood)/.test(s)) return 'vinyl';
+  if (/(allerg|asthma|hypoallergenic|durab|hardest|scratch|traffic|resale|luxury|premium)/.test(s)) return 'hardwood';
+  return null;
+}
+
+// Split article HTML at the <h2> nearest the middle so we can drop a mid-read
+// CTA at a natural section break (not mid-sentence). Returns [before, after].
+// If there aren't at least 2 <h2> sections, returns [full, ''] so nothing is
+// injected (the bottom DeepPageCapture still covers the page).
+function splitContentForMidCTA(html) {
+  if (!html || typeof html !== 'string') return [html || '', ''];
+  const positions = [];
+  const re = /<h2\b/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) positions.push(m.index);
+  if (positions.length < 2) return [html, ''];
+  // Choose the <h2> whose position is closest to the character midpoint,
+  // but never the very first one (keep the intro intact).
+  const mid = html.length / 2;
+  let best = positions[1];
+  let bestDist = Math.abs(positions[1] - mid);
+  for (let i = 1; i < positions.length; i++) {
+    const d = Math.abs(positions[i] - mid);
+    if (d < bestDist) { bestDist = d; best = positions[i]; }
+  }
+  return [html.slice(0, best), html.slice(best)];
+}
 
 function formatDate(dateStr, long = false) {
   if (!dateStr) return '';
@@ -177,9 +215,9 @@ export default function BlogPostClient({ slug, initialPost = null }) {
           </div>
         )}
 
-        {/* Article body */}
-        <div
-          className="prose prose-lg max-w-none
+        {/* Article body — split at a mid-article <h2> to inject a contextual CTA */}
+        {(() => {
+          const proseClass = `prose prose-lg max-w-none
             prose-headings:font-bold prose-headings:text-slate-800 prose-headings:mt-10 prose-headings:mb-4
             prose-h2:text-2xl prose-h2:sm:text-[1.65rem]
             prose-h3:text-xl
@@ -188,9 +226,19 @@ export default function BlogPostClient({ slug, initialPost = null }) {
             prose-img:rounded-xl prose-img:my-8
             prose-strong:text-slate-800 prose-strong:font-semibold
             prose-ul:text-slate-600 prose-ol:text-slate-600
-            prose-li:leading-[1.7] prose-li:mb-1"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+            prose-li:leading-[1.7] prose-li:mb-1`;
+          const [before, after] = splitContentForMidCTA(post.content);
+          if (!after) {
+            return <div className={proseClass} dangerouslySetInnerHTML={{ __html: before }} />;
+          }
+          return (
+            <>
+              <div className={proseClass} dangerouslySetInnerHTML={{ __html: before }} />
+              <MidArticleCTA productType={inferProductType(post)} />
+              <div className={proseClass} dangerouslySetInnerHTML={{ __html: after }} />
+            </>
+          );
+        })()}
       </article>
 
       {/* Category-Contextual Internal Links */}

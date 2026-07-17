@@ -62,11 +62,22 @@ const CITY_DISPLAY = {
 
 function inferProductType(post) {
   const s = `${post?.title || ''} ${post?.slug || ''}`.toLowerCase();
+  // 1) Explicit product mentions win (most specific first).
   if (s.includes('solid hardwood')) return 'solid-hardwood';
   if (s.includes('engineered') || s.includes('hardwood')) return 'hardwood';
-  if (s.includes('vinyl') || s.includes('lvp') || s.includes('luxury vinyl')) return 'vinyl';
+  if (s.includes('vinyl') || s.includes('lvp') || s.includes('lvt') || s.includes('luxury vinyl') || s.includes('spc') || s.includes('wpc')) return 'vinyl';
   if (s.includes('laminate')) return 'laminate';
   if (s.includes('stair')) return 'stair';
+  // 2) Intent-based fallback for research posts that never name a product.
+  //    These map the reader's problem to the category that BEST solves it,
+  //    so the capture block stays specific ("200+ vinyl floors") instead of
+  //    the weak generic ("flooring options"). Verified against top-click blogs
+  //    2026-07-17: waterproof/condo/basement/pet/kitchen/bathroom = vinyl intent;
+  //    allergy/asthma & durable/hardest = hardwood intent.
+  if (/(waterproof|water resistant|condo|basement|pet|dog|kitchen|bathroom|moisture|flood)/.test(s)) return 'vinyl';
+  if (/(allerg|asthma|hypoallergenic|durab|hardest|scratch|traffic|resale|luxury|premium)/.test(s)) return 'hardwood';
+  // 3) True catch-all: only for genuinely category-agnostic posts
+  //    (e.g. "how much flooring do I need"). Return null -> generic capture.
   return null;
 }
 
