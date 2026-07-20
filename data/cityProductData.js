@@ -3569,6 +3569,466 @@ Professional installation pricing is quoted during your free in-home estimate, b
       { label: 'Vinyl Flooring Oshawa', url: '/vinyl-flooring-oshawa' },
     ],
   },
+
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // JUL 20 2026 — MATRIX GAP FILL: EH×4 (ajax,scarborough,richmond-hill,vaughan) + laminate×2 (oshawa,whitby) + vinyl×1 (stouffville)
+  // ══════════════════════════════════════════════════════════════════════════
+
+'engineered-hardwood-flooring-ajax': {
+  productType: 'engineered-hardwood',
+  citySlug: 'ajax',
+  city: 'Ajax',
+  title: 'Engineered Hardwood Flooring Ajax | From $2.99/sqft',
+  metaDescription: 'Engineered hardwood flooring in Ajax from $2.99/sqft. 300+ styles, free estimate. BBS Flooring — family-owned since 2012. Call (647) 428-1111 today.',
+  h1: 'Engineered Hardwood Flooring in Ajax',
+  heroSubtitle: 'Shop 300+ engineered hardwood styles from $2.99/sqft — delivered from our Markham showroom to Ajax with professional installation available.',
+  content: {
+    intro: `Ajax homeowners have discovered that engineered hardwood delivers the warmth and elegance of real wood without the limitations of solid hardwood. With 300+ styles starting at $2.99/sqft at BBS Flooring, you\'ll find options for every home — from the heritage properties near Pickering Village to the newer builds in Nottingham. Our engineered hardwood features a genuine oak, maple, or walnut top layer over a dimensionally stable multi-layer core, meaning it handles Ajax\'s humid lake-effect summers and dry winters without cupping or gapping.`,
+    whyVinylHere: `Ajax\'s housing landscape spans decades of development, from the charming pre-war homes near Downtown Ajax and the Ajax Waterfront to the sprawling family subdivisions in Salem and Applecroft. Engineered hardwood is uniquely suited to this variety — it installs beautifully over the concrete slabs common in newer builds and floats perfectly over radiant-heat systems found in higher-end Riverside properties. Unlike solid hardwood, it won\'t buckle when humidity swings with the seasons along the Lake Ontario shoreline.
+
+The waterfront neighbourhoods around Ajax Waterfront and Richardson Point experience noticeable seasonal moisture fluctuation. Our engineered collection\'s cross-ply construction keeps boards stable year-round. And if your home has older subfloors with minor imperfections — common in Pickering Village\'s classic colonials — the floating installation method handles slight unevenness that would be problematic for solid wood. With a 3mm+ wear layer on our mid-range and premium options, you can refinish the floor once or twice down the road, extending the investment for years.`,
+    localExpertise: `- **Ajax Waterfront** — Cottagecore and contemporary finishes both sell well here; our wide-plank white oak pairs beautifully with the lake views residents prize.
+- **Pickering Village** — Heritage-style homes in this neighbourhood suit our hand-scraped hickory and warm-toned maple options that complement period trim and mouldings.
+- **Nottingham** — Newer family homes with open-concept layouts are ideal candidates for our smooth, wider-plank engineered oak in light wire-brush finishes.
+- **Riverside** — Upscale Riverside homes with radiant-heat systems are exactly where engineered hardwood outperforms solid wood — stable, warm, and refinishable.`,
+    pricingSection: `BBS Flooring carries engineered hardwood in three tiers, all in stock and ready for delivery to Ajax:
+
+| Tier | Wear Layer | Price Range |
+|------|-----------|-------------|
+| Entry Oak | 2–3mm | $2.99–$3.59/sqft |
+| Mid-Range Oak | 3–4mm | $3.59–$4.99/sqft |
+| Premium Wide-Plank | 4mm+ | $4.99–$7.99/sqft |
+
+Installation is quoted separately — call (647) 428-1111 or book a free in-home estimate and we\'ll provide a firm price delivered to your Ajax address.`,
+  },
+  neighbourhoods: ['Ajax Waterfront','Downtown Ajax','Salem','Richardson Point','Pickering Village','Applecroft','Nottingham','Riverside'],
+  faqs: [
+    {
+      question: 'What\'s the minimum cost for engineered hardwood in Ajax?',
+      answer: 'Our entry-level engineered hardwood starts at $2.99/sqft in stock at BBS Flooring in Markham. For an Ajax home, we\'ll deliver directly — call (647) 428-1111 for a delivery quote.'
+    },
+    {
+      question: 'Can engineered hardwood be installed over concrete in Ajax homes?',
+      answer: 'Yes — engineered hardwood\'s multi-layer core is designed for concrete slab installation, making it ideal for the many Ajax homes built on slabs. We recommend our 3mm+ wear-layer options for slabs. Call (647) 428-1111 to discuss your specific subfloor.'
+    },
+    {
+      question: 'Does lake humidity near Ajax Waterfront affect engineered hardwood?',
+      answer: 'Much less than solid hardwood. Our engineered boards are dimensionally stable through Ajax\'s seasonal humidity swings. We advise maintaining indoor humidity between 35–55% year-round. Our team at (647) 428-1111 can walk you through acclimatization steps before installation.'
+    },
+    {
+      question: 'How long does delivery to Ajax take from your Markham showroom?',
+      answer: 'Ajax is just 20 minutes from our showroom at 6061 Highway 7, Markham. In-stock orders can typically be arranged for delivery within a few business days. Call (647) 428-1111 to confirm availability and schedule.'
+    },
+    {
+      question: 'Can I refinish engineered hardwood floors in my Ajax home?',
+      answer: 'Yes, with a 3mm+ wear layer (our Mid-Range and Premium tiers) you can refinish once or twice. Entry-level boards with 2–3mm wear layers can typically be lightly screened once. Call (647) 428-1111 for a recommendation based on your chosen product.'
+    }
+  ],
+  relatedPages: [
+    { label: 'Engineered Hardwood Hub', url: '/engineered-hardwood' },
+    { label: 'Free Measurement & Estimate', url: '/free-measurement' },
+    { label: 'Hardwood Flooring Ajax', url: '/hardwood-flooring-ajax' },
+    { label: 'Vinyl Flooring Ajax', url: '/vinyl-flooring-ajax' },
+    { label: 'Laminate Flooring Ajax', url: '/laminate-flooring-ajax' }
+  ],
+  nearbyPages: [
+    { label: 'Engineered Hardwood Scarborough', url: '/engineered-hardwood-flooring-scarborough' },
+    { label: 'Engineered Hardwood Vaughan', url: '/engineered-hardwood-flooring-vaughan' },
+    { label: 'Laminate Flooring Oshawa', url: '/laminate-flooring-oshawa' },
+    { label: 'Laminate Flooring Whitby', url: '/laminate-flooring-whitby' }
+  ],
+},
+
+'engineered-hardwood-flooring-scarborough': {
+  productType: 'engineered-hardwood',
+  citySlug: 'scarborough',
+  city: 'Scarborough',
+  title: 'Engineered Hardwood Flooring Scarborough | $2.99/sqft',
+  metaDescription: 'Engineered hardwood flooring in Scarborough from $2.99/sqft. 300+ styles, real wood top layer, stable in all conditions. BBS Flooring (647) 428-1111.',
+  h1: 'Engineered Hardwood Flooring in Scarborough',
+  heroSubtitle: 'From Agincourt condos to Bluffs-view semis — 300+ engineered hardwood styles from $2.99/sqft, delivered from Markham with installation available.',
+  content: {
+    intro: `Scarborough is one of Toronto\'s most architecturally diverse boroughs, and its flooring needs reflect that diversity. BBS Flooring carries 300+ engineered hardwood styles starting at $2.99/sqft — covering everything from the compact post-war bungalows of Birch Cliff to the high-rise condominiums spreading through Agincourt. Real oak, maple, and walnut top layers sit over a dimensionally stable multi-ply core that handles Scarborough\'s seasonal temperature swings far better than solid hardwood, without sacrificing the warmth and character of genuine wood grain.`,
+    whyVinylHere: `Scarborough\'s housing stock is as layered as its communities. The Bluffs neighbourhood perches above Lake Ontario, where breathtaking views come with correspondingly active humidity cycles — the kind of environment where solid hardwood warps and gaps but engineered hardwood holds its shape. Birch Cliff\'s post-war semis and detached bungalows often have older subfloors where minor unevenness is common; the floating installation method used for engineered hardwood is forgiving in exactly these situations. Meanwhile, Agincourt\'s busy condo towers and Malvern\'s newer family homes increasingly favour the clean, wide-plank aesthetic that our premium engineered collection delivers.
+
+West Hill and Highland Creek are home to a mix of long-established families and newer residents who appreciate a floor that looks premium but performs practically. Engineered hardwood\'s 3mm+ wear layer means it can be lightly refinished when it shows its age — a meaningful advantage over vinyl for homeowners planning to stay long-term. Woburn and Guildwood\'s quiet residential streets are seeing renovation activity, and our Markham showroom is only a short drive away for homeowners comparing samples in person.`,
+    localExpertise: `- **The Bluffs** — The dramatic lakeside setting pairs beautifully with our wide-plank white oak and hand-scraped walnut; the stable core handles seasonal humidity shifts off the water.
+- **Birch Cliff** — Period bungalows here suit warm-toned maple and hickory finishes that complement the original wood trim still present in many homes.
+- **Agincourt** — High-rises and townhomes in Agincourt often have concrete subfloors; engineered hardwood is engineered for exactly this substrate, no additional levelling required in most cases.
+- **Guildwood** — This architecturally celebrated neighbourhood attracts design-conscious homeowners; our premium 4mm+ European oak collection fits the aesthetic perfectly.`,
+    pricingSection: `All tiers are in stock at our Markham showroom and delivered to Scarborough:
+
+| Tier | Wear Layer | Price Range |
+|------|-----------|-------------|
+| Entry Oak | 2–3mm | $2.99–$3.59/sqft |
+| Mid-Range Oak | 3–4mm | $3.59–$4.99/sqft |
+| Premium Wide-Plank | 4mm+ | $4.99–$7.99/sqft |
+
+Free in-home estimates available across all Scarborough neighbourhoods — call (647) 428-1111 or visit us at 6061 Highway 7 Unit B, Markham. Installation quoted at time of estimate.`,
+  },
+  neighbourhoods: ['Agincourt','Birch Cliff','The Bluffs','Malvern','West Hill','Highland Creek','Woburn','Guildwood'],
+  faqs: [
+    {
+      question: 'Is engineered hardwood a good fit for condo units in Agincourt?',
+      answer: 'Yes — engineered hardwood installs beautifully over concrete slabs common in Agincourt condos. Check your condo\'s bylaws for IIC/STC ratings; our team at (647) 428-1111 can recommend appropriate underlayment to meet requirements. Prices start at $2.99/sqft.'
+    },
+    {
+      question: 'How does engineered hardwood handle the humidity near The Bluffs?',
+      answer: 'The Bluffs\' lake-side exposure creates noticeable humidity cycles. Our engineered hardwood\'s cross-ply core resists the seasonal expansion and contraction that causes solid wood to cup or gap. Maintain indoor humidity between 35–55% and your floors will remain stable for decades. Call (647) 428-1111 for product advice.'
+    },
+    {
+      question: 'What styles work best in Scarborough\'s older Birch Cliff bungalows?',
+      answer: 'Warm-toned maple and hickory in 3–4" widths complement the original trim and millwork found in Birch Cliff\'s post-war homes. Our Mid-Range Oak tier ($3.59–$4.99/sqft) hits the sweet spot of character and stability. Call (647) 428-1111 to arrange a sample delivery.'
+    },
+    {
+      question: 'How far is your showroom from Scarborough?',
+      answer: 'BBS Flooring is at 6061 Highway 7 Unit B, Markham — typically 20–30 minutes from most Scarborough neighbourhoods via the 401. We\'re open Mon–Sat 10am–5pm and offer free in-home estimates. Call (647) 428-1111 to book.'
+    },
+    {
+      question: 'Can I refinish engineered hardwood floors in my Scarborough home?',
+      answer: 'Mid-Range and Premium tiers with 3mm+ wear layers can be refinished once or twice, restoring the floor\'s look without full replacement. Entry-level boards can be lightly screened. Call (647) 428-1111 for a recommendation on which tier fits your timeline and budget.'
+    }
+  ],
+  relatedPages: [
+    { label: 'Engineered Hardwood Hub', url: '/engineered-hardwood' },
+    { label: 'Free Measurement & Estimate', url: '/free-measurement' },
+    { label: 'Hardwood Flooring Scarborough', url: '/hardwood-flooring-scarborough' },
+    { label: 'Vinyl Flooring Scarborough', url: '/vinyl-flooring-scarborough' },
+    { label: 'Laminate Flooring Scarborough', url: '/laminate-flooring-scarborough' }
+  ],
+  nearbyPages: [
+    { label: 'Engineered Hardwood Ajax', url: '/engineered-hardwood-flooring-ajax' },
+    { label: 'Engineered Hardwood Richmond Hill', url: '/engineered-hardwood-flooring-richmond-hill' },
+    { label: 'Engineered Hardwood Vaughan', url: '/engineered-hardwood-flooring-vaughan' },
+    { label: 'Vinyl Flooring Scarborough', url: '/vinyl-flooring-scarborough' }
+  ],
+},
+
+'engineered-hardwood-flooring-richmond-hill': {
+  productType: 'engineered-hardwood',
+  citySlug: 'richmond-hill',
+  city: 'Richmond Hill',
+  title: 'Engineered Hardwood Flooring Richmond Hill | $2.99/sqft',
+  metaDescription: 'Engineered hardwood flooring in Richmond Hill from $2.99/sqft. 300+ styles for Oak Ridges to Bayview Hill. BBS Flooring, call (647) 428-1111 today.',
+  h1: 'Engineered Hardwood Flooring in Richmond Hill',
+  heroSubtitle: 'Richmond Hill\'s luxury homes deserve real wood — 300+ engineered hardwood styles from $2.99/sqft, delivered from our Markham showroom with installation available.',
+  content: {
+    intro: `Richmond Hill is one of York Region\'s most sought-after addresses, where estate properties in Bayview Hill and South Richvale sit alongside the naturalist communities bordering the Oak Ridges Moraine. BBS Flooring\'s 300+ engineered hardwood styles — starting at $2.99/sqft — are a natural match for homes that demand both beauty and performance. Our real oak, maple, and walnut wear layers deliver genuine wood character, while the multi-ply core stays dimensionally stable through the temperature swings that come with Richmond Hill\'s location between the moraine and the GTA\'s urban heat pocket.`,
+    whyVinylHere: `The Oak Ridges Moraine gives Richmond Hill a unique microclimate — winter temperatures drop noticeably north of Elgin Mills, and the moraine\'s water-table activity means basements and main floors alike experience humidity variation through the seasons. Engineered hardwood\'s cross-ply construction handles this elegantly; unlike solid hardwood, it doesn\'t swell in summer or gap in winter. Homes in Jefferson and Observatory — many built with radiant-heat systems under tile or hardwood — benefit particularly from our engineered collection, which is rated for in-floor heating applications that solid wood cannot safely tolerate.
+
+Bayview Hill and South Richvale are Richmond Hill\'s prestige addresses, with custom homes and high-end renovations happening year-round. Our premium wide-plank collection (4mm+ wear layer, $4.99–$7.99/sqft) is a consistent favourite in these neighbourhoods — oversized European oak planks in wire-brushed or matte-lacquer finishes that complement the architectural details of custom builds. Mill Pond and Lake Wilcox\'s mature-tree lots attract buyers who appreciate character; our hand-scraped and distressed hickory options deliver that lived-in richness without the fragility of antique reclaimed wood.`,
+    localExpertise: `- **Oak Ridges** — Moraine-adjacent homes with variable humidity are ideal candidates for engineered hardwood\'s stable core; we recommend our Mid-Range or Premium tier for this area.
+- **Bayview Hill** — Richmond Hill\'s most prestigious enclave calls for wide-plank premium oak; our 6"+ European oak collection is a consistent seller here for custom-home builds and renovations.
+- **Mill Pond** — Heritage-influenced homes around Mill Pond\'s trails suit warm-toned maple and hand-scraped hickory that echo the neighbourhood\'s mature, established character.
+- **Jefferson** — Newer executive homes with open-concept great rooms and radiant heat are perfectly served by engineered hardwood — stable, refinishable, and warmer underfoot than tile.`,
+    pricingSection: `Three tiers in stock, ready for delivery across Richmond Hill:
+
+| Tier | Wear Layer | Price Range |
+|------|-----------|-------------|
+| Entry Oak | 2–3mm | $2.99–$3.59/sqft |
+| Mid-Range Oak | 3–4mm | $3.59–$4.99/sqft |
+| Premium Wide-Plank | 4mm+ | $4.99–$7.99/sqft |
+
+Richmond Hill is minutes from our Markham showroom at 6061 Highway 7 Unit B. Book your free in-home measurement by calling (647) 428-1111 — installation quoted at no charge.`,
+  },
+  neighbourhoods: ['Oak Ridges','South Richvale','Lake Wilcox','Elgin Mills','Jefferson','Mill Pond','Observatory','Bayview Hill'],
+  faqs: [
+    {
+      question: 'Is engineered hardwood suitable for homes near the Oak Ridges Moraine?',
+      answer: 'Absolutely. The moraine\'s seasonal moisture variation is exactly why engineered hardwood outperforms solid wood in northern Richmond Hill. The multi-ply core resists swelling and gapping. Call (647) 428-1111 for product recommendations specific to your area — starting at $2.99/sqft.'
+    },
+    {
+      question: 'Can engineered hardwood go over radiant heat in Jefferson homes?',
+      answer: 'Yes — this is one of engineered hardwood\'s key advantages over solid wood. Our Mid-Range and Premium tiers are rated for radiant-heat installation. We recommend keeping surface temperatures under 27°C. Call (647) 428-1111 to confirm compatibility with your specific heating system.'
+    },
+    {
+      question: 'What wide-plank options do you carry for Bayview Hill custom homes?',
+      answer: 'Our Premium Wide-Plank tier ($4.99–$7.99/sqft) includes European oak in 5", 6", and 7" widths with matte, wire-brush, and hand-scraped finishes. Visit our showroom at 6061 Highway 7, Markham, or call (647) 428-1111 to arrange sample delivery to Bayview Hill.'
+    },
+    {
+      question: 'How soon can you deliver engineered hardwood to Richmond Hill?',
+      answer: 'Richmond Hill is approximately 15 minutes from our Markham showroom. In-stock orders can typically be arranged for delivery within a few business days. Call (647) 428-1111 to confirm availability and schedule your delivery.'
+    },
+    {
+      question: 'How many times can engineered hardwood be refinished?',
+      answer: 'Mid-Range (3–4mm wear layer) can typically be refinished once; Premium (4mm+) twice. Entry-level boards can be lightly screened. For Bayview Hill and South Richvale luxury renovations, we always recommend the Premium tier for maximum longevity. Call (647) 428-1111 for advice.'
+    }
+  ],
+  relatedPages: [
+    { label: 'Engineered Hardwood Hub', url: '/engineered-hardwood' },
+    { label: 'Free Measurement & Estimate', url: '/free-measurement' },
+    { label: 'Hardwood Flooring Richmond Hill', url: '/hardwood-flooring-richmond-hill' },
+    { label: 'Vinyl Flooring Richmond Hill', url: '/vinyl-flooring-richmond-hill' },
+    { label: 'Flooring in Richmond Hill', url: '/flooring-in/richmond-hill' }
+  ],
+  nearbyPages: [
+    { label: 'Engineered Hardwood Vaughan', url: '/engineered-hardwood-flooring-vaughan' },
+    { label: 'Engineered Hardwood Scarborough', url: '/engineered-hardwood-flooring-scarborough' },
+    { label: 'Engineered Hardwood Ajax', url: '/engineered-hardwood-flooring-ajax' },
+    { label: 'Vinyl Flooring Richmond Hill', url: '/vinyl-flooring-richmond-hill' }
+  ],
+},
+
+'engineered-hardwood-flooring-vaughan': {
+  productType: 'engineered-hardwood',
+  citySlug: 'vaughan',
+  city: 'Vaughan',
+  title: 'Engineered Hardwood Flooring Vaughan | From $2.99/sqft',
+  metaDescription: 'Engineered hardwood flooring in Vaughan from $2.99/sqft. Kleinburg estates to VMC condos — 300+ styles. BBS Flooring, call (647) 428-1111 for free estimate.',
+  h1: 'Engineered Hardwood Flooring in Vaughan',
+  heroSubtitle: 'From Kleinburg\'s estate homes to VMC\'s high-rise condos — 300+ engineered hardwood styles from $2.99/sqft, delivered from Markham with installation available.',
+  content: {
+    intro: `Vaughan\'s flooring needs span an extraordinary range — from the heritage stone estates of Kleinburg and the sprawling family homes of Woodbridge to the sleek high-rise towers rising around Vaughan Metropolitan Centre. BBS Flooring\'s 300+ engineered hardwood styles, starting at $2.99/sqft, cover every point on that spectrum. Our real oak, maple, and walnut top layers are bonded to a dimensionally stable multi-layer core, delivering the aesthetic of solid hardwood with the practical versatility that Vaughan\'s diverse housing types demand.`,
+    whyVinylHere: `Kleinburg is arguably York Region\'s most design-forward neighbourhood — the McMichael Canadian Art Collection attracts a community that takes aesthetics seriously, and the custom estate homes here frequently feature engineered hardwood in wide-plank European oak or rich walnut. These large homes also tend to have radiant-heat systems and concrete slabs in finished lower levels, both of which are ideal applications for engineered hardwood but problematic for solid wood. Our premium 4mm+ wear-layer collection is the consistent choice for Kleinburg\'s renovation market.
+
+Vaughan Metropolitan Centre is a different story — a rapidly urbanizing transit hub where glass towers and mid-rise buildings are replacing big-box retail. Condo buyers and investors in VMC and Concord are choosing engineered hardwood for its premium look at a practical price point, and the floating installation over concrete is quick and clean for units that need to be tenant-ready fast. Maple and Woodbridge\'s established family subdivisions occupy a happy middle ground: homes with good bones, often being updated for resale, where our Mid-Range Oak tier ($3.59–$4.99/sqft) delivers excellent ROI on the renovation investment.`,
+    localExpertise: `- **Kleinburg** — Estate homes in this village demand our finest: premium wide-plank European oak in 6"+ widths with wire-brush or matte-lacquer finishes that complement Kleinburg\'s signature stone and timber architecture.
+- **Woodbridge** — Woodbridge\'s Italian-influenced family homes often feature ornate millwork and warm colour palettes; our hand-scraped walnut and warm-toned hickory are strong sellers here.
+- **Vaughan Metropolitan Centre** — New-construction condos over concrete need a floor that installs cleanly and looks premium; our smooth, wide-plank engineered oak in light finishes suits the modern aesthetic perfectly.
+- **Pine Valley** — Upscale Pine Valley homes renovating for resale consistently choose our Mid-Range or Premium engineered oak — the ROI on real-wood floors in this price bracket is well established.`,
+    pricingSection: `Full tier range available in stock at our Markham showroom, with delivery to all Vaughan communities:
+
+| Tier | Wear Layer | Price Range |
+|------|-----------|-------------|
+| Entry Oak | 2–3mm | $2.99–$3.59/sqft |
+| Mid-Range Oak | 3–4mm | $3.59–$4.99/sqft |
+| Premium Wide-Plank | 4mm+ | $4.99–$7.99/sqft |
+
+Call (647) 428-1111 to book a free in-home estimate anywhere in Vaughan. Installation quoted at no charge — no surprises.`,
+  },
+  neighbourhoods: ['Maple','Woodbridge','Kleinburg','Concord','Thornhill','Vaughan Metropolitan Centre','Pine Valley','Islington & Hwy 7'],
+  faqs: [
+    {
+      question: 'What engineered hardwood styles suit Kleinburg estate homes?',
+      answer: 'Kleinburg\'s custom builds typically call for our Premium Wide-Plank tier ($4.99–$7.99/sqft) — European oak in 5"–7" widths, wire-brushed or matte-lacquered. These are in stock at our Markham showroom. Call (647) 428-1111 to arrange sample delivery or a free in-home estimate.'
+    },
+    {
+      question: 'Is engineered hardwood appropriate for VMC condo units in Vaughan?',
+      answer: 'Yes — VMC\'s concrete-slab construction is a perfect substrate for engineered hardwood\'s floating installation. Starting at $2.99/sqft, it\'s a cost-effective upgrade that photos well for rental listings. Check your condo\'s IIC rating requirements; our team at (647) 428-1111 can recommend the right underlayment.'
+    },
+    {
+      question: 'Can engineered hardwood be installed over radiant heat in Vaughan homes?',
+      answer: 'Engineered hardwood is one of the few wood-look floors rated for in-floor heating. Our Mid-Range and Premium tiers handle it well; keep surface temps under 27°C. Solid hardwood is not recommended for radiant heat — another reason Vaughan\'s custom-home builders default to engineered. Call (647) 428-1111 for specifics.'
+    },
+    {
+      question: 'How do I get samples delivered to Woodbridge or Maple?',
+      answer: 'Visit us at 6061 Highway 7 Unit B, Markham — Woodbridge and Maple are both under 20 minutes away. Or call (647) 428-1111 and we\'ll arrange a free in-home consultation where we bring samples to you. Showroom hours: Mon–Sat 10am–5pm.'
+    },
+    {
+      question: 'What\'s the best engineered hardwood tier for a Vaughan home renovation for resale?',
+      answer: 'For resale ROI, our Mid-Range Oak ($3.59–$4.99/sqft) is the sweet spot — real wood character, 3–4mm wear layer for longevity, and price points that buyers in Maple, Woodbridge, and Thornhill respond to. Call (647) 428-1111 and we\'ll walk through the numbers with you.'
+    }
+  ],
+  relatedPages: [
+    { label: 'Engineered Hardwood Hub', url: '/engineered-hardwood' },
+    { label: 'Free Measurement & Estimate', url: '/free-measurement' },
+    { label: 'Hardwood Flooring Vaughan', url: '/hardwood-flooring-vaughan' },
+    { label: 'Vinyl Flooring Vaughan', url: '/vinyl-flooring-vaughan' },
+    { label: 'Flooring in Vaughan', url: '/flooring-in/vaughan' }
+  ],
+  nearbyPages: [
+    { label: 'Engineered Hardwood Richmond Hill', url: '/engineered-hardwood-flooring-richmond-hill' },
+    { label: 'Engineered Hardwood Scarborough', url: '/engineered-hardwood-flooring-scarborough' },
+    { label: 'Vinyl Flooring Vaughan', url: '/vinyl-flooring-vaughan' },
+    { label: 'Engineered Hardwood Ajax', url: '/engineered-hardwood-flooring-ajax' }
+  ],
+},
+
+'laminate-flooring-oshawa': {
+  productType: 'laminate',
+  citySlug: 'oshawa',
+  city: 'Oshawa',
+  title: 'Laminate Flooring Oshawa | Starting at $1.49/sqft | BBS',
+  metaDescription: 'Laminate flooring in Oshawa from $1.49/sqft. 140+ styles, AC5-rated scratch resistance. BBS Flooring, family-owned since 2012. Call (647) 428-1111.',
+  h1: 'Laminate Flooring in Oshawa',
+  heroSubtitle: 'Durable, scratch-resistant laminate from $1.49/sqft — 140+ styles, delivered from our Markham showroom to Oshawa with professional installation available.',
+  content: {
+    intro: `Oshawa\'s mix of long-established working families, Ontario Tech and Durham College students, and a growing wave of first-time buyers makes it one of Durham Region\'s most active flooring markets. BBS Flooring carries 140+ laminate styles starting at just $1.49/sqft — a practical, high-performance choice for rental units near the university, starter homes in Donevan, and busy family households in Windfields. Our AC5-rated laminate takes the kind of daily punishment that kids, pets, and furniture legs dish out without flinching, and the wood-look finish elevates any interior without the cost of hardwood.`,
+    whyVinylHere: `Ontario Tech University and Durham College anchor Oshawa\'s north end, creating steady demand for rental properties in Samac, Windfields, and North Oshawa. Landlords consistently choose laminate for these units: it\'s affordable, installs quickly, looks sharp in listing photos, and individual planks can be replaced if a section is damaged — a key advantage over carpets that absorb damage permanently. AC5 commercial-grade abrasion resistance handles the higher foot traffic of student rentals far better than standard residential flooring.
+
+Downtown Oshawa\'s revitalization is drawing younger buyers and investors into the Vanier and Lakeview areas, where older bungalows are being updated and flipped. In these renovations, laminate\'s cost-per-square-foot advantage allows homeowners to do whole-home flooring on tight budgets while achieving a cohesive, modern aesthetic. One important note: we always recommend vinyl (not laminate) for bathrooms or any room with plumbing risk — laminate is water-resistant, not waterproof. Our team at (647) 428-1111 will flag this clearly so you choose the right product for each room.`,
+    localExpertise: `- **Windfields** — North Oshawa\'s newer family subdivisions near Ontario Tech are prime laminate territory; our water-resistant 12mm tier handles the family-room and kitchen-adjacent traffic these homes generate.
+- **Vanier** — Investors renovating Vanier\'s older stock for resale or rental get the best return with our Premium 10mm laminate — enough quality to impress buyers without over-capitalizing the reno.
+- **Donevan** — Established working-family homes in Donevan prioritize durability; our AC5 standard and premium tiers resist scratches from pets and furniture better than most vinyl alternatives.
+- **Eastdale** — Eastdale\'s modest bungalows being updated for the rental market are ideal fits for our $1.49/sqft entry tier — clean, wood-look finish at the lowest per-room cost in our catalogue.`,
+    pricingSection: `Laminate in three durable tiers, all in stock and deliverable to Oshawa from Markham:
+
+| Tier | Thickness | Price Range |
+|------|-----------|-------------|
+| Standard | 8mm | $1.49–$1.99/sqft |
+| Premium | 10mm | $1.99–$2.49/sqft |
+| Water-Resistant | 12mm | $2.49–$3.29/sqft |
+
+Installation is priced separately — call (647) 428-1111 or book a free in-home estimate. Note: for bathrooms or basements with moisture risk, ask us about our vinyl collection instead.`,
+  },
+  neighbourhoods: ['Windfields','North Oshawa','Donevan','Eastdale','Lakeview','Downtown Oshawa','Vanier','Samac'],
+  faqs: [
+    {
+      question: 'Is laminate flooring a good choice for student rentals near Ontario Tech in Oshawa?',
+      answer: 'It\'s one of the best choices — AC5-rated laminate handles high foot traffic, cleans easily, and individual planks are replaceable if damaged. Starting at $1.49/sqft, it\'s budget-friendly for landlords furnishing multiple units. Call (647) 428-1111 for a bulk quote.'
+    },
+    {
+      question: 'Can laminate be used in Oshawa basement suites?',
+      answer: 'Laminate is water-resistant but not waterproof — for basement suites with any moisture risk, we strongly recommend our vinyl collection instead. Vinyl is 100% waterproof and handles below-grade humidity. Call (647) 428-1111 and we\'ll steer you to the right product for your Oshawa basement.'
+    },
+    {
+      question: 'What\'s the most durable laminate for a family home with pets in Donevan?',
+      answer: 'Our AC5 Premium (10mm, $1.99–$2.49/sqft) and Water-Resistant (12mm, $2.49–$3.29/sqft) tiers are your best bets for pets and kids. AC5 is commercial-grade scratch resistance — significantly tougher than standard residential laminate. Call (647) 428-1111 to see samples.'
+    },
+    {
+      question: 'How quickly can BBS Flooring deliver laminate to Oshawa?',
+      answer: 'Oshawa is roughly 45 minutes from our showroom at 6061 Highway 7 Unit B, Markham. In-stock orders can typically be arranged for delivery within a few business days. Call (647) 428-1111 to confirm availability and schedule delivery.'
+    },
+    {
+      question: 'Can damaged laminate planks be replaced without redoing the whole floor?',
+      answer: 'Yes — this is one of laminate\'s key advantages for rental properties. Individual planks can typically be replaced by floating-floor mechanics. We recommend keeping a few boxes from your original order for this purpose. Call (647) 428-1111 for advice on matching existing flooring if you didn\'t purchase from us originally.'
+    }
+  ],
+  relatedPages: [
+    { label: 'Laminate Flooring Hub', url: '/laminate' },
+    { label: 'Free Measurement & Estimate', url: '/free-measurement' },
+    { label: 'Vinyl Flooring Oshawa', url: '/vinyl-flooring-oshawa' },
+    { label: 'Hardwood Flooring Oshawa', url: '/hardwood-flooring-oshawa' },
+    { label: 'Flooring in Oshawa', url: '/flooring-in/oshawa' }
+  ],
+  nearbyPages: [
+    { label: 'Laminate Flooring Whitby', url: '/laminate-flooring-whitby' },
+    { label: 'Laminate Flooring Ajax', url: '/laminate-flooring-ajax' },
+    { label: 'Vinyl Flooring Oshawa', url: '/vinyl-flooring-oshawa' },
+    { label: 'Engineered Hardwood Ajax', url: '/engineered-hardwood-flooring-ajax' }
+  ],
+},
+
+'laminate-flooring-whitby': {
+  productType: 'laminate',
+  citySlug: 'whitby',
+  city: 'Whitby',
+  title: 'Laminate Flooring Whitby | Starting at $1.49/sqft | BBS',
+  metaDescription: 'Laminate flooring in Whitby from $1.49/sqft. 140+ styles for Brooklin to Port Whitby. BBS Flooring, family-owned since 2012. Call (647) 428-1111.',
+  h1: 'Laminate Flooring in Whitby',
+  heroSubtitle: 'Whitby\'s fastest-growing neighbourhoods deserve durable, beautiful floors — 140+ laminate styles from $1.49/sqft, delivered from our Markham showroom.',
+  content: {
+    intro: `Whitby has transformed over the past decade into one of Durham Region\'s most desirable family communities, and the flooring needs of its expanding neighbourhoods reflect that growth. BBS Flooring offers 140+ laminate styles starting at $1.49/sqft — from the established homes of Pringle Creek and Rolling Acres to the booming new subdivisions in Brooklin. Our AC5-rated laminate handles the daily demands of busy family households: school bags dragged across the hallway, hockey gear through the mudroom, and the general enthusiasm that kids and pets bring to any floor.`,
+    whyVinylHere: `Brooklin is Whitby\'s fastest-growing community, with new-construction family homes being purchased by buyers who want to finalize their flooring before move-in. These builds typically have clean, level subfloors — ideal for laminate\'s floating installation, which goes in quickly and cleanly before furniture arrives. Brooklin\'s buyers tend to choose our Premium 10mm or Water-Resistant 12mm laminate for main floors, giving the home a finished, cohesive look from the moment keys are handed over.
+
+Port Whitby and Downtown Whitby attract a different buyer — professionals and downsizers who appreciate the waterfront lifestyle and the walkability of Whitby\'s older town centre. Homes here are being tastefully renovated, and laminate\'s wood-look aesthetics in wide-plank formats fit the coastal-casual interior style that Port Whitby homeowners often favour. Blue Grass Meadows and Williamsburg\'s established streets are seeing mid-life renovations where families want to update carpeted bedrooms and dated vinyl tile without breaking the renovation budget — laminate is the clear value choice at every tier.`,
+    localExpertise: `- **Brooklin** — New-construction move-ins here need floors installed fast before furniture arrives; our floating-install laminate goes in clean on level new-build subfloors with minimal prep.
+- **Port Whitby** — Waterfront-adjacent homes favour wide-plank laminate in driftwood and greyed-oak finishes that echo the Lake Ontario shoreline aesthetic popular in this neighbourhood.
+- **Pringle Creek** — Established family homes in Pringle Creek\'s mature-tree streets typically have good subfloor conditions and choose our Premium 10mm for its quieter underfoot feel and scratch resilience.
+- **Williamsburg** — Active family households in Williamsburg prioritize our AC5-rated tiers — the commercial-grade abrasion resistance makes a meaningful difference in high-traffic entryways and living areas.`,
+    pricingSection: `Three laminate tiers in stock, delivered to Whitby from our Markham showroom:
+
+| Tier | Thickness | Price Range |
+|------|-----------|-------------|
+| Standard | 8mm | $1.49–$1.99/sqft |
+| Premium | 10mm | $1.99–$2.49/sqft |
+| Water-Resistant | 12mm | $2.49–$3.29/sqft |
+
+Free in-home estimates available throughout Whitby — call (647) 428-1111 or visit 6061 Highway 7 Unit B, Markham (Mon–Sat 10am–5pm). Note: for bathrooms and basement moisture zones, ask about our waterproof vinyl collection.`,
+  },
+  neighbourhoods: ['Brooklin','Williamsburg','Rolling Acres','Pringle Creek','Blue Grass Meadows','Downtown Whitby','Port Whitby','Lynde Creek'],
+  faqs: [
+    {
+      question: 'Can laminate be installed in new Brooklin homes before furniture arrives?',
+      answer: 'Absolutely — new-construction subfloors in Brooklin are ideal for laminate\'s floating installation. It goes in quickly and cleanly, typically before furniture delivery. Starting at $1.49/sqft, it\'s an affordable way to finish the whole home in one product. Call (647) 428-1111 to schedule.'
+    },
+    {
+      question: 'Is laminate waterproof enough for Whitby\'s basements?',
+      answer: 'Laminate is water-resistant, not waterproof — for basement applications or bathrooms, we strongly recommend our vinyl flooring instead. Vinyl is 100% waterproof and better suited for below-grade installations in Whitby homes. Call (647) 428-1111 and we\'ll help you choose the right product room by room.'
+    },
+    {
+      question: 'What laminate style suits Port Whitby\'s coastal aesthetic?',
+      answer: 'Wide-plank laminate in greyed-oak, driftwood, or whitewashed finishes is very popular for Port Whitby\'s lake-adjacent homes. Our Premium and Water-Resistant tiers come in these finishes at $1.99–$3.29/sqft. Call (647) 428-1111 to have samples brought to your home.'
+    },
+    {
+      question: 'How far is BBS Flooring from Whitby?',
+      answer: 'Our showroom at 6061 Highway 7 Unit B, Markham is approximately 30–35 minutes from most Whitby neighbourhoods via the 401. We\'re open Mon–Sat 10am–5pm and offer free in-home estimates across Whitby. Call (647) 428-1111 to book.'
+    },
+    {
+      question: 'What AC rating should I look for in a family home with children?',
+      answer: 'We recommend AC4 minimum and AC5 ideally for family homes — AC5 is commercial-grade, meaning it handles the kind of traffic most residential homes never produce. Our Premium ($1.99–$2.49/sqft) and Water-Resistant ($2.49–$3.29/sqft) tiers carry AC5 ratings. Call (647) 428-1111 for details.'
+    }
+  ],
+  relatedPages: [
+    { label: 'Laminate Flooring Hub', url: '/laminate' },
+    { label: 'Free Measurement & Estimate', url: '/free-measurement' },
+    { label: 'Vinyl Flooring Whitby', url: '/vinyl-flooring-whitby' },
+    { label: 'Laminate Flooring Oshawa', url: '/laminate-flooring-oshawa' },
+    { label: 'Flooring in Whitby', url: '/flooring-in/whitby' }
+  ],
+  nearbyPages: [
+    { label: 'Laminate Flooring Oshawa', url: '/laminate-flooring-oshawa' },
+    { label: 'Laminate Flooring Ajax', url: '/laminate-flooring-ajax' },
+    { label: 'Vinyl Flooring Whitby', url: '/vinyl-flooring-whitby' },
+    { label: 'Engineered Hardwood Ajax', url: '/engineered-hardwood-flooring-ajax' }
+  ],
+},
+
+'vinyl-flooring-stouffville': {
+  productType: 'vinyl',
+  citySlug: 'stouffville',
+  city: 'Stouffville',
+  title: 'Vinyl Flooring Stouffville | 100% Waterproof from $1.99/sqft',
+  metaDescription: 'Vinyl flooring in Stouffville from $1.99/sqft. 100% waterproof LVP & SPC for rural homes, basements & cottages. BBS Flooring, call (647) 428-1111.',
+  h1: 'Vinyl Flooring in Stouffville',
+  heroSubtitle: '100% waterproof vinyl flooring from $1.99/sqft — 200+ styles for Stouffville\'s rural homes, lakeside retreats, and growing subdivisions, delivered from Markham.',
+  content: {
+    intro: `Stouffville sits at the edge of York Region\'s rural belt, where cedar-rail fences line gravel roads and lake properties border Musselman\'s Lake and Vandorf\'s quiet concessions. It\'s a community where homes face real-world performance demands — muddy boots from the hobby farm, humid summers at the lake, finished basements in older properties with variable moisture. BBS Flooring\'s 200+ vinyl styles, starting at $1.99/sqft, are genuinely built for this environment. Our 100% waterproof LVP and rigid-core SPC handle anything Stouffville\'s rural-meets-suburban lifestyle throws at them.`,
+    whyVinylHere: `Musselman\'s Lake and the surrounding properties in Lemonville and Vandorf are cottage-adjacent year-round homes — the kind of properties where seasonal humidity fluctuation is dramatic, water is tracked in from docks and gardens, and basement moisture is an ongoing consideration. Rigid-core SPC vinyl is the only flooring type that is completely impervious to water damage; unlike hardwood or laminate, it won\'t buckle in a humid crawl space or warp if a basement sump struggles after a spring thaw. The floating installation over uneven subfloors — common in Stouffville\'s older rural properties — is another practical advantage.
+
+Old Stouffville and Main Street\'s heritage character attracts buyers who want warmth and authenticity without the maintenance of real hardwood. Our vinyl collection includes remarkably convincing wood-look textures with embossed grain surfaces that look and feel like the real thing at a fraction of the cost. Ballantrae and Gormley\'s newer estate properties are seeing it used in mudrooms, laundry areas, and basements where hardwood simply isn\'t appropriate. Wheler\'s Mill\'s growing subdivision is particularly active — new-build buyers finishing lower levels consistently choose SPC vinyl for its rigidity, warmth underfoot, and complete waterproofing.`,
+    localExpertise: `- **Musselman\'s Lake** — Waterfront and lake-adjacent properties here demand 100% waterproof flooring throughout; our Premium SPC (9mm+) is the definitive choice for these homes.
+- **Old Stouffville** — Heritage-influenced renovations in Old Stouffville\'s core suit our wide-plank wood-look vinyl in warm oak and reclaimed-wood textures that complement period architecture.
+- **Ballantrae** — Ballantrae\'s large-lot rural estates use vinyl in mudrooms, garages, and basements while reserving hardwood for formal areas — a practical split we help design regularly.
+- **Wheler\'s Mill** — Active new-subdivision families here choose our rigid-core SPC for basement family rooms — it\'s warmer than tile, more durable than laminate, and impervious to the humidity that comes with below-grade living.`,
+    pricingSection: `Three waterproof vinyl tiers, all in stock and delivered from our Markham showroom to Stouffville:
+
+| Tier | Thickness | Price Range |
+|------|-----------|-------------|
+| Budget LVP | 6mm | $1.99–$2.49/sqft |
+| Mid-Range SPC | 8mm | $2.49–$2.99/sqft |
+| Premium SPC | 9mm+ | $2.99–$3.59/sqft |
+
+Stouffville deliveries are arranged directly from our showroom at 6061 Highway 7 Unit B, Markham. Call (647) 428-1111 for a free in-home estimate — installation quoted at no charge.`,
+  },
+  neighbourhoods: ["Wheler's Mill",'Old Stouffville','Main Street','Ballantrae',"Musselman's Lake",'Gormley','Lemonville','Vandorf'],
+  faqs: [
+    {
+      question: 'Is vinyl flooring truly waterproof for properties near Musselman\'s Lake?',
+      answer: 'Yes — our LVP and SPC vinyl is 100% waterproof through the entire plank, not just the surface coating. It won\'t swell, buckle, or mold from standing water. For Musselman\'s Lake properties with high seasonal humidity, it\'s the only flooring we\'d recommend without reservation. Call (647) 428-1111.'
+    },
+    {
+      question: 'Can vinyl flooring go in a Stouffville basement with moisture issues?',
+      answer: 'SPC rigid-core vinyl is the gold standard for basements with moisture concerns — it\'s completely waterproof, installs over concrete, and handles below-grade humidity that destroys hardwood and damages laminate. Starting at $1.99/sqft for our LVP tier. Call (647) 428-1111 for a free estimate.'
+    },
+    {
+      question: 'What vinyl styles work in Old Stouffville heritage homes?',
+      answer: 'Our wide-plank wood-look SPC in warm oak, reclaimed cedar, and hand-scraped hickory finishes are very popular in Old Stouffville\'s heritage-influenced interiors. The embossed texture is convincing enough that visitors often assume it\'s hardwood. Prices from $2.49/sqft. Call (647) 428-1111 for samples.'
+    },
+    {
+      question: 'How does rigid-core SPC compare to LVP for Stouffville rural homes?',
+      answer: 'SPC (Stone Polymer Composite) is denser and more dimensionally stable than standard LVP — better for uneven rural subfloors and larger temperature swings common in Stouffville properties. We recommend SPC (from $2.49/sqft) for most Stouffville applications. Call (647) 428-1111 for a recommendation.'
+    },
+    {
+      question: 'How do I get vinyl flooring delivered to Stouffville from your Markham showroom?',
+      answer: 'Stouffville is approximately 20–25 minutes north of our Markham showroom at 6061 Highway 7 Unit B. In-stock orders can typically be arranged for delivery within a few business days. Call (647) 428-1111 or visit Mon–Sat 10am–5pm to choose your product and schedule delivery.'
+    }
+  ],
+  relatedPages: [
+    { label: 'Vinyl Flooring Hub', url: '/vinyl' },
+    { label: 'Free Measurement & Estimate', url: '/free-measurement' },
+    { label: 'Engineered Hardwood Flooring Stouffville', url: '/engineered-hardwood-flooring-stouffville' },
+    { label: 'Laminate Flooring Stouffville', url: '/laminate-flooring-stouffville' },
+    { label: 'Flooring in Stouffville', url: '/flooring-in/stouffville' }
+  ],
+  nearbyPages: [
+    { label: 'Engineered Hardwood Richmond Hill', url: '/engineered-hardwood-flooring-richmond-hill' },
+    { label: 'Vinyl Flooring Oshawa', url: '/vinyl-flooring-oshawa' },
+    { label: 'Engineered Hardwood Vaughan', url: '/engineered-hardwood-flooring-vaughan' },
+    { label: 'Laminate Flooring Whitby', url: '/laminate-flooring-whitby' }
+  ],
+},
 };
 
 // ── Helper: get all slugs for static generation ──────────────────────────────
