@@ -40,7 +40,7 @@ const DEFAULT_STATE = {
   nosingLf: 10,
   nosingType: 'new',
   railingLf: 0,
-  railingType: 'new',
+  railingType: 'refinish',
   landingEnabled: false,
   landingSize: 'small',
   species: 'red_oak',

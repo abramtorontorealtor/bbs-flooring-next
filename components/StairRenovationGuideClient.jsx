@@ -73,7 +73,7 @@ export default function StairRenovationGuideClient() {
             Quick Answer: Stair Renovation Cost in Toronto &amp; GTA (2026)
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            Staircase renovation at BBS Flooring: refinishing from <strong>$125/step</strong>, new hardwood treads from <strong>$185/step</strong> (straight) or <strong>$225/step</strong> (pie/bullnose), new posts <strong>$150 each</strong>, iron or wood pickets <strong>$25/piece</strong>, railing refinish <strong>$25/lf</strong>, new railing <strong>$50/lf</strong>, stringers from <strong>$350/side</strong>. A typical 13-step staircase runs $1,625 (refinishing) to $5,500+ (full renovation with new treads, pickets, posts &amp; railing). WSIB-insured, serving the entire GTA. Free estimate: <a href="tel:6474281111" className="text-amber-700 underline">(647) 428-1111</a>.
+            Staircase renovation at BBS Flooring: refinishing from <strong>$125/step</strong>, new hardwood treads from <strong>$185/step</strong> (straight) or <strong>$225/step</strong> (pie/bullnose), new posts <strong>$150 each</strong>, iron or wood pickets <strong>$25/piece</strong>, railing refinish <strong>$25/lf</strong> (what most homeowners choose) or new railing <strong>$50/lf</strong>, stringers <strong>white-painted $350/side</strong> or stained. A typical 13-step staircase runs $1,625 (refinishing) to $5,500+ (full renovation). Most projects mix new and refinished elements &mdash; new pickets &amp; posts with a sanded-and-restained existing railing is the most common combination. WSIB-insured, serving the entire GTA. Free estimate: <a href="tel:6474281111" className="text-amber-700 underline">(647) 428-1111</a>.
           </p>
         </section>
 
@@ -121,7 +121,7 @@ export default function StairRenovationGuideClient() {
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6">
               <div className="text-3xl mb-3">🏗️</div>
               <h3 className="text-xl font-bold text-stone-800 mb-2">Option 4: Full Staircase Renovation</h3>
-              <p className="text-stone-600 text-sm mb-3">New treads + new railings + new balusters/pickets + posts. Complete transformation from dated colonial to modern open-riser or traditional custom design.</p>
+              <p className="text-stone-600 text-sm mb-3">New treads + new pickets/balusters + posts, with your railing either refinished (most common) or replaced. Complete transformation from dated colonial to modern open-riser or traditional custom design.</p>
               <div className="bg-white rounded-lg p-3 border border-emerald-100">
                 <p className="text-emerald-700 font-semibold text-sm">$4,500–$7,000+ for a full 13-step renovation</p>
                 <p className="text-stone-500 text-xs">Includes treads, pickets, posts, railing, nosing &amp; stringers</p>
@@ -280,13 +280,13 @@ export default function StairRenovationGuideClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-stone-800 text-white rounded-xl p-6">
               <p className="text-amber-400 font-semibold text-sm mb-2">⭐ Most Popular Combo (2026)</p>
-              <p className="font-bold text-lg mb-3">Iron pickets + stained railing + new posts</p>
-              <p className="text-stone-300 text-sm mb-4">The open, modern look that dominates Toronto renovations. Iron pickets feel lighter than wood, require zero maintenance, and the matte black finish pairs with every stain colour.</p>
+              <p className="font-bold text-lg mb-3">New iron pickets + new posts + refinished railing</p>
+              <p className="text-stone-300 text-sm mb-4">The open, modern look that dominates Toronto renovations &mdash; and the most common real-world combination. New iron pickets and posts do the visual heavy lifting, while your existing solid-wood railing is sanded and restained to match (about 9 in 10 of our customers keep and refinish their railing rather than replace it).</p>
               <div className="bg-white/10 rounded-lg p-3 text-sm">
                 <div className="flex justify-between"><span>2 new posts</span><span>$300</span></div>
                 <div className="flex justify-between"><span>26 iron pickets</span><span>$650</span></div>
-                <div className="flex justify-between"><span>10 lf new railing</span><span>$500</span></div>
-                <div className="flex justify-between pt-2 border-t border-white/20 font-bold"><span>Railing upgrade</span><span>~$1,450</span></div>
+                <div className="flex justify-between"><span>10 lf railing refinish</span><span>$250</span></div>
+                <div className="flex justify-between pt-2 border-t border-white/20 font-bold"><span>Railing upgrade</span><span>~$1,200</span></div>
               </div>
             </div>
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
@@ -304,7 +304,7 @@ export default function StairRenovationGuideClient() {
 
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
             <p className="text-blue-800 font-semibold mb-2">💡 How much to replace a banister in Toronto?</p>
-            <p className="text-blue-700 text-sm">A typical banister upgrade (2 new posts + 26 iron pickets + 10 lf new railing) runs <strong>$1,450–$1,700</strong> installed. Just refinishing an existing wood railing costs <strong>$25/lf</strong> — a 10 lf railing is $250. Mix &amp; match using the calculator above for your exact configuration.</p>
+            <p className="text-blue-700 text-sm">Most homeowners keep their existing solid-wood railing and refinish it (<strong>$25/lf</strong> &mdash; a 10 lf railing is just $250) while adding new posts and pickets. That most-common combo (2 new posts + 26 iron pickets + refinished railing) runs about <strong>$1,200</strong> installed. A full replacement with new railing runs <strong>$1,450–$1,700</strong>. Mix &amp; match using the calculator above for your exact configuration.</p>
           </div>
         </section>
 

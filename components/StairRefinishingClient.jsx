@@ -106,7 +106,7 @@ export default function StairRefinishingClient() {
               { emoji: '🎨', title: 'Sanding & Refinishing', desc: 'Strip old finish, sand smooth, custom stain, and apply 2-3 coats of commercial-grade polyurethane. Restore faded or scratched stairs to like-new.' },
               { emoji: '🪜', title: 'Stair Recapping', desc: 'Install new hardwood or vinyl treads and risers over existing structure. Faster and 40-60% cheaper than full replacement — looks identical.' },
               { emoji: '✂️', title: 'Carpet Removal + Hardwood', desc: 'Remove old carpet, prep the structure, install new hardwood treads, custom stain, and finish. Complete transformation in 2-3 days.' },
-              { emoji: '🔩', title: 'Railings & Spindles', desc: 'Modern iron pickets, glass panels, or refreshed wood railings. We coordinate the full staircase look — treads, risers, and railing together.' },
+              { emoji: '🔩', title: 'Railings & Spindles', desc: 'New iron pickets, glass panels, and posts paired with your existing wood railing sanded and restained to match (what most homeowners choose) — or a full new railing. We coordinate the whole staircase look: treads, risers, and railing together.' },
             ].map(s => (
               <div key={s.title} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
                 <div className="text-3xl mb-3">{s.emoji}</div>
