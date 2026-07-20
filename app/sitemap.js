@@ -64,6 +64,11 @@ export default async function sitemap() {
     { path: '/hardwood-refinishing', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/carpet-removal', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/carpet-to-hardwood-stairs', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/stair-recapping', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/carpet-to-hardwood-stairs-richmond-hill', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/carpet-to-hardwood-stairs-vaughan', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/carpet-to-hardwood-stairs-scarborough', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/carpet-to-hardwood-stairs-oakville', priority: 0.7, changeFrequency: 'monthly' },
     // City service pages (Phase D — Markham)
     { path: '/hardwood-refinishing-markham', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/stair-refinishing-markham', priority: 0.8, changeFrequency: 'monthly' },
