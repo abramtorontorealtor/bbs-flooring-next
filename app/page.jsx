@@ -17,10 +17,10 @@ export const metadata = {
     description: 'Premium flooring in Markham, Toronto & Durham. 1,000+ products, expert installation. Free measurements.',
     images: [
       {
-        url: 'https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp',
+        url: 'https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized-v2.webp',
         width: 1920,
         height: 1080,
-        alt: 'BBS Flooring showroom and installation services in Markham',
+        alt: 'Warm modern living room with premium hardwood flooring by BBS Flooring in Markham',
       },
     ],
   },
@@ -137,9 +137,9 @@ export default function HomePage() {
       <section className="relative flex items-center md:min-h-[100svh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized.webp"
-            alt="Luxury hardwood flooring installation in modern Markham home living room"
-            className="w-full h-full object-cover object-[center_40%]"
+            src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized-v2.webp"
+            alt="Warm sunlit living room with premium wide-plank hardwood flooring in a modern Markham home"
+            className="w-full h-full object-cover object-[center_55%]"
             width={1920}
             height={1080}
             priority
