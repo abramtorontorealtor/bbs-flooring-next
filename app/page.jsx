@@ -139,7 +139,7 @@ export default function HomePage() {
           <Image
             src="https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized-v2.webp"
             alt="Warm sunlit living room with premium wide-plank hardwood flooring in a modern Markham home"
-            className="w-full h-full object-cover object-[center_55%]"
+            className="w-full h-full object-cover object-[center_72%] md:object-[center_55%]"
             width={1920}
             height={1080}
             priority
@@ -147,10 +147,10 @@ export default function HomePage() {
             sizes="100vw"
             quality={75}
           />
-          {/* Mobile: heavier bottom gradient so text is always readable. Desktop: side gradient. */}
+          {/* Mobile: dark at TOP for headline legibility, but lighter through the lower-middle so the floor (the product) stays visible. */}
           <div
             className="absolute inset-0 md:hidden"
-            style={{ background: 'linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.8) 35%, rgba(15,23,42,0.3) 65%, transparent 100%)' }}
+            style={{ background: 'linear-gradient(to bottom, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.78) 30%, rgba(15,23,42,0.42) 55%, rgba(15,23,42,0.28) 78%, rgba(15,23,42,0.4) 100%)' }}
           />
           <div
             className="absolute inset-0 hidden md:block"
