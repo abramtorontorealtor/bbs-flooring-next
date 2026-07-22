@@ -84,8 +84,8 @@ function buildBreakdown(s) {
     rows.push({ label: `Nosing ${nt} (${s.nosingLf} lf)`, amount: s.nosingLf * (s.nosingType === 'refinish' ? P.nosing_refinish : P.nosing_new) });
   }
   if (s.railingLf > 0) {
-    const rt = s.railingType === 'refinish' ? 'refinish' : 'new';
-    rows.push({ label: `Railing ${rt} (${s.railingLf} lf)`, amount: s.railingLf * (s.railingType === 'refinish' ? P.railing_refinish : P.railing_new) });
+    const rt = s.railingType === 'refinish' ? 'sand & restain' : 'new';
+    rows.push({ label: `Handrail ${rt} (${s.railingLf} lf)`, amount: s.railingLf * (s.railingType === 'refinish' ? P.railing_refinish : P.railing_new) });
   }
   if (s.landingEnabled) {
     const ls = s.landingSize === 'large' ? 'large (6×3 ft)' : 'small (3×3 ft)';
@@ -106,7 +106,7 @@ function buildNotesString(s) {
   if (s.pickets) parts.push(`${s.pickets} iron/wood pickets`);
   if (s.stringerCount) parts.push(`${s.stringerCount} ${s.stringerType} stringer(s)`);
   if (s.nosingLf) parts.push(`${s.nosingLf}lf nosing (${s.nosingType})`);
-  if (s.railingLf) parts.push(`${s.railingLf}lf railing (${s.railingType})`);
+  if (s.railingLf) parts.push(`${s.railingLf}lf handrail (${s.railingType === 'refinish' ? 'sand & restain' : 'new'})`);
   if (s.landingEnabled) parts.push(`${s.landingSize} landing`);
   const speciesLabel = SPECIES_OPTIONS.find(o => o.value === s.species)?.label || 'Red Oak';
   parts.push(`wood species: ${speciesLabel}`);
@@ -290,11 +290,11 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                 <NumInput value={s.nosingLf} onChange={v => set('nosingLf', v)} max={50} />
               </div>
               {s.nosingLf > 0 && (
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between flex-wrap gap-2">
                   <span className="text-sm text-stone-600">Type</span>
                   <div className="flex gap-2">
+                    <RadioPill checked={s.nosingType === 'refinish'} onChange={() => set('nosingType', 'refinish')}>Sand &amp; Restain ${P.nosing_refinish}/lf</RadioPill>
                     <RadioPill checked={s.nosingType === 'new'} onChange={() => set('nosingType', 'new')}>New ${P.nosing_new}/lf</RadioPill>
-                    <RadioPill checked={s.nosingType === 'refinish'} onChange={() => set('nosingType', 'refinish')}>Refinish ${P.nosing_refinish}/lf</RadioPill>
                   </div>
                 </div>
               )}
@@ -309,15 +309,14 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                 <span className="text-sm text-stone-600">Linear feet</span>
                 <NumInput value={s.railingLf} onChange={v => set('railingLf', v)} max={50} />
               </div>
-              {s.railingLf > 0 && (
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-stone-600">Type</span>
-                  <div className="flex gap-2">
-                    <RadioPill checked={s.railingType === 'new'} onChange={() => set('railingType', 'new')}>New ${P.railing_new}/lf</RadioPill>
-                    <RadioPill checked={s.railingType === 'refinish'} onChange={() => set('railingType', 'refinish')}>Refinish ${P.railing_refinish}/lf</RadioPill>
-                  </div>
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <span className="text-sm text-stone-600">Type</span>
+                <div className="flex gap-2">
+                  <RadioPill checked={s.railingType === 'refinish'} onChange={() => set('railingType', 'refinish')}>Sand &amp; Restain ${P.railing_refinish}/lf</RadioPill>
+                  <RadioPill checked={s.railingType === 'new'} onChange={() => set('railingType', 'new')}>New ${P.railing_new}/lf</RadioPill>
                 </div>
-              )}
+              </div>
+              <p className="text-xs text-stone-400">💡 Most homeowners sand &amp; restain the existing handrail. Choose “New” to replace it.</p>
             </div>
           </div>
 
