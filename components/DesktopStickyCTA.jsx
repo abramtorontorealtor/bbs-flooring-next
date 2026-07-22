@@ -22,6 +22,14 @@ import { FileText } from 'lucide-react';
 const HIDDEN_PATHS = ['/cart', '/checkout', '/view-booking', '/quote-booking', '/quote-calculator'];
 const WHATSAPP_URL = 'https://wa.me/message/CQQRGZKI3U2VH1';
 
+// Deep-link Instant Quote to the matching intent branch based on the current page,
+// so stairs/removal visitors skip the flooring product gate.
+function quoteHrefForPath(pathname) {
+  if (/stair/.test(pathname)) return '/quote-calculator?intent=stairs';
+  if (/removal/.test(pathname)) return '/quote-calculator?intent=removal';
+  return '/quote-calculator';
+}
+
 export default function DesktopStickyCTA() {
   const [visible, setVisible] = useState(false);
   const pathname = usePathname();
@@ -39,6 +47,8 @@ export default function DesktopStickyCTA() {
   }, [isHiddenPage, pathname]);
 
   if (!visible || isHiddenPage) return null;
+
+  const quoteHref = quoteHrefForPath(pathname);
 
   const handleQuoteClick = () => {
     if (typeof window.gtag === 'function') {
@@ -70,7 +80,7 @@ export default function DesktopStickyCTA() {
     <div className="hidden lg:flex flex-col items-end gap-3 fixed right-6 bottom-6 z-50">
       {/* Instant Quote pill — highest-intent action */}
       <Link
-        href="/quote-calculator"
+        href={quoteHref}
         onClick={handleQuoteClick}
         aria-label="Get an instant flooring quote"
         className="group flex items-center gap-2 rounded-full bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold px-5 py-3 shadow-lg transition-all duration-200"

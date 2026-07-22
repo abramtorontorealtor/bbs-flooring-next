@@ -16,7 +16,7 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent } from '@/components/ui/card';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CheckCircle2, Info, Lock, ArrowRight, ArrowLeft, BookmarkCheck, Footprints } from 'lucide-react';
+import { CheckCircle2, Info, Lock, ArrowRight, ArrowLeft, BookmarkCheck, Footprints, Layers, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { createPageUrl } from '@/lib/routes';
 import { useAuth } from '@/lib/auth-context';
@@ -24,6 +24,78 @@ import { useAuth } from '@/lib/auth-context';
 import { Analytics } from '@/components/analytics';
 import { validatePhone } from '@/lib/validations';
 import StairCalculatorWidget from '@/components/StairCalculatorWidget';
+import RemovalEstimator from '@/components/RemovalEstimator';
+
+// ─── Intent modes (site-wide "Instant Quote" can land on any of these) ───
+const INTENT_OPTIONS = [
+  { key: 'flooring', label: 'New Flooring', icon: Layers },
+  { key: 'stairs', label: 'Stairs', icon: Footprints },
+  { key: 'removal', label: 'Floor Removal', icon: Trash2 },
+];
+
+// Removal types — rates mirror the standalone removal pages exactly (data/removalPages.js
+// + CarpetRemovalEstimator). Submits to /api/contact via the shared RemovalEstimator.
+const REMOVAL_INTENT_TYPES = [
+  { key: 'carpet', ratePerSqft: 1.0, removalType: 'Carpet Removal', source: 'quote-calculator-carpet-removal' },
+  { key: 'hardwood', ratePerSqft: 1.5, removalType: 'Hardwood Removal', source: 'quote-calculator-hardwood-removal' },
+  { key: 'vinyl-laminate', ratePerSqft: 1.5, removalType: 'Vinyl/Laminate Removal', source: 'quote-calculator-vinyl-laminate-removal' },
+  { key: 'tile', ratePerSqft: 3.0, removalType: 'Tile Removal', source: 'quote-calculator-tile-removal' },
+];
+
+// ─── Intent Chooser Bar ───
+function IntentChooser({ intent, onChange }) {
+  return (
+    <div className="mb-8">
+      <p className="text-center text-sm font-semibold text-slate-500 mb-3">What can we quote for you?</p>
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 max-w-2xl mx-auto">
+        {INTENT_OPTIONS.map(({ key, label, icon: Icon }) => {
+          const active = intent === key;
+          return (
+            <button key={key} type="button" onClick={() => onChange(key)}
+              aria-pressed={active}
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border-2 px-2 py-3.5 text-sm font-semibold transition-all ${
+                active
+                  ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm'
+                  : 'border-slate-200 bg-white text-slate-600 hover:border-amber-300 hover:bg-amber-50/40'
+              }`}>
+              <Icon className={`w-5 h-5 ${active ? 'text-amber-600' : 'text-slate-400'}`} />
+              <span className="leading-tight text-center">{label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Removal intent branch (standalone — no flooring product gate) ───
+function RemovalIntentPanel() {
+  const [removalKey, setRemovalKey] = useState('carpet');
+  const cfg = REMOVAL_INTENT_TYPES.find(r => r.key === removalKey) || REMOVAL_INTENT_TYPES[0];
+  return (
+    <div className="space-y-5">
+      <div>
+        <Label className="mb-2 block text-xs font-semibold text-slate-500 uppercase tracking-wider">What are we removing?</Label>
+        <div className="flex flex-wrap gap-2">
+          {REMOVAL_INTENT_TYPES.map(({ key, removalType }) => (
+            <button key={key} type="button" onClick={() => setRemovalKey(key)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                removalKey === key ? 'bg-amber-500 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}>{removalType.replace(' Removal', '')}</button>
+          ))}
+        </div>
+      </div>
+      <RemovalEstimator
+        key={removalKey}
+        ratePerSqft={cfg.ratePerSqft}
+        haulAwayFee={75}
+        removalType={cfg.removalType}
+        source={cfg.source}
+        creditLabel="$100 Floor Replacement Credit"
+      />
+    </div>
+  );
+}
 
 
 // ─── Constants ───
@@ -162,6 +234,20 @@ export default function QuoteCalculatorClient() {
   const searchParams = useSearchParams();
   const preselectedProductId = searchParams.get('product_id');
   const resumeToken = searchParams.get('resume');
+
+  // ─── Intent mode: sticky "Instant Quote" lands here from anywhere; stairs/removal
+  //     visitors must NOT be dead-ended at the flooring product gate. ?intent= deep-links.
+  const intentParam = searchParams.get('intent');
+  const initialIntent = ['stairs', 'removal', 'flooring'].includes(intentParam) ? intentParam : 'flooring';
+  const [intent, setIntent] = useState(initialIntent);
+
+  const changeIntent = (next) => {
+    setIntent(next);
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'quote_intent_select', { event_category: 'engagement', event_label: next });
+    }
+    setTimeout(() => topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  };
 
   const savedProject = (() => {
     if (typeof window === 'undefined') return null;
@@ -472,6 +558,37 @@ export default function QuoteCalculatorClient() {
         </div>
       )}
 
+      {/* Intent chooser — turns the site-wide Instant Quote into "quote for anything" */}
+      <IntentChooser intent={intent} onChange={changeIntent} />
+
+      {/* ═══════════ STAIRS INTENT ═══════════ */}
+      {intent === 'stairs' && (
+        <Card className="border-2 border-slate-200">
+          <CardContent className="p-5 md:p-8">
+            <div className="mb-5">
+              <h2 className="text-xl font-bold text-slate-800 mb-1 flex items-center gap-2"><Footprints className="w-5 h-5 text-amber-600" /> Stair Renovation Quote</h2>
+              <p className="text-sm text-slate-500">Configure your staircase for an instant estimate — no flooring purchase required.</p>
+            </div>
+            <StairCalculatorWidget />
+          </CardContent>
+        </Card>
+      )}
+
+      {/* ═══════════ REMOVAL INTENT ═══════════ */}
+      {intent === 'removal' && (
+        <Card className="border-2 border-slate-200">
+          <CardContent className="p-5 md:p-8">
+            <div className="mb-5">
+              <h2 className="text-xl font-bold text-slate-800 mb-1 flex items-center gap-2"><Trash2 className="w-5 h-5 text-amber-600" /> Floor Removal Quote</h2>
+              <p className="text-sm text-slate-500">Get an instant removal estimate — no flooring purchase required.</p>
+            </div>
+            <RemovalIntentPanel />
+          </CardContent>
+        </Card>
+      )}
+
+      {/* ═══════════ FLOORING INTENT (original 4-step flow, untouched) ═══════════ */}
+      {intent === 'flooring' && (<>
       {/* Step indicator */}
       <StepIndicator currentStep={step} steps={STEPS} />
 
@@ -917,6 +1034,7 @@ export default function QuoteCalculatorClient() {
           )}
         </div>
       )}
+      </>)}
 
     </div>
   );

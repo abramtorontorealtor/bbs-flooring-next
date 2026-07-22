@@ -13,6 +13,14 @@ const HIDDEN_PATHS = [
   '/quote-booking',
 ];
 
+// Deep-link the Instant Quote to the right intent based on the page the visitor is on,
+// so stairs/removal traffic lands on the matching quote branch (not the flooring gate).
+function quoteHrefForPath(pathname) {
+  if (/stair/.test(pathname)) return '/quote-calculator?intent=stairs';
+  if (/removal/.test(pathname)) return '/quote-calculator?intent=removal';
+  return '/quote-calculator';
+}
+
 export default function StickyMobileCTA() {
   const pathname = usePathname();
 
@@ -21,6 +29,8 @@ export default function StickyMobileCTA() {
   const isHiddenPage = isProductDetail || HIDDEN_PATHS.some((p) => pathname.startsWith(p));
 
   if (isHiddenPage) return null;
+
+  const quoteHref = quoteHrefForPath(pathname);
 
   const handleWhatsAppClick = () => {
     if (typeof window.gtag === 'function') {
@@ -58,7 +68,7 @@ export default function StickyMobileCTA() {
         </a>
 
         <Link
-          href="/quote-calculator"
+          href={quoteHref}
           className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-amber-500 text-white active:bg-amber-600 transition-colors"
         >
           <FileText className="w-4 h-4" />
