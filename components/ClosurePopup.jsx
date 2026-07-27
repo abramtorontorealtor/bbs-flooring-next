@@ -5,10 +5,9 @@ import { useEffect, useState } from 'react';
 /**
  * One-off temporary closure popup (floating modal — does NOT affect page layout).
  *
- * Notice: showroom closed Wed July 15, 2026 due to the Ontario wildfire-smoke
- * air quality warning (Environment Canada, AQHI high/very-high).
+ * Notice: showroom closed Mon July 27, 2026 (staff / inventory day).
  *
- * Self-expiring: only renders through end of day July 15, 2026 America/Toronto.
+ * Self-expiring: only renders through end of day July 27, 2026 America/Toronto.
  * After that it renders nothing, so a forgotten popup cannot linger.
  * Dismissible per-visitor via sessionStorage (won't nag on every page view).
  *
@@ -16,9 +15,9 @@ import { useEffect, useState } from 'react';
  * reserves space in the document flow and cannot push/break the header layout.
  */
 
-// Show through 2026-07-16 04:00 UTC == 2026-07-16 00:00 ET (end of Jul 15 ET).
-const EXPIRES_AT = Date.parse('2026-07-16T04:00:00Z');
-const DISMISS_KEY = 'bbs-closure-2026-07-15-dismissed';
+// Show through 2026-07-28 04:00 UTC == 2026-07-28 00:00 ET (end of Jul 27 ET).
+const EXPIRES_AT = Date.parse('2026-07-28T04:00:00Z');
+const DISMISS_KEY = 'bbs-closure-2026-07-27-dismissed';
 
 export default function ClosurePopup() {
   const [show, setShow] = useState(false);
@@ -69,19 +68,19 @@ export default function ClosurePopup() {
           </svg>
         </button>
 
-        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-2xl">
-          <span aria-hidden="true">⚠️</span>
+        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-2xl">
+          <span aria-hidden="true">🕒</span>
         </div>
 
         <h2 id="closure-title" className="text-lg font-bold text-slate-900">
           Showroom Closed Today
         </h2>
-        <p className="mt-1 text-sm font-medium text-red-700">Wednesday, July&nbsp;15</p>
+        <p className="mt-1 text-sm font-medium text-amber-700">Monday, July&nbsp;27</p>
 
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
-          Our showroom is closed today due to the Ontario air quality warning.
-          Online orders &amp; quote requests are still open — we&apos;ll respond
-          as soon as we reopen. Thanks for your patience &amp; stay safe.
+          Our showroom is closed today. Online orders &amp; quote requests are
+          still open — we&apos;ll respond as soon as we reopen tomorrow. Thanks
+          for your patience!
         </p>
 
         <button
