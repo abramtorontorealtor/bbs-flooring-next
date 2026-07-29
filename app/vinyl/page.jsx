@@ -10,6 +10,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 import CityLinks from '@/components/CityLinks';
 import CategoryShopBar from '@/components/CategoryShopBar';
+import FloorFinderCTA from '@/components/FloorFinderCTA';
+import GuidedUseCaseChips from '@/components/GuidedUseCaseChips';
 
 export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
 
@@ -109,6 +111,10 @@ export default async function VinylPage() {
 
         {/* ── SSR Shop-intent + trust bar (surfaces shopping above SEO copy) ── */}
         <CategoryShopBar count={stats.count ? `${stats.count}+` : '100+'} low={low} label="Vinyl Flooring" />
+
+        {/* ── Guided "help me choose" + shop-by-need (overload killers) ── */}
+        <FloorFinderCTA context="vinyl" />
+        <GuidedUseCaseChips category="vinyl" base="/products" />
 
         {/* ── Interactive Product Grid (client island) — moved up so shopping is immediate ── */}
         <div id="shop" className="scroll-mt-24">

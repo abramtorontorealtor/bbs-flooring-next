@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import ProductsClient from '@/components/ProductsClient';
 import ProductGridServer from '@/components/ProductGridServer';
+import FloorFinderCTA from '@/components/FloorFinderCTA';
+import GuidedUseCaseChips from '@/components/GuidedUseCaseChips';
 import { SEO_DATA } from '@/lib/seo';
 import { getProductsForGrid } from '@/lib/products-server';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -51,6 +53,12 @@ export default async function ProductsPage() {
           </Link>
         ))}
       </div>
+
+      {/* ── Guided "help me choose" escape hatch (overload killer) ── */}
+      <FloorFinderCTA />
+
+      {/* ── Shop-by-need chips → pre-filtered grid states ── */}
+      <GuidedUseCaseChips category="all" base="/products" />
 
       {/* ── Interactive Product Grid (client island) ── */}
       <Suspense fallback={serverGrid}>
