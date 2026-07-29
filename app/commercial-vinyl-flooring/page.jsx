@@ -8,7 +8,7 @@ import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CityLinks from '@/components/CityLinks';
 
-export const revalidate = 300; // 5-minute ISR
+export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
 
 const CANONICAL = 'https://bbsflooring.ca/commercial-vinyl-flooring';
 

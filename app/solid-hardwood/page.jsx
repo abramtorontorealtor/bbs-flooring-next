@@ -11,7 +11,7 @@ import QuoteContextBanner from '@/components/QuoteContextBanner';
 import CityLinks from '@/components/CityLinks';
 import CategoryShopBar from '@/components/CategoryShopBar';
 
-export const revalidate = 300; // 5-minute ISR
+export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
 
 export async function generateMetadata() {
   const stats = await getCategoryPriceStats('solid_hardwood');

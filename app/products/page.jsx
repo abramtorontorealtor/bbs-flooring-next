@@ -6,7 +6,7 @@ import { SEO_DATA } from '@/lib/seo';
 import { getProductsForGrid } from '@/lib/products-server';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
-export const revalidate = 300; // 5-minute ISR
+export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
 
 export const metadata = {
   title: SEO_DATA.products.title,
