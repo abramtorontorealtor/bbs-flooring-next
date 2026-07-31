@@ -270,8 +270,34 @@ export default function AdminCRMClient() {
 
   // ─── BOOKING MUTATIONS ─────────────────────────────────────────────────
   const [bookingRescheduleDate, setBookingRescheduleDate] = useState('');
+  // Stored as a human 12-hour string (e.g. "2:45 PM") to match what email/calendar expect.
   const [bookingRescheduleTime, setBookingRescheduleTime] = useState('');
   const [bookingCancelReason, setBookingCancelReason] = useState('');
+
+  // Convert a native <input type="time"> value ("HH:MM", 24h) into a 12-hour label.
+  const to12Hour = (hhmm) => {
+    if (!hhmm) return '';
+    const [hStr, mStr] = hhmm.split(':');
+    let h = parseInt(hStr, 10);
+    const m = mStr ?? '00';
+    const period = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    if (h === 0) h = 12;
+    return `${h}:${m} ${period}`;
+  };
+  // Feed the native time input back from the stored 12-hour string (round-trip).
+  const to24Hour = (label) => {
+    if (!label) return '';
+    const m = label.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!m) return '';
+    let h = parseInt(m[1], 10);
+    const min = m[2];
+    const period = m[3].toUpperCase();
+    if (period === 'PM' && h !== 12) h += 12;
+    if (period === 'AM' && h === 12) h = 0;
+    return `${String(h).padStart(2, '0')}:${min}`;
+  };
+  const bookingRescheduleTime24 = to24Hour(bookingRescheduleTime);
 
   // ── FOLLOW-UP STATE ───────────────────────────────────────────────────
   const [followUpOpen, setFollowUpOpen] = useState(false);
@@ -1716,24 +1742,21 @@ export default function AdminCRMClient() {
                           {!['completed', 'cancelled'].includes(o.status) && (
                             <div className="bg-slate-50 rounded-lg p-3 space-y-2">
                               <Label className="text-xs font-semibold text-slate-600">Reschedule</Label>
+                              {/* Admin can reschedule to ANY date/time — not limited to the
+                                  customer-facing online booking window. Date allows today or later;
+                                  time is a free picker (any clock time). */}
                               <div className="flex gap-2">
                                 <Input type="date" value={bookingRescheduleDate}
                                   onChange={(e) => setBookingRescheduleDate(e.target.value)}
-                                  className="h-8 text-sm flex-1"
-                                  min={new Date(Date.now() + 86400000).toISOString().split('T')[0]} />
-                                <select value={bookingRescheduleTime}
-                                  onChange={(e) => setBookingRescheduleTime(e.target.value)}
-                                  className="h-8 rounded-md border border-input bg-background px-2 text-sm">
-                                  <option value="">Time...</option>
-                                  <option value="11:00 AM">11:00 AM</option>
-                                  <option value="11:30 AM">11:30 AM</option>
-                                  <option value="12:00 PM">12:00 PM</option>
-                                  <option value="12:30 PM">12:30 PM</option>
-                                  <option value="1:00 PM">1:00 PM</option>
-                                  <option value="1:30 PM">1:30 PM</option>
-                                  <option value="5:00 PM">5:00 PM</option>
-                                </select>
+                                  className="h-8 text-sm flex-1" />
+                                <Input type="time" value={bookingRescheduleTime24}
+                                  onChange={(e) => setBookingRescheduleTime(to12Hour(e.target.value))}
+                                  className="h-8 text-sm w-32"
+                                  step={300} />
                               </div>
+                              {bookingRescheduleTime && (
+                                <p className="text-[11px] text-slate-500">Selected time: {bookingRescheduleTime}</p>
+                              )}
                               <Button size="sm" variant="outline" className="w-full"
                                 disabled={!bookingRescheduleDate || bookingAdminAction.isPending}
                                 onClick={() => bookingAdminAction.mutate({
