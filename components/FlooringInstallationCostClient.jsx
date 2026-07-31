@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { createPageUrl } from '@/lib/routes';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
+import InstallCityLinks from '@/components/InstallCityLinks';
 import FinancingBanner from '@/components/FinancingBanner';
 import { Analytics } from '@/components/analytics';
 import { flooringImages } from '@/data/galleryImages';
@@ -680,6 +681,12 @@ export default function FlooringInstallationCostClient() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <FinancingBanner monthlyFrom={150} />
       </div>
+
+      {/* ─── Flooring Installation by City (internal-link mesh) ─── */}
+      <InstallCityLinks
+        title="Get Your Installation Cost by City"
+        subtitle="Local pricing and free in-home estimates across the GTA. See installation details for your city:"
+      />
 
       {/* ─── FAQ ─── */}
       <div id="faq" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 md:pt-10 md:pb-16 scroll-mt-16">

@@ -564,6 +564,29 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Professional Installation by City — dedicated install-page links (install-intent anchors) */}
+          <div className="mb-12">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Professional Flooring Installation by City</h3>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              {[
+                { label: 'Flooring Installation Markham', href: '/flooring-installation-markham' },
+                { label: 'Flooring Installation Toronto', href: '/flooring-installation-toronto' },
+                { label: 'Flooring Installation Scarborough', href: '/flooring-installation-scarborough' },
+                { label: 'Flooring Installation Richmond Hill', href: '/flooring-installation-richmond-hill' },
+                { label: 'Flooring Installation Vaughan', href: '/flooring-installation-vaughan' },
+                { label: 'Flooring Installation Pickering', href: '/flooring-installation-pickering' },
+                { label: 'Flooring Installation Ajax', href: '/flooring-installation-ajax' },
+                { label: 'Flooring Installation Whitby', href: '/flooring-installation-whitby' },
+                { label: 'Flooring Installation Newmarket', href: '/flooring-installation-newmarket' },
+                { label: 'Flooring Installation Oshawa', href: '/flooring-installation-oshawa' },
+              ].map(link => (
+                <Link key={link.href} href={link.href} className="text-slate-700 hover:text-amber-600 transition-colors font-medium">
+                  {link.label} →
+                </Link>
+              ))}
+            </div>
+          </div>
+
           {/* Popular Flooring by City */}
           <div className="mb-12">
             <h3 className="text-xl font-bold text-slate-800 mb-4">Popular Flooring by City</h3>

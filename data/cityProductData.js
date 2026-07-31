@@ -4040,3 +4040,13 @@ export function getAllCityProductSlugs() {
 export function getCityProductPage(slug) {
   return cityProductPages[slug] || null;
 }
+
+// ── Helper: install-only city pages (slug + city), for internal-link mesh ─────
+// Powers the "Flooring Installation by City" link block on /installation and
+// /flooring-installation-cost so authority flows from the hub + cost page down
+// to the dedicated city install pages (they already link back up).
+export function getInstallCityPages() {
+  return Object.entries(cityProductPages)
+    .filter(([, p]) => p.isInstallationPage)
+    .map(([slug, p]) => ({ slug, city: p.city }));
+}
