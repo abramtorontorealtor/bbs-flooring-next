@@ -283,6 +283,7 @@ export default function AdminCRMClient() {
   const [followUpSending, setFollowUpSending] = useState(false);
 
   const FOLLOW_UP_TEMPLATES = [
+    { key: 'price_quote', label: '🏷️ Price Quote (Compete)', description: 'Send list price + willing-to-compete pitch for a PDP quote request' },
     { key: 'quote_followup', label: '💰 Quote Follow-Up', description: 'For leads who got a quote on the website' },
     { key: 'measurement_followup', label: '📏 Measurement Follow-Up', description: 'After a measurement visit' },
     { key: 'general_checkin', label: '👋 General Check-In', description: 'Casual check-in on their project' },
@@ -656,23 +657,47 @@ export default function AdminCRMClient() {
 
   const getFollowUpVars = (lead) => {
     const o = lead.raw;
+    const message = o.message || '';
+    // Parse a clean "product + configuration" line out of a PDP quote-request message.
+    // PDP messages look like:
+    //   Product: Toffee Crunch – Vidar White Oak Engineered Hardwood
+    //   SKU: TOFFEE_CRUNCH_PARENT
+    //   Variant SKU: VID-TOCR-AWO-61/2-SELBETTER
+    //   Configuration: Standard · 6 1/2" · Select & Better (AB)
+    let pdpProduct = '';
+    let pdpConfig = '';
+    if (message) {
+      const pm = message.match(/Product:\s*(.+)/i);
+      if (pm) pdpProduct = pm[1].trim();
+      const cm = message.match(/Configuration:\s*(.+)/i);
+      if (cm) pdpConfig = cm[1].trim();
+    }
+    const productLabel = pdpProduct || o.product_name || '';
     return {
       name: (lead.name || 'there').split(' ')[0],
-      product: o.product_name || '',
+      product: productLabel,
+      product_config: pdpConfig,
+      product_full: pdpConfig ? `${productLabel} (${pdpConfig})` : productLabel,
       sqft: o.square_footage || o.sqft || '',
       quote_total: lead.value > 0 ? lead.value.toLocaleString('en-CA', { minimumFractionDigits: 0 }) : '',
       address: o.customer_address || o.address || '',
+      message,
     };
   };
 
   const generateFollowUpPreview = useCallback((templateKey, vars) => {
     const name = vars.name || 'there';
     const product = vars.product || 'flooring';
+    const productFull = vars.product_full || product;
     const sqft = vars.sqft;
     const quoteTotal = vars.quote_total;
     const address = vars.address;
 
     const templates = {
+      price_quote: {
+        subject: `Your Price on ${product || 'Vidar Flooring'} — BBS Flooring`,
+        body: `Hi ${name},\n\nThanks for requesting a quote on ${productFull} through our website — great choice.\n\nHere’s our list price for this floor:\n\n    • [$__.__ /sq ft]\n\nI want to be upfront: this is our published list price, and I’m happy to sharpen my pencil to earn your business. If you’ve got a competing quote in hand, send it over — I’ll do everything I can to beat it or match it.\n\nJust let me know your square footage and I’ll put together an exact all-in number (material + delivery/install if you need it). Free in-home measurement is available too.\n\nReply here or call/text me at (647) 428-1111 and we’ll get you taken care of.`,
+      },
       quote_followup: {
         subject: `Following Up \u2014 Your ${product || 'Flooring'} Quote`,
         body: `Hi ${name},\n\nYou recently put together a quote on our website for ${product}${sqft ? ` (${sqft} sq ft)` : ''} and I wanted to check in.${quoteTotal ? `\n\nYour quote: $${quoteTotal} CAD` : ''}\n\nIf you have any questions about the product, installation, or pricing \u2014 I\u2019m happy to help. We also offer free in-home measurements if you\u2019d like us to come take a look at your space.`,
@@ -700,7 +725,10 @@ export default function AdminCRMClient() {
 
   const openFollowUpCompose = useCallback((lead) => {
     const vars = getFollowUpVars(lead);
-    const bestTemplate = lead.source === 'booking' ? 'measurement_followup' : 'quote_followup';
+    const isPdpQuote = lead.source === 'contact' && /pdp quote request/i.test(vars.message || '');
+    const bestTemplate = isPdpQuote
+      ? 'price_quote'
+      : (lead.source === 'booking' ? 'measurement_followup' : 'quote_followup');
     const preview = generateFollowUpPreview(bestTemplate, vars);
 
     setFollowUpLead(lead);
