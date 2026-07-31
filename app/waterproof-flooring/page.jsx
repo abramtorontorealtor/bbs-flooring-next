@@ -4,6 +4,8 @@ import BrandLandingServer from '@/components/BrandLandingServer';
 import { faqSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
+import FloorFinderCTA from '@/components/FloorFinderCTA';
+import GuidedUseCaseChips from '@/components/GuidedUseCaseChips';
 
 export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
 
@@ -23,6 +25,12 @@ export default async function WaterproofFlooringPage() {
         brandKey="waterproof"
         initialProducts={products}
         serverGrid={serverGrid}
+        guidedNav={
+          <>
+            <FloorFinderCTA context="waterproof floor" />
+            <GuidedUseCaseChips category="waterproof" base="/products" heading="Shop waterproof by need" />
+          </>
+        }
       />
     </>
   );

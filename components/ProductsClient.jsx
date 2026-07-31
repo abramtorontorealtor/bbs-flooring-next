@@ -215,6 +215,31 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     };
   }, [products, filters.category]);
 
+  // ── Dynamic price ceiling from the loaded catalog (category-aware) ──
+  // Replaces the old hardcoded 0–50 slider (everything sat in the first ~30% of the track).
+  const priceMax = useMemo(() => {
+    const scope = filters.category === 'all'
+      ? products
+      : products.filter(p => (p.category || '').toLowerCase().replace(/\s+/g, '_') === filters.category.toLowerCase());
+    let max = 0;
+    scope.forEach(p => {
+      const price = p.sale_price_per_sqft || p.price_per_sqft || 0;
+      if (price > max) max = price;
+    });
+    // Round up to the next whole dollar, clamp to a sane floor so the slider is always usable.
+    return Math.max(5, Math.ceil(max));
+  }, [products, filters.category]);
+
+  // Preset budget bands — mirror the Floor Finder quiz buckets.
+  const priceBands = useMemo(() => {
+    const bands = [{ label: 'Under $3', range: [0, 3] }];
+    if (priceMax > 5) bands.push({ label: '$3–$5', range: [3, 5] });
+    bands.push({ label: priceMax > 5 ? '$5+' : '$3+', range: [priceMax > 5 ? 5 : 3, priceMax] });
+    return bands;
+  }, [priceMax]);
+
+  const priceIsActive = filters.priceRange[0] > 0 || filters.priceRange[1] < priceMax;
+
   // ── Category counts ──
   const categoryCounts = useMemo(() => {
     const counts = { all: products.length };
@@ -294,6 +319,15 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
   // Reset visible count when filters change
   useEffect(() => { setVisibleCount(ITEMS_PER_PAGE); }, [filters]);
 
+  // Clamp the price upper bound to the live catalog ceiling (handles the legacy default
+  // of 50 and category switches that lower the max). Only pulls DOWN an untouched/overflowing
+  // handle — never overrides a deliberate narrower selection.
+  useEffect(() => {
+    if (filters.priceRange[1] > priceMax) {
+      setFilters(f => ({ ...f, priceRange: [Math.min(f.priceRange[0], priceMax), priceMax] }));
+    }
+  }, [priceMax]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // ── Active filter tracking ──
   const activeFilters = useMemo(() => {
     const pills = [];
@@ -311,16 +345,16 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     filters.grades.forEach(g => pills.push({ key: `grade-${g}`, label: g, clear: () => setFilters(f => ({ ...f, grades: f.grades.filter(x => x !== g) })) }));
     filters.wearLayers.forEach(w => pills.push({ key: `wl-${w}`, label: `${w} Wear Layer`, clear: () => setFilters(f => ({ ...f, wearLayers: f.wearLayers.filter(x => x !== w) })) }));
     filters.acRatings.forEach(a => pills.push({ key: `ac-${a}`, label: a, clear: () => setFilters(f => ({ ...f, acRatings: f.acRatings.filter(x => x !== a) })) }));
-    if (filters.priceRange[0] > 0 || filters.priceRange[1] < 50) pills.push({ key: 'price', label: `C$${filters.priceRange[0]}–$${filters.priceRange[1]}/sqft`, clear: () => setFilters(f => ({ ...f, priceRange: [0, 50] })) });
+    if (priceIsActive) pills.push({ key: 'price', label: `C$${filters.priceRange[0]}–$${Math.min(filters.priceRange[1], priceMax)}/sqft`, clear: () => setFilters(f => ({ ...f, priceRange: [0, priceMax] })) });
     return pills;
-  }, [filters, isSearchMode, urlSearchParam, searchParams, router, pathname]);
+  }, [filters, isSearchMode, urlSearchParam, searchParams, router, pathname, priceMax, priceIsActive]);
 
   const activeFilterCount = activeFilters.length;
 
   // ── Clear all filters ──
   const clearAllFilters = useCallback(() => {
     const reset = {
-      category: 'all', search: '', priceRange: [0, 50],
+      category: 'all', search: '', priceRange: [0, priceMax],
       isOnSale: false, isWaterproof: false, isNewArrival: false, isClearance: false,
       brands: [], species: [], widths: [], thicknesses: [], finishes: [],
       grades: [], wearLayers: [], acRatings: [], sortBy: 'recommended',
@@ -328,7 +362,7 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     setFilters(reset);
     sessionStorage.removeItem('products_filters_v2');
     router.replace(createPageUrl('Products'), { scroll: false });
-  }, [router]);
+  }, [router, priceMax]);
 
   // ── Sync URL ↔ filters ──
   useEffect(() => {
@@ -357,7 +391,7 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     if (filters.acRatings.length) params.set('acRating', filters.acRatings.join(','));
     if (filters.sortBy !== 'recommended') params.set('sort', filters.sortBy);
     if (filters.priceRange[0] !== 0) params.set('priceMin', String(filters.priceRange[0]));
-    if (filters.priceRange[1] !== 50) params.set('priceMax', String(filters.priceRange[1]));
+    if (filters.priceRange[1] < priceMax) params.set('priceMax', String(filters.priceRange[1]));
 
     const newSearch = params.toString();
     const currentSearch = searchParams.toString();
@@ -417,18 +451,40 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
       {/* Price Range */}
       <FilterSection title="Price (per sq.ft)" defaultOpen={true}>
         <div className="px-1">
+          {/* Quick budget bands — mirror the Floor Finder quiz buckets */}
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {priceBands.map((band) => {
+              const active = filters.priceRange[0] === band.range[0] && filters.priceRange[1] === band.range[1];
+              return (
+                <button
+                  key={band.label}
+                  onClick={() => setFilters(f => ({
+                    ...f,
+                    priceRange: active ? [0, priceMax] : [band.range[0], band.range[1]],
+                  }))}
+                  className={`text-xs px-2.5 py-1 rounded-full border font-medium transition-colors ${
+                    active
+                      ? 'bg-amber-500 text-white border-amber-500'
+                      : 'bg-white text-slate-600 border-slate-200 hover:border-amber-300 hover:bg-amber-50'
+                  }`}
+                >
+                  {band.label}
+                </button>
+              );
+            })}
+          </div>
           <Slider
-            value={filters.priceRange}
+            value={[Math.min(filters.priceRange[0], priceMax), Math.min(filters.priceRange[1], priceMax)]}
             onValueChange={(val) => setFilters(f => ({ ...f, priceRange: val }))}
             min={0}
-            max={50}
+            max={priceMax}
             step={0.5}
             className="mb-3"
           />
           <div className="flex items-center justify-between text-sm">
             <span className="text-slate-600 font-medium tabular-nums">C${filters.priceRange[0].toFixed(2)}</span>
             <span className="text-slate-400">—</span>
-            <span className="text-slate-600 font-medium tabular-nums">C${filters.priceRange[1].toFixed(2)}</span>
+            <span className="text-slate-600 font-medium tabular-nums">C${Math.min(filters.priceRange[1], priceMax).toFixed(2)}{filters.priceRange[1] >= priceMax ? '+' : ''}</span>
           </div>
         </div>
       </FilterSection>

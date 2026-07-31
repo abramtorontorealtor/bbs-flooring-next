@@ -42,6 +42,14 @@ const PRESETS = {
     { label: '✨ New Arrivals', to: '?category=solid_hardwood&new=true' },
     { label: '🔥 On Sale', to: '?category=solid_hardwood&sale=true' },
   ],
+  waterproof: [
+    { label: '🏠 Best for Basements', to: '?waterproof=true&category=vinyl' },
+    { label: '🐾 Pet & Kid Proof', to: '?waterproof=true' },
+    { label: '🧱 Waterproof Laminate', to: '?waterproof=true&category=laminate' },
+    { label: '💰 Budget Under $3', to: '?waterproof=true&priceMax=3' },
+    { label: '✨ New Arrivals', to: '?waterproof=true&new=true' },
+    { label: '🔥 On Sale', to: '?waterproof=true&sale=true' },
+  ],
   all: [
     { label: '🏠 Best for Basements', to: '?category=vinyl&waterproof=true' },
     { label: '🐾 Pet & Kid Proof', to: '?waterproof=true' },

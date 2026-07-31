@@ -35,6 +35,7 @@ export default function BrandLandingServer({
   ctaText = 'Get a Free Quote',
   initialProducts,
   serverGrid,
+  guidedNav,
 }) {
   // Build breadcrumb items
   const breadcrumbs = [
@@ -115,6 +116,7 @@ export default function BrandLandingServer({
         {showProducts && brandKey && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-slate-800 mb-6">Products Available Now</h2>
+            {guidedNav}
             <Suspense fallback={serverGrid}>
               <BrandProductGrid
                 brandKey={brandKey}
