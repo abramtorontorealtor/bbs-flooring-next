@@ -10,6 +10,25 @@ import { callUrl, smsUrl, whatsappUrl, PHONE_DISPLAY } from '@/lib/contact';
 
 export default function RequestQuoteBox({ product, selectedVariant = null }) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+
+  // Rich descriptor for the pre-filled SMS/WhatsApp deep links so the customer's
+  // first message already identifies the exact floor + selected options + SKU.
+  const enquiryTarget = (() => {
+    if (!product) return undefined;
+    const config = selectedVariant
+      ? [selectedVariant.pattern, selectedVariant.width, selectedVariant.grade].filter(Boolean).join(' \u00b7 ')
+      : '';
+    const url = (product.slug || product.handle)
+      ? `https://bbsflooring.ca/products/${product.slug || product.handle}`
+      : (typeof window !== 'undefined' ? window.location.href.split('?')[0] : '');
+    return {
+      name: product.name,
+      sku: product.sku,
+      variantSku: selectedVariant?.sku,
+      config: config || undefined,
+      url: url || undefined,
+    };
+  })();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [deliveryOpen, setDeliveryOpen] = useState(false);
@@ -194,7 +213,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
           </a>
           {/* Text */}
           <a
-            href={smsUrl(product?.name)}
+            href={smsUrl(enquiryTarget)}
             aria-label="Text BBS Flooring"
             className="flex flex-col items-center gap-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 transition-colors"
           >
@@ -203,7 +222,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
           </a>
           {/* WhatsApp */}
           <a
-            href={whatsappUrl(product?.name)}
+            href={whatsappUrl(enquiryTarget)}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
