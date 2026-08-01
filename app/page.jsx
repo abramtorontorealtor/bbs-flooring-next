@@ -93,7 +93,7 @@ const CATEGORIES = [
 
 /* Hero quick-nav: thumbnails reuse the category images; routes match CATEGORY_ROUTES. */
 const HERO_CATEGORY_NAV = [
-  { label: 'Hardwood', href: '/engineered-hardwood', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/engineered-hardwood.webp' },
+  { label: 'Engineered Hardwood', href: '/engineered-hardwood', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/engineered-hardwood.webp' },
   { label: 'Vinyl', href: '/vinyl', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/vinyl.webp' },
   { label: 'Laminate', href: '/laminate', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/laminate.webp' },
   { label: 'Waterproof', href: '/waterproof-flooring', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/waterproof.webp' },
