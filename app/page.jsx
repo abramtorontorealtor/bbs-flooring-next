@@ -538,8 +538,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           {/* Service Areas */}
           <div className="mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">Flooring Installation Across the GTA</h2>
-            <p className="text-slate-600 mb-6 max-w-3xl">BBS Flooring serves homeowners across Markham, Toronto, and the Greater Toronto Area with professional flooring installation, stair refinishing, and hardwood refinishing services.</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">Find Flooring &amp; Installation in Your City</h2>
+            <p className="text-slate-600 mb-6 max-w-3xl">Choose your city below for local flooring &amp; installation details, pricing, and neighbourhood expertise. For a full breakdown of professional installation in your area, visit your dedicated city installation page — each covers local pricing, subfloor considerations, and how to book a free in-home estimate.</p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
               {[
                 { city: 'Markham', slug: 'markham' },
