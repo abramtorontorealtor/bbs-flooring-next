@@ -158,32 +158,6 @@ export default function QuoteBookingClient() {
     setError('');
     setIsSubmitting(true);
 
-    // GA4 — book_appointment event
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'book_appointment', {
-        event_category: 'appointment',
-        event_label: 'quote_booking',
-        value: 75,
-        currency: 'CAD',
-        quote_value: estimate ? parseFloat(estimate) : undefined,
-        product_name: productName || undefined,
-      });
-      // Direct Google Ads conversion tracking
-      window.gtag('event', 'conversion', {
-        send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
-        value: 75.0,
-        currency: 'CAD',
-      });
-    }
-    // Meta Pixel — Schedule event
-    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-      window.fbq('track', 'Schedule', {
-        content_name: productName || 'Quote Booking',
-        value: estimate ? parseFloat(estimate) : 0,
-        currency: 'CAD',
-      });
-    }
-
     try {
       // 1. Create booking record → shows in admin calendar, sends customer + admin emails
       const bookingPayload = {
@@ -211,11 +185,38 @@ export default function QuoteBookingClient() {
         },
       };
 
-      await fetch('/api/booking/confirm', {
+      const res = await fetch('/api/booking/confirm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingPayload),
       });
+      if (!res.ok) throw new Error('Booking submission failed');
+
+      // Conversion tracking — fire ONLY after a confirmed successful submit
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'book_appointment', {
+          event_category: 'appointment',
+          event_label: 'quote_booking',
+          value: 75,
+          currency: 'CAD',
+          quote_value: estimate ? parseFloat(estimate) : undefined,
+          product_name: productName || undefined,
+        });
+        // Direct Google Ads conversion tracking
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
+          value: 75.0,
+          currency: 'CAD',
+        });
+      }
+      // Meta Pixel — Schedule event
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Schedule', {
+          content_name: productName || 'Quote Booking',
+          value: estimate ? parseFloat(estimate) : 0,
+          currency: 'CAD',
+        });
+      }
 
       // 2. If we have quote data, also persist the quote for the admin quotes panel
       if (quoteData && quoteData.total) {

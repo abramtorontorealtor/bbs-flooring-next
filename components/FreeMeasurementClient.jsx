@@ -183,26 +183,8 @@ export default function FreeMeasurementClient() {
     setError('');
     setIsSubmitting(true);
 
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'book_appointment', {
-        event_category: 'appointment',
-        event_label: 'free_measurement',
-        value: 75,
-        currency: 'CAD',
-      });
-      // Direct Google Ads conversion tracking
-      window.gtag('event', 'conversion', {
-        send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
-        value: 75.0,
-        currency: 'CAD',
-      });
-    }
-    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-      window.fbq('track', 'Schedule', { content_name: 'Free Measurement' });
-    }
-
     try {
-      await fetch('/api/booking/confirm', {
+      const res = await fetch('/api/booking/confirm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -224,6 +206,27 @@ export default function FreeMeasurementClient() {
           },
         }),
       });
+      if (!res.ok) throw new Error('Booking submission failed');
+
+      // Conversion tracking — fire ONLY after a confirmed successful submit
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'book_appointment', {
+          event_category: 'appointment',
+          event_label: 'free_measurement',
+          value: 75,
+          currency: 'CAD',
+        });
+        // Direct Google Ads conversion tracking
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
+          value: 75.0,
+          currency: 'CAD',
+        });
+      }
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Schedule', { content_name: 'Free Measurement' });
+      }
+
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
