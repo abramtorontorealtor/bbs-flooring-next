@@ -28,9 +28,11 @@ export async function POST(request) {
     const body = await request.json();
     const { name, email, phone, message, source, smsConsent, honeypot, company } = body;
 
-    if (!name || !email) {
+    // Require a name plus at least one contact channel. PDP quote leads are
+    // phone-first (email optional); other forms remain email-based.
+    if (!name || (!email && !phone)) {
       return NextResponse.json(
-        { success: false, error: 'Name and email are required' },
+        { success: false, error: 'Name and a phone number or email are required' },
         { status: 400 }
       );
     }
@@ -94,7 +96,8 @@ export async function POST(request) {
     } else {
       emailPromises = [
         sendContactAdminNotification({ name, email, phone, message, source, smsConsent }),
-        sendContactCustomerConfirmation({ name, email }),
+        // Phone-first PDP quote leads may have no email — skip the customer confirmation then.
+        ...(email ? [sendContactCustomerConfirmation({ name, email })] : []),
       ];
     }
 

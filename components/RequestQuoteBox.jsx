@@ -39,8 +39,8 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.email.trim()) {
-      toast.error('Please enter your name and email');
+    if (!form.name.trim() || !form.phone.trim()) {
+      toast.error('Please enter your name and phone number');
       return;
     }
 
@@ -61,8 +61,8 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.name.trim(),
-          email: form.email.trim(),
-          phone: form.phone.trim() || undefined,
+          phone: form.phone.trim(),
+          email: form.email.trim() || undefined,
           message: lines.join('\n'),
           source: 'pdp_quote_request',
         }),
@@ -111,7 +111,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
         </div>
         <h3 className="text-lg font-bold text-slate-900 mb-2">Quote Request Sent!</h3>
         <p className="text-sm text-slate-600 mb-4">
-          We&apos;ll get back to you within 1 business day with pricing for{' '}
+          We&apos;ll text or call you shortly — usually within an hour — with pricing for{' '}
           <span className="font-medium text-slate-800">{product.name}</span>.
         </p>
         <p className="text-sm text-slate-600">
@@ -160,19 +160,21 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
           className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
         />
         <input
-          type="email"
-          name="email"
-          placeholder="Email Address *"
-          value={form.email}
+          type="tel"
+          name="phone"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="Phone Number *"
+          value={form.phone}
           onChange={handleChange}
           required
           className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
         />
         <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number (optional)"
-          value={form.phone}
+          type="email"
+          name="email"
+          placeholder="Email Address (optional)"
+          value={form.email}
           onChange={handleChange}
           className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
         />
@@ -193,9 +195,14 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
           {submitting ? (
             <><Loader2 className="w-5 h-5 mr-2 animate-spin" />Sending...</>
           ) : (
-            'Request a Quote'
+            'Get My Price'
           )}
         </Button>
+        {/* Speed + no-obligation reassurance directly under the CTA */}
+        <p className="flex items-center justify-center gap-1.5 text-xs text-slate-500">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+          Free, no obligation · usually replies within 1 hour
+        </p>
       </form>
 
       {/* ── Prefer to message us? — 3-channel row ── */}

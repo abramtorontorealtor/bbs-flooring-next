@@ -44,7 +44,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const [selectedVariantId, setSelectedVariantId] = useState(null);
   const [selectedJsonVariant, setSelectedJsonVariant] = useState(null);
   const [buyMode, setBuyMode] = useState('material');
-  const [stickyCartVisible, setStickyCartVisible] = useState(false);
+  // Start visible: on mobile the buy/quote box loads below the fold, so the sticky
+  // CTA should be present from first paint. The observer then hides it only while the
+  // box is actually on screen. Prevents a brief no-CTA flash on PDP load.
+  const [stickyCartVisible, setStickyCartVisible] = useState(true);
   // variantSort removed Apr 15 — was only used by dead variant table block
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [showAllSpecs, setShowAllSpecs] = useState(false);
