@@ -141,12 +141,12 @@ export default function FlooringComparisonGuideClient() {
             Engineered hardwood is the most popular flooring category at BBS — and the most popular in Canada, period. It delivers authentic wood look and feel at better dimensional stability than solid hardwood. The construction is a real hardwood veneer (2–6mm thick) bonded to a cross-ply plywood or HDF core. That layered core resists the expansion and contraction that causes solid wood to cup and gap during Ontario&apos;s extreme humidity swings.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS stocks 572 engineered hardwood products from 8 brands: Vidar (240), NAF (83), Northernest (71), Canadian Standard (48), Woden (46), Simba (45), Falcon (25), and Lee (14). Species range from White Oak and Hickory to European Oak, Maple, Walnut, and Birch. Widths span 3¼" to 9½" — with wide plank (7"+) dominating 2026 sales.
+            BBS stocks 572 engineered hardwood products from 8 brands: Vidar (240), NAF (83), Northernest (71), Canadian Standard (48), Woden (46), Simba (45), Falcon (25), and Lee (11). Species range from White Oak and Hickory to American Oak, Walnut, Maple, and Birch. Widths span 3¼" to 9½" — with wide plank (7"+) dominating 2026 sales.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             A popular entry point is the{' '}
-            <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee</Link>
-            {' '}— a 6.5" SELECT grade European Oak at $3.19/sqft with genuine warmth and character. For a wider-plank statement floor, the{' '}
+            <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee</Link>
+            {' '}— a 6.5" Select &amp; Better American Oak on clearance at $3.29/sqft (reg $3.99) with genuine warmth and character. For a wider-plank statement floor, the{' '}
             <Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Arizona by NAF Elegant</Link>
             {' '}(7.5" Oak, $4.69/sqft) is one of our best-selling wide-plank options for open-concept main floors in 2026.
           </p>
@@ -243,7 +243,7 @@ export default function FlooringComparisonGuideClient() {
             Vinyl flooring has undergone a revolution. Today&apos;s luxury vinyl plank (LVP) and stone polymer composite (SPC) products look remarkably like real wood, are 100% waterproof through the core, and handle the abuse of pets, kids, and heavy foot traffic without showing damage. It&apos;s the single most practical flooring type for Canadian families — and at $1.79–$3.59/sqft, it&apos;s more affordable than hardwood.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS stocks 241 vinyl options from 6 brands: NAF (77 options, $2.49–$3.89/sqft), Woden (49, $2.29–$4.35/sqft), Triforest (44, $2.29–$3.19/sqft), Simba (42, $2.29–$3.59/sqft), Falcon (19, $1.79–$2.59/sqft), and Lee (10, $2.49/sqft). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
+            BBS stocks 241 vinyl options from 6 brands: NAF (77 options, $2.49–$3.89/sqft), Woden (49, $2.29–$4.35/sqft), Triforest (44, $2.29–$3.19/sqft), Simba (42, $2.29–$3.59/sqft), Falcon (19, $1.79–$2.59/sqft), and Lee (8, $1.79/sqft on clearance). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             At the entry level, the{' '}

@@ -193,7 +193,7 @@ export default function VinylFlooringGuideClient() {
               <strong>Real example:</strong> The{' '}
               <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham NAF AquaPlus Platinum (9mm) at $3.49/sqft</Link>{' '}
               features a 28mil wear layer — premium-grade protection for busy family homes, large dogs, or commercial-adjacent spaces. For most main-floor living areas, a 20mil product like{' '}
-              <Link href="/products/walnut-wharf-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Walnut Wharf by Lee (7mm) at $2.49/sqft</Link>{' '}
+              <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Weathered Barnwood by Lee (7mm) at $1.79/sqft on clearance</Link>{' '}
               is the practical sweet spot.
             </p>
           </div>
@@ -243,7 +243,7 @@ export default function VinylFlooringGuideClient() {
               <div>
                 <p className="font-semibold text-slate-800 mb-1">Mid-Range Residential — Better Feel, More Subfloor Forgiveness</p>
                 <p className="text-slate-600 text-sm leading-relaxed">Noticeably more solid than 6mm. Better thermal insulation and less sound transmission. The extra millimetre makes a real difference if you have older concrete with small dips or uneven areas. Most of our mid-range lineup sits here — like the{' '}
-                  <Link href="/products/walnut-wharf-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Walnut Wharf Lee 7mm at $2.49/sqft</Link>{' '}
+                  <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Weathered Barnwood Lee 7mm at $1.79/sqft on clearance</Link>{' '}
                   and{' '}
                   <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar NAF Classic 7mm at $2.79/sqft</Link>.
                 </p>
@@ -416,7 +416,7 @@ export default function VinylFlooringGuideClient() {
                   <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
                     <p className="text-xs font-semibold text-slate-500 uppercase mb-2">Example Product A</p>
                     <p className="text-sm text-slate-700">
-                      <Link href="/products/walnut-wharf-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">Walnut Wharf — Lee 7mm</Link>
+                      <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">Weathered Barnwood — Lee 7mm</Link>
                       {' '}— $2.49/sqft · 20mil · Warm oak tone
                     </p>
                   </div>

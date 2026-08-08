@@ -312,7 +312,7 @@ export default function EngineeredHardwoodGuideClient() {
                   ['Canadian Standard', '48', '$4.89–$7.59', 'White Oak, Hickory', 'Premium Canadian-made'],
                   ['Woden', '46', '$2.49–$6.99', 'European Oak, White Oak', 'Budget to mid-range entry point'],
                   ['Falcon', '25', '$3.89–$3.99', 'White Oak', 'Budget White Oak'],
-                  ['Lee', '14', '$3.19–$3.49', 'European Oak', 'Affordable European Oak'],
+                  ['Lee', '11', '$3.29', 'American Oak', 'Affordable American Oak on clearance'],
                 ].map(([brand, products, price, species, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{brand}</td>
@@ -331,7 +331,7 @@ export default function EngineeredHardwoodGuideClient() {
               <p className="font-semibold text-green-800 mb-1">💰 Best Value</p>
               <p className="text-stone-600 text-sm">
                 Woden Flooring and Lee Flooring offer the lowest entry points for real engineered hardwood. Top picks:{' '}
-                <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee (6½" European Oak, $3.19/sqft)</Link>,{' '}
+                <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee (6½" American Oak, $3.29/sqft on clearance)</Link>,{' '}
                 <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Linen by Falcon (6½" Red Oak, $3.89/sqft)</Link>, and{' '}
                 <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard by Woden (6½" Vermont Oak, $3.99/sqft)</Link>.
               </p>
@@ -431,7 +431,7 @@ export default function EngineeredHardwoodGuideClient() {
               ['🏢 Condos', 'Glue-down installation over concrete is the standard for Toronto condos. Check your building\'s acoustic requirements — some require specific underlayments or STC/IIC ratings. Engineered hardwood is condo-friendly by design. BBS installs glue-down at $3.25/sqft.'],
               ['♨️ Radiant Heat', 'Engineered hardwood is the only real wood option for radiant heat. Thinner profiles (1/2") conduct heat better than 3/4". Avoid very wide planks (9"+) over radiant — more expansion movement. White Oak handles heat well. Solid hardwood is not recommended over radiant systems.'],
               ['🐾 Pets & Kids', 'Hickory (Janka 1820) is the hardest species — best for scratches and dents. Wire-brushed or hand-scraped finishes hide wear between maintenance. Matte finishes show less scratching than gloss. Avoid softer species like Walnut.'],
-              ['💰 Best Value Overall', 'Woden Flooring European Oak from $2.49/sqft or Lee Flooring from $3.19/sqft. Both offer genuine engineered hardwood at prices that compete with luxury vinyl. At $2.49/sqft material + $2.25/sqft labour = real hardwood floors for under $5/sqft installed.'],
+              ['💰 Best Value Overall', 'Woden Flooring European Oak from $2.49/sqft or Lee Flooring from $3.29/sqft (clearance). Both offer genuine engineered hardwood at prices that compete with luxury vinyl. At $2.49/sqft material + $2.25/sqft labour = real hardwood floors for under $5/sqft installed.'],
               ['✨ Best for Resale Value', 'White Oak in 5"–7½" wide-plank, natural or matte finish. This is what buyers expect in 2026. Vidar and Canadian Standard are the premium choices. Engineered hardwood consistently adds more resale value than laminate or vinyl.'],
             ].map(([title, desc]) => (
               <div key={title} className="bg-stone-50 border border-stone-200 rounded-xl p-6">

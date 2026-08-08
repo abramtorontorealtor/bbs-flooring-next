@@ -79,9 +79,9 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '572 options', '$2.49–$8.99/sqft', '$4.89/sqft', 'Lee ($3.19) · Woden ($2.49) · Falcon ($3.89)'],
+                  ['Engineered Hardwood', '572 options', '$2.49–$8.99/sqft', '$4.89/sqft', 'Lee ($3.29) · Woden ($2.49) · Falcon ($3.89)'],
                   ['Solid Hardwood', '83 options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
-                  ['Vinyl (LVP/SPC)', '241 options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($2.49) · Woden ($2.29)'],
+                  ['Vinyl (LVP/SPC)', '241 options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($1.79) · Woden ($2.29)'],
                   ['Laminate', '145 options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
                 ].map(([type, options, range, avg, value], i) => (
                   <tr key={type} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
@@ -98,7 +98,7 @@ export default function FlooringCostGuideClient() {
 
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
             <p className="text-stone-700 font-medium">
-              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $3.19/sqft (like the <Link href="/products/solen-lee-select-grade-engineered-european-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Solen by Lee Flooring</Link>) when big-box stores start at $5.00+ for comparable European Oak. Same quality, fewer markups.
+              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $3.29/sqft (like the <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee Flooring</Link>) when big-box stores start at $5.00+ for comparable American Oak. Same quality, fewer markups.
             </p>
           </div>
 
