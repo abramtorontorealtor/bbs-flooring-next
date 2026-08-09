@@ -284,13 +284,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ CLEARANCE URGENCY STRIP ═══ */}
+      {/* ═══ LEE CLEARANCE URGENCY STRIP ═══ */}
       <div className="bg-orange-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-center gap-3 text-center">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
           <span className="text-lg">🔥</span>
           <p className="text-sm font-semibold">
-            <span className="font-bold">30 Clearance Lines — Deep Discounts on Premium Flooring.</span>{' '}
-            <a href="/clearance" className="underline underline-offset-2 hover:no-underline">Shop Before It’s Gone →</a>
+            <span className="font-bold">Lee Flooring Clearance — Real Engineered Oak from $3.29 &amp; 7mm Vinyl from $1.79/sqft.</span>{' '}
+            <a href="/lee-flooring" className="underline underline-offset-2 hover:no-underline">Shop Lee Clearance →</a>
           </p>
         </div>
       </div>
