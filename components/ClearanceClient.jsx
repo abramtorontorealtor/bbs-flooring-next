@@ -223,6 +223,19 @@ export default function ClearanceClient() {
     [allProducts]
   );
 
+  // Lee clearance spotlight metrics
+  const leeStats = useMemo(() => {
+    const lee = clearanceProducts.filter((p) =>
+      (p.brand || '').toLowerCase().includes('lee')
+    );
+    if (!lee.length) return null;
+    const prices = lee.map((p) => getProductPrice(p)).filter((n) => n > 0);
+    return {
+      count: lee.length,
+      minPrice: prices.length ? Math.min(...prices) : null,
+    };
+  }, [clearanceProducts]);
+
   // Derive brand list
   const brands = useMemo(() => {
     const set = new Set(clearanceProducts.map((p) => getProductBrand(p)).filter(Boolean));
@@ -348,6 +361,43 @@ export default function ClearanceClient() {
           </a>
         </div>
       </div>
+
+      {/* Featured: Lee Flooring Clearance spotlight */}
+      {leeStats && (
+        <div className="mb-8 rounded-2xl overflow-hidden border border-amber-300 bg-gradient-to-r from-amber-50 via-white to-amber-50">
+          <div className="flex flex-col md:flex-row md:items-center gap-5 p-6">
+            <div className="flex-1">
+              <div className="inline-flex items-center gap-2 bg-slate-900 text-white text-[11px] font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
+                <Tag className="w-3.5 h-3.5" />
+                Featured Clearance
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">
+                Lee Flooring Clearance — Everything Must Go
+              </h2>
+              <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl">
+                Real engineered American oak from <strong className="text-red-600">$3.29/sqft</strong> and
+                22mil waterproof vinyl from <strong className="text-red-600">$1.79/sqft</strong>.
+                First-quality Lee flooring at end-of-lot prices — {leeStats.count} colours,
+                while quantities last.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 flex-shrink-0 w-full md:w-auto">
+              <Link
+                href={createPageUrl('LeeFlooring')}
+                className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+              >
+                Shop Lee Clearance →
+              </Link>
+              <a
+                href="tel:+16474281111"
+                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+              >
+                Check Stock: (647) 428-1111
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isLoading ? (
         <div className="flex justify-center py-20">
