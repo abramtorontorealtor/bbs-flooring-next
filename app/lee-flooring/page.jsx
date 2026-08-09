@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: leeFlooringData.title,
   description: leeFlooringData.description,
+  alternates: { canonical: '/lee-flooring' },
 };
 
 export default async function LeeFlooringPage() {
