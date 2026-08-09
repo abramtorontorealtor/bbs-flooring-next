@@ -236,17 +236,22 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   }, [product]);
 
   /* ── Calculation ── */
+  // A1 fix: never hard-gate Add-to-Cart behind sqft entry. If the shopper hasn't
+  // entered footage yet, default to the honest minimum (1 box) so they can add to
+  // cart and adjust box qty in the Cart (which already supports +/-). Entering a
+  // real sqft still drives the exact box math as before.
   const calculation = useMemo(() => {
-    if (!currentPricing || !sqftNeeded || parseFloat(sqftNeeded) <= 0) return null;
-    const sqft = parseFloat(sqftNeeded);
+    if (!currentPricing) return null;
     const sqftPerBox = currentPricing.sqft_per_box || 20;
+    const hasUserSqft = !!sqftNeeded && parseFloat(sqftNeeded) > 0;
+    const sqft = hasUserSqft ? parseFloat(sqftNeeded) : sqftPerBox; // 1-box default
     const boxesRequired = Math.ceil(sqft / sqftPerBox);
     const actualSqft = boxesRequired * sqftPerBox;
     const pricePerSqft = (currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft)
       ? currentPricing.sale_price_per_sqft
       : currentPricing.price_per_sqft;
     const lineTotal = actualSqft * pricePerSqft;
-    return { sqftNeeded: sqft, sqftPerBox, boxesRequired, actualSqft, pricePerSqft, lineTotal, extraSqft: actualSqft - sqft };
+    return { sqftNeeded: sqft, sqftPerBox, boxesRequired, actualSqft, pricePerSqft, lineTotal, extraSqft: actualSqft - sqft, hasUserSqft };
   }, [currentPricing, sqftNeeded]);
 
   const breadcrumbItems = useMemo(() => getProductBreadcrumbs(product), [product]);
@@ -272,9 +277,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
       toast.error('Please select a variant option');
       return;
     }
-    // Dead guard removed Apr 15 — all parent products have has_variants=true
+    // A1: calculation now defaults to 1 box when no sqft entered, so this only
+    // blocks the genuinely-uncalculable case (no pricing loaded).
     if (!calculation) {
-      toast.error('Please enter the square footage you need');
+      toast.error('Pricing not available for this product yet');
       return;
     }
     setIsAddingToCart(true);
@@ -800,15 +806,15 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                 {/* Primary CTA: Add to Cart */}
                 <Button
                   className={`w-full h-12 text-base font-bold rounded-xl transition-all ${
-                    calculation
+                    (calculation && !(product.has_variants && !selectedJsonVariant) && !isOutOfStock)
                       ? 'bg-amber-500 hover:bg-amber-600 text-white shadow-md hover:shadow-lg'
                       : 'bg-slate-200 text-slate-500 cursor-not-allowed'
                   }`}
                   onClick={handleAddToCart}
-                  disabled={isAddingToCart || isOutOfStock || !calculation}
+                  disabled={isAddingToCart || isOutOfStock || !calculation || (product.has_variants && !selectedJsonVariant)}
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
-                  {isAddingToCart ? 'Adding...' : isOutOfStock ? 'Out of Stock' : calculation ? `Add to Cart · C$${calculation.lineTotal.toFixed(2)}` : 'Enter sqft to add to cart'}
+                  {isAddingToCart ? 'Adding...' : isOutOfStock ? 'Out of Stock' : (product.has_variants && !selectedJsonVariant) ? 'Select an option' : calculation ? (calculation.hasUserSqft ? `Add to Cart · C$${calculation.lineTotal.toFixed(2)}` : `Add 1 Box · C$${calculation.lineTotal.toFixed(2)}`) : 'Add to Cart'}
                 </Button>
               </div>
             ) : (

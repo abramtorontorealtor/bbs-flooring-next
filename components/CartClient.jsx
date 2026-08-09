@@ -484,14 +484,22 @@ export default function CartClient() {
                   <span className="text-slate-600">HST (13%)</span>
                   <span className="font-medium">C${totals.tax.toFixed(2)}</span>
                 </div>
+                {/* A18: surface delivery fee here instead of hiding it until checkout */}
+                <div className="flex justify-between">
+                  <span className="text-slate-600">Delivery</span>
+                  <span className="font-medium text-slate-500 text-sm text-right">Free pickup · $140 garage · $200 inside<br/><span className="text-xs">chosen at checkout</span></span>
+                </div>
               </div>
 
               <Separator />
 
               <div className="flex justify-between text-lg">
-                <span className="font-semibold">Total</span>
+                <span className="font-semibold">Total <span className="text-xs font-normal text-slate-400">(before delivery)</span></span>
                 <span className="font-bold text-xl">C${totals.total.toFixed(2)}</span>
               </div>
+
+              {/* A2: surface the 25% restocking policy upfront, not only at checkout */}
+              <p className="text-xs text-slate-400 mt-1">Returns accepted within 14 days in-store · 25% restocking fee on returned uninstalled product. See our <a href="/return-policy" className="underline hover:text-slate-600">return policy</a>.</p>
 
               {/* Financing callout — show when cart total qualifies ($1000+) */}
               {totals.total >= 1000 && (() => {
