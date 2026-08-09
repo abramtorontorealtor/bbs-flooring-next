@@ -5,7 +5,8 @@ import ProductGridServer from '@/components/ProductGridServer';
 import FloorFinderCTA from '@/components/FloorFinderCTA';
 import GuidedUseCaseChips from '@/components/GuidedUseCaseChips';
 import { SEO_DATA } from '@/lib/seo';
-import { getProductsForGrid } from '@/lib/products-server';
+import { getProductsForGrid, deriveOfferStats } from '@/lib/products-server';
+import { JsonLd } from '@/lib/schemas';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
@@ -19,9 +20,29 @@ export const metadata = {
 export default async function ProductsPage() {
   const products = await getProductsForGrid();
   const serverGrid = <ProductGridServer products={products} />;
+  const stats = deriveOfferStats(products);
 
   return (
     <div className="max-w-7xl mx-auto px-4 pb-12 pt-10 md:pt-14">
+      {stats && (
+        <JsonLd data={{
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: 'Flooring — All Products',
+          description: `${stats.count} flooring products from 15+ brands — engineered hardwood, solid hardwood, luxury vinyl plank, and laminate. Available from our Markham showroom with GTA installation.`,
+          category: 'Flooring',
+          brand: { '@type': 'Brand', name: 'BBS Flooring' },
+          offers: {
+            '@type': 'AggregateOffer',
+            priceCurrency: 'CAD',
+            lowPrice: stats.lowPrice,
+            highPrice: stats.highPrice,
+            offerCount: stats.count,
+            availability: 'https://schema.org/InStock',
+            url: 'https://bbsflooring.ca/products',
+          },
+        }} />
+      )}
       <Suspense><Breadcrumbs items={[{ label: 'Home', url: '/' }, { label: 'All Products' }]} /></Suspense>
 
       {/* ── SSR Page Header ── */}
