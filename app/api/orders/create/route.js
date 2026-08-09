@@ -37,12 +37,48 @@ export async function POST(request) {
     const supabase = getSupabaseAdminClient();
     const orderNumber = await generateOrderNumber(supabase);
 
-    // Calculate total
-    const subtotal = orderData.subtotal || 0;
-    const tax = orderData.tax || 0;
-    const deliveryFee = orderData.delivery_fee || 0;
-    const processingFee = paymentMethod === 'credit_card' ? (subtotal + tax + deliveryFee) * 0.029 : 0;
-    const total = subtotal + tax + deliveryFee + processingFee;
+    // ── SECURITY: recompute money SERVER-SIDE from DB product prices ──
+    // Never trust client-sent subtotal/line totals. Re-price every line item
+    // against the products table, then derive tax + delivery + processing here.
+    const HST_RATE = 0.13; // Ontario
+    const DELIVERY_FEES = { pickup: 0, delivery: 140, inside: 200 };
+
+    const itemIds = (orderData.items || [])
+      .map((it) => it.product_id || it.id)
+      .filter(Boolean);
+    let priceMap = {};
+    if (itemIds.length) {
+      const { data: prods } = await supabase
+        .from('products')
+        .select('id, price_per_sqft, sale_price_per_sqft')
+        .in('id', itemIds);
+      for (const p of prods || []) {
+        priceMap[p.id] = (p.sale_price_per_sqft != null ? p.sale_price_per_sqft : p.price_per_sqft) || 0;
+      }
+    }
+
+    // Recompute subtotal from trusted prices × client-declared sqft.
+    // Live orders bill on `actual_sqft` (line_total = actual_sqft × price_per_sqft),
+    // so it MUST be first in the fallback chain. No coupons/discounts exist on
+    // this store (Abram, Aug 9) — client-sent discount is ignored entirely.
+    let subtotal = 0;
+    for (const it of orderData.items || []) {
+      const pid = it.product_id || it.id;
+      const unit = priceMap[pid];
+      const qty = Number(it.actual_sqft || it.sqft || it.square_footage || it.quantity || 0);
+      if (unit != null && Number.isFinite(qty) && qty > 0) {
+        subtotal += unit * qty;
+      }
+    }
+    subtotal = Math.round(subtotal * 100) / 100;
+
+    // Custom-zone (out-of-area) orders are priced manually as quotes → keep 0 delivery here.
+    const deliveryFee = isCustomZone ? 0 : (DELIVERY_FEES[orderData.delivery_preference] ?? 0);
+    const tax = Math.round(subtotal * HST_RATE * 100) / 100;
+    const processingFee = paymentMethod === 'credit_card'
+      ? Math.round((subtotal + tax + deliveryFee) * 0.029 * 100) / 100
+      : 0;
+    const total = Math.round((subtotal + tax + deliveryFee + processingFee) * 100) / 100;
 
     // Credit card orders start as 'awaiting_payment' — emails fire ONLY after
     // Stripe webhook confirms authorization (checkout.session.completed).

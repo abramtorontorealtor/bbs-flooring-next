@@ -312,7 +312,7 @@ export default function ContactClient() {
                   </li>
                   <li className="flex justify-between gap-8">
                     <span>Sunday</span>
-                    <span className="font-medium text-amber-600">By Appointment</span>
+                    <span className="font-medium text-slate-400">Closed</span>
                   </li>
                 </ul>
               </div>

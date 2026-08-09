@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/api-auth';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderPaymentConfirmed } from '@/lib/email';
 
 export async function POST(request) {
+  // SECURITY: admin-only. This flips an order to paid/completed + emails the
+  // customer; it must never be callable by the public (was previously open).
+  const { error: authError } = await requireAdmin();
+  if (authError) return authError;
+
   try {
     const { orderId } = await request.json();
 

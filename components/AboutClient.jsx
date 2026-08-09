@@ -86,7 +86,7 @@ export default function AboutClient() {
       <div className="bg-amber-50 rounded-2xl p-8 text-center border border-amber-200">
         <h2 className="text-2xl font-bold text-slate-800 mb-3">Visit Our Showroom</h2>
         <p className="text-slate-600 mb-2">B-6061 Highway 7 E, Markham, ON L3P 3B2</p>
-        <p className="text-slate-600 mb-4">Mon-Sat: 10am-5pm · Sun: By Appointment</p>
+        <p className="text-slate-600 mb-4">Mon-Sat: 10am-5pm · Sun: Closed</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link href={createPageUrl('Contact')}>
             <button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-3 rounded-xl transition-colors">

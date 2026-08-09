@@ -17,9 +17,9 @@ const PROGRAMS = [
   },
   {
     id: 'deferral', badge: '🔥 Limited Time', badgeColor: 'bg-orange-100 text-orange-700',
-    title: 'No Payments for 3 Months', subtitle: '0% interest · No payments until July',
+    title: 'No Payments for 3 Months', subtitle: '0% interest · First payment ~90 days after install',
     description: 'Get your new floors installed today and make zero payments for 3 full months. Perfect if you want beautiful floors now but prefer to start paying a little later.',
-    highlight: 'Floors in this week. First payment in July.',
+    highlight: 'Floors in this week. First payment ~90 days later.',
     icon: <Clock className="w-6 h-6 text-orange-500" />,
     link: FINANCEIT_LINKS.deferral3mo, color: 'border-orange-200 bg-orange-50', ctaColor: 'bg-orange-500 hover:bg-orange-600',
   },

@@ -487,15 +487,12 @@ export default function QuoteCalculatorClient() {
       customer_name: formData.customer_name, customer_email: formData.customer_email, customer_phone: formData.customer_phone,
     };
 
-    Analytics.trackQuoteSubmit(selectedProduct?.name || 'unknown', quoteData.total, 'CAD');
-    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-      window.fbq('track', 'Lead', { content_name: selectedProduct?.name || 'unknown', value: quote.displayTotal, currency: 'CAD' });
-    }
-
+    // Show the quote instantly (UX), but DO NOT fire conversions yet.
     setLeadCaptured(true);
     setQuoteState('unlocked');
     if (currentUser) autoSaveQuote(quote);
 
+    let quoteSaved = false;
     try {
       await entities.Quote.create({
         customer_name: formData.customer_name, customer_email: formData.customer_email, customer_phone: formData.customer_phone,
@@ -508,7 +505,16 @@ export default function QuoteCalculatorClient() {
         delivery_cost: quote.deliveryCost || 0, subtotal: quote.subtotal || 0, tax: quote.tax || 0, total: quote.total || 0,
         lead_status: 'new', status: 'draft',
       });
+      quoteSaved = true;
     } catch (err) { console.error('Failed to save Quote entity:', err); }
+
+    // CONVERSION TRACKING: fire ONLY after a confirmed DB save (no ghost/bot conversions).
+    if (quoteSaved) {
+      Analytics.trackQuoteSubmit(selectedProduct?.name || 'unknown', quoteData.total, 'CAD');
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: selectedProduct?.name || 'unknown', value: quote.displayTotal, currency: 'CAD' });
+      }
+    }
 
     try {
       await fetch('/api/quotes/send', {

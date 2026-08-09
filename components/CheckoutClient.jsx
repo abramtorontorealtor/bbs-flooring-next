@@ -377,15 +377,9 @@ export default function CheckoutClient() {
           const checkoutResponse = await fetch('/api/stripe/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              orderId: order.id,
-              amount: order.total,
-              customerEmail: formData.customer_email,
-              customerName: formData.customer_name,
-              shippingCity: formData.shipping_city,
-              shippingPostalCode: formData.shipping_postal_code,
-              orderNumber: createdOrderNumber
-            }),
+            // SECURITY: send orderId only. The server re-reads the authoritative
+            // total + customer fields from the DB order (never trust client amounts).
+            body: JSON.stringify({ orderId: order.id }),
           });
 
           const checkoutResult = await checkoutResponse.json();

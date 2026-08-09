@@ -21,19 +21,13 @@ async function checkVelocity(supabase, email) {
 
 export async function POST(request) {
   try {
-    const { orderId, amount, customerEmail, orderNumber, customerName, shippingCity, shippingPostalCode } = await request.json();
+    // SECURITY: never trust a client-sent amount. We accept orderId only and
+    // re-read the authoritative total (and email) from the DB order record.
+    const { orderId } = await request.json();
 
-    if (!orderId || !amount || !customerEmail || !orderNumber) {
+    if (!orderId) {
       return NextResponse.json(
-        { error: 'Missing required fields (orderId, amount, customerEmail, orderNumber)' },
-        { status: 400 }
-      );
-    }
-
-    // ── Fraud Check: Minimum amount ──
-    if (amount < MIN_CC_AMOUNT) {
-      return NextResponse.json(
-        { error: `Minimum order amount for credit card is $${MIN_CC_AMOUNT}. For smaller orders, please use e-Transfer.` },
+        { error: 'Missing required field (orderId)' },
         { status: 400 }
       );
     }
@@ -46,8 +40,42 @@ export async function POST(request) {
       );
     }
 
-    // ── Fraud Check: Velocity ──
     const supabase = getSupabaseAdminClient();
+
+    // ── SECURITY: authoritative amount comes from the DB, not the client ──
+    const { data: dbOrder, error: orderErr } = await supabase
+      .from('orders')
+      .select('total, customer_email, order_number, customer_name, shipping_city, shipping_postal_code, payment_status')
+      .eq('id', orderId)
+      .single();
+
+    if (orderErr || !dbOrder) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    }
+    if (dbOrder.payment_status === 'completed') {
+      return NextResponse.json({ error: 'Order is already paid.' }, { status: 409 });
+    }
+
+    const amount = Number(dbOrder.total);
+    const customerEmail = dbOrder.customer_email;
+    const orderNumber = dbOrder.order_number;
+    const customerName = dbOrder.customer_name;
+    const shippingCity = dbOrder.shipping_city;
+    const shippingPostalCode = dbOrder.shipping_postal_code;
+
+    if (!amount || !Number.isFinite(amount) || amount <= 0) {
+      return NextResponse.json({ error: 'Order total is invalid.' }, { status: 400 });
+    }
+
+    // ── Fraud Check: Minimum amount (now on the trusted DB total) ──
+    if (amount < MIN_CC_AMOUNT) {
+      return NextResponse.json(
+        { error: `Minimum order amount for credit card is $${MIN_CC_AMOUNT}. For smaller orders, please use e-Transfer.` },
+        { status: 400 }
+      );
+    }
+
+    // ── Fraud Check: Velocity ──
     const velocity = await checkVelocity(supabase, customerEmail);
     if (!velocity.ok) {
       return NextResponse.json(
