@@ -14,7 +14,9 @@ export const metadata = {
 };
 
 export default async function LeeFlooringPage() {
-  const products = await getProductsForGrid({ brand: 'Lee' });
+  const allLee = await getProductsForGrid({ brand: 'Lee' });
+  // Only in-stock SKUs may show/schema-count (delisted lots have in_stock=false).
+  const products = allLee.filter((p) => p.in_stock !== false);
   const serverGrid = <ProductGridServer products={products} />;
 
   // AggregateOffer signal — derive live from the Lee clearance catalog

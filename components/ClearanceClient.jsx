@@ -188,9 +188,9 @@ function FilterSidebarContent({ filters, onChange, brands, maxPriceInStock }) {
   );
 }
 
-export default function ClearanceClient() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function ClearanceClient({ initialProducts = [] } = {}) {
+  const [allProducts, setAllProducts] = useState(initialProducts);
+  const [isLoading, setIsLoading] = useState(initialProducts.length === 0);
   const [filters, setFilters] = useState({
     search: '',
     category: 'All',
@@ -202,6 +202,8 @@ export default function ClearanceClient() {
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
 
   useEffect(() => {
+    // Products already seeded server-side — skip the client fetch (no empty flash).
+    if (initialProducts.length > 0) return;
     const loadProducts = async () => {
       try {
         const res = await fetch('/api/products/grid?clearance=true');
