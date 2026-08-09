@@ -389,6 +389,7 @@ export const leeFlooringData = {
     },
   ],
   faqItems: [
+    { question: 'Why is Lee the best flooring value in the GTA right now?', answer: 'Because Lee is the rare clearance line that gives you real engineered American oak at vinyl-level pricing: $3.29/sqft (reg $3.99) for genuine 6½" Select & Better oak, plus 7mm vinyl with a condo-approved underpad at just $1.79/sqft (reg $2.49). Both are first-quality, not seconds — the price is low only because these are clearance quantities. For anyone who wants real wood but thought it was out of budget, Lee is the best dollar-for-dollar flooring value at BBS Flooring in Markham while stock lasts.' },
     { question: 'Is Lee Flooring affordable?', answer: 'Yes — and right now it is on clearance. Lee engineered American oak is $3.29/sqft (reg $3.99), among the lowest prices for real wood flooring at BBS Flooring, and their 7mm vinyl is $1.79/sqft (reg $2.49). Both represent exceptional value for budget-conscious renovations while clearance quantities last.' },
     { question: 'What type of hardwood does Lee offer?', answer: 'Lee offers 6½" Select & Better engineered American oak, plus one warm American walnut. All options are engineered construction for dimensional stability and radiant heat compatibility.' },
     { question: 'Is Lee vinyl condo approved?', answer: 'Lee offers 7mm vinyl with 2mm condo-approved underpad — thicker than the typical 1.5mm pad. This meets most condo board sound requirements. Verify your specific building\'s STC/IIC requirements with property management.' },

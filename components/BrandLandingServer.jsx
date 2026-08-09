@@ -90,9 +90,26 @@ export default function BrandLandingServer({
         </div>
       </div>
 
-      {/* Main Content — info sections */}
+      {/* Product Grid — FIRST (paid-click / mobile: show floors before the reading) */}
+      <div className="max-w-7xl mx-auto px-4 pt-10">
+        {showProducts && brandKey && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-slate-800 mb-6">Products Available Now</h2>
+            {guidedNav}
+            <Suspense fallback={serverGrid}>
+              <BrandProductGrid
+                brandKey={brandKey}
+                initialProducts={initialProducts}
+                serverGrid={serverGrid}
+              />
+            </Suspense>
+          </div>
+        )}
+      </div>
+
+      {/* Main Content — info sections (SEO copy BELOW the grid; Google still reads full page) */}
       {content.length > 0 && (
-        <div className="max-w-5xl mx-auto px-4 pt-10 pb-2">
+        <div className="max-w-5xl mx-auto px-4 pb-2">
           <div className="space-y-8">
             {content.map((section, idx) => (
               <div key={idx} className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
@@ -111,21 +128,8 @@ export default function BrandLandingServer({
         </div>
       )}
 
-      {/* Product Grid */}
+      {/* Remaining sections (financing, FAQ, map, CTA) */}
       <div className="max-w-7xl mx-auto px-4 py-10">
-        {showProducts && brandKey && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-slate-800 mb-6">Products Available Now</h2>
-            {guidedNav}
-            <Suspense fallback={serverGrid}>
-              <BrandProductGrid
-                brandKey={brandKey}
-                initialProducts={initialProducts}
-                serverGrid={serverGrid}
-              />
-            </Suspense>
-          </div>
-        )}
 
         {/* Financing Banner */}
         <div className="my-10 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-700 text-white px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-5">
