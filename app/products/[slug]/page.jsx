@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, cache } from 'react';
 import { notFound } from 'next/navigation';
 import ProductDetailClient from '@/components/ProductDetailClient';
 import { entities } from '@/lib/base44-compat-server';
@@ -24,8 +24,10 @@ export async function generateStaticParams() {
   }
 }
 
-// Fetch product server-side (shared between metadata + page render)
-async function getProduct(slug) {
+// Fetch product server-side (shared between metadata + page render).
+// Wrapped in React.cache so generateMetadata + the page render dedupe to ONE
+// Supabase round-trip per request instead of 2x (C-P02). Cache is per-request.
+const getProduct = cache(async (slug) => {
   try {
     const products = await entities.Product.filter({ slug });
     if (products?.[0]) return products[0];
@@ -34,7 +36,7 @@ async function getProduct(slug) {
   } catch {
     return null;
   }
-}
+});
 
 // Fetch product by UUID (for parent lookup from child variants)
 async function getProductById(id) {

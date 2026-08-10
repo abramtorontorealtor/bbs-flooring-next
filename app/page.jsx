@@ -168,7 +168,7 @@ export default function HomePage() {
               <span className="text-amber-500">1,000+ Floors. Wholesale Prices.</span>
             </h1>
             <p className="text-base md:text-xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
-              Hardwood, vinyl &amp; laminate from $1.49/sqft. Free in-home measurements. Installed by our own crew.
+              Laminate from $1.49 · Vinyl from $1.79 · Engineered hardwood from $3.29/sqft. Free in-home measurements. Installed by our own crew.
             </p>
             {/* Phone number directly in hero — unmissable */}
             <a
@@ -397,7 +397,7 @@ export default function HomePage() {
               </h2>
               <ul className="space-y-5">
                 {[
-                  { text: 'Professional installation by experienced local experts', strong: '100+ five-star installs' },
+                  { text: 'Professional installation by experienced local experts', strong: '2,000+ installs since 2012' },
                   { text: 'Free in-home measurements with clear, honest quotes', strong: 'No surprises' },
                   { text: '1,000+ flooring options in our Markham showroom', strong: 'See it in person' },
                   { text: 'Transparent pricing — no hidden fees, ever', strong: 'Wholesale direct' },

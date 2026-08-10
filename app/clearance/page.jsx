@@ -34,6 +34,7 @@ export default async function ClearancePage() {
         highPrice: Math.max(...prices).toFixed(2),
         offerCount: prices.length,
         image: products.find((p) => p.image_url)?.image_url,
+        brandName: null, // mixed-brand clearance — no single Brand (D2)
       })
     : null;
 

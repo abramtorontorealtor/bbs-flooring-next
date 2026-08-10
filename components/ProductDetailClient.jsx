@@ -16,6 +16,7 @@ import FAQSection from '@/components/FAQSection';
 import StickyAddToCart from '@/components/StickyAddToCart';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getProductBreadcrumbs } from '@/lib/breadcrumbs';
+import { GOOGLE_REVIEW_STATS } from '@/data/googleReviews';
 // Product schema is emitted by the server component (app/products/[slug]/page.jsx)
 // to avoid duplicate JSON-LD and to include childVariants data.
 import { Analytics } from '@/components/analytics';
@@ -477,8 +478,10 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             )}
           </h1>
 
-          {/* Reviews (if any) */}
-          {product.review_count > 0 && (
+          {/* Reviews: product-level if present, otherwise the store-level Google
+              rating (A5/A13 — every PDP now carries the 4.7★ / 41-review trust badge
+              instead of showing nothing on the ~all products with no product reviews). */}
+          {product.review_count > 0 ? (
             <div className="flex items-center gap-2 mb-3">
               <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_, i) => (
@@ -488,6 +491,21 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
               <span className="text-sm font-medium text-slate-700">{product.review_rating?.toFixed(1)}</span>
               <span className="text-sm text-slate-400">({product.review_count})</span>
             </div>
+          ) : (
+            <a
+              href={GOOGLE_REVIEW_STATS.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mb-3 group"
+            >
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className={`w-4 h-4 ${i < Math.round(GOOGLE_REVIEW_STATS.averageRating) ? 'fill-amber-400 text-amber-400' : 'fill-slate-200 text-slate-200'}`} />
+                ))}
+              </div>
+              <span className="text-sm font-medium text-slate-700">{GOOGLE_REVIEW_STATS.averageRating.toFixed(1)}</span>
+              <span className="text-sm text-slate-400 group-hover:text-amber-600 transition-colors">({GOOGLE_REVIEW_STATS.totalReviews} Google reviews)</span>
+            </a>
           )}
 
           {/* ── Price Block ── */}

@@ -36,7 +36,7 @@ export default function FreeMeasurementPage() {
               <span className="flex items-center gap-1">✓ Free</span>
               <span className="flex items-center gap-1">✓ No Obligation</span>
               <span className="flex items-center gap-1">⏰ Same-Week Booking</span>
-              <span className="flex items-center gap-1">⭐ 5-Star Rated</span>
+              <span className="flex items-center gap-1">⭐ 4.7★ on Google (41)</span>
             </div>
           </div>
         </div>
