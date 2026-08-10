@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: simbaFlooringData.title,
   description: simbaFlooringData.description,
+  alternates: { canonical: '/simba-flooring' },
 };
 
 export default async function SimbaFlooringPage() {

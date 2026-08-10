@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: nafFlooringData.title,
   description: nafFlooringData.description,
+  alternates: { canonical: '/naf-flooring' },
 };
 
 export default async function NafFlooringPage() {

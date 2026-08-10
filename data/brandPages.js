@@ -15,7 +15,7 @@ const has = (str, sub) => lc(str).includes(lc(sub));
 
 export const nafFlooringData = {
   route: 'NafFlooring',
-  title: 'NAF Flooring Markham | Vinyl, Hardwood & Laminate | BBS Flooring',
+  title: 'NAF Flooring Markham | Vinyl, Hardwood & Laminate',
   description: 'Shop NAF Flooring in Markham — 170+ products in stock including the NEW 14mm Waterproof Laminate PRO. Vinyl, hardwood & laminate from $2.39/sqft. Call (647) 428-1111.',
   h1: 'NAF Flooring — Vinyl, Hardwood & Laminate',
   subtitle: '170+ NAF products in stock at our Markham showroom — including the NEW 14mm Waterproof Laminate PRO with attached underpad. One brand covers every room in your home.',

@@ -78,6 +78,7 @@ export default async function CityProductPage({ params }) {
       '@type': 'Product',
       name: `${productType.label} in ${page.city}`,
       description: `${stats.count}+ ${productType.shortLabel.toLowerCase()} flooring options available for ${page.city} homeowners. Professional installation available.`,
+      image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/bbs-logo-official-v2.png',
       category: productType.label,
       brand: { '@type': 'Brand', name: 'BBS Flooring' },
       offers: {

@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: triforestFlooringData.title,
   description: triforestFlooringData.description,
+  alternates: { canonical: '/triforest-flooring' },
 };
 
 export default async function TriforestFlooringPage() {

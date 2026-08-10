@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: falconFlooringData.title,
   description: falconFlooringData.description,
+  alternates: { canonical: '/falcon-flooring' },
 };
 
 export default async function FalconFlooringPage() {

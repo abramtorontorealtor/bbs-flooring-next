@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: northernestFlooringData.title,
   description: northernestFlooringData.description,
+  alternates: { canonical: '/northernest-flooring' },
 };
 
 export default async function NorthernestFlooringPage() {

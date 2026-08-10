@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: evergreenFlooringData.title,
   description: evergreenFlooringData.description,
+  alternates: { canonical: '/evergreen-flooring' },
 };
 
 export default async function EvergreenFlooringPage() {

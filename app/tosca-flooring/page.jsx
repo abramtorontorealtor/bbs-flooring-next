@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: toscaFlooringData.title,
   description: toscaFlooringData.description,
+  alternates: { canonical: '/tosca-flooring' },
 };
 
 export default async function ToscaFlooringPage() {

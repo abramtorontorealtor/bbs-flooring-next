@@ -10,6 +10,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: wodenFlooringData.title,
   description: wodenFlooringData.description,
+  alternates: { canonical: '/woden-flooring' },
 };
 
 export default async function WodenFlooringPage() {
