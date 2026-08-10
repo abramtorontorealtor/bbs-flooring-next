@@ -46,8 +46,11 @@ export default function AdLandingTemplate({
     Analytics.trackEvent('view_landing_page', 'engagement', h1);
   }, [h1]);
 
+  // H2: A CTA/button click is NOT a lead — the actual lead fires on the FreeMeasurement
+  // form submit. Firing 'generate_lead' here poisoned the GA4 conversion set and let
+  // Smart Bidding optimize toward clicks. Downgrade to a non-conversion engagement event.
   const handleCtaClick = (location) => {
-    Analytics.trackEvent('generate_lead', 'conversion', `${h1}_${location}`);
+    Analytics.trackEvent('select_cta', 'engagement', `${h1}_${location}`);
   };
 
   // Build breadcrumb items — hierarchy-based (Home > Parent > Current)

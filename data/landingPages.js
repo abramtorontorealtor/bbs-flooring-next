@@ -702,3 +702,69 @@ export const compareFlooringData = {
   ],
   ctaText: 'Get Your Free Quote',
 };
+
+// ══════════════════════════════════════════════════════════
+// E-1 — BUDGET SERP GAP: "cheap flooring GTA" / "under $2/sqft"
+// Reclaims the budget angle Top Floorings Depot was owning. BBS has real
+// price power here ($1.49 laminate, $1.79 vinyl in stock) — lead with it.
+// ══════════════════════════════════════════════════════════
+export const cheapFlooringGtaData = {
+  route: 'CheapFlooringGta',
+  title: 'Cheap Flooring GTA | From $1.49/sqft In-Stock | BBS Flooring',
+  description: 'Cheap flooring in the GTA done right. Laminate from $1.49/sqft, waterproof vinyl from $1.79/sqft, engineered hardwood from $2.99/sqft — all in stock in Markham. Real prices, pro installation, no gimmicks. Call (647) 428-1111.',
+  h1: 'Cheap Flooring in the GTA — From $1.49/sqft, In Stock',
+  subtitle: 'Budget-friendly doesn\'t mean cheap quality. First-quality laminate, waterproof vinyl, and engineered hardwood at contractor-direct prices — with real installation and no bait-and-switch.',
+  schemaType: 'product',
+  content: [
+    {
+      heading: 'The Real Cost of Cheap Flooring in the GTA (2026 Prices)',
+      body: `<p>"Cheap flooring" usually means one of two things: a low sticker price that balloons once installation and removal are added, or genuinely affordable material from a store that buys direct. We're the second kind. Here's what our budget lines actually cost, in stock today in Markham:</p>
+<ul>
+<li><strong>Laminate — from $1.49/sqft.</strong> 12mm, AC4/AC5 rated. The cheapest way to get a real wood look in bedrooms, offices, and dry living areas.</li>
+<li><strong>Waterproof vinyl (LVP/SPC) — from $1.79/sqft.</strong> 100% waterproof, installs over concrete, perfect for basements, kitchens, and rentals.</li>
+<li><strong>Engineered hardwood — from $2.99/sqft.</strong> Genuine hardwood top layer, still the best value for resale and main floors.</li>
+</ul>
+<p>Add professional installation at <strong>$2.00/sqft</strong> (floating laminate/vinyl) and you're all-in from <strong>$3.49/sqft</strong> — old floor removal and furniture moving included. A 500 sqft room, fully installed, starts around <strong>$1,745</strong>. <a href="/quote-calculator">Run your exact number →</a></p>`
+    },
+    {
+      heading: 'Why We Can Sell Flooring Cheaper Than the Big Box Stores',
+      body: `<p>We're a family-owned flooring store in Markham that's been buying contractor-direct since 2012. There's no national-chain markup, no middleman, and no showroom-glamour tax baked into the price. What you save is real:</p>
+<ul>
+<li><strong>Direct sourcing.</strong> We buy from the same mills the big brands do — you get the product, not the logo premium.</li>
+<li><strong>In-stock, not special-order.</strong> Our budget lines are on the floor now. No 6-week wait, no shipping surcharge.</li>
+<li><strong>One trade, done right.</strong> We sell AND install, so there's no finger-pointing between a store and a separate installer.</li>
+</ul>
+<p>Come see the price on the box yourself — <a href="/contact">visit the Markham showroom</a> or call <a href="tel:+16474281111">(647) 428-1111</a>.</p>`
+    },
+    {
+      heading: 'Cheap Flooring That Won\'t Cost You Twice',
+      body: `<p>The cheapest floor is the one you only buy once. A $0.99 clearance special that isn't rated for your room, or a "great deal" installed over a bad subfloor, is the most expensive flooring there is. Every budget floor we sell is first-quality and matched to the right room:</p>
+<ul>
+<li>Basement or bathroom? <strong>Waterproof vinyl</strong> — never budget laminate.</li>
+<li>Bedroom or office on a budget? <strong>Laminate</strong> is perfect and cheapest.</li>
+<li>Want resale value without overspending? <strong>Engineered hardwood from $2.99.</strong></li>
+</ul>
+<p>Not sure what fits your budget and your rooms? <a href="/free-measurement">Book a free in-home measurement</a> — we bring samples to your door across the GTA.</p>`
+    },
+  ],
+  faqItems: [
+    { question: 'What is the cheapest flooring you can buy in the GTA?', answer: 'Laminate at $1.49/sqft is our cheapest in-stock flooring. Installed, it works out to about $3.49/sqft all-in ($1.49 material + $2.00 installation), including old floor removal and free furniture moving. For a 500 sqft room that\'s roughly $1,745 total. Call (647) 428-1111 for an exact quote.' },
+    { question: 'What is the cheapest waterproof flooring for a basement?', answer: 'SPC waterproof vinyl plank from $1.79/sqft. It\'s 100% waterproof, installs directly over concrete, and handles GTA basement humidity without warping or mold. Never use budget laminate or hardwood in a basement — vinyl is both cheaper long-term and the correct product.' },
+    { question: 'Is cheap flooring lower quality?', answer: 'Not at BBS. Our budget lines are first-quality, brand-new flooring — they\'re affordable because we buy contractor-direct with no big-box markup, not because they\'re seconds or defects. Same warranties, same build quality, lower price.' },
+    { question: 'How much to install cheap flooring in the GTA?', answer: 'Installation is $2.00/sqft for floating laminate and vinyl (the budget categories), which includes subfloor prep, transitions, old floor removal, and free furniture moving. So budget laminate is about $3.49/sqft all-in and waterproof vinyl about $3.79/sqft all-in.' },
+    { question: 'Do you deliver cheap flooring or is it pickup only?', answer: 'Both. Warehouse pickup in Markham is free. Delivery is $140 to your garage or $200 inside the house. You can also have us supply and install — most budget projects are completed in a day or two.' },
+    { question: 'Can I get a free quote on budget flooring?', answer: 'Yes. Use the instant Quote Calculator at bbsflooring.ca/quote-calculator, book a free in-home measurement, or call (647) 428-1111. No obligation, no pressure — just a real, itemized price.' },
+  ],
+  // Budget filter: in-stock, priced, non-variant, effective price under $2.50/sqft.
+  productFilter: (p) => {
+    if (!p || p.hide_price === true || p.in_stock === false || p.is_variant === true) return false;
+    const list = Number(p.price_per_sqft);
+    if (!Number.isFinite(list) || list <= 0) return false;
+    const sale = p.sale_price_per_sqft != null ? Number(p.sale_price_per_sqft) : null;
+    const effective = sale != null && Number.isFinite(sale) && sale > 0 ? sale : list;
+    return effective < 2.50;
+  },
+  productSessionKey: 'cheap-flooring-gta',
+  productQueryKey: 'products-cheap-gta',
+  ctaText: 'Get Your Free Budget Quote',
+};

@@ -22,22 +22,20 @@ export async function POST(request) {
 
   let event;
 
-  // Verify webhook signature if secret is configured
-  if (webhookSecret && signature) {
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-    } catch (err) {
-      console.error('[Stripe Webhook] Signature verification failed:', err.message);
-      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
-    }
-  } else {
-    // No webhook secret configured — parse raw (development mode)
-    try {
-      event = JSON.parse(body);
-      console.warn('[Stripe Webhook] No STRIPE_WEBHOOK_SECRET set — skipping signature verification');
-    } catch (err) {
-      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
-    }
+  // SECURITY (F3): signature verification is MANDATORY. Never parse raw/unsigned events —
+  // an attacker could POST a fake checkout.session.completed to mark an order paid.
+  if (!webhookSecret) {
+    console.error('[Stripe Webhook] STRIPE_WEBHOOK_SECRET is not set — refusing to process unsigned events.');
+    return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 });
+  }
+  if (!signature) {
+    return NextResponse.json({ error: 'Missing signature' }, { status: 400 });
+  }
+  try {
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+  } catch (err) {
+    console.error('[Stripe Webhook] Signature verification failed:', err.message);
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
   const supabase = getSupabaseAdminClient();
@@ -51,6 +49,20 @@ export async function POST(request) {
 
       if (!orderId && !orderNumber) {
         console.warn('[Stripe Webhook] checkout.session.completed with no order metadata');
+        break;
+      }
+
+      // ── Idempotency (F7): Stripe retries the same event on timeout/cold-start.
+      // If this order is already authorized/captured, acknowledge and skip re-sending
+      // confirmation emails + Telegram alerts (was firing 3–5 duplicates per retry).
+      const idemFilter = orderId ? { id: orderId } : { order_number: orderNumber };
+      const { data: existingOrder } = await supabase
+        .from('orders')
+        .select('payment_status')
+        .match(idemFilter)
+        .single();
+      if (existingOrder && ['authorized', 'captured', 'paid'].includes(existingOrder.payment_status)) {
+        console.log(`[Stripe Webhook] Duplicate checkout.session.completed for ${orderNumber || orderId} (payment_status=${existingOrder.payment_status}) — already processed, skipping.`);
         break;
       }
 

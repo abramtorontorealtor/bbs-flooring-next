@@ -31,6 +31,7 @@ export default async function sitemap() {
     { path: '/', priority: 1.0, changeFrequency: 'weekly' },
     { path: '/products', priority: 0.9, changeFrequency: 'daily' },
     { path: '/clearance', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/cheap-flooring-gta', priority: 0.8, changeFrequency: 'weekly' },
     // /flooring-clearance-sale canonicals to /clearance — omitted from sitemap
     // Category pages
     { path: '/engineered-hardwood', priority: 0.8, changeFrequency: 'weekly' },

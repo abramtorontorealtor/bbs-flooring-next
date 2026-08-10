@@ -4,14 +4,20 @@ import { NextResponse } from 'next/server';
 // On-demand ISR revalidation endpoint
 // Usage: POST /api/revalidate { "path": "/products/some-slug", "secret": "..." }
 // Or: POST /api/revalidate { "paths": ["/products/a", "/products/b"], "secret": "..." }
-const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET || 'bbs-revalidate-2026';
+// SECURITY (F8): no hardcoded fallback. If REVALIDATE_SECRET is unset, the endpoint
+// is disabled rather than falling back to a public, source-visible secret.
+const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET;
 
 export async function POST(request) {
   try {
+    if (!REVALIDATE_SECRET) {
+      return NextResponse.json({ error: 'Revalidation not configured' }, { status: 500 });
+    }
+
     const body = await request.json();
     const { path, paths, secret } = body;
 
-    if (secret !== REVALIDATE_SECRET) {
+    if (!secret || secret !== REVALIDATE_SECRET) {
       return NextResponse.json({ error: 'Invalid secret' }, { status: 401 });
     }
 
