@@ -206,7 +206,7 @@ export const locationData = {
       },
       {
         q: "Can I visit the BBS Flooring showroom in Markham?",
-        a: "Yes — our showroom at 6061 Highway 7, Unit B is open Monday to Saturday, 10am–5pm, and Sundays by appointment. We carry over 1,000 flooring options in stock so you can see and feel samples before buying. Call (647) 428-1111 to book a consultation."
+        a: "Yes — our Markham flooring store at 6061 Highway 7, Unit B is open Monday to Saturday, 10am–5pm (closed Sundays). We carry over 1,000 flooring options in stock so you can see and feel samples before buying. Call (647) 428-1111 or just walk in — no appointment needed."
       },
       {
         q: "What's the best flooring for Markham basements?",

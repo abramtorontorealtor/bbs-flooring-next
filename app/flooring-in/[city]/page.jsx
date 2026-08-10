@@ -57,11 +57,19 @@ export default async function LocationPage({ params }) {
           },
           {
             '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
+            // Flooring "store" query intent: HomeAndConstructionBusiness (a Store subtype) with hours + map.
+            '@type': data.isFlagship ? ['LocalBusiness', 'HomeAndConstructionBusiness', 'Store'] : 'LocalBusiness',
             name: 'BBS Flooring',
             description: data.description,
             telephone: '(647) 428-1111',
             url: 'https://bbsflooring.ca',
+            ...(data.isFlagship ? {
+              priceRange: '$$',
+              hasMap: 'https://www.google.com/maps?cid=9896263526048495139',
+              openingHoursSpecification: [
+                { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '17:00' },
+              ],
+            } : {}),
             address: {
               '@type': 'PostalAddress',
               streetAddress: '6061 Highway 7, Unit B',
@@ -75,6 +83,7 @@ export default async function LocationPage({ params }) {
               '@type': 'AggregateRating',
               ratingValue: '4.7',
               reviewCount: String(GOOGLE_REVIEW_COUNT),
+              bestRating: '5',
             },
           },
         ]} />
@@ -90,7 +99,9 @@ export default async function LocationPage({ params }) {
             <span className="text-sm font-medium">Serving {data.city}</span>
           </div>
           <h1 className="text-5xl font-bold text-slate-800 mb-6">
-            Hardwood &amp; Vinyl Flooring Installation in {data.city}
+            {data.isFlagship
+              ? `Flooring Store in ${data.city} — Hardwood, Vinyl & Laminate`
+              : `Hardwood & Vinyl Flooring Installation in ${data.city}`}
           </h1>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
             {data.content}
@@ -354,6 +365,11 @@ export default async function LocationPage({ params }) {
                 {link.label}
               </Link>
             ))}
+            {data.isFlagship && (
+              <Link href="/flooring-showroom-markham" className="hover:text-amber-600 transition-colors font-medium">
+                Visit our {data.city} Flooring Store &rarr;
+              </Link>
+            )}
           </div>
           <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Other Service Areas</h3>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">

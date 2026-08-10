@@ -165,8 +165,8 @@ export const flooringShowroomMarkhamData = {
   route: 'FlooringShowroomMarkham',
   title: 'Flooring Store Markham | Showroom | 6061 Hwy 7',
   description: 'Visit BBS Flooring showroom in Markham. 1,000+ products, hardwood, vinyl, laminate. 6061 Highway 7. Mon-Sat. Free measurements. Call (647) 428-1111.',
-  h1: 'BBS Flooring Showroom — Markham',
-  subtitle: '600+ flooring products on display. Expert advice, free measurements, and honest pricing since 2012.',
+  h1: 'Flooring Store in Markham — BBS Flooring Showroom',
+  subtitle: '1,000+ flooring products on display. Markham\'s local flooring store since 2012 — expert advice, free measurements, and honest wholesale-direct pricing.',
   schemaType: 'showroom',
   showProducts: false,
   showMap: true,
@@ -174,8 +174,8 @@ export const flooringShowroomMarkhamData = {
   content: [
     {
       heading: 'Your Local Flooring Experts on Highway 7',
-      body: `<p>BBS Flooring has been Markham's trusted flooring destination since 2012. Our showroom at 6061 Highway 7 features over 1,000 products you can see, touch, and take home as samples.</p>
-<p><strong>📍 Address:</strong> 6061 Highway 7, Unit B, Markham, ON L3P 3A7<br/>
+      body: `<p>BBS Flooring is Markham's local flooring store, trusted by GTA homeowners since 2012. Our Highway 7 showroom features over 1,000 flooring products — hardwood, engineered hardwood, luxury vinyl, laminate and stairs — that you can see, touch, and take home as samples. Prefer to compare in person before you buy? That's exactly what a real flooring store is for.</p>
+<p><strong>📍 Address:</strong> 6061 Highway 7, Unit B, Markham, ON L3P 3B2<br/>
 <strong>📞 Phone:</strong> <a href="tel:+16474281111">(647) 428-1111</a><br/>
 <strong>🕐 Hours:</strong> Monday–Saturday 10am–5pm | Sunday Closed</p>`
     },
@@ -188,15 +188,19 @@ export const flooringShowroomMarkhamData = {
 <li><strong><a href="/Laminate">Laminate</a>:</strong> 12mm premium options from $2.39/sqft.</li>
 <li><strong><a href="/Stairs">Staircase Samples</a>:</strong> Treads, risers, and railing options for full stair renovations.</li>
 </ul>
-<p>Walk-ins are always welcome. No appointment needed — but if you'd like one-on-one time with a specialist, <a href="/Contact">book a consultation</a>.</p>`
+<p>Walk-ins are always welcome. No appointment needed — but if you'd like one-on-one time with a specialist, <a href="/contact">book a consultation</a>.</p>`
+    },
+    {
+      heading: 'Flooring by Type at Our Markham Store',
+      body: `<p>Looking for something specific? Our Markham flooring store stocks every major category in depth: <a href="/vinyl-flooring-markham">vinyl flooring in Markham</a>, <a href="/hardwood-flooring-markham">hardwood flooring in Markham</a>, and <a href="/laminate-flooring-markham">laminate flooring in Markham</a>. Prefer to browse first? See our full <a href="/flooring-in/markham">Markham flooring guide</a> with neighbourhood recommendations and transparent pricing.</p>`
     },
     {
       heading: 'Serving the Entire GTA',
-      body: `<p>While our showroom is in Markham, we install flooring across the Greater Toronto Area: <a href="/Location?city=Markham">Markham</a>, <a href="/Location?city=Richmond Hill">Richmond Hill</a>, <a href="/Location?city=Pickering">Pickering</a>, <a href="/Location?city=Ajax">Ajax</a>, <a href="/Location?city=Whitby">Whitby</a>, <a href="/Location?city=Vaughan">Vaughan</a>, Toronto, Scarborough, and North York. <strong>Free in-home measurements</strong> anywhere in the GTA.</p>`
+      body: `<p>While our store is in Markham, we install flooring across the Greater Toronto Area: <a href="/flooring-in/markham">Markham</a>, <a href="/flooring-in/toronto">Toronto</a>, <a href="/flooring-in/pickering">Pickering</a>, <a href="/flooring-in/ajax">Ajax</a>, <a href="/flooring-in/whitby">Whitby</a>, <a href="/flooring-in/vaughan">Vaughan</a>, <a href="/flooring-in/scarborough">Scarborough</a>, and <a href="/flooring-in/stouffville">Stouffville</a>. <strong>Free in-home measurements</strong> anywhere in the GTA.</p>`
     },
   ],
   faqItems: [
-    { question: 'Where is BBS Flooring located?', answer: '6061 Highway 7, Unit B, Markham, ON L3P 3A7. We\'re on the south side of Highway 7, between McCowan Rd and Markham Rd, near Markville Mall.' },
+    { question: 'Where is BBS Flooring located?', answer: 'BBS Flooring is at 6061 Highway 7, Unit B, Markham, ON L3P 3B2 — on Highway 7 near Markville Mall, with free parking at the door. As Markham\'s local flooring store, we carry 1,000+ hardwood, vinyl and laminate options you can see and sample in person.' },
     { question: 'Do I need an appointment to visit the showroom?', answer: 'No appointment needed — walk-ins are welcome Monday through Saturday. If you\'d like dedicated time with a flooring specialist, you can call (647) 428-1111 to schedule a consultation.' },
     { question: 'Can I take home flooring samples?', answer: 'Yes! We offer free samples of most products so you can see how they look in your home\'s lighting. Just visit the showroom and ask.' },
     { question: 'Do you offer free measurements?', answer: 'Yes. We provide free in-home measurements anywhere in the GTA. Call (647) 428-1111 or book online at our Free Measurement page. Our estimator will measure every room and provide a detailed, no-obligation quote.' },
