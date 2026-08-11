@@ -238,7 +238,7 @@ export default function WaterproofLaminateClient() {
           <div className="bg-stone-50 rounded-xl p-6 space-y-3 text-stone-700">
             <p className="flex justify-between border-b border-stone-200 pb-2"><span>12mm 72-hour waterproof laminate (material)</span><span className="font-semibold">from $2.39/sqft</span></p>
             <p className="flex justify-between border-b border-stone-200 pb-2"><span>Professional floating installation</span><span className="font-semibold">$2.00/sqft</span></p>
-            <p className="flex justify-between border-b border-stone-200 pb-2"><span>Old flooring removal (if needed)</span><span className="font-semibold">$1.00–$1.25/sqft</span></p>
+            <p className="flex justify-between border-b border-stone-200 pb-2"><span>Old flooring removal (if needed)</span><span className="font-semibold">$1.00–$1.50/sqft</span></p>
             <p className="flex justify-between border-b border-stone-200 pb-2"><span>Delivery</span><span className="font-semibold">Free pickup · $140 garage · $200 inside</span></p>
             <p className="flex justify-between pt-1"><span className="font-semibold">500 sqft room (material + install)</span><span className="font-bold text-amber-700">≈ $2,195</span></p>
           </div>

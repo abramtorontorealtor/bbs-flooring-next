@@ -224,21 +224,21 @@ export default function StairRenovationGuideClient() {
                   <p className="font-semibold text-stone-800">Refinish 13-step staircase</p>
                   <p className="text-stone-500 text-sm">13 treads × $125 + 10 lf nosing refinish × $20 + 10 lf railing refinish × $25</p>
                 </div>
-                <span className="font-bold text-amber-700 shrink-0 ml-4">~$1,875</span>
+                <span className="font-bold text-amber-700 shrink-0 ml-4">~$2,075</span>
               </div>
               <div className="flex justify-between items-start border-b border-stone-200 pb-3">
                 <div>
                   <p className="font-semibold text-stone-800">New treads — carpet-to-hardwood conversion</p>
                   <p className="text-stone-500 text-sm">13 straight treads × $185 (carpet removal included) + 10 lf new nosing × $25 + 1 stringer (white) × $350</p>
                 </div>
-                <span className="font-bold text-amber-700 shrink-0 ml-4">~$2,955</span>
+                <span className="font-bold text-amber-700 shrink-0 ml-4">~$3,005</span>
               </div>
               <div className="flex justify-between items-start">
                 <div>
                   <p className="font-semibold text-stone-800">Full renovation — new treads + iron pickets + posts + railing</p>
                   <p className="text-stone-500 text-sm">13 treads × $185 + 26 pickets × $25 + 2 posts × $150 + 10 lf new rail × $50 + 1 stringer (white) × $350</p>
                 </div>
-                <span className="font-bold text-amber-700 shrink-0 ml-4">~$4,355</span>
+                <span className="font-bold text-amber-700 shrink-0 ml-4">~$4,205</span>
               </div>
             </div>
           </div>

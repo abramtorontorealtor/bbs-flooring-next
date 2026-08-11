@@ -62,7 +62,7 @@ export default function CleanVinylPlankClient() {
             Luxury vinyl plank (LVP, SPC, and WPC) is built from a waterproof core topped with a tough, factory-applied wear layer. That wear layer is the magic: it resists water, stains, and scratches far better than wood or laminate, which is exactly why vinyl plank dominates kitchens, bathrooms, basements, and busy family homes. There&apos;s no finish to strip, no wood to swell, and no special sealant to maintain.
           </p>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            That said, &quot;waterproof&quot; doesn&apos;t mean &quot;indestructible.&quot; The two things that actually damage vinyl plank are <strong>heat</strong> (steam mops, soften the surface and lift adhesive) and <strong>abrasion</strong> (grit and scouring pads scratch the wear layer). Manage those two and your floor stays new for 20+ years. Browse our full <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank collection</Link> (from $1.99/sqft), including in-stock favourites like the <Link href="/products/golden-hearth-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Golden Hearth 22mil LVP</Link>.
+            That said, &quot;waterproof&quot; doesn&apos;t mean &quot;indestructible.&quot; The two things that actually damage vinyl plank are <strong>heat</strong> (steam mops, soften the surface and lift adhesive) and <strong>abrasion</strong> (grit and scouring pads scratch the wear layer). Manage those two and your floor stays new for 20+ years. Browse our full <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank collection</Link> (from $2.19/sqft, or $1.79 on clearance), including in-stock favourites like the <Link href="/products/golden-hearth-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Golden Hearth 22mil LVP</Link>.
           </p>
         </section>
 
@@ -72,7 +72,7 @@ export default function CleanVinylPlankClient() {
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
             <ul className="space-y-3 text-slate-700">
               <li>🧹 <strong>Sweep or dust-mop</strong> high-traffic areas to lift grit — the only thing that scratches vinyl&apos;s wear layer over time.</li>
-              <li>🍷 <strong>Wipe spills whenever you notice them.</strong> No rush — vinyl is waterproof — but wiping keeps it spotless and prevents sticky residue.</li>
+              <li>🍷 <strong>Wipe spills promptly.</strong> Vinyl is waterproof, so there&apos;s no panic — but wiping spills up soon keeps the floor spotless and prevents sticky residue.</li>
               <li>👟 <strong>Doormats at entries</strong> catch the sand and salt that does the slow scratching.</li>
             </ul>
           </div>
@@ -152,7 +152,7 @@ export default function CleanVinylPlankClient() {
             Vinyl plank can&apos;t be sanded or refinished like hardwood — but its big advantage is that <strong>individual planks can often be swapped out</strong> if one is gouged or stained, especially on click-lock floors near a wall. If a floating floor has lifted or gapped from heat or a bad subfloor, it can usually be re-laid rather than fully replaced.
           </p>
           <p className="text-slate-600 text-lg leading-relaxed">
-            If your vinyl is worn through, dated, or beyond a single-plank fix, browse our <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank collection</Link> (from $1.99/sqft) or compare with <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">laminate</Link> and <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link>. We also handle professional <Link href="/installation" className="text-amber-700 underline hover:text-amber-800">flooring installation</Link> across the GTA.
+            If your vinyl is worn through, dated, or beyond a single-plank fix, browse our <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank collection</Link> (from $2.19/sqft) or compare with <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">laminate</Link> and <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link>. We also handle professional <Link href="/installation" className="text-amber-700 underline hover:text-amber-800">flooring installation</Link> across the GTA.
           </p>
         </section>
 
@@ -170,7 +170,7 @@ export default function CleanVinylPlankClient() {
             </details>
             <details className="bg-slate-50 border border-slate-200 rounded-lg p-5">
               <summary className="font-semibold text-slate-800 cursor-pointer">Can you use vinegar on vinyl plank flooring?</summary>
-              <p className="text-slate-600 mt-3">A heavily diluted vinegar solution (about 1 cup per gallon of warm water) is generally safe for occasional cleaning of vinyl plank because the floor is not a finished wood surface. However, a pH-neutral floor cleaner is gentler and avoids any risk of dulling the wear layer over time. Never use undiluted vinegar, bleach, ammonia, or wax-based products.</p>
+              <p className="text-slate-600 mt-3">Most manufacturers recommend a pH-neutral floor cleaner rather than vinegar. A heavily diluted vinegar solution (about 1 cup per gallon of warm water) is only occasionally acceptable, but its acidity can dull the wear layer over time — so a pH-neutral cleaner is the safer everyday choice. Never use undiluted vinegar, bleach, ammonia, or wax-based products.</p>
             </details>
             <details className="bg-slate-50 border border-slate-200 rounded-lg p-5">
               <summary className="font-semibold text-slate-800 cursor-pointer">How do I remove scuff marks from vinyl plank?</summary>
@@ -191,7 +191,7 @@ export default function CleanVinylPlankClient() {
         <section className="bg-gradient-to-br from-slate-800 to-emerald-900 text-white rounded-2xl p-8 md:p-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Time for a New Floor?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
-            If your vinyl is worn or dated, BBS Flooring stocks 260+ waterproof vinyl plank options from $1.99/sqft — plus professional installation across Markham &amp; the GTA.
+            If your vinyl is worn or dated, BBS Flooring stocks 280+ waterproof vinyl plank options from $2.19/sqft ($1.79 on clearance) — plus professional installation across Markham &amp; the GTA.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/vinyl" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-6 py-3 rounded-lg transition">Browse Vinyl Plank</Link>

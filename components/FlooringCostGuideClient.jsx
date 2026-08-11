@@ -53,7 +53,7 @@ export default function FlooringCostGuideClient() {
           Quick Answer: Flooring Installation Cost in Toronto &amp; GTA (2026)
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Total cost (material + labour) at BBS Flooring: Laminate from $3.49/sqft, Vinyl/SPC from $4.19/sqft, Engineered hardwood from $5.44/sqft, Solid hardwood from $7.35/sqft. A typical 500 sqft room costs $1,745&#8211;$4,750 depending on material. BBS buys direct from manufacturers &#8212; 20&#8211;40% less than big-box stores. Free in-home measurement: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          Total cost (material + labour) at BBS Flooring: Laminate from $3.49/sqft, Vinyl/SPC from $4.19/sqft, Engineered hardwood from $5.54/sqft, Solid hardwood from $7.35/sqft. A typical 500 sqft room costs $1,745&#8211;$4,750 depending on material. BBS buys direct from manufacturers &#8212; 20&#8211;40% less than big-box stores. Free in-home measurement: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -79,10 +79,10 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '572 options', '$2.49–$8.99/sqft', '$4.89/sqft', 'Lee ($3.29) · Woden ($2.49) · Falcon ($3.89)'],
-                  ['Solid Hardwood', '83 options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
-                  ['Vinyl (LVP/SPC)', '241 options', '$1.79–$3.59/sqft', '$2.75/sqft', 'Falcon ($1.79) · Lee ($1.79) · Woden ($2.29)'],
-                  ['Laminate', '145 options', '$1.49–$3.29/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.25)'],
+                  ['Engineered Hardwood', '400+ options', '$3.29–$8.99/sqft', '$4.89/sqft', 'Lee ($3.29) · Woden ($3.50) · Falcon ($3.89)'],
+                  ['Solid Hardwood', '80+ options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
+                  ['Vinyl (LVP/SPC)', '280+ options', '$2.19–$4.35/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($1.79 clearance) · Triforest ($2.29)'],
+                  ['Laminate', '135+ options', '$1.49–$3.39/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.29)'],
                 ].map(([type, options, range, avg, value], i) => (
                   <tr key={type} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{type}</td>
@@ -112,7 +112,7 @@ export default function FlooringCostGuideClient() {
               </div>
               <div className="border border-stone-200 rounded-xl p-5">
                 <p className="text-sm font-semibold text-amber-600 mb-1">💰 Budget Laminate — $1.49/sqft</p>
-                <p className="text-stone-700"><Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904</Link> — 8mm AC4-rated, ideal for bedrooms and low-traffic areas. Cheapest flooring in the GTA.</p>
+                <p className="text-stone-700"><Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904</Link> — 12mm AC4-rated, ideal for bedrooms and low-traffic areas. Cheapest flooring in the GTA.</p>
               </div>
               <div className="border border-stone-200 rounded-xl p-5">
                 <p className="text-sm font-semibold text-amber-600 mb-1">⭐ Mid-Range Engineered — $4.69/sqft</p>
@@ -150,7 +150,7 @@ export default function FlooringCostGuideClient() {
                   ['Vinyl / Laminate installation', '$2.00/sqft', 'Click-lock floating over any flat subfloor'],
                   ['Tile installation', '$10.00/sqft', 'Includes thin-set and labour'],
                   ['Carpet removal', '$1.00/sqft', 'Includes staple/tack strip removal'],
-                  ['Vinyl / Laminate removal', '$1.25/sqft', 'Includes underlayment removal'],
+                  ['Vinyl / Laminate removal', '$1.50/sqft', 'Includes underlayment removal'],
                   ['Hardwood removal', '$1.50/sqft', 'Nail-down or glue-down'],
                   ['Tile removal', '$3.00/sqft', 'Includes subfloor prep'],
                   ['Baseboard installation', '$3.61/linear ft', 'Standard MDF or wood baseboards'],
@@ -206,7 +206,7 @@ export default function FlooringCostGuideClient() {
                   ['Laminate (premium)', '$5.29', '$1,058', '$2,645', '$4,232', '$5,290', '$7,935'],
                   ['Vinyl (budget)', '$4.19', '$838', '$2,095', '$3,352', '$4,190', '$6,285'],
                   ['Vinyl (premium)', '$5.59', '$1,118', '$2,795', '$4,472', '$5,590', '$8,385'],
-                  ['Engineered HW (budget)', '$5.44', '$1,088', '$2,720', '$4,352', '$5,440', '$8,160'],
+                  ['Engineered HW (budget)', '$5.54', '$1,108', '$2,770', '$4,432', '$5,540', '$8,310'],
                   ['Engineered HW (mid)', '$7.27', '$1,454', '$3,635', '$5,816', '$7,270', '$10,905'],
                   ['Engineered HW (premium)', '$12.24', '$2,448', '$6,120', '$9,792', '$12,240', '$18,360'],
                   ['Solid Hardwood (std)', '$7.35', '$1,470', '$3,675', '$5,880', '$7,350', '$11,025'],
@@ -240,7 +240,7 @@ export default function FlooringCostGuideClient() {
               ['🍳 Kitchen', '~150 sqft', 'Vinyl (LVP/SPC)', '$629–$839 installed', 'Waterproof protection for spills and high traffic. Best ROI for the room most used in the house.'],
               ['🏠 Living Room', '~300 sqft', 'Engineered Hardwood', '$1,422–$3,672 installed', 'The room where flooring matters most for aesthetics and resale value. White Oak wide-plank is the 2026 standard.'],
               ['🛏️ Master Bedroom', '~200 sqft', 'Engineered Hardwood or Laminate', '$698–$2,448 installed', 'Low traffic = any type works. Hardwood for resale value, laminate from $698 total if budget-conscious.'],
-              ['🏚️ Basement', '~600 sqft', 'Vinyl (LVP/SPC)', '$2,514–$3,354 installed', '100% waterproof is non-negotiable below grade. 241 vinyl options handle Ontario basement moisture.'],
+              ['🏚️ Basement', '~600 sqft', 'Vinyl (LVP/SPC)', '$2,514–$3,354 installed', '100% waterproof is non-negotiable below grade. 280+ vinyl options handle Ontario basement moisture.'],
               ['🏡 Whole House', '~1,200 sqft', 'Mixed (EH + Vinyl)', '$5,688–$14,688 installed', 'Most homeowners: engineered hardwood in living areas + vinyl in basement/kitchen. BBS installs transitions between types.'],
             ].map(([room, size, type, cost, desc]) => (
               <div key={room} className="bg-stone-50 border border-stone-200 rounded-xl p-6">

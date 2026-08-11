@@ -20,11 +20,11 @@ export default function BasementFlooringGuideClient() {
             Best Flooring for Basements in Ontario
           </h1>
           <p className="text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed">
-            Moisture, concrete subfloors, and Ontario&apos;s climate make basements the hardest room to floor. This guide covers what works, what doesn&apos;t, and what it costs — with 241 waterproof options in stock.
+            Moisture, concrete subfloors, and Ontario&apos;s climate make basements the hardest room to floor. This guide covers what works, what doesn&apos;t, and what it costs — with 280+ waterproof options in stock.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-stone-400">
-            <span>✔ 241 waterproof options</span>
-            <span>✔ From $1.79/sqft</span>
+            <span>✔ 280+ waterproof options</span>
+            <span>✔ From $1.79/sqft on clearance</span>
             <span>✔ Ontario-specific advice</span>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function BasementFlooringGuideClient() {
           Quick Answer: Best Basement Flooring in Ontario
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Vinyl/SPC flooring is the best choice for Ontario basements &#8212; 100% waterproof, installs over concrete, handles temperature swings and moisture. BBS Flooring in Markham carries 241 vinyl options from $1.79/sqft with professional installation at $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          Vinyl/SPC flooring is the best choice for Ontario basements &#8212; 100% waterproof, installs over concrete, handles temperature swings and moisture. BBS Flooring in Markham carries 280+ in-stock vinyl options from $1.79/sqft on clearance ($2.19 regular) with professional installation at $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -100,14 +100,14 @@ export default function BasementFlooringGuideClient() {
             <div className="border-2 border-amber-400 rounded-xl p-6 bg-amber-50/30">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-amber-600 text-white text-sm font-bold px-3 py-1 rounded-full">#1 BEST OVERALL</span>
-                <span className="text-stone-400 text-sm">241 options · $1.79–$3.59/sqft</span>
+                <span className="text-stone-400 text-sm">280+ options · $2.19–$4.35/sqft</span>
               </div>
               <h3 className="text-2xl font-bold text-stone-900 mb-3">Vinyl (LVP/SPC)</h3>
               <p className="text-stone-600 leading-relaxed mb-4">
                 Vinyl is the gold standard for basement flooring. SPC (stone polymer composite) vinyl is 100% waterproof through every layer — surface, core, and backing. Water can pool on it for days without damage. It installs via click-lock directly over concrete with no adhesive, handles temperature swings without expanding or contracting, and feels warm and comfortable underfoot despite the cold slab below.
               </p>
               <p className="text-stone-600 leading-relaxed mb-4">
-                BBS stocks 188+ <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank options</Link> from 6 brands: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link>, <Link href="/woden-flooring" className="text-amber-700 underline">Woden</Link>, <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link>, <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link>, <Link href="/falcon-flooring" className="text-amber-700 underline">Falcon</Link>, and <Link href="/lee-flooring" className="text-amber-700 underline">Lee</Link>. Prices range from $1.79–$3.59/sqft with wear layers from 12mil to 28mil. Our top picks for basements: the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum Fulham</Link> ($3.49/sqft, 9mm with 20mil wear layer — ideal for family rooms), the budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside</Link> ($1.79/sqft, 6mm SPC), and for a premium herringbone look, the <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone</Link> ($2.79/sqft).
+                BBS stocks 280+ <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank options</Link> from 7 brands: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link>, <Link href="/woden-flooring" className="text-amber-700 underline">Woden</Link>, <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link>, <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link>, <Link href="/falcon-flooring" className="text-amber-700 underline">Falcon</Link>, and <Link href="/lee-flooring" className="text-amber-700 underline">Lee</Link>. Prices range from $2.19–$4.35/sqft (with clearance lines from $1.79) and wear layers from 12mil to 28mil. Our top picks for basements: the <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum Fulham</Link> ($3.69/sqft, 9mm with 28mil wear layer — ideal for family rooms), the budget-friendly <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside</Link> ($2.19/sqft, 6mm SPC), and for a premium herringbone look, the <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone</Link> ($3.09/sqft).
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -136,7 +136,7 @@ export default function BasementFlooringGuideClient() {
             <div className="border border-stone-200 rounded-xl p-6">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-stone-600 text-white text-sm font-bold px-3 py-1 rounded-full">#2 BUDGET-FRIENDLY</span>
-                <span className="text-stone-400 text-sm">145 options · $1.49–$3.29/sqft</span>
+                <span className="text-stone-400 text-sm">135+ options · $1.49–$3.39/sqft</span>
               </div>
               <h3 className="text-2xl font-bold text-stone-900 mb-3">Laminate</h3>
               <p className="text-stone-600 leading-relaxed mb-4">
@@ -146,7 +146,7 @@ export default function BasementFlooringGuideClient() {
                 Use laminate in basements only if: (a) the basement is dry with no moisture history, (b) you install a quality moisture barrier underlayment, and (c) you accept the risk that any water event (pipe burst, sump pump failure, spring flooding) will likely destroy the floor. For dry, finished basements used as offices or spare bedrooms, laminate is a solid budget choice.
               </p>
               <p className="text-stone-600 text-sm">
-                BBS carries 145 <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">laminate flooring options</Link> from 9 brands. For basements, choose AC4+ rated products: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link> (32 options), <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link> (18), <Link href="/northernest-flooring" className="text-amber-700 underline">Northernest</Link> (18), <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link> (16). Budget picks: <Link href="/tosca-flooring" className="text-amber-700 underline">Tosca</Link> from $1.49/sqft. See our <Link href="/vinyl-flooring-guide" className="text-amber-700 underline hover:text-amber-800">vinyl vs laminate breakdown</Link> for a detailed comparison.
+                BBS carries 135+ <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">laminate flooring options</Link> from 9 brands. For basements, choose AC4+ rated products: <Link href="/naf-flooring" className="text-amber-700 underline">NAF</Link>, <Link href="/simba-flooring" className="text-amber-700 underline">Simba</Link>, <Link href="/northernest-flooring" className="text-amber-700 underline">Northernest</Link>, and <Link href="/triforest-flooring" className="text-amber-700 underline">Triforest</Link>. Budget picks: <Link href="/tosca-flooring" className="text-amber-700 underline">Tosca</Link> from $1.49/sqft. See our <Link href="/vinyl-flooring-guide" className="text-amber-700 underline hover:text-amber-800">vinyl vs laminate breakdown</Link> for a detailed comparison.
               </p>
             </div>
 
@@ -154,7 +154,7 @@ export default function BasementFlooringGuideClient() {
             <div className="border border-stone-200 rounded-xl p-6">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-stone-600 text-white text-sm font-bold px-3 py-1 rounded-full">#3 PREMIUM LOOK</span>
-                <span className="text-stone-400 text-sm">335 options · $2.49–$8.99/sqft</span>
+                <span className="text-stone-400 text-sm">360+ options · $3.29–$8.99/sqft</span>
               </div>
               <h3 className="text-2xl font-bold text-stone-900 mb-3">Engineered Hardwood</h3>
               <p className="text-stone-600 leading-relaxed mb-4">
@@ -164,7 +164,7 @@ export default function BasementFlooringGuideClient() {
                 <strong>However, engineered hardwood is NOT waterproof.</strong> Any standing water will damage the wood veneer and core. Only use engineered hardwood in basements that are: (a) completely dry with verified low moisture readings, (b) finished and climate-controlled year-round, and (c) protected by a proper moisture barrier between the concrete and the flooring. If your basement has ANY history of water intrusion, choose vinyl.
               </p>
               <p className="text-stone-600 text-sm">
-                For dry basements on a budget, the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Blizzard</Link> ($3.99/sqft) or <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Linen Red Oak</Link> ($3.89/sqft) offer real hardwood beauty at accessible prices. Premium options include <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link> (call for pricing) and <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Canadian Standard Lucid Pure</Link> ($7.59/sqft). Browse all 335 options on our <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link> page.
+                For dry basements on a budget, the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Blizzard</Link> ($3.79/sqft) or <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Linen Red Oak</Link> ($3.89/sqft) offer real hardwood beauty at accessible prices. Premium options include <Link href="/vidar-flooring" className="text-amber-700 underline">Vidar</Link> (call for pricing) and <Link href="/products/pure-lucid-canadian-standard-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Canadian Standard Lucid Pure</Link> ($7.59/sqft). Browse all 360+ options on our <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link> page.
               </p>
             </div>
 
@@ -263,7 +263,7 @@ export default function BasementFlooringGuideClient() {
                   ['Sound dampening', '★★★ Moderate', '★★★★ Better'],
                   ['Temperature stability', '★★★★★ Minimal expansion', '★★★★ Good'],
                   ['Best for basements?', '✅ Yes — better for concrete', '✅ Yes — if comfort is priority'],
-                  ['Price at BBS', '$1.79–$3.59/sqft', '$2.49–$3.59/sqft'],
+                  ['Price at BBS', '$2.19–$4.35/sqft', '$2.49–$3.59/sqft'],
                 ].map(([feature, spc, wpc], i) => (
                   <tr key={feature} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{feature}</td>
@@ -306,12 +306,12 @@ export default function BasementFlooringGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['NAF Flooring', '60+', '$2.79–$3.49', 'Widest selection, AquaPlus series with 20mil+ wear layers'],
-                  ['Woden Flooring', '45+', '$2.79–$3.19', 'Herringbone options, great mid-range quality'],
-                  ['Triforest Flooring', '40+', '$2.29–$3.19', 'Reliable mid-range, 4.2–7mm options'],
-                  ['Simba Flooring', '35+', '$2.59–$3.59', 'Budget to premium range, Venus herringbone'],
-                  ['Falcon Flooring', '18+', '$1.79–$2.59', 'Lowest price point — best budget vinyl at BBS'],
-                  ['Lee Flooring', '8', '$1.79', 'Affordable 7mm with 22mil wear layer, on clearance'],
+                  ['NAF Flooring', '84', '$2.69–$4.09', 'Widest selection, AquaPlus series with 20mil+ wear layers'],
+                  ['Woden Flooring', '49', '$2.39–$4.35', 'Herringbone options, great mid-range quality'],
+                  ['Triforest Flooring', '39', '$2.29–$3.19', 'Reliable mid-range, 4.2–7mm options'],
+                  ['Simba Flooring', '40', '$2.49–$3.59', 'Budget to premium range, Venus herringbone'],
+                  ['Falcon Flooring', '13', '$2.19–$2.59', 'Lowest regular price point — best budget vinyl at BBS'],
+                  ['Lee Flooring', '8', '$2.49 ($1.79 clearance)', 'Affordable 7mm with 22mil wear layer, clearance pricing'],
                 ].map(([brand, count, price, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{brand}</td>
@@ -372,7 +372,7 @@ export default function BasementFlooringGuideClient() {
             <div className="grid sm:grid-cols-2 gap-3 text-sm">
               {[
                 ['Old carpet removal', '$1.00/sqft'],
-                ['Old vinyl/laminate removal', '$1.25/sqft'],
+                ['Old vinyl/laminate removal', '$1.50/sqft'],
                 ['Moisture barrier underlayment', '$0.50–$1.50/sqft'],
                 ['DRIcore subfloor panels', '$3.00–$5.00/sqft'],
                 ['Baseboards', '$3.61/linear ft'],
@@ -468,11 +468,11 @@ export default function BasementFlooringGuideClient() {
                 <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
                 <p className="text-stone-600 text-sm">
                   <strong>SPC vinyl, 7mm+ thickness, 22–28mil wear layer.</strong> The{' '}
-                  <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum 9mm ($3.49/sqft)</Link>{' '}
+                  <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF AquaPlus Platinum 9mm ($3.69/sqft)</Link>{' '}
                   is our top pick for home gyms — its stone polymer core resists equipment dents better than any other residential vinyl. For free weight areas, consider adding interlocking rubber mats over the vinyl for extra impact protection.
                 </p>
               </div>
-              <p className="text-stone-500 text-xs">Budget alternative: <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline">Falcon Cliffside 6mm ($1.79/sqft)</Link> under rubber mat system — total cost lower while still protecting the subfloor.</p>
+              <p className="text-stone-500 text-xs">Budget alternative: <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline">Falcon Cliffside 6mm ($2.19/sqft)</Link> under rubber mat system — total cost lower while still protecting the subfloor.</p>
             </div>
 
             {/* Entertainment / Home Theatre */}
@@ -488,7 +488,7 @@ export default function BasementFlooringGuideClient() {
                 <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
                 <p className="text-stone-600 text-sm">
                   <strong>Option A (safe):</strong> Premium SPC vinyl with attached IXPE underpad for sound dampening — like the{' '}
-                  <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone ($2.79/sqft)</Link>.
+                  <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Seaside Motel Herringbone ($3.09/sqft)</Link>.
                   The herringbone pattern elevates the space visually.{' '}
                   <strong>Option B (premium, dry basements only):</strong> Glue-down{' '}
                   <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link>{' '}
@@ -511,7 +511,7 @@ export default function BasementFlooringGuideClient() {
                 <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
                 <p className="text-stone-600 text-sm">
                   <strong>SPC vinyl, 7mm+, with IXPE underpad.</strong> The attached pad adds warmth and cushion for long standing/sitting. Use a hard chair mat under rolling chairs to prevent wear marks. Mid-range products like{' '}
-                  <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Classic Madagascar 7mm ($2.79/sqft)</Link>{' '}
+                  <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Classic Madagascar 7mm ($2.99/sqft)</Link>{' '}
                   provide the right balance of durability and comfort for daily office use.
                 </p>
               </div>
@@ -549,8 +549,8 @@ export default function BasementFlooringGuideClient() {
                 <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
                 <p className="text-stone-600 text-sm">
                   <strong>Budget SPC vinyl, 6mm, throughout the entire suite.</strong> The{' '}
-                  <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside 6mm ($1.79/sqft)</Link>{' '}
-                  is purpose-built for this use case — one consistent floor throughout kitchen, living, and sleeping areas keeps costs low and maintenance simple. Waterproof means no risk from tenant bathroom/kitchen incidents. At $1.79/sqft, replacing an entire 500 sqft suite costs ~$1,095 in material — a reasonable landlord expense every 15–20 years.
+                  <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Cliffside 6mm ($2.19/sqft)</Link>{' '}
+                  is purpose-built for this use case — one consistent floor throughout kitchen, living, and sleeping areas keeps costs low and maintenance simple. Waterproof means no risk from tenant bathroom/kitchen incidents. At $2.19/sqft, replacing an entire 500 sqft suite costs ~$1,095 in material — a reasonable landlord expense every 15–20 years.
                 </p>
               </div>
               <p className="text-stone-500 text-xs">GTA landlord tip: Same vinyl colour throughout eliminates transition strips and makes the space look larger — tenants prefer this and it&apos;s faster to install.</p>
@@ -570,7 +570,7 @@ export default function BasementFlooringGuideClient() {
               <div className="bg-stone-50 rounded-lg p-4">
                 <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
                 <p className="text-stone-600 text-sm">
-                  <strong>Safe choice:</strong> Budget vinyl at $1.79–$2.49/sqft with underlayment for warmth.{' '}
+                  <strong>Safe choice:</strong> Budget vinyl at $2.19–$2.49/sqft with underlayment for warmth.{' '}
                   <strong>Budget choice (dry basements only):</strong>{' '}
                   <Link href="/laminate" className="text-amber-700 underline hover:text-amber-800">Laminate from $1.49/sqft</Link>{' '}
                   with moisture barrier underlayment — saves ~$0.70/sqft vs vinyl. Always moisture-test first.
@@ -696,7 +696,7 @@ export default function BasementFlooringGuideClient() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link href="/vinyl-flooring-guide" className="group border border-stone-200 rounded-xl p-5 hover:border-amber-400 transition-colors">
               <h3 className="font-bold text-stone-800 group-hover:text-amber-700 mb-2">Vinyl Flooring Guide 2026</h3>
-              <p className="text-stone-500 text-sm">SPC vs WPC, wear layers, thickness, costs, and how to choose the right vinyl. 241 options compared.</p>
+              <p className="text-stone-500 text-sm">SPC vs WPC, wear layers, thickness, costs, and how to choose the right vinyl. 280+ options compared.</p>
               <span className="text-amber-700 text-sm font-semibold mt-3 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                 Read guide <ArrowRight className="w-3 h-3" />
               </span>
@@ -745,13 +745,13 @@ export default function BasementFlooringGuideClient() {
 
           <div className="space-y-3">
             {[
-              ['What is the best waterproof flooring for a basement?', 'Vinyl (LVP/SPC) — 100% waterproof through the core. BBS carries 241 waterproof vinyl options from $1.79–$3.59/sqft. SPC vinyl is slightly better for basements than WPC due to its denser, more stable core. Brands like NAF, Woden, and Triforest are top sellers for basements.'],
+              ['What is the best waterproof flooring for a basement?', 'Vinyl (LVP/SPC) — 100% waterproof through the core. BBS carries 280+ waterproof vinyl options from $2.19–$4.35/sqft (with clearance lines from $1.79). SPC vinyl is slightly better for basements than WPC due to its denser, more stable core. Brands like NAF, Woden, and Triforest are top sellers for basements.'],
               ['Can you put hardwood in a basement?', 'Engineered hardwood can work in dry, finished basements with proper moisture testing and barriers. Use glue-down ($3.25/sqft) or floating installation. Never use solid hardwood in a basement — it cannot handle concrete subfloors or basement moisture levels.'],
-              ['What is the cheapest basement flooring?', 'Laminate from Tosca Floors at $1.49/sqft + $2.00/sqft installation = $3.49/sqft total. A 600 sqft basement costs about $2,094. But laminate is NOT waterproof — only use in dry basements. Vinyl from $1.79/sqft is $420 more for 600 sqft but gives you 100% waterproof protection.'],
+              ['What is the cheapest basement flooring?', 'Laminate from Tosca Floors at $1.49/sqft + $2.00/sqft installation = $3.49/sqft total. A 600 sqft basement costs about $2,094. But laminate is NOT waterproof — only use in dry basements. Vinyl from $2.19/sqft is about $420 more for 600 sqft but gives you 100% waterproof protection.'],
               ['How do you handle moisture in a basement before installing flooring?', 'Step 1: Test moisture (calcium chloride or RH test). Step 2: Install a 6mil polyethylene vapour barrier over the concrete. Step 3: For problem basements, use DRIcore subfloor panels ($3–$5/sqft). Step 4: Run a dehumidifier year-round at 45–50% RH. BBS tests moisture free during in-home measurements.'],
               ['Does BBS Flooring install basement flooring?', 'Yes. BBS provides professional basement flooring installation across the GTA with WSIB-insured contractors. Vinyl/laminate: $2.00/sqft, engineered hardwood glue-down: $3.25/sqft. Includes subfloor assessment and moisture testing. Call (647) 428-1111 or book at bbsflooring.ca/free-measurement.'],
               ['How long does vinyl flooring last in a basement?', 'Quality SPC vinyl lasts 15–25 years in a basement. Products with 20mil+ wear layers last longest. BBS carries vinyl with wear layers from 12mil to 28mil. For a basement that gets regular use, invest in 20mil or higher — the cost difference is small ($0.30–$0.50/sqft) but longevity improves significantly.'],
-              ['Can laminate go in a basement?', 'Yes, but only in dry basements with a moisture barrier underlayment. Laminate is water-resistant, not waterproof — standing water will swell the HDF core. Choose AC4+ rated products for durability. If there is any history of moisture or flooding, use vinyl instead. BBS carries 145 laminate options from $1.49/sqft.'],
+              ['Can laminate go in a basement?', 'Yes, but only in dry basements with a moisture barrier underlayment. Laminate is water-resistant, not waterproof — standing water will swell the HDF core. Choose AC4+ rated products for durability. If there is any history of moisture or flooding, use vinyl instead. BBS carries 135+ laminate options from $1.49/sqft.'],
               ['What about carpet in basements?', 'Not recommended in Ontario. Carpet absorbs moisture, promotes mould growth, and is nearly impossible to dry after a water event. If warmth is the goal, vinyl with built-in underlayment or vinyl + a quality pad provides warmth without the mould risk. Area rugs on top of vinyl give you the soft feel where you want it.'],
               ['Do I need underlayment for basement flooring?', 'For floating vinyl or laminate: yes — use underlayment with a built-in vapour barrier. Some vinyl products have attached padding (check specs before buying separate underlayment). For glue-down engineered hardwood: no underlayment, but use moisture-blocking adhesive. BBS advises on the right setup during your free measurement.'],
               ['How much does it cost to floor a 600 sqft basement?', 'At BBS: Vinyl (budget): $2,514. Vinyl (mid-range): $2,850. Laminate: $2,094–$2,814. Engineered hardwood (glue-down): $3,444–$7,344. Add $600 for old carpet removal, $200 for delivery, and $300–$900 for underlayment if needed. Free measurement and detailed quote available.'],
@@ -771,7 +771,7 @@ export default function BasementFlooringGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Floor Your Basement?</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            BBS Flooring stocks 241 waterproof vinyl options from $1.79/sqft — perfect for Ontario basements. Free moisture testing and in-home measurement included.
+            BBS Flooring stocks 280+ waterproof vinyl options from $2.19/sqft ($1.79 on clearance) — perfect for Ontario basements. Free moisture testing and in-home measurement included.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/waterproof-flooring" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">

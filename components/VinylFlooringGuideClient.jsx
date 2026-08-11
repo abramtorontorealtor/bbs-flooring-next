@@ -22,8 +22,8 @@ export default function VinylFlooringGuideClient() {
             Everything you need to know about luxury vinyl plank — SPC vs WPC, wear layers, thickness, waterproof performance, costs, and how to choose the right vinyl for every room.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-slate-400">
-            <span>✔ 241 options in stock</span>
-            <span>✔ 6 brands compared</span>
+            <span>✔ 240+ options in stock</span>
+            <span>✔ 7 brands compared</span>
             <span>✔ Real Canadian pricing</span>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function VinylFlooringGuideClient() {
           Quick Answer: Best Vinyl Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 241 luxury vinyl plank (LVP/SPC) options from $1.79&#8211;$3.59/sqft &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include Woden, NAF, Triforest, Simba, Falcon, and Lee. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring carries 240+ luxury vinyl plank (LVP/SPC) options from $1.79/sqft on clearance ($2.19&#8211;$4.35/sqft regular) &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include NAF, Triforest, Woden, Simba, Falcon, Lee, and Vidar. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -114,7 +114,7 @@ export default function VinylFlooringGuideClient() {
           <p className="text-slate-600 leading-relaxed">
             Not sure if vinyl is right for your space? Our{' '}
             <Link href="/waterproof-flooring" className="text-amber-700 underline hover:text-amber-800">waterproof flooring collection</Link>{' '}
-            covers all 241 options, or{' '}
+            covers all 240+ options, or{' '}
             <Link href="/free-measurement" className="text-amber-700 underline hover:text-amber-800">book a free in-home measurement</Link>{' '}
             and we&apos;ll walk you through your best choices in person.
           </p>
@@ -144,7 +144,7 @@ export default function VinylFlooringGuideClient() {
                 <tr className="border-b"><td className="p-4 font-medium">Sound absorption</td><td className="p-4">Moderate (needs underpad)</td><td className="p-4">Better natural sound dampening</td></tr>
                 <tr className="border-b bg-slate-50"><td className="p-4 font-medium">Thickness range</td><td className="p-4">4mm–6.5mm</td><td className="p-4">5.5mm–8mm</td></tr>
                 <tr className="border-b"><td className="p-4 font-medium">Temperature stability</td><td className="p-4">Excellent — minimal expansion</td><td className="p-4">Good — slightly more expansion</td></tr>
-                <tr className="border-b bg-slate-50"><td className="p-4 font-medium">Price range (BBS)</td><td className="p-4">$1.79–$3.59/sqft</td><td className="p-4">$2.79–$3.59/sqft</td></tr>
+                <tr className="border-b bg-slate-50"><td className="p-4 font-medium">Price range (BBS)</td><td className="p-4">$2.19–$4.35/sqft</td><td className="p-4">$2.79–$3.59/sqft</td></tr>
                 <tr><td className="p-4 font-medium">Best for</td><td className="p-4 font-semibold text-blue-700">Basements, kitchens, high-traffic</td><td className="p-4 font-semibold text-emerald-700">Bedrooms, living rooms, condos</td></tr>
               </tbody>
             </table>
@@ -157,9 +157,9 @@ export default function VinylFlooringGuideClient() {
 
           <p className="text-slate-600 leading-relaxed">
             A popular SPC entry point is the{' '}
-            <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside by Falcon (6mm SPC) at $1.79/sqft</Link>{' '}
+            <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside by Falcon (6mm SPC) at $2.19/sqft</Link>{' '}
             — an ideal budget option for basements and rental properties. For a mid-range 7mm SPC with more colour options, check out{' '}
-            <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar by NAF Classic (7mm) at $2.79/sqft</Link>.
+            <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar by NAF Classic (7mm) at $2.99/sqft</Link>.
           </p>
         </section>
 
@@ -191,7 +191,7 @@ export default function VinylFlooringGuideClient() {
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
             <p className="text-slate-700 text-sm">
               <strong>Real example:</strong> The{' '}
-              <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham NAF AquaPlus Platinum (9mm) at $3.49/sqft</Link>{' '}
+              <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham NAF AquaPlus Platinum (9mm) at $3.69/sqft</Link>{' '}
               features a 28mil wear layer — premium-grade protection for busy family homes, large dogs, or commercial-adjacent spaces. For most main-floor living areas, a 20mil product like{' '}
               <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Weathered Barnwood by Lee (7mm) at $1.79/sqft on clearance</Link>{' '}
               is the practical sweet spot.
@@ -232,7 +232,7 @@ export default function VinylFlooringGuideClient() {
               <div>
                 <p className="font-semibold text-slate-800 mb-1">Standard Residential — The Most Popular Thickness</p>
                 <p className="text-slate-600 text-sm leading-relaxed">The dominant thickness for residential vinyl in Canada. Solid underfoot feel, hides typical subfloor variation, and pairs well with attached IXPE underpad. The{' '}
-                  <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside Falcon 6mm at $1.79/sqft</Link>{' '}
+                  <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside Falcon 6mm at $2.19/sqft</Link>{' '}
                   is our best-selling entry product at this thickness. Works in kitchens, living rooms, basements, and bedrooms equally well.</p>
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function VinylFlooringGuideClient() {
                 <p className="text-slate-600 text-sm leading-relaxed">Noticeably more solid than 6mm. Better thermal insulation and less sound transmission. The extra millimetre makes a real difference if you have older concrete with small dips or uneven areas. Most of our mid-range lineup sits here — like the{' '}
                   <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Weathered Barnwood Lee 7mm at $1.79/sqft on clearance</Link>{' '}
                   and{' '}
-                  <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar NAF Classic 7mm at $2.79/sqft</Link>.
+                  <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar NAF Classic 7mm at $2.99/sqft</Link>.
                 </p>
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function VinylFlooringGuideClient() {
               <div>
                 <p className="font-semibold text-slate-800 mb-1">Premium Residential — Maximum Comfort &amp; Durability</p>
                 <p className="text-slate-600 text-sm leading-relaxed">The thickest rigid-core vinyl available at BBS. Feels the closest to real hardwood underfoot — substantial, quiet, and warm. Handles the most pronounced subfloor irregularities and is virtually indistinguishable from wood when walked on. The{' '}
-                  <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham NAF AquaPlus Platinum 9mm at $3.49/sqft</Link>{' '}
+                  <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham NAF AquaPlus Platinum 9mm at $3.69/sqft</Link>{' '}
                   is our flagship 9mm product — 28mil wear layer, IXPE underpad included, lifetime residential warranty.
                 </p>
               </div>
@@ -305,7 +305,7 @@ export default function VinylFlooringGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Vinyl Brands at BBS Flooring — Compared</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            We carry 241 vinyl products across 6 brands. Here&apos;s how they stack up:
+            We carry 240+ vinyl products across 7 brands. Here&apos;s how they stack up:
           </p>
 
           <div className="overflow-x-auto mb-6">
@@ -321,39 +321,39 @@ export default function VinylFlooringGuideClient() {
               <tbody className="text-slate-600">
                 <tr className="border-b">
                   <td className="p-3 font-medium"><Link href="/naf-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Flooring</Link></td>
-                  <td className="p-3 text-center">69</td>
-                  <td className="p-3 text-center">$2.49–$3.59</td>
+                  <td className="p-3 text-center">84</td>
+                  <td className="p-3 text-center">$2.69–$4.09</td>
                   <td className="p-3">Widest selection, premium collections, SPC + herringbone options</td>
                 </tr>
                 <tr className="border-b bg-slate-50">
                   <td className="p-3 font-medium"><Link href="/woden-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Flooring</Link></td>
                   <td className="p-3 text-center">49</td>
-                  <td className="p-3 text-center">$2.29–$3.19</td>
+                  <td className="p-3 text-center">$2.39–$4.35</td>
                   <td className="p-3">Mid-range value, consistent quality, good colour range</td>
                 </tr>
                 <tr className="border-b">
                   <td className="p-3 font-medium">Triforest Flooring</td>
-                  <td className="p-3 text-center">44</td>
+                  <td className="p-3 text-center">39</td>
                   <td className="p-3 text-center">$2.29–$3.19</td>
                   <td className="p-3">Strong mid-range, thick planks, commercial-grade options</td>
                 </tr>
                 <tr className="border-b bg-slate-50">
                   <td className="p-3 font-medium">Simba Flooring</td>
-                  <td className="p-3 text-center">42</td>
-                  <td className="p-3 text-center">$2.29–$3.59</td>
+                  <td className="p-3 text-center">40</td>
+                  <td className="p-3 text-center">$2.49–$3.59</td>
                   <td className="p-3">Budget-friendly, clearance deals, herringbone available</td>
                 </tr>
                 <tr className="border-b">
                   <td className="p-3 font-medium"><Link href="/falcon-flooring" className="text-amber-700 underline hover:text-amber-800">Falcon Flooring</Link></td>
-                  <td className="p-3 text-center">19</td>
-                  <td className="p-3 text-center">$1.79–$2.59</td>
+                  <td className="p-3 text-center">13</td>
+                  <td className="p-3 text-center">$2.19–$2.59</td>
                   <td className="p-3">Best budget option, reliable basics for rentals and basements</td>
                 </tr>
                 <tr>
                   <td className="p-3 font-medium">Lee Flooring</td>
-                  <td className="p-3 text-center">10</td>
-                  <td className="p-3 text-center">$2.29</td>
-                  <td className="p-3">Value-focused, consistent single price point</td>
+                  <td className="p-3 text-center">8</td>
+                  <td className="p-3 text-center">$2.49 ($1.79 clearance)</td>
+                  <td className="p-3">Value-focused, clearance pricing on select lines</td>
                 </tr>
               </tbody>
             </table>
@@ -361,7 +361,7 @@ export default function VinylFlooringGuideClient() {
 
           <p className="text-slate-500 text-sm italic mb-4">
             Prices current as of April 2026.{' '}
-            <Link href="/vinyl-flooring" className="text-blue-600 hover:underline">Browse all 241 vinyl products →</Link>
+            <Link href="/vinyl-flooring" className="text-blue-600 hover:underline">Browse all 240+ vinyl products →</Link>
           </p>
 
           <p className="text-slate-600 text-sm">
@@ -395,7 +395,7 @@ export default function VinylFlooringGuideClient() {
                   <p className="text-xs font-semibold text-slate-500 uppercase mb-2">Example Product</p>
                   <p className="text-sm text-slate-700">
                     <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">Cliffside — Falcon Floors 6mm SPC</Link>
-                    {' '}— $1.79/sqft · 12mil wear layer · 100% waterproof · Click-lock over concrete
+                    {' '}— $2.19/sqft · 12mil wear layer · 100% waterproof · Click-lock over concrete
                   </p>
                 </div>
               </div>
@@ -446,7 +446,7 @@ export default function VinylFlooringGuideClient() {
                   <p className="text-xs font-semibold text-slate-500 uppercase mb-2">Example Product</p>
                   <p className="text-sm text-slate-700">
                     <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">H02 Seaside Motel — Woden Herringbone 7mm</Link>
-                    {' '}— $2.79/sqft · 20mil · Statement herringbone pattern
+                    {' '}— $3.09/sqft · 20mil · Statement herringbone pattern
                   </p>
                 </div>
               </div>
@@ -467,7 +467,7 @@ export default function VinylFlooringGuideClient() {
                   <p className="text-xs font-semibold text-slate-500 uppercase mb-2">Example Product</p>
                   <p className="text-sm text-slate-700">
                     <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">Fulham — NAF AquaPlus Platinum 9mm</Link>
-                    {' '}— $3.49/sqft · 28mil wear layer · IXPE underpad included · Lifetime warranty
+                    {' '}— $3.69/sqft · 28mil wear layer · IXPE underpad included · Lifetime warranty
                   </p>
                 </div>
               </div>
@@ -497,7 +497,7 @@ export default function VinylFlooringGuideClient() {
             <div className="border-2 border-slate-200 rounded-xl p-6 hover:border-amber-400 transition-colors">
               <div className="flex items-center justify-between mb-3">
                 <span className="bg-slate-700 text-white text-xs font-bold px-3 py-1 rounded-full">BEST BUDGET</span>
-                <span className="text-amber-700 font-bold text-lg">$1.79/sqft</span>
+                <span className="text-amber-700 font-bold text-lg">$2.19/sqft</span>
               </div>
               <h3 className="font-bold text-slate-900 text-lg mb-1">
                 <Link href="/products/cliffside-falcon-floor-products-6mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Cliffside — Falcon Floors 6mm</Link>
@@ -511,7 +511,7 @@ export default function VinylFlooringGuideClient() {
             <div className="border-2 border-blue-200 rounded-xl p-6 hover:border-amber-400 transition-colors">
               <div className="flex items-center justify-between mb-3">
                 <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
-                <span className="text-amber-700 font-bold text-lg">$2.79/sqft</span>
+                <span className="text-amber-700 font-bold text-lg">$2.99/sqft</span>
               </div>
               <h3 className="font-bold text-slate-900 text-lg mb-1">
                 <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar — NAF Classic 7mm</Link>
@@ -525,7 +525,7 @@ export default function VinylFlooringGuideClient() {
             <div className="border-2 border-amber-200 rounded-xl p-6 hover:border-amber-400 transition-colors">
               <div className="flex items-center justify-between mb-3">
                 <span className="bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-full">STATEMENT PICK</span>
-                <span className="text-amber-700 font-bold text-lg">$2.79/sqft</span>
+                <span className="text-amber-700 font-bold text-lg">$3.09/sqft</span>
               </div>
               <h3 className="font-bold text-slate-900 text-lg mb-1">
                 <Link href="/products/h02-seaside-motel-woden-7mm-vinyl-herringbone-flooring" className="text-amber-700 underline hover:text-amber-800">H02 Seaside Motel — Woden Herringbone 7mm</Link>
@@ -539,7 +539,7 @@ export default function VinylFlooringGuideClient() {
             <div className="border-2 border-emerald-200 rounded-xl p-6 hover:border-amber-400 transition-colors">
               <div className="flex items-center justify-between mb-3">
                 <span className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">BEST PREMIUM</span>
-                <span className="text-amber-700 font-bold text-lg">$3.49/sqft</span>
+                <span className="text-amber-700 font-bold text-lg">$3.69/sqft</span>
               </div>
               <h3 className="font-bold text-slate-900 text-lg mb-1">
                 <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham — NAF AquaPlus Platinum 9mm</Link>
@@ -552,7 +552,7 @@ export default function VinylFlooringGuideClient() {
 
           <div className="mt-6 text-center">
             <Link href="/vinyl-flooring" className="inline-block bg-slate-800 hover:bg-slate-900 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
-              Browse All 241 Vinyl Products →
+              Browse All 240+ Vinyl Products →
             </Link>
           </div>
         </section>
@@ -588,7 +588,7 @@ export default function VinylFlooringGuideClient() {
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-4">
             <p className="text-amber-800 font-semibold mb-2">💡 Budget Tip</p>
-            <p className="text-amber-700 text-sm">Material costs above include 5% waste factor. Installation at $2.00/sqft is all-inclusive labour — no hidden fees for furniture moving, transitions, or basic prep. Old carpet removal adds $1.00/sqft; old hardwood/laminate removal adds $1.25–$1.50/sqft.</p>
+            <p className="text-amber-700 text-sm">Material costs above include 5% waste factor. Installation at $2.00/sqft is all-inclusive labour — no hidden fees for furniture moving, transitions, or basic prep. Old carpet removal adds $1.00/sqft; old hardwood/vinyl/laminate removal adds $1.50/sqft.</p>
           </div>
 
           <p className="text-slate-600 text-sm">
@@ -642,7 +642,7 @@ export default function VinylFlooringGuideClient() {
           <div className="space-y-4 mb-8">
             {[
               { step: '1', title: 'Free In-Home Measurement', desc: 'We measure every room, assess your subfloor, and provide a no-obligation quote within 24 hours.' },
-              { step: '2', title: 'Material Selection', desc: 'Choose your vinyl at our Markham showroom (241 options to see and touch) or from our online catalog.' },
+              { step: '2', title: 'Material Selection', desc: 'Choose your vinyl at our Markham showroom (240+ options to see and touch) or from our online catalog.' },
               { step: '3', title: 'Subfloor Preparation', desc: 'Old flooring removal (if needed), levelling compounds for dips/bumps, and moisture testing on concrete.' },
               { step: '4', title: 'Click-Lock Installation', desc: 'Planks click together without glue. A 500 sqft room typically takes 1 day. We handle furniture moving, transitions, and trim.' },
               { step: '5', title: 'Final Walkthrough', desc: 'We inspect every seam, clean up all debris, move furniture back, and review the finished project with you.' },
@@ -715,7 +715,7 @@ export default function VinylFlooringGuideClient() {
             {[
               [
                 'What is the best vinyl flooring for a kitchen?',
-                'SPC vinyl with a 20mil+ wear layer and attached IXPE underpad. The stone polymer composite core is permanently waterproof and handles the hard standing, dropped pots, and temperature changes a kitchen demands. At BBS, the Madagascar NAF Classic 7mm ($2.79/sqft) and the Fulham NAF AquaPlus Platinum 9mm ($3.49/sqft) are top kitchen choices.'
+                'SPC vinyl with a 20mil+ wear layer and attached IXPE underpad. The stone polymer composite core is permanently waterproof and handles the hard standing, dropped pots, and temperature changes a kitchen demands. At BBS, the Madagascar NAF Classic 7mm ($2.99/sqft) and the Fulham NAF AquaPlus Platinum 9mm ($3.69/sqft) are top kitchen choices.'
               ],
               [
                 'Is SPC vinyl really 100% waterproof?',
@@ -731,7 +731,7 @@ export default function VinylFlooringGuideClient() {
               ],
               [
                 'How much does vinyl flooring cost installed in the GTA?',
-                'At BBS: budget vinyl ($1.79/sqft material) + $2.00/sqft installation = ~$4.19/sqft total. A 500 sqft main floor runs $2,095–$2,795 depending on product tier. Mid-range (7mm, 20mil) comes in around $4.79/sqft all-in. Premium 9mm vinyl with installation is ~$5.49/sqft. Book a free measurement for your exact quote — no obligation.'
+                'At BBS: budget vinyl (from $1.79/sqft material on clearance, $2.19/sqft regular) + $2.00/sqft installation = ~$4.19–$4.59/sqft total. A 500 sqft main floor runs $2,095–$2,795 depending on product tier. Mid-range (7mm, 20mil) comes in around $4.79/sqft all-in. Premium 9mm vinyl with installation is ~$5.49/sqft. Book a free measurement for your exact quote — no obligation.'
               ],
               [
                 'Can you install vinyl flooring over existing flooring?',
@@ -773,14 +773,14 @@ export default function VinylFlooringGuideClient() {
         <section className="bg-gradient-to-r from-slate-800 to-blue-900 rounded-2xl p-8 md:p-12 text-white text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to See Vinyl In Person?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
-            Visit our Markham showroom to touch and compare all 241 vinyl options. Or book a free measurement and we&apos;ll bring samples to your home.
+            Visit our Markham showroom to touch and compare all 240+ vinyl options. Or book a free measurement and we&apos;ll bring samples to your home.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
             <Link href="/free-measurement" className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
               Book Free Measurement
             </Link>
             <Link href="/vinyl-flooring" className="border-2 border-white/30 hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
-              Browse 241 Vinyl Products
+              Browse 240+ Vinyl Products
             </Link>
             <Link href="/quote-calculator" className="border-2 border-white/30 hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
               Get a Quick Quote

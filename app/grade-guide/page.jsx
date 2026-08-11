@@ -73,7 +73,7 @@ const faqSchema = {
       name: 'Which hardwood grade is best for homes with kids or pets?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Character grade is ideal for active households. Its natural variation and darker tones hide everyday scratches, dents, and dirt far better than lighter, more uniform grades. It also offers the best value per square foot.',
+        text: 'Character grade is ideal for active households. Its natural variation — knots, mineral streaks, and colour movement — hides everyday scratches, dents, and dirt far better than clean, uniform grades. It also offers the best value per square foot.',
       },
     },
     {
@@ -265,8 +265,8 @@ export default function GradeGuidePage() {
                   quality or durability. A Character-grade board is just as strong as a Select & Better board; it simply looks more natural.
                 </p>
                 <p className="text-slate-600 leading-relaxed">
-                  Grades are set by the manufacturer and generally follow the North American industry standard (NHLA), though
-                  terminology can vary slightly by brand. At BBS Flooring, we use three primary grades across our engineered
+                  Grades are set by the manufacturer and generally follow North American wood-flooring conventions (aligned with NWFA
+                  appearance-grade guidelines), though terminology can vary slightly by brand. At BBS Flooring, we use three primary grades across our engineered
                   and solid hardwood collections.
                 </p>
               </div>

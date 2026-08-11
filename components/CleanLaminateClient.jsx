@@ -191,7 +191,7 @@ export default function CleanLaminateClient() {
         <section className="bg-gradient-to-br from-slate-800 to-emerald-900 text-white rounded-2xl p-8 md:p-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Time for a New Floor?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
-            If your laminate is worn or water-damaged, BBS Flooring stocks 150+ laminate options from $1.49/sqft — the most affordable way to refresh a room — plus professional installation across Markham &amp; the GTA.
+            If your laminate is worn or water-damaged, BBS Flooring stocks 135+ laminate options from $1.49/sqft — the most affordable way to refresh a room — plus professional installation across Markham &amp; the GTA.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/laminate" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-6 py-3 rounded-lg transition">Browse Laminate</Link>

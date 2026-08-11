@@ -19,10 +19,10 @@ export default function FlooringComparisonGuideClient() {
             Hardwood vs Vinyl vs Laminate: Which Flooring Should You Choose?
           </h1>
           <p className="text-xl text-stone-300 max-w-2xl mx-auto leading-relaxed">
-            An honest, data-driven comparison using real pricing from 1,000+ in-stock products. Room-by-room recommendations for Ontario homeowners.
+            An honest, data-driven comparison using real pricing from 900+ in-stock products. Room-by-room recommendations for Ontario homeowners.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-stone-400">
-            <span>✔ 1,000+ products compared</span>
+            <span>✔ 900+ products compared</span>
             <span>✔ 4 flooring types</span>
             <span>✔ Real Canadian pricing</span>
           </div>
@@ -55,7 +55,7 @@ export default function FlooringComparisonGuideClient() {
           Quick Answer: Hardwood vs Vinyl vs Laminate &#8212; Which Is Best?
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          It depends on your room and budget. Vinyl/SPC ($1.79&#8211;$3.59/sqft) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($2.49&#8211;$8.99/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.29/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 1,000+ products in stock. Free comparison visit: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          It depends on your room and budget. Vinyl/SPC ($2.19&#8211;$4.35/sqft, from $1.79 on clearance) is best for basements, bathrooms, and pet owners &#8212; 100% waterproof. Engineered hardwood ($3.29&#8211;$8.99/sqft) is best for living rooms and main floors &#8212; real wood beauty. Laminate ($1.49&#8211;$3.39/sqft) is best for budget renovations. BBS Flooring in Markham carries all three with 900+ products in stock. Free comparison visit: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -69,9 +69,9 @@ export default function FlooringComparisonGuideClient() {
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              ['Hardwood (Engineered + Solid)', '572 options from $2.49/sqft', 'Real wood — either a solid plank or an engineered core topped with a genuine wood veneer. Nothing replicates its warmth, character, or how it lifts a home\u2019s resale value. Engineered handles moisture better; solid is refinishable for generations.', '/engineered-hardwood-flooring'],
-              ['Vinyl (LVP/SPC)', '241 options from $1.79/sqft', '100% synthetic, 100% waterproof. Luxury Vinyl Plank is built from multiple PVC layers printed with hyper-realistic wood or stone visuals. The fastest-growing category — handles moisture, pets, and heavy traffic without flinching.', '/vinyl-flooring'],
-              ['Laminate', '145 options from $1.49/sqft', 'A high-density fibreboard core with a photographic wood layer sealed under a tough wear surface. Budget-friendly and scratch-resistant, but not waterproof — placement matters. Best for bedrooms, offices, and dry living spaces.', '/laminate-flooring'],
+              ['Hardwood (Engineered + Solid)', '440+ options from $3.29/sqft', 'Real wood — either a solid plank or an engineered core topped with a genuine wood veneer. Nothing replicates its warmth, character, or how it lifts a home\u2019s resale value. Engineered handles moisture better; solid is refinishable for generations.', '/engineered-hardwood-flooring'],
+              ['Vinyl (LVP/SPC)', '280+ options from $1.79/sqft on clearance', '100% synthetic, 100% waterproof. Luxury Vinyl Plank is built from multiple PVC layers printed with hyper-realistic wood or stone visuals. The fastest-growing category — handles moisture, pets, and heavy traffic without flinching.', '/vinyl-flooring'],
+              ['Laminate', '135+ options from $1.49/sqft', 'A high-density fibreboard core with a photographic wood layer sealed under a tough wear surface. Budget-friendly and scratch-resistant, but not waterproof — placement matters. Best for bedrooms, offices, and dry living spaces.', '/laminate-flooring'],
             ].map(([title, price, desc, link]) => (
               <div key={title} className="border border-stone-200 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-stone-800 mb-1">{title}</h3>
@@ -103,7 +103,7 @@ export default function FlooringComparisonGuideClient() {
               <tbody>
                 {[
                   ['Price at BBS', '$2.49–$8.99/sqft', '$5.10–$7.25/sqft', '$1.79–$3.59/sqft', '$1.49–$3.29/sqft'],
-                  ['Options at BBS', '335 products', '83 products', '241 products', '145 products'],
+                  ['Options at BBS', '360+ products', '80+ products', '280+ products', '135+ products'],
                   ['Waterproof', '❌ Moisture-resistant', '❌ No', '✅ 100% waterproof', '⚠️ Water-resistant only'],
                   ['Durability', '25–50 years', '50–100 years', '15–25 years', '10–20 years'],
                   ['Refinishable', '✅ 1–3 times', '✅ 5–7 times', '❌ No', '❌ No'],
@@ -134,14 +134,14 @@ export default function FlooringComparisonGuideClient() {
         <section id="engineered-hardwood">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Engineered Hardwood Deep Dive</h2>
           <div className="flex gap-3 mb-4">
-            <span className="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">335 OPTIONS</span>
+            <span className="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">360+ OPTIONS</span>
             <span className="text-stone-400 text-sm mt-0.5">$2.49–$8.99/sqft · Avg $5.02/sqft</span>
           </div>
           <p className="text-stone-600 text-lg leading-relaxed mb-6">
             Engineered hardwood is the most popular flooring category at BBS — and the most popular in Canada, period. It delivers authentic wood look and feel at better dimensional stability than solid hardwood. The construction is a real hardwood veneer (2–6mm thick) bonded to a cross-ply plywood or HDF core. That layered core resists the expansion and contraction that causes solid wood to cup and gap during Ontario&apos;s extreme humidity swings.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS stocks 572 engineered hardwood products from 8 brands: Vidar (240), NAF (83), Northernest (71), Canadian Standard (48), Woden (46), Simba (45), Falcon (25), and Lee (11). Species range from White Oak and Hickory to American Oak, Walnut, Maple, and Birch. Widths span 3¼" to 9½" — with wide plank (7"+) dominating 2026 sales.
+            BBS stocks 400+ engineered hardwood products from 9 brands: NAF (83), Northernest (71), Woden (51), Vidar (49, call for pricing), Canadian Standard (48), Simba (46), Falcon (25), Lee (18), and Triforest (12). Species range from White Oak and Hickory to American Oak, Walnut, and Maple. Common widths are 6½" and 7½" — with wide plank (7"+) dominating 2026 sales.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             A popular entry point is the{' '}
@@ -177,7 +177,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Living rooms, dining rooms, bedrooms, hallways, open-concept main floors. The go-to choice for homeowners who want real wood and plan to stay in their home long-term. <Link href="/engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 335 options →</Link></p>
+            <p className="text-stone-600 text-sm">Living rooms, dining rooms, bedrooms, hallways, open-concept main floors. The go-to choice for homeowners who want real wood and plan to stay in their home long-term. <Link href="/engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 400+ options →</Link></p>
           </div>
         </section>
 
@@ -236,14 +236,14 @@ export default function FlooringComparisonGuideClient() {
         <section id="vinyl">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Vinyl (LVP/SPC) Deep Dive</h2>
           <div className="flex gap-3 mb-4">
-            <span className="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">241 OPTIONS</span>
+            <span className="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">280+ OPTIONS</span>
             <span className="text-stone-400 text-sm mt-0.5">$1.79–$3.59/sqft · Avg $2.75/sqft</span>
           </div>
           <p className="text-stone-600 text-lg leading-relaxed mb-6">
             Vinyl flooring has undergone a revolution. Today&apos;s luxury vinyl plank (LVP) and stone polymer composite (SPC) products look remarkably like real wood, are 100% waterproof through the core, and handle the abuse of pets, kids, and heavy foot traffic without showing damage. It&apos;s the single most practical flooring type for Canadian families — and at $1.79–$3.59/sqft, it&apos;s more affordable than hardwood.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS stocks 241 vinyl options from 6 brands: NAF (77 options, $2.49–$3.89/sqft), Woden (49, $2.29–$4.35/sqft), Triforest (44, $2.29–$3.19/sqft), Simba (42, $2.29–$3.59/sqft), Falcon (19, $1.79–$2.59/sqft), and Lee (8, $1.79/sqft on clearance). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
+            BBS stocks 280+ vinyl options from 7 brands: NAF (84 options, $2.69–$4.09/sqft), Woden (49, $2.39–$4.35/sqft), Triforest (39, $2.29–$3.19/sqft), Simba (40, $2.49–$3.59/sqft), Falcon (13, $2.19–$2.59/sqft), Lee (8, from $1.79/sqft on clearance), and Vidar (call for pricing). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             At the entry level, the{' '}
@@ -279,7 +279,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-sky-50 border border-sky-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Basements, kitchens, bathrooms, laundry rooms, rental properties, pet-owner homes, and anyone on a budget. The practical all-rounder. <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 241 options →</Link></p>
+            <p className="text-stone-600 text-sm">Basements, kitchens, bathrooms, laundry rooms, rental properties, pet-owner homes, and anyone on a budget. The practical all-rounder. <Link href="/vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 280+ options →</Link></p>
           </div>
         </section>
 
@@ -287,14 +287,14 @@ export default function FlooringComparisonGuideClient() {
         <section id="laminate">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Laminate Deep Dive</h2>
           <div className="flex gap-3 mb-4">
-            <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">145 OPTIONS</span>
+            <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">135+ OPTIONS</span>
             <span className="text-stone-400 text-sm mt-0.5">$1.49–$3.29/sqft · Avg $2.53/sqft</span>
           </div>
           <p className="text-stone-600 text-lg leading-relaxed mb-6">
             Laminate is the budget champion. A high-density fibreboard (HDF) core supports a high-resolution photographic layer that mimics wood grain, sealed under a transparent melamine wear layer rated on the AC scale (AC3–AC5). Modern laminate has come a long way from the shiny, plasticky floors of the 2000s — today&apos;s products feature embossed-in-register textures that feel remarkably like real wood.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS carries 145 laminate options from 9 brands: NAF (32), Tosca Floors (21, from $1.49/sqft), Simba (18), Northernest (18), Triforest (16), Evergreen (16), Falcon (12), Woden (6), and Golden Choice (6). AC ratings range from AC3 (residential) to AC5 (heavy commercial). Water-resistant cores are available but laminate is NOT waterproof — standing water will damage the HDF core.
+            BBS carries 135+ laminate options from 9 brands: NAF, Tosca Floors (from $1.49/sqft), Simba, Northernest, Triforest, Evergreen, Falcon, Woden, and Golden Choice. AC ratings range from AC3 (residential) to AC5 (heavy commercial). Water-resistant cores are available but laminate is NOT waterproof — standing water will damage the HDF core.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             The{' '}
@@ -345,7 +345,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
             <p className="font-semibold text-stone-800 mb-1">💡 Best for</p>
-            <p className="text-stone-600 text-sm">Bedrooms, home offices, dry living areas, rental properties on a tight budget, and anyone who wants the wood look at the lowest possible cost. Keep it away from water. <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 145 options →</Link></p>
+            <p className="text-stone-600 text-sm">Bedrooms, home offices, dry living areas, rental properties on a tight budget, and anyone who wants the wood look at the lowest possible cost. Keep it away from water. <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">Browse all 135+ options →</Link></p>
           </div>
         </section>
 
@@ -358,7 +358,7 @@ export default function FlooringComparisonGuideClient() {
             {[
               ['🏠 Living Room', 'Engineered Hardwood', 'The living room is where you see the most flooring and where resale value matters most. White Oak in 7" wide-plank with a matte finish is the 2026 standard. From $2.49/sqft at BBS.'],
               ['🍳 Kitchen', 'Vinyl (LVP/SPC) or Engineered Hardwood', 'Kitchens see water spills, dropped utensils, and heavy foot traffic. Vinyl is the safest bet — 100% waterproof from $1.79/sqft. Engineered hardwood works if you wipe spills quickly.'],
-              ['🏚️ Basement', 'Vinyl (LVP/SPC)', 'Below-grade moisture makes vinyl the only worry-free choice. 241 waterproof options from $1.79/sqft. Engineered hardwood is possible in dry basements with moisture barriers. Never use solid hardwood. See our complete basement flooring guide at bbsflooring.ca/basement-flooring-guide.'],
+              ['🏚️ Basement', 'Vinyl (LVP/SPC)', 'Below-grade moisture makes vinyl the only worry-free choice. 280+ waterproof options from $1.79/sqft on clearance ($2.19 regular). Engineered hardwood is possible in dry basements with moisture barriers. Never use solid hardwood. See our complete basement flooring guide at bbsflooring.ca/basement-flooring-guide.'],
               ['🛏️ Bedroom', 'Engineered Hardwood or Laminate', 'Low traffic and no moisture — any type works. Hardwood maximizes resale value. Laminate from $1.49/sqft is the budget pick. Both install with underlayment for sound dampening.'],
               ['🚿 Bathroom', 'Vinyl (LVP/SPC) Only', 'The only option from BBS suitable for bathrooms. 100% waterproof, comfortable on bare feet, and won\u2019t warp from shower steam. Never install hardwood or laminate in a bathroom.'],
               ['🚪 Hallway & Entryway', 'Engineered Hardwood (Hickory)', 'High-traffic zones need the hardest species. Hickory (Janka 1820) handles shoes, pets, and kids. Wire-brushed finishes hide wear. From $3.49/sqft at BBS.'],
@@ -396,7 +396,7 @@ export default function FlooringComparisonGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', 'Budget', '$2.49–$3.99', '$2.25', '$4.74–$6.24', '$2,370–$3,120'],
+                  ['Engineered Hardwood', 'Budget', '$3.29–$3.99', '$2.25', '$5.54–$6.24', '$2,770–$3,120'],
                   ['Engineered Hardwood', 'Mid-Range', '$4.19–$6.19', '$2.25–$3.25', '$6.44–$9.44', '$3,220–$4,720'],
                   ['Engineered Hardwood', 'Premium', '$6.19–$8.99', '$3.25–$4.25', '$9.44–$13.24', '$4,720–$6,620'],
                   ['Solid Hardwood', 'Standard', '$5.10–$6.39', '$2.25', '$7.35–$8.64', '$3,675–$4,320'],
@@ -406,7 +406,7 @@ export default function FlooringComparisonGuideClient() {
                   ['Vinyl (LVP/SPC)', 'Premium', '$3.19–$3.59', '$2.00', '$5.19–$5.59', '$2,595–$2,795'],
                   ['Laminate', 'Budget', '$1.49–$2.39', '$2.00', '$3.49–$4.39', '$1,745–$2,195'],
                   ['Laminate', 'Mid-Range', '$2.39–$2.89', '$2.00', '$4.39–$4.89', '$2,195–$2,445'],
-                  ['Laminate', 'Premium', '$2.89–$3.29', '$2.00', '$4.89–$5.29', '$2,445–$2,645'],
+                  ['Laminate', 'Premium', '$2.89–$3.39', '$2.00', '$4.89–$5.39', '$2,445–$2,695'],
                 ].map(([type, tier, material, labour, total, room], i) => (
                   <tr key={`${type}-${tier}`} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{type}</td>
@@ -551,16 +551,16 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="space-y-3">
             {[
-              ['What is the most durable type of flooring?', 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For day-to-day scratch and water resistance, vinyl (LVP/SPC) is the toughest. BBS carries 83 solid hardwood options from $5.10/sqft and 241 vinyl options from $1.79/sqft.'],
+              ['What is the most durable type of flooring?', 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For day-to-day scratch and water resistance, vinyl (LVP/SPC) is the toughest. BBS carries 80+ solid hardwood options from $5.10/sqft and 280+ vinyl options from $2.19/sqft ($1.79 on clearance).'],
               ['Is hardwood or vinyl better value for money?', 'Vinyl offers the best upfront value at $1.79–$3.59/sqft material + $2.00/sqft installation. Hardwood costs more upfront but adds more resale value and lasts longer. For a 500 sqft room: vinyl costs $2,095–$2,795 installed vs $2,370–$6,620 for engineered hardwood.'],
               ['What is the cheapest flooring option at BBS?', 'Laminate from Tosca Floors starts at $1.49/sqft. With installation at $2.00/sqft, total cost starts around $3.49/sqft — about $1,745 for a 500 sqft room. Vinyl starts at $1.79/sqft material.'],
               ['Can you mix flooring types in the same house?', 'Absolutely — most GTA homeowners do. Engineered hardwood in living areas, vinyl in basements and kitchens, laminate in bedrooms or rental units. BBS installs transition strips between different flooring types for a clean look.'],
               ['Which flooring is best for pets?', 'Vinyl (LVP/SPC) — 100% waterproof and scratch-resistant. If you prefer real wood, choose Hickory engineered hardwood (Janka 1820) with wire-brushed finish to hide scratches. Avoid laminate with pets — the surface shows scratches more easily.'],
               ['What flooring adds the most home resale value?', 'Hardwood — both engineered and solid. Real estate agents consistently rank it as the #1 flooring upgrade buyers look for. White Oak wide-plank is the most in-demand look in 2026. Vinyl is neutral. Laminate adds the least value.'],
-              ['Is vinyl flooring really 100% waterproof?', 'Yes. SPC (stone polymer composite) vinyl is waterproof through the core — surface, core, and backing will not absorb water. This makes it ideal for basements, kitchens, and bathrooms. BBS stocks 241 waterproof vinyl options from $1.79/sqft.'],
+              ['Is vinyl flooring really 100% waterproof?', 'Yes. SPC (stone polymer composite) vinyl is waterproof through the core — surface, core, and backing will not absorb water. This makes it ideal for basements, kitchens, and bathrooms. BBS stocks 280+ waterproof vinyl options from $2.19/sqft ($1.79 on clearance).'],
               ['How long does each flooring type last?', 'Solid hardwood: 50–100 years (refinishable 5–7 times). Engineered hardwood: 25–50 years (refinishable 1–3 times). Vinyl: 15–25 years. Laminate: 10–20 years. Longevity depends on quality, foot traffic, and maintenance.'],
               ['What flooring is best for a rental property?', 'Vinyl (LVP/SPC) — waterproof, extremely durable, affordable at $1.79–$3.59/sqft, and tenants can\u2019t easily damage it. Laminate ($1.49–$3.29/sqft) is the budget alternative. Avoid expensive hardwood in rentals unless targeting premium tenants.'],
-              ['Does BBS carry all four flooring types?', 'Yes. BBS stocks 1,000+ products: 572 engineered hardwood, 83 solid hardwood, 241 vinyl (LVP/SPC), and 145 laminate from 15 brands. Showroom: 6061 Highway 7, Unit B, Markham. Or browse online at bbsflooring.ca/products.'],
+              ['Does BBS carry all four flooring types?', 'Yes. BBS stocks 900+ products: 400+ engineered hardwood, 80+ solid hardwood, 280+ vinyl (LVP/SPC), and 135+ laminate from 15 brands. Showroom: 6061 Highway 7, Unit B, Markham. Or browse online at bbsflooring.ca/products.'],
             ].map(([q, a]) => (
               <details key={q} className="border border-stone-200 rounded-lg group">
                 <summary className="p-4 cursor-pointer font-medium text-stone-800 hover:bg-stone-50 flex justify-between items-center">
@@ -577,7 +577,7 @@ export default function FlooringComparisonGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Choose Your Flooring?</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            BBS Flooring stocks 1,000+ options across hardwood, vinyl, and laminate — starting at $1.49/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
+            BBS Flooring stocks 900+ options across hardwood, vinyl, and laminate — starting at $1.49/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/products" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">

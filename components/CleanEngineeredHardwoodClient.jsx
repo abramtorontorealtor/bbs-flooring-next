@@ -62,7 +62,7 @@ export default function CleanEngineeredHardwoodClient() {
             Engineered hardwood is real wood — a hardwood veneer bonded to a multi-ply plywood or HDF core. That construction makes it more stable than solid hardwood, but it is still <strong>wood</strong>, which means it reacts to moisture and abrasion. The thin protective finish on top is the only thing standing between daily life and the raw wood underneath. Clean it correctly and it lasts decades. Clean it wrong and you can dull, scratch, or swell it in a single mistake.
           </p>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            The two enemies are <strong>grit</strong> and <strong>moisture</strong>. Grit (sand, dust, pet kibble crumbs) acts like sandpaper underfoot and slowly grinds the finish away in walkways. Moisture seeps into the micro-bevels between planks and swells the veneer or delaminates it from the core. Every routine below is designed to manage those two threats. Shop our full <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood collection</Link> (from $2.99/sqft) if you&apos;re comparing floors, or browse popular in-stock options like the <Link href="/products/smoke-grey-vidar-design-flooring-american-white-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Smoke Grey Vidar White Oak</Link>.
+            The two enemies are <strong>grit</strong> and <strong>moisture</strong>. Grit (sand, dust, pet kibble crumbs) acts like sandpaper underfoot and slowly grinds the finish away in walkways. Moisture seeps into the micro-bevels between planks and swells the veneer or delaminates it from the core. Every routine below is designed to manage those two threats. Shop our full <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood collection</Link> (from $3.29/sqft) if you&apos;re comparing floors, or browse popular in-stock options like the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard Woden Vermont Oak</Link>.
           </p>
         </section>
 
@@ -149,7 +149,7 @@ export default function CleanEngineeredHardwoodClient() {
         <section id="refinish">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">When to Refinish vs Replace</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            If the surface is scratched or dull but the planks are flat and sound, you may be able to <strong>refinish rather than replace</strong> — a fraction of the cost. Engineered floors with a thick (3mm+) wear layer can usually be sanded once or twice; thin 0.6–2mm veneers generally cannot be sanded and instead get a screen-and-recoat or replacement. Check your product spec, or have us assess it.
+            If the surface is scratched or dull but the planks are flat and sound, you may be able to <strong>refinish rather than replace</strong> — a fraction of the cost. Engineered floors with a thick (3mm+) veneer can usually be sanded once or twice; thin 0.6–2mm veneers generally cannot be sanded and instead get a screen-and-recoat or replacement. Check your product spec, or have us assess it.
           </p>
           <p className="text-slate-600 text-lg leading-relaxed">
             BBS offers professional <Link href="/hardwood-refinishing" className="text-amber-700 underline hover:text-amber-800">hardwood refinishing in Markham &amp; the GTA</Link>. If the floor is water-damaged, delaminated, or worn through to the wood, browse a fresh <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood</Link> set — or compare with low-maintenance <Link href="/vinyl" className="text-amber-700 underline hover:text-amber-800">vinyl plank</Link> for high-moisture rooms.
@@ -178,7 +178,7 @@ export default function CleanEngineeredHardwoodClient() {
             </details>
             <details className="bg-slate-50 border border-slate-200 rounded-lg p-5">
               <summary className="font-semibold text-slate-800 cursor-pointer">Can you refinish engineered hardwood?</summary>
-              <p className="text-slate-600 mt-3">Sometimes — it depends on the wear-layer thickness. Engineered floors with a 3mm+ veneer can usually be sanded and refinished once or twice; thin 0.6–2mm wear layers generally cannot. Check your specific product spec before assuming. If your finish is worn but the floor is structurally sound, ask us about a refinish before replacing.</p>
+              <p className="text-slate-600 mt-3">Sometimes — it depends on the wear-layer thickness. Engineered floors with a 3mm+ veneer can usually be sanded and refinished once or twice; thin 0.6–2mm veneers generally cannot. Check your specific product spec before assuming. If your finish is worn but the floor is structurally sound, ask us about a refinish before replacing.</p>
             </details>
             <details className="bg-slate-50 border border-slate-200 rounded-lg p-5">
               <summary className="font-semibold text-slate-800 cursor-pointer">What humidity level is best for engineered hardwood?</summary>
@@ -191,7 +191,7 @@ export default function CleanEngineeredHardwoodClient() {
         <section className="bg-gradient-to-br from-slate-800 to-emerald-900 text-white rounded-2xl p-8 md:p-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Time for a New Floor?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
-            If your engineered hardwood is worn beyond cleaning, BBS Flooring has 380+ engineered hardwood options from $2.99/sqft — plus professional installation and refinishing across Markham &amp; the GTA.
+            If your engineered hardwood is worn beyond cleaning, BBS Flooring has 360+ engineered hardwood options from $3.29/sqft — plus professional installation and refinishing across Markham &amp; the GTA.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/engineered-hardwood" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-6 py-3 rounded-lg transition">Browse Engineered Hardwood</Link>

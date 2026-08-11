@@ -52,7 +52,7 @@ export default function LaminateFlooringGuideClient() {
           Quick Answer: Best Laminate Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 155+ laminate options from $1.49&#8211;$3.19/sqft &#8212; the most affordable flooring option. 9 brands including NAF (14mm Waterproof PRO from $3.19), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring stocks 155+ laminate options from $1.49&#8211;$3.39/sqft &#8212; the most affordable flooring option. 9 brands including NAF (14mm Waterproof PRO $3.39), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -258,7 +258,7 @@ export default function LaminateFlooringGuideClient() {
           </div>
 
           <p className="text-slate-500 text-sm">
-            Need true waterproof performance? See our <Link href="/vinyl-flooring-guide" className="text-blue-600 hover:underline">Vinyl Flooring Guide</Link> — 241 options from $1.79/sqft, 100% waterproof.
+            Need true waterproof performance? See our <Link href="/vinyl-flooring-guide" className="text-blue-600 hover:underline">Vinyl Flooring Guide</Link> — 240+ options from $1.79/sqft on clearance, 100% waterproof.
           </p>
         </section>
 
@@ -287,8 +287,8 @@ export default function LaminateFlooringGuideClient() {
                   </td>
                   <td className="p-3 text-center">42</td>
                   <td className="p-3 text-slate-600">12mm – 14mm</td>
-                  <td className="p-3 text-slate-600 font-medium">$2.39–$3.19/sqft</td>
-                  <td className="p-3 text-slate-600">Only brand with 14mm PRO (AC5, attached underpad). See <Link href="/products/horizon-naf-14mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">Horizon 14mm PRO</Link> ($3.19)</td>
+                  <td className="p-3 text-slate-600 font-medium">$2.39–$3.39/sqft</td>
+                  <td className="p-3 text-slate-600">Only brand with 14mm PRO (AC5, attached underpad). See <Link href="/products/horizon-naf-14mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">Horizon 14mm PRO</Link> ($3.39)</td>
                 </tr>
                 <tr>
                   <td className="p-3 font-semibold text-slate-800">
@@ -535,8 +535,8 @@ export default function LaminateFlooringGuideClient() {
             </div>
             <div className="mt-4 space-y-3 text-sm border-t border-slate-300 pt-4">
               <div className="flex justify-between">
-                <span className="text-slate-600">Material (NAF 14mm PRO @ $3.19/sqft × 525 sqft)</span>
-                <span className="font-semibold text-slate-800">$1,465</span>
+                <span className="text-slate-600">Material (NAF 14mm PRO @ $3.39/sqft × 525 sqft)</span>
+                <span className="font-semibold text-slate-800">$1,780</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-600">Underlay — pre-attached (no cost)</span>
@@ -552,7 +552,7 @@ export default function LaminateFlooringGuideClient() {
               </div>
               <div className="flex justify-between border-t border-slate-300 pt-3">
                 <span className="text-slate-900 font-bold">Total (premium)</span>
-                <span className="text-emerald-700 font-bold text-lg">$3,040</span>
+                <span className="text-emerald-700 font-bold text-lg">$3,355</span>
               </div>
             </div>
           </div>
