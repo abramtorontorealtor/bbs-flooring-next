@@ -30,9 +30,18 @@ export const metadata = {
     type: 'website',
     locale: 'en_CA',
     siteName: 'BBS Flooring',
+    images: [
+      {
+        url: 'https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized-v2.webp',
+        width: 1920,
+        height: 1080,
+        alt: 'BBS Flooring — Premium Flooring in Markham, Toronto & Durham',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['https://cdn.bbsflooring.ca/storage/v1/object/public/Base44/hero-optimized-v2.webp'],
   },
   verification: {
     google: 'qPp8mzcoDERajMMGMl1lqV5CXW3FFTXjH7w8DvG1g3w',
