@@ -353,7 +353,7 @@ export default function SolidHardwoodGuideClient() {
                 <tr>
                   <td className="p-3 font-medium text-slate-800">Price at BBS</td>
                   <td className="p-3 text-slate-600 font-medium">$5.10–$7.25/sqft</td>
-                  <td className="p-3 text-slate-600 font-medium">$2.49–$8.99/sqft</td>
+                  <td className="p-3 text-slate-600 font-medium">$3.29–$8.99/sqft</td>
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-medium text-slate-800">Installation</td>

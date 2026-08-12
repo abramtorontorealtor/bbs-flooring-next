@@ -10,7 +10,7 @@ const faqItems = [
   },
   {
     question: 'Is hardwood or vinyl flooring better value?',
-    answer: 'Vinyl offers the best upfront value at $1.79–$3.59/sqft material + $2.00/sqft installation. Hardwood costs more upfront ($2.49–$8.99/sqft for engineered) but adds more resale value and lasts longer. For a 500 sqft room, vinyl costs $2,095–$2,795 installed vs $2,370–$6,120 for engineered hardwood.',
+    answer: 'Vinyl offers the best upfront value at $1.79–$3.59/sqft material + $2.00/sqft installation. Hardwood costs more upfront ($3.29–$8.99/sqft for engineered) but adds more resale value and lasts longer. For a 500 sqft room, vinyl costs $2,095–$3,175 installed vs $2,770–$6,120 for engineered hardwood.',
   },
   {
     question: 'What is the cheapest flooring option at BBS?',
