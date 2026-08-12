@@ -1,14 +1,14 @@
 /**
  * Curated Google Business Profile reviews for BBS Flooring.
  * Source: GBP API (accounts/116022137284651432372/locations/17267219491889966789)
- * Last refreshed: 2026-03-16
+ * Last refreshed: 2026-08-12 (live GBP API pull: 4.7 / 49)
  * 
  * To update: run `python scripts/refresh-reviews.py` from workspace root
  */
 
 export const GOOGLE_REVIEW_STATS = {
   averageRating: 4.7,
-  totalReviews: 41,
+  totalReviews: 49,
   googleMapsUrl: 'https://www.google.com/maps/place/BBS+Flooring/@43.8561,-79.3372,17z/data=!4m8!3m7!1s0x89d4d5ea9cb856cb:0xd76bc69a2c9e3c3b!8m2!3d43.856092!4d-79.334618!9m1!1b1!16s%2Fg%2F11c1jn5n06',
 };
 
