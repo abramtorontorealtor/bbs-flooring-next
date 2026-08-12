@@ -30,11 +30,11 @@ const faqItems = [
   },
   {
     question: 'What width engineered hardwood is most popular in 2026?',
-    answer: 'Wide plank (7" to 9½") dominates the 2026 market. Wider boards create a modern, open look with fewer seams. 5" remains a versatile standard width. Narrow 3¼" strips are now considered traditional/classic.',
+    answer: 'Wide plank (6½" to 7½") dominates our in-stock 2026 selection. Wider boards create a modern, open look with fewer seams. Narrower strips are now considered traditional/classic.',
   },
   {
     question: 'Should I choose engineered or solid hardwood?',
-    answer: 'Choose engineered if: installing over concrete, using radiant heat, in a condo, or want wider planks at lower cost. Choose solid if: you want maximum refinish potential (5–7 times), prefer the traditional feel, and have a wood subfloor. BBS carries 572 engineered and 83 solid hardwood options.',
+    answer: 'Choose engineered if: installing over concrete, using radiant heat, in a condo, or want wider planks at lower cost. Choose solid if: you want maximum refinish potential (5–7 times), prefer the traditional feel, and have a wood subfloor. BBS carries 400+ engineered and 83 solid hardwood options.',
   },
   {
     question: 'Does BBS Flooring install engineered hardwood?',
@@ -48,11 +48,11 @@ const faqItems = [
 
 export const metadata = {
   title: 'Engineered Hardwood Buying Guide 2026 | Prices, Brands & Installation',
-  description: 'Complete guide to buying engineered hardwood flooring in Canada. Compare 572 options from 8 brands ($2.49–$8.99/sqft), installation costs, species, and grades. Based in Markham, serving the GTA.',
+  description: 'Complete guide to buying engineered hardwood flooring in Canada. Compare 400+ options from 9 brands ($3.29–$8.99/sqft), installation costs, species, and grades. Based in Markham, serving the GTA.',
   alternates: { canonical: '/engineered-hardwood-guide' },
   openGraph: {
     title: 'Engineered Hardwood Buying Guide 2026 | BBS Flooring',
-    description: 'Compare 572 engineered hardwood options from 8 brands. Real pricing, installation costs, and expert advice from BBS Flooring in Markham.',
+    description: 'Compare 400+ engineered hardwood options from 9 brands. Real pricing, installation costs, and expert advice from BBS Flooring in Markham.',
     url: 'https://bbsflooring.ca/engineered-hardwood-guide',
     type: 'article',
   },

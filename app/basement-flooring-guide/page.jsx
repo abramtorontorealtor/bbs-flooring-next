@@ -6,7 +6,7 @@ import DeepPageCapture from '@/components/DeepPageCapture';
 const faqItems = [
   {
     question: 'What is the best waterproof flooring for a basement?',
-    answer: 'Vinyl (LVP/SPC) is the best waterproof basement flooring. It is 100% waterproof through the core, installs directly over concrete, and handles basement humidity and temperature swings. BBS Flooring carries 241 waterproof vinyl options from $1.79–$3.59/sqft from brands like NAF, Woden, Triforest, and Simba.',
+    answer: 'Vinyl (LVP/SPC) is the best waterproof basement flooring. It is 100% waterproof through the core, installs directly over concrete, and handles basement humidity and temperature swings. BBS Flooring carries 280+ waterproof vinyl options from $2.19–$4.35/sqft ($1.79 on clearance) from brands like NAF, Woden, Triforest, and Simba.',
   },
   {
     question: 'Can you put hardwood in a basement?',
@@ -30,7 +30,7 @@ const faqItems = [
   },
   {
     question: 'Can laminate go in a basement?',
-    answer: 'Yes, but only in dry basements with a proper moisture barrier underlayment. Laminate is water-resistant, not waterproof — standing water will damage it. Choose AC4 or AC5 rated laminate for durability. BBS carries 145 laminate options from $1.49/sqft. If there is any moisture history, use vinyl instead.',
+    answer: 'Yes, but only in dry basements with a proper moisture barrier underlayment. Laminate is water-resistant, not waterproof — standing water will damage it. Choose AC4 or AC5 rated laminate for durability. BBS carries 135+ laminate options from $1.49/sqft. If there is any moisture history, use vinyl instead.',
   },
   {
     question: 'What about carpet in basements?',
@@ -50,17 +50,17 @@ const faqItems = [
   },
   {
     question: 'Is it worth finishing a basement with good flooring in Ontario?',
-    answer: 'Yes. A finished basement adds 50–70% of its cost to your home\'s resale value in the GTA. Proper flooring (vinyl from $1.79/sqft) transforms unusable space into a family room, rental suite, or home office. At BBS, a 600 sqft basement vinyl installation costs $2,514–$3,354 — a strong ROI for a home addition that costs a fraction of building above grade.',
+    answer: 'Yes. A finished basement adds 50–70% of its cost to your home\'s resale value in the GTA. Proper flooring (vinyl from $2.19/sqft, $1.79 on clearance) transforms unusable space into a family room, rental suite, or home office. At BBS, a 600 sqft basement vinyl installation costs $2,514–$3,354 — a strong ROI for a home addition that costs a fraction of building above grade.',
   },
 ];
 
 export const metadata = {
   title: 'Best Flooring for Basements in Ontario (2026) | Waterproof Options',
-  description: 'Complete guide to basement flooring in Ontario. 241 waterproof vinyl options from $1.79/sqft, moisture barrier advice, cost breakdowns, and installation tips for concrete subfloors. Based in Markham, serving the GTA.',
+  description: 'Complete guide to basement flooring in Ontario. 280+ waterproof vinyl options from $2.19/sqft ($1.79 on clearance), moisture barrier advice, cost breakdowns, and installation tips for concrete subfloors. Based in Markham, serving the GTA.',
   alternates: { canonical: '/basement-flooring-guide' },
   openGraph: {
     title: 'Best Basement Flooring in Ontario (2026) | BBS Flooring',
-    description: '241 waterproof options from $1.79/sqft. Vinyl, laminate, and engineered hardwood compared for basements. Real pricing and Ontario-specific advice.',
+    description: '280+ waterproof options from $2.19/sqft ($1.79 on clearance). Vinyl, laminate, and engineered hardwood compared for basements. Real pricing and Ontario-specific advice.',
     url: 'https://bbsflooring.ca/basement-flooring-guide',
     type: 'article',
   },

@@ -42,13 +42,13 @@ const faqItems = [
   },
   {
     question: 'What brands of laminate do you carry?',
-    answer: 'BBS Flooring carries 145 laminate options from 9 brands: NAF Flooring (42 options, including 14mm Waterproof PRO), Tosca Floors (21, from $1.49/sqft — our value leader), Northernest (18), Simba (18), Triforest (16), Evergreen (16, 12mm waterproof), Falcon (12), Woden (6), and Golden Choice (6). Visit our Markham showroom to see samples.',
+    answer: 'BBS Flooring carries 135+ laminate options from 9 brands including NAF Flooring (14mm Waterproof PRO), Tosca Floors (from $1.49/sqft — our value leader), Northernest, Simba, Triforest, Evergreen (12mm waterproof), Falcon, Woden, and Golden Choice. Visit our Markham showroom to see samples.',
   },
 ];
 
 export const metadata = {
   title: 'Laminate Flooring Guide 2026 | AC Ratings, Costs & Best Brands',
-  description: 'Complete guide to laminate flooring in Canada. AC ratings explained, 12mm vs 14mm, waterproof options, real 2026 pricing. 145 options from $1.49/sqft at BBS Flooring Markham.',
+  description: 'Complete guide to laminate flooring in Canada. AC ratings explained, 12mm vs 14mm, waterproof options, real 2026 pricing. 135+ options from $1.49/sqft at BBS Flooring Markham.',
   alternates: { canonical: '/laminate-flooring-guide' },
 };
 

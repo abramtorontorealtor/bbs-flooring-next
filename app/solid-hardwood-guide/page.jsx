@@ -18,7 +18,7 @@ const faqItems = [
   },
   {
     question: 'Can solid hardwood be installed in a basement?',
-    answer: 'No. Solid hardwood should never be installed below grade (basements). Wood absorbs moisture from concrete subfloors, causing cupping, buckling, and warping. For basements, use engineered hardwood (from $2.49/sqft) or waterproof vinyl (from $1.79/sqft) — both available at BBS Flooring.',
+    answer: 'No. Solid hardwood should never be installed below grade (basements). Wood absorbs moisture from concrete subfloors, causing cupping, buckling, and warping. For basements, use engineered hardwood (from $3.29/sqft) or waterproof vinyl (from $2.19/sqft, $1.79 on clearance) — both available at BBS Flooring.',
   },
   {
     question: 'What is the best wood species for solid hardwood floors?',

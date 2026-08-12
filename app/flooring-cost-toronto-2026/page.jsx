@@ -18,7 +18,7 @@ const faqItems = [
   },
   {
     question: 'Is hardwood flooring worth the extra cost vs vinyl?',
-    answer: 'For primary residences — usually yes. Hardwood adds 3–5% to home value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $2.49/sqft, while vinyl starts at $1.79/sqft. For rentals or basements, vinyl is the smarter investment.',
+    answer: 'For primary residences — usually yes. Hardwood adds 3–5% to home value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $3.29/sqft, while vinyl starts at $2.19/sqft ($1.79 on clearance). For rentals or basements, vinyl is the smarter investment.',
   },
   {
     question: 'Is installation included in BBS flooring prices?',

@@ -6,7 +6,7 @@ import DeepPageCapture from '@/components/DeepPageCapture';
 const faqItems = [
   {
     question: 'What is the most durable type of flooring?',
-    answer: 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For scratch and water resistance, vinyl (LVP/SPC) is the most durable day-to-day option. BBS carries 83 solid hardwood options from $5.10/sqft and 241 vinyl options from $1.79/sqft.',
+    answer: 'Solid hardwood is the most durable long-term — it can be refinished 5–7 times and last 50–100 years. For scratch and water resistance, vinyl (LVP/SPC) is the most durable day-to-day option. BBS carries 83 solid hardwood options from $5.10/sqft and 280+ vinyl options from $2.19/sqft ($1.79 on clearance).',
   },
   {
     question: 'Is hardwood or vinyl flooring better value?',
@@ -30,7 +30,7 @@ const faqItems = [
   },
   {
     question: 'Is vinyl flooring really waterproof?',
-    answer: 'Yes. SPC (stone polymer composite) and WPC (wood polymer composite) vinyl are 100% waterproof through the core. The surface, core, and backing will not absorb water. This makes vinyl ideal for basements, kitchens, and bathrooms. BBS carries 241 waterproof vinyl options from $1.79/sqft.',
+    answer: 'Yes. SPC (stone polymer composite) and WPC (wood polymer composite) vinyl are 100% waterproof through the core. The surface, core, and backing will not absorb water. This makes vinyl ideal for basements, kitchens, and bathrooms. BBS carries 280+ waterproof vinyl options from $2.19/sqft ($1.79 on clearance).',
   },
   {
     question: 'How long does each flooring type last?',
@@ -42,17 +42,17 @@ const faqItems = [
   },
   {
     question: 'Does BBS Flooring carry all three types?',
-    answer: 'Yes. BBS stocks 1,000+ flooring products across all types: 572 engineered hardwood, 83 solid hardwood, 241 vinyl (LVP/SPC), and 145 laminate options from 15 brands. Visit the Markham showroom at 6061 Highway 7, Unit B, or browse online at bbsflooring.ca.',
+    answer: 'Yes. BBS stocks 900+ flooring products across all types: 400+ engineered hardwood, 83 solid hardwood, 280+ vinyl (LVP/SPC), and 135+ laminate options from 15 brands. Visit the Markham showroom at 6061 Highway 7, Unit B, or browse online at bbsflooring.ca.',
   },
 ];
 
 export const metadata = {
   title: 'Hardwood vs Vinyl vs Laminate: Which Flooring to Choose? (2026)',
-  description: 'Complete comparison of hardwood, vinyl, and laminate flooring with real 2026 pricing from BBS Flooring. 1,000+ options compared — costs, durability, best uses, and room-by-room recommendations for GTA homeowners.',
+  description: 'Complete comparison of hardwood, vinyl, and laminate flooring with real 2026 pricing from BBS Flooring. 900+ options compared — costs, durability, best uses, and room-by-room recommendations for GTA homeowners.',
   alternates: { canonical: '/flooring-comparison-guide' },
   openGraph: {
     title: 'Hardwood vs Vinyl vs Laminate Flooring Comparison (2026) | BBS Flooring',
-    description: 'Compare 1,000+ flooring options with real Canadian pricing. Hardwood, vinyl, and laminate — head-to-head on cost, durability, and room suitability.',
+    description: 'Compare 900+ flooring options with real Canadian pricing. Hardwood, vinyl, and laminate — head-to-head on cost, durability, and room suitability.',
     url: 'https://bbsflooring.ca/flooring-comparison-guide',
     type: 'article',
   },
