@@ -22,6 +22,7 @@ import { GOOGLE_REVIEW_STATS } from '@/data/googleReviews';
 import { Analytics } from '@/components/analytics';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
+import AccessoryBox from '@/components/AccessoryBox';
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import RequestQuoteBox from '@/components/RequestQuoteBox';
@@ -971,6 +972,12 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           <TransitionPieces product={product} />
         </section>
       )}
+
+      {/* Accessories — underlay/quarter round/baseboards. Trim + baseboards are
+          universal; underpad self-gates to floating floors inside the component. */}
+      <section className="mt-8">
+        <AccessoryBox product={product} />
+      </section>
 
       {/* ── Complete Your Project — Compact service cards ── */}
       <section className="mt-16">

@@ -62,9 +62,10 @@ export default function CartClient() {
     staleTime: 10 * 60 * 1000,
   });
 
-  // Separate products and transitions
+  // Separate products, transitions, and accessories
   const productItems = cartItems.filter(item => !item.item_type || item.item_type === 'product');
   const transitionItems = cartItems.filter(item => item.item_type === 'transition');
+  const accessoryItems = cartItems.filter(item => item.item_type === 'accessory');
   
   // Get vinyl and laminate products for transition piece section
   const vinylLaminateProducts = productItems.filter(item => {
@@ -109,6 +110,20 @@ export default function CartClient() {
       return entities.CartItem.update(itemId, {
         transition_quantity: newQty,
         line_total: newQty * pricePerPiece,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      window.dispatchEvent(new Event('cartUpdated'));
+    },
+  });
+
+  const updateAccessoryMutation = useMutation({
+    mutationFn: ({ itemId, newQty, pricePerUnit }) => {
+      return entities.CartItem.update(itemId, {
+        quantity: newQty,
+        transition_quantity: newQty,
+        line_total: Math.round(newQty * pricePerUnit * 100) / 100,
       });
     },
     onSuccess: () => {
@@ -330,6 +345,92 @@ export default function CartClient() {
                   onTransitionAdded={() => queryClient.invalidateQueries({ queryKey: ['cart'] })}
                 />
               ))}
+            </div>
+          )}
+
+          {/* Accessory Items — underlay / quarter round / baseboards */}
+          {accessoryItems.length > 0 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold text-slate-800 flex items-center gap-2">
+                <Package className="w-5 h-5 text-amber-600" />
+                Accessories
+              </h2>
+              {accessoryItems.map((item) => {
+                const qty = item.quantity || item.transition_quantity || 1;
+                const pricePerUnit = qty > 0 ? (item.line_total || 0) / qty : 0;
+                return (
+                  <div key={item.id}>
+                    <Card className="border-amber-200">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex gap-3 justify-between items-start">
+                          <div className="flex gap-3 flex-1 min-w-0">
+                            {item.image_url && (
+                              <img src={item.image_url} alt={item.product_name} className="w-14 h-14 rounded-lg object-cover bg-slate-50 flex-shrink-0" />
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <div className="font-semibold text-slate-800 text-sm">{item.product_name}</div>
+                              {item.parent_product_name && (
+                                <p className="text-xs text-slate-500 mt-0.5">For: {item.parent_product_name}</p>
+                              )}
+                              <div className="mt-2 flex items-center gap-3">
+                                <span className="text-sm text-slate-500">Qty:</span>
+                                <div className="flex items-center gap-1">
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-7 w-7"
+                                    onClick={() => {
+                                      const newQty = Math.max(1, qty - 1);
+                                      updateAccessoryMutation.mutate({ itemId: item.id, newQty, pricePerUnit });
+                                    }}
+                                    disabled={updateAccessoryMutation.isPending || qty <= 1}
+                                  >
+                                    <Minus className="w-3 h-3" />
+                                  </Button>
+                                  <Input
+                                    type="number"
+                                    value={qty}
+                                    onChange={(e) => {
+                                      const val = Math.max(1, parseInt(e.target.value) || 1);
+                                      if (val <= 200) updateAccessoryMutation.mutate({ itemId: item.id, newQty: val, pricePerUnit });
+                                    }}
+                                    className="h-7 w-14 text-center text-sm px-1"
+                                    min="1"
+                                    max="200"
+                                  />
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-7 w-7"
+                                    onClick={() => updateAccessoryMutation.mutate({ itemId: item.id, newQty: qty + 1, pricePerUnit })}
+                                    disabled={updateAccessoryMutation.isPending}
+                                  >
+                                    <Plus className="w-3 h-3" />
+                                  </Button>
+                                </div>
+                                <span className="text-sm text-slate-500">× C${pricePerUnit.toFixed(2)}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <div className="text-right">
+                              <div className="font-bold text-lg">C${item.line_total?.toFixed(2)}</div>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => deleteMutation.mutate(item.id)}
+                              className="text-slate-400 hover:text-red-500"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                );
+              })}
             </div>
           )}
 

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib/email';
 import { sendTelegramAlert, formatOrderAlert } from '@/lib/telegram';
+import { priceAccessoryLine } from '@/lib/accessoryCatalog';
 
 async function generateOrderNumber(supabase) {
   // Sequential: BBS-10001, BBS-10002, etc. via Postgres sequence
@@ -61,8 +62,20 @@ export async function POST(request) {
     // Live orders bill on `actual_sqft` (line_total = actual_sqft × price_per_sqft),
     // so it MUST be first in the fallback chain. No coupons/discounts exist on
     // this store (Abram, Aug 9) — client-sent discount is ignored entirely.
+    //
+    // ACCESSORIES/TRANSITIONS: these have no products-table row, so the product
+    // × sqft path prices them at $0 (the live revenue leak this build fixes).
+    // Price them from the trusted server-side accessoryCatalog instead — never
+    // from the client-sent line_total. See lib/accessoryCatalog.js.
     let subtotal = 0;
     for (const it of orderData.items || []) {
+      if (it.item_type === 'accessory' || it.item_type === 'transition') {
+        const accTotal = priceAccessoryLine(it);
+        if (accTotal != null && Number.isFinite(accTotal) && accTotal > 0) {
+          subtotal += accTotal;
+        }
+        continue;
+      }
       const pid = it.product_id || it.id;
       const unit = priceMap[pid];
       const qty = Number(it.actual_sqft || it.sqft || it.square_footage || it.quantity || 0);
