@@ -12,6 +12,7 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export const metadata = {
   title: waterproofFlooringData.title,
   description: waterproofFlooringData.description,
+  alternates: { canonical: '/waterproof-flooring' },
 };
 
 export default async function WaterproofFlooringPage() {

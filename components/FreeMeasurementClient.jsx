@@ -442,14 +442,14 @@ export default function FreeMeasurementClient() {
                 </div>
               )}
             </div>
-            <p className="text-xs text-red-600 font-medium text-center">⚡ Limited spots available this week.</p>
+
             <Button type="submit" disabled={isSubmitting || !formData.customer_name || !formData.customer_phone || !formData.customer_email || !formData.customer_address || !formData.preferred_date || !formData.preferred_time}
               className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base py-6 disabled:opacity-50 disabled:cursor-not-allowed" size="lg">
               {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Booking...</> : 'Book Free Measurement'}
             </Button>
             <div className="flex items-center justify-center gap-2 text-sm text-slate-600">
               <div className="flex">{[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}</div>
-              <span className="font-medium">5-Star Rated</span>
+              <span className="font-medium">4.7★ on Google (49)</span>
               <span className="text-slate-400">· 100% Free</span>
             </div>
           </form>

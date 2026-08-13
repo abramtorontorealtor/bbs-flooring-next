@@ -106,6 +106,7 @@ export default async function sitemap() {
     { path: '/financing', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/compare', priority: 0.5, changeFrequency: 'monthly' },
     { path: '/quote-calculator', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/price-match', priority: 0.8, changeFrequency: 'monthly' },
     // Room Visualizer hidden — needs rework (Apr 5, 2026)
     // { path: '/room-visualizer', priority: 0.6, changeFrequency: 'monthly' },
