@@ -334,8 +334,13 @@ export default function CartClient() {
           {/* Installation upsell removed — was an exit ramp mid-checkout funnel.
              Moved to order confirmation page instead (post-purchase upsell). */}
 
-          {/* Inline transition pieces — vinyl/laminate products only */}
-          {vinylLaminateProducts.length > 0 && transitionItems.length === 0 && (
+          {/* Inline transition pieces — vinyl/laminate products only.
+             BUGFIX (Aug 13): was gated `transitionItems.length === 0`, so once a
+             customer added ONE transition (e.g. a reducer) the add box vanished and
+             they couldn't add a second type (T-moulding) from the cart — "the website
+             gave me a hard time" (Katherine Castelo, BBS-10044). Now always shown so
+             every transition type stays addable regardless of what's already in cart. */}
+          {vinylLaminateProducts.length > 0 && (
             <div className="space-y-4">
               {vinylLaminateProducts.map((item) => (
                 <TransitionPieces
