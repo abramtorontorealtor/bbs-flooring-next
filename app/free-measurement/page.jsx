@@ -83,7 +83,7 @@ export default function FreeMeasurementPage() {
                   <span className="text-3xl flex-shrink-0">⏰</span>
                   <div>
                     <h3 className="font-bold text-lg text-slate-800 mb-1">Quick &amp; Easy</h3>
-                    <p className="text-slate-600 text-sm">Flexible scheduling, evening &amp; weekend availability across the GTA.</p>
+                    <p className="text-slate-600 text-sm">Flexible scheduling, including weekend availability across the GTA.</p>
                   </div>
                 </div>
               </div>

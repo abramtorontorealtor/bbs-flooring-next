@@ -544,7 +544,7 @@ export default function QuoteBookingClient() {
               {[
                 { icon: FileText, title: 'Accurate Quotes', desc: 'We measure your space for a precise, all-in quote—no surprises.' },
                 { icon: CheckCircle, title: 'No Pressure', desc: '100% free, no obligation—your satisfaction is our priority.' },
-                { icon: Clock, title: 'Quick & Easy', desc: 'Flexible scheduling, evening & weekend availability across the GTA.' },
+                { icon: Clock, title: 'Quick & Easy', desc: 'Flexible scheduling, including weekend availability across the GTA.' },
                 { icon: CalendarCheck, title: 'Same-Week Availability', desc: 'Most appointments are confirmed within 24 hours.' },
               ].map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="flex gap-4">

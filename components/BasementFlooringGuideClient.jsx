@@ -672,7 +672,7 @@ export default function BasementFlooringGuideClient() {
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
             <p className="font-semibold text-stone-800 mb-2">Total timeline: 3\u20137 business days from material delivery to walking on your new floor.</p>
             <p className="text-stone-600 text-sm mb-4">
-              Most basement projects take 5 business days total. Larger basements (800+ sqft) or projects requiring extensive subfloor prep may take 7 days. We schedule around your availability \u2014 evening and weekend installation available on request.
+              Most basement projects take 5 business days total. Larger basements (800+ sqft) or projects requiring extensive subfloor prep may take 7 days. We schedule around your availability — weekend installation available on request.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link href="/free-measurement" className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors">

@@ -24,7 +24,7 @@ export default function AboutClient() {
           { icon: Calendar, label: 'In Business', value: 'Since 2012' },
           { icon: Home, label: 'Projects Completed', value: '2,000+' },
           { icon: Star, label: 'Google Rating', value: '4.7★ on Google' },
-          { icon: Users, label: 'Team Members', value: '15+' },
+          { icon: Users, label: 'Install Crews', value: 'GTA-Wide' },
         ].map(({ icon: Icon, label, value }) => (
           <div key={label} className="bg-white rounded-2xl p-6 border border-slate-200 text-center">
             <Icon className="w-8 h-8 text-amber-500 mx-auto mb-3" />
