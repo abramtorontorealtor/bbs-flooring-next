@@ -93,10 +93,13 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
   };
 
   const renderItemRow = (item) => (
-    <div key={item.key} className="flex items-center gap-3 bg-white rounded-lg p-2.5 border border-slate-100">
+    <div key={item.key} className={`flex items-center gap-3 rounded-lg p-2.5 border ${item.recommended ? 'bg-emerald-50/60 border-emerald-300' : 'bg-white border-slate-100'}`}>
       <img src={item.image} alt={item.label} className="w-12 h-12 rounded object-cover bg-slate-50 flex-shrink-0" loading="lazy" />
       <div className="flex-1 min-w-0">
-        <div className="font-semibold text-slate-800 text-sm leading-tight">{item.label}</div>
+        <div className="font-semibold text-slate-800 text-sm leading-tight flex items-center gap-1.5 flex-wrap">
+          {item.label}
+          {item.recommended && <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-full">BEST VALUE</span>}
+        </div>
         <div className="text-xs text-slate-500 leading-tight mt-0.5">{item.blurb}</div>
         <div className="text-xs font-bold text-amber-700 mt-0.5">C${item.price.toFixed(2)}/{item.unit}</div>
       </div>
