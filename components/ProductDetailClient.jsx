@@ -21,7 +21,7 @@ import { GOOGLE_REVIEW_STATS } from '@/data/googleReviews';
 // to avoid duplicate JSON-LD and to include childVariants data.
 import { Analytics } from '@/components/analytics';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
-// TransitionPieces import removed — trim sales paused until pricing/availability fixed (Abram May 5)
+import TransitionPieces from '@/components/TransitionPieces';
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import RequestQuoteBox from '@/components/RequestQuoteBox';
@@ -965,7 +965,12 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
         </section>
       )}
 
-      {/* Transition Pieces removed site-wide — trim sales paused until pricing/availability fixed (Abram May 5) */}
+      {/* Transition Pieces — vinyl & laminate only (hardwood excluded per Abram) */}
+      {(product.category === 'vinyl' || product.category === 'laminate') && (
+        <section className="mt-12">
+          <TransitionPieces product={product} />
+        </section>
+      )}
 
       {/* ── Complete Your Project — Compact service cards ── */}
       <section className="mt-16">

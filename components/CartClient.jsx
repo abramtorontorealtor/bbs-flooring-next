@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrench, Zap, Lock, Truck, Phone, Minus, Plus, Tag, X, CheckCircle, CreditCard } from 'lucide-react';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { toast } from 'sonner';
-// TransitionPieces import removed — trim sales paused until pricing/availability fixed (Abram May 5)
+import TransitionPieces from '@/components/TransitionPieces';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
@@ -319,7 +319,19 @@ export default function CartClient() {
           {/* Installation upsell removed — was an exit ramp mid-checkout funnel.
              Moved to order confirmation page instead (post-purchase upsell). */}
 
-          {/* Transition pieces upsell removed — trim sales paused until pricing/availability fixed (Abram May 5) */}
+          {/* Inline transition pieces — vinyl/laminate products only */}
+          {vinylLaminateProducts.length > 0 && transitionItems.length === 0 && (
+            <div className="space-y-4">
+              {vinylLaminateProducts.map((item) => (
+                <TransitionPieces
+                  key={`trans-${item.id}`}
+                  product={item}
+                  sessionId={sessionId}
+                  onTransitionAdded={() => queryClient.invalidateQueries({ queryKey: ['cart'] })}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Transition Items */}
           {transitionItems.length > 0 && (
