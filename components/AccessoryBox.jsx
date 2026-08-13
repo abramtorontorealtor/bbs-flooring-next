@@ -9,19 +9,42 @@ import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 import { UNDERPAD_CATALOG, TRIM_CATALOG, BASEBOARD_CATALOG } from '@/lib/accessoryCatalog';
 
-// Ordered groups for display. Underpad only shows on floating floors (vinyl/laminate);
-// trim + baseboards are universal (offered on every category).
+// Ordered groups for display. Trim + baseboards are universal (every category).
+// Underpad visibility is decided by needsUnderpad() below — it's never hard-hidden,
+// just collapsed behind a toggle when the floor likely doesn't need it.
 const GROUPS = [
-  { key: 'underpad',  title: 'Underlay',            note: 'Sold per full roll — required under floating vinyl & laminate.', items: Object.values(UNDERPAD_CATALOG), floatingOnly: true },
-  { key: 'trim',      title: 'Quarter Round & Shoe', note: 'Finishes the floor-to-wall gap. Sold per full piece.',           items: Object.values(TRIM_CATALOG),     floatingOnly: false },
-  { key: 'baseboard', title: 'Baseboards',           note: 'Paint-grade MDF. Sold per full piece.',                          items: Object.values(BASEBOARD_CATALOG),floatingOnly: false },
+  { key: 'trim',      title: 'Quarter Round & Shoe', note: 'Finishes the floor-to-wall gap. Sold per full piece.', items: Object.values(TRIM_CATALOG) },
+  { key: 'baseboard', title: 'Baseboards',           note: 'Paint-grade MDF. Sold per full piece.',                items: Object.values(BASEBOARD_CATALOG) },
 ];
+
+const UNDERPAD_ITEMS = Object.values(UNDERPAD_CATALOG);
+
+// ── Underpad recommendation logic (Abram, Aug 13) ──
+// Vinyl: virtually all is pre-padded → don't recommend (pad-on-pad is wrong).
+// Laminate: needs pad EXCEPT 14mm (thick enough) or any SKU with attached IXPE/
+//   underpad already baked into the thickness/spec string.
+// Returns 'recommend' (show expanded, floor needs it), 'optional' (collapsed behind
+//   a toggle — customer can still add if they know they need it), or 'hidden'.
+function underpadMode(product) {
+  const category = (product?.category || '').toLowerCase();
+  const hay = `${product?.thickness || ''} ${product?.specifications || ''} ${product?.product_details || ''}`.toLowerCase();
+  const hasAttachedPad = /ixpe|attached|pre-?attached|underpad|underlay|pad/.test(hay);
+
+  if (category === 'laminate') {
+    const is14 = /\b14\s*mm/.test(hay) || /\b14mm/.test((product?.thickness || '').toLowerCase());
+    if (is14 || hasAttachedPad) return 'optional'; // 14mm or already-padded → collapsed
+    return 'recommend'; // 12mm/12.3mm bare laminate → the real attach
+  }
+  if (category === 'vinyl') {
+    return hasAttachedPad ? 'hidden' : 'optional'; // padded vinyl → hidden; bare vinyl → collapsed
+  }
+  return 'hidden'; // hardwood etc. → no floating underlay
+}
 
 export default function AccessoryBox({ product, sessionId: initialSessionId, onAccessoryAdded }) {
   const [quantities, setQuantities] = useState({});
-
-  const category = (product?.category || '').toLowerCase();
-  const isFloating = category === 'vinyl' || category === 'laminate';
+  const padMode = underpadMode(product);
+  const [showOptionalPad, setShowOptionalPad] = useState(false);
 
   const getSessionId = () => {
     let sid = initialSessionId || (typeof window !== 'undefined' && localStorage.getItem('bbs_session_id'));
@@ -69,8 +92,22 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
     }
   };
 
-  const visibleGroups = GROUPS.filter(g => !g.floatingOnly || isFloating);
-  if (visibleGroups.length === 0) return null;
+  const renderItemRow = (item) => (
+    <div key={item.key} className="flex items-center gap-3 bg-white rounded-lg p-2.5 border border-slate-100">
+      <img src={item.image} alt={item.label} className="w-12 h-12 rounded object-cover bg-slate-50 flex-shrink-0" loading="lazy" />
+      <div className="flex-1 min-w-0">
+        <div className="font-semibold text-slate-800 text-sm leading-tight">{item.label}</div>
+        <div className="text-xs text-slate-500 leading-tight mt-0.5">{item.blurb}</div>
+        <div className="text-xs font-bold text-amber-700 mt-0.5">C${item.price.toFixed(2)}/{item.unit}</div>
+      </div>
+      <div className="flex items-center gap-1.5 flex-shrink-0">
+        <Input type="number" min="0" value={quantities[item.key] || ''} onChange={(e) => setQty(item.key, e.target.value)} placeholder="Qty" className="w-14 text-center h-8 text-sm" />
+        <Button onClick={() => handleAdd(item)} disabled={(quantities[item.key] || 0) <= 0} size="sm" className="bg-amber-500 hover:bg-amber-600 h-8 w-8 p-0" aria-label={`Add ${item.label}`}>
+          <Plus className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <Card className="border-2 border-amber-200 bg-amber-50/40">
@@ -84,50 +121,41 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
-        {visibleGroups.map(group => (
+        {/* ── Underlay — recommended (expanded) vs optional (collapsed toggle) ── */}
+        {padMode === 'recommend' && (
+          <div>
+            <div className="mb-2">
+              <h4 className="text-sm font-bold text-slate-800">Underlay <span className="text-xs font-semibold text-emerald-600">· Recommended for this floor</span></h4>
+              <p className="text-xs text-slate-500">This floating floor needs underlay. Sold per full roll — pick one tier.</p>
+            </div>
+            <div className="space-y-2">{UNDERPAD_ITEMS.map(renderItemRow)}</div>
+          </div>
+        )}
+        {padMode === 'optional' && (
+          <div>
+            {!showOptionalPad ? (
+              <button type="button" onClick={() => setShowOptionalPad(true)} className="text-sm font-semibold text-amber-700 hover:text-amber-800 underline">
+                + Need underlay? This floor usually has pad attached — add a roll anyway
+              </button>
+            ) : (
+              <div>
+                <div className="mb-2">
+                  <h4 className="text-sm font-bold text-slate-800">Underlay</h4>
+                  <p className="text-xs text-slate-500">Most of these floors are pre-padded, so underlay usually isn&apos;t needed. Add a roll only if your subfloor calls for it.</p>
+                </div>
+                <div className="space-y-2">{UNDERPAD_ITEMS.map(renderItemRow)}</div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {GROUPS.map(group => (
           <div key={group.key}>
             <div className="mb-2">
               <h4 className="text-sm font-bold text-slate-800">{group.title}</h4>
               <p className="text-xs text-slate-500">{group.note}</p>
             </div>
-            <div className="space-y-2">
-              {group.items.map(item => (
-                <div key={item.key} className="flex items-center gap-3 bg-white rounded-lg p-2.5 border border-slate-100">
-                  <img
-                    src={item.image}
-                    alt={item.label}
-                    className="w-12 h-12 rounded object-cover bg-slate-50 flex-shrink-0"
-                    loading="lazy"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-slate-800 text-sm leading-tight">{item.label}</div>
-                    <div className="text-xs text-slate-500 leading-tight mt-0.5">{item.blurb}</div>
-                    <div className="text-xs font-bold text-amber-700 mt-0.5">
-                      C${item.price.toFixed(2)}/{item.unit}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5 flex-shrink-0">
-                    <Input
-                      type="number"
-                      min="0"
-                      value={quantities[item.key] || ''}
-                      onChange={(e) => setQty(item.key, e.target.value)}
-                      placeholder="Qty"
-                      className="w-14 text-center h-8 text-sm"
-                    />
-                    <Button
-                      onClick={() => handleAdd(item)}
-                      disabled={(quantities[item.key] || 0) <= 0}
-                      size="sm"
-                      className="bg-amber-500 hover:bg-amber-600 h-8 w-8 p-0"
-                      aria-label={`Add ${item.label}`}
-                    >
-                      <Plus className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <div className="space-y-2">{group.items.map(renderItemRow)}</div>
           </div>
         ))}
       </CardContent>
