@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 export async function POST(request) {
   try {
@@ -9,8 +10,14 @@ export async function POST(request) {
       return NextResponse.json({ success: false, error: 'Token and password are required' }, { status: 400 });
     }
 
-    if (password.length < 6) {
-      return NextResponse.json({ success: false, error: 'Password must be at least 6 characters' }, { status: 400 });
+    // SECURITY (F6): cap attempts per token prefix to prevent token-space probing.
+    if (!checkRateLimit(`reset-confirm:${String(token).substring(0, 8)}`, { maxRequests: 10, windowMs: 15 * 60 * 1000 }).ok) {
+      return NextResponse.json({ success: false, error: 'Too many attempts. Please request a new reset link.' }, { status: 429 });
+    }
+
+    // SECURITY (F10): 8-char minimum (NIST SP 800-63B) — was 6.
+    if (password.length < 8) {
+      return NextResponse.json({ success: false, error: 'Password must be at least 8 characters' }, { status: 400 });
     }
 
     const supabase = getSupabaseAdminClient();

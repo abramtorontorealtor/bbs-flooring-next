@@ -42,6 +42,25 @@ const nextConfig = {
       },
     ],
   },
+  // SECURITY (F11): baseline security headers on every response.
+  // X-Frame-Options + frame-ancestors block clickjacking on checkout;
+  // HSTS prevents first-visit downgrade; nosniff + referrer policy harden posture.
+  // NOTE: a full script-src CSP is deliberately NOT added here — it needs its own
+  // careful pass to avoid breaking Stripe Checkout, GA4, Meta Pixel, and Supabase.
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
+        ],
+      },
+    ];
+  },
   // Redirect old Base44 PascalCase URLs to new kebab-case paths.
   // IMPORTANT: Do NOT add redirects where source and destination differ only by
   // capitalisation (e.g. /Vinyl → /vinyl). Next.js 16 / Vercel matches redirects

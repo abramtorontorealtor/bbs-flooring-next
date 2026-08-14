@@ -32,13 +32,28 @@ async function sendEmail({ to, subject, html }) {
 
 export async function POST(request) {
   try {
-    const { userId, userEmail, userName } = await request.json();
+    const { userId } = await request.json();
 
-    if (!userId || !userEmail) {
-      return NextResponse.json({ success: false, error: 'Missing user details' }, { status: 400 });
+    if (!userId) {
+      return NextResponse.json({ success: false, error: 'Missing user id' }, { status: 400 });
     }
 
     const supabase = getSupabaseAdminClient();
+
+    // SECURITY (F5): derive email/name from the DB by userId — never trust
+    // a body-supplied email/name, or an attacker could point verification
+    // emails at an address of their choosing (phishing surface).
+    const { data: dbUser } = await supabase
+      .from('users')
+      .select('email, full_name')
+      .eq('id', userId)
+      .single();
+
+    if (!dbUser?.email) {
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+    }
+    const userEmail = dbUser.email;
+    const userName = dbUser.full_name;
 
     // Generate verification token
     const token = crypto.randomBytes(32).toString('hex');

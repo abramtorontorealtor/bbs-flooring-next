@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
+import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 import crypto from 'crypto';
 
 const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
@@ -32,10 +33,22 @@ async function sendEmail({ to, subject, html }) {
 
 export async function POST(request) {
   try {
+    // SECURITY (F6): burst-limit signups per IP to curb credential-stuffing
+    // and Brevo email-quota exhaustion.
+    const ip = getClientIP(request);
+    if (!checkRateLimit(`signup:${ip}`, { maxRequests: 5, windowMs: 15 * 60 * 1000 }).ok) {
+      return NextResponse.json({ error: 'Too many attempts. Please wait a few minutes and try again.' }, { status: 429 });
+    }
+
     const { email, password, full_name, phone } = await request.json();
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Email and password are required.' }, { status: 400 });
+    }
+
+    // SECURITY (F10): 8-char minimum (NIST SP 800-63B).
+    if (password.length < 8) {
+      return NextResponse.json({ error: 'Password must be at least 8 characters.' }, { status: 400 });
     }
 
     const supabase = getSupabaseAdminClient();

@@ -35,19 +35,26 @@ function esc(str) {
 
 export async function POST(request) {
   try {
-    const { userId, userEmail, userName } = await request.json();
-    if (!userId || !userEmail) {
-      return NextResponse.json({ success: false, error: 'Missing user details' }, { status: 400 });
+    const { userId } = await request.json();
+    if (!userId) {
+      return NextResponse.json({ success: false, error: 'Missing user id' }, { status: 400 });
     }
 
     const supabase = getSupabaseAdminClient();
 
-    // Check if welcome email already sent
+    // SECURITY (F5): derive email/name from the DB by userId — never trust
+    // body-supplied email/name (arbitrary-recipient phishing surface).
     const { data: user } = await supabase
       .from('users')
-      .select('welcome_email_sent, phone')
+      .select('welcome_email_sent, phone, email, full_name')
       .eq('id', userId)
       .single();
+
+    if (!user?.email) {
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+    }
+    const userEmail = user.email;
+    const userName = user.full_name;
 
     if (user?.welcome_email_sent) {
       return NextResponse.json({ success: true, skipped: true });

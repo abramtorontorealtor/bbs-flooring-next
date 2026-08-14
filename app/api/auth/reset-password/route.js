@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
+import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 import crypto from 'crypto';
 
 const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
@@ -32,6 +33,14 @@ async function sendEmail({ to, subject, html }) {
 
 export async function POST(request) {
   try {
+    // SECURITY (F6): burst-limit reset requests per IP — curbs email
+    // enumeration probing and Brevo quota exhaustion. Still always returns
+    // success below so we never leak whether an email exists.
+    const ip = getClientIP(request);
+    if (!checkRateLimit(`reset-password:${ip}`, { maxRequests: 5, windowMs: 15 * 60 * 1000 }).ok) {
+      return NextResponse.json({ success: true });
+    }
+
     const { email } = await request.json();
     if (!email) {
       return NextResponse.json({ success: false, error: 'Email is required' }, { status: 400 });
