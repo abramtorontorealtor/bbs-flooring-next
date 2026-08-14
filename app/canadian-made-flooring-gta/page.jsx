@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { canadianMadeFlooringData } from '@/data/brandPages';
 import BrandLandingServer from '@/components/BrandLandingServer';
-import { faqSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, productItemListSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
 
@@ -16,9 +16,15 @@ export const metadata = {
 export default async function CanadianMadeFlooringGtaPage() {
   const products = await getProductsForGrid({ canadian: true });
   const serverGrid = <ProductGridServer products={products} />;
+  const itemList = productItemListSchema({
+    name: 'Canadian-Made Flooring in the GTA — Domestic Hardwood at BBS Flooring',
+    url: 'https://bbsflooring.ca/canadian-made-flooring-gta',
+    products,
+  });
   return (
     <>
       <JsonLd data={faqSchema(canadianMadeFlooringData.faqItems)} />
+      {itemList && <JsonLd data={itemList} />}
       <BrandLandingServer
         {...canadianMadeFlooringData}
         brandKey="canadian-made"

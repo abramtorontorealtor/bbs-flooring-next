@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { impressiveFlooringData } from '@/data/brandPages';
 import BrandLandingServer from '@/components/BrandLandingServer';
-import { faqSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, productItemListSchema, JsonLd } from '@/lib/schemas';
 import { getProductsForGrid } from '@/lib/products-server';
 import ProductGridServer from '@/components/ProductGridServer';
 
@@ -16,9 +16,15 @@ export const metadata = {
 export default async function ImpressiveFlooringPage() {
   const products = await getProductsForGrid({ brand: 'Impressive' });
   const serverGrid = <ProductGridServer products={products} />;
+  const itemList = productItemListSchema({
+    name: 'Impressive Flooring — Canadian-Made Hardwood, Vinyl & Laminate at BBS Flooring',
+    url: 'https://bbsflooring.ca/impressive-flooring',
+    products,
+  });
   return (
     <>
       <JsonLd data={faqSchema(impressiveFlooringData.faqItems)} />
+      {itemList && <JsonLd data={itemList} />}
       <BrandLandingServer
         {...impressiveFlooringData}
         brandKey="impressive"
