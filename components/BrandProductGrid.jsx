@@ -26,6 +26,7 @@ const BRAND_DATA_MAP = {
   'golden-choice': brandData.goldenChoiceFlooringData,
   impressive: brandData.impressiveFlooringData,
   'canadian-made': brandData.canadianMadeFlooringData,
+  'canadian-made-toronto': brandData.canadianMadeFlooringTorontoData,
   vidar: vidarFlooringData,
   wickham: wickhamFlooringData,
   // Keyword pages

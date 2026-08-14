@@ -687,7 +687,7 @@ export const canadianMadeFlooringData = {
     },
     {
       heading: 'See It in Markham Before You Buy',
-      body: `<p>Canadian-made flooring is worth seeing in person — grain, colour, and finish read differently under real light than on a screen. Our Markham showroom at 6061 Highway 7, Unit B carries the full domestic-hardwood range, and we offer <a href="/free-measurement">free in-home measurements</a> across the GTA — Markham, Richmond Hill, Vaughan, Scarborough, Toronto, and Durham.</p>`
+      body: `<p>Canadian-made flooring is worth seeing in person — grain, colour, and finish read differently under real light than on a screen. Our Markham showroom at 6061 Highway 7, Unit B carries the full domestic-hardwood range, and we offer <a href="/free-measurement">free in-home measurements</a> across the GTA — Markham, Richmond Hill, Vaughan, Scarborough, <a href="/canadian-made-flooring-toronto">Toronto</a>, and Durham.</p>`
     },
   ],
   faqItems: [
@@ -701,4 +701,51 @@ export const canadianMadeFlooringData = {
   productFilter: (p) => (p.is_canadian === true) || has(p.made_in, 'canada'),
   productSessionKey: 'canadian-made',
   productQueryKey: 'products-canadian-made',
+};
+
+// ══════════════════════════════════════════════════════════
+// CANADIAN-MADE FLOORING TORONTO — city-term sibling of the GTA page
+// Toronto has real search volume; distinct copy (neighbourhoods, Toronto framing)
+// to avoid thin-duplicate risk. Same is_canadian aggregation + schema.
+// ══════════════════════════════════════════════════════════
+
+export const canadianMadeFlooringTorontoData = {
+  route: 'CanadianMadeFlooringToronto',
+  title: 'Canadian-Made Flooring Toronto | Domestic Hardwood Delivered',
+  description: 'Buy Canadian-made flooring in Toronto — Canadian-milled White Oak & Red Oak engineered and solid hardwood from $4.25/sqft. In-stock in Markham, free measurements across Toronto. Call (647) 428-1111.',
+  h1: 'Canadian-Made Flooring in Toronto',
+  subtitle: 'Domestic White Oak and Red Oak — engineered and solid — milled in Canada and built for Toronto homes, from $4.25/sqft. In stock now, with free in-home measurements across the city.',
+  parentPage: null,
+  schemaType: 'product',
+  content: [
+    {
+      heading: 'Where to Buy Canadian-Made Flooring in Toronto',
+      body: `<p>Most flooring on Toronto showroom floors is imported. If you specifically want <strong>Canadian-made hardwood</strong> — milled here, built for our climate — the selection narrows fast. BBS Flooring stocks one of the deepest domestic-hardwood ranges serving Toronto: Canadian-milled <strong>White Oak and Red Oak</strong> across engineered and solid lines, from <a href="/impressive-flooring">Impressive</a>, <a href="/northernest-flooring">Northernest</a>, and <a href="/canadian-standard-flooring">Canadian Standard</a>.</p>
+<p>We're a short drive from the city in Markham, and we bring the samples to you — free in-home measurements across <strong>North York, Scarborough, Etobicoke, East York, and downtown Toronto</strong>. See the grain and colour in your own light before you commit.</p>`
+    },
+    {
+      heading: 'Why Canadian-Made Matters for a Toronto Home',
+      body: `<p>Toronto's climate is hard on flooring — dry, heated winters and humid summers mean wood expands and contracts all year. <strong>Canadian-made hardwood is milled and acclimatized for exactly these conditions</strong>, so it's more dimensionally stable than product shipped across an ocean and finished in a distant factory. Shorter supply chains, domestic support, and floors built from the start for the home they'll live in.</p>`
+    },
+    {
+      heading: 'Canadian-Made Engineered & Solid — from $4.25/sqft',
+      body: `<p>The deepest domestic selection is engineered <strong>White Oak</strong> from Impressive — Canadian-milled, in 5", 6½", and wider planks from <strong>$4.25/sqft</strong>. Engineered construction installs over concrete and in condos and basements where solid hardwood can't go — a big deal for Toronto's condo and older-home mix.</p>
+<p>For classic ¾" <strong>solid Red Oak</strong>, milled in Canada, pricing starts at <strong>$5.25/sqft</strong> in Select and Select &amp; Better grades — the buy-it-once floor for main-floor living areas.</p>`
+    },
+    {
+      heading: 'Delivery & Measurement Across Toronto',
+      body: `<p>We deliver across Toronto — warehouse pickup is free, garage delivery $140, inside-home $200 — and offer <a href="/free-measurement">free in-home measurements</a> throughout the city and the wider GTA. Prefer to browse first? See the full domestic range at our <a href="/canadian-made-flooring-gta">Canadian-made flooring</a> collection or visit the Markham showroom at 6061 Highway 7, Unit B.</p>`
+    },
+  ],
+  faqItems: [
+    { question: 'Where can I buy Canadian-made flooring in Toronto?', answer: 'BBS Flooring stocks Canadian-made hardwood serving Toronto \u2014 Canadian-milled White Oak and Red Oak from Impressive, Northernest, and Canadian Standard \u2014 from our Markham showroom at 6061 Highway 7, Unit B. Engineered starts at $4.25/sqft, solid Red Oak at $5.25/sqft. We deliver across Toronto and offer free in-home measurements throughout North York, Scarborough, Etobicoke, and downtown. Call (647) 428-1111.' },
+    { question: 'Is Canadian-made hardwood better for Toronto\u2019s climate?', answer: 'Yes \u2014 Canadian-made hardwood is milled and acclimatized for Canadian conditions, so it handles Toronto\u2019s dry heated winters and humid summers with better dimensional stability than imported product finished in a distant factory. It\u2019s built from the start for the climate it will live in.' },
+    { question: 'Do you deliver Canadian-made flooring in Toronto?', answer: 'Yes. BBS Flooring delivers across Toronto \u2014 warehouse pickup is free, garage delivery is $140, and inside-home delivery is $200. We also offer free in-home measurements throughout Toronto and the GTA.' },
+    { question: 'What Canadian-made flooring is good for a Toronto condo?', answer: 'For condos, Canadian-made engineered White Oak is the strongest choice \u2014 its dimensionally-stable core installs over concrete subfloors that solid hardwood can\u2019t handle. Impressive\u2019s engineered line starts at $4.25/sqft. For fully below-grade or moisture-heavy spaces, waterproof vinyl is also worth considering.' },
+    { question: 'How much does Canadian-made flooring cost in Toronto?', answer: 'At BBS Flooring, Canadian-made engineered White Oak starts at $4.25 per square foot and Canadian-made solid Red Oak at $5.25 per square foot, with premium wide-plank engineered up to $7.99. Prices are for in-stock inventory delivered across Toronto.' },
+  ],
+  hideBrandFilter: true,
+  productFilter: (p) => (p.is_canadian === true) || has(p.made_in, 'canada'),
+  productSessionKey: 'canadian-made-toronto',
+  productQueryKey: 'products-canadian-made-toronto',
 };
