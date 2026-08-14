@@ -701,10 +701,34 @@ export default function QuoteCalculatorClient() {
             {/* Square Footage */}
             <div>
               <Label className="mb-1.5 block">Square Footage *</Label>
-              <Input type="number" placeholder="e.g. 500" className="h-12 text-base"
+              {/* Quick-estimate presets — most flooring jobs cluster around these common room/home sizes.
+                  Reduces the #1 friction point (guessing sqft); a tap prefills, then they can fine-tune. */}
+              <div className="flex flex-wrap gap-2 mb-2.5">
+                {[250, 500, 750, 1000, 1500].map((sf) => {
+                  const active = String(formData.square_footage) === String(sf);
+                  return (
+                    <button key={sf} type="button"
+                      onClick={() => {
+                        setFormData(f => ({ ...f, square_footage: String(sf) }));
+                        if (typeof window !== 'undefined' && window.gtag) {
+                          window.gtag('event', 'sqft_quick_select', { event_category: 'engagement', event_label: String(sf) });
+                        }
+                      }}
+                      aria-pressed={active}
+                      className={`px-3.5 py-2 rounded-full text-sm font-semibold transition-all ${
+                        active
+                          ? 'bg-amber-500 text-white shadow-sm'
+                          : 'bg-slate-100 text-slate-600 hover:bg-amber-50 hover:text-amber-700 border border-transparent hover:border-amber-200'
+                      }`}>
+                      {sf.toLocaleString()} sqft
+                    </button>
+                  );
+                })}
+              </div>
+              <Input type="number" placeholder="or enter exact — e.g. 500" className="h-12 text-base"
                 value={formData.square_footage} min="1" max="50000"
                 onChange={(e) => setFormData(f => ({ ...f, square_footage: e.target.value }))} />
-              <p className="text-xs text-slate-400 mt-1.5">Not sure? Multiply room length × width in feet. We&apos;ll measure for free!</p>
+              <p className="text-xs text-slate-400 mt-1.5">Not sure? Tap a size above, or multiply room length × width in feet. We&apos;ll measure for free!</p>
             </div>
 
             {/* Installation Type — Vinyl/Laminate */}
