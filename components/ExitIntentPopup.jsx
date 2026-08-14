@@ -268,7 +268,7 @@ export default function ExitIntentPopup() {
               <div className="flex items-center justify-center gap-4 mt-5 text-xs text-slate-400">
                 <span>🔒 No spam</span>
                 <span>💳 Financing from $68/mo</span>
-                <span>⭐ 5-star rated</span>
+                <span>⭐ 4.7★ on Google (41 reviews)</span>
               </div>
             </>
           )}

@@ -153,7 +153,7 @@ export const locationData = {
         },
         {
           heading: "Markham-Based Since 2012",
-          detail: "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on 14 years of serving our neighbours — backed by five-star Google reviews from real homeowners."
+          detail: "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on serving our neighbours since 2012 — backed by 4.7-star Google reviews from real homeowners."
         }
       ]
     },
