@@ -48,6 +48,28 @@ export default function FooterServer() {
             </ul>
           </div>
 
+          {/* Shop by Brand */}
+          <div>
+            <h3 className="text-lg font-semibold mb-6">Shop by Brand</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'Vidar Flooring', path: '/vidar-flooring' },
+                { name: 'Woden Flooring', path: '/woden-flooring' },
+                { name: 'NAF Flooring', path: '/naf-flooring' },
+                { name: 'Simba Flooring', path: '/simba-flooring' },
+                { name: 'Wickham Hardwood', path: '/wickham-flooring' },
+                { name: 'Lee Flooring', path: '/lee-flooring' },
+                { name: 'Triforest Flooring', path: '/triforest-flooring' },
+              ].map(({ name, path }) => (
+                <li key={name}>
+                  <Link href={path} className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                    {name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Services */}
           <div>
             <h3 className="text-lg font-semibold mb-6">Services</h3>

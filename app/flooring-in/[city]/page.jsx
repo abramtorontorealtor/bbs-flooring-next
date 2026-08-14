@@ -59,10 +59,21 @@ export default async function LocationPage({ params }) {
             '@context': 'https://schema.org',
             // Flooring "store" query intent: HomeAndConstructionBusiness (a Store subtype) with hours + map.
             '@type': data.isFlagship ? ['LocalBusiness', 'HomeAndConstructionBusiness', 'Store'] : 'LocalBusiness',
+            '@id': 'https://bbsflooring.ca/#localbusiness',
             name: 'BBS Flooring',
             description: data.description,
             telephone: '(647) 428-1111',
             url: 'https://bbsflooring.ca',
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 43.85905624535496,
+              longitude: -79.25622102326802,
+            },
+            sameAs: [
+              'https://www.facebook.com/bbsflooring',
+              'https://www.instagram.com/bbsflooring',
+              'https://g.co/kgs/N1qmHvP',
+            ],
             ...(data.isFlagship ? {
               priceRange: '$$',
               hasMap: 'https://www.google.com/maps?cid=9896263526048495139',
