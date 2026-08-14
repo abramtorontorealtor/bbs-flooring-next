@@ -67,12 +67,27 @@ export async function POST(request) {
     // × sqft path prices them at $0 (the live revenue leak this build fixes).
     // Price them from the trusted server-side accessoryCatalog instead — never
     // from the client-sent line_total. See lib/accessoryCatalog.js.
+    // Normalize each line as we price it, so the PERSISTED order is always
+    // self-describing (qty + unit_price + trusted line_total) instead of an
+    // opaque lump. (Fix Aug 14 2026: accessory/transition lines were saving a
+    // flat line_total with no quantity — orders/emails/admin couldn't show
+    // "12 × Reducer @ $25".)
     let subtotal = 0;
+    const normalizedItems = [];
     for (const it of orderData.items || []) {
       if (it.item_type === 'accessory' || it.item_type === 'transition') {
         const accTotal = priceAccessoryLine(it);
+        const qty = Math.max(0, parseInt(it.transition_quantity ?? it.quantity ?? 0, 10) || 0);
         if (accTotal != null && Number.isFinite(accTotal) && accTotal > 0) {
           subtotal += accTotal;
+          normalizedItems.push({
+            ...it,
+            quantity: qty || null,
+            unit_price: qty > 0 ? Math.round((accTotal / qty) * 100) / 100 : null,
+            line_total: accTotal, // server-trusted, overwrites any client value
+          });
+        } else {
+          normalizedItems.push(it);
         }
         continue;
       }
@@ -80,14 +95,22 @@ export async function POST(request) {
       const unit = priceMap[pid];
       const qty = Number(it.actual_sqft || it.sqft || it.square_footage || it.quantity || 0);
       if (unit != null && Number.isFinite(qty) && qty > 0) {
+        const lineTotal = Math.round(unit * qty * 100) / 100;
         subtotal += unit * qty;
+        normalizedItems.push({ ...it, unit_price: unit, line_total: lineTotal });
+      } else {
+        normalizedItems.push(it);
       }
     }
     subtotal = Math.round(subtotal * 100) / 100;
 
     // Custom-zone (out-of-area) orders are priced manually as quotes → keep 0 delivery here.
     const deliveryFee = isCustomZone ? 0 : (DELIVERY_FEES[orderData.delivery_preference] ?? 0);
-    const tax = Math.round(subtotal * HST_RATE * 100) / 100;
+    // HST applies to delivery/freight too (taxable supply in Ontario) — tax the
+    // full taxable base (goods + delivery), NOT subtotal alone. (Fix Aug 14 2026:
+    // delivery fee was previously untaxed, under-collecting 13% on every
+    // delivery/inside order.)
+    const tax = Math.round((subtotal + deliveryFee) * HST_RATE * 100) / 100;
     const processingFee = paymentMethod === 'credit_card'
       ? Math.round((subtotal + tax + deliveryFee) * 0.029 * 100) / 100
       : 0;

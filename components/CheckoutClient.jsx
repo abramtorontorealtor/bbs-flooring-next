@@ -185,7 +185,7 @@ export default function CheckoutClient() {
         entities.CartItem.filter({ session_id: sid }).then(items => {
           if (items.length > 0) {
             const subtotal = items.reduce((sum, item) => sum + (item.line_total || 0), 0);
-            const tax = subtotal * 0.13;
+            const tax = subtotal * 0.13; // analytics estimate only; authoritative tax/total are computed server-side in orders/create (HST incl. delivery)
             const total = subtotal + tax;
             Analytics.trackPurchase(orderNum, total, tax, items, 'credit_card');
           }
@@ -226,7 +226,6 @@ export default function CheckoutClient() {
     const subtotal = rawSubtotal - discount;
 
     const taxRate = 0.13;
-    const tax = subtotal * taxRate;
     const totalBoxes = cartItems.reduce((sum, item) => sum + (item.boxes_required || 0), 0);
     const totalSqft = cartItems.reduce((sum, item) => sum + (item.actual_sqft || 0), 0);
 
@@ -240,6 +239,10 @@ export default function CheckoutClient() {
         deliveryFee = 200;
       }
     }
+
+    // HST applies to goods + delivery (delivery/freight is a taxable supply in
+    // Ontario). Must match orders/create server billing. (Fix Aug 14 2026.)
+    const tax = (subtotal + deliveryFee) * taxRate;
     
     const processingFee = formData.payment_method === 'credit_card' ? (subtotal + tax + deliveryFee) * 0.029 : 0;
     const total = subtotal + tax + deliveryFee + processingFee;
