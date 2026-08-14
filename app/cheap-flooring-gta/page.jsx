@@ -47,7 +47,7 @@ export default async function CheapFlooringGtaPage() {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: '4.7',
-            reviewCount: '41',
+            reviewCount: '50',
             bestRating: '5',
           },
         }] : []),

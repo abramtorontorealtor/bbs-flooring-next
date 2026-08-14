@@ -323,7 +323,7 @@ export default function QuoteBookingClient() {
             <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-green-600" /> Free</span>
             <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-green-600" /> No Obligation</span>
             <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-amber-600" /> Same-Week Booking</span>
-            <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> 4.7★ on Google (49)</span>
+            <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> 4.7★ on Google</span>
           </div>
         </div>
       </div>
@@ -529,7 +529,7 @@ export default function QuoteBookingClient() {
                   </Button>
                   <div className="flex items-center justify-center gap-2 text-sm text-slate-600">
                     <div className="flex">{[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}</div>
-                    <span className="font-medium">4.7★ on Google (49)</span>
+                    <span className="font-medium">4.7★ on Google</span>
                     <span className="text-slate-400">· 100% Free</span>
                   </div>
                 </form>

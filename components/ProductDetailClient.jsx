@@ -485,7 +485,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
           </h1>
 
           {/* Reviews: product-level if present, otherwise the store-level Google
-              rating (A5/A13 — every PDP now carries the 4.7★ / 41-review trust badge
+              rating (A5/A13 — every PDP now carries the 4.7★ Google trust badge
               instead of showing nothing on the ~all products with no product reviews). */}
           {product.review_count > 0 ? (
             <div className="flex items-center gap-2 mb-3">
