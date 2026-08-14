@@ -50,6 +50,8 @@ export default async function sitemap() {
     { path: '/woden-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/falcon-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/canadian-standard-flooring', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/impressive-flooring', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/canadian-made-flooring-gta', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/triforest-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/simba-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/lee-flooring', priority: 0.7, changeFrequency: 'weekly' },

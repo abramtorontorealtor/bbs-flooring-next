@@ -24,6 +24,8 @@ const BRAND_DATA_MAP = {
   evergreen: brandData.evergreenFlooringData,
   sherwood: brandData.sherwoodFlooringData,
   'golden-choice': brandData.goldenChoiceFlooringData,
+  impressive: brandData.impressiveFlooringData,
+  'canadian-made': brandData.canadianMadeFlooringData,
   vidar: vidarFlooringData,
   wickham: wickhamFlooringData,
   // Keyword pages

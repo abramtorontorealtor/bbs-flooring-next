@@ -609,3 +609,96 @@ export const goldenChoiceFlooringData = {
   productSessionKey: 'golden-choice',
   productQueryKey: 'products-golden-choice',
 };
+
+// ══════════════════════════════════════════════════════════
+// IMPRESSIVE FLOORING — 137 products (EH 47, vinyl 48, laminate 24, solid 18)
+// 🇨🇦 Canadian-made hero: 56 SKUs (38 engineered + 18 solid) White Oak / Red Oak
+// ══════════════════════════════════════════════════════════
+
+export const impressiveFlooringData = {
+  route: 'ImpressiveFlooring',
+  title: 'Impressive Flooring Markham | Canadian-Made Hardwood',
+  description: 'Shop Impressive Flooring in Markham — Canadian-made White Oak & Red Oak engineered and solid hardwood from $4.25/sqft, plus vinyl and laminate. 137 products in stock. Call (647) 428-1111.',
+  h1: 'Impressive Flooring — Canadian-Made Hardwood in Markham',
+  subtitle: '137 Impressive products in stock. Canadian-made White Oak and Red Oak — 38 engineered and 18 solid hardwood options milled in Canada — plus vinyl and laminate. All at our Markham showroom.',
+  parentPage: null,
+  schemaType: 'product',
+  content: [
+    {
+      heading: 'Canadian-Made White Oak & Red Oak — Milled in Canada',
+      body: `<p>Impressive is one of the few brands we carry that's <strong>genuinely Canadian-made</strong>. Their engineered and solid hardwood — <strong>56 White Oak and Red Oak options</strong> — are milled in Canada, built for the humidity and temperature swings of Ontario homes rather than shipped in from overseas and hoping for the best.</p>
+<p>If you're specifically looking for <a href="/canadian-made-flooring-gta">Canadian-made flooring in the GTA</a>, this is the collection to start with. Real domestic hardwood, in stock, at prices that undercut most imported wide-plank oak.</p>`
+    },
+    {
+      heading: 'Engineered Hardwood — 47 Options from $4.25/sqft',
+      body: `<p>The core of the Impressive line is <strong>Canadian-made engineered White Oak</strong> in 5", 6½", and wider planks. The 5" collection starts at <strong>$4.25/sqft</strong> — an unusually low entry point for domestic engineered oak — and runs up to $7.99 for the premium wide-plank, wire-brushed finishes.</p>
+<p>Engineered construction means a real oak wear layer over a dimensionally-stable core, so it handles basements and over-concrete installs that solid hardwood can't. Wire-brushed and UV-cured finishes across most of the range.</p>`
+    },
+    {
+      heading: 'Solid Red Oak — 18 Options at $5.25/sqft',
+      body: `<p>For buyers who want classic ¾" <strong>solid Red Oak</strong>, Impressive's Canadian-made solid line is available in <strong>two widths (3¼" and 4¼") and two grades (Select and Select &amp; Better)</strong>, starting at $5.25/sqft. Nail-down over plywood — the proven method that lasts decades and can be sanded and refinished multiple times.</p>
+<p>Solid hardwood is the buy-it-once floor. Milled in Canada, it's the right call for main-floor living areas where you want permanence and the option to refinish down the road.</p>`
+    },
+    {
+      heading: 'Vinyl & Laminate — Imported Value from $1.79/sqft',
+      body: `<p>Rounding out the range, Impressive also carries <strong>48 vinyl plank options from $1.79/sqft</strong> and <strong>24 laminate options from $2.55/sqft</strong>. These are imported lines — not Canadian-made like the hardwood — but they're strong value plays for basements, rentals, and high-traffic spaces where waterproof SPC vinyl or a durable laminate makes more sense than wood.</p>`
+    },
+  ],
+  faqItems: [
+    { question: 'Is Impressive flooring Canadian-made?', answer: 'Impressive\u2019s hardwood is Canadian-made \u2014 their 38 engineered and 18 solid White Oak and Red Oak options are milled in Canada and built for Canadian climate conditions. Their vinyl and laminate lines are imported. BBS Flooring carries 137 Impressive products at our Markham showroom.' },
+    { question: 'How much does Impressive Canadian-made hardwood cost?', answer: 'Impressive Canadian-made engineered White Oak starts at $4.25 per square foot and runs to $7.99 for premium wide-plank finishes. Solid Red Oak is $5.25 per square foot in Select and Select & Better grades. Call (647) 428-1111 or use our Quote Calculator for a project estimate.' },
+    { question: 'What species does Impressive hardwood come in?', answer: 'Impressive Canadian-made hardwood comes in White Oak (engineered) and Red Oak (solid). The engineered line offers 5", 6.5", and wider planks with wire-brushed and UV-cured finishes; the solid Red Oak comes in 3.25" and 4.25" widths, Select and Select & Better grades.' },
+    { question: 'Where can I buy Canadian-made Impressive flooring in the GTA?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham carries the full Impressive collection, including all 56 Canadian-made hardwood options. Walk-ins welcome Monday\u2013Saturday. We offer free in-home measurements across the GTA.' },
+    { question: 'Is Impressive engineered hardwood good for basements?', answer: 'Yes. Impressive engineered hardwood uses a dimensionally-stable core that handles the humidity swings and over-concrete installs typical in basements \u2014 conditions solid hardwood can\u2019t. For fully below-grade or moisture-heavy areas, their waterproof vinyl plank is also worth considering.' },
+  ],
+  hideBrandFilter: true,
+  productFilter: (p) => has(p.brand, 'impressive'),
+  productSessionKey: 'impressive',
+  productQueryKey: 'products-impressive',
+};
+
+// ══════════════════════════════════════════════════════════
+// CANADIAN-MADE FLOORING GTA — AEO/SEO term-owner landing
+// Aggregates the Canadian-made lines we carry (Impressive + Northernest + Canadian Standard)
+// ══════════════════════════════════════════════════════════
+
+export const canadianMadeFlooringData = {
+  route: 'CanadianMadeFlooringGta',
+  title: 'Canadian-Made Flooring GTA | Domestic Hardwood in Markham',
+  description: 'Looking for Canadian-made flooring in the GTA? BBS Flooring in Markham stocks Canadian-milled White Oak & Red Oak engineered and solid hardwood from $4.25/sqft. Impressive, Northernest & more. Call (647) 428-1111.',
+  h1: 'Canadian-Made Flooring in the GTA',
+  subtitle: 'Real domestic hardwood, in stock in Markham. Canadian-milled White Oak and Red Oak — engineered and solid — built for Ontario homes, from $4.25/sqft. Free measurements across the GTA.',
+  parentPage: null,
+  schemaType: 'product',
+  content: [
+    {
+      heading: 'Why Buy Canadian-Made Flooring?',
+      body: `<p>Most flooring sold in the GTA is imported — shipped across an ocean, acclimatized to a factory floor thousands of kilometres away, and not necessarily built for Canadian humidity swings. <strong>Canadian-made hardwood is milled here, for homes here.</strong> That means tighter dimensional stability through our dry winters and humid summers, shorter supply chains, and dollars that stay in the domestic economy.</p>
+<p>At BBS Flooring in Markham, we carry <strong>Canadian-made White Oak and Red Oak</strong> across engineered and solid lines — real domestic hardwood you can see and stand on in our showroom before you buy.</p>`
+    },
+    {
+      heading: 'Canadian-Made Engineered Hardwood — from $4.25/sqft',
+      body: `<p>Our deepest Canadian-made selection is engineered <strong>White Oak</strong> from <a href="/impressive-flooring">Impressive</a> — 38 Canadian-milled options in 5", 6½", and wider planks, starting at just <strong>$4.25/sqft</strong>. Engineered construction pairs a real oak wear layer with a stable core, so it installs over concrete and in basements where solid hardwood can't go.</p>
+<p>We also carry Canadian-built engineered hardwood from <a href="/northernest-flooring">Northernest</a> and <a href="/canadian-standard-flooring">Canadian Standard</a> — giving you one of the widest domestic-hardwood selections in the GTA under one roof.</p>`
+    },
+    {
+      heading: 'Canadian-Made Solid Red Oak — $5.25/sqft',
+      body: `<p>For classic ¾" <strong>solid Red Oak</strong> milled in Canada, Impressive's solid line comes in two widths (3¼" and 4¼") and two grades (Select and Select &amp; Better) from <strong>$5.25/sqft</strong>. Nail-down solid hardwood is the buy-it-once floor — sandable and refinishable for decades.</p>`
+    },
+    {
+      heading: 'See It in Markham Before You Buy',
+      body: `<p>Canadian-made flooring is worth seeing in person — grain, colour, and finish read differently under real light than on a screen. Our Markham showroom at 6061 Highway 7, Unit B carries the full domestic-hardwood range, and we offer <a href="/free-measurement">free in-home measurements</a> across the GTA — Markham, Richmond Hill, Vaughan, Scarborough, Toronto, and Durham.</p>`
+    },
+  ],
+  faqItems: [
+    { question: 'Where can I buy Canadian-made flooring in the GTA?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham stocks Canadian-made hardwood in the GTA \u2014 including Canadian-milled White Oak and Red Oak from Impressive, plus Northernest and Canadian Standard. Engineered options start at $4.25/sqft and solid Red Oak at $5.25/sqft. Call (647) 428-1111 or visit the Markham showroom.' },
+    { question: 'What flooring brands are Canadian-made?', answer: 'At BBS Flooring, the Canadian-made hardwood brands are Impressive (Canadian-milled White Oak engineered and Red Oak solid), Northernest, and Canadian Standard. Impressive offers the deepest domestic selection with 56 Canadian-made hardwood options in stock.' },
+    { question: 'Is Canadian-made hardwood better for Ontario homes?', answer: 'Canadian-made hardwood is milled for Canadian climate conditions, which typically means better dimensional stability through Ontario\u2019s dry winters and humid summers. Because it isn\u2019t shipped across an ocean and acclimatized in a distant factory, it\u2019s built from the start for the conditions it will actually live in.' },
+    { question: 'How much does Canadian-made flooring cost in the GTA?', answer: 'At BBS Flooring, Canadian-made engineered White Oak starts at $4.25 per square foot and Canadian-made solid Red Oak at $5.25 per square foot. Premium wide-plank engineered runs up to $7.99. Prices are for in-stock inventory at our Markham showroom.' },
+    { question: 'Do you deliver Canadian-made flooring across the GTA?', answer: 'Yes. BBS Flooring delivers across the GTA \u2014 warehouse pickup is free, garage delivery is $140, and inside-home delivery is $200. We also offer free in-home measurements throughout Markham, Richmond Hill, Vaughan, Scarborough, Toronto, and Durham.' },
+  ],
+  hideBrandFilter: true,
+  productFilter: (p) => (p.is_canadian === true) || has(p.made_in, 'canada'),
+  productSessionKey: 'canadian-made',
+  productQueryKey: 'products-canadian-made',
+};

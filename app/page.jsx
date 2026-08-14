@@ -617,6 +617,7 @@ export default function HomePage() {
             <h3 className="text-xl font-bold text-slate-800 mb-4">Shop by Brand</h3>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
               {[
+                { label: 'Impressive Flooring 🇨🇦', href: '/impressive-flooring' },
                 { label: 'Vidar Flooring', href: '/vidar-flooring' },
                 { label: 'NAF Flooring', href: '/naf-flooring' },
                 { label: 'Wickham Flooring', href: '/wickham-flooring' },

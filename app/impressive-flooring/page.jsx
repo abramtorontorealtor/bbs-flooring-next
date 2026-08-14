@@ -1,0 +1,30 @@
+import { Suspense } from 'react';
+import { impressiveFlooringData } from '@/data/brandPages';
+import BrandLandingServer from '@/components/BrandLandingServer';
+import { faqSchema, JsonLd } from '@/lib/schemas';
+import { getProductsForGrid } from '@/lib/products-server';
+import ProductGridServer from '@/components/ProductGridServer';
+
+export const revalidate = 3600; // 1-hour ISR (prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
+
+export const metadata = {
+  title: impressiveFlooringData.title,
+  description: impressiveFlooringData.description,
+  alternates: { canonical: '/impressive-flooring' },
+};
+
+export default async function ImpressiveFlooringPage() {
+  const products = await getProductsForGrid({ brand: 'Impressive' });
+  const serverGrid = <ProductGridServer products={products} />;
+  return (
+    <>
+      <JsonLd data={faqSchema(impressiveFlooringData.faqItems)} />
+      <BrandLandingServer
+        {...impressiveFlooringData}
+        brandKey="impressive"
+        initialProducts={products}
+        serverGrid={serverGrid}
+      />
+    </>
+  );
+}

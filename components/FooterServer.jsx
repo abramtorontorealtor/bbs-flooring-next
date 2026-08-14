@@ -53,6 +53,7 @@ export default function FooterServer() {
             <h3 className="text-lg font-semibold mb-6">Shop by Brand</h3>
             <ul className="space-y-3">
               {[
+                { name: 'Impressive (Canadian-Made)', path: '/impressive-flooring' },
                 { name: 'Vidar Flooring', path: '/vidar-flooring' },
                 { name: 'Woden Flooring', path: '/woden-flooring' },
                 { name: 'NAF Flooring', path: '/naf-flooring' },
