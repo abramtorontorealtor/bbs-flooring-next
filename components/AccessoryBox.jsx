@@ -217,6 +217,11 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
             <div className="space-y-2">{group.items.map(renderItemRow)}</div>
           </div>
         ))}
+
+        {/* Backlink to the full accessories page (internal-linking + attach discovery) */}
+        <a href="/flooring-accessories" className="block text-center text-sm font-semibold text-amber-700 hover:text-amber-800 underline pt-1">
+          See all flooring accessories &amp; underlay guide →
+        </a>
       </CardContent>
     </Card>
 
