@@ -14,6 +14,7 @@ import { Trash2, ShoppingBag, ArrowRight, Package, AlertCircle, ArrowLeft, Wrenc
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { toast } from 'sonner';
 import TransitionPieces from '@/components/TransitionPieces';
+import CompleteInstallStrip from '@/components/CompleteInstallStrip';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
@@ -652,6 +653,16 @@ export default function CartClient() {
                   </div>
                 );
               })()}
+
+              {/* Complete-your-install attach-sell — highest-intent moment, above CTA.
+                 Surfaces top 2-3 accessories for the floors in cart, one-tap add.
+                 Renders null when no vinyl/laminate floor or everything's already added. */}
+              <CompleteInstallStrip
+                cartItems={cartItems}
+                productItems={productItems}
+                sessionId={sessionId}
+                onAdded={() => queryClient.invalidateQueries({ queryKey: ['cart'] })}
+              />
 
               <Link href="/checkout" className="block">
                 <Button
