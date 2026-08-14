@@ -32,7 +32,7 @@ export default function ContactClient() {
   };
 
   const validatePhone = (phone) => {
-    if (!phone) return true; // optional field
+    if (!phone) return false; // phone now required — it's how we call the lead back
     const digits = phone.replace(/\D/g, '');
     return digits.length === 10 || digits.length === 11;
   };
@@ -42,6 +42,11 @@ export default function ContactClient() {
     setLoading(true);
     setError(null);
 
+    if (!formData.phone || !formData.phone.trim()) {
+      setError('Phone number is required — it’s how we reach you to confirm your quote.');
+      setLoading(false);
+      return;
+    }
     if (!validatePhone(formData.phone)) {
       setError('Please enter a valid 10-digit phone number (e.g. 647-428-1111).');
       setLoading(false);
@@ -167,17 +172,19 @@ export default function ContactClient() {
                   {/* Phone */}
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="phone">
-                      Phone Number
+                      Phone Number <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="phone"
                       name="phone"
                       type="tel"
+                      required
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="(647) 555-0100"
                       className="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
                     />
+                    <p className="mt-1 text-xs text-slate-500">We call to confirm details &amp; book your measurement — fastest way to get your quote.</p>
                   </div>
 
                   {/* Honeypot — hidden from real users, catches bots. Do not remove. */}
