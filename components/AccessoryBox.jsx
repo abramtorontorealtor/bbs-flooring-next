@@ -41,7 +41,27 @@ function underpadMode(product) {
   return 'hidden'; // hardwood etc. → no floating underlay
 }
 
-export default function AccessoryBox({ product, sessionId: initialSessionId, onAccessoryAdded }) {
+// ── Quantity auto-suggest (Abram Aug 13 · Phase 2 task #3) ──
+// Turns the sqft the customer already typed in the buy box into a sensible
+// starting quantity so the qty field isn't a blank guess.
+//  - Underlay (per roll): exact → ceil(sqft / roll coverage).
+//  - Trim/baseboard (per 10ft/7ft stick): rooms aren't square, so estimate the
+//    perimeter as ~4.5×√area (a mild buffer over the 4×√area square-room ideal)
+//    then ceil(perimeter / stick length). Framed as an estimate, never forced.
+function suggestQty(item, floorSqft) {
+  const sqft = parseFloat(floorSqft);
+  if (!sqft || sqft <= 0) return 0;
+  if (item.unit === 'roll') {
+    const cov = item.coverage_sqft || 200;
+    return Math.max(1, Math.ceil(sqft / cov));
+  }
+  // per-piece linear trim → estimate perimeter
+  const perimeterFt = 4.5 * Math.sqrt(sqft);
+  const len = item.length_ft || 10;
+  return Math.max(1, Math.ceil(perimeterFt / len));
+}
+
+export default function AccessoryBox({ product, sessionId: initialSessionId, onAccessoryAdded, floorSqft = null }) {
   const [quantities, setQuantities] = useState({});
   const padMode = underpadMode(product);
   const [showOptionalPad, setShowOptionalPad] = useState(false);
@@ -92,7 +112,12 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
     }
   };
 
-  const renderItemRow = (item) => (
+  const renderItemRow = (item) => {
+    const suggested = suggestQty(item, floorSqft);
+    const effectiveQty = (quantities[item.key] != null && quantities[item.key] > 0)
+      ? quantities[item.key]
+      : 0;
+    return (
     <div key={item.key} className={`flex items-center gap-3 rounded-lg p-2.5 border ${item.recommended ? 'bg-emerald-50/60 border-emerald-300' : 'bg-white border-slate-100'}`}>
       <img src={item.image} alt={item.label} className="w-12 h-12 rounded object-cover bg-slate-50 flex-shrink-0" loading="lazy" />
       <div className="flex-1 min-w-0">
@@ -103,14 +128,28 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
         <div className="text-xs text-slate-500 leading-tight mt-0.5">{item.blurb}</div>
         <div className="text-xs font-bold text-amber-700 mt-0.5">C${item.price.toFixed(2)}/{item.unit}</div>
       </div>
-      <div className="flex items-center gap-1.5 flex-shrink-0">
-        <Input type="number" min="0" value={quantities[item.key] || ''} onChange={(e) => setQty(item.key, e.target.value)} placeholder="Qty" className="w-14 text-center h-8 text-sm" />
-        <Button onClick={() => handleAdd(item)} disabled={(quantities[item.key] || 0) <= 0} size="sm" className="bg-amber-500 hover:bg-amber-600 h-8 w-8 p-0" aria-label={`Add ${item.label}`}>
-          <Plus className="w-4 h-4" />
-        </Button>
+      <div className="flex flex-col items-end gap-1 flex-shrink-0">
+        <div className="flex items-center gap-1.5">
+          <Input type="number" min="0" value={quantities[item.key] ?? ''} onChange={(e) => setQty(item.key, e.target.value)} placeholder={suggested > 0 ? String(suggested) : 'Qty'} className="w-14 text-center h-8 text-sm" />
+          <Button onClick={() => handleAdd(item)} disabled={effectiveQty <= 0} size="sm" className="bg-amber-500 hover:bg-amber-600 h-8 w-8 p-0" aria-label={`Add ${item.label}`}>
+            <Plus className="w-4 h-4" />
+          </Button>
+        </div>
+        {suggested > 0 && (quantities[item.key] == null || quantities[item.key] === 0) && (
+          <button
+            type="button"
+            onClick={() => setQty(item.key, suggested)}
+            className="text-[10px] font-semibold text-amber-700 hover:text-amber-800 hover:underline leading-none whitespace-nowrap"
+          >
+            {item.unit === 'roll'
+              ? `Use ${suggested} for your ${floorSqft} sqft →`
+              : `~${suggested} for your perimeter →`}
+          </button>
+        )}
       </div>
     </div>
-  );
+    );
+  };
 
   return (
     <Card className="border-2 border-amber-200 bg-amber-50/40">

@@ -59,6 +59,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
   const PLACEHOLDER = '/images/product-placeholder.svg';
   const buyBoxRef = useRef(null);
   const quoteBoxRef = useRef(null);
+  const accessoryBoxRef = useRef(null);
+
+  const scrollToAccessories = () => {
+    accessoryBoxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const scrollToQuoteBox = useCallback(() => {
     quoteBoxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -835,6 +840,18 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   {isAddingToCart ? 'Adding...' : isOutOfStock ? 'Out of Stock' : (product.has_variants && !selectedJsonVariant) ? 'Select an option' : calculation ? (calculation.hasUserSqft ? `Add to Cart · C$${calculation.lineTotal.toFixed(2)}` : `Add 1 Box · C$${calculation.lineTotal.toFixed(2)}`) : 'Add to Cart'}
                 </Button>
+                {/* Attach-sell seed at the decision point — plants underlay/trim awareness
+                   right under the buy CTA without cluttering the buy area (the box
+                   itself stays lower). memory/ACCESSORY-ATTACH-PLAN.md Phase 2 task #2. */}
+                {(product.category === 'vinyl' || product.category === 'laminate') && (
+                  <button
+                    type="button"
+                    onClick={scrollToAccessories}
+                    className="w-full text-sm font-semibold text-amber-700 hover:text-amber-800 hover:underline text-center pt-0.5"
+                  >
+                    + Add underlay, quarter round &amp; trim →
+                  </button>
+                )}
               </div>
             ) : (
               /* Installation mode → route to quote calculator */
@@ -975,8 +992,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
 
       {/* Accessories — underlay/quarter round/baseboards. Trim + baseboards are
           universal; underpad self-gates to floating floors inside the component. */}
-      <section className="mt-8">
-        <AccessoryBox product={product} />
+      <section className="mt-8" ref={accessoryBoxRef}>
+        <AccessoryBox product={product} floorSqft={calculation?.hasUserSqft ? calculation.sqftNeeded : null} />
       </section>
 
       {/* ── Complete Your Project — Compact service cards ── */}
