@@ -40,6 +40,7 @@ export default async function sitemap() {
     { path: '/commercial-vinyl-flooring', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/laminate', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/waterproof-flooring', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/flooring-accessories', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/waterproof-laminate-flooring', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/white-oak-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/vidar-flooring', priority: 0.7, changeFrequency: 'weekly' },
