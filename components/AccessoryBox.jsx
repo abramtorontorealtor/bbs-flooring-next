@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Plus, Package } from 'lucide-react';
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Plus, Package, ZoomIn } from 'lucide-react';
 import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 import { UNDERPAD_CATALOG, TRIM_CATALOG, BASEBOARD_CATALOG } from '@/lib/accessoryCatalog';
@@ -65,6 +66,9 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
   const [quantities, setQuantities] = useState({});
   const padMode = underpadMode(product);
   const [showOptionalPad, setShowOptionalPad] = useState(false);
+  // Lightbox: profiles matter (8 baseboard shapes, 6 doorstop profiles) — let the
+  // customer tap the thumbnail to see the actual profile they're committing to.
+  const [zoomItem, setZoomItem] = useState(null);
 
   const getSessionId = () => {
     let sid = initialSessionId || (typeof window !== 'undefined' && localStorage.getItem('bbs_session_id'));
@@ -80,8 +84,10 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
     setQuantities(prev => ({ ...prev, [key]: qty }));
   };
 
-  const handleAdd = async (item) => {
-    const qty = quantities[item.key] || 0;
+  const handleAdd = async (item, qtyOverride = null) => {
+    // qtyOverride lets the lightbox 'Add to Cart' pass an explicit qty without
+    // waiting on the async setQty state update (stale-read guard).
+    const qty = qtyOverride != null ? qtyOverride : (quantities[item.key] || 0);
     if (qty <= 0) { toast.error('Please enter a quantity greater than 0'); return; }
     const sid = getSessionId();
     const unitWord = item.unit === 'roll' ? 'Roll' : 'Piece';
@@ -119,7 +125,17 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
       : 0;
     return (
     <div key={item.key} className={`flex items-center gap-3 rounded-lg p-2.5 border ${item.recommended ? 'bg-emerald-50/60 border-emerald-300' : 'bg-white border-slate-100'}`}>
-      <img src={item.image} alt={item.label} className="w-12 h-12 rounded object-cover bg-slate-50 flex-shrink-0" loading="lazy" />
+      <button
+        type="button"
+        onClick={() => setZoomItem(item)}
+        className="relative w-12 h-12 rounded overflow-hidden bg-slate-50 flex-shrink-0 group focus:outline-none focus:ring-2 focus:ring-amber-400"
+        aria-label={`View ${item.label} profile`}
+      >
+        <img src={item.image} alt={item.label} className="w-12 h-12 object-cover" loading="lazy" />
+        <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">
+          <ZoomIn className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+        </span>
+      </button>
       <div className="flex-1 min-w-0">
         <div className="font-semibold text-slate-800 text-sm leading-tight flex items-center gap-1.5 flex-wrap">
           {item.label}
@@ -152,6 +168,7 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
   };
 
   return (
+   <>
     <Card className="border-2 border-amber-200 bg-amber-50/40">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center gap-2">
@@ -202,5 +219,40 @@ export default function AccessoryBox({ product, sessionId: initialSessionId, onA
         ))}
       </CardContent>
     </Card>
+
+    {/* Profile lightbox — tap any accessory thumbnail to see the actual profile. */}
+    <Dialog open={!!zoomItem} onOpenChange={(o) => !o && setZoomItem(null)}>
+      <DialogContent className="max-w-md p-0 overflow-hidden">
+        {zoomItem && (
+          <div>
+            <div className="bg-slate-50 flex items-center justify-center p-4">
+              <img
+                src={zoomItem.image}
+                alt={zoomItem.label}
+                className="max-h-[60vh] w-auto object-contain rounded"
+              />
+            </div>
+            <div className="p-4">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h4 className="font-bold text-slate-900">{zoomItem.label}</h4>
+                {zoomItem.recommended && <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-full">BEST VALUE</span>}
+              </div>
+              {zoomItem.blurb && <p className="text-sm text-slate-600 mt-1">{zoomItem.blurb}</p>}
+              <div className="flex items-center justify-between mt-3">
+                <span className="text-sm font-bold text-amber-700">C${zoomItem.price.toFixed(2)}/{zoomItem.unit}</span>
+                <Button
+                  onClick={() => { const q = Math.max(1, quantities[zoomItem.key] || suggestQty(zoomItem, floorSqft) || 1); handleAdd(zoomItem, q); setZoomItem(null); }}
+                  size="sm"
+                  className="bg-amber-500 hover:bg-amber-600"
+                >
+                  <Plus className="w-4 h-4 mr-1" /> Add to Cart
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+   </>
   );
 }
