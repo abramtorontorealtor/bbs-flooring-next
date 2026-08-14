@@ -12,6 +12,7 @@ export default function NewsletterForm() {
     e.preventDefault();
     if (!email || submitting) return;
     setSubmitting(true);
+    let saved = false;
     try {
       await entities.ContactLead.create({
         email,
@@ -21,22 +22,27 @@ export default function NewsletterForm() {
         source: 'newsletter_footer',
         message: 'Email subscriber (footer signup)',
       });
+      saved = true;
     } catch (err) {
       console.warn('Footer email subscribe failed:', err);
     }
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'generate_lead', {
-        event_category: 'Email Capture',
-        event_label: 'footer_signup',
-        value: 5.0,
-        currency: 'CAD',
-      });
-    }
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'Lead', { content_name: 'footer_email', value: 5.0, currency: 'CAD' });
+    // Only fire the conversion event when the lead actually saved — firing on
+    // failure poisons the GA4 conversion set + Meta pixel and misleads Smart Bidding.
+    if (saved) {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'Email Capture',
+          event_label: 'footer_signup',
+          value: 5.0,
+          currency: 'CAD',
+        });
+      }
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'footer_email', value: 5.0, currency: 'CAD' });
+      }
     }
     setSubmitting(false);
-    setSubmitted(true);
+    if (saved) setSubmitted(true);
   };
 
   if (submitted) {
