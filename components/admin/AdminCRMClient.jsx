@@ -2057,6 +2057,8 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
   const [logNotes, setLogNotes] = useState('');
   const [logging, setLogging] = useState(false);
   const [copied, setCopied] = useState(null);
+  const [pricePerSqft, setPricePerSqft] = useState('');
+  const [sqftInput, setSqftInput] = useState('');
 
   const o = lead.raw;
   const firstName = (lead.name || 'there').split(' ')[0];
@@ -2111,18 +2113,31 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
     slate: 'bg-slate-50 border-slate-200 text-slate-700',
   };
 
+  // ── Price line (agent types $/sqft; sqft pre-fills from the parsed note, editable)
+  const effectiveSqft = (sqftInput || sqft || '').toString().replace(/,/g, '').trim();
+  const priceNum = parseFloat((pricePerSqft || '').toString().replace(/[^0-9.]/g, ''));
+  const sqftNum = parseFloat(effectiveSqft);
+  const hasPrice = !isNaN(priceNum) && priceNum > 0;
+  const priceLine = hasPrice
+    ? (!isNaN(sqftNum) && sqftNum > 0
+        ? `$${priceNum.toFixed(2)}/sq ft × ${sqftNum.toLocaleString('en-CA')} sq ft = $${(priceNum * sqftNum).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} all-in`
+        : `$${priceNum.toFixed(2)}/sq ft`)
+    : '';
+
   // ── Generate scripts
   // PDP price requests get their own scripts: the customer asked for PRICING on a
   // specific product — they never built a quote, so "following up on your quote" is wrong.
   const callScript = isPdpPriceRequest
-    ? `Hey ${firstName}, it's Abram from BBS Flooring. You asked us for pricing on ${product}${sqft ? ` for about ${sqft} sq ft` : ''} — I've got that ready for you.\n\nGive them the price, then:\n“That's our all-in price per sq ft. Want me to work out the total for your space?”\n\nIf they're comparing prices:\n“We beat any written quote by 5% — bring it in and we'll match it, guaranteed.”\n\nIf they're ready:\n“I can book a free in-home measurement this week and bring samples — what day works?”`
+    ? `Hey ${firstName}, it's Abram from BBS Flooring. You asked us for pricing on ${product}${effectiveSqft ? ` for about ${Number(effectiveSqft).toLocaleString('en-CA')} sq ft` : ''} — I've got that ready for you.\n\n${priceLine ? `Quote them: ${priceLine}` : 'Give them the price'}, then:\n“${sqftNum > 0 ? "That's the all-in total for your space." : "That's our all-in price per sq ft. Want me to work out the total for your space?"}”\n\nIf they're comparing prices:\n“We beat any written quote by 5% — bring it in and we'll match it, guaranteed.”\n\nIf they're ready:\n“I can book a free in-home measurement this week and bring samples — what day works?”`
     : `Hey ${firstName}, it's Abram from BBS Flooring. ${lead.status === 'new'
       ? `You were looking at ${product}${sqft ? ` for about ${sqft} square feet` : ''} on our site — just wanted to check in and see if you had any questions.`
       : `Just following up on your ${product} project — wanted to see how things are going.`
     }\n\nIf they're comparing prices:\n“We beat any written quote by 5%. Bring it in and we'll match it — guaranteed.”\n\nIf they need more time:\n“No rush at all. Want me to hold that pricing for you?”\n\nIf they're ready:\n“Great! I can book a free measurement this week — what day works best?”`;
 
   const textScript = isPdpPriceRequest
-    ? `Hi ${firstName}! It's Abram from BBS Flooring — you asked for pricing on ${product}${sqft ? ` for about ${sqft} sq ft` : ''}. Happy to send over the price and answer any questions, or book a free in-home measurement with samples whenever works 👍 bbsflooring.ca`
+    ? (priceLine
+        ? `Hi ${firstName}! It's Abram from BBS Flooring — pricing on ${product}: ${priceLine}. ${sqftNum > 0 ? 'That’s all-in for your space. ' : ''}Happy to answer any questions or book a free in-home measurement with samples whenever works 👍 bbsflooring.ca`
+        : `Hi ${firstName}! It's Abram from BBS Flooring — you asked for pricing on ${product}${effectiveSqft ? ` for about ${Number(effectiveSqft).toLocaleString('en-CA')} sq ft` : ''}. Happy to send over the price and answer any questions, or book a free in-home measurement with samples whenever works 👍 bbsflooring.ca`)
     : `Hey ${firstName}! It's Abram from BBS Flooring. ${lead.status === 'new'
       ? `Just following up on your ${product} quote${quoteTotal ? ` (${quoteTotal})` : ''}. Happy to answer any questions or book a free measurement whenever works 👍`
       : `Checking in on your ${product} project — let me know if you need anything!`
@@ -2178,6 +2193,30 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
         </div>
 
         <div className="p-3">
+          {/* Price inputs — shown on Call + Text tabs for price-request leads so the agent can drop the quoted price into the script */}
+          {isPdpPriceRequest && (activeTab === 'call' || activeTab === 'text') && (lead.phone) && (
+            <div className="mb-3 flex items-end gap-2 rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
+              <div className="flex-1">
+                <label className="block text-[11px] font-semibold text-slate-500 mb-0.5">Price $/sq ft</label>
+                <input type="number" step="0.01" inputMode="decimal" placeholder="4.29"
+                  value={pricePerSqft} onChange={(e) => setPricePerSqft(e.target.value)}
+                  className="w-full px-2.5 py-1.5 border border-slate-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+              </div>
+              <div className="flex-1">
+                <label className="block text-[11px] font-semibold text-slate-500 mb-0.5">Sq ft</label>
+                <input type="number" inputMode="numeric" placeholder={sqft ? String(sqft) : '1100'}
+                  value={sqftInput} onChange={(e) => setSqftInput(e.target.value)}
+                  className="w-full px-2.5 py-1.5 border border-slate-200 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+              </div>
+              {priceLine && (
+                <div className="flex-[1.4] text-right">
+                  <span className="block text-[11px] text-slate-400">Quotes as</span>
+                  <span className="text-sm font-bold text-amber-700">{priceLine}</span>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Call Tab */}
           {activeTab === 'call' && lead.phone && (
             <div className="space-y-3">
