@@ -2060,8 +2060,17 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
 
   const o = lead.raw;
   const firstName = (lead.name || 'there').split(' ')[0];
-  const product = o.product_name || 'flooring';
-  const sqft = o.square_footage || o.sqft || '';
+
+  // PDP price requests (source=pdp_quote_request) carry no product_name column —
+  // the product, SKU, config and often the sq ft live in the message body:
+  //   Product: <name>\nSKU: ...\nConfiguration: ...\nCustomer note: <free text, often "1100 sq ft">
+  const rawMsg = o.message || '';
+  const isPdpPriceRequest = (o.source === 'pdp_quote_request') || /^Product:\s/i.test(rawMsg);
+  const pdpProductName = (rawMsg.match(/^Product:\s*(.+)$/im) || [])[1]?.trim();
+  const pdpSqft = (rawMsg.match(/([\d,]+)\s*(?:sq\.?\s*ft|square\s*feet|sqft|sf)\b/i) || [])[1];
+
+  const product = pdpProductName || o.product_name || 'flooring';
+  const sqft = o.square_footage || o.sqft || pdpSqft || '';
   const quoteTotal = lead.value > 0 ? `$${lead.value.toLocaleString('en-CA', { minimumFractionDigits: 0 })}` : '';
   const address = o.customer_address || o.address || '';
   const daysSince = lead.date ? Math.floor((Date.now() - new Date(lead.date)) / 86400000) : 0;
@@ -2069,10 +2078,14 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
   // ── Suggested next step logic
   const getSuggestedStep = () => {
     if (lead.status === 'new' && daysSince < 1) {
-      return { urgency: 'red', icon: '🚨', text: `Call ${firstName} now — ${quoteTotal || product} quote, just came in!` };
+      return { urgency: 'red', icon: '🚨', text: isPdpPriceRequest
+        ? `Call ${firstName} now — asked for pricing on ${product}, just came in! Reply within the hour.`
+        : `Call ${firstName} now — ${quoteTotal || product} quote, just came in!` };
     }
     if (lead.status === 'new' && daysSince < 3) {
-      return { urgency: 'red', icon: '🔴', text: `Call ${firstName} — ${quoteTotal || product}, ${daysSince}d without contact` };
+      return { urgency: 'red', icon: '🔴', text: isPdpPriceRequest
+        ? `Call ${firstName} — price request for ${product}, ${daysSince}d without contact`
+        : `Call ${firstName} — ${quoteTotal || product}, ${daysSince}d without contact` };
     }
     if (lead.status === 'new' && daysSince >= 3) {
       return { urgency: 'amber', icon: '⚠️', text: `${firstName} has been waiting ${daysSince} days. Try a text — less intrusive than a call at this point.` };
@@ -2099,15 +2112,21 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
   };
 
   // ── Generate scripts
-  const callScript = `Hey ${firstName}, it's Abram from BBS Flooring. ${lead.status === 'new'
-    ? `You were looking at ${product}${sqft ? ` for about ${sqft} square feet` : ''} on our site — just wanted to check in and see if you had any questions.`
-    : `Just following up on your ${product} project — wanted to see how things are going.`
-  }\n\nIf they're comparing prices:\n“We beat any written quote by 5%. Bring it in and we'll match it — guaranteed.”\n\nIf they need more time:\n“No rush at all. Want me to hold that pricing for you?”\n\nIf they're ready:\n“Great! I can book a free measurement this week — what day works best?”`;
+  // PDP price requests get their own scripts: the customer asked for PRICING on a
+  // specific product — they never built a quote, so "following up on your quote" is wrong.
+  const callScript = isPdpPriceRequest
+    ? `Hey ${firstName}, it's Abram from BBS Flooring. You asked us for pricing on ${product}${sqft ? ` for about ${sqft} sq ft` : ''} — I've got that ready for you.\n\nGive them the price, then:\n“That's our all-in price per sq ft. Want me to work out the total for your space?”\n\nIf they're comparing prices:\n“We beat any written quote by 5% — bring it in and we'll match it, guaranteed.”\n\nIf they're ready:\n“I can book a free in-home measurement this week and bring samples — what day works?”`
+    : `Hey ${firstName}, it's Abram from BBS Flooring. ${lead.status === 'new'
+      ? `You were looking at ${product}${sqft ? ` for about ${sqft} square feet` : ''} on our site — just wanted to check in and see if you had any questions.`
+      : `Just following up on your ${product} project — wanted to see how things are going.`
+    }\n\nIf they're comparing prices:\n“We beat any written quote by 5%. Bring it in and we'll match it — guaranteed.”\n\nIf they need more time:\n“No rush at all. Want me to hold that pricing for you?”\n\nIf they're ready:\n“Great! I can book a free measurement this week — what day works best?”`;
 
-  const textScript = `Hey ${firstName}! It's Abram from BBS Flooring. ${lead.status === 'new'
-    ? `Just following up on your ${product} quote${quoteTotal ? ` (${quoteTotal})` : ''}. Happy to answer any questions or book a free measurement whenever works 👍`
-    : `Checking in on your ${product} project — let me know if you need anything!`
-  } bbsflooring.ca`;
+  const textScript = isPdpPriceRequest
+    ? `Hi ${firstName}! It's Abram from BBS Flooring — you asked for pricing on ${product}${sqft ? ` for about ${sqft} sq ft` : ''}. Happy to send over the price and answer any questions, or book a free in-home measurement with samples whenever works 👍 bbsflooring.ca`
+    : `Hey ${firstName}! It's Abram from BBS Flooring. ${lead.status === 'new'
+      ? `Just following up on your ${product} quote${quoteTotal ? ` (${quoteTotal})` : ''}. Happy to answer any questions or book a free measurement whenever works 👍`
+      : `Checking in on your ${product} project — let me know if you need anything!`
+    } bbsflooring.ca`;
 
   const copyToClipboard = (text, label) => {
     navigator.clipboard.writeText(text).then(() => {
