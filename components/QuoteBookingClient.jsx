@@ -12,6 +12,13 @@ import { Analytics } from '@/components/analytics';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+import { ServiceGallery } from '@/components/service';
+import { stairsImages, flooringImages } from '@/data/galleryImages';
+
+const QUOTE_PROOF = [
+  stairsImages[2], flooringImages[3], stairsImages[0],
+  flooringImages[5], stairsImages[4], flooringImages[0],
+];
 
 function formatPostalCode(value) {
   const clean = value.replace(/\s/g, '').toUpperCase();
@@ -543,7 +550,7 @@ export default function QuoteBookingClient() {
             <div className="space-y-5">
               {[
                 { icon: FileText, title: 'Accurate Quotes', desc: 'We measure your space for a precise, all-in quote—no surprises.' },
-                { icon: CheckCircle, title: 'No Pressure', desc: '100% free, no obligation—your satisfaction is our priority.' },
+                { icon: CheckCircle, title: 'No Pressure, Guaranteed', desc: '100% free, no obligation. Every job ends with a final walkthrough — we make it right until you\'re satisfied.' },
                 { icon: Clock, title: 'Quick & Easy', desc: 'Flexible scheduling, including weekend availability across the GTA.' },
                 { icon: CalendarCheck, title: 'Same-Week Availability', desc: 'Most appointments are confirmed within 24 hours.' },
               ].map(({ icon: Icon, title, desc }) => (
@@ -582,6 +589,15 @@ export default function QuoteBookingClient() {
             </div>
           </div>
         </div>
+
+        {/* Real project proof — reassure before they book */}
+        <ServiceGallery
+          title="Real GTA Projects — What You're Booking"
+          subtitle="Installed by our own Markham crew across Markham, Toronto & Durham since 2012."
+          images={QUOTE_PROOF}
+          totalCount={47}
+          bg="bg-slate-50"
+        />
       </div>
 
       {/* Sticky Mobile CTA */}

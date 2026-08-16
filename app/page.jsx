@@ -401,7 +401,7 @@ export default function HomePage() {
                   { text: 'Free in-home measurements with clear, honest quotes', strong: 'No surprises' },
                   { text: '1,000+ flooring options in our Markham showroom', strong: 'See it in person' },
                   { text: 'Transparent pricing — no hidden fees, ever', strong: 'Wholesale direct' },
-                  { text: '100% satisfaction guaranteed on every project', strong: 'Our promise' },
+                  { text: '100% satisfaction guaranteed — final walkthrough on every job, and we make it right', strong: 'Our promise' },
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-4">
                     <CheckCircleIcon className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" />

@@ -4,6 +4,13 @@ import { freeMeasurementSchema, faqSchema, JsonLd } from '@/lib/schemas';
 import { FREE_MEASUREMENT_FAQS } from '@/data/faqs';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+import { ServiceGallery } from '@/components/service';
+import { stairsImages, flooringImages } from '@/data/galleryImages';
+
+const MEASUREMENT_PROOF = [
+  stairsImages[0], flooringImages[0], stairsImages[4],
+  flooringImages[5], stairsImages[2], flooringImages[3],
+];
 
 export const metadata = {
   title: 'Free In-Home Flooring Measurement Markham & GTA 2026',
@@ -75,8 +82,8 @@ export default function FreeMeasurementPage() {
                 <div className="flex gap-4">
                   <span className="text-3xl flex-shrink-0">✅</span>
                   <div>
-                    <h3 className="font-bold text-lg text-slate-800 mb-1">No Pressure</h3>
-                    <p className="text-slate-600 text-sm">100% free, no obligation—your satisfaction is our priority.</p>
+                    <h3 className="font-bold text-lg text-slate-800 mb-1">No Pressure, Guaranteed</h3>
+                    <p className="text-slate-600 text-sm">100% free, no obligation. Every job ends with a final walkthrough — we don't consider it done until you're satisfied.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -109,6 +116,15 @@ export default function FreeMeasurementPage() {
             </div>
           </div>
         </div>
+
+        {/* SSR: Real project proof — reassure before they book */}
+        <ServiceGallery
+          title="Real GTA Projects — What You're Booking"
+          subtitle="Every measurement leads to work like this: installed by our own Markham crew across Markham, Toronto & Durham since 2012."
+          images={MEASUREMENT_PROOF}
+          totalCount={47}
+          bg="bg-slate-50"
+        />
 
         {/* SSR: FAQ section with native details/summary for crawlers */}
         <div className="mt-16 max-w-3xl mx-auto px-4 pb-16">
