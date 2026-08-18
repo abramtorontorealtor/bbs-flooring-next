@@ -567,6 +567,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 389 impr, pos 16.2
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-vaughan': {
+    noindex: true, // Phase D Wave 1 (Aug 18 2026): zero-traffic doorway page — reversible noindex test. See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'vaughan',
     city: 'Vaughan',
@@ -1012,6 +1013,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 122 impr, pos 15.5
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-ajax': {
+    noindex: true, // Phase D Wave 1 (Aug 18 2026): zero-traffic doorway page — reversible noindex test. See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'ajax',
     city: 'Ajax',
@@ -2459,6 +2461,7 @@ Prices are for material; nail-down install and on-site sand-and-finish are quote
   // ENGINEERED HARDWOOD FLOORING × TORONTO  (exact-match slug)
   // ══════════════════════════════════════════════════════════════════════════
   'engineered-hardwood-flooring-toronto': {
+    noindex: true, // Phase D Wave 1 (Aug 18 2026): zero-traffic doorway page — reversible noindex test. See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'engineered-hardwood',
     citySlug: 'toronto',
     city: 'Toronto',
@@ -2609,6 +2612,7 @@ Prices are for material. Installation is quoted at your free estimate. We delive
   // LAMINATE FLOORING × VAUGHAN
   // ══════════════════════════════════════════════════════════════════════════
   'laminate-flooring-vaughan': {
+    noindex: true, // Phase D Wave 1 (Aug 18 2026): zero-traffic doorway page — reversible noindex test. See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'vaughan',
     city: 'Vaughan',
@@ -3117,6 +3121,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'solid-hardwood-flooring-vaughan': {
+    noindex: true, // Phase D Wave 1 (Aug 18 2026): zero-traffic doorway page — reversible noindex test. See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'solid-hardwood',
     citySlug: 'vaughan',
     city: 'Vaughan',

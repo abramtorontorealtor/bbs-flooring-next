@@ -29,6 +29,11 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
+    // Phase D Wave 1 (Aug 18 2026): reversible noindex on zero-traffic doorway pages.
+    // noindex,follow = drop from index but still pass link equity. Fully reversible
+    // (remove the flag in data/cityProductData.js + redeploy). See
+    // projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
+    ...(page.noindex ? { robots: { index: false, follow: true } } : {}),
     alternates: {
       canonical: `/${cityProduct}`,
     },
