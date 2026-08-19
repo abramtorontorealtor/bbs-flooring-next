@@ -136,7 +136,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
       search: p('search'),
       priceRange: [
         p('priceMin') ? parseFloat(p('priceMin')) : 0,
-        p('priceMax') ? parseFloat(p('priceMax')) : 50,
+        p('priceMax') ? parseFloat(p('priceMax')) : null,
       ],
       isOnSale: searchParams.get('sale') === 'true',
       isWaterproof: searchParams.get('waterproof') === 'true',
@@ -161,7 +161,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
       defaults.thicknesses.length || defaults.finishes.length || defaults.grades.length ||
       defaults.wearLayers.length || defaults.acRatings.length || defaults.categories.length ||
       defaults.isOnSale || defaults.isWaterproof || defaults.isNewArrival || defaults.isClearance ||
-      defaults.sortBy !== 'recommended' || defaults.priceRange[0] !== 0 || defaults.priceRange[1] !== 50;
+      defaults.sortBy !== 'recommended' || defaults.priceRange[0] !== 0 || defaults.priceRange[1] !== null;
 
     if (hasUrlFilters) return defaults;
 
@@ -207,6 +207,18 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
       return true;
     }), [allProducts, categoryFilter]
   );
+
+  // Dynamic price ceiling — the slider tops out at the real max price of the
+  // products on THIS grid (rounded up to the next dollar), not a hardcoded $50.
+  // A top-thumb value of null means "no upper bound" (i.e. sitting at the ceiling).
+  const priceCeiling = useMemo(() => {
+    let mx = 0;
+    for (const p of products) {
+      const v = p.sale_price_per_sqft || p.price_per_sqft || 0;
+      if (v > mx) mx = v;
+    }
+    return mx > 0 ? Math.ceil(mx) : 10;
+  }, [products]);
 
   // Detect category composition for mixed-category brand pages
   const hasHardwood = useMemo(() => isMixedCategory && products.some(p => HARDWOOD_CATEGORIES.includes(p.category)), [products, isMixedCategory]);
@@ -284,7 +296,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
 
     result = result.filter(p => {
       const price = p.sale_price_per_sqft || p.price_per_sqft || 0;
-      return price >= filters.priceRange[0] && price <= filters.priceRange[1];
+      return price >= (filters.priceRange[0] || 0) && price <= (filters.priceRange[1] ?? Infinity);
     });
 
     // Sort
@@ -365,16 +377,16 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     filters.acRatings.forEach(a => pills.push({ key: `ac-${a}`, label: a, clear: () => setFilters(f => ({ ...f, acRatings: f.acRatings.filter(x => x !== a) })) }));
     const CAT_LABELS = { vinyl: 'Vinyl', engineered_hardwood: 'Engineered Hardwood', solid_hardwood: 'Solid Hardwood', laminate: 'Laminate' };
     filters.categories.forEach(c => pills.push({ key: `cat-${c}`, label: CAT_LABELS[c] || c, clear: () => setFilters(f => ({ ...f, categories: f.categories.filter(x => x !== c) })) }));
-    if (filters.priceRange[0] > 0 || filters.priceRange[1] < 50) pills.push({ key: 'price', label: `C$${filters.priceRange[0]}–$${filters.priceRange[1]}/sqft`, clear: () => setFilters(f => ({ ...f, priceRange: [0, 50] })) });
+    if ((filters.priceRange[0] || 0) > 0 || (filters.priceRange[1] != null && filters.priceRange[1] < priceCeiling)) pills.push({ key: 'price', label: `C$${(filters.priceRange[0] || 0).toFixed(2)}–$${(filters.priceRange[1] ?? priceCeiling).toFixed(2)}/sqft`, clear: () => setFilters(f => ({ ...f, priceRange: [0, null] })) });
     return pills;
-  }, [filters]);
+  }, [filters, priceCeiling]);
 
   const activeFilterCount = activeFilters.length;
 
   // ── Clear all filters ──
   const clearAllFilters = useCallback(() => {
     const reset = {
-      search: '', priceRange: [0, 50],
+      search: '', priceRange: [0, null],
       isOnSale: false, isWaterproof: false, isNewArrival: false, isClearance: false,
       brands: [], collections: [], species: [], colours: [], widths: [],
       thicknesses: [], finishes: [], grades: [], wearLayers: [], acRatings: [],
@@ -409,8 +421,8 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     if (filters.acRatings.length) params.set('acRating', filters.acRatings.join(','));
     if (filters.categories.length) params.set('cat', filters.categories.join(','));
     if (filters.sortBy !== 'recommended') params.set('sort', filters.sortBy);
-    if (filters.priceRange[0] !== 0) params.set('priceMin', String(filters.priceRange[0]));
-    if (filters.priceRange[1] !== 50) params.set('priceMax', String(filters.priceRange[1]));
+    if ((filters.priceRange[0] || 0) !== 0) params.set('priceMin', String(filters.priceRange[0]));
+    if (filters.priceRange[1] != null) params.set('priceMax', String(filters.priceRange[1]));
 
     const newSearch = params.toString();
     const currentSearch = searchParams.toString();
@@ -445,17 +457,17 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
       <FilterSection title="Price (per sq.ft)" defaultOpen={true}>
         <div className="px-1">
           <Slider
-            value={filters.priceRange}
-            onValueChange={(val) => setFilters(f => ({ ...f, priceRange: val }))}
+            value={[filters.priceRange[0] || 0, Math.min(filters.priceRange[1] ?? priceCeiling, priceCeiling)]}
+            onValueChange={(val) => setFilters(f => ({ ...f, priceRange: [val[0], val[1] >= priceCeiling ? null : val[1]] }))}
             min={0}
-            max={50}
-            step={0.5}
+            max={priceCeiling}
+            step={0.1}
             className="mb-3"
           />
           <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-600 font-medium tabular-nums">C${filters.priceRange[0].toFixed(2)}</span>
+            <span className="text-slate-600 font-medium tabular-nums">C${(filters.priceRange[0] || 0).toFixed(2)}</span>
             <span className="text-slate-400">—</span>
-            <span className="text-slate-600 font-medium tabular-nums">C${filters.priceRange[1].toFixed(2)}</span>
+            <span className="text-slate-600 font-medium tabular-nums">C${(filters.priceRange[1] ?? priceCeiling).toFixed(2)}</span>
           </div>
         </div>
       </FilterSection>
