@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import ProductCard from '@/components/ProductCard';
 import ProductToolbar from '@/components/ProductToolbar';
+import GridPriceMatchBar from '@/components/GridPriceMatchBar';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
@@ -628,6 +629,9 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
   );
 
   return (
+    <>
+    {/* Store-wide negotiation bar — catches comparison-shoppers before they bounce */}
+    <GridPriceMatchBar className="mb-3 sm:mb-4" />
     <div className="flex gap-6">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:block w-64 flex-shrink-0">
@@ -735,5 +739,6 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
         )}
       </div>
     </div>
+    </>
   );
 }
