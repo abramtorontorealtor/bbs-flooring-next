@@ -173,6 +173,10 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
   };
 
   const [filters, setFilters] = useState(getInitialFilters);
+  // Live drag value for the price slider. While dragging we update ONLY this
+  // (cheap) — committing to `filters` mid-drag re-filters the whole grid and
+  // re-renders the slider, which kills the drag. null = not dragging.
+  const [priceDraft, setPriceDraft] = useState(null);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [viewMode, setViewMode] = useState('grid');
@@ -219,6 +223,10 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     }
     return mx > 0 ? Math.ceil(mx) : 10;
   }, [products]);
+
+  // What the slider + labels display: the live drag draft if dragging, else
+  // the committed filter (with the null top mapped back to the ceiling).
+  const priceDisplay = priceDraft ?? [filters.priceRange[0] || 0, Math.min(filters.priceRange[1] ?? priceCeiling, priceCeiling)];
 
   // Detect category composition for mixed-category brand pages
   const hasHardwood = useMemo(() => isMixedCategory && products.some(p => HARDWOOD_CATEGORIES.includes(p.category)), [products, isMixedCategory]);
@@ -457,17 +465,18 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
       <FilterSection title="Price (per sq.ft)" defaultOpen={true}>
         <div className="px-1">
           <Slider
-            value={[filters.priceRange[0] || 0, Math.min(filters.priceRange[1] ?? priceCeiling, priceCeiling)]}
-            onValueChange={(val) => setFilters(f => ({ ...f, priceRange: [val[0], val[1] >= priceCeiling ? null : val[1]] }))}
+            value={priceDisplay}
+            onValueChange={setPriceDraft}
+            onValueCommit={(val) => { setFilters(f => ({ ...f, priceRange: [val[0], val[1] >= priceCeiling ? null : val[1]] })); setPriceDraft(null); }}
             min={0}
             max={priceCeiling}
             step={0.1}
             className="mb-3"
           />
           <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-600 font-medium tabular-nums">C${(filters.priceRange[0] || 0).toFixed(2)}</span>
+            <span className="text-slate-600 font-medium tabular-nums">C${(priceDisplay[0] || 0).toFixed(2)}</span>
             <span className="text-slate-400">—</span>
-            <span className="text-slate-600 font-medium tabular-nums">C${(filters.priceRange[1] ?? priceCeiling).toFixed(2)}</span>
+            <span className="text-slate-600 font-medium tabular-nums">C${(priceDisplay[1] ?? priceCeiling).toFixed(2)}</span>
           </div>
         </div>
       </FilterSection>
