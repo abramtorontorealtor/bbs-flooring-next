@@ -22,6 +22,7 @@ import { GOOGLE_REVIEW_STATS } from '@/data/googleReviews';
 import { Analytics } from '@/components/analytics';
 import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
+import PriceNegotiationNote from '@/components/PriceNegotiationNote';
 import AccessoryBox from '@/components/AccessoryBox';
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
@@ -553,6 +554,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                       💳 {financingTeaser} · <span className="underline">Financing options</span>
                     </Link>
                   )}
+                  {/* Negotiation door — phone-first, thumb-visible under price */}
+                  {!isOutOfStock && <PriceNegotiationNote />}
                 </div>
               ) : (
                 <span className="text-lg text-slate-500">Contact for Price</span>

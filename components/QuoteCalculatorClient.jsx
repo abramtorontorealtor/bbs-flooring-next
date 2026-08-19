@@ -964,6 +964,15 @@ export default function QuoteCalculatorClient() {
                   {quote.minimumApplied && (
                     <p className="text-xs text-slate-500 mt-1">* $500 minimum project charge applies</p>
                   )}
+                  {/* Negotiation closer — push the call before they book */}
+                  <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5">
+                    <p className="text-sm font-semibold text-slate-800 leading-snug">
+                      🏷️ This is our everyday price. On a job this size, call and we&apos;ll beat any written quote.
+                    </p>
+                    <a href="tel:6474281111" className="mt-1 inline-flex items-center gap-1.5 text-sm font-bold text-amber-700 hover:text-amber-800 transition-colors">
+                      📞 Call (647) 428-1111 for your rate
+                    </a>
+                  </div>
                 </div>
 
                 {/* Stairs note */}
