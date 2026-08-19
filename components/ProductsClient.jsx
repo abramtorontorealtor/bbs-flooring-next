@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { X, ChevronDown, RotateCcw } from 'lucide-react';
 import ProductToolbar from '@/components/ProductToolbar';
+import GridPriceMatchBar from '@/components/GridPriceMatchBar';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Analytics } from '@/components/analytics';
@@ -642,6 +643,9 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
       <div className="mb-3 sm:mb-5">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800">{getCategoryTitle()}</h1>
       </div>
+
+      {/* Store-wide negotiation bar — catches comparison-shoppers before they bounce */}
+      <GridPriceMatchBar className="mb-3 sm:mb-4" />
 
       {/* Category chips — horizontal, scrollable */}
       <div className="flex gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2 sm:pb-3 -mx-4 px-4">
