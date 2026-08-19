@@ -39,7 +39,7 @@ const CLEARANCE_FAQS = [
   {
     question: 'What brands and categories are on sale?',
     answer:
-      'Our sale and clearance section includes engineered hardwood (Canadian Standard, Northernest, NAF, Woden, Vidar, Wickham), luxury vinyl plank (SPC), and 12mm laminate. Brands and deals change regularly — visit in store or call (647) 428-1111 for current stock.',
+      'Our sale and clearance section includes engineered hardwood (Northernest, Woden, Wickham), luxury vinyl plank (SPC), and 12mm laminate. Brands and deals change regularly — visit in store or call (647) 428-1111 for current stock.',
   },
 ];
 
