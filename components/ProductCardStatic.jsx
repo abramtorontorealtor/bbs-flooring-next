@@ -26,11 +26,11 @@ function getProductBadges(product) {
   // Only show price-related badges when price is visible
   if (!product.hide_price) {
     const hasDiscount = product.sale_price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft;
-    if (product.is_clearance) {
-      badges.push({ key: 'clearance', label: 'Clearance', className: 'bg-amber-500 text-white' });
-    } else if (hasDiscount) {
+    if (hasDiscount) {
       const pct = Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100);
       badges.push({ key: 'deal', label: pct > 0 ? `-${pct}%` : 'Sale', className: 'bg-red-500 text-white' });
+    } else if (product.is_clearance) {
+      badges.push({ key: 'deal', label: 'Sale', className: 'bg-red-500 text-white' });
     }
   }
   return badges.slice(0, 2);
