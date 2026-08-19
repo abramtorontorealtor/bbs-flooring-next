@@ -8,7 +8,7 @@ export const revalidate = 3600; // 1-hour ISR; refresh via /api/revalidate after
 export const metadata = {
   title: 'Vinyl & Hardwood Flooring Clearance Sale — From $1.79/sqft',
   description:
-    'Shop flooring sale and clearance in Markham. First-quality engineered hardwood, vinyl, and laminate — up to 60% off. Premium brands at better prices. Call (647) 428-1111.',
+    'Shop flooring sale and clearance in Markham. First-quality engineered hardwood, vinyl, and laminate — up to 30% off. Premium brands at better prices. Call (647) 428-1111.',
   alternates: { canonical: '/clearance' },
 };
 
@@ -28,7 +28,7 @@ export default async function ClearancePage() {
     ? brandAggregateOfferSchema({
         name: 'BBS Flooring Clearance — Engineered Hardwood, Vinyl & Laminate',
         description:
-          'First-quality flooring clearance in Markham — engineered hardwood, luxury vinyl, and laminate at up to 60% off.',
+          'First-quality flooring clearance in Markham — engineered hardwood, luxury vinyl, and laminate at up to 30% off.',
         url: 'https://bbsflooring.ca/clearance',
         lowPrice: Math.min(...prices).toFixed(2),
         highPrice: Math.max(...prices).toFixed(2),

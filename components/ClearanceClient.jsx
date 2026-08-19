@@ -338,7 +338,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
           Flooring Clearance
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
-          Sale pricing, overstock deals, discontinued colours, and limited-quantity lots — up to 60% off.
+          Sale pricing, overstock deals, discontinued colours, and limited-quantity lots — up to 30% off.
           First-quality products — same warranty, better price.
         </p>
       </div>

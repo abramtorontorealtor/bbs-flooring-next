@@ -146,7 +146,7 @@ export const flooringInstallationCostData = {
     {
       heading: 'How to Save on Flooring Installation',
       body: `<p>✅ <strong>Buy material + installation together</strong> — bundled pricing is always cheaper than hiring separately.</p>
-<p>✅ <strong>Check our <a href="/Clearance">Clearance section</a></strong> — in-stock overstocks at 30-60% off.</p>
+<p>✅ <strong>Check our <a href="/Clearance">Clearance section</a></strong> — in-stock overstocks at up to 30% off.</p>
 <p>✅ <strong>Ask about contractor pricing</strong> — if you're a contractor or buying for multiple rooms, we offer volume discounts.</p>
 <p>✅ <strong>Get a free measurement first</strong> — accurate measurements prevent over-ordering material.</p>`
     },
@@ -375,10 +375,10 @@ export const carpetToHardwoodStairsData = {
 
 export const flooringClearanceSaleData = {
   route: 'FlooringClearanceSale',
-  title: 'Flooring Clearance Sale Markham | Up to 60% Off',
-  description: 'Flooring clearance sale in Markham. Hardwood, vinyl, laminate up to 60% off. In-stock, limited quantities. Visit BBS Flooring or call (647) 428-1111.',
+  title: 'Flooring Clearance Sale Markham | Up to 30% Off',
+  description: 'Flooring clearance sale in Markham. Hardwood, vinyl, laminate up to 30% off. In-stock, limited quantities. Visit BBS Flooring or call (647) 428-1111.',
   h1: 'Flooring Clearance Sale',
-  subtitle: 'In-stock overruns, discontinued lines, and limited quantities at 30–60% off. First come, first served.',
+  subtitle: 'In-stock overruns, discontinued lines, and limited quantities at up to 30% off. First come, first served.',
   schemaType: 'product',
   content: [
     {

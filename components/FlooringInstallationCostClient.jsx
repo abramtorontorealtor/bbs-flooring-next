@@ -584,7 +584,7 @@ export default function FlooringInstallationCostClient() {
           <div className="space-y-4">
             {[
               { tip: 'Buy material + installation together', desc: 'Bundled pricing is always cheaper than sourcing material separately and hiring an installer. We guarantee both material and workmanship.', icon: '📦' },
-              { tip: 'Check our Clearance section', desc: 'In-stock overstocks at 30–60% off. Same quality products, fraction of the price. First come, first served.', icon: '🏷️', link: '/clearance' },
+              { tip: 'Check our Clearance section', desc: 'In-stock overstocks at up to 30% off. Same quality products, fraction of the price. First come, first served.', icon: '🏷️', link: '/clearance' },
               { tip: 'Ask about contractor pricing', desc: 'If you\'re a contractor, builder, or buying for multiple rooms/units, we offer volume discounts on material and labour.', icon: '🏗️', link: '/contractor-flooring' },
               { tip: 'Get a free measurement first', desc: 'Accurate measurements prevent over-ordering material. We measure every room for free — no obligation.', icon: '📏', link: '/free-measurement' },
               { tip: 'Consider vinyl for high-ROI areas', desc: 'Waterproof vinyl at $3.79–$7.25/sqft total is 40–50% cheaper than hardwood, and it\'s perfect for basements, kitchens, and condos.', icon: '💧' },
