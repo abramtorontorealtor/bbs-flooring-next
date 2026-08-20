@@ -371,16 +371,16 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
             <div className="flex-1">
               <div className="inline-flex items-center gap-2 bg-slate-900 text-white text-[11px] font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
                 <Tag className="w-3.5 h-3.5" />
-                Featured Clearance
+                Featured Deal
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">
-                Lee Flooring Clearance — Everything Must Go
+                Lee Flooring — Wholesale-Direct Pricing
               </h2>
               <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl">
                 Real engineered American oak from <strong className="text-red-600">$3.29/sqft</strong> and
                 22mil waterproof vinyl from <strong className="text-red-600">$1.79/sqft</strong>.
-                First-quality Lee flooring at end-of-lot prices — {leeStats.count} colours,
-                while quantities last.
+                First-quality Lee flooring at special direct pricing — {leeStats.count} colours,
+                in stock and reorderable anytime.
               </p>
             </div>
             <div className="flex flex-col gap-2 flex-shrink-0 w-full md:w-auto">
@@ -388,7 +388,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
                 href={createPageUrl('LeeFlooring')}
                 className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
               >
-                Shop Lee Clearance →
+                Shop Lee Flooring →
               </Link>
               <a
                 href="tel:+16474281111"
