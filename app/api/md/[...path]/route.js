@@ -134,7 +134,7 @@ function productToMd(p) {
   const price = p.hide_price
     ? 'Call (647) 428-1111 for pricing'
     : p.is_on_sale && p.sale_price_per_sqft
-      ? `~~$${p.price_per_sqft}/sqft~~ **$${p.sale_price_per_sqft}/sqft**${p.is_clearance ? ' (Clearance)' : ' (Sale)'}`
+      ? `~~$${p.price_per_sqft}/sqft~~ **$${p.sale_price_per_sqft}/sqft** (Sale)`
       : `$${p.price_per_sqft}/sqft`;
 
   const specs = [
@@ -367,7 +367,7 @@ For the full product catalog and pricing: https://bbsflooring.ca/llms-full.txt
         const price = product.hide_price
           ? 'Call (647) 428-1111 for pricing'
           : product.is_on_sale && product.sale_price_per_sqft
-            ? `~~$${product.price_per_sqft}/sqft~~ **$${product.sale_price_per_sqft}/sqft** (${product.is_clearance ? 'Clearance' : 'Sale'})`
+            ? `~~$${product.price_per_sqft}/sqft~~ **$${product.sale_price_per_sqft}/sqft** (Sale)`
             : `$${product.price_per_sqft}/sqft`;
 
         let md = `# ${product.name}\n\n`;

@@ -460,8 +460,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             onActiveIdxChange={setActiveImageIdx}
             badges={[
               product.is_new_arrival && <Badge key="new" className="bg-emerald-500 text-white border-0">New Arrival</Badge>,
-              !hidePrice && product.is_on_sale && !product.is_clearance && <Badge key="sale" className="bg-red-500 text-white border-0 text-sm font-bold px-3 py-1">SALE</Badge>,
-              !hidePrice && product.is_clearance && <Badge key="clearance" className="bg-orange-500 text-white border-0 text-sm font-bold px-3 py-1">🔥 CLEARANCE</Badge>,
+              !hidePrice && (product.is_on_sale || product.is_clearance) && (() => {
+                const pct = product.price_per_sqft > 0 && product.sale_price_per_sqft
+                  ? Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100) : 0;
+                return <Badge key="deal" className="bg-red-500 text-white border-0 text-sm font-bold px-3 py-1">{pct > 0 ? `-${pct}%` : 'SALE'}</Badge>;
+              })(),
             ].filter(Boolean)}
           />
         </div>
@@ -522,15 +525,8 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                 <Badge className="bg-slate-700 text-white border-0 text-base px-3 py-1.5">Out of Stock</Badge>
               ) : product.price_per_sqft ? (
                 <div>
-                  {/* Urgency pill for sale/clearance */}
-                  {!hidePrice && product.is_clearance && (
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="inline-flex items-center gap-1.5 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full border border-orange-300">
-                        🔥 Clearance — Limited Stock
-                      </span>
-                    </div>
-                  )}
-                  {!hidePrice && product.is_on_sale && !product.is_clearance && (
+                  {/* Urgency pill for sale/clearance — shows discount, not the word "clearance" (Aug 20 rule) */}
+                  {!hidePrice && (product.is_on_sale || product.is_clearance) && (
                     <div className="flex items-center gap-2 mb-2">
                       <span className="inline-flex items-center gap-1.5 bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full border border-red-300">
                         🏷️ On Sale — Save {currentPricing.price_per_sqft > 0 ? Math.round((1 - currentPricing.sale_price_per_sqft / currentPricing.price_per_sqft) * 100) : 0}%
@@ -823,11 +819,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                   </div>
                 )}
 
-                {/* Clearance urgency note */}
-                {product.is_clearance && !isOutOfStock && (
-                  <div className="flex items-center gap-2 py-2 px-3 bg-orange-50 border border-orange-200 rounded-lg">
-                    <span className="text-base">🔥</span>
-                    <p className="text-xs font-semibold text-orange-800">Clearance price — once it’s gone, it’s gone</p>
+                {/* Sale urgency note — avoids the word "clearance" unless truly discontinued (Aug 20 rule) */}
+                {(product.is_on_sale || product.is_clearance) && !isOutOfStock && (
+                  <div className="flex items-center gap-2 py-2 px-3 bg-red-50 border border-red-200 rounded-lg">
+                    <span className="text-base">🏷️</span>
+                    <p className="text-xs font-semibold text-red-800">Sale price — limited stock at this price</p>
                   </div>
                 )}
                 {/* Primary CTA: Add to Cart */}
