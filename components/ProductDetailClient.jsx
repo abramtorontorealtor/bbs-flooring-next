@@ -460,6 +460,7 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             onActiveIdxChange={setActiveImageIdx}
             badges={[
               product.is_new_arrival && <Badge key="new" className="bg-emerald-500 text-white border-0">New Arrival</Badge>,
+              product.is_canadian && <Badge key="canada" className="bg-red-600 text-white border-0 text-sm font-bold px-3 py-1">🇨🇦 Canadian Made</Badge>,
               !hidePrice && (product.is_on_sale || product.is_clearance) && (() => {
                 const pct = product.price_per_sqft > 0 && product.sale_price_per_sqft
                   ? Math.round((1 - product.sale_price_per_sqft / product.price_per_sqft) * 100) : 0;
@@ -880,6 +881,18 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
                     <p className="text-[10px] text-slate-500">From $68/mo · Instant approval · No prepayment penalty</p>
                   </div>
                 </Link>
+              </div>
+            )}
+
+            {/* Canadian-Made trust callout — is_canadian is a strong local-trust + AEO selling point;
+               surfaced on the PDP buy box, not just the grid card (Abram, Aug 20). */}
+            {product.is_canadian && (
+              <div className="flex items-center gap-2.5 p-3 mb-3 bg-red-50 rounded-xl border border-red-200">
+                <span className="text-xl leading-none">🇨🇦</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-slate-800">Canadian-Made Flooring</p>
+                  <p className="text-[11px] text-slate-600 leading-snug">Built for Canadian climates — domestic manufacturing you can stand behind.</p>
+                </div>
               </div>
             )}
 
