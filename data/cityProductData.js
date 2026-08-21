@@ -74,6 +74,7 @@ export const cityProductPages = {
   // GSC: "vinyl flooring markham" — 60 impr, pos 14.3, 1 click
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-markham': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'markham',
     city: 'Markham',
@@ -153,6 +154,7 @@ All prices include the flooring material. Professional installation is available
   // GSC: "hardwood flooring markham" — 142 impr, pos 14.4, 2 clicks
   // ══════════════════════════════════════════════════════════════════════════
   'hardwood-flooring-markham': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'hardwood',
     citySlug: 'markham',
     city: 'Markham',
@@ -235,6 +237,7 @@ Professional installation is available and quoted during your free in-home estim
   // GSC: "laminate flooring markham" — 38 impr, pos 12.7
   // ══════════════════════════════════════════════════════════════════════════
   'laminate-flooring-markham': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'markham',
     city: 'Markham',
@@ -313,6 +316,7 @@ Note: For truly waterproof applications (basements, bathrooms), we recommend vin
   // GSC: "scarborough flooring" 67 impr, "floor installation scarborough" 104 impr
   // ══════════════════════════════════════════════════════════════════════════
   'hardwood-flooring-scarborough': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'hardwood',
     citySlug: 'scarborough',
     city: 'Scarborough',
@@ -391,6 +395,7 @@ Delivery available across Scarborough — free warehouse pickup or delivery from
   // GSC: "floor installation vaughan" 105 impr, pos 16.7
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-vaughan': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'vaughan',
     city: 'Vaughan',
@@ -471,6 +476,7 @@ Delivery available across Vaughan — free warehouse pickup or delivery from $14
   // GSC: "floor installation markham" 127 impr + "flooring installation markham" 47 impr
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-markham': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl', // Shows vinyl as default but page covers all types
     citySlug: 'markham',
     city: 'Markham',
@@ -657,6 +663,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 302 impr, pos 27.6
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-scarborough': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'scarborough',
     city: 'Scarborough',
@@ -746,6 +753,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 169 impr, pos 15.2
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-newmarket': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'newmarket',
     city: 'Newmarket',
@@ -835,6 +843,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 156 impr, pos 17.3
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-richmond-hill': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'richmond-hill',
     city: 'Richmond Hill',
@@ -924,6 +933,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 141 impr, pos 16.7
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-pickering': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'pickering',
     city: 'Pickering',
@@ -1102,6 +1112,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 90 impr, pos 39.2
   // ══════════════════════════════════════════════════════════════════════════
   'hardwood-flooring-toronto': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'hardwood',
     citySlug: 'toronto',
     city: 'Toronto',
@@ -1190,6 +1201,7 @@ Professional installation and stair matching quoted during your free in-home est
   // GSC: 76 impr, pos 30.4
   // ══════════════════════════════════════════════════════════════════════════
   'hardwood-flooring-vaughan': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'hardwood',
     citySlug: 'vaughan',
     city: 'Vaughan',
@@ -1278,6 +1290,7 @@ Professional installation and stair matching quoted during your free in-home est
   // GSC: 68 impr, pos 37.1
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-toronto': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'toronto',
     city: 'Toronto',
@@ -1363,6 +1376,7 @@ All prices are for material. Professional installation is quoted during your fre
   // GSC: 64 impr, pos 29.1
   // ══════════════════════════════════════════════════════════════════════════
   'hardwood-flooring-richmond-hill': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'hardwood',
     citySlug: 'richmond-hill',
     city: 'Richmond Hill',
@@ -1451,6 +1465,7 @@ Professional installation and stair matching quoted during your free in-home est
   // GSC: 33 impr, pos 22.4
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-scarborough': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'scarborough',
     city: 'Scarborough',
@@ -1536,6 +1551,7 @@ All prices are for material. Professional installation is quoted during your fre
   // GSC: 30 impr, pos 18.9
   // ══════════════════════════════════════════════════════════════════════════
   'laminate-flooring-newmarket': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'newmarket',
     city: 'Newmarket',
@@ -1622,6 +1638,7 @@ Professional installation quoted during your free in-home estimate. Popular bran
   // GSC: 19 impr, pos 14.2
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-richmond-hill': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'richmond-hill',
     city: 'Richmond Hill',
@@ -1707,6 +1724,7 @@ All prices are for material. Professional installation is quoted during your fre
   // GSC: 17 impr, pos 37.1
   // ══════════════════════════════════════════════════════════════════════════
   'hardwood-flooring-ajax': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'hardwood',
     citySlug: 'ajax',
     city: 'Ajax',
@@ -1794,6 +1812,7 @@ Professional installation and stair matching quoted during your free in-home est
   // GSC: 22 impr, pos 23.4
   // ══════════════════════════════════════════════════════════════════════════
   'flooring-installation-oshawa': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'oshawa',
     city: 'Oshawa',
@@ -1883,6 +1902,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // GSC: 19 impr, pos 19.1
   // ══════════════════════════════════════════════════════════════════════════
   'hardwood-flooring-oshawa': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'hardwood',
     citySlug: 'oshawa',
     city: 'Oshawa',
@@ -1971,6 +1991,7 @@ Professional installation and stair matching quoted during your free in-home est
   // GSC: 10 impr, pos 27.2
   // ══════════════════════════════════════════════════════════════════════════
   'laminate-flooring-scarborough': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'scarborough',
     city: 'Scarborough',
@@ -2057,6 +2078,7 @@ Professional installation quoted during your free in-home estimate. Popular bran
   // GSC: 9 impr, pos 21.3
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-pickering': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'pickering',
     city: 'Pickering',
@@ -2142,6 +2164,7 @@ All prices are for material. Professional installation is quoted during your fre
   // GSC: 8 impr, pos 25.8
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-ajax': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'ajax',
     city: 'Ajax',
@@ -2226,6 +2249,7 @@ All prices are for material. Professional installation is quoted during your fre
   // GSC: 8 impr, pos 32.1
   // ══════════════════════════════════════════════════════════════════════════
   'laminate-flooring-richmond-hill': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'richmond-hill',
     city: 'Richmond Hill',
@@ -2311,6 +2335,7 @@ Professional installation quoted during your free in-home estimate. Popular bran
   // SOLID HARDWOOD FLOORING × MARKHAM  (first solid-HW city page)
   // ══════════════════════════════════════════════════════════════════════════
   'solid-hardwood-flooring-markham': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'solid-hardwood',
     citySlug: 'markham',
     city: 'Markham',
@@ -2386,6 +2411,7 @@ Prices are for material. Nail-down installation and on-site sanding/finishing ar
   // SOLID HARDWOOD FLOORING × TORONTO
   // ══════════════════════════════════════════════════════════════════════════
   'solid-hardwood-flooring-toronto': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'solid-hardwood',
     citySlug: 'toronto',
     city: 'Toronto',
@@ -2537,6 +2563,7 @@ Prices are material; installation is quoted at your free estimate. We deliver ac
   // LAMINATE FLOORING × TORONTO
   // ══════════════════════════════════════════════════════════════════════════
   'laminate-flooring-toronto': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'toronto',
     city: 'Toronto',
@@ -2688,6 +2715,7 @@ Prices are for material. Installation is quoted at your free in-home estimate. W
   // VINYL FLOORING × NEWMARKET
   // ══════════════════════════════════════════════════════════════════════════
   'vinyl-flooring-newmarket': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'newmarket',
     city: 'Newmarket',
@@ -2761,6 +2789,7 @@ All prices include the flooring material. Installation is quoted at your free in
 
   // ── Phase B batch 2a (Jun 17, 2026) ───────────────────────────────────────
   'laminate-flooring-pickering': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'pickering',
     city: 'Pickering',
@@ -2833,6 +2862,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'laminate-flooring-ajax': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'ajax',
     city: 'Ajax',
@@ -2905,6 +2935,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'vinyl-flooring-oshawa': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'oshawa',
     city: 'Oshawa',
@@ -2977,6 +3008,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'vinyl-flooring-whitby': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'whitby',
     city: 'Whitby',
@@ -3049,6 +3081,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'engineered-hardwood-flooring-pickering': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'engineered-hardwood',
     citySlug: 'pickering',
     city: 'Pickering',
@@ -3194,6 +3227,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'laminate-flooring-stouffville': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'laminate',
     citySlug: 'stouffville',
     city: 'Stouffville',
@@ -3266,6 +3300,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'engineered-hardwood-flooring-newmarket': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'engineered-hardwood',
     citySlug: 'newmarket',
     city: 'Newmarket',
@@ -3338,6 +3373,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'engineered-hardwood-flooring-stouffville': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'engineered-hardwood',
     citySlug: 'stouffville',
     city: 'Stouffville',
@@ -3410,6 +3446,7 @@ All prices include the flooring material. Installation is quoted at your free in
   },
 
   'flooring-installation-toronto': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'toronto',
     city: 'Toronto',
@@ -3493,6 +3530,7 @@ Professional installation is quoted during your free in-home estimate, based on 
   },
 
   'flooring-installation-whitby': {
+    noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
     productType: 'vinyl',
     citySlug: 'whitby',
     city: 'Whitby',
@@ -3581,6 +3619,7 @@ Professional installation pricing is quoted during your free in-home estimate, b
   // ══════════════════════════════════════════════════════════════════════════
 
 'engineered-hardwood-flooring-ajax': {
+  noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
   productType: 'engineered-hardwood',
   citySlug: 'ajax',
   city: 'Ajax',
@@ -3646,6 +3685,7 @@ Installation is quoted separately — call (647) 428-1111 or book a free in-home
 },
 
 'engineered-hardwood-flooring-scarborough': {
+  noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
   productType: 'engineered-hardwood',
   citySlug: 'scarborough',
   city: 'Scarborough',
@@ -3711,6 +3751,7 @@ Free in-home estimates available across all Scarborough neighbourhoods — call 
 },
 
 'engineered-hardwood-flooring-richmond-hill': {
+  noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
   productType: 'engineered-hardwood',
   citySlug: 'richmond-hill',
   city: 'Richmond Hill',
@@ -3776,6 +3817,7 @@ Richmond Hill is minutes from our Markham showroom at 6061 Highway 7 Unit B. Boo
 },
 
 'engineered-hardwood-flooring-vaughan': {
+  noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
   productType: 'engineered-hardwood',
   citySlug: 'vaughan',
   city: 'Vaughan',
@@ -3841,6 +3883,7 @@ Call (647) 428-1111 to book a free in-home estimate anywhere in Vaughan. Install
 },
 
 'laminate-flooring-oshawa': {
+  noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
   productType: 'laminate',
   citySlug: 'oshawa',
   city: 'Oshawa',
@@ -3906,6 +3949,7 @@ Installation is priced separately — call (647) 428-1111 or book a free in-home
 },
 
 'laminate-flooring-whitby': {
+  noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
   productType: 'laminate',
   citySlug: 'whitby',
   city: 'Whitby',
@@ -3971,6 +4015,7 @@ Free in-home estimates available throughout Whitby — call (647) 428-1111 or vi
 },
 
 'vinyl-flooring-stouffville': {
+  noindex: true, // Phase D Wave 2 (Aug 21 2026): doorway consolidation — reversible noindex (Abram-approved). See projects/site-ranking-diagnosis/PHASE-D-CONSOLIDATION-TARGETS.md
   productType: 'vinyl',
   citySlug: 'stouffville',
   city: 'Stouffville',
