@@ -15,17 +15,24 @@ const has = (str, sub) => lc(str).includes(lc(sub));
 
 export const nafFlooringData = {
   route: 'NafFlooring',
-  title: 'NAF Flooring Markham | Vinyl, Hardwood & Laminate',
-  description: 'Shop NAF Flooring in Markham — 170+ products in stock including the NEW 14mm Waterproof Laminate PRO. Vinyl, hardwood & laminate from $2.39/sqft. Call (647) 428-1111.',
+  title: 'NAF Flooring Review & Prices Markham | Canadian-Made, 30-Yr Warranty',
+  description: 'Is NAF flooring good? Canadian-made, 30-year residential warranty, AC5 laminate, 100% waterproof AquaPlus vinyl. 170+ products from $2.39/sqft at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'NAF Flooring — Vinyl, Hardwood & Laminate',
-  subtitle: '170+ NAF products in stock at our Markham showroom — including the NEW 14mm Waterproof Laminate PRO with attached underpad. One brand covers every room in your home.',
+  subtitle: 'Canadian-made, backed by a 30-year residential warranty — 170+ NAF products in stock at our Markham showroom. Waterproof AquaPlus vinyl, engineered oak, and AC5-rated laminate. One trusted brand covers every room in your home.',
   parentPage: null,
   schemaType: 'product',
   content: [
     {
-      heading: 'The Full-Range Flooring Brand',
-      body: `<p>NAF is the brand you pick when you want one manufacturer across your entire home. They cover <strong>vinyl plank, engineered hardwood, and laminate</strong> — all built for Canadian climates and all available at BBS Flooring right now.</p>
-<p>That matters because it means consistent quality standards floor to floor, and you're not mixing three different manufacturers with three different warranty processes. One brand, one warranty contact, done.</p>`
+      heading: 'Is NAF Flooring Good? Why It\'s Worth It',
+      body: `<p>NAF is one of the strongest all-round brands we carry — here's what sets it apart:</p>
+<ul>
+<li><strong>Canadian-made</strong> — built and quality-controlled for Canadian climates, not imported and hoping for the best.</li>
+<li><strong>30-year residential warranty</strong> (5-year light commercial) — serious backing across the lineup.</li>
+<li><strong>100% waterproof AquaPlus vinyl</strong> — SPC cores rated for basements, kitchens, and bathrooms with zero moisture worry.</li>
+<li><strong>AC5 commercial-grade laminate</strong> — the toughest wear rating available, including the 14mm Waterproof PRO with attached underpad.</li>
+<li><strong>One brand, every room</strong> — vinyl, engineered hardwood, and laminate under a single warranty contact instead of juggling three manufacturers.</li>
+</ul>
+<p>That last point matters more than it sounds: consistent quality standards floor to floor, and one number to call if anything ever goes wrong. All of it in stock at BBS Flooring right now.</p>`
     },
     {
       heading: 'NAF Vinyl Plank — 69 Options from $2.99/sqft',
@@ -50,7 +57,7 @@ export const nafFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Is NAF Flooring a good brand?', answer: 'NAF is a well-established flooring manufacturer distributed across Canada. They produce vinyl, engineered hardwood, and laminate — all built for Canadian climate conditions. BBS Flooring carries 164 NAF products and installs NAF flooring regularly across the GTA.' },
+    { question: 'Is NAF Flooring a good brand?', answer: 'Yes — NAF is one of the better all-round brands available. It\'s Canadian-made, carries a 30-year residential warranty, and spans vinyl, engineered hardwood, and laminate all built for Canadian climate conditions. Its AquaPlus vinyl is 100% waterproof and its laminate is AC5-rated (the toughest wear class). BBS Flooring carries 170+ NAF products and installs them regularly across the GTA.' },
     { question: 'How much does NAF vinyl flooring cost?', answer: 'NAF vinyl plank at BBS Flooring ranges from $2.99 to $4.29 per square foot depending on thickness and underpad type. The 7mm options with cork underpad are the most popular for homes. Call (647) 428-1111 for current pricing on specific products.' },
     { question: 'Is NAF vinyl flooring waterproof?', answer: 'Yes. All NAF vinyl plank flooring is 100% waterproof with an SPC (Stone Polymer Composite) core. It can be installed in basements, kitchens, bathrooms, and laundry rooms without moisture concerns.' },
     { question: 'Where can I buy NAF Flooring in Markham?', answer: 'BBS Flooring at 6061 Highway 7, Unit B carries 170+ NAF products in stock — vinyl, engineered hardwood, and laminate including the new 14mm PRO line. Walk-ins welcome Monday–Saturday. We also offer free in-home measurements across the GTA.' },
@@ -69,17 +76,24 @@ export const nafFlooringData = {
 
 export const northernestFlooringData = {
   route: 'NorthernestFlooring',
-  title: 'Northernest Flooring Markham | Hardwood & Laminate',
-  description: 'Shop Northernest Flooring in Markham — 106 products in stock. Engineered hardwood, solid hardwood, and European laminate from $3.19/sqft. Call (647) 428-1111.',
+  title: 'Northernest Flooring Review & Prices | Canadian Hardwood Markham',
+  description: 'Is Northernest flooring good? Canadian-built hardwood — one of our deepest real-wood selections in oak, maple & hickory, engineered and solid, from $3.19/sqft. BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'Northernest Hardwood & Laminate Flooring',
-  subtitle: '106 Northernest products in stock. Engineered and solid hardwood in oak, maple, and hickory — plus 12mm European laminate. All at our Markham showroom.',
+  subtitle: 'One of our deepest real-hardwood selections — Canadian-built engineered and solid oak, maple, and hickory from $3.19/sqft, plus 12mm European laminate. All in stock at our Markham showroom.',
   parentPage: null,
   schemaType: 'product',
   content: [
     {
-      heading: 'Hardwood-First, Built for Canadian Homes',
-      body: `<p>Northernest is a hardwood-focused brand — <strong>70 engineered and 18 solid hardwood options</strong> across white oak, red oak, maple, and hickory. If you're shopping for real wood flooring, they're one of the deepest selections we carry.</p>
-<p>What sets Northernest apart is their range of installation systems. They offer both traditional tongue-and-groove (for glue-down and nail-down installs) and <strong>click-lock systems</strong> — which means faster installation and lower labour costs without sacrificing the look or feel of real hardwood.</p>`
+      heading: 'Is Northernest Flooring Good? Why It\'s Worth It',
+      body: `<p>For anyone shopping real wood, Northernest is one of the strongest values we carry — here's why:</p>
+<ul>
+<li><strong>Canadian-built and climate-ready</strong> — engineered for Ontario's humidity and temperature swings.</li>
+<li><strong>One of our deepest real-hardwood selections</strong> — 70 engineered and 18 solid options in white oak, red oak, maple, and hickory.</li>
+<li><strong>Real 7½" wide-plank European oak</strong> from under $5/sqft — genuinely hard to beat for the quality.</li>
+<li><strong>Both installation systems</strong> — traditional tongue-and-groove for glue/nail-down, plus click-lock for faster, lower-cost installs.</li>
+<li><strong>Solid ¾" options</strong> that sand and refinish for decades — the buy-it-once floor.</li>
+</ul>
+<p>What really sets Northernest apart is that range: whether you want a fast-installing click floor or a lifetime nail-down solid, you stay in one trusted brand without sacrificing the look or feel of real hardwood.</p>`
     },
     {
       heading: 'Engineered Hardwood — 70 Options from $3.99/sqft',
@@ -97,7 +111,8 @@ export const northernestFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Is Northernest a Canadian flooring brand?', answer: 'Northernest is distributed in Canada and built for Canadian climate conditions. Their engineered hardwood is designed to handle the temperature and humidity swings typical in Ontario homes. BBS Flooring carries 106 Northernest products at our Markham showroom.' },
+    { question: 'Is Northernest flooring good quality?', answer: 'Yes. Northernest is Canadian-built and designed for Ontario\'s climate, and it offers one of the deepest real-hardwood selections we carry — 70 engineered and 18 solid options in oak, maple, and hickory. Highlights include real 7½" wide-plank European oak from under $5/sqft and both tongue-and-groove and click-lock systems. For real wood at this price, it\'s hard to beat. BBS Flooring carries 106 Northernest products in Markham.' },
+    { question: 'Is Northernest a Canadian flooring brand?', answer: 'Northernest is built for Canadian climate conditions. Their engineered hardwood is designed to handle the temperature and humidity swings typical in Ontario homes. BBS Flooring carries 106 Northernest products at our Markham showroom.' },
     { question: 'What species does Northernest hardwood come in?', answer: 'Northernest offers white oak, red oak, European oak, hickory, and maple in both engineered and solid hardwood. Their 7½" wide-plank European oak is the most popular collection. Visit our showroom to see all options in person.' },
     { question: 'How much does Northernest engineered hardwood cost?', answer: 'Northernest engineered hardwood at BBS Flooring ranges from $3.99 to $7.49 per square foot. The price depends on species, plank width, and finish. Call (647) 428-1111 or use our Quote Calculator for an estimate tailored to your project.' },
     { question: 'Does Northernest have click-lock hardwood?', answer: 'Yes. Northernest offers click-lock (click system) options in oak, maple, and hickory. Click-lock engineered hardwood installs faster than traditional glue-down, which reduces labour costs. It is also a viable option for experienced DIYers.' },
@@ -115,13 +130,25 @@ export const northernestFlooringData = {
 
 export const wodenFlooringData = {
   route: 'WodenFlooring',
-  title: 'Woden Flooring Markham | Vinyl & Engineered Hardwood',
-  description: 'Shop Woden Flooring in Markham — 62 products in stock. Vinyl plank and engineered hardwood from $2.59/sqft. Free measurements. Call (647) 428-1111.',
+  title: 'Woden Flooring Review & Prices Markham | Lifetime Waterproof Warranty',
+  description: 'Is Woden flooring good? Lifetime residential waterproof warranty, AC4-rated, up to 4mm wear layer — among the thickest SPC vinyl we carry. From $2.59/sqft at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'Woden Vinyl & Engineered Hardwood Flooring',
-  subtitle: '62 Woden products in stock — from waterproof vinyl at $2.59/sqft to engineered oak hardwood. In stock at our Markham showroom.',
+  subtitle: 'Backed by a lifetime residential waterproof warranty — Woden vinyl and engineered oak from $2.59/sqft, in stock at our Markham showroom. Home of one of the thickest, most substantial SPC vinyl planks we carry.',
   parentPage: null,
   schemaType: 'product',
   content: [
+    {
+      heading: 'Is Woden Flooring Good? Why It\'s Worth It',
+      body: `<p>Woden keeps its lineup tight and its quality high — here's what stands out:</p>
+<ul>
+<li><strong>Lifetime residential waterproof warranty</strong> — one of the strongest warranties on any vinyl we carry.</li>
+<li><strong>AC4 commercial wear rating</strong> — built for heavy traffic, kids, and pets.</li>
+<li><strong>Up to a 4mm wear layer (28mil)</strong> — dramatically thicker than the typical 12–20mil vinyl, which means far better scratch and dent resistance.</li>
+<li><strong>Up to 11mm plank thickness</strong> — among the thickest SPC vinyl on the market, with a solid, quiet, hardwood-like feel underfoot.</li>
+<li><strong>Real engineered oak too</strong> — white and natural oak so you can run wood in living areas and vinyl in wet areas, all one brand.</li>
+</ul>
+<p>They don't try to be everything to everyone — they make vinyl and hardwood, and they make them exceptionally well.</p>`
+    },
     {
       heading: 'Two Categories, One Consistent Standard',
       body: `<p>Woden focuses on two product lines: <strong>waterproof vinyl plank and engineered oak hardwood</strong>. They don't try to be everything to everyone — they make vinyl and hardwood, and they make them well.</p>
@@ -145,7 +172,7 @@ export const wodenFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Is Woden Flooring good quality?', answer: 'Woden produces solid vinyl plank and engineered hardwood flooring. Their 11mm vinyl is among the thickest SPC options available — substantially more durable than typical 5-6mm vinyl. BBS Flooring carries 62 Woden products and has installed them across the GTA without issues.' },
+    { question: 'Is Woden Flooring good quality?', answer: 'Yes. Woden is backed by a lifetime residential waterproof warranty, carries an AC4 commercial wear rating, and offers up to a 4mm (28mil) wear layer — far thicker than typical vinyl, so it resists scratches and dents dramatically better. Its 11mm plank is among the thickest SPC options available, with a solid hardwood-like feel underfoot. BBS Flooring carries 62 Woden products and has installed them across the GTA without issues.' },
     { question: 'How much does Woden vinyl flooring cost?', answer: 'Woden vinyl at BBS Flooring starts at $2.59/sqft for 6mm options and goes up to $4.79/sqft for 11mm premium planks. This includes the integrated underpad. Call (647) 428-1111 for current pricing.' },
     { question: 'Does Woden make waterproof flooring?', answer: 'Yes. All Woden vinyl plank flooring is 100% waterproof with SPC cores. They also offer engineered hardwood, which is moisture-resistant but not waterproof — suitable for main floors but not recommended for bathrooms or basements.' },
     { question: 'What is the thickest Woden vinyl available?', answer: 'Woden offers an 11mm vinyl plank — one of the thickest SPC vinyl options on the market. It provides exceptional sound dampening, durability, and a premium feel underfoot. Available at BBS Flooring\'s Markham showroom.' },
@@ -163,17 +190,23 @@ export const wodenFlooringData = {
 
 export const falconFlooringData = {
   route: 'FalconFlooring',
-  title: 'Falcon Flooring Markham | Affordable Hardwood, Vinyl & Laminate',
-  description: 'Shop Falcon Flooring in Markham — 56 products from $1.79/sqft. Engineered hardwood, vinyl, and waterproof laminate. Free measurements. Call (647) 428-1111.',
+  title: 'Falcon Flooring Review & Prices Markham | Affordable Hardwood & Vinyl',
+  description: 'Is Falcon flooring good value? Real hickory hardwood, 100% waterproof vinyl, condo-approved options from $1.79/sqft — the most affordable quality floors at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'Falcon Flooring — Hardwood, Vinyl & Laminate',
-  subtitle: '56 Falcon products from $1.79/sqft. Real hardwood, waterproof vinyl, and 12mm laminate — quality floors at prices that make renovations actually affordable.',
+  subtitle: 'The value pick that doesn\'t feel cheap — real hickory hardwood, 100% waterproof vinyl, and 12mm laminate from $1.79/sqft. 56 Falcon products in stock at our Markham showroom.',
   parentPage: null,
   schemaType: 'product',
   content: [
     {
-      heading: 'Quality Flooring at Honest Prices',
-      body: `<p>Falcon is the brand we recommend when the budget matters but you're not willing to compromise on what goes under your feet. Their pricing is among the lowest in our showroom — <strong>vinyl from $1.79/sqft, laminate from $2.69/sqft, engineered hardwood from $3.89/sqft</strong> — without the quality corners you'd expect at these prices.</p>
-<p>They cover all three major flooring categories, which makes them ideal for whole-home renovations where you need different flooring types in different rooms but want to keep the total cost manageable.</p>`
+      heading: 'Is Falcon Flooring Good Value? Why It\'s Worth It',
+      body: `<p>Falcon is the brand we recommend when the budget matters but you refuse to compromise on what goes under your feet. Here's why it works:</p>
+<ul>
+<li><strong>Lowest entry prices in our showroom</strong> — vinyl from $1.79/sqft, laminate from $2.69, engineered hardwood from $3.89, without the usual quality corners.</li>
+<li><strong>Real hickory hardwood</strong> — the hardest North American species commercially available, so it stands up to kids, dogs, and heavy traffic.</li>
+<li><strong>100% waterproof vinyl</strong> — including condo-approved options with integrated underpad that meet most GTA condo board sound rules.</li>
+<li><strong>All three categories</strong> — hardwood, vinyl, and 12mm waterproof laminate, perfect for whole-home renos on one budget.</li>
+</ul>
+<p>Different flooring for different rooms, one affordable brand, total cost kept manageable — that's the Falcon advantage.</p>`
     },
     {
       heading: 'Falcon Engineered Hardwood — 25 Options from $3.89/sqft',
@@ -191,6 +224,7 @@ export const falconFlooringData = {
     },
   ],
   faqItems: [
+    { question: 'Is Falcon flooring good quality for the price?', answer: 'Yes — Falcon is one of the best value brands at BBS Flooring. Despite the lowest entry prices in our showroom (vinyl from $1.79/sqft, laminate $2.69, engineered hardwood $3.89), quality is consistent: its hardwood includes real hickory (the hardest North American species), and its vinyl is 100% waterproof with condo-approved options. We have installed Falcon across the GTA without complaints.' },
     { question: 'Is Falcon Flooring affordable?', answer: 'Yes. Falcon is one of the most competitively priced brands at BBS Flooring. Vinyl starts at $1.79/sqft, laminate at $2.69/sqft, and engineered hardwood at $3.89/sqft. Despite the low prices, quality is consistent — we have installed Falcon flooring across the GTA without complaints.' },
     { question: 'Does Falcon make condo-approved flooring?', answer: 'Yes. Falcon offers 7mm vinyl plank with integrated condo-approved underpad (5.5mm + 1.5mm) that meets the sound transmission requirements of most condo boards in the GTA. Check with your property management for specific STC/IIC requirements.' },
     { question: 'What hardwood species does Falcon offer?', answer: 'Falcon engineered hardwood comes in hickory, maple, and red oak — all in 6½" plank widths. Hickory is the hardest of the three and best suited for high-traffic areas. Available at BBS Flooring\'s Markham showroom.' },
@@ -257,13 +291,25 @@ export const canadianStandardFlooringData = {
 
 export const triforestFlooringData = {
   route: 'TriforestFlooring',
-  title: 'Triforest Flooring Markham | Vinyl Plank & Laminate',
-  description: 'Shop Triforest Flooring in Markham — 38 products from $2.29/sqft. Waterproof vinyl plank and 12mm laminate. Condo approved. Call (647) 428-1111.',
+  title: 'Triforest Flooring Review & Prices Markham | Waterproof Vinyl In Stock',
+  description: 'Is Triforest flooring good? 100% waterproof SPC vinyl, AC4-rated, 25-year warranty, condo-approved underpad, from $2.29/sqft. In stock at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'Triforest Vinyl Plank & Laminate Flooring',
-  subtitle: '38 Triforest products from $2.29/sqft. Waterproof vinyl in multiple thicknesses plus budget-friendly laminate — smart choices for cost-conscious renovations.',
+  subtitle: '100% waterproof SPC vinyl, AC4-rated and backed by a 25-year warranty — Triforest products from $2.29/sqft, in stock at our Markham showroom. Condo-approved options and one of the tightest value price bands we carry.',
   parentPage: null,
   schemaType: 'product',
   content: [
+    {
+      heading: 'Is Triforest Flooring Good? Why It\'s Worth It',
+      body: `<p>Triforest punches well above its price — here's what you're actually getting:</p>
+<ul>
+<li><strong>100% waterproof SPC core</strong> — every vinyl plank is safe for basements, kitchens, bathrooms, and laundry rooms.</li>
+<li><strong>AC4 commercial wear rating</strong> — rated for heavy residential and light commercial traffic, not just bedrooms.</li>
+<li><strong>25-year residential warranty</strong> — real backing at a budget price point.</li>
+<li><strong>Condo-approved underpad options</strong> — meets the sound-transmission rules most GTA condo boards require, no separate underlay needed.</li>
+<li><strong>One of the tightest price bands we carry</strong> — you're not penalized for choosing the thicker, better-feeling plank.</li>
+</ul>
+<p>If you know you want waterproof vinyl and you want genuine value without cutting corners on durability, Triforest delivers.</p>`
+    },
     {
       heading: 'Vinyl-Forward, Value-Driven',
       body: `<p>Triforest is primarily a vinyl brand — <strong>32 of their 38 products are waterproof vinyl plank</strong> — with a small laminate collection rounding out the lineup. If you know you want vinyl and you want options, Triforest delivers.</p>
@@ -286,6 +332,7 @@ export const triforestFlooringData = {
     },
   ],
   faqItems: [
+    { question: 'Is Triforest flooring good quality?', answer: 'Yes — Triforest is strong value. Its vinyl uses a 100% waterproof SPC core, carries an AC4 commercial wear rating (rated for heavy residential and light commercial traffic), and is backed by a 25-year residential warranty, all at one of the most competitive price points in our showroom. Condo-approved underpad options are available. BBS Flooring carries 38 Triforest products in Markham.' },
     { question: 'Is Triforest vinyl plank waterproof?', answer: 'Yes. All 32 Triforest vinyl plank options are 100% waterproof with SPC cores. They can be installed in basements, kitchens, bathrooms, and laundry rooms without moisture concerns.' },
     { question: 'Does Triforest have condo-approved vinyl?', answer: 'Yes. Triforest offers 5.5mm + 1.5mm vinyl plank with integrated condo-approved underpad that meets the sound transmission requirements of most GTA condo boards. Verify your building\'s specific STC/IIC requirements with property management.' },
     { question: 'How much does Triforest flooring cost?', answer: 'Triforest vinyl ranges from $2.79 to $3.49/sqft and laminate is $2.29/sqft at BBS Flooring. These are among the most competitive prices in our Markham showroom. Call (647) 428-1111 for current pricing.' },
@@ -304,13 +351,25 @@ export const triforestFlooringData = {
 
 export const simbaFlooringData = {
   route: 'SimbaFlooring',
-  title: 'Simba Flooring Markham | Vinyl, Engineered Hardwood & Laminate',
-  description: 'Shop Simba Flooring in Markham — 103 products from $2.29/sqft. SPC vinyl plank, herringbone, engineered hardwood (Oak, Hickory, Birch), and waterproof laminate. Call (647) 428-1111.',
+  title: 'Simba Flooring Review & Prices Markham | Vinyl, Hardwood & Laminate',
+  description: 'Is Simba flooring good? 100% waterproof SPC vinyl, AC4-rated, up to 4mm wear layer, plus real engineered oak and herringbone. 100+ products from $2.29/sqft at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'Simba Flooring — Vinyl, Engineered Hardwood & Laminate',
-  subtitle: '103 Simba products from $2.29/sqft — vinyl plank, herringbone, engineered hardwood in Oak & Hickory, and waterproof laminate.',
+  subtitle: '100% waterproof SPC vinyl, AC4-rated with up to a 4mm wear layer — plus real engineered oak and on-trend herringbone. 100+ Simba products from $2.29/sqft, in stock at our Markham showroom.',
   parentPage: { label: 'Shop', route: 'Shop' },
   schemaType: 'product',
   content: [
+    {
+      heading: 'Is Simba Flooring Good? Why It\'s Worth It',
+      body: `<p>Simba is one of the most versatile brands we carry, and it doesn't cut corners to get there:</p>
+<ul>
+<li><strong>100% waterproof SPC vinyl</strong> — safe in every wet area of the home.</li>
+<li><strong>AC4 commercial wear rating with up to a 4mm wear layer</strong> — serious durability for high-traffic homes.</li>
+<li><strong>Real engineered hardwood</strong> — Oak, Hickory, Birch, Maple, Sapele, and Black Walnut, in widths up to 9.5".</li>
+<li><strong>On-trend herringbone</strong> — one of the few brands offering true herringbone at this price, in easy click-lock.</li>
+<li><strong>Every category under one brand</strong> — vinyl for the basement, engineered oak for the main floor, laminate for the budget rooms.</li>
+</ul>
+<p>Whether you're doing a basement in vinyl, a main floor in engineered Oak, or a budget renovation in laminate — Simba has a genuinely good product for it.</p>`
+    },
     {
       heading: 'A Full Flooring Lineup Under One Brand',
       body: `<p>Simba Flooring covers three product categories: <strong>SPC vinyl plank</strong> (including herringbone), <strong>engineered hardwood</strong>, and <strong>waterproof laminate</strong>. Whether you're doing a basement in vinyl, a main floor in engineered Oak, or a budget renovation with laminate — Simba has a product for it.</p>
@@ -347,6 +406,7 @@ export const simbaFlooringData = {
     },
   ],
   faqItems: [
+    { question: 'Is Simba flooring good quality?', answer: 'Yes. Simba\'s vinyl uses a 100% waterproof SPC core, carries an AC4 commercial wear rating, and offers up to a 4mm wear layer for strong scratch and dent resistance. Beyond vinyl, Simba makes real engineered hardwood in six species and true click-lock herringbone — a rare feature at this price. It\'s one of the most versatile, best-value brands at BBS Flooring in Markham.' },
     { question: 'Does Simba Flooring offer engineered hardwood?', answer: 'Yes. Simba has 45 engineered hardwood products in Oak, Hickory, Birch, Maple, Sapele, and Black Walnut. Available in 3/4", 5/8", 3/5", and 1/2" thicknesses from $3.49/sqft at BBS Flooring in Markham.' },
     { question: 'Does Simba Flooring offer herringbone vinyl?', answer: 'Yes. Simba offers 7mm herringbone vinyl plank (Venus collection) with 1.5mm integrated underpad. Click-lock installation — no specialized herringbone skills required. Available from $3.59/sqft at BBS Flooring.' },
     { question: 'Is Simba vinyl flooring waterproof?', answer: 'Yes. All Simba SPC vinyl is 100% waterproof with Stone Polymer Composite cores. Safe for basements, kitchens, bathrooms, and laundry rooms.' },

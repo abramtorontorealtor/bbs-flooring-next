@@ -19,17 +19,24 @@ const has = (str, sub) => lc(str).includes(lc(sub));
 
 export const vidarFlooringData = {
   route: 'VidarFlooring',
-  title: 'Vidar Flooring Markham | Engineered Hardwood',
-  description: 'Shop Vidar engineered hardwood flooring in Markham. European oak, wide plank, waterproof options. In-stock at BBS Flooring. Free measurements. Call (647) 428-1111.',
+  title: 'Vidar Flooring Review & Prices Markham | Engineered Oak In Stock',
+  description: 'Is Vidar flooring worth it? Wide-plank European oak, up to 3mm real-wood wear layer, 25+ year warranty, radiant-heat ready. In stock at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'Vidar Engineered Hardwood Flooring',
-  subtitle: 'Premium European oak from Vidar — in stock at our Markham showroom. Expert installation across the GTA.',
+  subtitle: 'One of the most respected engineered oak brands in Canada — wide-plank European oak, up to a 3mm real-wood wear layer, and a 25+ year warranty. In stock at our Markham showroom, expertly installed across the GTA.',
   parentPage: { label: 'Engineered Hardwood', route: 'EngineeredHardwood' },
   schemaType: 'product',
   content: [
     {
-      heading: 'Why Choose Vidar Flooring?',
-      body: `<p>Vidar is one of Canada's most trusted engineered hardwood brands, known for <strong>wide-plank European oak</strong> with real wood wear layers up to 4mm thick. Every Vidar floor is built for Canadian climates — dimensionally stable, compatible with radiant heat, and backed by a 35-year residential warranty.</p>
-<p>At BBS Flooring, we carry <strong>the full Vidar collection</strong> in stock at our <a href="/Location?city=Markham">Markham showroom</a>. From wire-brushed natural oak to deep-smoked wide planks, you'll find the perfect match for your home.</p>`
+      heading: 'Is Vidar Flooring Good? Why It\'s Worth It',
+      body: `<p>Short answer: yes — Vidar is one of the most respected engineered hardwood names in Canada, and here's why homeowners keep choosing it:</p>
+<ul>
+<li><strong>Real European white oak</strong> — not a photo-print veneer. A genuine sawn oak wear layer (up to 3mm, plus 20mil options) that can be re-sanded and refinished.</li>
+<li><strong>25+ year residential warranty</strong> — Vidar stands behind the floor for the long haul.</li>
+<li><strong>Built for Canadian homes</strong> — dimensionally stable multi-ply construction that shrugs off the humidity swings between a dry heated January and a humid August.</li>
+<li><strong>Radiant-heat compatible</strong> across the collection.</li>
+<li><strong>Designer finishes</strong> — wire-brushed and smoked surfaces that hide everyday scuffs and add real character, not plastic shine.</li>
+</ul>
+<p>At BBS Flooring, we carry <strong>the full Vidar collection</strong> in stock at our <a href="/Location?city=Markham">Markham showroom</a> — from wire-brushed natural oak to deep-smoked wide planks. Come feel the difference between real oak and a printed lookalike.</p>`
     },
     {
       heading: 'Vidar Collection Highlights',
@@ -47,7 +54,8 @@ export const vidarFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Is Vidar flooring good quality?', answer: 'Yes. Vidar is a premium Canadian-distributed brand specializing in European oak engineered hardwood. Their floors feature real wood wear layers (2–4mm), 35-year warranties, and are built for Canadian temperature swings. BBS Flooring is an authorized Vidar dealer.' },
+    { question: 'Is Vidar flooring good quality?', answer: 'Yes. Vidar is a premium engineered hardwood brand specializing in real European white oak. Their floors feature genuine sawn-oak wear layers (up to 3mm, plus 20mil options), a 25+ year residential warranty, and multi-ply construction built for Canadian temperature and humidity swings. Because the wear layer is real wood, Vidar floors can be sanded and refinished — something laminate and printed vinyl can never do. BBS Flooring carries the full Vidar collection in Markham.' },
+    { question: 'What do Vidar flooring reviews say?', answer: 'Vidar is consistently praised for the authenticity of its European oak, the depth of its wire-brushed and smoked finishes, and its dimensional stability in Canadian climates. Homeowners choosing real engineered oak over printed lookalikes rate it highly for feel underfoot and long-term durability. See and feel it yourself at BBS Flooring in Markham before you buy.' },
     { question: 'How much does Vidar flooring cost per square foot?', answer: 'Vidar engineered hardwood ranges from approximately $4.50 to $9.00 per square foot depending on the collection and plank width. BBS Flooring offers competitive pricing — call (647) 428-1111 or use our online Quote Calculator for an exact price.' },
     { question: 'Can Vidar flooring be installed over radiant heat?', answer: 'Yes. All Vidar engineered hardwood collections are compatible with radiant heating systems. Our installers follow Vidar\'s specifications for moisture barriers and temperature limits.' },
     { question: 'Where can I see Vidar flooring samples in Markham?', answer: 'Visit BBS Flooring at 6061 Highway 7, Unit B, Markham. We carry the full Vidar collection in our showroom. Walk-ins welcome Monday–Saturday.' },
@@ -304,10 +312,10 @@ export const whiteOakFlooringData = {
 
 export const wickhamFlooringData = {
   route: 'WickhamFlooring',
-  title: 'Wickham Flooring Markham | Hardwood Made in Canada',
-  description: 'Shop Wickham hardwood flooring in Markham. Canadian-made, solid & engineered. Red oak, maple, hickory. Free measurements. Call (647) 428-1111.',
+  title: 'Wickham Flooring Review & Prices | Canadian-Made Hardwood Markham',
+  description: 'Is Wickham hardwood worth it? Made in Quebec since 1997, 25-year warranty, sustainably-sourced North American maple, oak & hickory. In stock at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'Wickham Hardwood Flooring',
-  subtitle: 'Canadian-made hardwood from Wickham — solid and engineered collections in stock at BBS Flooring.',
+  subtitle: 'One of Canada\'s premier hardwood makers — milled in Wickham, Quebec since 1997, 100% Canadian-made, backed by a 25-year warranty. Solid and engineered collections in stock at BBS Flooring.',
   parentPage: { label: 'Engineered Hardwood', route: 'EngineeredHardwood' },
   schemaType: 'product',
   content: [
@@ -315,6 +323,18 @@ export const wickhamFlooringData = {
       heading: 'Wickham: Canadian Hardwood Since 1997',
       body: `<p>Wickham Hardwood Flooring has been manufacturing premium hardwood floors in Quebec since 1997. Their products are <strong>100% made in Canada</strong> using sustainably sourced North American hardwoods.</p>
 <p>At BBS Flooring, we carry a wide selection of Wickham's engineered and solid collections — from classic red oak to contemporary white oak and exotic hickory.</p>`
+    },
+    {
+      heading: 'Is Wickham Flooring Good? Why It\'s Worth It',
+      body: `<p>Wickham is one of the few genuinely Canadian-made hardwood brands left — and it shows in the floor:</p>
+<ul>
+<li><strong>Made in Canada since 1997</strong> — milled in Wickham, Quebec, not shipped in from overseas. Shorter supply chain, domestic quality control, and a floor built for our climate.</li>
+<li><strong>Sustainably sourced North American hardwood</strong> — real maple, red oak, white oak, and hickory.</li>
+<li><strong>25-year residential warranty</strong> — a Canadian manufacturer standing behind a Canadian floor.</li>
+<li><strong>Solid and engineered options</strong> — solid ¾" for lifetime refinishing, engineered multi-ply for radiant heat and basements.</li>
+<li><strong>Factory custom staining</strong> — colours you won't find in a big-box aisle.</li>
+</ul>
+<p>If buying Canadian matters to you, Wickham is the real thing — not an imported floor with a maple-leaf sticker.</p>`
     },
     {
       heading: 'Wickham Collections at BBS',
@@ -328,6 +348,7 @@ export const wickhamFlooringData = {
     },
   ],
   faqItems: [
+    { question: 'Is Wickham flooring good quality?', answer: 'Yes. Wickham is one of Canada\'s premier hardwood manufacturers, milled in Wickham, Quebec since 1997. Because it\'s made in Canada from sustainably-sourced North American maple, oak, and hickory — and acclimatized for our climate — it offers excellent dimensional stability, a 25-year residential warranty, and consistent quality control that imported hardwood often can\'t match. BBS Flooring carries Wickham solid and engineered collections in Markham.' },
     { question: 'Is Wickham flooring made in Canada?', answer: 'Yes. Wickham Hardwood Flooring is manufactured in Wickham, Quebec, Canada. They use sustainably sourced North American hardwoods and have been in operation since 1997.' },
     { question: 'How much does Wickham hardwood flooring cost?', answer: 'Wickham hardwood ranges from approximately $5–$10/sqft depending on species, width, and collection. Contact BBS Flooring at (647) 428-1111 for current stock and pricing.' },
     { question: 'Where can I buy Wickham flooring in Markham?', answer: 'BBS Flooring at 6061 Highway 7, Markham carries Wickham hardwood. Visit our showroom to see samples or call (647) 428-1111 to check availability of specific products.' },
