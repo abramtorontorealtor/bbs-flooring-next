@@ -44,12 +44,8 @@ export default async function CheapFlooringGtaPage() {
             url: 'https://bbsflooring.ca/cheap-flooring-gta',
             seller: { '@type': 'Organization', name: 'BBS Flooring', url: 'https://bbsflooring.ca' },
           },
-          aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '4.7',
-            reviewCount: '50',
-            bestRating: '5',
-          },
+          // Store-level Google rating intentionally omitted from Product schema
+          // (self-serving → ignored by Google since Jul 2026). Lives on LocalBusiness only.
         }] : []),
       ]} />
       <BrandLandingServer
