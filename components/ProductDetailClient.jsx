@@ -376,7 +376,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
     if (currentPricing.thickness) items.push({ label: 'Thickness', value: currentPricing.thickness });
     if (currentPricing.finish) items.push({ label: 'Finish', value: currentPricing.finish });
     if (currentPricing.grade) items.push({ label: 'Grade', value: currentPricing.grade });
-    if (currentPricing.wear_layer) items.push({ label: 'Wear Layer', value: currentPricing.wear_layer });
+    // Only advertise wear layer/veneer of 2mm+ on engineered hardwood. Sub-2mm veneers are suppressed
+    // (DB value retained internally). Vinyl/laminate wear layers are a different spec and always shown.
+    const wearLayerMm = parseFloat(currentPricing.wear_layer);
+    const hideThinVeneer = product?.category === 'engineered_hardwood' && !Number.isNaN(wearLayerMm) && wearLayerMm < 2;
+    if (currentPricing.wear_layer && !hideThinVeneer) items.push({ label: 'Wear Layer', value: currentPricing.wear_layer });
     if (currentPricing.ac_rating) items.push({ label: 'AC Rating', value: currentPricing.ac_rating });
     if (currentPricing.sqft_per_box) items.push({ label: 'Sqft/Box', value: currentPricing.sqft_per_box.toFixed(2) });
     return items;
