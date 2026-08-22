@@ -19,6 +19,18 @@ const ITEMS_PER_PAGE = 24;
 
 const HARDWOOD_CATEGORIES = ['solid_hardwood', 'engineered_hardwood'];
 
+// Hardwood veneer buckets: everything <=2mm collapses (not practically refinishable — a
+// 2mm layer only survives a light same-colour screen, not a full sand to bare wood), 3mm and
+// 4mm are isolated as the refinishable/premium tiers. Vinyl wear layers are NOT bucketed.
+const VENEER_BUCKETS = ['2mm or less', '3mm', '4mm'];
+function veneerBucket(wearLayer) {
+  const mm = parseFloat(wearLayer);
+  if (Number.isNaN(mm)) return null;
+  if (mm <= 2) return '2mm or less';
+  if (mm < 4) return '3mm';
+  return '4mm';
+}
+
 const WIDTH_BUCKETS = [
   { value: 'narrow', label: 'Narrow (< 5")', test: (w) => w < 5 },
   { value: 'standard', label: 'Standard (5–7")', test: (w) => w >= 5 && w <= 7 },
@@ -229,6 +241,8 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
   // Detect category composition for mixed-category brand pages
   const hasHardwood = useMemo(() => isMixedCategory && products.some(p => HARDWOOD_CATEGORIES.includes(p.category)), [products, isMixedCategory]);
   const hasVinyl = useMemo(() => isMixedCategory && products.some(p => p.category === 'vinyl'), [products, isMixedCategory]);
+  // Bucket the veneer-thickness filter (hardwood only; vinyl wear layers stay per-value).
+  const bucketVeneer = (isHardwood || hasHardwood) && !(isVinyl || hasVinyl);
   const hasLaminate = useMemo(() => isMixedCategory && products.some(p => p.category === 'laminate'), [products, isMixedCategory]);
 
   // Unified category awareness — works for both single-category and mixed-brand pages
@@ -260,7 +274,15 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
       thicknesses: countBy(products, 'thickness'),
       finishes: countBy(products, 'finish'),
       grades: showGrades ? countBy(products, 'grade') : [],
-      wearLayers: showWearLayer ? countBy(products, 'wear_layer') : [],
+      wearLayers: showWearLayer
+        ? (bucketVeneer
+            ? (() => {
+                const counts = {};
+                products.forEach(p => { const b = veneerBucket(p.wear_layer); if (b) counts[b] = (counts[b] || 0) + 1; });
+                return VENEER_BUCKETS.filter(b => counts[b]).map(b => ({ value: b, label: b, count: counts[b] }));
+              })()
+            : countBy(products, 'wear_layer'))
+        : [],
       acRatings: showAcRating ? countBy(products, 'ac_rating') : [],
       categories: isMixedCategory ? countBy(products, 'category') : [],
     };
@@ -296,7 +318,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     if (filters.thicknesses.length) result = result.filter(p => filters.thicknesses.includes(p.thickness));
     if (filters.finishes.length) result = result.filter(p => filters.finishes.includes(p.finish));
     if (filters.grades.length) result = result.filter(p => filters.grades.includes(p.grade));
-    if (filters.wearLayers.length) result = result.filter(p => filters.wearLayers.includes(p.wear_layer));
+    if (filters.wearLayers.length) result = result.filter(p => filters.wearLayers.includes(bucketVeneer ? veneerBucket(p.wear_layer) : p.wear_layer));
     if (filters.acRatings.length) result = result.filter(p => filters.acRatings.includes(p.ac_rating));
     if (filters.categories.length) result = result.filter(p => filters.categories.includes(p.category));
 
@@ -379,7 +401,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     filters.thicknesses.forEach(t => pills.push({ key: `thickness-${t}`, label: t, clear: () => setFilters(f => ({ ...f, thicknesses: f.thicknesses.filter(x => x !== t) })) }));
     filters.finishes.forEach(fi => pills.push({ key: `finish-${fi}`, label: fi, clear: () => setFilters(f => ({ ...f, finishes: f.finishes.filter(x => x !== fi) })) }));
     filters.grades.forEach(g => pills.push({ key: `grade-${g}`, label: g, clear: () => setFilters(f => ({ ...f, grades: f.grades.filter(x => x !== g) })) }));
-    filters.wearLayers.forEach(w => pills.push({ key: `wl-${w}`, label: `${w} ${(isHardwood || hasHardwood) && !(isVinyl || hasVinyl) ? 'Veneer' : 'Wear Layer'}`, clear: () => setFilters(f => ({ ...f, wearLayers: f.wearLayers.filter(x => x !== w) })) }));
+    filters.wearLayers.forEach(w => pills.push({ key: `wl-${w}`, label: bucketVeneer ? `Veneer: ${w}` : `${w} Wear Layer`, clear: () => setFilters(f => ({ ...f, wearLayers: f.wearLayers.filter(x => x !== w) })) }));
     filters.acRatings.forEach(a => pills.push({ key: `ac-${a}`, label: a, clear: () => setFilters(f => ({ ...f, acRatings: f.acRatings.filter(x => x !== a) })) }));
     const CAT_LABELS = { vinyl: 'Vinyl', engineered_hardwood: 'Engineered Hardwood', solid_hardwood: 'Solid Hardwood', laminate: 'Laminate' };
     filters.categories.forEach(c => pills.push({ key: `cat-${c}`, label: CAT_LABELS[c] || c, clear: () => setFilters(f => ({ ...f, categories: f.categories.filter(x => x !== c) })) }));
@@ -606,7 +628,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
 
       {/* Wear Layer / Veneer Thickness */}
       {filterOptions.wearLayers.length > 0 && (
-        <FilterSection title={(isHardwood || hasHardwood) && !(isVinyl || hasVinyl) ? 'Veneer Thickness' : 'Wear Layer'} defaultOpen={filters.wearLayers.length > 0}>
+        <FilterSection title={bucketVeneer ? 'Veneer Thickness' : 'Wear Layer'} defaultOpen={filters.wearLayers.length > 0}>
           <CheckboxFilterList
             options={filterOptions.wearLayers}
             selected={filters.wearLayers}
