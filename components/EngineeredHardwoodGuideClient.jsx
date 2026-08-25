@@ -22,8 +22,8 @@ export default function EngineeredHardwoodGuideClient() {
             Everything you need to know — species, brands, costs, installation methods, and how to choose the right engineered hardwood for every room in your home.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-stone-400">
-            <span>✔ 400+ options in stock</span>
-            <span>✔ 9 brands compared</span>
+            <span>✔ 500+ in-stock options</span>
+            <span>✔ 10 brands compared</span>
             <span>✔ Real Canadian pricing</span>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function EngineeredHardwoodGuideClient() {
           Quick Answer: Best Engineered Hardwood in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 400+ in-stock engineered hardwood options from $3.29&#8211;$8.99/sqft across 9 brands, plus a premium Vidar Design line (call-for-pricing). Species include White Oak, Hickory, Maple, and Walnut. Common widths run 6&#189;&quot; and 7&#189;&quot;. Professional installation from $2.25/sqft (nail-down) or $3.25/sqft (glue-down). Free in-home measurement: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring stocks 500+ in-stock engineered hardwood options from $3.29&#8211;$8.99/sqft across 10 brands, including a premium Vidar Design line (call-for-pricing). Species include White Oak, Hickory, Maple, and Walnut. Common widths run 6&#189;&quot; and 7&#189;&quot;. Professional installation from $2.25/sqft (nail-down) or $3.25/sqft (glue-down). Free in-home measurement: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -116,8 +116,8 @@ export default function EngineeredHardwoodGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Price at BBS', '$3.29–$8.99/sqft', '$5.10–$7.25/sqft'],
-                  ['Options at BBS', '400+ options, 9 brands', '80+ options, 4 brands'],
+                  ['Price at BBS', '$3.29–$8.99/sqft', '$5.10–$7.59/sqft'],
+                  ['Options at BBS', '600+ options, 10 brands', '100+ options, 6 brands'],
                   ['Construction', 'Multi-layer (veneer + plywood core)', 'Single piece of wood, 3/4" thick'],
                   ['Install over concrete', '✅ Yes — glue-down or floating', '❌ No — nail-down on wood only'],
                   ['Radiant heat compatible', '✅ Yes', '❌ Not recommended'],
@@ -290,7 +290,7 @@ export default function EngineeredHardwoodGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Brand Comparison</h2>
           <p className="text-stone-600 text-lg leading-relaxed mb-8">
-            BBS Flooring carries engineered hardwood from 9 brands. Here&apos;s how they compare on price, selection, and what they&apos;re best for.
+            BBS Flooring carries engineered hardwood from 10 brands. Here&apos;s how they compare on price, selection, and what they&apos;re best for.
           </p>
 
           <div className="overflow-x-auto rounded-xl border border-stone-200">
@@ -306,15 +306,16 @@ export default function EngineeredHardwoodGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['NAF', '83', '$4.69–$8.19', 'White Oak, Maple, Hickory', 'Good value with wide variety'],
+                  ['Vidar', '240', 'Call for pricing', 'White Oak, Hickory, Walnut, European Oak', 'Premium wide-plank, herringbone, designer looks'],
+                  ['NAF', '89', '$4.69–$8.19', 'White Oak, Maple, Hickory', 'Good value with wide variety'],
                   ['Northernest', '71', '$4.19–$6.99', 'White Oak, Maple, Hickory', 'Mid-range Canadian quality'],
                   ['Woden', '51', '$3.79–$6.99', 'European Oak, White Oak', 'Budget to mid-range entry point'],
-                  ['Vidar', '49', 'Call for pricing', 'White Oak, Hickory, Walnut, European Oak', 'Premium wide-plank, herringbone, designer looks'],
                   ['Canadian Standard', '48', '$4.89–$7.59', 'White Oak, Hickory', 'Premium Canadian-made'],
+                  ['Impressive', '47', '$4.25–$7.99', 'White Oak, Hickory', 'Mid-range value, wide selection'],
                   ['Simba', '46', '$3.69–$8.99', 'White Oak, Hickory', 'Wide range, budget to premium'],
                   ['Falcon', '25', '$3.89–$3.99', 'White Oak, Red Oak', 'Budget Oak'],
                   ['Lee', '18', '$3.19–$5.49', 'American Oak', 'Affordable American Oak'],
-                  ['Triforest', '12', 'Call for pricing', 'White Oak', 'Specialty engineered lines'],
+                  ['Triforest', '12', '$4.79–$6.29', 'White Oak', 'Specialty engineered lines'],
                 ].map(([brand, products, price, species, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{brand}</td>
@@ -342,6 +343,16 @@ export default function EngineeredHardwoodGuideClient() {
               <p className="font-semibold text-purple-800 mb-1">👑 Premium Pick</p>
               <p className="text-stone-600 text-sm">Vidar Design Flooring — a premium line (call for pricing) including herringbone, Chevron, wide-plank, and exotic species. The designer&apos;s choice.</p>
             </div>
+          </div>
+        </section>
+
+        {/* Mid-scroll standout CTA */}
+        <section className="bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-2xl p-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Not sure which brand or species fits your home?</h2>
+          <p className="text-amber-100 mb-6 max-w-xl mx-auto">Get a free in-home measurement and a no-pressure quote. We&apos;ll match you to the right engineered hardwood for your subfloor, budget, and style.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="tel:6474281111" className="bg-white text-amber-800 rounded-lg px-6 py-3 font-semibold hover:bg-amber-50 transition-colors">📞 Call (647) 428-1111</a>
+            <Link href="/free-measurement" className="bg-amber-900/40 hover:bg-amber-900/60 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">Book Free Measurement</Link>
           </div>
         </section>
 
@@ -522,7 +533,7 @@ export default function EngineeredHardwoodGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Choose Your Engineered Hardwood?</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            BBS Flooring stocks 400+ in-stock engineered hardwood options across 9 brands, starting at $3.29/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
+            BBS Flooring stocks 500+ in-stock engineered hardwood options across 10 brands, starting at $3.29/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/engineered-hardwood-flooring" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">
