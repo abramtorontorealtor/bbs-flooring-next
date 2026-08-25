@@ -63,7 +63,7 @@ export default function FlooringCostGuideClient() {
         <section id="material-costs">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Material Costs by Flooring Type</h2>
           <p className="text-stone-600 text-lg leading-relaxed mb-8">
-            Every price below is what you&apos;ll actually pay for materials at BBS Flooring — no MSRP inflation, no &quot;starting from&quot; bait-and-switch. These are real prices from our 1,000+ in-stock products, updated for April 2026.
+            Every price below is what you&apos;ll actually pay for materials at BBS Flooring — no MSRP inflation, no &quot;starting from&quot; bait-and-switch. These are real prices from our 1,000+ in-stock products, updated for August 2026.
           </p>
 
           <div className="overflow-x-auto rounded-xl border border-stone-200">
@@ -79,10 +79,10 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '400+ options', '$3.29–$8.99/sqft', '$4.89/sqft', 'Lee ($3.29) · Woden ($3.50) · Falcon ($3.89)'],
-                  ['Solid Hardwood', '80+ options', '$5.10–$7.25/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
-                  ['Vinyl (LVP/SPC)', '280+ options', '$2.19–$4.35/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($1.79 clearance) · Triforest ($2.29)'],
-                  ['Laminate', '135+ options', '$1.49–$3.39/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.29)'],
+                  ['Engineered Hardwood', '600+ options', '$3.29–$8.99/sqft', '$4.89/sqft', 'Lee ($3.29) · Woden ($3.50) · Falcon ($3.89)'],
+                  ['Solid Hardwood', '100+ options', '$5.10–$7.59/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
+                  ['Vinyl (LVP/SPC)', '340+ options', '$2.19–$4.35/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($1.79 clearance) · Triforest ($2.29)'],
+                  ['Laminate', '170+ options', '$1.49–$3.39/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.29)'],
                 ].map(([type, options, range, avg, value], i) => (
                   <tr key={type} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{type}</td>
@@ -177,6 +177,16 @@ export default function FlooringCostGuideClient() {
               <p className="font-semibold text-amber-800 mb-1">📞 Get your quote</p>
               <p className="text-stone-600 text-sm">Call (647) 428-1111 or <Link href="/free-measurement" className="text-amber-700 underline">book a free measurement online</Link>. Same-week installation often available.</p>
             </div>
+          </div>
+        </section>
+
+        {/* Mid-scroll standout CTA */}
+        <section className="bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-2xl p-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Want your exact number, not a range?</h2>
+          <p className="text-amber-100 mb-6 max-w-xl mx-auto">Book a free in-home measurement and we&apos;ll quote material, labour, removal, and every extra itemized upfront — no surprises. Direct-from-manufacturer pricing across the GTA.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="tel:6474281111" className="bg-white text-amber-800 rounded-lg px-6 py-3 font-semibold hover:bg-amber-50 transition-colors">📞 Call (647) 428-1111</a>
+            <Link href="/free-measurement" className="bg-amber-900/40 hover:bg-amber-900/60 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">Book Free Measurement</Link>
           </div>
         </section>
 

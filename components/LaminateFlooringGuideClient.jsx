@@ -19,8 +19,8 @@ export default function LaminateFlooringGuideClient() {
             AC ratings decoded, thickness compared, waterproof options explained, and real Canadian pricing — everything you need to choose the right laminate for your home.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-slate-400">
-            <span>✔ 155+ options in stock</span>
-            <span>✔ 9 brands compared</span>
+            <span>✔ 170+ options in stock</span>
+            <span>✔ 10 brands compared</span>
             <span>✔ From $1.49/sqft</span>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default function LaminateFlooringGuideClient() {
           Quick Answer: Best Laminate Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 155+ laminate options from $1.49&#8211;$3.39/sqft &#8212; the most affordable flooring option. 9 brands including NAF (14mm Waterproof PRO $3.39), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring stocks 170+ laminate options from $1.49&#8211;$3.39/sqft &#8212; the most affordable flooring option. 10 brands including NAF (14mm Waterproof PRO $3.39), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -62,7 +62,7 @@ export default function LaminateFlooringGuideClient() {
         <section id="what-is-laminate">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">What Is Laminate Flooring?</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            Laminate is a multi-layer flooring product that mimics the look of hardwood (or stone) using a high-resolution photographic print layer protected by a tough wear coating. Modern laminate has come a long way — with embossed-in-register (EIR) textures and realistic grain, quality laminate is almost indistinguishable from real wood. Browse our full <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">laminate flooring collection</Link> to see 155+ options starting from $1.49/sqft.
+            Laminate is a multi-layer flooring product that mimics the look of hardwood (or stone) using a high-resolution photographic print layer protected by a tough wear coating. Modern laminate has come a long way — with embossed-in-register (EIR) textures and realistic grain, quality laminate is almost indistinguishable from real wood. Browse our full <Link href="/laminate-flooring" className="text-amber-700 underline hover:text-amber-800">laminate flooring collection</Link> to see 170+ options starting from $1.49/sqft.
           </p>
 
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-6">
@@ -266,7 +266,7 @@ export default function LaminateFlooringGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Brand &amp; Price Comparison</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            BBS Flooring carries 155+ laminate products from 9 brands. Here&apos;s how they compare:
+            BBS Flooring carries 200+ laminate products (170+ in stock) from 10 brands. Here&apos;s how they compare:
           </p>
 
           <div className="overflow-x-auto mb-8">
@@ -285,7 +285,7 @@ export default function LaminateFlooringGuideClient() {
                   <td className="p-3 font-semibold text-emerald-800">
                     <Link href="/naf-flooring" className="text-amber-700 underline hover:text-amber-800">NAF Flooring</Link>
                   </td>
-                  <td className="p-3 text-center">42</td>
+                  <td className="p-3 text-center">54</td>
                   <td className="p-3 text-slate-600">12mm – 14mm</td>
                   <td className="p-3 text-slate-600 font-medium">$2.39–$3.39/sqft</td>
                   <td className="p-3 text-slate-600">Only brand with 14mm PRO (AC5, attached underpad). See <Link href="/products/horizon-naf-14mm-waterproof-laminate" className="text-amber-700 underline hover:text-amber-800">Horizon 14mm PRO</Link> ($3.39)</td>
@@ -317,7 +317,7 @@ export default function LaminateFlooringGuideClient() {
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-semibold text-slate-800">Triforest</td>
-                  <td className="p-3 text-center">16</td>
+                  <td className="p-3 text-center">40</td>
                   <td className="p-3 text-slate-600">12mm</td>
                   <td className="p-3 text-slate-600 font-medium">$1.79–$2.79/sqft</td>
                   <td className="p-3 text-slate-600">Wide price range, budget-to-mid options</td>
@@ -347,6 +347,13 @@ export default function LaminateFlooringGuideClient() {
                   <td className="p-3 text-green-700 font-medium">From $1.49/sqft</td>
                   <td className="p-3 text-slate-600">Lowest price — best for rentals, flips, large areas. See <Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904</Link> ($1.49)</td>
                 </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-slate-800">Impressive</td>
+                  <td className="p-3 text-center">24</td>
+                  <td className="p-3 text-slate-600">12mm</td>
+                  <td className="p-3 text-slate-600 font-medium">$2.55–$2.75/sqft</td>
+                  <td className="p-3 text-slate-600">Value house label — wide in-stock selection, consistent mid-range pricing</td>
+                </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-semibold text-slate-800">Golden Choice</td>
                   <td className="p-3 text-center">6</td>
@@ -356,6 +363,16 @@ export default function LaminateFlooringGuideClient() {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Mid-scroll standout CTA */}
+        <section className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-2xl p-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Not sure which laminate fits your budget and traffic?</h2>
+          <p className="text-emerald-50 mb-6 max-w-xl mx-auto">Get a free in-home measurement and a no-pressure quote. We&apos;ll match you to the right AC rating, thickness, and waterproofing for your space — and tell you exactly what it costs installed.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="tel:6474281111" className="bg-white text-emerald-700 rounded-lg px-6 py-3 font-semibold hover:bg-emerald-50 transition-colors">📞 Call (647) 428-1111</a>
+            <Link href="/free-measurement" className="bg-emerald-900/40 hover:bg-emerald-900/60 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">Book Free Measurement</Link>
           </div>
         </section>
 

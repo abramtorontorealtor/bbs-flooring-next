@@ -19,8 +19,8 @@ export default function SolidHardwoodGuideClient() {
             Species comparison, grade explained, real pricing, and everything you need to choose the right solid hardwood for your home.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-amber-200">
-            <span>✔ 83 options in stock</span>
-            <span>✔ 4 premium brands</span>
+            <span>✔ 75+ options in stock</span>
+            <span>✔ 6 brands compared</span>
             <span>✔ From $5.10/sqft</span>
           </div>
         </div>
@@ -54,7 +54,7 @@ export default function SolidHardwoodGuideClient() {
           Quick Answer: Best Solid Hardwood Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 83 solid hardwood options from $5.10&#8211;$7.25/sqft. Four Canadian brands: Wickham, Appalachian, Sherwood Forest, and Northernest. &#190;&quot; thick solid planks that can be refinished 5&#8211;7 times. Professional nail-down installation from $2.25/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring carries 100+ solid hardwood options (75+ in stock) from $5.10&#8211;$7.59/sqft across six brands: Wickham, Impressive, Sherwood Forest, Northernest, Appalachian, and NAF. &#190;&quot; thick solid planks that can be refinished 5&#8211;7 times. Professional nail-down installation from $2.25/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -352,7 +352,7 @@ export default function SolidHardwoodGuideClient() {
                 </tr>
                 <tr>
                   <td className="p-3 font-medium text-slate-800">Price at BBS</td>
-                  <td className="p-3 text-slate-600 font-medium">$5.10–$7.25/sqft</td>
+                  <td className="p-3 text-slate-600 font-medium">$5.10–$7.59/sqft</td>
                   <td className="p-3 text-slate-600 font-medium">$3.29–$8.99/sqft</td>
                 </tr>
                 <tr className="bg-slate-50">
@@ -373,7 +373,7 @@ export default function SolidHardwoodGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Brand &amp; Price Comparison</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            BBS Flooring carries solid hardwood from four Canadian-market brands. All are ¾&quot; thick, tongue-and-groove, and come pre-finished (no on-site sanding needed).
+            BBS Flooring carries solid hardwood from six brands. All are ¾&quot; thick, tongue-and-groove, and come pre-finished (no on-site sanding needed).
           </p>
 
           <div className="space-y-6 mb-8">
@@ -444,6 +444,29 @@ export default function SolidHardwoodGuideClient() {
                 <Link href="/products/fraser-4-3-4-maple-northernest-solid-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Fraser Northernest 4¾&quot; Maple — $5.10/sqft</Link>
               </p>
             </div>
+
+            <div className="border border-slate-200 rounded-xl p-6">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900">Impressive</h3>
+                  <p className="text-slate-500 text-sm">18 options · Value house label</p>
+                </div>
+                <span className="text-amber-700 font-bold">$5.25/sqft</span>
+              </div>
+              <p className="text-slate-600 text-sm">
+                BBS&apos;s in-house solid hardwood label — a straightforward, well-stocked value line. 18 options at a flat $5.25/sqft in ¾&quot; pre-finished planks. A strong pick when you want genuine solid hardwood at a predictable mid-range price without paying for a premium brand name.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Mid-scroll standout CTA */}
+        <section className="bg-gradient-to-r from-amber-700 to-amber-800 text-white rounded-2xl p-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Not sure which species or brand fits your home?</h2>
+          <p className="text-amber-100 mb-6 max-w-xl mx-auto">Get a free in-home measurement and a no-pressure quote. We&apos;ll bring samples and match you to the right solid hardwood for your subfloor, traffic, and budget.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="tel:6474281111" className="bg-white text-amber-800 rounded-lg px-6 py-3 font-semibold hover:bg-amber-50 transition-colors">📞 Call (647) 428-1111</a>
+            <Link href="/free-measurement" className="bg-amber-900/40 hover:bg-amber-900/60 text-white border border-white/30 rounded-lg px-6 py-3 font-semibold transition-colors">Book Free Measurement</Link>
           </div>
         </section>
 
@@ -813,7 +836,7 @@ export default function SolidHardwoodGuideClient() {
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Frequently Asked Questions</h2>
           <div className="space-y-6">
             {[
-              { q: 'How much does solid hardwood flooring cost in Toronto?', a: 'At BBS Flooring in Markham, solid hardwood ranges from $5.10–$7.25/sqft for material. Installation adds $3.50/sqft (nail-down). For a typical 500 sqft project, total installed cost is approximately $4,300–$5,875 before flooring removal.' },
+              { q: 'How much does solid hardwood flooring cost in Toronto?', a: 'At BBS Flooring in Markham, solid hardwood ranges from $5.10–$7.59/sqft for material. Installation adds $3.50/sqft (nail-down). For a typical 500 sqft project, total installed cost is approximately $4,300–$5,875 before flooring removal.' },
               { q: 'What is the difference between solid and engineered hardwood?', a: 'Solid hardwood is a single piece of wood (¾" thick) that can be refinished 5–10 times. Engineered has a wood veneer over plywood — more stable but refinishable only 1–3 times. Solid is the premium choice for main floors; engineered is better for basements and over concrete.' },
               { q: 'How long does solid hardwood flooring last?', a: 'Solid hardwood lasts 75–100+ years with proper maintenance. The ¾" thickness allows 5–10 refinishing cycles over the floor\'s lifetime. Many century-old Toronto homes still have original solid hardwood floors.' },
               { q: 'Can solid hardwood be installed in a basement?', a: 'No. Solid hardwood should never go below grade — moisture from concrete causes cupping, buckling, and warping. Solid hardwood requires controlled humidity (35–55% RH) that below-grade environments cannot provide. Use engineered hardwood (from $3.19/sqft) or vinyl for basements.' },
@@ -823,7 +846,7 @@ export default function SolidHardwoodGuideClient() {
               { q: 'How often does solid hardwood need to be refinished?', a: 'Typically every 10–15 years for heavily used floors, or every 20–25 years for bedrooms and low-traffic areas. A screen-and-recoat (lighter process) can be done every 5–7 years to maintain the finish before a full sand is needed. Solid hardwood\'s ¾" thickness allows 5–10 full refinishing cycles.' },
               { q: 'Does solid hardwood increase home value?', a: 'Yes. Real estate professionals consistently rank hardwood as the #1 flooring for resale value. Solid hardwood commands a premium over engineered, vinyl, and laminate in the GTA market.' },
               { q: 'How long does installation take?', a: 'A standard 500 sqft room takes 2–3 days including subfloor prep. Acclimation (3–7 days before install) is separate. Larger projects scale proportionally. BBS handles everything in one visit — removal, prep, install, baseboards.' },
-              { q: 'What brands of solid hardwood do you carry?', a: 'Wickham (31 options, $5.50–$7.25), Appalachian (18, $5.99–$6.39), Northernest (18, $5.10–$6.50), and Sherwood Forest (16, $5.99–$6.99). All are ¾" thick, pre-finished, tongue-and-groove. Visit our Markham showroom.' },
+              { q: 'What brands of solid hardwood do you carry?', a: 'Wickham (31 options, $5.50–$7.25), Impressive (18, $5.25), Northernest (18, $5.10–$6.50), Appalachian (18, $5.99–$6.39), Sherwood Forest (16, $5.99–$6.99), and NAF (2, $7.19–$7.59). All are ¾" thick, pre-finished, tongue-and-groove. Visit our Markham showroom.' },
             ].map((faq, i) => (
               <details key={i} className="group border border-slate-200 rounded-xl">
                 <summary className="p-5 cursor-pointer font-semibold text-slate-800 group-open:border-b group-open:border-slate-200 list-none flex justify-between items-center">
