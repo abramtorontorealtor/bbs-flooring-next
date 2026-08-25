@@ -326,6 +326,16 @@ export default function CheckoutClient() {
           actual_sqft: item.actual_sqft,
           price_per_sqft: item.price_per_sqft,
           line_total: item.line_total,
+          // Accessory/transition tag-through (fix Aug 25 2026): these fields let
+          // orders/create re-price add-ons from the trusted accessoryCatalog.
+          // Without them the server couldn't identify accessory/transition lines
+          // (item_type null), priced them via the product path (no product_id),
+          // and DROPPED them from subtotal/tax/total — the $25 still displayed
+          // but wasn't charged (BBS-10046 −$50, BBS-10044 −$300).
+          item_type: item.item_type,
+          transition_type: item.transition_type,
+          transition_quantity: item.transition_quantity,
+          quantity: item.quantity,
         })),
         subtotal: totals.subtotal,
         tax: totals.tax,

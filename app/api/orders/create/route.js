@@ -75,32 +75,38 @@ export async function POST(request) {
     let subtotal = 0;
     const normalizedItems = [];
     for (const it of orderData.items || []) {
-      if (it.item_type === 'accessory' || it.item_type === 'transition') {
-        const accTotal = priceAccessoryLine(it);
-        const qty = Math.max(0, parseInt(it.transition_quantity ?? it.quantity ?? 0, 10) || 0);
-        if (accTotal != null && Number.isFinite(accTotal) && accTotal > 0) {
-          subtotal += accTotal;
-          normalizedItems.push({
-            ...it,
-            quantity: qty || null,
-            unit_price: qty > 0 ? Math.round((accTotal / qty) * 100) / 100 : null,
-            line_total: accTotal, // server-trusted, overwrites any client value
-          });
-        } else {
-          normalizedItems.push(it);
-        }
+      const pid = it.product_id || it.id;
+      const unit = pid ? priceMap[pid] : null;
+      const sqft = Number(it.actual_sqft || it.sqft || it.square_footage || 0);
+
+      // 1) Real product line — priced by trusted product_id × sqft.
+      if (unit != null && Number.isFinite(sqft) && sqft > 0) {
+        const lineTotal = Math.round(unit * sqft * 100) / 100;
+        subtotal += unit * sqft;
+        normalizedItems.push({ ...it, unit_price: unit, line_total: lineTotal });
         continue;
       }
-      const pid = it.product_id || it.id;
-      const unit = priceMap[pid];
-      const qty = Number(it.actual_sqft || it.sqft || it.square_footage || it.quantity || 0);
-      if (unit != null && Number.isFinite(qty) && qty > 0) {
-        const lineTotal = Math.round(unit * qty * 100) / 100;
-        subtotal += unit * qty;
-        normalizedItems.push({ ...it, unit_price: unit, line_total: lineTotal });
-      } else {
-        normalizedItems.push(it);
+
+      // 2) Accessory / transition line — tagged (item_type) OR detected by SKU.
+      //    priceAccessoryLine handles BOTH shapes and returns a trusted total
+      //    from accessoryCatalog. The SKU fallback catches lines sent by a
+      //    checkout bundle loaded BEFORE the payload-tag fix deployed, so an
+      //    in-flight customer is billed correctly regardless of their browser.
+      const accTotal = priceAccessoryLine(it);
+      if (accTotal != null && Number.isFinite(accTotal) && accTotal > 0) {
+        const qty = Math.max(0, parseInt(it.transition_quantity ?? it.quantity ?? 0, 10) || 0);
+        subtotal += accTotal;
+        normalizedItems.push({
+          ...it,
+          quantity: qty > 0 ? qty : (it.quantity ?? it.transition_quantity ?? null),
+          unit_price: qty > 0 ? Math.round((accTotal / qty) * 100) / 100 : null,
+          line_total: accTotal, // server-trusted, overwrites any client value
+        });
+        continue;
       }
+
+      // 3) Unknown / unpriceable — persist as-is, never add to subtotal.
+      normalizedItems.push(it);
     }
     subtotal = Math.round(subtotal * 100) / 100;
 
