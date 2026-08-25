@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getSupabaseBrowserClient } from '@/lib/supabase';
-import { Calendar, Clock, MapPin, ArrowLeft, Share2, Phone, Ruler, Star, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, ArrowLeft, Share2, Phone, Ruler, Star, ChevronRight, Zap } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getBlogPostBreadcrumbs } from '@/lib/breadcrumbs';
 import MidArticleCTA from '@/components/MidArticleCTA';
@@ -23,27 +23,64 @@ function inferProductType(post) {
   return null;
 }
 
-// Split article HTML at the <h2> nearest the middle so we can drop a mid-read
-// CTA at a natural section break (not mid-sentence). Returns [before, after].
-// If there aren't at least 2 <h2> sections, returns [full, ''] so nothing is
-// injected (the bottom DeepPageCapture still covers the page).
-function splitContentForMidCTA(html) {
-  if (!html || typeof html !== 'string') return [html || '', ''];
+// Presentation-only enhancement of the stored article HTML. No copy is changed —
+// elements are only wrapped/annotated so the scoped .blog-body CSS can style them.
+// (@tailwindcss/typography is NOT installed, so the old .prose classes rendered
+// nothing and in-body headings/lists came through as flat body text.)
+function enhanceBodyHtml(html) {
+  if (!html || typeof html !== 'string') return html || '';
+  let out = html;
+  // 1) Wrap every <table> in a horizontally-scrollable, framed card (mobile-safe).
+  out = out
+    .replace(/<table/gi, '<div class="blog-table-wrap"><table')
+    .replace(/<\/table>/gi, '</table></div>');
+  // 2) Promote labelled lead-in lines ("Tip:", "Note:", "Bottom line", ...) to
+  //    callout boxes. Text is untouched — the <p> is just wrapped. Rare in current
+  //    content but keeps future cannon output consistent.
+  out = out.replace(
+    /<p>\s*(<strong>\s*(?:Pro tip|Tip|Note|Warning|Important|Bottom line|Key takeaway|Keep in mind)\b[^<]*<\/strong>[\s\S]*?)<\/p>/gi,
+    '<div class="blog-callout"><p>$1</p></div>'
+  );
+  return out;
+}
+
+// Split article HTML at natural <h2> breaks so we can drop mid-read CTAs without
+// cutting mid-sentence. Long posts (>=3 sections, >4k chars) get TWO CTAs at
+// ~1/3 and ~2/3; shorter posts get ONE at ~1/2; posts with <2 <h2> get none
+// (the bottom DeepPageCapture still covers the page). Returns an array of
+// segments; a MidArticleCTA is rendered between each.
+function splitContentForCTAs(html) {
+  if (!html || typeof html !== 'string') return [html || ''];
   const positions = [];
   const re = /<h2\b/gi;
   let m;
   while ((m = re.exec(html)) !== null) positions.push(m.index);
-  if (positions.length < 2) return [html, ''];
-  // Choose the <h2> whose position is closest to the character midpoint,
-  // but never the very first one (keep the intro intact).
-  const mid = html.length / 2;
-  let best = positions[1];
-  let bestDist = Math.abs(positions[1] - mid);
-  for (let i = 1; i < positions.length; i++) {
-    const d = Math.abs(positions[i] - mid);
-    if (d < bestDist) { bestDist = d; best = positions[i]; }
+  // Never cut at the first <h2> (keep the intro + opening section intact).
+  const candidates = positions.slice(1);
+  if (candidates.length === 0) return [html];
+  const len = html.length;
+  // Long pillar posts (~1,400+ words) get two CTAs at ~1/3 + ~2/3; shorter
+  // neighbourhood posts (~5k chars) stay at a single ~1/2 CTA so they don't feel
+  // ad-stuffed. Threshold calibrated to the live corpus (pillars 19-24k chars,
+  // neighbourhood posts ~5k).
+  const fractions = (candidates.length >= 3 && len > 8000) ? [1 / 3, 2 / 3] : [1 / 2];
+  const cutSet = new Set();
+  for (const f of fractions) {
+    const target = len * f;
+    let best = candidates[0];
+    let bestDist = Math.abs(best - target);
+    for (const p of candidates) {
+      const d = Math.abs(p - target);
+      if (d < bestDist) { bestDist = d; best = p; }
+    }
+    cutSet.add(best);
   }
-  return [html.slice(0, best), html.slice(best)];
+  const cuts = [...cutSet].sort((a, b) => a - b);
+  const segments = [];
+  let prev = 0;
+  for (const c of cuts) { segments.push(html.slice(prev, c)); prev = c; }
+  segments.push(html.slice(prev));
+  return segments;
 }
 
 function formatDate(dateStr, long = false) {
@@ -215,29 +252,33 @@ export default function BlogPostClient({ slug, initialPost = null }) {
           </div>
         )}
 
-        {/* Article body — split at a mid-article <h2> to inject a contextual CTA */}
+        {/* Quick-reference / "short answer" card — scannable TL;DR above the body.
+            Serves the quick-reference ask, lifts CTR, and is AEO/AI-Overview bait.
+            Uses the existing excerpt — no copy is written. */}
+        {post.excerpt && (
+          <aside className="mb-9 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 sm:p-6">
+            <div className="flex items-center gap-2 mb-2">
+              <Zap className="w-4 h-4 text-amber-600" />
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-700">The Short Answer</span>
+            </div>
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
+              {post.excerpt}
+            </p>
+          </aside>
+        )}
+
+        {/* Article body — presentation-enhanced, split at natural <h2> breaks to
+            inject 1-2 contextual CTAs. .blog-body CSS styles the raw HTML. */}
         {(() => {
-          const proseClass = `prose prose-lg max-w-none
-            prose-headings:font-bold prose-headings:text-slate-800 prose-headings:mt-10 prose-headings:mb-4
-            prose-h2:text-2xl prose-h2:sm:text-[1.65rem]
-            prose-h3:text-xl
-            prose-p:text-slate-600 prose-p:leading-[1.8] prose-p:mb-5
-            prose-a:text-amber-700 prose-a:font-semibold hover:prose-a:text-amber-900 prose-a:underline prose-a:underline-offset-2 prose-a:decoration-amber-400
-            prose-img:rounded-xl prose-img:my-8
-            prose-strong:text-slate-800 prose-strong:font-semibold
-            prose-ul:text-slate-600 prose-ol:text-slate-600
-            prose-li:leading-[1.7] prose-li:mb-1`;
-          const [before, after] = splitContentForMidCTA(post.content);
-          if (!after) {
-            return <div className={proseClass} dangerouslySetInnerHTML={{ __html: before }} />;
-          }
-          return (
-            <>
-              <div className={proseClass} dangerouslySetInnerHTML={{ __html: before }} />
-              <MidArticleCTA productType={inferProductType(post)} />
-              <div className={proseClass} dangerouslySetInnerHTML={{ __html: after }} />
-            </>
-          );
+          const enhanced = enhanceBodyHtml(post.content);
+          const segments = splitContentForCTAs(enhanced);
+          const pt = inferProductType(post);
+          return segments.map((seg, i) => (
+            <Fragment key={i}>
+              {i > 0 && <MidArticleCTA productType={pt} />}
+              <div className="blog-body" dangerouslySetInnerHTML={{ __html: seg }} />
+            </Fragment>
+          ));
         })()}
       </article>
 
