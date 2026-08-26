@@ -112,6 +112,9 @@ export default function AdminCRMClient() {
   const [pickupReference, setPickupReference] = useState('');
   const [scheduleDate, setScheduleDate] = useState('');
   const [scheduleNote, setScheduleNote] = useState('');
+  const [cancelOrderId, setCancelOrderId] = useState(null);
+  const [cancelReason, setCancelReason] = useState('customer_request');
+  const [cancelSendEmail, setCancelSendEmail] = useState(true);
 
   // ─── DATA QUERIES ───────────────────────────────────────────────────────
   const { data: quotes = [], isLoading: loadingQuotes } = useQuery({
@@ -171,18 +174,29 @@ export default function AdminCRMClient() {
   });
 
   const cancelOrderMutation = useMutation({
-    mutationFn: async (orderId) => {
-      const r = await fetch('/api/stripe/cancel', {
+    mutationFn: async ({ orderId, reason, sendEmail }) => {
+      const r = await fetch('/api/orders/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId }),
+        body: JSON.stringify({ orderId, reason, sendEmail }),
       });
       if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Cancel failed'); }
       return r.json();
     },
-    onSuccess: () => { refreshAll(); toast.success('Order cancelled'); setSelectedLead(null); },
+    onSuccess: (data) => {
+      refreshAll();
+      toast.success(data?.emailed ? 'Order cancelled — customer emailed' : 'Order cancelled (no email sent)');
+      setSelectedLead(null);
+      setCancelOrderId(null);
+    },
     onError: (err) => toast.error('Cancel failed: ' + err.message),
   });
+
+  const openCancelDialog = (orderId) => {
+    setCancelReason('customer_request');
+    setCancelSendEmail(true);
+    setCancelOrderId(orderId);
+  };
 
   const updateOrderMutation = useMutation({
     mutationFn: async ({ orderId, updates }) => {
@@ -370,12 +384,7 @@ export default function AdminCRMClient() {
   };
 
   const handleCancelOrder = (orderId) => {
-    const reason = prompt('Cancel reason?\n\n1 = Out of stock\n2 = Customer requested\n3 = Other');
-    if (!reason) return;
-    const reasonMap = { '1': 'out_of_stock', '2': 'customer_request', '3': 'other' };
-    if (confirm('Cancel this order? Customer will be notified.')) {
-      cancelOrderMutation.mutate(orderId);
-    }
+    openCancelDialog(orderId);
   };
 
   const getOrderActions = (o) => {
@@ -1200,7 +1209,7 @@ export default function AdminCRMClient() {
                               {lead.source === 'order' && o.status !== 'cancelled' && o.status !== 'delivered' && (
                                 <Button variant="outline" size="sm" className="h-7 text-xs text-red-600 border-red-200 hover:bg-red-50"
                                   disabled={cancelOrderMutation.isPending}
-                                  onClick={() => { if (confirm('Cancel this order? This will release funds and notify the customer.')) cancelOrderMutation.mutate(lead.entityId); }}>
+                                  onClick={() => openCancelDialog(lead.entityId)}>
                                   <X className="w-3 h-3 mr-1" /> Cancel
                                 </Button>
                               )}
@@ -1691,7 +1700,7 @@ export default function AdminCRMClient() {
                               </Button>
                               <Button variant="destructive" className="flex-1"
                                 disabled={cancelOrderMutation.isPending}
-                                onClick={() => { if (confirm('Cancel this order? This will release funds and notify the customer.')) cancelOrderMutation.mutate(lead.entityId); }}>
+                                onClick={() => openCancelDialog(lead.entityId)}>
                                 {cancelOrderMutation.isPending ? '⏳ Cancelling...' : '❌ Cancel Order'}
                               </Button>
                             </div>
@@ -1857,6 +1866,77 @@ export default function AdminCRMClient() {
     </div>
 
     {/* ── FOLLOW-UP COMPOSE DIALOG ──────────────────────── */}
+    <Dialog open={!!cancelOrderId} onOpenChange={(open) => { if (!open) setCancelOrderId(null); }}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Ban className="w-5 h-5 text-red-600" />
+            Cancel Order
+          </DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div>
+            <Label className="text-sm font-semibold mb-1.5 block">Reason</Label>
+            <div className="space-y-2">
+              {[
+                { key: 'customer_request', label: 'Customer requested', desc: 'Cancelled at the customer’s request' },
+                { key: 'out_of_stock', label: 'Out of stock', desc: 'Item(s) became unavailable' },
+                { key: 'other', label: 'Other', desc: 'Unable to fulfill — generic notice' },
+              ].map((r) => (
+                <button
+                  key={r.key}
+                  onClick={() => setCancelReason(r.key)}
+                  className={`w-full text-left p-3 rounded-lg border transition-all ${
+                    cancelReason === r.key
+                      ? 'border-red-400 bg-red-50 ring-1 ring-red-400'
+                      : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                  }`}
+                >
+                  <p className="font-medium text-sm">{r.label}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{r.desc}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <label className="flex items-start gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={cancelSendEmail}
+              onChange={(e) => setCancelSendEmail(e.target.checked)}
+              className="mt-0.5 w-4 h-4 accent-red-600"
+            />
+            <span>
+              <span className="block text-sm font-medium text-slate-800">Email the customer a cancellation notice</span>
+              <span className="block text-xs text-slate-500 mt-0.5">Uncheck for a silent DB correction (e.g. already handled by phone). Any Stripe auth/refund still processes either way.</span>
+            </span>
+          </label>
+
+          <div className="flex gap-3 pt-1">
+            <Button
+              variant="outline"
+              onClick={() => setCancelOrderId(null)}
+              className="flex-1"
+            >
+              Keep Order
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={cancelOrderMutation.isPending}
+              onClick={() => cancelOrderMutation.mutate({ orderId: cancelOrderId, reason: cancelReason, sendEmail: cancelSendEmail })}
+              className="flex-1"
+            >
+              {cancelOrderMutation.isPending ? (
+                <><RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Cancelling...</>
+              ) : (
+                <><Ban className="w-4 h-4 mr-2" /> Cancel Order</>
+              )}
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+
     <Dialog open={followUpOpen} onOpenChange={(open) => { if (!open) { setFollowUpOpen(false); setFollowUpLead(null); } }}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>

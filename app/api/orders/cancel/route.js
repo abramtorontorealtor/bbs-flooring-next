@@ -8,7 +8,7 @@ export async function POST(request) {
     const { error: authError } = await requireAdmin();
     if (authError) return authError;
 
-    const { orderId, reason } = await request.json();
+    const { orderId, reason, sendEmail = true } = await request.json();
 
     if (!orderId) {
       return NextResponse.json({ error: 'Missing orderId' }, { status: 400 });
@@ -71,15 +71,20 @@ export async function POST(request) {
       })
       .eq('id', orderId);
 
-    // Send cancellation email to customer
-    try {
-      await sendOrderCancelled({ order, reason: cancelReason });
-    } catch (emailErr) {
-      console.warn('[Cancel] Customer email failed (non-fatal):', emailErr);
+    // Send cancellation email to customer (skippable for silent DB corrections)
+    let emailed = false;
+    if (sendEmail) {
+      try {
+        await sendOrderCancelled({ order, reason: cancelReason });
+        emailed = true;
+      } catch (emailErr) {
+        console.warn('[Cancel] Customer email failed (non-fatal):', emailErr);
+      }
     }
 
     return NextResponse.json({
       success: true,
+      emailed,
       stripe: stripeResult ? { status: stripeResult.status || stripeResult.object } : null,
     });
   } catch (error) {
