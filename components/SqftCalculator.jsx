@@ -157,7 +157,7 @@ export default function SqftCalculator({ variants = [], currentVariant = null, o
               </div>
               <div className="flex justify-between items-center text-sm mt-1">
                 <span className="text-slate-600">+ {wasteFactor}% waste:</span>
-                <span className="font-semibold text-amber-700">{totalSqft} sqft total</span>
+                <span className="font-semibold text-amber-700">{totalSqft?.toFixed(1)} sqft total</span>
               </div>
             </div>
           )}
@@ -184,7 +184,7 @@ export default function SqftCalculator({ variants = [], currentVariant = null, o
             className="flex items-center gap-1.5 text-xs font-semibold text-amber-700 hover:text-amber-800 transition-colors"
           >
             <Calculator className="w-3.5 h-3.5" />
-            Compare all {comparison.length} options for {totalSqft} sqft
+            Compare all {comparison.length} options for {totalSqft?.toFixed(1)} sqft
             {showComparison ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </button>
 

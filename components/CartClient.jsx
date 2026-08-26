@@ -313,7 +313,7 @@ export default function CartClient() {
                           </div>
                           <div>
                             <span className="text-slate-500 block">Actual sq.ft</span>
-                            <span className="font-medium">{item.actual_sqft?.toFixed(3)}</span>
+                            <span className="font-medium">{item.actual_sqft?.toFixed(1)}</span>
                           </div>
                           <div>
                             <span className="text-slate-500 block">Line total</span>
@@ -322,7 +322,7 @@ export default function CartClient() {
                         </div>
 
                         <div className="mt-3 text-sm text-slate-500">
-                          C${item.price_per_sqft?.toFixed(2)}/sq.ft × {item.actual_sqft?.toFixed(3)} sq.ft
+                          C${item.price_per_sqft?.toFixed(2)}/sq.ft × {item.actual_sqft?.toFixed(1)} sq.ft
                         </div>
                       </div>
                     </div>
@@ -541,7 +541,7 @@ export default function CartClient() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-600">Total Coverage</span>
-                  <span className="font-semibold">{totals.totalSqft.toFixed(3)} sq.ft</span>
+                  <span className="font-semibold">{totals.totalSqft.toFixed(1)} sq.ft</span>
                 </div>
               </div>
 

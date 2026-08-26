@@ -36,6 +36,10 @@ const WIX_REDIRECTS = new Map([
   // Added May 20 2026 — GSC crawled-not-indexed audit
   // /faq removed — dedicated FAQ page now exists (May 20 session 6)
   ['/book-online/house-measurement-visit-laminate-floor', '/free-measurement'],
+  // Aug 26 2026 — 404 dead-ends recovered to live category pages
+  ['/vinyl-flooring', '/vinyl'],
+  ['/laminate-flooring', '/laminate'],
+  ['/hardwood-flooring', '/hardwood'],
 ]);
 
 // Vidar slug fixes — wrong species in URLs (Apr 7, 2026)

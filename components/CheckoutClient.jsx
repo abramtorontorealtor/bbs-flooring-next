@@ -34,7 +34,7 @@ export default function CheckoutClient() {
     shipping_postal_code: '',
     delivery_preference: 'delivery',
     delivery_location: 'garage',
-    payment_method: 'etransfer',
+    payment_method: 'credit_card',
     notes: '',
   });
 
@@ -967,7 +967,7 @@ export default function CheckoutClient() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-600">Total Coverage</span>
-                    <span className="font-semibold">{totals.totalSqft} sq.ft</span>
+                    <span className="font-semibold">{totals.totalSqft?.toFixed(1)} sq.ft</span>
                   </div>
                 </div>
 
