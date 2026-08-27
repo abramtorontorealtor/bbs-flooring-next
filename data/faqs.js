@@ -30,7 +30,7 @@ export const INSTALLATION_FAQS = [
 export const STAIRS_FAQS = [
   {
     question: 'How much does it cost to convert carpet stairs to hardwood in Markham?',
-    answer: 'Stair tread refinishing (sand & restain) costs $125 per step, new straight steps are $185 each, and specialty steps (pie, triangle, bullnose) are $225 each. A full 13-step staircase refinish with rails and nosing runs approximately $2,000–$2,500. New iron or wood pickets are $25/piece installed with material. BBS Flooring provides free in-home measurements with detailed, no-obligation quotes for all staircase projects in Markham, Toronto, and Durham.'
+    answer: 'Stair tread refinishing (sand & restain) costs $125 per step, new straight steps are $185 each, and specialty steps (pie, triangle, bullnose) are $225 each. A full 13-step staircase refinish with rails and nosing runs approximately $2,000–$2,500. Railings, pickets, posts and nosing are priced per project — build your exact staircase in our online calculator for an itemized quote. BBS Flooring provides free in-home measurements with detailed, no-obligation quotes for all staircase projects in Markham, Toronto, and Durham.'
   },
   {
     question: 'What is staircase refinishing and how long does it take?',

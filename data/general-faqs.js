@@ -58,7 +58,7 @@ export const GENERAL_FAQ_SECTIONS = [
       },
       {
         question: 'How much does stair renovation cost?',
-        answer: 'Stair tread refinishing (sand and restain existing hardwood) costs $125 per step. New straight stair treads (recapping over existing) are $185 each. Specialty steps (pie, triangle, bullnose) are $225 each. Iron or wood pickets are $25 per piece installed with material. A typical 13-step staircase refinish with rails and nosing runs $2,000-$2,500.',
+        answer: 'Stair tread refinishing (sand and restain existing hardwood) costs $125 per step. New straight stair treads (recapping over existing) are $185 each. Specialty steps (pie, triangle, bullnose) are $225 each. Railings, pickets, posts and nosing are priced per project — build your exact staircase in our online calculator for an itemized quote. A typical 13-step staircase refinish with rails and nosing runs $2,000-$2,500.',
       },
       {
         question: 'Do you offer carpet removal?',
