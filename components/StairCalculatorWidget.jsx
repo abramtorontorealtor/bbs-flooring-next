@@ -182,7 +182,7 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
           <span className="text-3xl">🧮</span>
           <div>
             <h2 className="text-2xl font-bold text-stone-900">Stair Renovation Cost Calculator</h2>
-            <p className="text-stone-500 text-sm">Adjust below — your estimate updates live. No account needed.</p>
+            <p className="text-stone-500 text-sm">Configure your staircase below, then unlock your instant quote — we'll email you the full itemized breakdown.</p>
           </div>
         </div>
       )}
@@ -206,13 +206,12 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
               <div className="flex items-center justify-between">
                 <span className="text-sm text-stone-600">
                   {s.treadMode === 'refinish' ? 'Treads to refinish' : 'Straight treads'}
-                  <span className="text-stone-400 ml-1">@ ${s.treadMode === 'refinish' ? P.tread_refinish : P.tread_straight}/step</span>
                 </span>
                 <NumInput value={s.straightTreads} onChange={v => set('straightTreads', v)} />
               </div>
               {s.treadMode === 'new' && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-stone-600">Pie/triangle/bullnose<span className="text-stone-400 ml-1">@ ${P.tread_pie}/step</span></span>
+                  <span className="text-sm text-stone-600">Pie/triangle/bullnose</span>
                   <NumInput value={s.pieTreads} onChange={v => set('pieTreads', v)} />
                 </div>
               )}
@@ -224,12 +223,12 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
             <p className="font-semibold text-stone-800 mb-3">Posts &amp; Pickets</p>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-stone-600">New posts (3¼")<span className="text-stone-400 ml-1">@ ${P.post}/post</span></span>
+                <span className="text-sm text-stone-600">New posts (3¼")</span>
                 <NumInput value={s.posts} onChange={v => set('posts', v)} />
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-sm text-stone-600">Pickets (iron or wood)<span className="text-stone-400 ml-1">@ ${P.picket}/piece</span></span>
+                  <span className="text-sm text-stone-600">Pickets (iron or wood)</span>
                   <p className="text-xs text-stone-400 mt-0.5">💡 Typical: 2 pickets/step. 13 steps = ~26 pickets</p>
                 </div>
                 <NumInput value={s.pickets} onChange={v => set('pickets', v)} />
@@ -250,9 +249,9 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-stone-600">Finish</span>
                   <div className="flex gap-2">
-                    <RadioPill checked={s.stringerType === 'white'} onChange={() => set('stringerType', 'white')}>White ${P.stringer_white}/side</RadioPill>
+                    <RadioPill checked={s.stringerType === 'white'} onChange={() => set('stringerType', 'white')}>White</RadioPill>
                     <RadioPill checked={s.stringerType === 'stained'} onChange={() => s.treadMode === 'new' && set('stringerType', 'stained')}>
-                      <span className={s.treadMode !== 'new' ? 'opacity-40' : ''}>Stained ${P.stringer_stained}/side</span>
+                      <span className={s.treadMode !== 'new' ? 'opacity-40' : ''}>Stained</span>
                     </RadioPill>
                   </div>
                 </div>
@@ -293,8 +292,8 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <span className="text-sm text-stone-600">Type</span>
                   <div className="flex gap-2">
-                    <RadioPill checked={s.nosingType === 'refinish'} onChange={() => set('nosingType', 'refinish')}>Sand &amp; Restain ${P.nosing_refinish}/lf</RadioPill>
-                    <RadioPill checked={s.nosingType === 'new'} onChange={() => set('nosingType', 'new')}>New ${P.nosing_new}/lf</RadioPill>
+                    <RadioPill checked={s.nosingType === 'refinish'} onChange={() => set('nosingType', 'refinish')}>Sand &amp; Restain</RadioPill>
+                    <RadioPill checked={s.nosingType === 'new'} onChange={() => set('nosingType', 'new')}>New</RadioPill>
                   </div>
                 </div>
               )}
@@ -312,8 +311,8 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="text-sm text-stone-600">Type</span>
                 <div className="flex gap-2">
-                  <RadioPill checked={s.railingType === 'refinish'} onChange={() => set('railingType', 'refinish')}>Sand &amp; Restain ${P.railing_refinish}/lf</RadioPill>
-                  <RadioPill checked={s.railingType === 'new'} onChange={() => set('railingType', 'new')}>New ${P.railing_new}/lf</RadioPill>
+                  <RadioPill checked={s.railingType === 'refinish'} onChange={() => set('railingType', 'refinish')}>Sand &amp; Restain</RadioPill>
+                  <RadioPill checked={s.railingType === 'new'} onChange={() => set('railingType', 'new')}>New</RadioPill>
                 </div>
               </div>
               <p className="text-xs text-stone-400">💡 Most homeowners sand &amp; restain the existing handrail. Choose “New” to replace it.</p>
@@ -328,8 +327,8 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
             </div>
             {s.landingEnabled && (
               <div className="flex gap-2 flex-wrap">
-                <RadioPill checked={s.landingSize === 'small'} onChange={() => set('landingSize', 'small')}>Small 3×3 ft — ${P.landing_small}</RadioPill>
-                <RadioPill checked={s.landingSize === 'large'} onChange={() => set('landingSize', 'large')}>Large 6×3 ft — ${P.landing_large}</RadioPill>
+                <RadioPill checked={s.landingSize === 'small'} onChange={() => set('landingSize', 'small')}>Small 3×3 ft</RadioPill>
+                <RadioPill checked={s.landingSize === 'large'} onChange={() => set('landingSize', 'large')}>Large 6×3 ft</RadioPill>
               </div>
             )}
           </div>
@@ -343,25 +342,25 @@ export default function StairCalculatorWidget({ embedded = false, onTotalChange 
               {breakdown.length === 0 ? (
                 <p className="text-stone-400 text-sm italic">Configure your staircase on the left to see pricing.</p>
               ) : gate === 'unlocked' ? (
-                <div className="space-y-2 mb-4">
-                  {breakdown.map((row, i) => (
-                    <div key={i} className="flex justify-between text-sm">
-                      <span className="text-stone-600">{row.label}</span>
-                      <span className="font-semibold text-stone-800">${row.amount.toLocaleString()}</span>
-                    </div>
-                  ))}
-                  <div className="border-t border-stone-200 pt-3 flex justify-between">
-                    <span className="font-bold text-stone-900">Estimated Total</span>
+                <div className="space-y-3 mb-4">
+                  <div className="border border-stone-200 rounded-lg p-4 flex justify-between items-center">
+                    <span className="font-bold text-stone-900">Your Estimated Total</span>
                     <span className="font-bold text-2xl text-amber-600">${total.toLocaleString()}</span>
                   </div>
+                  <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-sm text-green-800">
+                    ✅ Full itemized quote sent to {form.email} — a team member will call within 2 hours to confirm and book your free measurement.
+                  </div>
+                  <a href="/free-measurement" className="block w-full text-center bg-stone-900 hover:bg-stone-800 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-colors">
+                    Book Measurement Online →
+                  </a>
                 </div>
               ) : null}
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-xs text-amber-800">
                 ⚠️ Estimate only — final price confirmed at free in-home measurement. Carpet removal included with new treads.
               </div>
 
-              {/* Financing nudge */}
-              {total >= 1000 && getMonthlyPayment && (() => { const mo = getMonthlyPayment(total); return mo ? (
+              {/* Financing nudge — only after unlock (the monthly figure would back-calc the total) */}
+              {gate === 'unlocked' && total >= 1000 && getMonthlyPayment && (() => { const mo = getMonthlyPayment(total); return mo ? (
                 <a href={FINANCEIT_LINKS?.freeProgram || '#'} target="_blank" rel="noopener noreferrer" className="block bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-center hover:bg-blue-100 transition-colors">
                   <p className="text-xs font-semibold text-blue-600 mb-0.5">💳 Finance it</p>
                   <p className="text-xl font-extrabold text-blue-700">~${mo}<span className="text-sm font-semibold text-blue-400">/mo</span></p>

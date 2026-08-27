@@ -120,106 +120,32 @@ export default function StairsClient() {
           </div>
         </div>
 
-        {/* Staircase Pricing */}
+        {/* Staircase Pricing — "from" anchors only. Exact per-component rates live in the gated calculator + emailed quote. */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-slate-800 mb-4">Staircase Renovation Pricing</h2>
           <p className="text-lg text-slate-600 mb-8">
-            Transparent, all-inclusive pricing for every staircase service. No hidden fees — all prices include labour and materials unless noted.
+            Transparent starting prices — all-inclusive of labour and materials. Every staircase is different, so build your exact configuration in the calculator above and we'll email you an itemized quote.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Stair Treads */}
-            <div className="bg-white border-2 border-slate-200 rounded-2xl p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <DollarSign className="w-8 h-8 text-amber-600" />
-                <h3 className="text-xl font-bold text-slate-800">Stair Treads</h3>
-              </div>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-700 font-medium">Sand & Restain (Refinish) Treads</span>
-                  <span className="text-xl font-bold text-amber-600">$125/step</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-700 font-medium">New Straight Steps</span>
-                  <span className="text-xl font-bold text-amber-600">$185/step</span>
-                </div>
-                <div className="flex justify-between items-center py-3">
-                  <span className="text-slate-700 font-medium">New Pie / Triangle / Bullnose Steps</span>
-                  <span className="text-xl font-bold text-amber-600">$225/step</span>
-                </div>
-              </div>
+          <div className="grid sm:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 text-center">
+              <p className="text-slate-700 font-medium mb-2">Refinish Existing Treads</p>
+              <p className="text-3xl font-bold text-amber-600">from $125<span className="text-lg text-slate-400">/step</span></p>
             </div>
-
-            {/* Railings & Pickets */}
-            <div className="bg-white border-2 border-slate-200 rounded-2xl p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <DollarSign className="w-8 h-8 text-amber-600" />
-                <h3 className="text-xl font-bold text-slate-800">Railings & Pickets</h3>
-              </div>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-700 font-medium">Sand & Restain Rails</span>
-                  <span className="text-xl font-bold text-amber-600">$25/ft</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-700 font-medium">New Handrail (Installed)</span>
-                  <span className="text-xl font-bold text-amber-600">$50/ft</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-700 font-medium">New Iron or Wood Pickets</span>
-                  <span className="text-xl font-bold text-amber-600">$25/piece</span>
-                </div>
-                <div className="flex justify-between items-center py-3">
-                  <span className="text-slate-700 font-medium">New Post (3¼")</span>
-                  <span className="text-xl font-bold text-amber-600">$150/post</span>
-                </div>
-                <p className="text-sm text-slate-500 italic">All railing prices include material & labour</p>
-              </div>
+            <div className="bg-white border-2 border-amber-300 rounded-2xl p-6 text-center shadow-sm">
+              <p className="text-slate-700 font-medium mb-2">New Straight Treads</p>
+              <p className="text-3xl font-bold text-amber-600">from $185<span className="text-lg text-slate-400">/step</span></p>
             </div>
-
-            {/* Nosing */}
-            <div className="bg-white border-2 border-slate-200 rounded-2xl p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <DollarSign className="w-8 h-8 text-amber-600" />
-                <h3 className="text-xl font-bold text-slate-800">Stair Nosing</h3>
-              </div>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-700 font-medium">Sand & Restain Nosing</span>
-                  <span className="text-xl font-bold text-amber-600">$20/ft</span>
-                </div>
-                <div className="flex justify-between items-center py-3">
-                  <span className="text-slate-700 font-medium">New Nosing</span>
-                  <span className="text-xl font-bold text-amber-600">$25/ft</span>
-                </div>
-              </div>
+            <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 text-center">
+              <p className="text-slate-700 font-medium mb-2">Specialty / Pie Steps</p>
+              <p className="text-3xl font-bold text-amber-600">from $225<span className="text-lg text-slate-400">/step</span></p>
             </div>
-
-            {/* Example Project Cost */}
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-300 rounded-2xl p-6">
-              <h3 className="text-xl font-bold text-slate-800 mb-4">💡 Example: 13-Step Staircase</h3>
-              <div className="space-y-3 text-slate-700">
-                <div className="flex justify-between">
-                  <span>Refinish 13 treads</span>
-                  <span className="font-semibold">$1,625</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sand & restain rails (~12ft)</span>
-                  <span className="font-semibold">$300</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Nosing refinish (~12ft)</span>
-                  <span className="font-semibold">$240</span>
-                </div>
-                <div className="flex justify-between pt-3 border-t border-amber-300">
-                  <span className="font-bold text-lg">Full Refinish Estimate</span>
-                  <span className="font-bold text-lg text-amber-700">~$2,165</span>
-                </div>
-              </div>
-              <Link href={createPageUrl('FreeMeasurement')} className="block w-full mt-6 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-center py-3 rounded-xl transition-colors">
-                Get Your Exact Quote — Free
-              </Link>
-            </div>
+          </div>
+          <div className="text-center">
+            <a href="#calculator" className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-3 rounded-xl transition-colors">
+              Build Your Exact Quote →
+            </a>
+            <p className="text-sm text-slate-500 mt-3">Railings, pickets, posts, nosing &amp; landings all priced in your personalized quote.</p>
           </div>
         </div>
 
