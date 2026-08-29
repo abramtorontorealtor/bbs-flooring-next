@@ -453,11 +453,11 @@ export default function CartClient() {
                 <div key={item.id}>
                   <Card className="border-amber-200">
                     <CardContent className="p-6">
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
+                      <div className="flex justify-between items-start gap-3">
+                        <div className="flex-1 min-w-0">
                           <div className="font-semibold text-slate-800">{item.product_name}</div>
                           <p className="text-xs text-slate-500 mt-1">Matches: {item.parent_product_name}</p>
-                          <div className="mt-3 flex items-center gap-3">
+                          <div className="mt-3 flex items-center flex-wrap gap-3">
                             <span className="text-sm text-slate-500">Qty:</span>
                             <div className="flex items-center gap-1">
                               <Button
