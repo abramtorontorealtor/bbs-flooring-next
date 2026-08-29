@@ -365,9 +365,9 @@ export default function EngineeredHardwoodGuideClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {[
-              ['Nail-Down', '$2.25/sqft', 'The traditional method. Nailed or stapled to a wood subfloor. Most secure bond. Required for solid hardwood; works great for engineered too.', 'Wood subfloor'],
-              ['Glue-Down', '$3.25/sqft', 'Adhered directly to the subfloor with flooring adhesive. The best method for concrete subfloors and radiant heat systems. Eliminates hollow sounds.', 'Concrete or wood subfloor'],
-              ['Floating (Click-Lock)', '$2.00/sqft', 'Planks click together and float over an underlayment. No nails or glue touching the subfloor. Fastest to install. Some acoustic considerations in condos.', 'Any flat, level subfloor'],
+              ['Nail-Down', 'From $2.25/sqft', 'The traditional method. Nailed or stapled to a wood subfloor. Most secure bond. Required for solid hardwood; works great for engineered too.', 'Wood subfloor'],
+              ['Glue-Down', 'From $3.25/sqft', 'Adhered directly to the subfloor with flooring adhesive. The best method for concrete subfloors and radiant heat systems. Eliminates hollow sounds.', 'Concrete or wood subfloor'],
+              ['Floating (Click-Lock)', 'From $2.00/sqft', 'Planks click together and float over an underlayment. No nails or glue touching the subfloor. Fastest to install. Some acoustic considerations in condos.', 'Any flat, level subfloor'],
             ].map(([method, cost, desc, subfloor]) => (
               <div key={method} className="border border-stone-200 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-stone-800 mb-1">{method}</h3>

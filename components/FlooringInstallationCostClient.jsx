@@ -36,27 +36,27 @@ const TOC_ITEMS = [
 
 /* ── Pricing Data ── */
 const INSTALL_PRICING = [
-  { type: 'Luxury Vinyl (SPC)', material: '$1.79–$5.00', labour: '$2.00–$2.25', total: '$3.79–$7.25', note: 'Click-lock floating install', popular: true },
-  { type: 'Laminate', material: '$1.79–$5.00', labour: '$2.00–$2.25', total: '$3.79–$7.25', note: 'Click-lock floating install' },
-  { type: 'Engineered Hardwood (Nail-Down)', material: '$3.00–$7.25', labour: '$2.25', total: '$5.25–$9.50', note: 'Over plywood subfloor' },
-  { type: 'Engineered Hardwood (Glue-Down)', material: '$3.00–$7.25', labour: '$3.25', total: '$6.25–$10.50', note: 'Over concrete subfloor' },
-  { type: 'Engineered Hardwood (Herringbone)', material: '$3.00–$7.25', labour: '$4.25', total: '$7.25–$11.50', note: 'Premium pattern — glue-down' },
-  { type: 'Solid Hardwood (Nail-Down)', material: '$5.00–$12.00', labour: '$2.25', total: '$7.25–$14.25', note: 'Over plywood subfloor only' },
+  { type: 'Luxury Vinyl (SPC)', material: '$1.79–$5.00', labour: 'From $2.00', total: '$3.79–$7.25', note: 'Click-lock floating install', popular: true },
+  { type: 'Laminate', material: '$1.79–$5.00', labour: 'From $2.00', total: '$3.79–$7.25', note: 'Click-lock floating install' },
+  { type: 'Engineered Hardwood (Nail-Down)', material: '$3.00–$7.25', labour: 'From $2.25', total: '$5.25–$9.50', note: 'Over plywood subfloor' },
+  { type: 'Engineered Hardwood (Glue-Down)', material: '$3.00–$7.25', labour: 'From $3.25', total: '$6.25–$10.50', note: 'Over concrete subfloor' },
+  { type: 'Engineered Hardwood (Herringbone)', material: '$3.00–$7.25', labour: 'From $4.25', total: '$7.25–$11.50', note: 'Premium pattern — glue-down' },
+  { type: 'Solid Hardwood (Nail-Down)', material: '$5.00–$12.00', labour: 'From $2.25', total: '$7.25–$14.25', note: 'Over plywood subfloor only' },
   { type: 'Tile', material: 'Varies', labour: 'From $10.00', total: 'From $10.00/sqft+', note: 'Ceramic, porcelain, or natural stone' },
 ];
 
 const REMOVAL_PRICING = [
-  { type: 'Carpet Removal', price: '$1.00/sqft', haul: '+ $75 haul-away', note: '24-hr turnaround available' },
-  { type: 'Hardwood Removal', price: '$1.50/sqft', haul: '+ haul-away', note: 'Nail-down & glue-down' },
-  { type: 'Vinyl / Laminate Removal', price: '$1.50/sqft', haul: '+ haul-away', note: 'Click-lock & glue-down' },
-  { type: 'Tile Removal', price: '$3.00/sqft', haul: '+ haul-away', note: 'Thinset/mortar cleanup included' },
+  { type: 'Carpet Removal', price: 'From $1.00/sqft', haul: '+ $75 haul-away', note: '24-hr turnaround available' },
+  { type: 'Hardwood Removal', price: 'From $1.50/sqft', haul: '+ haul-away', note: 'Nail-down & glue-down' },
+  { type: 'Vinyl / Laminate Removal', price: 'From $1.50/sqft', haul: '+ haul-away', note: 'Click-lock & glue-down' },
+  { type: 'Tile Removal', price: 'From $3.00/sqft', haul: '+ haul-away', note: 'Thinset/mortar cleanup included' },
 ];
 
 const EXTRAS_PRICING = [
-  { item: 'Standard Baseboard Install', price: '$3.61/linear ft' },
-  { item: 'Shoe Moulding Install', price: '$1.91/linear ft' },
-  { item: 'Stair Recapping (New Treads)', price: '$185–$225/step' },
-  { item: 'Stair Refinishing', price: '$125/step' },
+  { item: 'Standard Baseboard Install', price: 'From $3.50/linear ft' },
+  { item: 'Shoe Moulding Install', price: 'From $1.75/linear ft' },
+  { item: 'Stair Recapping (New Treads)', price: 'From $185/step' },
+  { item: 'Stair Refinishing', price: 'From $125/step' },
   { item: 'Garage Delivery', price: '$140 flat' },
   { item: 'Inside Delivery', price: '$200 flat' },
   { item: 'Furniture Moving', price: 'FREE', highlight: true },
@@ -66,7 +66,7 @@ const EXTRAS_PRICING = [
 /* ── Cost Factors ── */
 const COST_FACTORS = [
   { icon: '🏗️', title: 'Subfloor Condition', desc: 'Uneven concrete or damaged plywood may need leveling ($1–$3/sqft extra). Our crew assesses during the free measurement.' },
-  { icon: '🔨', title: 'Old Floor Removal', desc: 'Ripping up carpet ($1.00/sqft), hardwood ($1.50/sqft), or tile ($3.00/sqft) adds to the total. We handle everything.' },
+  { icon: '🔨', title: 'Old Floor Removal', desc: 'Ripping up old carpet, hardwood, or tile (from $1.00/sqft) adds to the total. We handle everything.' },
   { icon: '📐', title: 'Room Complexity', desc: 'Stairs, closets, angled hallways, and tight corners take more time than open rectangles. Simple rooms = lower cost.' },
   { icon: '🪵', title: 'Material & Install Method', desc: 'Floating click-lock (vinyl/laminate) is fastest. Glue-down costs more. Herringbone is premium. Nail-down requires plywood.' },
   { icon: '🏠', title: 'Project Size', desc: 'Larger projects are more cost-efficient per sqft. A 200 sqft room costs more per sqft than a 1,500 sqft main floor.' },
@@ -76,7 +76,7 @@ const COST_FACTORS = [
 /* ── DIY vs Pro ── */
 const DIY_VS_PRO = {
   diy: [
-    'Save $2.00–$4.25/sqft on labour',
+    'Save on labour — you supply the install time',
     'Work on your own schedule',
     'Good for simple floating floor in small rooms',
     'YouTube has tutorials for click-lock vinyl',
@@ -103,34 +103,33 @@ const EXAMPLE_PROJECTS = [
   {
     title: '500 sqft Condo — Vinyl',
     items: [
-      { label: 'Material (SPC vinyl @ $3.50/sqft)', cost: '$1,750' },
-      { label: 'Installation ($2.00/sqft)', cost: '$1,000' },
-      { label: 'Carpet removal ($1.00/sqft + $75)', cost: '$575' },
-      { label: 'Baseboards (80 LF × $3.61)', cost: '$289' },
+      'SPC vinyl — supply & install',
+      'Old carpet removal + haul-away',
+      'Baseboards & trim',
+      'Free furniture moving',
     ],
-    total: '$3,614',
+    total: '~$3,600',
     note: 'Typical GTA condo. Furniture moving & in-home measurement FREE.',
   },
   {
     title: '1,200 sqft Main Floor — Engineered Hardwood',
     items: [
-      { label: 'Material (eng. hardwood @ $5.50/sqft)', cost: '$6,600' },
-      { label: 'Installation — nail-down ($2.25/sqft)', cost: '$2,700' },
-      { label: 'Old laminate removal ($1.50/sqft)', cost: '$1,800' },
-      { label: 'Baseboards (200 LF × $3.61)', cost: '$722' },
-      { label: 'Inside delivery', cost: '$200' },
+      'Engineered hardwood — supply & install (nail-down)',
+      'Old floor removal + haul-away',
+      'Baseboards & trim',
+      'Inside delivery',
     ],
-    total: '$12,022',
+    total: '~$12,000',
     note: 'Typical Markham detached. 0% financing available — ~$200/mo.',
   },
   {
     title: '250 sqft Basement — Waterproof Vinyl',
     items: [
-      { label: 'Material (waterproof SPC @ $2.50/sqft)', cost: '$625' },
-      { label: 'Installation ($2.00/sqft)', cost: '$500' },
-      { label: 'Garage delivery', cost: '$140' },
+      'Waterproof SPC — supply & install',
+      'Garage delivery',
+      'Free furniture moving',
     ],
-    total: '$1,265',
+    total: '~$1,300',
     note: 'Most affordable option. 100% waterproof — ideal for basements.',
   },
 ];
@@ -150,11 +149,11 @@ const MINIMUM_QUOTE = 500;
 const FAQ_ITEMS = [
   { question: 'How much does it cost to install 1,000 sqft of flooring?', answer: 'For 1,000 sqft, expect roughly $3,790–$7,250 for vinyl or laminate, $5,250–$9,500 for engineered hardwood (nail-down), or $7,250–$14,250 for solid hardwood. These ranges include material + professional installation. Use our calculator above for your exact room size, or call (647) 428-1111 for a free quote.' },
   { question: 'Does BBS Flooring offer free estimates?', answer: 'Yes. We provide free in-home measurements and quotes anywhere in the GTA — Markham, Toronto, Scarborough, Pickering, Ajax, Whitby, Richmond Hill, Vaughan, and surrounding areas. No obligation. Call (647) 428-1111 to book.' },
-  { question: 'Is it cheaper to buy flooring and install yourself?', answer: 'DIY saves $2.00–$4.25/sqft on labour, but risks costly mistakes. Improper subfloor prep, wrong expansion gaps, and bad transitions can cause buckling, squeaking, or water damage within months — and there\'s no warranty. Our professional installation includes subfloor prep, moisture testing, trim, furniture moving, and warranty on both material and labour.' },
+  { question: 'Is it cheaper to buy flooring and install yourself?', answer: 'DIY saves on labour, but risks costly mistakes. Improper subfloor prep, wrong expansion gaps, and bad transitions can cause buckling, squeaking, or water damage within months — and there\'s no warranty. Our professional installation includes subfloor prep, moisture testing, trim, furniture moving, and warranty on both material and labour.' },
   { question: 'How long does flooring installation take?', answer: 'A typical 500 sqft room takes 1–2 days for vinyl or laminate, 2–3 days for hardwood. Larger homes (1,000+ sqft) usually take 3–5 days. This includes old floor removal if needed. We give you an exact timeline during your free measurement appointment.' },
   { question: 'Do you charge extra to move furniture?', answer: 'No. BBS Flooring moves standard household furniture at no extra charge. Heavy items like pianos, pool tables, or gun safes may require specialty movers, but regular beds, dressers, sofas — we handle it all.' },
   { question: 'What\'s included in the installation cost?', answer: 'Professional installation by our WSIB-insured crew, subfloor assessment, moisture testing for concrete, proper expansion gaps, transitions between rooms, furniture moving, and post-install cleanup. Material, delivery, old floor removal, and baseboards are separate line items — all quoted upfront with no hidden fees.' },
-  { question: 'How does flooring installation pricing work in the GTA?', answer: 'GTA flooring installation is priced per square foot. Material cost varies by product ($1.79–$12.00/sqft). Labour ranges from $2.00/sqft (vinyl/laminate) to $4.25/sqft (herringbone). Total project cost = material + labour + removal (if needed) + trim + delivery. We itemize everything in your quote so you see exactly what you\'re paying for.' },
+  { question: 'How does flooring installation pricing work in the GTA?', answer: 'GTA flooring installation is priced per square foot. Material varies by product ($1.79–$12.00/sqft), and labour depends on the material and install method — floating floors (vinyl/laminate) are the most affordable, while glue-down and herringbone are premium. Total project cost = material + labour + removal (if needed) + trim + delivery. We confirm your exact per-sqft rate at your free measurement and itemize everything in your written quote.' },
   { question: 'Can I supply my own material and have you install it?', answer: 'We prefer to supply and install together — it means we guarantee both the material and the workmanship. If you supply your own material, we\'ll install it but the material warranty is between you and your supplier. Labour warranty still applies.' },
 ];
 
@@ -240,8 +239,8 @@ export default function FlooringInstallationCostClient() {
         titleLine2="Cost Guide"
         subtitle="Transparent pricing from a local, family-owned company. Material + professional installation — no hidden fees, free in-home measurements across the GTA."
         pricingPills={[
-          { value: '$2.00', label: 'per sqft vinyl/laminate install' },
-          { value: '$2.25', label: 'per sqft hardwood install' },
+          { value: 'From $2', label: 'per sqft — professional install' },
+          { value: 'From $3.79', label: 'per sqft installed (with material)' },
           { value: 'FREE', label: 'in-home measurement' },
         ]}
         primaryCTA={{ text: '📏 Book Free Measurement', route: 'FreeMeasurement' }}
@@ -390,9 +389,9 @@ export default function FlooringInstallationCostClient() {
                 <h3 className="font-bold text-base mb-4">{project.title}</h3>
                 <div className="space-y-2 flex-1">
                   {project.items.map((item, j) => (
-                    <div key={j} className="flex justify-between text-sm">
-                      <span className="text-slate-300 leading-tight pr-2">{item.label}</span>
-                      <span className="text-amber-400 font-semibold whitespace-nowrap">{item.cost}</span>
+                    <div key={j} className="flex items-start gap-2 text-sm">
+                      <span className="text-amber-400">✓</span>
+                      <span className="text-slate-300 leading-tight">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -466,10 +465,10 @@ export default function FlooringInstallationCostClient() {
                     No removal needed
                   </button>
                   {[
-                    { key: 'carpet', label: 'Carpet ($1.00/sqft)' },
-                    { key: 'hardwood', label: 'Hardwood ($1.50/sqft)' },
-                    { key: 'vinyl', label: 'Vinyl ($1.50/sqft)' },
-                    { key: 'tile', label: 'Tile ($3.00/sqft)' },
+                    { key: 'carpet', label: 'Carpet' },
+                    { key: 'hardwood', label: 'Hardwood' },
+                    { key: 'vinyl', label: 'Vinyl' },
+                    { key: 'tile', label: 'Tile' },
                   ].map(opt => (
                     <button
                       key={opt.key}
@@ -501,20 +500,9 @@ export default function FlooringInstallationCostClient() {
                   <p className="text-xs text-amber-300 text-center mb-4">* $500 minimum project charge applies</p>
                 )}
 
-                <div className="grid grid-cols-3 gap-3 text-center text-xs mb-4">
-                  <div className="bg-slate-700/50 rounded-lg p-2">
-                    <p className="text-slate-400">Material</p>
-                    <p className="font-bold text-white">${Math.round(calcEstimate.materialLow).toLocaleString()}–${Math.round(calcEstimate.materialHigh).toLocaleString()}</p>
-                  </div>
-                  <div className="bg-slate-700/50 rounded-lg p-2">
-                    <p className="text-slate-400">Labour</p>
-                    <p className="font-bold text-white">${Math.round(calcEstimate.labourLow).toLocaleString()}–${Math.round(calcEstimate.labourHigh).toLocaleString()}</p>
-                  </div>
-                  <div className="bg-slate-700/50 rounded-lg p-2">
-                    <p className="text-slate-400">{calcRemoval ? 'Removal' : 'Removal'}</p>
-                    <p className="font-bold text-white">{calcEstimate.removalCost > 0 ? `$${Math.round(calcEstimate.removalCost).toLocaleString()}` : '—'}</p>
-                  </div>
-                </div>
+                <p className="text-center text-xs text-slate-300 mb-4">
+                  Material + professional installation, all-in{calcRemoval ? ' (including old-floor removal)' : ''}. Your exact per-sqft rate is confirmed at your free in-home measurement.
+                </p>
 
                 {calcEstimate.high >= 1000 && (
                   <p className="text-center text-xs text-slate-300 mb-4">

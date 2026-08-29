@@ -371,11 +371,11 @@ export default function BasementFlooringGuideClient() {
             <h3 className="font-semibold text-stone-800 mb-3">Common Add-Ons</h3>
             <div className="grid sm:grid-cols-2 gap-3 text-sm">
               {[
-                ['Old carpet removal', '$1.00/sqft'],
-                ['Old vinyl/laminate removal', '$1.50/sqft'],
+                ['Old carpet removal', 'From $1.00/sqft'],
+                ['Old vinyl/laminate removal', 'From $1.50/sqft'],
                 ['Moisture barrier underlayment', '$0.50–$1.50/sqft'],
                 ['DRIcore subfloor panels', '$3.00–$5.00/sqft'],
-                ['Baseboards', '$3.61/linear ft'],
+                ['Baseboards', 'From $3.50/linear ft'],
                 ['Inside delivery', '$200 flat'],
               ].map(([item, cost]) => (
                 <div key={item} className="flex justify-between">
@@ -646,7 +646,7 @@ export default function BasementFlooringGuideClient() {
               {
                 step: '6',
                 title: 'Baseboards & Finishing',
-                desc: 'New baseboards installed at $3.61/linear ft (optional). Quarter round or shoe moulding covers expansion gaps. All seams inspected. Furniture moved back. Complete cleanup \u2014 we leave the space ready to use.',
+                desc: 'New baseboards installed from $3.50/linear ft (optional). Quarter round or shoe moulding covers expansion gaps. All seams inspected. Furniture moved back. Complete cleanup \u2014 we leave the space ready to use.',
                 time: '0.5 day'
               },
               {

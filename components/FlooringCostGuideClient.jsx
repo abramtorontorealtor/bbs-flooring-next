@@ -130,7 +130,7 @@ export default function FlooringCostGuideClient() {
         <section id="installation-costs">
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Installation Labour Costs</h2>
           <p className="text-stone-600 text-lg leading-relaxed mb-8">
-            BBS Flooring provides professional installation with WSIB-insured contractors across the entire GTA. All labour prices below are per square foot unless noted otherwise. No surprises — these are the same rates we quote in-home.
+            BBS Flooring provides professional installation with WSIB-insured contractors across the entire GTA. All labour prices below are starting rates, per square foot unless noted otherwise — your exact per-sqft rate is confirmed at your free in-home measurement.
           </p>
 
           <div className="overflow-x-auto rounded-xl border border-stone-200 mb-6">
@@ -144,17 +144,17 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Hardwood installation (nail-down)', '$2.25/sqft', 'On wood subfloor only'],
-                  ['Hardwood installation (glue-down)', '$3.25/sqft', 'Over concrete or wood — eliminates hollow sound'],
-                  ['Herringbone / Chevron installation', '$4.25/sqft', 'Glue-down only — takes 2× longer than standard'],
-                  ['Vinyl / Laminate installation', '$2.00/sqft', 'Click-lock floating over any flat subfloor'],
-                  ['Tile installation', '$10.00/sqft', 'Includes thin-set and labour'],
-                  ['Carpet removal', '$1.00/sqft', 'Includes staple/tack strip removal'],
-                  ['Vinyl / Laminate removal', '$1.50/sqft', 'Includes underlayment removal'],
-                  ['Hardwood removal', '$1.50/sqft', 'Nail-down or glue-down'],
-                  ['Tile removal', '$3.00/sqft', 'Includes subfloor prep'],
-                  ['Baseboard installation', '$3.61/linear ft', 'Standard MDF or wood baseboards'],
-                  ['Shoe moulding', '$1.91/linear ft', 'Quarter-round trim at floor line'],
+                  ['Hardwood installation (nail-down)', 'From $2.25/sqft', 'On wood subfloor only'],
+                  ['Hardwood installation (glue-down)', 'From $3.25/sqft', 'Over concrete or wood — eliminates hollow sound'],
+                  ['Herringbone / Chevron installation', 'From $4.25/sqft', 'Glue-down only — takes 2× longer than standard'],
+                  ['Vinyl / Laminate installation', 'From $2.00/sqft', 'Click-lock floating over any flat subfloor'],
+                  ['Tile installation', 'From $10.00/sqft', 'Includes thin-set and labour'],
+                  ['Carpet removal', 'From $1.00/sqft', 'Includes staple/tack strip removal'],
+                  ['Vinyl / Laminate removal', 'From $1.50/sqft', 'Includes underlayment removal'],
+                  ['Hardwood removal', 'From $1.50/sqft', 'Nail-down or glue-down'],
+                  ['Tile removal', 'From $3.00/sqft', 'Includes subfloor prep'],
+                  ['Baseboard installation', 'From $3.50/linear ft', 'Standard MDF or wood baseboards'],
+                  ['Shoe moulding', 'From $1.75/linear ft', 'Quarter-round trim at floor line'],
                   ['Delivery (garage)', '$140 flat', 'Curbside or garage drop-off'],
                   ['Delivery (inside)', '$200 flat', 'Required for installation jobs'],
                 ].map(([service, price, notes], i) => (
@@ -279,7 +279,7 @@ export default function FlooringCostGuideClient() {
               ['🗑️ Old Floor Removal', '$1.00–$3.00/sqft', 'Carpet $1.00/sqft, vinyl/laminate $1.25/sqft, hardwood $1.50/sqft, tile $3.00/sqft.'],
               ['🔧 Subfloor Repair', '$2.00–$5.00/sqft', 'Levelling compounds, plywood patches, moisture remediation. BBS assesses during free measurement.'],
               ['💧 Moisture Testing', '$0 (with BBS)', 'Included in BBS free measurement. Independent testing costs $100–$300 elsewhere.'],
-              ['📐 Baseboards & Transitions', '$3.61/linear ft', 'Often needed after new flooring — height changes require new trim. Shoe moulding: $1.91/linear ft.'],
+              ['📐 Baseboards & Transitions', 'From $3.50/linear ft', 'Often needed after new flooring — height changes require new trim. Shoe moulding: from $1.75/linear ft.'],
               ['🧱 Underlayment', '$0.50–$1.50/sqft', 'Required for floating installs. Some vinyl has built-in pad. Ask BBS which products include it.'],
               ['🚚 Delivery', '$140–$200 flat', 'Garage drop: $140. Inside delivery (required for installation): $200.'],
               ['📏 Waste Factor (5–15%)', '5–15% of material cost', 'Standard 5% for rectangular rooms, 10% for complex layouts, 15% for diagonal/herringbone patterns.'],
@@ -362,14 +362,14 @@ export default function FlooringCostGuideClient() {
 
           <div className="space-y-3">
             {[
-              ['What is the cheapest type of flooring?', 'Laminate is the cheapest at BBS, starting at $1.49/sqft (Tosca Floors). With installation at $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $1.79/sqft material — the second most affordable option.'],
+              ['What is the cheapest type of flooring?', 'Laminate is the cheapest at BBS, starting at $1.49/sqft (Tosca Floors). With installation from $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $1.79/sqft material — the second most affordable option.'],
               ['How much does it cost to floor 1,000 square feet?', 'At BBS Flooring: Laminate $3,490–$5,290 installed. Vinyl $4,190–$5,590 installed. Engineered hardwood $4,740–$12,240 installed. Solid hardwood $7,350–$10,500 installed. These include material + professional installation.'],
               ['Does BBS Flooring offer free estimates?', 'Yes. BBS provides free in-home measurements across the GTA. A technician measures every room, checks subfloor conditions, and provides a detailed quote — no obligation. Book at bbsflooring.ca/free-measurement or call (647) 428-1111.'],
               ['Is hardwood flooring worth the extra cost over vinyl?', 'For primary residences — usually yes. Hardwood adds more resale value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $3.29/sqft while vinyl starts at $2.19/sqft ($1.79 on clearance). For rentals or basements, vinyl wins on practicality.'],
-              ['Is installation included in BBS flooring prices?', 'Material and labour are quoted separately for transparency. Material prices are per square foot on the website. Installation starts at $2.00/sqft for vinyl/laminate and $2.25/sqft for hardwood. This lets you compare material costs fairly.'],
-              ['How should I budget for a flooring project?', 'Rule of thumb: material cost × 2 covers materials + installation + most extras. For precision, add: material + labour + old floor removal ($1.00–$3.00/sqft) + baseboards ($3.61/linear ft) + delivery ($140–$200) + 10% waste factor. BBS provides free detailed quotes.'],
-              ['How much do stairs cost?', 'At BBS: Stair refinishing is $125/step. New straight hardwood treads are $185/step. Specialty stairs (open/curved) are $225/step. Pickets are $25/piece. A typical 13-step straight staircase costs $1,625–$2,405 for new treads.'],
-              ['Can I install flooring myself to save money?', 'Click-lock vinyl and laminate are DIY-friendly — saving $2.00/sqft in labour. Hardwood requires professional installation (nail guns, moisture testing, specialized tools). BBS sells material without installation if you prefer DIY.'],
+              ['Is installation included in BBS flooring prices?', 'Material and labour are quoted separately for transparency. Material prices are per square foot on the website. Installation starts from $2.00/sqft for vinyl/laminate and from $2.25/sqft for hardwood. This lets you compare material costs fairly.'],
+              ['How should I budget for a flooring project?', 'Rule of thumb: material cost × 2 covers materials + installation + most extras. For precision, add: material + labour + old floor removal ($1.00–$3.00/sqft) + baseboards (from $3.50/linear ft) + delivery ($140–$200) + 10% waste factor. BBS provides free detailed quotes.'],
+              ['How much do stairs cost?', 'At BBS: Stair refinishing starts from $125/step. New straight hardwood treads from $185/step. Specialty stairs (open/curved) from $225/step. A typical 13-step straight staircase starts around $1,625–$2,405 for new treads.'],
+              ['Can I install flooring myself to save money?', 'Click-lock vinyl and laminate are DIY-friendly — saving on labour. Hardwood requires professional installation (nail guns, moisture testing, specialized tools). BBS sells material without installation if you prefer DIY.'],
               ['When is the cheapest time to buy flooring?', 'BBS runs clearance sales year-round with discontinued products from $1.49/sqft. The best time for deals is typically late fall and winter when demand is lower. Check bbsflooring.ca/clearance for current markdowns.'],
               ['Does BBS require a deposit?', 'For material purchases, payment is due at order. For installation projects, BBS typically requires a deposit to schedule, with the balance due on completion. Financing through PayBright is available for larger projects.'],
             ].map(([q, a]) => (

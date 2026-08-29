@@ -37,7 +37,7 @@ const SERVICES = [
   { title: 'Stair Renovation', desc: 'Refinishing, recapping, new treads, railings & full staircase transformations.', price: 'From $125/step', href: '/stairs', emoji: '🪜' },
   { title: 'Floor Removal', desc: 'Carpet, hardwood, vinyl, laminate & tile removal with subfloor prep.', price: 'From $1.00/sqft', href: '#pricing', emoji: '🔨' },
   { title: 'Hardwood Refinishing', desc: 'Sand, stain & refinish your existing hardwood floors to like-new condition.', price: 'Custom quote', href: '/hardwood-refinishing', emoji: '✨' },
-  { title: 'Carpet Removal', desc: 'The Clean Slate service — 24hr turnaround, install-ready subfloor guaranteed.', price: '$1.00/sqft + $75', href: '/carpet-removal', emoji: '🧹' },
+  { title: 'Carpet Removal', desc: 'The Clean Slate service — 24hr turnaround, install-ready subfloor guaranteed.', price: 'From $1.00/sqft + $75', href: '/carpet-removal', emoji: '🧹' },
   { title: 'Free Measurement', desc: 'No-obligation in-home measurement with a detailed, transparent quote.', price: 'Free', href: '/free-measurement', emoji: '📐' },
 ];
 
@@ -51,24 +51,24 @@ const PROCESS_STEPS = [
 ];
 
 const INSTALL_PRICING = [
-  { title: 'Solid / Eng. Hardwood (Nail Down)', price: '$2.25/sqft' },
-  { title: 'Engineered Hardwood (Glue-Down)', price: '$3.25/sqft' },
-  { title: 'Herringbone (Glue-Down)', price: '$4.25/sqft' },
-  { title: 'Laminate Installation', price: '$2.00/sqft' },
-  { title: 'Vinyl Installation', price: '$2.00/sqft' },
+  { title: 'Solid / Eng. Hardwood (Nail Down)', price: 'From $2.25/sqft' },
+  { title: 'Engineered Hardwood (Glue-Down)', price: 'From $3.25/sqft' },
+  { title: 'Herringbone (Glue-Down)', price: 'From $4.25/sqft' },
+  { title: 'Laminate Installation', price: 'From $2.00/sqft' },
+  { title: 'Vinyl Installation', price: 'From $2.00/sqft' },
   { title: 'Tile Installation', price: 'From $10.00/sqft' },
 ];
 
 const REMOVAL_PRICING = [
-  { title: 'Carpet Removal', price: '$1.00/sqft', note: '+ $75 haul-away' },
-  { title: 'Hardwood Removal', price: '$1.50/sqft', note: '+ haul-away' },
-  { title: 'Vinyl / Laminate Removal', price: '$1.50/sqft', note: '+ haul-away' },
-  { title: 'Tile Removal', price: '$3.00/sqft', note: '+ haul-away' },
+  { title: 'Carpet Removal', price: 'From $1.00/sqft', note: '+ $75 haul-away' },
+  { title: 'Hardwood Removal', price: 'From $1.50/sqft', note: '+ haul-away' },
+  { title: 'Vinyl / Laminate Removal', price: 'From $1.50/sqft', note: '+ haul-away' },
+  { title: 'Tile Removal', price: 'From $3.00/sqft', note: '+ haul-away' },
 ];
 
 const TRIM_DELIVERY = [
-  { title: 'Standard Baseboard Install', price: '$3.61/linear ft' },
-  { title: 'Shoe Moulding Install', price: '$1.91/linear ft' },
+  { title: 'Standard Baseboard Install', price: 'From $3.50/linear ft' },
+  { title: 'Shoe Moulding Install', price: 'From $1.75/linear ft' },
   { title: 'Garage Delivery', price: '$140 flat rate' },
   { title: 'Inside Delivery', price: '$200 flat rate', note: 'Required for install jobs' },
 ];

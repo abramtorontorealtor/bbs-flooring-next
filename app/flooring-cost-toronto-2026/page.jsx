@@ -6,7 +6,7 @@ import DeepPageCapture from '@/components/DeepPageCapture';
 const faqItems = [
   {
     question: 'What is the cheapest type of flooring?',
-    answer: 'Laminate is the cheapest flooring type at BBS Flooring, starting at $1.49/sqft for materials (Tosca Floors). With installation at $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $1.79/sqft material, making it the second most affordable.',
+    answer: 'Laminate is the cheapest flooring type at BBS Flooring, starting at $1.49/sqft for materials (Tosca Floors). With installation from $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $1.79/sqft material, making it the second most affordable.',
   },
   {
     question: 'How much does it cost to floor 1,000 square feet?',
@@ -22,19 +22,19 @@ const faqItems = [
   },
   {
     question: 'Is installation included in BBS flooring prices?',
-    answer: 'No — material and labour are quoted separately for transparency. Material prices are listed per square foot on the website. Installation labour starts at $2.00/sqft for vinyl/laminate and $2.25/sqft for hardwood. This lets you compare material costs fairly.',
+    answer: 'No — material and labour are quoted separately for transparency. Material prices are listed per square foot on the website. Installation labour starts from $2.00/sqft for vinyl/laminate and from $2.25/sqft for hardwood. This lets you compare material costs fairly.',
   },
   {
     question: 'How should I budget for a flooring project?',
-    answer: 'Rule of thumb: material cost × 2 covers materials + installation + most extras. For a more accurate budget, add: material + installation labour + old floor removal ($1.00–$3.00/sqft) + baseboards ($3.61/linear ft) + delivery ($140–$200) + 10% waste factor. BBS provides free detailed quotes.',
+    answer: 'Rule of thumb: material cost × 2 covers materials + installation + most extras. For a more accurate budget, add: material + installation labour + old floor removal ($1.00–$3.00/sqft) + baseboards (from $3.50/linear ft) + delivery ($140–$200) + 10% waste factor. BBS provides free detailed quotes.',
   },
   {
     question: 'How much do stairs cost?',
-    answer: 'At BBS Flooring: Stair refinishing (sand & restain) is $125/step. New straight hardwood treads are $185/step. Specialty stairs (open/curved/bullnose) are $225/step. Pickets/spindles are $25/piece. A typical 13-step straight staircase costs $1,625–$2,405 for new treads.',
+    answer: 'At BBS Flooring: Stair refinishing (sand & restain) starts from $125/step. New straight hardwood treads from $185/step. Specialty stairs (open/curved/bullnose) from $225/step. A typical 13-step straight staircase starts around $1,625–$2,405 for new treads.',
   },
   {
     question: 'Can I install flooring myself to save money?',
-    answer: 'Click-lock vinyl and laminate are DIY-friendly — they float over the subfloor with no glue or nails. You can save $2.00/sqft in labour. Hardwood requires professional installation (nail guns, moisture testing, glue). BBS sells material without installation if you prefer DIY.',
+    answer: 'Click-lock vinyl and laminate are DIY-friendly — they float over the subfloor with no glue or nails. You can save on labour. Hardwood requires professional installation (nail guns, moisture testing, glue). BBS sells material without installation if you prefer DIY.',
   },
   {
     question: 'When is the cheapest time to buy flooring in the GTA?',

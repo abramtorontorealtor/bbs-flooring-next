@@ -110,7 +110,7 @@ export default function FlooringComparisonGuideClient() {
                   ['Over concrete', '✅ Glue-down or float', '❌ Not recommended', '✅ Float or glue-down', '✅ Float over underlayment'],
                   ['Radiant heat', '✅ Yes', '❌ Not recommended', '✅ Most products', '✅ Most products'],
                   ['Condo-friendly', '✅ With underlayment', '⚠️ Check building rules', '✅ With underlayment', '✅ With underlayment'],
-                  ['Installation cost', '$2.25–$4.25/sqft', '$2.25–$3.25/sqft', '$2.00/sqft', '$2.00/sqft'],
+                  ['Installation cost', 'From $2.25/sqft', 'From $2.25/sqft', 'From $2.00/sqft', 'From $2.00/sqft'],
                   ['Pet-friendly', '⚠️ Scratches on soft species', '⚠️ Scratches easily', '✅ Excellent', '✅ Good'],
                   ['Resale value', '★★★★★ Highest', '★★★★★ Highest', '★★★ Good', '★★ Modest'],
                   ['Sound underfoot', '🔊 Warm, natural', '🔊 Solid, premium', '⚠️ Can sound hollow', '⚠️ Can sound hollow'],
