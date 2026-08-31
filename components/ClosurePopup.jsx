@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 /**
  * One-off temporary closure popup (floating modal — does NOT affect page layout).
  *
- * Notice: showroom closed Fri August 28, 2026 (team out on installations).
+ * Notice: showroom closed Mon August 31, 2026.
  *
- * Self-expiring: only renders through end of day August 28, 2026 America/Toronto.
+ * Self-expiring: only renders through end of day August 31, 2026 America/Toronto.
  * After that it renders nothing, so a forgotten popup cannot linger.
  * Dismissible per-visitor via sessionStorage (won't nag on every page view).
  *
@@ -15,9 +15,9 @@ import { useEffect, useState } from 'react';
  * reserves space in the document flow and cannot push/break the header layout.
  */
 
-// Show through 2026-08-29 04:00 UTC == 2026-08-29 00:00 ET (end of Aug 28 ET).
-const EXPIRES_AT = Date.parse('2026-08-29T04:00:00Z');
-const DISMISS_KEY = 'bbs-closure-2026-08-28-dismissed';
+// Show through 2026-09-01 04:00 UTC == 2026-09-01 00:00 ET (end of Aug 31 ET).
+const EXPIRES_AT = Date.parse('2026-09-01T04:00:00Z');
+const DISMISS_KEY = 'bbs-closure-2026-08-31-dismissed';
 
 export default function ClosurePopup() {
   const [show, setShow] = useState(false);
@@ -75,13 +75,12 @@ export default function ClosurePopup() {
         <h2 id="closure-title" className="text-lg font-bold text-slate-900">
           Showroom Closed Today
         </h2>
-        <p className="mt-1 text-sm font-medium text-amber-700">Friday, August&nbsp;28</p>
+        <p className="mt-1 text-sm font-medium text-amber-700">Monday, August&nbsp;31</p>
 
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
-          Our team is out completing installations today, so the showroom is
-          closed. Online orders &amp; quote requests are still open — call or
-          request a quote and we&apos;ll get right back to you. Back in the
-          showroom tomorrow. Thanks for your patience!
+          Our showroom is closed today. Online orders &amp; quote requests are
+          still open — call or request a quote and we&apos;ll get right back to
+          you. Back in the showroom tomorrow. Thanks for your patience!
         </p>
 
         <button
