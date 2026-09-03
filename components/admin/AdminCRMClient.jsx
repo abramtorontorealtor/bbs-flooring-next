@@ -74,6 +74,9 @@ const STATUS_CONFIG = {
   confirmed: { color: 'bg-blue-100 text-blue-800 border-blue-200', label: '📅 Confirmed', priority: 3 },
   order:     { color: 'bg-blue-100 text-blue-800 border-blue-200', label: '🔵 Order', priority: 4 },
   pending_payment: { color: 'bg-yellow-100 text-yellow-800 border-yellow-200', label: '⏳ Pending Payment', priority: 4 },
+  awaiting_payment: { color: 'bg-orange-100 text-orange-800 border-orange-200', label: '💳 Awaiting Card', priority: 4 },
+  pending:   { color: 'bg-amber-100 text-amber-800 border-amber-200', label: '📦 Order Received', priority: 4 },
+  quote_requested: { color: 'bg-cyan-100 text-cyan-800 border-cyan-200', label: '🚛 Freight Quote', priority: 0 },
   paid:      { color: 'bg-green-100 text-green-800 border-green-200', label: '💰 Paid', priority: 5 },
   processing:{ color: 'bg-purple-100 text-purple-800 border-purple-200', label: '⚙️ Processing', priority: 5 },
   shipped:   { color: 'bg-indigo-100 text-indigo-800 border-indigo-200', label: '🚚 Shipped', priority: 5 },
@@ -81,6 +84,29 @@ const STATUS_CONFIG = {
   completed: { color: 'bg-emerald-100 text-emerald-800 border-emerald-200', label: '✅ Done', priority: 6 },
   lost:      { color: 'bg-slate-100 text-slate-500 border-slate-200', label: '⚫ Lost', priority: 7 },
   cancelled: { color: 'bg-slate-100 text-slate-500 border-slate-200', label: '⚫ Cancelled', priority: 7 },
+  abandoned: { color: 'bg-slate-100 text-slate-500 border-slate-200', label: '⚫ Abandoned', priority: 7 },
+  refunded:  { color: 'bg-slate-100 text-slate-500 border-slate-200', label: '↩️ Refunded', priority: 7 },
+};
+
+// Statuses that mean "nothing left to do" — hidden by the Active filter.
+const CLOSED_STATUSES = ['lost', 'cancelled', 'completed', 'delivered', 'abandoned', 'refunded'];
+
+// Human label for how an order is (or will be) paid. NEVER a binary — a
+// quote_request or blank method must not masquerade as "Credit Card".
+const PAYMENT_LABELS = { credit_card: 'Credit Card', etransfer: 'E-Transfer', quote_request: 'Freight Quote' };
+const paymentLabel = (o) => {
+  const base = PAYMENT_LABELS[o.payment_method] || '—';
+  // Custom-freight order where the method was set after the quote call → show both.
+  if (o.delivery_preference === 'custom_freight' && o.payment_method && o.payment_method !== 'quote_request') {
+    return `Freight · ${base}`;
+  }
+  return base;
+};
+const ORDER_STATUS_LABELS = {
+  awaiting_payment: 'Awaiting Payment', abandoned: 'Abandoned', pending_payment: 'Pending Payment',
+  pending: 'Order Received', confirmed: 'Confirmed', paid: 'Paid', processing: 'Preparing',
+  shipped: 'Shipped / Ready', delivered: 'Complete', cancelled: 'Cancelled', refunded: 'Refunded',
+  quote_requested: 'Quote Requested',
 };
 
 const LOST_REASONS = [
@@ -197,6 +223,24 @@ export default function AdminCRMClient() {
     setCancelSendEmail(true);
     setCancelOrderId(orderId);
   };
+
+  const quoteFollowupMutation = useMutation({
+    mutationFn: async ({ orderId, contacted, paymentMethod }) => {
+      const r = await fetch('/api/orders/quote-followup', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, contacted, paymentMethod }),
+      });
+      if (!r.ok) { const err = await r.json().catch(() => ({})); throw new Error(err.error || 'Failed'); }
+      return r.json();
+    },
+    onSuccess: (data, vars) => {
+      refreshAll();
+      if (vars.paymentMethod) toast.success(`Payment method: ${PAYMENT_LABELS[vars.paymentMethod] || vars.paymentMethod}`);
+      else toast.success(vars.contacted ? '📞 Marked contacted' : 'Contacted cleared');
+    },
+    onError: (err) => toast.error('Update failed: ' + err.message),
+  });
 
   const updateOrderMutation = useMutation({
     mutationFn: async ({ orderId, updates }) => {
@@ -434,8 +478,9 @@ export default function AdminCRMClient() {
       const label = status === 'authorized' ? 'CC — Authorized' : status === 'captured' ? 'CC — Captured' : `CC — ${status}`;
       return <Badge className="bg-blue-100 text-blue-800 border-0 text-xs">{label}</Badge>;
     }
-    if (method === 'quote_request') return <Badge className="bg-cyan-100 text-cyan-800 border-0 text-xs">Quote</Badge>;
-    return <Badge className="bg-emerald-100 text-emerald-800 border-0 text-xs">E-Transfer</Badge>;
+    if (method === 'quote_request') return <Badge className="bg-cyan-100 text-cyan-800 border-0 text-xs">Freight Quote</Badge>;
+    if (method === 'etransfer') return <Badge className="bg-emerald-100 text-emerald-800 border-0 text-xs">E-Transfer{status ? ` — ${status}` : ''}</Badge>;
+    return <Badge className="bg-slate-100 text-slate-600 border-0 text-xs">No payment method</Badge>;
   };
 
   const openOrderLead = (lead) => {
@@ -488,7 +533,7 @@ export default function AdminCRMClient() {
         value: o.total || o.amount || 0,
         status: o.status || 'pending_payment',
         date: o.created_date,
-        details: `Order #${o.order_number || o.id} — ${o.payment_method === 'etransfer' ? 'E-Transfer' : 'Credit Card'} — ${o.payment_status || 'pending'}`,
+        details: `Order #${o.order_number || o.id} — ${paymentLabel(o)} — ${ORDER_STATUS_LABELS[o.status] || o.status || 'Pending'}${o.contacted_at ? ' · 📞 contacted' : ''}`,
         notes: o.notes || '', lost_reason: '',
         raw: o,
       });
@@ -534,6 +579,8 @@ export default function AdminCRMClient() {
 
     leads.forEach(l => {
       if (l.status === 'new' && isUrgent(l.date)) l.displayStatus = 'urgent';
+      // Freight-quote order already called → show Contacted, not a red badge.
+      else if (l.source === 'order' && l.status === 'quote_requested' && l.raw.contacted_at) l.displayStatus = 'contacted';
       else l.displayStatus = l.status;
     });
 
@@ -545,7 +592,7 @@ export default function AdminCRMClient() {
     let result = allLeads;
     if (filterSource !== 'all') result = result.filter(l => l.source === filterSource);
     if (filterStatus === 'active') {
-      result = result.filter(l => !['lost', 'cancelled', 'completed', 'delivered'].includes(l.status));
+      result = result.filter(l => !CLOSED_STATUSES.includes(l.status));
     } else if (filterStatus !== 'all') {
       result = result.filter(l => l.status === filterStatus || l.displayStatus === filterStatus);
     }
@@ -1690,6 +1737,37 @@ export default function AdminCRMClient() {
                         <div className="space-y-2">
                           <Label className="text-sm font-semibold">Order Actions</Label>
 
+                          {/* Freight quote / unpaid follow-up: mark contacted + record real payment method */}
+                          {(o.status === 'quote_requested' || o.delivery_preference === 'custom_freight') && !['captured', 'completed', 'paid'].includes(o.payment_status) && (
+                            <div className="rounded-lg border border-cyan-200 bg-cyan-50 p-3 space-y-2">
+                              <div className="text-xs font-semibold text-cyan-900">🚛 Freight quote follow-up</div>
+                              <div className="flex flex-wrap gap-2 items-center">
+                                {o.contacted_at ? (
+                                  <span className="text-xs text-cyan-800">📞 Contacted {new Date(o.contacted_at).toLocaleDateString('en-CA')}
+                                    <button type="button" className="ml-2 underline text-cyan-700" onClick={() => quoteFollowupMutation.mutate({ orderId: lead.entityId, contacted: false })}>undo</button>
+                                  </span>
+                                ) : (
+                                  <Button size="sm" variant="outline" className="border-cyan-300 text-cyan-900 hover:bg-cyan-100"
+                                    disabled={quoteFollowupMutation.isPending}
+                                    onClick={() => quoteFollowupMutation.mutate({ orderId: lead.entityId, contacted: true })}>
+                                    📞 Mark Contacted
+                                  </Button>
+                                )}
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <Label className="text-xs text-slate-600 whitespace-nowrap">Customer will pay by:</Label>
+                                <Select value={o.payment_method || 'quote_request'} onValueChange={(val) => quoteFollowupMutation.mutate({ orderId: lead.entityId, paymentMethod: val })}>
+                                  <SelectTrigger className="h-8 text-sm bg-white"><SelectValue /></SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="quote_request">Not decided (quote pending)</SelectItem>
+                                    <SelectItem value="etransfer">E-Transfer</SelectItem>
+                                    <SelectItem value="credit_card">Credit Card</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
+                          )}
+
                           {/* Capture payment (credit card authorized) */}
                           {o.payment_method === 'credit_card' && o.payment_status === 'authorized' && o.stripe_payment_intent_id && (
                             <div className="flex gap-2">
@@ -1720,6 +1798,8 @@ export default function AdminCRMClient() {
                             <Select value={o.status} onValueChange={(val) => updateOrderMutation.mutate({ orderId: lead.entityId, updates: { status: val }})}>
                               <SelectTrigger className="h-8 text-sm"><SelectValue /></SelectTrigger>
                               <SelectContent>
+                                <SelectItem value="quote_requested">Quote Requested</SelectItem>
+                                <SelectItem value="awaiting_payment">Awaiting Payment (card)</SelectItem>
                                 <SelectItem value="pending_payment">Pending Payment</SelectItem>
                                 <SelectItem value="paid">Paid</SelectItem>
                                 <SelectItem value="confirmed">Confirmed</SelectItem>
