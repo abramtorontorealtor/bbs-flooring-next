@@ -101,7 +101,7 @@ export default function CollectionSiblings({ siblings = [], current, hidePrice =
   };
 
   return (
-    <section aria-labelledby="collection-siblings-heading" className="mb-6">
+    <section aria-labelledby="collection-siblings-heading" className="mb-6 min-w-0 max-w-full">
       <div className="flex items-baseline justify-between gap-3 mb-2">
         <h2 id="collection-siblings-heading" className="text-sm font-semibold text-slate-800">
           {collection && collection !== brand ? (
@@ -126,7 +126,7 @@ export default function CollectionSiblings({ siblings = [], current, hidePrice =
       {/* Mobile: horizontal snap strip (~4.5 visible). Desktop: wrapping grid,
           max 2 rows then "+N more". */}
       <div
-        className="flex sm:grid gap-2 sm:gap-3 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none pb-1 -mx-1 px-1
+        className="flex sm:grid gap-2 sm:gap-3 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none pb-1 -mx-1 px-1 min-w-0 max-w-full [-webkit-overflow-scrolling:touch]
                    sm:grid-cols-6 md:grid-cols-8 [scrollbar-width:thin]"
       >
         {siblings.map((p, idx) =>

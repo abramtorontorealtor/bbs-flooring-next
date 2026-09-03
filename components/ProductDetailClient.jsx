@@ -476,7 +476,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
         </div>
 
         {/* ── Right: Product Info + Buy Box ── */}
-        <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+        <div className="animate-fade-in-up min-w-0" style={{ animationDelay: '0.1s' }}>
 
           {/* Brand */}
           {product.brand && (
