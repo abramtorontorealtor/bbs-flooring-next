@@ -56,6 +56,39 @@ async function getChildVariants(parentId) {
   }
 }
 
+// Collection siblings — the other colours of the same brand + collection +
+// category (Phase 2, memory/COLLECTION-SIBLINGS-PLAN.md). Server-side + cached
+// so the swatch strip is SSR'd with real <a href> links (crawlable internal-link
+// cluster for collection queries). Parents/variants never get siblings — they
+// use VariantSelector — and Vidar/Impressive children are filtered out via the
+// three variant flags. Returns [] (strip renders nothing) when < 2 rows.
+const SIBLING_COLUMNS = 'id, slug, name, colour, brand, collection, image_url, image_alt_text, price_per_sqft, sale_price_per_sqft, in_stock';
+const getSiblings = cache(async (product) => {
+  try {
+    if (!product?.brand || !product?.collection || !product?.category) return [];
+    if (product.is_parent_product || product.is_variant || product.parent_product_id || product.has_variants) return [];
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from('products')
+      .select(SIBLING_COLUMNS)
+      .eq('brand', product.brand)
+      .eq('collection', product.collection)
+      .eq('category', product.category)
+      .eq('is_variant', false)
+      .eq('is_parent_product', false)
+      .eq('is_archived_variant', false)
+      .not('slug', 'is', null)
+      .order('name', { ascending: true })
+      .limit(60);
+    if (error) return [];
+    const rows = data || [];
+    return rows.length >= 2 ? rows : [];
+  } catch {
+    return [];
+  }
+});
+
 // Dynamic metadata based on product slug
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -107,13 +140,16 @@ export default async function ProductDetailPage({ params }) {
   const childVariants = product?.is_parent_product
     ? await getChildVariants(product.id)
     : [];
+  const siblings = await getSiblings(product);
 
   // JSON-LD: ProductGroup + hasVariant + AggregateOffer for parents, single Product for others
   const hidePrice = product?.hide_price === true;
   // Skip product schema entirely for hide_price products — Google requires
   // either offers or aggregateRating for Product/ProductGroup rich results.
   // Emitting without either just generates GSC validation errors.
-  const productSchema = (product && !hidePrice) ? generateProductSchema(product, 'https://bbsflooring.ca', childVariants, { hidePrice }) : null;
+  const productSchema = (product && !hidePrice)
+    ? generateProductSchema(product, 'https://bbsflooring.ca', childVariants, { hidePrice, siblings })
+    : null;
 
   return (
     <>
@@ -167,7 +203,7 @@ export default async function ProductDetailPage({ params }) {
           </div>
         )
       }>
-        <ProductDetailClient slug={slug} initialProduct={product} />
+        <ProductDetailClient slug={slug} initialProduct={product} initialSiblings={siblings} />
       </Suspense>
     </>
   );

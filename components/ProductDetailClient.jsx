@@ -29,13 +29,14 @@ import ProductImageGallery from '@/components/ProductImageGallery';
 import RequestQuoteBox from '@/components/RequestQuoteBox';
 import SampleTrapModal from '@/components/SampleTrapModal';
 import TrustStrip from '@/components/TrustStrip';
+import CollectionSiblings from '@/components/CollectionSiblings';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
 /* ── FAST_PICKUP_BRANDS — warehouse-stocked brands with quick turnaround ── */
 const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
 
-export default function ProductDetailClient({ slug, initialProduct = null }) {
+export default function ProductDetailClient({ slug, initialProduct = null, initialSiblings = [] }) {
   const router = useRouter();
   const { user: currentUser, isLoadingAuth } = useAuth();
   const authResolved = !isLoadingAuth;
@@ -582,6 +583,11 @@ export default function ProductDetailClient({ slug, initialProduct = null }) {
             <div className="w-px h-4 bg-slate-200" />
             <SaveButton product={product} user={currentUser} />
           </div>
+
+          {/* ── Collection siblings — other colours in this brand+collection (SSR, real links) ── */}
+          {!product.is_parent_product && !product.has_variants && initialSiblings?.length >= 2 && (
+            <CollectionSiblings siblings={initialSiblings} current={product} hidePrice={hidePrice} />
+          )}
 
           {/* ── Variant Selector (chip-based for has_variants) ── */}
           {product.has_variants && (
