@@ -27,7 +27,7 @@ const NAV_ITEMS = [
       { name: 'Stairs', path: '/stairs' },
       { name: 'Installation', path: '/installation' },
       { name: 'Carpet Removal', path: '/carpet-removal' },
-      { name: 'Floor Finder Quiz', path: '/floor-finder' },
+      { name: 'Find My Floor', path: '/floor-finder' },
       { name: 'Gallery', path: '/gallery' },
     ],
   },

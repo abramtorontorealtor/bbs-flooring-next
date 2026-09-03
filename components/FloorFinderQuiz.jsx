@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { ArrowRight, ArrowLeft, Loader, Home, Droplets, Palette, DollarSign, Dog, CheckCircle, Phone, Star, ShoppingCart } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Loader, Home, Droplets, Palette, DollarSign, Dog, CheckCircle, Phone, Star, ShoppingCart, MessageCircle, FileText } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import useBusinessHours from '@/components/useBusinessHours';
 
 // ── Quiz Steps ──────────────────────────────────────────────────
 const STEPS = [
@@ -83,9 +84,7 @@ export default function FloorFinderQuiz() {
   const [answers, setAnswers] = useState({});
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
-  const [emailSubmitting, setEmailSubmitting] = useState(false);
+  const { open, nextOpen } = useBusinessHours();
 
   const currentStep = STEPS[step];
   const progress = ((step) / STEPS.length) * 100;
@@ -145,50 +144,21 @@ export default function FloorFinderQuiz() {
     setStep(0);
     setAnswers({});
     setResults(null);
-    setEmail('');
-    setEmailSubmitted(false);
   };
 
-  const handleEmailSubmit = async (e) => {
-    e.preventDefault();
-    if (!email || emailSubmitting) return;
-    setEmailSubmitting(true);
-
-    try {
-      const { entities } = await import('@/lib/base44-compat');
-      await entities.ContactLead.create({
-        email,
-        customer_email: email,
-        lead_status: 'new',
-        status: 'new',
-        source: 'floor_finder_quiz',
-        message: `Floor Finder quiz lead. Room: ${answers.room}, Priority: ${answers.priority}, Budget: ${answers.budget}, Style: ${answers.style}, Lifestyle: ${answers.lifestyle}`,
-      });
-    } catch (err) {
-      console.warn('Email save failed:', err);
-    }
-
+  // Time-aware escalation click tracking (replaces the old dead-end email capture).
+  const trackEscalate = (target) => {
     if (typeof window.gtag === 'function') {
-      window.gtag('event', 'generate_lead', {
-        event_category: 'Floor Finder',
-        event_label: 'quiz_email_capture',
-        value: 10.0,
-        currency: 'CAD',
-      });
-      // Direct Google Ads conversion tracking
-      window.gtag('event', 'conversion', {
-        send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
-        value: 10.0,
-        currency: 'CAD',
+      window.gtag('event', 'finder_escalate', {
+        target,
+        hours: open ? 'open' : 'closed',
       });
     }
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'Lead', { content_name: 'floor_finder_quiz', value: 10.0, currency: 'CAD' });
-    }
-
-    setEmailSubmitting(false);
-    setEmailSubmitted(true);
   };
+
+  // While useBusinessHours hasn't mounted yet (open === null), render the
+  // open-hours variant so server and first client paint always agree.
+  const showOpenVariant = open === null || open === true;
 
   // ── Results Screen ──
   if (isComplete) {
@@ -290,58 +260,92 @@ export default function FloorFinderQuiz() {
               ))}
             </div>
 
-            {/* Email Capture CTA */}
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 sm:p-8 text-center mb-8">
-              {emailSubmitted ? (
-                <div>
-                  <CheckCircle className="w-10 h-10 text-green-400 mx-auto mb-3" />
-                  <h3 className="text-xl font-bold text-white mb-1">You&apos;re All Set!</h3>
-                  <p className="text-slate-300 text-sm">We&apos;ll be in touch with exclusive deals on your recommended floors.</p>
+            {/* Next step CTA — time-aware escalation (replaces the old dead-end email capture) */}
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 sm:p-8 text-center mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                Like what you see?
+              </h3>
+              <p className="text-slate-300 mb-6 text-sm sm:text-base">
+                Here&apos;s the fastest way to move forward with your matches.
+              </p>
+
+              {showOpenVariant ? (
+                <div className="flex flex-col items-center gap-4 min-w-0">
+                  <div className="w-full sm:w-auto min-w-0">
+                    <a
+                      href="tel:6474281111"
+                      onClick={() => trackEscalate('call')}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-amber-500/20 min-w-0"
+                    >
+                      <Phone className="w-5 h-5 flex-shrink-0" />
+                      <span className="truncate">Call now — (647) 428-1111</span>
+                    </a>
+                    <p className="text-xs text-slate-400 mt-2">Talk to a real person about these floors</p>
+                  </div>
+                  <Link
+                    href="/quote-calculator"
+                    onClick={() => trackEscalate('quote')}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-slate-600 hover:border-amber-400 text-white font-semibold rounded-xl transition-colors min-w-0"
+                  >
+                    <FileText className="w-5 h-5 flex-shrink-0" />
+                    Get an instant quote
+                  </Link>
+                  <a
+                    href="https://wa.me/message/CQQRGZKI3U2VH1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEscalate('whatsapp')}
+                    className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-green-400 transition-colors"
+                  >
+                    <MessageCircle className="w-4 h-4 flex-shrink-0" />
+                    Ask on WhatsApp
+                  </a>
                 </div>
               ) : (
-                <>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                    Want These Deals Sent to You?
-                  </h3>
-                  <p className="text-slate-300 mb-5 text-sm sm:text-base">
-                    Get exclusive pricing and sale alerts on your recommended floors. No spam.
-                  </p>
-                  <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
-                      className="flex-1 px-4 py-3 rounded-xl text-sm border-0 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    />
-                    <button
-                      type="submit"
-                      disabled={emailSubmitting}
-                      className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors disabled:opacity-50 whitespace-nowrap"
+                <div className="flex flex-col items-center gap-4 min-w-0">
+                  <div className="w-full sm:w-auto min-w-0">
+                    <Link
+                      href="/quote-calculator"
+                      onClick={() => trackEscalate('quote')}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-amber-500/20 min-w-0"
                     >
-                      {emailSubmitting ? 'Saving...' : 'Send Me Deals'}
-                    </button>
-                  </form>
-                </>
+                      <FileText className="w-5 h-5 flex-shrink-0" />
+                      Get an instant quote
+                    </Link>
+                    <p className="text-xs text-slate-400 mt-2">Takes 2 minutes, no account needed</p>
+                  </div>
+                  <div className="w-full sm:w-auto min-w-0">
+                    <a
+                      href="https://wa.me/message/CQQRGZKI3U2VH1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackEscalate('whatsapp')}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-slate-600 hover:border-green-400 text-white font-semibold rounded-xl transition-colors min-w-0"
+                    >
+                      <MessageCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                      Ask about these on WhatsApp
+                    </a>
+                    <p className="text-xs text-slate-400 mt-2">We reply first thing</p>
+                  </div>
+                  <a
+                    href="tel:6474281111"
+                    onClick={() => trackEscalate('call')}
+                    className="text-sm text-slate-400 hover:text-amber-400 underline underline-offset-2 transition-colors"
+                  >
+                    Showroom&apos;s closed — call us from {nextOpen}
+                  </a>
+                </div>
               )}
             </div>
 
-            {/* Bottom CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="tel:6474281111"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-amber-500/20"
-              >
-                <Phone className="w-5 h-5" />
-                Call for Expert Advice
-              </a>
+            {/* Start over */}
+            <div className="flex justify-center">
               <button
                 onClick={restart}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-slate-200 hover:border-amber-400 text-slate-700 font-semibold rounded-xl transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-slate-200 hover:border-amber-400 text-slate-700 font-semibold rounded-xl transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Retake Quiz
+                Start Over
               </button>
             </div>
           </>
@@ -365,7 +369,7 @@ export default function FloorFinderQuiz() {
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-slate-200 text-slate-700 font-semibold rounded-xl transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Retake Quiz
+                Start Over
               </button>
             </div>
           </div>

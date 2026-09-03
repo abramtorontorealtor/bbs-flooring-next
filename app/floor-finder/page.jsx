@@ -4,14 +4,14 @@ import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { Phone, Clock, Shield, Truck } from 'lucide-react';
 
 export const metadata = {
-  title: 'Floor Finder Quiz — Find Your Perfect Flooring in 60 Seconds',
-  description: 'Answer 5 quick questions and get personalized flooring recommendations from BBS Flooring. 1,000+ options in vinyl, hardwood, laminate & engineered hardwood. Free estimates in Markham, Toronto & GTA.',
+  title: 'Floor Finder — Find the Right Flooring in 60 Seconds',
+  description: 'Answer 5 quick questions and get 3 real in-stock matches from BBS Flooring — vinyl, laminate, engineered & solid hardwood — then grab an instant quote. Markham, Toronto & GTA.',
   alternates: {
     canonical: 'https://bbsflooring.ca/floor-finder',
   },
   openGraph: {
-    title: 'Floor Finder Quiz — Find Your Perfect Flooring in 60 Seconds',
-    description: 'Answer 5 quick questions and get personalized flooring recommendations from 1,000+ options.',
+    title: 'Floor Finder — Find the Right Flooring in 60 Seconds',
+    description: 'Answer 5 quick questions and get 3 real in-stock flooring matches, then an instant quote.',
     url: 'https://bbsflooring.ca/floor-finder',
     type: 'website',
   },
@@ -90,7 +90,7 @@ export default function FloorFinderPage() {
             <p>
               Choosing flooring can be overwhelming — with hundreds of options across vinyl, laminate,
               engineered hardwood, and solid hardwood, it&apos;s hard to know where to start. Our Floor
-              Finder quiz narrows down the perfect match based on your room, budget, style, and
+              Finder narrows it down to your best in-stock matches based on your room, budget, style, and
               lifestyle needs.
             </p>
             <p>
@@ -166,7 +166,7 @@ export default function FloorFinderPage() {
                 name: 'How do I choose between hardwood and vinyl?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Choose hardwood for premium look, refinishability, and home value. Choose vinyl for waterproof protection, lower cost, scratch resistance, and easier maintenance. Our Floor Finder quiz helps you decide based on your specific room and lifestyle.',
+                  text: 'Choose hardwood for premium look, refinishability, and home value. Choose vinyl for waterproof protection, lower cost, scratch resistance, and easier maintenance. Our Floor Finder helps you decide based on your specific room and lifestyle.',
                 },
               },
             ],

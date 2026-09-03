@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { FileText } from 'lucide-react';
+import { FileText, Compass } from 'lucide-react';
+import useBusinessHours from '@/components/useBusinessHours';
 
 // Desktop-only persistent conversion cluster (bottom-right).
 // Mobile already has StickyMobileCTA (Call / WhatsApp / Instant Quote bar).
@@ -33,6 +34,8 @@ function quoteHrefForPath(pathname) {
 export default function DesktopStickyCTA() {
   const [visible, setVisible] = useState(false);
   const pathname = usePathname();
+  const { open } = useBusinessHours();
+  const hours = open ? 'open' : 'closed';
 
   const isProductDetail = /^\/products\/[^/]+/.test(pathname);
   const isHiddenPage = isProductDetail || HIDDEN_PATHS.some((p) => pathname.startsWith(p));
@@ -57,6 +60,11 @@ export default function DesktopStickyCTA() {
         event_label: 'instant_quote_desktop_sticky',
         event_action: 'quote_click',
       });
+      window.gtag('event', 'sticky_cta_click', {
+        button: 'quote',
+        surface: 'desktop_cluster',
+        hours,
+      });
     }
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'Lead', { content_name: 'instant_quote_desktop_sticky' });
@@ -70,9 +78,24 @@ export default function DesktopStickyCTA() {
         event_label: 'whatsapp_desktop_sticky',
         event_action: 'whatsapp_click',
       });
+      window.gtag('event', 'sticky_cta_click', {
+        button: 'whatsapp',
+        surface: 'desktop_cluster',
+        hours,
+      });
     }
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'Contact', { content_name: 'whatsapp_desktop_sticky' });
+    }
+  };
+
+  const handleFinderClick = () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'sticky_cta_click', {
+        button: 'finder',
+        surface: 'desktop_cluster',
+        hours,
+      });
     }
   };
 
@@ -88,6 +111,19 @@ export default function DesktopStickyCTA() {
         <FileText className="w-5 h-5" />
         <span className="text-sm">Instant Quote</span>
       </Link>
+
+      {/* Find my floor — secondary action, never visually outranks Instant Quote/Call */}
+      {pathname !== '/floor-finder' && (
+        <Link
+          href="/floor-finder"
+          onClick={handleFinderClick}
+          aria-label="Find my floor with our 5-question wizard"
+          className="group flex items-center gap-2 rounded-full bg-white hover:bg-amber-50 active:scale-95 text-amber-700 border border-amber-300 font-semibold px-4 py-2 shadow-md transition-all duration-200 text-sm"
+        >
+          <Compass className="w-4 h-4" />
+          <span>Find my floor</span>
+        </Link>
+      )}
 
       {/* WhatsApp bubble (folded in from the old WhatsAppButton) */}
       <a

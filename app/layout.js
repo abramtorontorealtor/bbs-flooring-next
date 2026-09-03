@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import { LocalBusinessJsonLd } from '@/components/LocalBusinessJsonLd';
 import { ClientProviders } from './providers';
 import FooterServer from '@/components/FooterServer';
-import ClosurePopup from '@/components/ClosurePopup';
+import AfterHoursConcierge from '@/components/AfterHoursConcierge';
 import { DeferredAnalytics } from '@/components/DeferredAnalytics';
 
 const inter = Inter({
@@ -96,8 +96,8 @@ export default function RootLayout({ children }) {
           {children}
         </ClientProviders>
 
-        {/* One-off closure notice — floating popup (self-expires end of Jul 15, 2026 ET) */}
-        <ClosurePopup />
+        {/* After-hours Floor Finder nudge — desktop only, renders only when the showroom is closed (Mon–Sat 10–5 ET), dismissible per session */}
+        <AfterHoursConcierge />
 
         {/* Footer is a server component — zero client JS */}
         <FooterServer />

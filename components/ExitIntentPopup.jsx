@@ -224,7 +224,7 @@ export default function ExitIntentPopup() {
                 className="w-full py-3 border-2 border-amber-200 hover:border-amber-400 text-amber-700 font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
-                Not sure? Take the Floor Finder Quiz
+                Not sure? Find My Floor
               </button>
 
               <div className="flex items-center gap-3 my-5">
