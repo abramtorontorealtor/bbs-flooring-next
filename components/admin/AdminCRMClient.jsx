@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { describeItemQty, formatItemQty } from '@/lib/orderItemQty';
 import { useSearchParams } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
@@ -1510,11 +1511,11 @@ export default function AdminCRMClient() {
                                     <div key={idx} className="flex justify-between items-start p-3 bg-slate-50 rounded-lg">
                                       <div className="flex-1 min-w-0">
                                         <p className="font-medium text-sm">{item.product_name}</p>
-                                        <p className="text-xs text-slate-500">{item.sku && `${item.sku} · `}{item.boxes_required} boxes · {Number(item.actual_sqft).toFixed(1)} sqft</p>
+                                        <p className="text-xs text-slate-500">{item.sku && `${item.sku} · `}{formatItemQty(item)}</p>
                                       </div>
                                       <div className="text-right flex-shrink-0 ml-3">
                                         <p className="font-semibold text-sm">C${Number(item.line_total).toFixed(2)}</p>
-                                        <p className="text-xs text-slate-400">C${Number(item.price_per_sqft).toFixed(2)}/sqft</p>
+                                        {describeItemQty(item).unitPrice && <p className="text-xs text-slate-400">C${describeItemQty(item).unitPrice.amount.toFixed(2)}/{describeItemQty(item).unitPrice.per}</p>}
                                       </div>
                                     </div>
                                   ))}

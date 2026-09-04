@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { describeItemQty } from '@/lib/orderItemQty';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createPageUrl } from '@/lib/routes';
@@ -479,8 +480,8 @@ export default function AccountDashboardClient() {
                                 {item.sku && <p className="text-xs text-slate-400">SKU: {item.sku}</p>}
                               </div>
                               <div className="text-right text-xs text-slate-500 flex-shrink-0">
-                                <p>{item.boxes_required || '—'} box{(item.boxes_required || 0) !== 1 ? 'es' : ''}</p>
-                                <p>{item.actual_sqft ? Number(item.actual_sqft).toFixed(1) : '—'} sqft</p>
+                                <p>{describeItemQty(item).qty || '—'} {describeItemQty(item).unit}</p>
+                                {describeItemQty(item).sqft ? <p>{describeItemQty(item).sqft.toFixed(1)} sqft</p> : null}
                               </div>
                               <div className="text-right flex-shrink-0">
                                 <p className="font-semibold text-slate-700 text-sm">C${(item.line_total || 0).toFixed(2)}</p>
