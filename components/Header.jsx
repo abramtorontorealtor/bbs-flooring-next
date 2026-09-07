@@ -3,40 +3,48 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
+import useBusinessHours from '@/components/useBusinessHours';
+import { CLOSE_HOUR } from '@/lib/business-hours';
 
 // Heavy components lazy-loaded — not in the critical JS path
 const MobileMenu = lazy(() => import('./MobileMenu'));
 const AdvancedSearchBar = lazy(() => import('./AdvancedSearchBar'));
 
+// Desktop nav = 7 top-level items + the Free Measure button (was 12 → wrapped to
+// two lines at 1440px). `mobileOnly` items still appear in the slide-out menu.
+// Home = logo. About lives in the mobile menu + footer.
 const NAV_ITEMS = [
-  { name: 'Home', path: '/' },
+  { name: 'Home', path: '/', mobileOnly: true },
   {
     name: 'Products',
     submenu: [
+      { name: 'All Products', path: '/products' },
       { name: 'Vinyl', path: '/vinyl' },
       { name: 'Laminate', path: '/laminate' },
-      { name: 'Solid Hardwood', path: '/solid-hardwood' },
       { name: 'Engineered Hardwood', path: '/engineered-hardwood' },
-      { name: 'All Products', path: '/products' },
-      { name: 'Clearance', path: '/clearance' },
+      { name: 'Solid Hardwood', path: '/solid-hardwood' },
+      { name: 'Waterproof Flooring', path: '/waterproof-flooring' },
     ],
   },
   {
     name: 'Services',
     submenu: [
-      { name: 'Stairs', path: '/stairs' },
       { name: 'Installation', path: '/installation' },
+      { name: 'Stairs', path: '/stairs' },
+      { name: 'Hardwood Refinishing', path: '/hardwood-refinishing' },
       { name: 'Carpet Removal', path: '/carpet-removal' },
+      { name: 'Instant Quote Calculator', path: '/quote-calculator' },
       { name: 'Find My Floor', path: '/floor-finder' },
-      { name: 'Gallery', path: '/gallery' },
     ],
   },
-  { name: 'Quote Calculator', path: '/quote-calculator' },
+  { name: 'Clearance', path: '/clearance', accent: true },
+  { name: 'Gallery', path: '/gallery' },
   { name: 'Financing', path: '/financing' },
   { name: 'Blog', path: '/blog' },
-  { name: 'About', path: '/about' },
+  { name: 'About', path: '/about', mobileOnly: true },
   { name: 'Contact', path: '/contact' },
 ];
+const DESKTOP_NAV_ITEMS = NAV_ITEMS.filter((i) => !i.mobileOnly);
 
 export default function Header({ cartCount = 0 }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,6 +53,10 @@ export default function Header({ cartCount = 0 }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchLoaded, setSearchLoaded] = useState(false);
   const { user, logout, navigateToLogin } = useAuth();
+  // Hydration-safe: `open === null` until mounted → render the static trust line only.
+  const { open: showroomOpen, nextOpen } = useBusinessHours();
+  const statusLabel =
+    showroomOpen === null ? null : showroomOpen ? `Open now · until ${CLOSE_HOUR > 12 ? CLOSE_HOUR - 12 : CLOSE_HOUR}pm` : `Closed · opens ${nextOpen}`;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -82,10 +94,26 @@ export default function Header({ cartCount = 0 }) {
         {/* Desktop: standard top bar */}
         <div className="hidden sm:block py-2 px-4">
           <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
-            <span>We Guarantee Your Satisfaction Throughout Our Start-To-Finish Process</span>
+            {/* Trust line, not a slogan: today's status + the reasons to call us. */}
+            <span className="flex items-center gap-x-2.5 min-w-0 truncate">
+              {statusLabel && (
+                <>
+                  <span className="inline-flex items-center gap-1.5 font-semibold">
+                    <span className={`w-2 h-2 rounded-full ${showroomOpen ? 'bg-emerald-300' : 'bg-amber-200/70'}`} aria-hidden="true" />
+                    {statusLabel}
+                  </span>
+                  <span className="text-amber-200/70" aria-hidden="true">·</span>
+                </>
+              )}
+              <span>Free in-home measure</span>
+              <span className="text-amber-200/70" aria-hidden="true">·</span>
+              <span>Installed by our own crew</span>
+              <span className="text-amber-200/70 hidden md:inline" aria-hidden="true">·</span>
+              <span className="hidden md:inline">4.7★ on Google</span>
+            </span>
             <a
               href="tel:+16474281111"
-              className="flex items-center gap-2 font-semibold hover:text-amber-100 transition-colors py-2 px-3 -mx-3 rounded"
+              className="flex items-center gap-2 font-semibold hover:text-amber-100 transition-colors py-2 px-3 -mx-3 rounded shrink-0"
               style={{ WebkitTapHighlightColor: 'rgba(255,255,255,0.3)', touchAction: 'manipulation', minHeight: '44px', minWidth: '44px' }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.93 3.29 2 2 0 0 1 3.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -109,11 +137,11 @@ export default function Header({ cartCount = 0 }) {
 
           {/* ── Desktop Nav — pure CSS dropdowns, zero Radix ── */}
           <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1">
-            {NAV_ITEMS.map((item) =>
+            {DESKTOP_NAV_ITEMS.map((item) =>
               item.submenu ? (
                 <div key={item.name} className="relative group">
                   <button
-                    className={`text-sm font-medium transition-colors ${hoverColor} px-3 py-2 flex items-center gap-1 ${textColor}`}
+                    className={`text-sm font-medium transition-colors ${hoverColor} px-3 py-2 flex items-center gap-1 whitespace-nowrap ${textColor}`}
                     aria-haspopup="true"
                   >
                     {item.name}
@@ -137,7 +165,9 @@ export default function Header({ cartCount = 0 }) {
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`text-sm font-medium transition-colors ${hoverColor} px-3 py-2 ${textColor}`}
+                  className={`text-sm font-medium transition-colors ${hoverColor} px-3 py-2 whitespace-nowrap ${
+                    item.accent ? (isScrolled ? 'text-orange-600 font-semibold' : 'text-orange-300 font-semibold') : textColor
+                  }`}
                 >
                   {item.name}
                 </Link>
@@ -151,7 +181,7 @@ export default function Header({ cartCount = 0 }) {
             {/* Free Measure CTA — desktop */}
             <Link
               href="/free-measurement"
-              className="hidden lg:flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm"
+              className="hidden lg:flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap shrink-0"
             >
               {/* Ruler icon */}
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
@@ -159,7 +189,7 @@ export default function Header({ cartCount = 0 }) {
             </Link>
 
             {/* Desktop search — lazy-loaded, rendered once opened */}
-            <div className="hidden md:block w-56 lg:w-72">
+            <div className="hidden md:block w-56 lg:w-48 xl:w-72">
               {searchLoaded ? (
                 <Suspense fallback={<SearchPlaceholder />}>
                   <AdvancedSearchBar />

@@ -98,7 +98,7 @@ const HERO_CATEGORY_NAV = [
   { label: 'Laminate', href: '/laminate', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/laminate.webp' },
   { label: 'Waterproof', href: '/waterproof-flooring', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/waterproof.webp' },
   { label: 'Solid Hardwood', href: '/solid-hardwood', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/solid-hardwood.webp' },
-  { label: '🔥 Clearance', href: '/clearance', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/clearance.webp', accent: true },
+  { label: 'Clearance', href: '/clearance', image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/clearance.webp', accent: true },
 ];
 
 const SERVICES = [
@@ -110,7 +110,7 @@ const SERVICES = [
 
 const STATS = [
   { value: '1,000+', label: 'Products In Stock' },
-  { value: '14+', label: 'Years in Markham' },
+  { value: '2012', label: 'Family-Owned Since' },
   { value: '4.7★', label: 'Google Reviews' },
   { value: '0%', label: 'Financing Available' },
 ];
@@ -170,14 +170,8 @@ export default function HomePage() {
             <p className="text-base md:text-xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
               Laminate from $1.49 · Vinyl from $1.79 · Engineered hardwood from $3.29/sqft. Free in-home measurements. Installed by our own crew.
             </p>
-            {/* Phone number directly in hero — unmissable */}
-            <a
-              href="tel:+16474281111"
-              className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-lg md:text-xl font-bold mb-5 md:mb-7 transition-colors"
-            >
-              <PhoneIcon className="w-5 h-5 md:w-6 md:h-6" />
-              (647) 428-1111
-            </a>
+            {/* ONE primary (amber) + ONE secondary. Phone lives in the top bar, the desktop card and the mobile sticky bar —
+                a third copy here was noise (D1/D8). Finder demoted to a text link so it stays in viewport 1 without competing. */}
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link
                 href="/products"
@@ -191,17 +185,17 @@ export default function HomePage() {
               >
                 Get Free In-Home Quote
               </Link>
-              <Link
-                href="/floor-finder"
-                className="inline-flex items-center justify-center border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-7 py-3.5 md:px-8 md:py-4 text-base md:text-lg rounded-full font-semibold w-full sm:w-auto hover:-translate-y-0.5 transition-all"
-              >
-                Find my floor in 60 seconds
-              </Link>
             </div>
+            <Link
+              href="/floor-finder"
+              className="inline-flex items-center gap-1.5 mt-4 md:mt-5 text-sm md:text-base text-slate-200 hover:text-amber-300 font-medium underline underline-offset-4 decoration-white/30 hover:decoration-amber-300 transition-colors"
+            >
+              Not sure where to start? Find my floor in 60 seconds <ArrowIcon className="w-4 h-4" />
+            </Link>
 
-            {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 ═══ */}
-            {/* Mobile: horizontal scroll strip. Desktop: tidy pill row. Server-rendered, zero client JS. */}
-            <div className="mt-6 md:mt-9 lg:max-w-3xl">
+            {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 on phones/tablets ═══ */}
+            {/* Hidden at lg+ where the hero has the contact card and the full category grid is one scroll away (D4 dedupe). */}
+            <div className="mt-6 md:mt-9 lg:hidden">
               <p className="text-xs md:text-sm font-medium text-slate-300 uppercase tracking-wider mb-2.5 md:mb-3">
                 Shop by category
               </p>
@@ -233,7 +227,7 @@ export default function HomePage() {
                         />
                       )}
                     </span>
-                    <span className={`block text-center text-sm font-bold py-2 px-1 whitespace-nowrap ${c.accent ? 'text-orange-100 bg-orange-600/90' : 'text-white bg-slate-900/70'}`}>
+                    <span className={`flex items-center justify-center text-center text-xs md:text-sm font-bold leading-tight min-h-[2.5rem] py-1.5 px-1.5 ${c.accent ? 'text-orange-100 bg-orange-600/90' : 'text-white bg-slate-900/70'}`}>
                       {c.label}
                     </span>
                   </Link>
@@ -242,48 +236,35 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* ═══ HERO RIGHT — Affective trust + one-tap human contact (desktop only) ═══ */}
-          {/* Fills the dead right-half on wide screens. NO email form — WhatsApp/phone only. */}
+          {/* ═══ HERO RIGHT — one-tap human contact (desktop only) ═══ */}
+          {/* Compact on purpose: it supports the H1, it doesn't compete with it. The trust bullets it used to carry
+              already live in the badge + subhead on the left (D1). NO email form — WhatsApp/phone only. */}
           <div className="hidden lg:block">
-            <div className="ml-auto max-w-lg xl:max-w-xl bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-9 xl:p-11">
-              <h2 className="text-3xl xl:text-4xl font-extrabold text-white leading-tight mb-3">
-                Talk to a real flooring expert —{' '}
-                <span className="text-amber-400">not a call centre.</span>
-              </h2>
-              <p className="text-slate-200 text-lg mb-7 leading-relaxed">
-                Send us a photo of your room and we&apos;ll help you pick the right floor — honest advice, wholesale prices, installed by our own crew.
+            <div className="ml-auto max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-7 xl:p-8">
+              <p className="text-xl xl:text-2xl font-bold text-white leading-snug mb-2">
+                Talk to a real flooring expert — <span className="text-amber-400">not a call centre.</span>
               </p>
-              <ul className="space-y-4 mb-8">
-                {[
-                  '4.7★ rated on Google',
-                  'Family-owned in Markham since 2012',
-                  'Our own install crew — never subcontractors',
-                  'Free in-home measurement',
-                ].map((line) => (
-                  <li key={line} className="flex items-start gap-3 text-slate-100">
-                    <CheckCircleIcon className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-base xl:text-lg font-medium">{line}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="text-slate-200 text-base mb-6 leading-relaxed">
+                Send a photo of your room and we&apos;ll help you pick the right floor. Honest advice, wholesale prices.
+              </p>
               <a
                 href="https://wa.me/message/CQQRGZKI3U2VH1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2.5 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white px-6 py-4 xl:py-5 rounded-2xl font-bold text-lg xl:text-xl shadow-lg shadow-green-600/30 hover:-translate-y-0.5 transition-all mb-3.5"
+                className="flex items-center justify-center gap-2.5 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white px-6 py-3.5 rounded-2xl font-bold text-base shadow-md hover:-translate-y-0.5 transition-all mb-3"
               >
-                <WhatsAppIcon className="w-6 h-6 xl:w-7 xl:h-7" />
+                <WhatsAppIcon className="w-5 h-5" />
                 Message us on WhatsApp
               </a>
               <a
                 href="tel:+16474281111"
-                className="flex items-center justify-center gap-2 w-full border-2 border-white/30 bg-white/5 hover:bg-white/15 text-white px-6 py-4 rounded-2xl font-semibold text-lg xl:text-xl transition-all"
+                className="flex items-center justify-center gap-2 w-full border-2 border-white/30 bg-white/5 hover:bg-white/15 text-white px-6 py-3 rounded-2xl font-semibold text-base transition-all"
               >
-                <PhoneIcon className="w-5 h-5 xl:w-6 xl:h-6" />
-                (647) 428-1111
+                <PhoneIcon className="w-5 h-5" />
+                Call (647) 428-1111
               </a>
-              <p className="text-center text-sm text-slate-200 mt-5 font-medium">
-                One tap. A real person replies — usually within minutes.
+              <p className="text-center text-xs text-slate-300 mt-4">
+                A real person replies — usually within minutes.
               </p>
             </div>
           </div>
@@ -296,7 +277,7 @@ export default function HomePage() {
           <span className="text-lg">🔥</span>
           <p className="text-sm font-semibold">
             <span className="font-bold">Lee Flooring Clearance — Real Engineered Oak from $3.29 &amp; 7mm Vinyl from $1.79/sqft.</span>{' '}
-            <a href="/lee-flooring" className="underline underline-offset-2 hover:no-underline">Shop Lee Clearance →</a>
+            <Link href="/lee-flooring" className="underline underline-offset-2 hover:no-underline">Shop Lee Clearance →</Link>
           </p>
         </div>
       </div>
@@ -329,6 +310,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ═══ GOOGLE REVIEWS — Client (carousel). Social proof sits right after the catalogue, not 6 screens down (D5). ═══ */}
+      <Suspense fallback={<div className="min-h-[200px]" />}>
+        <GoogleReviewsBanner variant="carousel" />
+      </Suspense>
 
       {/* ═══ SERVICES — Compact 2x2 on mobile, side image on desktop ═══ */}
       <section className="py-12 md:py-28 px-4 sm:px-6 bg-stone-50">
@@ -451,11 +437,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ GOOGLE REVIEWS — Client (carousel) ═══ */}
-      <Suspense fallback={<div className="min-h-[200px]" />}>
-        <GoogleReviewsBanner variant="carousel" />
-      </Suspense>
-
       {/* ═══ FINANCING — Warm accent section ═══ */}
       <section className="py-16 md:py-20 px-4 sm:px-6 bg-slate-900">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
@@ -540,13 +521,15 @@ export default function HomePage() {
       </Suspense>
 
       {/* ═══ SERVICE AREAS & BRANDS — Internal linking for SEO ═══ */}
-      <section className="py-12 md:py-20 px-4 sm:px-6 bg-white border-t border-slate-100">
+      {/* Every link is still in the HTML (crawlable, equity unchanged — structural freeze respected); the deep city/brand
+          lists are folded into a native <details> so the page stops reading like a link farm (D4). Top-level cities stay visible. */}
+      <section className="py-12 md:py-16 px-4 sm:px-6 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           {/* Service Areas */}
-          <div className="mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6">Find Flooring &amp; Installation in Your City</h2>
-            <p className="text-slate-600 mb-6 max-w-3xl">Choose your city below for local flooring &amp; installation details, pricing, and neighbourhood expertise. For a full breakdown of professional installation in your area, visit your dedicated city installation page — each covers local pricing, subfloor considerations, and how to book a free in-home estimate.</p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+          <div className="mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-3">Serving Markham, Toronto &amp; Durham Region</h2>
+            <p className="text-slate-600 mb-6 max-w-3xl">Pick your city for local flooring &amp; installation pricing, subfloor notes, and how to book a free in-home measure.</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-3">
               {[
                 { city: 'Markham', slug: 'markham' },
                 { city: 'Toronto', slug: 'toronto' },
@@ -570,8 +553,14 @@ export default function HomePage() {
             </div>
           </div>
 
+          <details className="group rounded-2xl border border-slate-200 bg-stone-50 open:bg-white transition-colors">
+            <summary className="flex items-center justify-between cursor-pointer list-none px-5 py-4 text-slate-800 font-semibold select-none">
+              <span>More: installation by city, popular flooring by city &amp; all brands</span>
+              <svg className="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div className="px-5 pb-6 pt-2">
           {/* Professional Installation by City — dedicated install-page links (install-intent anchors) */}
-          <div className="mb-12">
+          <div className="mb-10">
             <h3 className="text-xl font-bold text-slate-800 mb-4">Professional Flooring Installation by City</h3>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
               {[
@@ -594,7 +583,7 @@ export default function HomePage() {
           </div>
 
           {/* Popular Flooring by City */}
-          <div className="mb-12">
+          <div className="mb-10">
             <h3 className="text-xl font-bold text-slate-800 mb-4">Popular Flooring by City</h3>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
               {[
@@ -641,6 +630,8 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+            </div>
+          </details>
         </div>
       </section>
 

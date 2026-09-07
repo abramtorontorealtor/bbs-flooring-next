@@ -47,7 +47,7 @@ export const GOOGLE_REVIEWS = [
     date: '2025-10-01',
     relativeDate: '5 months ago',
     text: 'This is the place if you need floors! Besides having lots of wonderful options to pick from, Abram was so incredibly helpful walking me through the different flooring materials, their benefits, and drawbacks.',
-    photoUrl: 'https://lh3.googleusercontent.com/a/ACg8ocJVYoWzjaRBJPqlrOs3q-eNf9XR6qKtdgc7zjjzQX2QUpgLvw=s120-c-rp-mo-br100',
+    photoUrl: null, // was a copy of Adam D.'s avatar — two reviewers with one face reads as fake; initials until the real one is pulled
   },
   {
     id: 'nh-2025',
@@ -65,7 +65,7 @@ export const GOOGLE_REVIEWS = [
     date: '2025-06-30',
     relativeDate: '9 months ago',
     text: 'Dealt with Abram from BBS Flooring. Great service and overall experience. He got us the flooring we wanted and was able to meet the tight deadline we had. Very communicative and trustworthy. A+ all around.',
-    photoUrl: 'https://lh3.googleusercontent.com/a/ACg8ocJlEE3NUWuh7O_jIt-RN6E1tUPqFPpP5U_dI2Sv4gDH5bPgPw=s120-c-rp-mo-br100',
+    photoUrl: null, // was a copy of Cathy F.'s avatar — see above
   },
   {
     id: 'melanie-2025',
