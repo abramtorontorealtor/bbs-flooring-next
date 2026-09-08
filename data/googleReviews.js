@@ -1,14 +1,14 @@
 /**
  * Curated Google Business Profile reviews for BBS Flooring.
  * Source: GBP API (accounts/116022137284651432372/locations/17267219491889966789)
- * Last refreshed: 2026-08-12 (live GBP API pull: 4.7 / 49)
+ * Last refreshed: 2026-09-08 (live GBP API pull: 4.8 / 54; avatar URLs re-verified per reviewer — Adam/Rebecca/Alex were wrong)
  * 
  * To update: run `python scripts/refresh-reviews.py` from workspace root
  */
 
 export const GOOGLE_REVIEW_STATS = {
-  averageRating: 4.7,
-  totalReviews: 49,
+  averageRating: 4.8,
+  totalReviews: 54,
   googleMapsUrl: 'https://www.google.com/maps/place/BBS+Flooring/@43.8561,-79.3372,17z/data=!4m8!3m7!1s0x89d4d5ea9cb856cb:0xd76bc69a2c9e3c3b!8m2!3d43.856092!4d-79.334618!9m1!1b1!16s%2Fg%2F11c1jn5n06',
 };
 
@@ -38,7 +38,7 @@ export const GOOGLE_REVIEWS = [
     date: '2025-10-22',
     relativeDate: '5 months ago',
     text: 'We visited this place recently to pick out about 800 sq ft of hardwood for a room we\'re doing, and the experience was awesome. Abram helped us out — super friendly, honest, and really knows his stuff.',
-    photoUrl: 'https://lh3.googleusercontent.com/a/ACg8ocJVYoWzjaRBJPqlrOs3q-eNf9XR6qKtdgc7zjjzQX2QUpgLvw=s120-c-rp-mo-br100',
+    photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjUU2YvC5MuMjI7CrD12qHjQwrJ6f124HBN9hjvyJUDlX6FA9IFW=s120-c-rp-mo-ba12-br100',
   },
   {
     id: 'rebecca-2025',
@@ -47,7 +47,7 @@ export const GOOGLE_REVIEWS = [
     date: '2025-10-01',
     relativeDate: '5 months ago',
     text: 'This is the place if you need floors! Besides having lots of wonderful options to pick from, Abram was so incredibly helpful walking me through the different flooring materials, their benefits, and drawbacks.',
-    photoUrl: null, // was a copy of Adam D.'s avatar — two reviewers with one face reads as fake; initials until the real one is pulled
+    photoUrl: 'https://lh3.googleusercontent.com/a/ACg8ocIX7oMBKQlcviVCPRwd1P_qLt1aA6XM2GhxSmK27QkqQPOMiw=s120-c-rp-mo-br100',
   },
   {
     id: 'nh-2025',
@@ -65,7 +65,7 @@ export const GOOGLE_REVIEWS = [
     date: '2025-06-30',
     relativeDate: '9 months ago',
     text: 'Dealt with Abram from BBS Flooring. Great service and overall experience. He got us the flooring we wanted and was able to meet the tight deadline we had. Very communicative and trustworthy. A+ all around.',
-    photoUrl: null, // was a copy of Cathy F.'s avatar — see above
+    photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjWSzhxn75eHpB8pURHG5A_lD-YQyDq6ho2T84EtdCKzbavWrHnVbg=s120-c-rp-mo-ba12-br100',
   },
   {
     id: 'melanie-2025',

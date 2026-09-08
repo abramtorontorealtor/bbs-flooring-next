@@ -5,6 +5,14 @@ import Image from 'next/image';
 import { Star } from 'lucide-react';
 import { GOOGLE_REVIEWS, GOOGLE_REVIEW_STATS } from '@/data/googleReviews';
 
+// Hardcoded relativeDate strings rot ('5 months ago' a year later reads as fake). Show the review month instead —
+// stable, honest, and identical on server and client (no hydration drift).
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function reviewMonth(iso) {
+  const m = /^(\d{4})-(\d{2})/.exec(iso || '');
+  return m ? `${MONTHS[Number(m[2]) - 1]} ${m[1]}` : '';
+}
+
 export default function GoogleReviewsBanner({ variant = 'carousel' }) {
   if (variant === 'compact') return <CompactReviews />;
   return <CarouselReviews />;
@@ -98,7 +106,7 @@ function CarouselReviews() {
                 <div className="hidden" />
                 <div className="min-w-0">
                   <p className="font-semibold text-slate-800 text-sm truncate">{review.name}</p>
-                  <p className="text-xs text-slate-400">{review.relativeDate}</p>
+                  <p className="text-xs text-slate-400">{reviewMonth(review.date)}</p>
                 </div>
                 <div className="ml-auto flex-shrink-0"><GoogleLogo size={16} /></div>
               </div>

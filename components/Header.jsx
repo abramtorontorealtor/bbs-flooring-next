@@ -109,7 +109,7 @@ export default function Header({ cartCount = 0 }) {
               <span className="text-amber-200/70" aria-hidden="true">·</span>
               <span>Installed by our own crew</span>
               <span className="text-amber-200/70 hidden md:inline" aria-hidden="true">·</span>
-              <span className="hidden md:inline">4.7★ on Google</span>
+              <span className="hidden md:inline">4.8★ on Google</span>
             </span>
             <a
               href="tel:+16474281111"

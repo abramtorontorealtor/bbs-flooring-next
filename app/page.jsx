@@ -111,7 +111,7 @@ const SERVICES = [
 const STATS = [
   { value: '1,000+', label: 'Products In Stock' },
   { value: '2012', label: 'Family-Owned Since' },
-  { value: '4.7★', label: 'Google Reviews' },
+  { value: '4.8★', label: 'Google Reviews' },
   { value: '0%', label: 'Financing Available' },
 ];
 
@@ -161,7 +161,7 @@ export default function HomePage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-4 md:mb-6">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-              <span className="text-amber-400 text-xs md:text-sm font-medium">4.7★ Google · Since 2012 in Markham</span>
+              <span className="text-amber-400 text-xs md:text-sm font-medium">4.8★ Google · Since 2012 in Markham</span>
             </div>
             <h1 className="text-[2.25rem] leading-[1.1] sm:text-5xl md:text-6xl font-extrabold text-white md:leading-[1.05] mb-3 md:mb-5 tracking-tight">
               Markham Flooring Store.{' '}
@@ -428,7 +428,7 @@ export default function HomePage() {
                   <span className="text-amber-600 text-xl font-bold">★</span>
                 </div>
                 <div>
-                  <div className="font-bold text-slate-800">4.7 out of 5</div>
+                  <div className="font-bold text-slate-800">4.8 out of 5</div>
                   <div className="text-sm text-slate-500">Rated on Google</div>
                 </div>
               </div>
