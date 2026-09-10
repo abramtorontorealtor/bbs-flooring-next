@@ -23,6 +23,10 @@ export const faqItems = [
     question: 'How do I claim my price match?',
     answer: 'The fastest way is WhatsApp us at (647) 428-1111 — most people prefer it and we reply quickly. You can also text the same number, or call us during showroom hours (Mon–Sat, 10am–5pm). Tell us the product, the competitor, and the price, and we will beat it.',
   },
+  {
+    question: 'Why buy flooring from BBS instead of Home Depot or an online seller?',
+    answer: 'BBS Flooring buys direct from manufacturers and sells at wholesale prices from a 1,000-plus floor showroom in Markham, then installs with its own WSIB-insured crews backed by a 2-year workmanship warranty. Big-box stores sell at retail shelf prices and book third-party installers; online-only sellers ship boxes and leave measurement and installation to you. If a local store lists the same brand and product for less, BBS beats the price.',
+  },
 ];
 
 export const metadata = {
