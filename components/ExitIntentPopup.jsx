@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { X, Calculator, Mail, ArrowRight, Sparkles } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
-import { entities } from '@/lib/base44-compat';
 
 const STORAGE_KEY = 'bbs_exit_popup_shown';
 const SUPPRESSED_PATHS = ['/cart', '/checkout', '/view-booking', '/quote-booking', '/admin'];
@@ -129,29 +128,39 @@ export default function ExitIntentPopup() {
     if (!email || submitting) return;
     setSubmitting(true);
 
+    // Route through /api/contact (server-side insert + Telegram alert + admin email +
+    // spam filter) instead of a bare client-side insert that nobody ever saw.
+    // Conversion events fire ONLY on a confirmed save — no ghost signals to Smart Bidding.
+    let saved = false;
     try {
-      await entities.ContactLead.create({
-        email,
-        customer_email: email,
-        lead_status: 'new',
-        status: 'new',
-        source: 'exit_intent_popup',
-        message: 'Email subscriber (exit-intent popup)',
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Website visitor (exit popup)',
+          email,
+          source: 'exit_intent_popup',
+          message: `Email subscriber via exit-intent popup on ${pathname || '/'} — wants deals + buying guide. No phone captured; reply by email.`,
+        }),
       });
+      const data = await res.json().catch(() => ({}));
+      saved = res.ok && data?.success !== false;
     } catch (err) {
       console.warn('Email subscribe save failed:', err);
     }
 
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'generate_lead', {
-        event_category: 'Email Capture',
-        event_label: 'exit_intent_popup',
-        value: 5.0,
-        currency: 'CAD',
-      });
-    }
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'Lead', { content_name: 'exit_intent_email', value: 5.0, currency: 'CAD' });
+    if (saved) {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'Email Capture',
+          event_label: 'exit_intent_popup',
+          value: 5.0,
+          currency: 'CAD',
+        });
+      }
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: 'exit_intent_email', value: 5.0, currency: 'CAD' });
+      }
     }
 
     setSubmitting(false);
