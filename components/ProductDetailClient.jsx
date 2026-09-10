@@ -365,6 +365,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
   const hasDiscount = !hidePrice && currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft;
   const displayPrice = hasDiscount ? currentPricing.sale_price_per_sqft : currentPricing.price_per_sqft;
   const isOutOfStock = product?.in_stock === false;
+  // Made-to-order width/veneer (Impressive Canadian lines): never add-to-cart — route to the quote box.
+  const isMadeToOrder = !!(product?.has_variants && selectedJsonVariant?.made_to_order);
   const isFastPickup = product && !isOutOfStock && FAST_PICKUP_BRANDS.some(b => (product.brand || '').toLowerCase().includes(b));
 
   /* ── Spec items (consolidated, no duplication) ── */
@@ -742,9 +744,9 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
           {/* ═══════════════════════════════════════
               BUY BOX or REQUEST QUOTE BOX
           ═══════════════════════════════════════ */}
-          {hidePrice ? (
+          {(hidePrice || isMadeToOrder) ? (
             <div ref={(el) => { buyBoxRef.current = el; quoteBoxRef.current = el; }}>
-              <RequestQuoteBox product={product} selectedVariant={selectedJsonVariant} />
+              <RequestQuoteBox product={product} selectedVariant={selectedJsonVariant} pricePerSqft={isMadeToOrder && !hidePrice ? currentPricing?.price_per_sqft : null} />
             </div>
           ) : (
           <div ref={buyBoxRef} className="border-2 border-amber-200 rounded-2xl bg-gradient-to-b from-amber-50/80 to-white p-5 space-y-4">
@@ -1101,10 +1103,10 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
         isOutOfStock={product.in_stock === false}
         isAddingToCart={isAddingToCart}
         onAddToCart={handleAddToCart}
-        hidePrice={hidePrice}
+        hidePrice={hidePrice || isMadeToOrder}
         productName={product?.name || ''}
         selectionSummary={selectionSummary}
-        onScrollToQuote={hidePrice ? scrollToQuoteBox : null}
+        onScrollToQuote={(hidePrice || isMadeToOrder) ? scrollToQuoteBox : null}
       />
 
       {/* ── Sample-in-person trap modal ── */}

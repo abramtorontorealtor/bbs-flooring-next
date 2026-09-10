@@ -478,7 +478,14 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
               </div>
             )}
           </div>
-          {!selectedVariant.in_stock && (
+          {selectedVariant.made_to_order ? (
+            <div className="mt-3 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-xs text-sky-900 space-y-0.5">
+              <div className="font-semibold text-sm">Made to order in this width</div>
+              <div>Milled to order by the manufacturer in Canada — typically <span className="font-medium">{selectedVariant.lead_time || '~2 weeks'}</span>{selectedVariant.lead_time_max ? ` (up to ${selectedVariant.lead_time_max})` : ''}.</div>
+              {selectedVariant.mto_fee ? <div>One-time production fee: <span className="font-medium">C${Number(selectedVariant.mto_fee).toFixed(0)}</span> per order (not per sq ft).</div> : null}
+              <div>Custom-width orders are final — no returns or cancellations. Request a quote below and we&apos;ll confirm colour, coverage and lead time before anything is ordered.</div>
+            </div>
+          ) : !selectedVariant.in_stock && (
             <div className="mt-2 text-sm font-medium text-red-600">
               ⚠ Special Order — Contact us for availability
             </div>

@@ -8,7 +8,8 @@ import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
 import { callUrl, smsUrl, whatsappUrl, PHONE_DISPLAY } from '@/lib/contact';
 
-export default function RequestQuoteBox({ product, selectedVariant = null }) {
+export default function RequestQuoteBox({ product, selectedVariant = null, pricePerSqft = null }) {
+  const isMTO = !!selectedVariant?.made_to_order;
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
 
   // Rich descriptor for the pre-filled SMS/WhatsApp deep links so the customer's
@@ -16,7 +17,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
   const enquiryTarget = (() => {
     if (!product) return undefined;
     const config = selectedVariant
-      ? [selectedVariant.pattern, selectedVariant.width, selectedVariant.grade].filter(Boolean).join(' \u00b7 ')
+      ? [selectedVariant.pattern, selectedVariant.width, selectedVariant.grade, selectedVariant.veneer, isMTO ? 'made to order' : null].filter(Boolean).join(' \u00b7 ')
       : '';
     const url = (product.slug || product.handle)
       ? `https://bbsflooring.ca/products/${product.slug || product.handle}`
@@ -51,8 +52,9 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
       if (product.sku) lines.push(`SKU: ${product.sku}`);
       if (selectedVariant) {
         if (selectedVariant.sku) lines.push(`Variant SKU: ${selectedVariant.sku}`);
-        const parts = [selectedVariant.pattern, selectedVariant.width, selectedVariant.grade].filter(Boolean);
+        const parts = [selectedVariant.pattern, selectedVariant.width, selectedVariant.grade, selectedVariant.veneer].filter(Boolean);
         if (parts.length) lines.push(`Configuration: ${parts.join(' · ')}`);
+        if (isMTO) lines.push(`MADE TO ORDER width — lead time ${selectedVariant.lead_time || '~2 weeks'}, production fee C$${selectedVariant.mto_fee || 250}, final sale${pricePerSqft ? `, C$${Number(pricePerSqft).toFixed(2)}/sqft` : ''}`);
       }
       if (form.message.trim()) lines.push(`\nCustomer note: ${form.message.trim()}`);
 
@@ -133,10 +135,12 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
       <div>
         <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
           <Phone className="w-5 h-5 text-amber-600" />
-          Get Pricing for {product.name}
+          {isMTO ? 'Request a Made-to-Order Quote' : `Get Pricing for ${product.name}`}
         </h3>
         <p className="text-sm text-slate-500 mt-1">
-          Available at our Markham showroom or by phone.
+          {isMTO
+            ? <>{pricePerSqft ? <>C${Number(pricePerSqft).toFixed(2)}/sqft + one-time C${selectedVariant.mto_fee || 250} production fee · {selectedVariant.lead_time || '~2 weeks'} · final sale. </> : null}We confirm coverage (+10–15% waste) and lead time before ordering.</>
+            : 'Available at our Markham showroom or by phone.'}
         </p>
       </div>
 
@@ -144,7 +148,8 @@ export default function RequestQuoteBox({ product, selectedVariant = null }) {
       {selectedVariant && (
         <div className="bg-white rounded-lg border border-slate-200 px-3 py-2 text-xs text-slate-600">
           <span className="font-medium text-slate-700">Selected: </span>
-          {[selectedVariant.pattern, selectedVariant.width, selectedVariant.grade].filter(Boolean).join(' · ')}
+          {[selectedVariant.pattern, selectedVariant.width, selectedVariant.grade, selectedVariant.veneer].filter(Boolean).join(' · ')}
+          {isMTO && <span className="ml-2 inline-block rounded bg-sky-100 text-sky-800 px-1.5 py-0.5 font-semibold">Made to order</span>}
           {selectedVariant.sku && <span className="text-slate-400 ml-2">({selectedVariant.sku})</span>}
         </div>
       )}
