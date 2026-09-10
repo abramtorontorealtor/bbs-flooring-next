@@ -112,6 +112,46 @@ export default function PriceMatchClient() {
         </div>
       </section>
 
+      {/* ── B6: BBS vs Big Box vs Online-only (the "why not Home Depot?" answer) ── */}
+      <section className="max-w-4xl mx-auto px-4 py-16">
+        <h2 className="text-3xl font-bold text-slate-900 text-center mb-3">BBS vs. Big Box vs. Online-Only</h2>
+        <p className="text-center text-slate-600 max-w-2xl mx-auto mb-8">
+          Most GTA homeowners price-check Home Depot or an online reseller before they call us. Here&apos;s the honest comparison — then bring us the quote.
+        </p>
+        <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+          <table className="w-full text-sm text-left border-collapse min-w-[560px]">
+            <thead>
+              <tr className="bg-slate-900 text-white">
+                <th scope="col" className="px-4 py-3 font-semibold">What matters</th>
+                <th scope="col" className="px-4 py-3 font-semibold bg-amber-500 text-slate-900">BBS Flooring</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Big-box store</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Online-only seller</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200">
+              {[
+                ['Price', 'Wholesale-direct; we beat any local quote on the same product', 'Retail shelf price, seasonal sales', 'Low sticker, then shipping + no local support'],
+                ['See it before you buy', '1,000+ floors in our Markham showroom, free samples', 'Limited aisle display, few in-stock colours', 'Screen colours only'],
+                ['Who installs it', 'Our own crews — we measure, install and stand behind it', 'Third-party installers booked through the store', 'You find and manage your own installer'],
+                ['Who you talk to', 'A flooring specialist, same person start to finish', 'Whoever is in the aisle that day', 'Chat widget or ticket queue'],
+                ['Measurement & quantity', 'Free in-home measurement across the GTA', 'Usually a paid measure or DIY', 'DIY — over-order or come up short'],
+                ['Problem after install?', 'Call the showroom — local, accountable', 'Store vs. installer vs. manufacturer', 'Email the reseller, ship it back'],
+              ].map(([k, bbs, box, online]) => (
+                <tr key={k} className="bg-white odd:bg-slate-50/60">
+                  <th scope="row" className="px-4 py-3 font-semibold text-slate-900 align-top">{k}</th>
+                  <td className="px-4 py-3 text-slate-900 font-medium bg-amber-50 align-top">✅ {bbs}</td>
+                  <td className="px-4 py-3 text-slate-600 align-top">{box}</td>
+                  <td className="px-4 py-3 text-slate-600 align-top">{online}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-slate-500 text-center mt-3">
+          General comparison of retail models; individual stores and sellers vary. Same brand, same product, lower local price? We beat it.
+        </p>
+      </section>
+
       {/* ── Fine print ── */}
       <section className="max-w-3xl mx-auto px-4 py-14">
         <h2 className="text-2xl font-bold text-slate-900 mb-5">The Fine Print (kept honest)</h2>
