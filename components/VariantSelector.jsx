@@ -17,6 +17,13 @@ const GRADE_DESCRIPTIONS = {
   'Select & Better (AB)': 'Premium — minimal knots, consistent colour and grain. Most refined look.',
 };
 
+// Veneer (wear-layer) axis — engineered hardwood offered in more than one top-layer thickness
+// on the same colour (e.g. Impressive Contempa 2mm vs 4mm). Keyed by the variant's `veneer` label.
+const VENEER_DESCRIPTIONS = {
+  '2mm Veneer': 'Standard wear layer — can be screened and recoated. Best value.',
+  '4mm Veneer': 'Thick sawn-face wear layer — can be fully sanded and refinished, like solid hardwood. Longest life.',
+};
+
 export default function VariantSelector({ product, onVariantChange, hidePrice = false, onSelectionSummary = null }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -49,6 +56,7 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
   const [selectedPattern, setSelectedPattern] = useState('');
   const [selectedWidth, setSelectedWidth] = useState('');
   const [selectedGrade, setSelectedGrade] = useState('');
+  const [selectedVeneer, setSelectedVeneer] = useState('');
   const [showGradeTooltip, setShowGradeTooltip] = useState(null);
   // Mobile stepper: which step is expanded (0=pattern, 1=width, 2=grade)
   const [mobileStep, setMobileStep] = useState(0);
@@ -76,6 +84,15 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     return [...new Set(filtered.map(v => v.grade).filter(Boolean))];
   }, [variants, selectedPattern, selectedWidth]);
 
+  // Veneer options for selected pattern + width + grade
+  const veneerOptions = useMemo(() => {
+    let filtered = variants;
+    if (selectedPattern) filtered = filtered.filter(v => v.pattern === selectedPattern);
+    if (selectedWidth) filtered = filtered.filter(v => v.width === selectedWidth);
+    if (selectedGrade) filtered = filtered.filter(v => v.grade === selectedGrade);
+    return [...new Set(filtered.map(v => v.veneer).filter(Boolean))];
+  }, [variants, selectedPattern, selectedWidth, selectedGrade]);
+
   // Reset width/grade when pattern changes (but respect URL params on first load)
   useEffect(() => {
     const urlWidth = searchParams.get('width');
@@ -95,6 +112,15 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     }
   }, [selectedWidth, selectedPattern]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    const urlVeneer = searchParams.get('veneer');
+    if (urlVeneer && veneerOptions.includes(urlVeneer)) {
+      setSelectedVeneer(urlVeneer);
+    } else {
+      setSelectedVeneer(veneerOptions[0] || '');
+    }
+  }, [selectedGrade, selectedWidth, selectedPattern]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Sync selections to URL.
   // IMPORTANT: read the CURRENT query string from window.location (not the
   // `searchParams` hook) and only call router.replace when the target string
@@ -103,7 +129,7 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
   // init effects re-read searchParams -> state churn -> router.replace again,
   // never settling (the "glitches like crazy" infinite re-render). Guarding on a
   // real diff makes the write idempotent and breaks the loop.
-  const updateUrl = useCallback((pattern, width, grade) => {
+  const updateUrl = useCallback((pattern, width, grade, veneer) => {
     if (typeof window === 'undefined') return;
     const current = new URLSearchParams(window.location.search);
     const params = new URLSearchParams(window.location.search);
@@ -113,25 +139,28 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     else params.delete('width');
     if (grade && gradeOptions.length > 1) params.set('grade', grade);
     else params.delete('grade');
+    if (veneer && veneerOptions.length > 1) params.set('veneer', veneer);
+    else params.delete('veneer');
     const qs = params.toString();
     // No-op if nothing changed — prevents the re-render loop.
     if (qs === current.toString()) return;
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
-  }, [pathname, router, patternOptions.length, widthOptions.length, gradeOptions.length]);
+  }, [pathname, router, patternOptions.length, widthOptions.length, gradeOptions.length, veneerOptions.length]);
 
   useEffect(() => {
-    if (selectedPattern || selectedWidth || selectedGrade) {
-      updateUrl(selectedPattern, selectedWidth, selectedGrade);
+    if (selectedPattern || selectedWidth || selectedGrade || selectedVeneer) {
+      updateUrl(selectedPattern, selectedWidth, selectedGrade, selectedVeneer);
     }
-  }, [selectedPattern, selectedWidth, selectedGrade, updateUrl]);
+  }, [selectedPattern, selectedWidth, selectedGrade, selectedVeneer, updateUrl]);
 
   const selectedVariant = useMemo(() => {
     return variants.find(v =>
       (!selectedPattern || v.pattern === selectedPattern) &&
       (!selectedWidth || v.width === selectedWidth) &&
-      (!selectedGrade || v.grade === selectedGrade)
+      (!selectedGrade || v.grade === selectedGrade) &&
+      (!selectedVeneer || v.veneer === selectedVeneer)
     ) || variants[0];
-  }, [variants, selectedPattern, selectedWidth, selectedGrade]);
+  }, [variants, selectedPattern, selectedWidth, selectedGrade, selectedVeneer]);
 
   useEffect(() => {
     if (selectedVariant) onVariantChange(selectedVariant);
@@ -144,9 +173,10 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
       if (selectedPattern && patternOptions.length > 1) parts.push(displayPattern(selectedPattern));
       if (selectedWidth) parts.push(selectedWidth);
       if (selectedGrade) parts.push(selectedGrade);
+      if (selectedVeneer && veneerOptions.length > 1) parts.push(selectedVeneer);
       onSelectionSummary(parts.length > 0 ? parts.join(' · ') : '');
     }
-  }, [selectedPattern, selectedWidth, selectedGrade]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedPattern, selectedWidth, selectedGrade, selectedVeneer]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Pricing display values (derived, not hooks)
   const displayPrice = selectedVariant?.sale_price ?? selectedVariant?.price_per_sqft;
@@ -165,8 +195,9 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
     if (patternOptions.length > 1) s.push({ key: 'pattern', label: 'Pattern', value: selectedPattern ? displayPattern(selectedPattern) : null });
     if (widthOptions.length > 1) s.push({ key: 'width', label: 'Width', value: selectedWidth || null });
     if (gradeOptions.length > 1) s.push({ key: 'grade', label: 'Grade', value: selectedGrade || null });
+    if (veneerOptions.length > 1) s.push({ key: 'veneer', label: 'Veneer', value: selectedVeneer || null });
     return s;
-  }, [patternOptions, widthOptions, gradeOptions, selectedPattern, selectedWidth, selectedGrade]);
+  }, [patternOptions, widthOptions, gradeOptions, veneerOptions, selectedPattern, selectedWidth, selectedGrade, selectedVeneer]);
 
   // Auto-advance mobile stepper when a selection is made
   const handleMobileSelect = useCallback((stepKey, value, setter) => {
@@ -308,6 +339,29 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
                       })}
                     </div>
                   )}
+                  {step.key === 'veneer' && (
+                    <div className="space-y-1.5">
+                      {veneerOptions.map(vn => {
+                        const data = VENEER_DESCRIPTIONS[vn];
+                        return (
+                          <button
+                            key={vn}
+                            onClick={() => handleMobileSelect('veneer', vn, setSelectedVeneer)}
+                            className={`w-full text-left px-3 py-2 rounded-lg border-2 transition-all ${
+                              selectedVeneer === vn
+                                ? 'border-amber-500 bg-amber-50'
+                                : 'border-slate-200 bg-white'
+                            }`}
+                          >
+                            <span className={`text-sm font-semibold ${
+                              selectedVeneer === vn ? 'text-amber-800' : 'text-slate-700'
+                            }`}>{vn}</span>
+                            {data && <p className="text-xs text-slate-500 mt-0.5">{data}</p>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -370,6 +424,15 @@ export default function VariantSelector({ product, onVariantChange, hidePrice = 
             descriptions={GRADE_DESCRIPTIONS}
           />
         )
+      )}
+      {veneerOptions.length > 1 && (
+        <ChipGroup
+          label="Veneer (wear layer)"
+          options={veneerOptions}
+          selected={selectedVeneer}
+          onSelect={setSelectedVeneer}
+          descriptions={VENEER_DESCRIPTIONS}
+        />
       )}
     </div>
   );

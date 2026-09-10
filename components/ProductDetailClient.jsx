@@ -166,6 +166,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
         dimensions: selectedJsonVariant.dimensions || base.dimensions,
         grade: selectedJsonVariant.grade || base.grade,
         thickness: selectedJsonVariant.thickness || base.thickness,
+        wear_layer: selectedJsonVariant.wear_layer || base.wear_layer,
       };
     }
     if (product?.is_parent_product && selectedVariantId) {
