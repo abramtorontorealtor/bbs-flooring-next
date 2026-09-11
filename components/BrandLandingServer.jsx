@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BrandProductGrid from '@/components/BrandProductGrid';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 /**
  * BrandLandingServer — Server-rendered brand landing page.
@@ -16,7 +17,7 @@ const PHONE = '(647) 428-1111';
 const ADDRESS = '6061 Highway 7, Unit B, Markham, ON';
 
 const TRUST_BADGES = [
-  { emoji: '⭐', label: 'Google 4.7★', sub: 'Verified Reviews' },
+  { emoji: '⭐', label: `Google ${GOOGLE_RATING}★`, sub: 'Verified Reviews' },
   { emoji: '🛡️', label: 'Licensed & Insured', sub: 'Since 2012' },
   { emoji: '🚚', label: 'Free Measurements', sub: 'GTA-wide' },
   { emoji: '📞', label: 'Same-Day Quotes', sub: PHONE },

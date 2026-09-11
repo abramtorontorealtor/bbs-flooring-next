@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import BookingCalendar from '@/components/BookingCalendar';
 import { CheckCircle, Clock, Phone, Star, ArrowRight, Loader2, MapPin } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 const PROJECT_TYPES = [
   { value: 'hardwood', label: '🪵 Hardwood' },
@@ -449,7 +450,7 @@ export default function FreeMeasurementClient() {
             </Button>
             <div className="flex items-center justify-center gap-2 text-sm text-slate-600">
               <div className="flex">{[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}</div>
-              <span className="font-medium">4.7★ on Google</span>
+              <span className="font-medium">{GOOGLE_RATING}★ on Google</span>
               <span className="text-slate-400">· 100% Free</span>
             </div>
           </form>

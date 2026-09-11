@@ -8,6 +8,7 @@ import { Calendar, Clock, MapPin, ArrowLeft, Share2, Phone, Ruler, Star, Chevron
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getBlogPostBreadcrumbs } from '@/lib/breadcrumbs';
 import MidArticleCTA from '@/components/MidArticleCTA';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 // Mirror of inferProductType() in app/blog/[slug]/page.jsx so the mid-article
 // CTA speaks to the same category as the bottom DeepPageCapture. Keep in sync.
@@ -351,7 +352,7 @@ export default function BlogPostClient({ slug, initialPost = null }) {
           </a>
         </div>
         <div className="flex flex-wrap items-center gap-3 mt-4 text-xs sm:text-sm text-slate-400">
-          <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-400" /> 4.7★ on Google</span>
+          <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-400" /> {GOOGLE_RATING}★ on Google</span>
           <span className="hidden sm:inline">·</span>
           <span>Serving Markham, Toronto & Durham</span>
         </div>

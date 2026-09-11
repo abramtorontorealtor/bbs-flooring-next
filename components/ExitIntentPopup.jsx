@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { X, Calculator, Mail, ArrowRight, Sparkles } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 const STORAGE_KEY = 'bbs_exit_popup_shown';
 const SUPPRESSED_PATHS = ['/cart', '/checkout', '/view-booking', '/quote-booking', '/admin'];
@@ -277,7 +278,7 @@ export default function ExitIntentPopup() {
               <div className="flex items-center justify-center gap-4 mt-5 text-xs text-slate-400">
                 <span>🔒 No spam</span>
                 <span>💳 Financing from $68/mo</span>
-                <span>⭐ 4.7★ on Google</span>
+                <span>⭐ {GOOGLE_RATING}★ on Google</span>
               </div>
             </>
           )}

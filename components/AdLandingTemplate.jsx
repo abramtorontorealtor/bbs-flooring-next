@@ -9,6 +9,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { Phone, MapPin, Clock, Star, Shield, Truck, ChevronDown } from 'lucide-react';
 import { Analytics } from './analytics';
 import dynamic from 'next/dynamic';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 const FinancingBanner = dynamic(() => import('@/components/FinancingBanner'), { ssr: false });
 
@@ -16,7 +17,7 @@ const PHONE = '(647) 428-1111';
 const ADDRESS = '6061 Highway 7, Unit B, Markham, ON';
 
 const TRUST_BADGES = [
-  { icon: Star, label: 'Google 4.7★', sub: 'Verified Reviews' },
+  { icon: Star, label: `Google ${GOOGLE_RATING}★`, sub: 'Verified Reviews' },
   { icon: Shield, label: 'Licensed & Insured', sub: 'Since 2012' },
   { icon: Truck, label: 'Free Measurements', sub: 'GTA-wide' },
   { icon: Phone, label: 'Same-Day Quotes', sub: PHONE },

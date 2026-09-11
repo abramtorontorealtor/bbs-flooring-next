@@ -1,3 +1,4 @@
+import { GOOGLE_RATING } from '@/lib/service-constants';
 // /flooring-in/markham — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Markham",
@@ -160,7 +161,7 @@ const data = {
       },
       {
         "heading": "Markham-Based Since 2012",
-        "detail": "We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on serving our neighbours since 2012 — backed by 4.7-star Google reviews from real homeowners."
+        "detail": `We're not a franchise or a chain. BBS Flooring is an independent, family-run business right here on Highway 7 in Markham. Our reputation is built on serving our neighbours since 2012 — backed by ${GOOGLE_RATING}-star Google reviews from real homeowners.`
       }
     ]
   },

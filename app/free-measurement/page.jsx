@@ -6,6 +6,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { ServiceGallery } from '@/components/service';
 import { stairsImages, flooringImages } from '@/data/galleryImages';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 const MEASUREMENT_PROOF = [
   stairsImages[0], flooringImages[0], stairsImages[4],
@@ -43,7 +44,7 @@ export default function FreeMeasurementPage() {
               <span className="flex items-center gap-1">✓ Free</span>
               <span className="flex items-center gap-1">✓ No Obligation</span>
               <span className="flex items-center gap-1">⏰ Same-Week Booking</span>
-              <span className="flex items-center gap-1">⭐ 4.7★ on Google</span>
+              <span className="flex items-center gap-1">⭐ {GOOGLE_RATING}★ on Google</span>
             </div>
           </div>
         </div>

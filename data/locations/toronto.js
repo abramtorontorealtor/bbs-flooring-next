@@ -1,8 +1,9 @@
+import { GOOGLE_RATING } from '@/lib/service-constants';
 // /flooring-in/toronto — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Toronto",
   "title": "Flooring Store Serving Toronto | Hardwood, Vinyl & Laminate Installation | BBS Flooring",
-  "description": "BBS Flooring serves all of Toronto — 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. Condo specialists. 4.7★ Google. Free in-home estimates. (647) 428-1111.",
+  "description": `BBS Flooring serves all of Toronto — 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. Condo specialists. ${GOOGLE_RATING}★ Google. Free in-home estimates. (647) 428-1111.`,
   "content": "BBS Flooring serves homeowners across the entire City of Toronto — from Victorian semis in the Annex and Leslieville to modern condos in North York and family homes in Etobicoke. Toronto is the most diverse housing market in Canada, and that diversity demands genuine flooring expertise. Century homes in Cabbagetown and Riverdale need dustless hardwood refinishing that preserves original character. Downtown condos at CityPlace and the Harbourfront require sound-rated underlayment and condo-board-compliant installation. North York's executive homes call for wide-plank engineered hardwood in European oak. East York's post-war bungalows are prime candidates for full-home carpet-to-hardwood conversions. Our Markham showroom is a quick 25-minute drive from Midtown Toronto via the DVP, and our installation crews work in Toronto every single day. We carry over 1,000 flooring products from 15+ premium brands — all at wholesale-direct pricing that's typically 20-40% below what you'll find at Toronto big-box stores. Whether you're renovating a single room or transforming an entire home, BBS Flooring understands Toronto building codes, condo regulations, heritage home requirements, and the unique challenges of older properties with uneven subfloors.",
   "landmarks": [
     "North York",

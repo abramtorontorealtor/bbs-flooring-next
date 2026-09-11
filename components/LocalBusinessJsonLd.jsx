@@ -51,7 +51,7 @@ export function LocalBusinessJsonLd() {
     ],
     // aggregateRating removed — Google sees this on every page (including product pages)
     // which triggers "Review has multiple aggregate ratings" error.
-    // Google pulls the 4.7★ rating directly from Google Maps reviews anyway.
+    // Google pulls the live ★ rating directly from Google Maps reviews anyway.
   };
 
   const organization = {

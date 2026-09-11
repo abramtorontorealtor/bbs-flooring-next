@@ -7,6 +7,7 @@ import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { MapPin, Phone, Calendar, Star, Users, Home, Shield, Truck, Heart, CheckCircle } from 'lucide-react';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 export default function AboutClient() {
   return (
@@ -23,7 +24,7 @@ export default function AboutClient() {
         {[
           { icon: Calendar, label: 'In Business', value: 'Since 2012' },
           { icon: Home, label: 'Projects Completed', value: '2,000+' },
-          { icon: Star, label: 'Google Rating', value: '4.7★ on Google' },
+          { icon: Star, label: 'Google Rating', value: `${GOOGLE_RATING}★ on Google` },
           { icon: Users, label: 'Install Crews', value: 'GTA-Wide' },
         ].map(({ icon: Icon, label, value }) => (
           <div key={label} className="bg-white rounded-2xl p-6 border border-slate-200 text-center">
@@ -68,7 +69,7 @@ export default function AboutClient() {
             { icon: Heart, title: 'Family Values', desc: 'We treat every customer like family. Your satisfaction is our reputation.' },
             { icon: CheckCircle, title: 'Quality Guaranteed', desc: 'Every installation backed by our workmanship guarantee.' },
             { icon: MapPin, title: 'Local Experts', desc: 'We know Markham, Toronto, and Durham homes. Local problems, local solutions.' },
-            { icon: Star, title: '4.7★ Google Rating', desc: 'Verified reviews from homeowners just like you.' },
+            { icon: Star, title: `${GOOGLE_RATING}★ Google Rating`, desc: 'Verified reviews from homeowners just like you.' },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex gap-4">
               <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">

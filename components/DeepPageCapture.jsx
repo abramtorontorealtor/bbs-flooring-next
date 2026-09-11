@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 // Deep-page contextual capture block.
 // Rendered at the end of blog/guide/deep pages (where ~86% of organic clicks land
@@ -101,7 +102,7 @@ export default function DeepPageCapture({ productType, className = '' }) {
             <ArrowIcon className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
           <p className="mt-2 text-sm text-slate-500">
-            4.7★ on Google · Family-owned since 2012 · Our own install crew · Free in-home measurement
+            {GOOGLE_RATING}★ on Google · Family-owned since 2012 · Our own install crew · Free in-home measurement
           </p>
         </div>
       </div>

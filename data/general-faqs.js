@@ -1,3 +1,4 @@
+import { GOOGLE_RATING } from '@/lib/service-constants';
 /**
  * General FAQ data for the dedicated /faq page.
  * ALL numbers are from the live product database and verified business details.
@@ -137,7 +138,7 @@ export const GENERAL_FAQ_SECTIONS = [
       },
       {
         question: 'Do you have reviews I can read?',
-        answer: 'Yes — BBS Flooring has a 4.7-star Google rating from verified customers. You can read our reviews on our Google Business Profile or visit our showroom to see photos of completed projects.',
+        answer: `Yes — BBS Flooring has a ${GOOGLE_RATING}-star Google rating from verified customers. You can read our reviews on our Google Business Profile or visit our showroom to see photos of completed projects.`,
       },
     ],
   },

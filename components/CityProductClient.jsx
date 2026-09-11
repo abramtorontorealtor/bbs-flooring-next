@@ -7,6 +7,7 @@ import { MapPin, Calculator, Phone, ChevronRight, CheckCircle2, Star, Hammer, La
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductCard from '@/components/ProductCard';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 // ── Icon map ─────────────────────────────────────────────────────────────────
 const iconMap = { Hammer, Layers, Home };
@@ -78,7 +79,7 @@ export default function CityProductClient({ pageData, productType, initialProduc
         {[
           { label: 'Products In Stock', value: `${priceStats.count}+` },
           { label: 'Starting From', value: `$${priceStats.lowPrice}/sqft` },
-          { label: 'Google Rating', value: '4.7★' },
+          { label: 'Google Rating', value: `${GOOGLE_RATING}★` },
           { label: 'Serving Since', value: '2012' },
         ].map((item, i) => (
           <div key={i} className="bg-white rounded-xl border border-slate-200 p-4 text-center">

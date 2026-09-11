@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServerClient } from '@/lib/supabase';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few times/mo, force-refresh via /api/revalidate after reconcile)
 
@@ -208,7 +209,7 @@ export async function GET(request, { params }) {
 - Largest in-stock selection in the GTA
 - Same-week installation available
 - Financing from $68/month through Financeit
-- 4.7★ Google rating, established since 2012
+- ${GOOGLE_RATING}★ Google rating, established since 2012
 
 For comprehensive AI reference: https://bbsflooring.ca/llms-full.txt
 `);

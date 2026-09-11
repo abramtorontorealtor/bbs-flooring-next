@@ -16,6 +16,7 @@ import {
   Calculator,
   Calendar,
 } from 'lucide-react';
+import { GOOGLE_RATING } from '@/lib/service-constants';
 
 const SECTION_ICONS = {
   'Products & Pricing': ShoppingBag,
@@ -84,7 +85,7 @@ export default function FaqClient() {
           { label: 'Products', value: '1,000+' },
           { label: 'Brands', value: '15' },
           { label: 'Starting Price', value: '$1.49/sqft' },
-          { label: 'Google Rating', value: '4.7★' },
+          { label: 'Google Rating', value: `${GOOGLE_RATING}★` },
         ].map(({ label, value }) => (
           <div
             key={label}
