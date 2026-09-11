@@ -205,7 +205,10 @@ export default function InstallationClient() {
                 <p className="text-emerald-100 leading-relaxed">
                   BBS Flooring carries <strong>WSIB workplace safety insurance</strong> and full <strong>commercial liability coverage</strong>.
                   If anything happens during your installation, you&apos;re never liable. Many flooring companies in the GTA don&apos;t carry WSIB —
-                  always ask before hiring. We provide proof of coverage on request.
+                  always ask before hiring. We provide proof of coverage on request. Installing in a condo? See our full breakdown of{' '}
+                  <Link href="/condo-flooring-installation-requirements" className="underline font-semibold hover:text-emerald-100">
+                    condo board paperwork requirements — COI, WSIB clearance &amp; acoustic underlay specs
+                  </Link>.
                 </p>
               </div>
             </div>
