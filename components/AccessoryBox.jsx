@@ -9,6 +9,9 @@ import { Plus, Package, ZoomIn } from 'lucide-react';
 import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 import { UNDERPAD_CATALOG, TRIM_CATALOG, BASEBOARD_CATALOG } from '@/lib/accessoryCatalog';
+// underpadMode + suggestQty moved to lib/installKit.js (Sep 11 2026) so the PDP
+// InstallKit and this full box can never drift apart on gating or qty math.
+import { underpadMode, suggestQty } from '@/lib/installKit';
 
 // Ordered groups for display. Trim + baseboards are universal (every category).
 // Underpad visibility is decided by needsUnderpad() below — it's never hard-hidden,
@@ -19,48 +22,6 @@ const GROUPS = [
 ];
 
 const UNDERPAD_ITEMS = Object.values(UNDERPAD_CATALOG);
-
-// ── Underpad recommendation logic (Abram, Aug 13) ──
-// Vinyl: virtually all is pre-padded → don't recommend (pad-on-pad is wrong).
-// Laminate: needs pad EXCEPT 14mm (thick enough) or any SKU with attached IXPE/
-//   underpad already baked into the thickness/spec string.
-// Returns 'recommend' (show expanded, floor needs it), 'optional' (collapsed behind
-//   a toggle — customer can still add if they know they need it), or 'hidden'.
-function underpadMode(product) {
-  const category = (product?.category || '').toLowerCase();
-  const hay = `${product?.thickness || ''} ${product?.specifications || ''} ${product?.product_details || ''}`.toLowerCase();
-  const hasAttachedPad = /ixpe|attached|pre-?attached|underpad|underlay|pad/.test(hay);
-
-  if (category === 'laminate') {
-    const is14 = /\b14\s*mm/.test(hay) || /\b14mm/.test((product?.thickness || '').toLowerCase());
-    if (is14 || hasAttachedPad) return 'optional'; // 14mm or already-padded → collapsed
-    return 'recommend'; // 12mm/12.3mm bare laminate → the real attach
-  }
-  if (category === 'vinyl') {
-    return hasAttachedPad ? 'hidden' : 'optional'; // padded vinyl → hidden; bare vinyl → collapsed
-  }
-  return 'hidden'; // hardwood etc. → no floating underlay
-}
-
-// ── Quantity auto-suggest (Abram Aug 13 · Phase 2 task #3) ──
-// Turns the sqft the customer already typed in the buy box into a sensible
-// starting quantity so the qty field isn't a blank guess.
-//  - Underlay (per roll): exact → ceil(sqft / roll coverage).
-//  - Trim/baseboard (per 10ft/7ft stick): rooms aren't square, so estimate the
-//    perimeter as ~4.5×√area (a mild buffer over the 4×√area square-room ideal)
-//    then ceil(perimeter / stick length). Framed as an estimate, never forced.
-function suggestQty(item, floorSqft) {
-  const sqft = parseFloat(floorSqft);
-  if (!sqft || sqft <= 0) return 0;
-  if (item.unit === 'roll') {
-    const cov = item.coverage_sqft || 200;
-    return Math.max(1, Math.ceil(sqft / cov));
-  }
-  // per-piece linear trim → estimate perimeter
-  const perimeterFt = 4.5 * Math.sqrt(sqft);
-  const len = item.length_ft || 10;
-  return Math.max(1, Math.ceil(perimeterFt / len));
-}
 
 export default function AccessoryBox({ product, sessionId: initialSessionId, onAccessoryAdded, floorSqft = null }) {
   const [quantities, setQuantities] = useState({});

@@ -38,6 +38,7 @@ export default function FooterServer() {
                 { name: 'Laminate', path: '/laminate' },
                 { name: 'Vinyl', path: '/vinyl' },
                 { name: 'Stairs', path: '/stairs' },
+                { name: 'Accessories & Supplies', path: '/flooring-accessories' },
               ].map(({ name, path }) => (
                 <li key={name}>
                   <Link href={path} className="text-slate-400 hover:text-amber-500 transition-colors text-sm">

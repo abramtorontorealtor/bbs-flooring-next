@@ -24,6 +24,7 @@ import RecentlyViewed, { recordProductView } from '@/components/RecentlyViewed';
 import TransitionPieces from '@/components/TransitionPieces';
 import PriceNegotiationNote from '@/components/PriceNegotiationNote';
 import AccessoryBox from '@/components/AccessoryBox';
+import InstallKit from '@/components/InstallKit';
 import SqftCalculator from '@/components/SqftCalculator';
 import ProductImageGallery from '@/components/ProductImageGallery';
 import RequestQuoteBox from '@/components/RequestQuoteBox';
@@ -57,6 +58,10 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
   const [showAllSpecs, setShowAllSpecs] = useState(false);
   const [descExpanded, setDescExpanded] = useState(false);
   const [selectionSummary, setSelectionSummary] = useState('');
+  // S1 (Sep 11 2026): the full accessory + transition boxes are collapsed by
+  // default — the compact InstallKit under the buy box is the primary attach
+  // path. "More styles & options" expands them and scrolls down.
+  const [showAllAccessories, setShowAllAccessories] = useState(false);
 
   const PLACEHOLDER = '/images/product-placeholder.svg';
   const buyBoxRef = useRef(null);
@@ -64,7 +69,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
   const accessoryBoxRef = useRef(null);
 
   const scrollToAccessories = () => {
-    accessoryBoxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setShowAllAccessories(true);
+    // Wait one frame so the expanded boxes exist before we scroll to them.
+    requestAnimationFrame(() => {
+      accessoryBoxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   };
 
   const scrollToQuoteBox = useCallback(() => {
@@ -853,18 +862,9 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   {isAddingToCart ? 'Adding...' : isOutOfStock ? 'Out of Stock' : (product.has_variants && !selectedJsonVariant) ? 'Select an option' : calculation ? (calculation.hasUserSqft ? `Add to Cart · C$${calculation.lineTotal.toFixed(2)}` : `Add 1 Box · C$${calculation.lineTotal.toFixed(2)}`) : 'Add to Cart'}
                 </Button>
-                {/* Attach-sell seed at the decision point — plants underlay/trim awareness
-                   right under the buy CTA without cluttering the buy area (the box
-                   itself stays lower). memory/ACCESSORY-ATTACH-PLAN.md Phase 2 task #2. */}
-                {(product.category === 'vinyl' || product.category === 'laminate') && (
-                  <button
-                    type="button"
-                    onClick={scrollToAccessories}
-                    className="w-full text-sm font-semibold text-amber-700 hover:text-amber-800 hover:underline text-center pt-0.5"
-                  >
-                    + Add underlay, quarter round &amp; trim →
-                  </button>
-                )}
+                {/* The old "+ Add underlay, quarter round & trim →" scroll link was
+                   retired Sep 11 2026 — the InstallKit now sits directly below
+                   this box, so the attach is in view instead of 1000px away. */}
               </div>
             ) : (
               /* Installation mode → route to quote calculator */
@@ -912,6 +912,19 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
             {/* Trust / risk-reversal strip — Stripe-secured, 14-day returns, price match, real phone */}
             <TrustStrip variant="compact" />
           </div>
+          )}
+
+          {/* ── S1 INSTALL KIT — ≤4 pre-checked accessories sized from the sqft
+              above, one-tap add. Hidden when the floor itself is out of stock
+              (no floor → no install). Shown for hide_price / MTO floors too:
+              trim + baseboard are still a sale. memory/ACCESSORY-ATTACH-PLAN.md */}
+          {!isOutOfStock && (
+            <InstallKit
+              product={product}
+              floorSqft={calculation?.hasUserSqft ? calculation.sqftNeeded : null}
+              onBrowseAll={scrollToAccessories}
+              className="mt-4"
+            />
           )}
 
           {/* ── Phase F: Book Free Measurement — product carried into the booking form (?product=) ── */}
@@ -1008,17 +1021,36 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
         </section>
       )}
 
-      {/* Transition Pieces — vinyl & laminate only (hardwood excluded per Abram) */}
-      {(product.category === 'vinyl' || product.category === 'laminate') && (
-        <section className="mt-12">
-          <TransitionPieces product={product} />
-        </section>
-      )}
-
-      {/* Accessories — underlay/quarter round/baseboards. Trim + baseboards are
-          universal; underpad self-gates to floating floors inside the component. */}
-      <section className="mt-8" ref={accessoryBoxRef}>
-        <AccessoryBox product={product} floorSqft={calculation?.hasUserSqft ? calculation.sqftNeeded : null} />
+      {/* ── All accessories & trim (collapsed by default since S1, Sep 11 2026) ──
+          The InstallKit under the buy box is the primary attach path. This is the
+          deep catalog for choosers: reducer / stair nosing (vinyl+laminate only —
+          hardwood excluded per Abram), 6 doorstops, 8 baseboard profiles, all 3
+          underpad tiers. Underpad self-gates to floating floors inside AccessoryBox. */}
+      <section className="mt-12 scroll-mt-24" ref={accessoryBoxRef}>
+        {!showAllAccessories ? (
+          <button
+            type="button"
+            onClick={() => setShowAllAccessories(true)}
+            className="w-full flex items-center justify-between gap-3 rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50/40 px-5 py-4 text-left hover:bg-amber-50 hover:border-amber-400 transition-colors"
+          >
+            <div className="min-w-0">
+              <div className="font-bold text-slate-900 text-sm">Browse all accessories &amp; trim</div>
+              <div className="text-xs text-slate-500 mt-0.5">
+                {(product.category === 'vinyl' || product.category === 'laminate')
+                  ? 'Reducers, stair nosing, 6 doorstop profiles, 8 baseboard styles, all underlay tiers'
+                  : '6 doorstop profiles, 8 baseboard styles, underlay'}
+              </div>
+            </div>
+            <span className="flex-shrink-0 text-sm font-semibold text-amber-700">Show ↓</span>
+          </button>
+        ) : (
+          <div className="space-y-8">
+            {(product.category === 'vinyl' || product.category === 'laminate') && (
+              <TransitionPieces product={product} />
+            )}
+            <AccessoryBox product={product} floorSqft={calculation?.hasUserSqft ? calculation.sqftNeeded : null} />
+          </div>
+        )}
       </section>
 
       {/* ── Complete Your Project — Compact service cards ── */}

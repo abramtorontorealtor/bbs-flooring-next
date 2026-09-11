@@ -24,6 +24,7 @@ const NAV_ITEMS = [
       { name: 'Engineered Hardwood', path: '/engineered-hardwood' },
       { name: 'Solid Hardwood', path: '/solid-hardwood' },
       { name: 'Waterproof Flooring', path: '/waterproof-flooring' },
+      { name: 'Accessories & Supplies', path: '/flooring-accessories' },
     ],
   },
   {
