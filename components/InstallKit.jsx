@@ -128,7 +128,7 @@ export default function InstallKit({ product, floorSqft = null, onBrowseAll, cla
               {line.image ? (
                 <img src={line.image} alt={line.label} loading="lazy" className="w-10 h-10 rounded-lg object-cover bg-slate-50 flex-shrink-0" />
               ) : (
-                <span aria-hidden="true" className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0 text-slate-400 text-[10px] font-bold tracking-wide">8ft</span>
+                <span aria-hidden="true" className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0 text-slate-400 text-[10px] font-bold tracking-wide uppercase">{line.unit}</span>
               )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap leading-tight">
