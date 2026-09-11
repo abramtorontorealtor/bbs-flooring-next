@@ -125,7 +125,11 @@ export default function InstallKit({ product, floorSqft = null, onBrowseAll, cla
               >
                 {on && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
               </button>
-              <img src={line.image} alt={line.label} loading="lazy" className="w-10 h-10 rounded-lg object-cover bg-slate-50 flex-shrink-0" />
+              {line.image ? (
+                <img src={line.image} alt={line.label} loading="lazy" className="w-10 h-10 rounded-lg object-cover bg-slate-50 flex-shrink-0" />
+              ) : (
+                <span aria-hidden="true" className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0 text-slate-400 text-[10px] font-bold tracking-wide">8ft</span>
+              )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap leading-tight">
                   <span className="text-sm font-semibold text-slate-800">{line.label}</span>
