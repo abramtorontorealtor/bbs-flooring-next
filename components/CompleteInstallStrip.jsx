@@ -53,7 +53,7 @@ function detectFloor(productItems) {
 // Build the ordered pick list (top 3) for the cart's floor mix.
 function buildPicks({ hasLaminate, hasVinyl, laminateNeedsPad }) {
   const picks = [];
-  const qr = TRIM_CATALOG.qr_d09;
+  const shoe = TRIM_CATALOG.shoe_d02; // shoe moulding outsells quarter round (Abram, Sep 11 2026)
   const bb = BASEBOARD_CATALOG.bb_b05; // Colonial 5" — the most common residential profile
   const tmould = TRANSITION_CATALOG.t_moulding;
   const pad = UNDERPAD_CATALOG.underpad_3_black; // BEST VALUE default
@@ -66,10 +66,10 @@ function buildPicks({ hasLaminate, hasVinyl, laminateNeedsPad }) {
       coverage_sqft: pad.coverage_sqft, length_ft: null,
     });
   }
-  // Quarter round — universal finish piece, everyone needs it at the wall gap.
+  // Shoe moulding — universal finish piece, everyone needs it at the wall gap.
   picks.push({
-    kind: 'accessory', key: qr.key, label: qr.label, price: qr.price, unit: qr.unit,
-    image: qr.image, sub: '10ft · finishes floor-to-wall gap', tag: null, length_ft: qr.length_ft,
+    kind: 'accessory', key: shoe.key, label: shoe.label, price: shoe.price, unit: shoe.unit,
+    image: shoe.image, sub: '10ft · finishes floor-to-wall gap', tag: null, length_ft: shoe.length_ft,
   });
   // Transition (T-moulding) — needed at doorways / room-to-room on floating floors.
   if (hasVinyl || hasLaminate) {

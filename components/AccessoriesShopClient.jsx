@@ -26,7 +26,7 @@ const SECTIONS = [
   },
   {
     id: 'quarter-round',
-    title: 'Quarter Round & Shoe Moulding',
+    title: 'Shoe Moulding & Quarter Round',
     note: 'Finishes the floor-to-baseboard gap for a clean edge. Sold per full piece.',
     items: Object.values(TRIM_CATALOG),
   },

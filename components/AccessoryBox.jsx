@@ -17,7 +17,7 @@ import { underpadMode, suggestQty } from '@/lib/installKit';
 // Underpad visibility is decided by needsUnderpad() below — it's never hard-hidden,
 // just collapsed behind a toggle when the floor likely doesn't need it.
 const GROUPS = [
-  { key: 'trim',      title: 'Quarter Round & Shoe', note: 'Finishes the floor-to-wall gap. Sold per full piece.', items: Object.values(TRIM_CATALOG) },
+  { key: 'trim',      title: 'Shoe Moulding & Quarter Round', note: 'Finishes the floor-to-wall gap. Sold per full piece.', items: Object.values(TRIM_CATALOG) },
   { key: 'baseboard', title: 'Baseboards',           note: 'Paint-grade MDF. Sold per full piece.',                items: Object.values(BASEBOARD_CATALOG) },
 ];
 
