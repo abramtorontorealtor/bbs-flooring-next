@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { locationData } from '@/data/locationData';
 import { getProductsForGrid } from '@/lib/products-server';
 import { JsonLd, faqSchema } from '@/lib/schemas';
-import { GOOGLE_REVIEW_COUNT } from '@/lib/service-constants';
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/lib/service-constants';
 import LocationProductGrid from '@/components/LocationProductGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getLocationBreadcrumbs } from '@/lib/breadcrumbs';
@@ -92,7 +92,7 @@ export default async function LocationPage({ params }) {
             areaServed: { '@type': 'City', name: data.city },
             aggregateRating: {
               '@type': 'AggregateRating',
-              ratingValue: '4.7',
+              ratingValue: GOOGLE_RATING,
               reviewCount: String(GOOGLE_REVIEW_COUNT),
               bestRating: '5',
             },
@@ -205,6 +205,34 @@ export default async function LocationPage({ params }) {
                     </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── SSR City Guide (Tier-1 hubs): long-form sections — cost, basements, stairs, home types, drive time ── */}
+        {data.guide && data.guide.sections && data.guide.sections.length > 0 && (
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-slate-800 mb-2">{data.guide.title || `Flooring in ${data.city}: What to Know Before You Buy`}</h2>
+            {data.guide.intro && <p className="text-slate-600 mb-8 leading-relaxed max-w-4xl">{data.guide.intro}</p>}
+            <div className="space-y-10 max-w-4xl">
+              {data.guide.sections.map((sec, i) => (
+                <section key={i}>
+                  <h3 className="text-2xl font-bold text-slate-800 mb-3">{sec.heading}</h3>
+                  {(sec.paragraphs || []).map((p, j) => (
+                    <p key={j} className="text-slate-600 leading-relaxed mb-4">{p}</p>
+                  ))}
+                  {sec.bullets && sec.bullets.length > 0 && (
+                    <ul className="list-disc pl-6 space-y-2 text-slate-600 mb-4">
+                      {sec.bullets.map((b, j) => <li key={j}>{b}</li>)}
+                    </ul>
+                  )}
+                  {sec.link && sec.link.href && (
+                    <Link href={sec.link.href} className="text-amber-600 font-medium hover:text-amber-700 inline-flex items-center gap-1">
+                      {sec.link.label} →
+                    </Link>
+                  )}
+                </section>
               ))}
             </div>
           </div>
