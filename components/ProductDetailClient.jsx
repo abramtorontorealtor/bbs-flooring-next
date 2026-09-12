@@ -403,11 +403,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
 
   /* ── Financing teaser (static, under price) ── */
   const financingTeaser = useMemo(() => {
-    if (isOutOfStock || !currentPricing.price_per_sqft) return null;
-    const sampleTotal = Math.round((currentPricing.price_per_sqft || 0) * 500 * 1.13);
+    if (isOutOfStock || !displayPrice) return null;
+    const sampleTotal = Math.round((parseFloat(displayPrice) || 0) * 500 * 1.13);
     const monthly = getMonthlyPayment(sampleTotal);
     return monthly ? `From ~$${monthly}/mo for 500 sqft` : null;
-  }, [currentPricing.price_per_sqft, isOutOfStock]);
+  }, [displayPrice, isOutOfStock]);
 
   /* ── Financing — dynamic based on actual calculation ── */
   const dynamicFinancing = useMemo(() => {
@@ -1127,7 +1127,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
       {/* ── Sticky Mobile Cart ── */}
       <StickyAddToCart
         visible={stickyCartVisible}
-        price={currentPricing?.price_per_sqft}
+        price={calculation?.pricePerSqft ?? (displayPrice ? parseFloat(displayPrice) : null)}
+        regularPrice={hasDiscount ? parseFloat(currentPricing.price_per_sqft) : null}
         sqftPerBox={currentPricing?.sqft_per_box}
         sqftNeeded={sqftNeeded}
         setSqftNeeded={setSqftNeeded}

@@ -87,7 +87,9 @@ async function buildClientCache() {
         name: p.name || 'Unnamed Product',
         brand: p.brand || '',
         image_url: p.image_url || p.image || p.thumbnail || null,
-        price_per_sqft: p.price_per_sqft ?? p.sale_price_per_sqft ?? 0,
+        price_per_sqft: (p.sale_price_per_sqft && (!p.price_per_sqft || p.sale_price_per_sqft < p.price_per_sqft))
+          ? p.sale_price_per_sqft
+          : (p.price_per_sqft ?? 0),
         hide_price: p.hide_price !== false, // default true (hidden) unless explicitly false
         category: p.category || '',
         _name: (p.name || '').toLowerCase(),

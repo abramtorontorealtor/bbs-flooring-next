@@ -7,7 +7,8 @@ import { callUrl, smsUrl, whatsappUrl, PHONE_DISPLAY } from '@/lib/contact';
 
 export default function StickyAddToCart({
   visible,
-  price,          // price per sqft
+  price,          // EFFECTIVE price per sqft (sale price when on sale — must match calculation.pricePerSqft)
+  regularPrice = null, // regular price when on sale → shown struck through
   sqftPerBox,     // for box calculation
   sqftNeeded,     // shared state string from parent
   setSqftNeeded,  // shared setter from parent
@@ -124,7 +125,10 @@ export default function StickyAddToCart({
         <div className="flex-shrink-0 text-center min-w-[52px]">
           {price ? (
             <>
-              <div className="text-base font-bold text-slate-900 leading-none">C${price.toFixed(2)}</div>
+              <div className={`text-base font-bold leading-none ${regularPrice ? 'text-red-600' : 'text-slate-900'}`}>C${price.toFixed(2)}</div>
+              {regularPrice ? (
+                <div className="text-[10px] text-slate-400 line-through leading-tight">C${regularPrice.toFixed(2)}</div>
+              ) : null}
               <div className="text-[10px] text-slate-500">/sqft</div>
             </>
           ) : (
@@ -163,13 +167,13 @@ export default function StickyAddToCart({
           {/* Live calculation summary — appears below input as user types */}
           {hasCalc && (
             <div className="flex items-baseline gap-1.5 flex-wrap px-0.5">
-              <span className="text-xs text-slate-500">{calculation.boxesRequired} boxes</span>
+              <span className="text-xs text-slate-500">{calculation.boxesRequired} {calculation.boxesRequired === 1 ? 'box' : 'boxes'} = {calculation.actualSqft.toFixed(1)} sqft</span>
               <span className="text-slate-300 text-xs">·</span>
               <span className="text-xs font-bold text-slate-800">C${calculation.lineTotal.toFixed(2)}</span>
               {calculation.extraSqft > 0 && (
                 <>
                   <span className="text-slate-300 text-xs">·</span>
-                  <span className="text-[10px] text-slate-400">+{calculation.extraSqft.toFixed(1)} sqft extra</span>
+                  <span className="text-[10px] text-slate-400">rounded up to full boxes</span>
                 </>
               )}
             </div>
