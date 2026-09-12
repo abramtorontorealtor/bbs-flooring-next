@@ -123,7 +123,7 @@ export default function SupplyFamilyBuyBox({ family, initialCode, works = [] }) 
           <span className="text-sm text-slate-500">/ {selected.unit}</span>
           {showFrom && (
             <span className="ml-2 text-sm text-slate-500">
-              (family from ${family.priceLow.toFixed(2)} to ${family.priceHigh.toFixed(2)})
+              (options from ${family.priceLow.toFixed(2)} to ${family.priceHigh.toFixed(2)})
             </span>
           )}
         </div>
