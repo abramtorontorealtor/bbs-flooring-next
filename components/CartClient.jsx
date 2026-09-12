@@ -17,6 +17,7 @@ import TransitionPieces from '@/components/TransitionPieces';
 import CompleteInstallStrip from '@/components/CompleteInstallStrip';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+import { isSuppliesOnlyCart } from '@/lib/fulfilment';
 
 export default function CartClient() {
   const queryClient = useQueryClient();
@@ -67,6 +68,8 @@ export default function CartClient() {
   const productItems = cartItems.filter(item => !item.item_type || item.item_type === 'product');
   const transitionItems = cartItems.filter(item => item.item_type === 'transition');
   const accessoryItems = cartItems.filter(item => item.item_type === 'accessory');
+  // S4: no flooring line → free showroom pickup default at checkout
+  const suppliesOnly = isSuppliesOnlyCart(cartItems);
   
   // Get vinyl and laminate products for transition piece section
   const vinylLaminateProducts = productItems.filter(item => {
@@ -531,6 +534,8 @@ export default function CartClient() {
               <CardTitle>Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* S4: boxes/coverage are flooring metrics — hide "0 boxes / 0.0 sq.ft" for supplies-only carts */}
+              {!suppliesOnly && (
               <div className="bg-amber-50 rounded-xl p-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-600">Total Boxes</span>
@@ -544,8 +549,9 @@ export default function CartClient() {
                   <span className="font-semibold">{totals.totalSqft.toFixed(1)} sq.ft</span>
                 </div>
               </div>
+              )}
 
-              <Separator />
+              {!suppliesOnly && <Separator />}
 
               {isVerified && (
                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-center gap-2">
@@ -604,10 +610,17 @@ export default function CartClient() {
                   <span className="font-medium">C${totals.tax.toFixed(2)}</span>
                 </div>
                 {/* A18: surface delivery fee here instead of hiding it until checkout */}
+                {suppliesOnly ? (
+                  <div className="flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-sm text-emerald-900">
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-emerald-600" />
+                    <span>Free showroom pickup in Markham, ready next business day. Delivery $140 garage / $200 inside.</span>
+                  </div>
+                ) : (
                 <div className="flex justify-between">
                   <span className="text-slate-600">Delivery</span>
                   <span className="font-medium text-slate-500 text-sm text-right">Free pickup · $140 garage · $200 inside<br/><span className="text-xs">chosen at checkout</span></span>
                 </div>
+                )}
               </div>
 
               <Separator />
@@ -695,10 +708,12 @@ export default function CartClient() {
               </Link>
 
               <div className="space-y-2 mt-4">
+                {!suppliesOnly && (
                 <div className="flex items-start gap-2 text-xs text-slate-500">
                   <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>Flooring is sold in full boxes only. Prices shown are per square foot.</span>
                 </div>
+                )}
                 <div className="flex items-start gap-2 text-xs text-slate-500">
                   <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>Note: We deliver throughout Ontario. If you are outside our main service area (GTA), shipping rates may vary. Please contact us for a custom delivery quote.</span>

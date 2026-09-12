@@ -22,10 +22,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Plus, ZoomIn, Package } from 'lucide-react';
+import { Plus, ZoomIn, Package, Store } from 'lucide-react';
 import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 import { Analytics } from '@/components/analytics';
+import { SUPPLIES_FULFILMENT_STRIP } from '@/lib/fulfilment';
 
 const UNIT_PLURAL = { gal: 'gal', pail: 'pails', bag: 'bags', roll: 'rolls', tube: 'tubes', each: 'pieces', kit: 'kits', piece: 'pieces' };
 
@@ -163,6 +164,11 @@ export default function SuppliesShopClient({ sections }) {
 
   return (
     <div className="space-y-12">
+      {/* S4: fulfilment strip shared by the hub and every category page */}
+      <p className="flex items-center gap-2 rounded-lg bg-amber-50 border border-amber-200 px-4 py-2.5 text-sm text-slate-700">
+        <Store className="w-4 h-4 text-amber-600 flex-shrink-0" />
+        <span>{SUPPLIES_FULFILMENT_STRIP}</span>
+      </p>
       {sections.filter((s) => s.items.length > 0).map((section) => (
         <section key={section.id} id={section.id} className="scroll-mt-24">
           <h2 className="text-2xl font-bold text-slate-900">{section.title}</h2>

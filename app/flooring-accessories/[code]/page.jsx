@@ -134,6 +134,17 @@ function productSchema(item) {
       availableAtOrFrom: SHOWROOM_PLACE,
       url: `https://bbsflooring.ca/flooring-accessories/${item.code}`,
       ...(item.upc ? { gtin: item.upc } : {}),
+      // S4: GTA delivery tier for supplies-only orders ($140 garage drop);
+      // handling = 1 business day (matches the "ready next business day" copy).
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: { '@type': 'MonetaryAmount', value: 140, currency: 'CAD' },
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CA', addressRegion: 'ON' },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 1, unitCode: 'DAY' },
+        },
+      },
     };
   }
   return node;

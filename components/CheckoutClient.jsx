@@ -19,6 +19,8 @@ import { Analytics } from '@/components/analytics';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import TrustStrip from '@/components/TrustStrip';
+import { isSuppliesOnlyCart, SHOWROOM_PICKUP_ADDRESS, SUPPLIES_PICKUP_LEAD_COPY, SUPPLIES_PICKUP_LABEL } from '@/lib/fulfilment';
+import { formatItemQty } from '@/lib/orderItemQty';
 
 export default function CheckoutClient() {
   const queryClient = useQueryClient();
@@ -49,6 +51,13 @@ export default function CheckoutClient() {
   const [resumeOrder, setResumeOrder] = useState(null);
   const [isResuming, setIsResuming] = useState(false);
   const [confirmedDeliveryPref, setConfirmedDeliveryPref] = useState(null);
+  // S4 (Sep 12 2026): whether THIS placed order was supplies-only — captured at
+  // submit time (before cart rows are deleted) or from the persisted order on
+  // Stripe-return, since live cartItems is unreliable once the cart is cleared.
+  const [suppliesOnlyOrder, setSuppliesOnlyOrder] = useState(false);
+  // Guards the supplies-only pickup default so it applies once on cart load and
+  // never fights a user's later manual choice.
+  const appliedDefaultDeliveryRef = useRef(false);
 
   const isCustomZone = formData.shipping_postal_code && !['M', 'L'].includes(formData.shipping_postal_code.toUpperCase()[0]);
 
@@ -176,6 +185,10 @@ export default function CheckoutClient() {
           if (data.order?.delivery_preference) {
             setConfirmedDeliveryPref(data.order.delivery_preference);
           }
+          // S4: server-derived truth for the supplies-only confirmation copy.
+          if (typeof data.order?.supplies_only === 'boolean') {
+            setSuppliesOnlyOrder(data.order.supplies_only);
+          }
         })
         .catch(() => {}); // Non-critical — falls back to formData
       
@@ -183,6 +196,10 @@ export default function CheckoutClient() {
       const sid = localStorage.getItem('bbs_session_id');
       if (sid) {
         entities.CartItem.filter({ session_id: sid }).then(items => {
+          // S4 fallback: the cart is still intact on Stripe return, so it
+          // mirrors the order lines. Only set true here — never clear a value
+          // the lookup already confirmed (it may resolve before or after this).
+          if (isSuppliesOnlyCart(items)) setSuppliesOnlyOrder(true);
           if (items.length > 0) {
             const subtotal = items.reduce((sum, item) => sum + (item.line_total || 0), 0);
             const tax = subtotal * 0.13; // analytics estimate only; authoritative tax/total are computed server-side in orders/create (HST incl. delivery)
@@ -212,6 +229,22 @@ export default function CheckoutClient() {
     queryFn: () => sessionId ? entities.CartItem.filter({ session_id: sessionId }) : [],
     enabled: !!sessionId,
   });
+
+  // S4: supplies-only cart (every line is accessory/transition, no flooring).
+  const suppliesOnly = useMemo(() => isSuppliesOnlyCart(cartItems), [cartItems]);
+
+  // S4: supplies-only carts default to free showroom pickup. Applied exactly
+  // once, the first time a non-empty cart loads — never re-applied, so a user
+  // who switches to delivery/inside afterwards is not fought. Flooring carts
+  // keep the 'delivery' default from useState above.
+  useEffect(() => {
+    if (appliedDefaultDeliveryRef.current) return;
+    if (isLoading || cartItems.length === 0) return;
+    appliedDefaultDeliveryRef.current = true;
+    if (isSuppliesOnlyCart(cartItems)) {
+      setFormData(prev => ({ ...prev, delivery_preference: 'pickup' }));
+    }
+  }, [cartItems, isLoading]);
 
   const totals = useMemo(() => {
     const rawSubtotal = cartItems.reduce((sum, item) => sum + (item.line_total || 0), 0);
@@ -304,6 +337,8 @@ export default function CheckoutClient() {
 
     setIsSubmitting(true);
     isSubmittingRef.current = true;
+    // S4: capture before the cart rows are deleted post-order.
+    setSuppliesOnlyOrder(isSuppliesOnlyCart(cartItems));
 
     try {
       const orderData = {
@@ -484,6 +519,11 @@ export default function CheckoutClient() {
   // Use confirmed delivery preference from DB (Stripe return) or form state
   const effectiveDeliveryPref = confirmedDeliveryPref || formData.delivery_preference;
   const isPickupOrder = effectiveDeliveryPref === 'pickup';
+  // S4: supplies-only + pickup → showroom pickup copy (no warehouse address step).
+  const isShowroomPickupOrder = isPickupOrder && suppliesOnlyOrder;
+  const pickupNextStepCopy = isShowroomPickupOrder
+    ? `${SUPPLIES_PICKUP_LEAD_COPY} Pick up at ${SHOWROOM_PICKUP_ADDRESS}.`
+    : "We'll email you the Warehouse Pickup Address and your Pickup #.";
 
   if (orderComplete) {
     return (
@@ -537,7 +577,7 @@ export default function CheckoutClient() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0 text-xs font-bold">4</span>
-                      <span>{isPickupOrder ? "We'll email you the Warehouse Pickup Address and your Pickup #." : "We'll contact you to schedule your delivery date."}</span>
+                      <span>{isPickupOrder ? pickupNextStepCopy : "We'll contact you to schedule your delivery date."}</span>
                     </li>
                   </>
                 ) : (
@@ -582,7 +622,11 @@ export default function CheckoutClient() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0 text-xs font-bold">4</span>
-                      <span><strong>We&apos;ll confirm receipt</strong> and {isPickupOrder ? "email you the Warehouse Pickup Address and Pickup #." : "contact you to schedule your delivery date."}</span>
+                      <span><strong>We&apos;ll confirm receipt</strong> {isPickupOrder
+                        ? (isShowroomPickupOrder
+                          ? <>and get your order ready. {SUPPLIES_PICKUP_LEAD_COPY} Pick up at {SHOWROOM_PICKUP_ADDRESS}.</>
+                          : 'and email you the Warehouse Pickup Address and Pickup #.')
+                        : 'and contact you to schedule your delivery date.'}</span>
                     </li>
                   </>
                 )}
@@ -780,8 +824,15 @@ export default function CheckoutClient() {
                         <div className="flex items-start gap-3">
                           <Store className="w-5 h-5 text-amber-600 mt-0.5" />
                           <div>
-                            <span className="font-medium">Warehouse Pickup</span>
-                            <p className="text-sm text-slate-500">Warehouse address will be provided after payment (varies by brand)</p>
+                            <span className="font-medium">{suppliesOnly ? SUPPLIES_PICKUP_LABEL : 'Warehouse Pickup'}</span>
+                            {suppliesOnly ? (
+                              <>
+                                <p className="text-sm text-slate-500">{SHOWROOM_PICKUP_ADDRESS}</p>
+                                <p className="text-sm text-slate-500">{SUPPLIES_PICKUP_LEAD_COPY}</p>
+                              </>
+                            ) : (
+                              <p className="text-sm text-slate-500">Warehouse address will be provided after payment (varies by brand)</p>
+                            )}
                             {formData.payment_method === 'credit_card' && (
                               <div className="bg-amber-100 border border-amber-300 rounded p-2 mt-2 text-xs text-amber-900">
                                 <strong>⚠️ Important:</strong> You must bring valid photo ID and the credit card used for this purchase to collect your order.
@@ -948,7 +999,9 @@ export default function CheckoutClient() {
                     <div key={item.id} className="flex justify-between text-sm">
                       <div>
                         <p className="font-medium">{item.product_name}</p>
-                        <p className="text-slate-500">{item.boxes_required} boxes × {item.sqft_per_box} sq.ft</p>
+                        <p className="text-slate-500">{(item.item_type === 'accessory' || item.item_type === 'transition')
+                          ? formatItemQty(item)
+                          : <>{item.boxes_required} boxes × {item.sqft_per_box} sq.ft</>}</p>
                       </div>
                       <span className="font-medium">C${item.line_total?.toFixed(2)}</span>
                     </div>
@@ -957,6 +1010,8 @@ export default function CheckoutClient() {
 
                 <Separator />
 
+                {/* S4: boxes/coverage are flooring metrics — hide the "0 boxes / 0.0 sq.ft" block for supplies-only carts */}
+                {!suppliesOnly && (
                 <div className="bg-amber-50 rounded-xl p-4 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-600">Total Boxes</span>
@@ -970,6 +1025,7 @@ export default function CheckoutClient() {
                     <span className="font-semibold">{totals.totalSqft?.toFixed(1)} sq.ft</span>
                   </div>
                 </div>
+                )}
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
@@ -1046,7 +1102,7 @@ export default function CheckoutClient() {
                       <ul className="space-y-1 text-slate-600">
                         <li>• Returns are subject to a 25% Manufacturer Restocking Fee.</li>
                         <li>• Customer is responsible for return shipping costs.</li>
-                        <li>• I must inspect all boxes upon delivery/pickup and report damages within 24 hours.</li>
+                        <li>• I must inspect all {suppliesOnly ? 'items' : 'boxes'} upon delivery/pickup and report damages within 24 hours.</li>
                       </ul>
                     </div>
                   </label>

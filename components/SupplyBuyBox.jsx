@@ -10,11 +10,12 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Plus, Minus, Calculator } from 'lucide-react';
+import { Plus, Minus, Calculator, Store } from 'lucide-react';
 import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 import { Analytics } from '@/components/analytics';
 import { suggestQty, sizingHint } from '@/lib/installKit';
+import { SUPPLIES_FULFILMENT_STRIP } from '@/lib/fulfilment';
 
 function getSessionId() {
   let sid = typeof window !== 'undefined' && localStorage.getItem('bbs_session_id');
@@ -104,6 +105,11 @@ export default function SupplyBuyBox({ item }) {
             Add to Cart — ${(item.price * qty).toFixed(2)}
           </Button>
         </div>
+        {/* S4: fulfilment strip — free showroom pickup default for supplies-only carts */}
+        <p className="mt-3 flex items-center gap-2 text-sm text-slate-600">
+          <Store className="w-4 h-4 text-amber-600 flex-shrink-0" />
+          <span>{SUPPLIES_FULFILMENT_STRIP}</span>
+        </p>
       </div>
 
       {/* Inline sqft calculator */}
