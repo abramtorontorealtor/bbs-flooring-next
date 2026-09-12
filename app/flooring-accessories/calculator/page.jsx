@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
+import { CALCULATOR_KEYS } from '@/lib/supplyCalculator';
 import SuppliesCalculatorClient from '@/components/SuppliesCalculatorClient';
 import { JsonLd } from '@/lib/schemas';
 
@@ -49,7 +50,7 @@ export default async function SuppliesCalculatorPage() {
         </header>
 
         <div className="mt-8">
-          <SuppliesCalculatorClient catalog={catalog} />
+          <SuppliesCalculatorClient catalog={{ byKey: Object.fromEntries(CALCULATOR_KEYS.filter((k) => catalog.byKey[k]).map((k) => [k, catalog.byKey[k]])), source: catalog.source }} />
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3">

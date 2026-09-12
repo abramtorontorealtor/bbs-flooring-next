@@ -2,6 +2,9 @@ import Link from 'next/link';
 import SuppliesShopClient from '@/components/SuppliesShopClient';
 import { faqSchema, JsonLd, SHOWROOM_PLACE } from '@/lib/schemas';
 import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
+import { buildCategorySection } from '@/lib/supplyGuides';
+import { resolveProPicks, familyUrl, stockInfo } from '@/lib/supplyFamilies';
+import { Package } from 'lucide-react';
 
 export const revalidate = 3600;
 
@@ -26,57 +29,86 @@ function coverageSentence(item) {
 // 'transition' is intentionally excluded: the live T-Mould/Reducer/Stair
 // Nosing box stays PDP-only per the hard constraint in this build's brief.
 function buildSections(catalog) {
-  const byCategory = catalog.byCategory || {};
-  const get = (...cats) => cats.flatMap((c) => byCategory[c] || []);
+  const sec = (def) => buildCategorySection(catalog, def);
   return [
-    {
+    sec({
       id: 'underlay',
       title: 'Underlay & Acoustic Mats',
       note: 'Sold per full roll. Underlay is mandatory under floating laminate — it soundproofs, cushions, and (on the 3mm black + 5mm airflow) blocks moisture from concrete or below-grade subfloors.',
-      items: get('underlay'),
-    },
-    {
+      categories: ['underlay'],
+    }),
+    sec({
       id: 'moisture-barriers',
       title: 'Moisture Barriers',
       note: 'Poly film and wax paper laid under the floor to stop moisture wicking up from a slab or subfloor before it can warp or mould your new flooring.',
-      items: get('moisture_barrier'),
-    },
-    {
+      categories: ['moisture_barrier'],
+    }),
+    sec({
       id: 'adhesives-primers',
       title: 'Adhesives & Primers',
       note: 'Glue-down vinyl and engineered hardwood adhesives, seam sealer, and the primers that make them bond properly to concrete or plywood subfloors.',
-      items: get('adhesive', 'primer'),
-    },
-    {
+      categories: ['adhesive', 'primer'],
+    }),
+    sec({
       id: 'subfloor-prep',
       title: 'Subfloor Prep',
       note: 'Self-levelling underlayment and patch/skimcoat compounds — flatten a subfloor before any floating or glue-down install so the new floor doesn\u2019t telegraph every dip.',
-      items: get('subfloor_prep'),
-    },
-    {
+      categories: ['subfloor_prep'],
+    }),
+    sec({
       id: 'quarter-round',
       title: 'Shoe Moulding & Quarter Round',
       note: 'Finishes the floor-to-baseboard gap for a clean edge. Sold per full piece.',
-      items: get('trim'),
-    },
-    {
+      categories: ['trim'],
+    }),
+    sec({
       id: 'baseboards',
       title: 'Baseboards',
       note: 'Paint-grade MDF, eight profiles. Sold per full 10ft piece.',
-      items: get('baseboard'),
-    },
-    {
+      categories: ['baseboard'],
+    }),
+    sec({
       id: 'floor-vents',
       title: 'Floor Vents',
       note: 'Wood and metal floor registers finished to match your new floor — the easiest whole-room add-on there is.',
-      items: get('floor_vent'),
-    },
-    {
+      categories: ['floor_vent'],
+    }),
+    sec({
+      id: 'stairs',
+      title: 'Stair Treads & Posts',
+      note: 'Unfinished hardwood box treads, returns and posts — stain them to match the floor. Priced per piece; most sizes are order-in.',
+      categories: ['stair'],
+    }),
+    sec({
       id: 'installer-tools',
       title: 'Installer Tools',
-      note: 'Pro-grade tapping blocks, pull bars and install kits for DIY installs.',
-      items: get('tools'),
-    },
+      note: 'Pro-grade tapping blocks, pull bars, trowels, spreaders and install kits for DIY installs.',
+      categories: ['tools'],
+    }),
+    sec({
+      id: 'fasteners',
+      title: 'Fasteners & Screws',
+      note: 'Subfloor and underlayment screws by the box — the fix for a squeaky subfloor before the new floor goes down.',
+      categories: ['fasteners'],
+    }),
+    sec({
+      id: 'repair',
+      title: 'Repair & Touch-Up',
+      note: 'Colour-matched putty and repair kits for chips, gouges and scratches in wood, laminate and vinyl.',
+      categories: ['repair'],
+    }),
+    sec({
+      id: 'floor-care',
+      title: 'Floor Care & Cleaners',
+      note: 'Manufacturer-approved cleaners that keep the finish warranty intact — no vinegar, no steam mops.',
+      categories: ['cleaner'],
+    }),
+    sec({
+      id: 'protection',
+      title: 'Surface Protection',
+      note: 'Temporary floor protection for renovations — keep the new floor new while the trades finish.',
+      categories: ['protection'],
+    }),
   ];
 }
 
@@ -169,28 +201,42 @@ function breadcrumbSchema() {
   };
 }
 
-// One Product node per supply item — individual Offers (not a single
-// AggregateOffer) so each SKU carries its own gtin (from upc, when present)
-// and a pickup-oriented availableAtOrFrom, per the S2 brief.
+// One Product node per FAMILY (S5). Single-member = plain Offer with gtin;
+// multi-member = AggregateOffer (low/high/count). Per-member detail lives on
+// the family page's own Product node.
 function supplyProductsSchema(sections) {
   const products = [];
   for (const section of sections) {
-    for (const item of section.items) {
-      if (item.price == null) continue;
+    for (const fam of section.items) {
+      if (fam.priceLow == null) continue;
+      const p = fam.primary;
+      const offers = fam.isMulti
+        ? {
+            '@type': 'AggregateOffer',
+            lowPrice: String(fam.priceLow),
+            highPrice: String(fam.priceHigh),
+            priceCurrency: 'CAD',
+            offerCount: fam.offerCount,
+            availability: stockInfo(fam.bestTier).schema,
+            url: `https://bbsflooring.ca${familyUrl(fam)}`,
+          }
+        : {
+            '@type': 'Offer',
+            price: String(p.price),
+            priceCurrency: 'CAD',
+            availability: stockInfo(p.stockTier).schema,
+            availableAtOrFrom: SHOWROOM_PLACE,
+            url: `https://bbsflooring.ca${familyUrl(fam)}`,
+            ...(p.upc ? { gtin: p.upc } : {}),
+          };
       products.push({
         '@type': 'Product',
-        name: item.pack_size ? `${item.label} (${item.pack_size})` : item.label,
-        ...(item.brand ? { brand: { '@type': 'Brand', name: item.brand } } : {}),
-        ...(item.image ? { image: item.image } : {}),
+        name: fam.name,
+        ...(fam.brand ? { brand: { '@type': 'Brand', name: fam.brand } } : {}),
+        ...(fam.image ? { image: fam.image } : {}),
         category: section.title,
-        offers: {
-          '@type': 'Offer',
-          price: String(item.price),
-          priceCurrency: 'CAD',
-          availability: 'https://schema.org/InStock',
-          availableAtOrFrom: SHOWROOM_PLACE,
-          ...(item.upc ? { gtin: item.upc } : {}),
-        },
+        sku: p.code,
+        offers,
       });
     }
   }
@@ -204,9 +250,55 @@ function supplyProductsSchema(sections) {
   };
 }
 
+// "Shop by your floor" — the hub's first job is to answer "what do I need for
+// MY floor" with one pro's pick + the why, before the buyer scrolls 13 categories.
+function ProPicks({ picks }) {
+  if (picks.length === 0) return null;
+  return (
+    <section className="mt-12" id="shop-by-floor">
+      <h2 className="text-2xl font-bold text-slate-900">Shop by your floor</h2>
+      <p className="mt-1 text-slate-600 max-w-2xl">
+        One pro&apos;s pick per floor type — the product our own installers reach for first, and why. See every option in the categories below.
+      </p>
+      <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {picks.map((pick) => {
+          const fam = pick.family;
+          const tier = stockInfo(fam.bestTier);
+          const price = fam.priceLow == null ? null : fam.isMulti && fam.priceLow !== fam.priceHigh ? `from $${fam.priceLow.toFixed(2)}` : `$${fam.priceLow.toFixed(2)}`;
+          return (
+            <div key={pick.id} className="rounded-2xl border border-slate-200 bg-white p-4 flex gap-4">
+              <Link href={familyUrl(fam)} className="flex-none w-24 h-24 rounded-xl bg-slate-50 border border-slate-100 overflow-hidden flex items-center justify-center">
+                {fam.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={fam.image} alt={fam.name} className="w-full h-full object-cover" loading="lazy" />
+                ) : (
+                  <Package className="w-8 h-8 text-slate-300" />
+                )}
+              </Link>
+              <div className="min-w-0">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-amber-700">{pick.title}</div>
+                <Link href={familyUrl(fam)} className="mt-0.5 block font-semibold text-slate-900 leading-snug hover:text-amber-700 hover:underline">
+                  {fam.name}
+                </Link>
+                <p className="mt-1 text-xs text-slate-600 leading-relaxed line-clamp-3">{pick.why}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+                  {price && <span className="font-bold text-slate-900">{price}</span>}
+                  <span className="text-slate-500">{tier.short}</span>
+                  <Link href={pick.floorUrl} className="text-amber-700 underline">shop {pick.title.toLowerCase().replace(/ \(.*\)$/, '')}</Link>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 export default async function FlooringAccessoriesPage() {
   const catalog = await getSuppliesCatalog();
   const sections = buildSections(catalog);
+  const picks = resolveProPicks(catalog);
   const faqItems = [...BASE_FAQ_ITEMS, ...buildSupplyFaq(catalog)];
 
   return (
@@ -230,12 +322,15 @@ export default async function FlooringAccessoriesPage() {
             priced per unit, and easy to add to your flooring order online.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link href="#underlay" className="rounded-lg bg-amber-600 px-4 py-2 text-white text-sm font-semibold hover:bg-amber-700">Shop underlay</Link>
+            <Link href="#shop-by-floor" className="rounded-lg bg-amber-600 px-4 py-2 text-white text-sm font-semibold hover:bg-amber-700">Shop by your floor</Link>
+            <Link href="#underlay" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Underlay</Link>
             <Link href="#adhesives-primers" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Adhesives & primers</Link>
             <Link href="/products" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Browse flooring</Link>
             <Link href="/contact" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Ask about your project</Link>
           </div>
         </header>
+
+        <ProPicks picks={picks} />
 
         {/* The underlay story — the AI-citable / GEO block */}
         <section className="mt-12 rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">

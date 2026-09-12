@@ -183,15 +183,15 @@ export default async function sitemap() {
   try {
     const catalog = await getSuppliesCatalog();
     if (catalog.source === 'db') {
-      for (const item of catalog.items) {
-        if (!item.code) continue;
+      // S5: one URL per FAMILY (canonical); member-code URLs canonicalize to it.
+      for (const fam of catalog.families || []) {
         const entry = {
-          url: `${SITE_URL}/flooring-accessories/${item.code}`,
+          url: `${SITE_URL}/flooring-accessories/${fam.slug}`,
           lastModified: now,
           changeFrequency: 'weekly',
           priority: 0.6,
         };
-        const img = toAbsoluteImageUrl(item.image);
+        const img = toAbsoluteImageUrl(fam.image);
         if (img) entry.images = [img];
         entries.push(entry);
       }

@@ -16,6 +16,17 @@ import { entities } from '@/lib/base44-compat';
 import { Analytics } from '@/components/analytics';
 import { suggestQty, sizingHint } from '@/lib/installKit';
 import { SUPPLIES_FULFILMENT_STRIP } from '@/lib/fulfilment';
+import { stockInfo } from '@/lib/supplyFamilies';
+
+// S5: the fulfilment line must not promise "ready next business day" on an
+// order-in SKU. showroom/gta keep the shared strip; slower tiers get the
+// tier's own window, same free-pickup / $140 delivery terms.
+function fulfilmentLine(item) {
+  const tier = item.stockTier || 'showroom';
+  if (tier === 'showroom' || tier === 'gta') return SUPPLIES_FULFILMENT_STRIP;
+  const info = stockInfo(tier);
+  return `Free pickup in Markham once it arrives (${info.short.toLowerCase()}) \u00b7 GTA delivery $140`;
+}
 
 function getSessionId() {
   let sid = typeof window !== 'undefined' && localStorage.getItem('bbs_session_id');
@@ -108,7 +119,7 @@ export default function SupplyBuyBox({ item }) {
         {/* S4: fulfilment strip — free showroom pickup default for supplies-only carts */}
         <p className="mt-3 flex items-center gap-2 text-sm text-slate-600">
           <Store className="w-4 h-4 text-amber-600 flex-shrink-0" />
-          <span>{SUPPLIES_FULFILMENT_STRIP}</span>
+          <span>{fulfilmentLine(item)}</span>
         </p>
       </div>
 

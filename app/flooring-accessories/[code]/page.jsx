@@ -3,13 +3,19 @@ import { notFound } from 'next/navigation';
 import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
 import { getSupplySteps, getSupplyFaq, FLOOR_TYPE_LINKS } from '@/lib/supplyGuides';
 import { JsonLd, faqSchema, SHOWROOM_PLACE } from '@/lib/schemas';
-import SupplyBuyBox from '@/components/SupplyBuyBox';
+import SupplyFamilyBuyBox from '@/components/SupplyFamilyBuyBox';
+import { familyUrl, stockInfo } from '@/lib/supplyFamilies';
 import { Package } from 'lucide-react';
 
 export const revalidate = 600;
 
 const CATEGORY_LABELS = {
   underlay: 'Underlay & Acoustic Mats',
+  stair: 'Stair Treads & Posts',
+  fasteners: 'Fasteners & Screws',
+  repair: 'Repair & Touch-Up',
+  cleaner: 'Floor Care & Cleaners',
+  protection: 'Surface Protection',
   moisture_barrier: 'Moisture Barriers',
   adhesive: 'Adhesives & Primers',
   primer: 'Adhesives & Primers',
@@ -31,140 +37,198 @@ const CATEGORY_HUB_ANCHOR = {
   baseboard: '#baseboards',
   floor_vent: '#floor-vents',
   tools: '#installer-tools',
+  stair: '#stairs',
+  fasteners: '#fasteners',
+  repair: '#repair',
+  cleaner: '#floor-care',
+  protection: '#protection',
 };
 
 // Companion categories: what pairs with what, for "Related supplies" when a
 // category doesn't have 4 siblings on its own (e.g. only 1-2 primers).
 const COMPANION_CATEGORIES = {
   adhesive: ['primer'],
+  stair: ['transition', 'repair'],
+  fasteners: ['tools', 'subfloor_prep'],
+  repair: ['cleaner', 'protection'],
+  cleaner: ['repair', 'protection'],
+  protection: ['cleaner', 'tools'],
   subfloor_prep: ['primer'],
   primer: ['adhesive', 'subfloor_prep'],
   moisture_barrier: ['underlay'],
   underlay: ['moisture_barrier'],
 };
 
-async function findItem(code) {
+// S5: the route param is EITHER a family slug (/flooring-accessories/henry-630)
+// OR a member code (/flooring-accessories/AR630-04 — the S3 URLs already
+// indexed). A member code renders the same family page with that member
+// pre-selected and canonical → the family URL. No redirects (structural-SEO
+// gate, SOUL.md): Google's product-variant guidance is rel=canonical to the
+// parent, which is exactly this.
+async function findFamily(param, searchParams) {
   const catalog = await getSuppliesCatalog();
-  const item = catalog.items.find((i) => i.code === code);
-  return { catalog, item };
+  const family = catalog.familyBySlug[param] || catalog.familyByCode[param] || null;
+  let initialCode = family ? family.primary.code : null;
+  if (family && catalog.familyByCode[param] === family) initialCode = param;
+  const v = searchParams?.v;
+  if (family && typeof v === 'string' && family.items.some((i) => i.code === v)) initialCode = v;
+  return { catalog, family, initialCode };
 }
 
 export async function generateStaticParams() {
   try {
     const catalog = await getSuppliesCatalog();
     if (catalog.source !== 'db') return [];
-    return catalog.items.filter((i) => i.code).map((i) => ({ code: i.code }));
+    return catalog.families.map((f) => ({ code: f.slug }));
   } catch {
     return [];
   }
 }
 
+function familyTitle(family) {
+  const brandBit = family.brand && !family.name.startsWith(family.brand) ? `${family.brand} ` : '';
+  const priceBit = family.priceLow == null
+    ? ''
+    : family.isMulti && family.priceLow !== family.priceHigh
+      ? ` — from $${family.priceLow.toFixed(2)}`
+      : ` — $${family.priceLow.toFixed(2)}`;
+  return `${brandBit}${family.name}${priceBit} | Pickup Markham`;
+}
+
 export async function generateMetadata({ params }) {
   const { code } = await params;
-  const { item } = await findItem(code);
-  if (!item) {
+  const { family } = await findFamily(code);
+  if (!family) {
     return { title: 'Supply Not Found', robots: { index: false, follow: true } };
   }
-  const brandBit = item.brand ? `${item.brand} ` : '';
-  const priceBit = item.price != null ? ` — $${item.price.toFixed(2)}` : '';
-  const title = `${brandBit}${item.label}${priceBit} | Pickup Markham`;
-  const coverageBit = item.coverage_sqft
-    ? `1 ${item.unit} covers ~${item.coverage_sqft} sq ft. `
-    : '';
-  const description = `${brandBit}${item.label}${item.pack_size ? ` (${item.pack_size})` : ''}. ${coverageBit}In stock, pick up free at our Markham showroom or add to your flooring order online.`.slice(0, 300);
+  const title = familyTitle(family);
+  const p = family.primary;
+  const coverageBit = p.coverage_sqft ? `1 ${p.unit} covers ~${p.coverage_sqft} sq ft. ` : '';
+  const optionsBit = family.isMulti ? `${family.items.length} options: ${family.items.map((i) => i.variantLabel || i.pack_size).filter(Boolean).slice(0, 6).join(', ')}. ` : (p.pack_size ? `${p.pack_size}. ` : '');
+  const avail = stockInfo(family.bestTier);
+  const description = `${family.blurb ? family.blurb + ' ' : ''}${optionsBit}${coverageBit}${avail.label}. Free showroom pickup, or add it to your flooring order online.`.slice(0, 300);
   return {
     title,
     description,
-    alternates: { canonical: `/flooring-accessories/${item.code}` },
+    alternates: { canonical: familyUrl(family) },
     openGraph: {
       title,
       description,
-      images: item.image ? [{ url: item.image }] : [],
+      images: family.image ? [{ url: family.image }] : [],
     },
   };
 }
 
-function relatedItems(catalog, item, max = 4) {
-  const companions = COMPANION_CATEGORIES[item.category] || [];
-  const pool = catalog.items.filter(
-    (i) => i.code !== item.code && (i.category === item.category || companions.includes(i.category))
+function relatedFamilies(catalog, family, max = 4) {
+  const companions = COMPANION_CATEGORIES[family.category] || [];
+  const pool = catalog.families.filter(
+    (f) => f.slug !== family.slug && (f.category === family.category || companions.includes(f.category))
   );
-  // Same category first, then companions, de-duplicated, capped.
-  const sameCategory = pool.filter((i) => i.category === item.category);
-  const companionItems = pool.filter((i) => i.category !== item.category);
-  const seen = new Set();
-  const out = [];
-  for (const i of [...sameCategory, ...companionItems]) {
-    if (seen.has(i.code)) continue;
-    seen.add(i.code);
-    out.push(i);
-    if (out.length >= max) break;
-  }
-  return out;
+  // Same category first, then companions, capped.
+  const sameCategory = pool.filter((f) => f.category === family.category);
+  const companionFams = pool.filter((f) => f.category !== family.category);
+  return [...sameCategory, ...companionFams].slice(0, max);
 }
 
-function breadcrumbSchema(item) {
+function breadcrumbSchema(family) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bbsflooring.ca/' },
       { '@type': 'ListItem', position: 2, name: 'Flooring Accessories', item: 'https://bbsflooring.ca/flooring-accessories' },
-      { '@type': 'ListItem', position: 3, name: item.label, item: `https://bbsflooring.ca/flooring-accessories/${item.code}` },
+      { '@type': 'ListItem', position: 3, name: family.name, item: `https://bbsflooring.ca${familyUrl(family)}` },
     ],
   };
 }
 
-function productSchema(item) {
+// S4 GTA delivery tier for supplies-only orders ($140 garage drop). Handling
+// time = the member's stock tier window (showroom/gta = 1 day, order-in longer).
+function shippingDetails(tier) {
+  const [minD, maxD] = stockInfo(tier).handlingDays;
+  return {
+    '@type': 'OfferShippingDetails',
+    shippingRate: { '@type': 'MonetaryAmount', value: 140, currency: 'CAD' },
+    shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CA', addressRegion: 'ON' },
+    deliveryTime: {
+      '@type': 'ShippingDeliveryTime',
+      handlingTime: { '@type': 'QuantitativeValue', minValue: Math.max(1, minD), maxValue: Math.max(1, maxD), unitCode: 'DAY' },
+    },
+  };
+}
+
+function memberOffer(family, item) {
+  return {
+    '@type': 'Offer',
+    name: item.variantLabel ? `${family.name} — ${item.variantLabel}` : (item.pack_size ? `${item.label} (${item.pack_size})` : item.label),
+    sku: item.code,
+    ...(item.upc ? { gtin: item.upc } : {}),
+    price: String(item.price),
+    priceCurrency: 'CAD',
+    availability: stockInfo(item.stockTier).schema,
+    availableAtOrFrom: SHOWROOM_PLACE,
+    url: `https://bbsflooring.ca${familyUrl(family, item)}`,
+    shippingDetails: shippingDetails(item.stockTier),
+  };
+}
+
+// ONE Product node per family. Single-member family = a plain Offer (same as
+// S3). Multi-member = AggregateOffer (low/high + count) carrying one nested
+// Offer per member with its own sku/gtin/availability/url — Google shows the
+// price range on the family result, Merchant Center gets one row per member
+// sharing item_group_id = family slug.
+function productSchema(family) {
+  const p = family.primary;
+  const priced = family.items.filter((i) => i.price != null);
   const node = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: item.pack_size ? `${item.label} (${item.pack_size})` : item.label,
-    ...(item.brand ? { brand: { '@type': 'Brand', name: item.brand } } : {}),
-    ...(item.image ? { image: item.image } : {}),
-    category: CATEGORY_LABELS[item.category] || item.category,
-    sku: item.code,
+    name: family.name,
+    ...(family.brand ? { brand: { '@type': 'Brand', name: family.brand } } : {}),
+    ...(family.image ? { image: family.image } : {}),
+    ...(family.blurb ? { description: family.blurb } : {}),
+    category: CATEGORY_LABELS[family.category] || family.category,
+    sku: p.code,
+    ...(family.isMulti ? { productGroupID: family.slug } : {}),
   };
-  if (item.price != null) {
-    node.offers = {
-      '@type': 'Offer',
-      price: String(item.price),
-      priceCurrency: 'CAD',
-      availability: 'https://schema.org/InStock',
-      availableAtOrFrom: SHOWROOM_PLACE,
-      url: `https://bbsflooring.ca/flooring-accessories/${item.code}`,
-      ...(item.upc ? { gtin: item.upc } : {}),
-      // S4: GTA delivery tier for supplies-only orders ($140 garage drop);
-      // handling = 1 business day (matches the "ready next business day" copy).
-      shippingDetails: {
-        '@type': 'OfferShippingDetails',
-        shippingRate: { '@type': 'MonetaryAmount', value: 140, currency: 'CAD' },
-        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CA', addressRegion: 'ON' },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 1, unitCode: 'DAY' },
-        },
-      },
-    };
+  if (priced.length === 0) return node;
+  if (!family.isMulti) {
+    node.offers = memberOffer(family, priced[0]);
+    return node;
   }
+  node.offers = {
+    '@type': 'AggregateOffer',
+    lowPrice: String(family.priceLow),
+    highPrice: String(family.priceHigh),
+    priceCurrency: 'CAD',
+    offerCount: priced.length,
+    availability: stockInfo(family.bestTier).schema,
+    url: `https://bbsflooring.ca${familyUrl(family)}`,
+    offers: priced.map((i) => memberOffer(family, i)),
+  };
   return node;
 }
 
-export default async function SupplyDetailPage({ params }) {
+export default async function SupplyDetailPage({ params, searchParams }) {
   const { code } = await params;
-  const { catalog, item } = await findItem(code);
-  if (!item) notFound();
+  const sp = searchParams ? await searchParams : {};
+  const { catalog, family, initialCode } = await findFamily(code, sp);
+  if (!family) notFound();
 
-  const steps = getSupplySteps(item);
-  const faqItems = getSupplyFaq(item);
-  const works = (item.floor_types || []).map((ft) => FLOOR_TYPE_LINKS[ft]).filter(Boolean);
-  const related = relatedItems(catalog, item);
-  const categoryLabel = CATEGORY_LABELS[item.category] || item.category;
-  const hubAnchor = CATEGORY_HUB_ANCHOR[item.category] || '';
+  // Technique steps / FAQ are keyed by member code (TDS-traced, lib/supplyGuides).
+  // Use the pre-selected member; fall back to the first member that has a guide.
+  const item = family.items.find((i) => i.code === initialCode) || family.primary;
+  const guideItem = family.items.find((i) => getSupplySteps(i).length > 0) || item;
+  const steps = getSupplySteps(guideItem);
+  const faqItems = getSupplyFaq(guideItem);
+  const works = (family.floor_types || []).map((ft) => FLOOR_TYPE_LINKS[ft]).filter(Boolean);
+  const related = relatedFamilies(catalog, family);
+  const categoryLabel = CATEGORY_LABELS[family.category] || family.category;
+  const hubAnchor = CATEGORY_HUB_ANCHOR[family.category] || '';
 
   return (
     <>
-      <JsonLd data={[productSchema(item), breadcrumbSchema(item), faqItems.length ? faqSchema(faqItems) : null].filter(Boolean)} />
+      <JsonLd data={[productSchema(family), breadcrumbSchema(family), faqItems.length ? faqSchema(faqItems) : null].filter(Boolean)} />
 
       <div className="max-w-6xl mx-auto px-4 py-10">
         {/* Breadcrumb */}
@@ -175,57 +239,11 @@ export default async function SupplyDetailPage({ params }) {
           <span>/</span>
           <Link href={`/flooring-accessories${hubAnchor}`} className="hover:text-amber-600">{categoryLabel}</Link>
           <span>/</span>
-          <span className="text-slate-700">{item.label}</span>
+          <span className="text-slate-700">{family.name}</span>
         </nav>
 
-        {/* Hero */}
-        <div className="grid lg:grid-cols-2 gap-10">
-          <div className="aspect-square rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-            {item.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.image} alt={item.label} className="w-full h-full object-cover" fetchPriority="high" />
-            ) : (
-              <div className="flex flex-col items-center gap-2 text-slate-400">
-                <Package className="w-16 h-16" />
-                <span className="text-xs font-bold uppercase tracking-wide">{item.code}</span>
-              </div>
-            )}
-          </div>
-
-          <div>
-            {item.brand && <div className="text-sm font-semibold text-amber-700 uppercase tracking-wide">{item.brand}</div>}
-            <h1 className="mt-1 text-3xl font-bold text-slate-900">{item.label}</h1>
-            {item.pack_size && <div className="mt-1 text-sm text-slate-500">{item.pack_size}</div>}
-
-            <div className="mt-4 flex items-baseline gap-2">
-              {item.price != null && <span className="text-3xl font-bold text-slate-900">${item.price.toFixed(2)}</span>}
-              <span className="text-sm text-slate-500">/ {item.unit}</span>
-            </div>
-
-            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-semibold text-emerald-700">
-              Pickup at Markham showroom
-            </div>
-
-            {item.blurb && <p className="mt-4 text-slate-600 leading-relaxed">{item.blurb}</p>}
-
-            <div className="mt-6">
-              <SupplyBuyBox item={item} />
-            </div>
-
-            {works.length > 0 && (
-              <div className="mt-6">
-                <div className="text-sm font-semibold text-slate-800">Works with</div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {works.map((w) => (
-                    <Link key={w.url} href={w.url} className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-amber-400 hover:text-amber-700">
-                      {w.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Hero — image, title, picker, price, availability, buy box (client) */}
+        <SupplyFamilyBuyBox family={family} initialCode={item.code} works={works} />
 
         {/* Spec table */}
         <section className="mt-14">
@@ -237,9 +255,19 @@ export default async function SupplyDetailPage({ params }) {
                   <td className="px-4 py-2.5 font-medium text-slate-600 w-1/3">Category</td>
                   <td className="px-4 py-2.5 text-slate-800">{categoryLabel}</td>
                 </tr>
-                <tr>
+                {family.isMulti && (
+                  <tr>
+                    <td className="px-4 py-2.5 font-medium text-slate-600">{family.picker} options</td>
+                    <td className="px-4 py-2.5 text-slate-800">{family.items.map((i) => i.variantLabel || i.pack_size || i.code).join(' · ')}</td>
+                  </tr>
+                )}
+                <tr className={family.isMulti ? 'bg-slate-50' : ''}>
                   <td className="px-4 py-2.5 font-medium text-slate-600">Unit sold</td>
-                  <td className="px-4 py-2.5 text-slate-800">{item.pack_size || item.unit}</td>
+                  <td className="px-4 py-2.5 text-slate-800">{item.pack_size || item.unit}{family.isMulti ? ` (${item.variantLabel || item.code})` : ''}</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2.5 font-medium text-slate-600">Availability</td>
+                  <td className="px-4 py-2.5 text-slate-800">{stockInfo(item.stockTier).label}</td>
                 </tr>
                 {item.coverage_sqft && (
                   <tr className="bg-slate-50">
@@ -277,7 +305,7 @@ export default async function SupplyDetailPage({ params }) {
         {/* How to use */}
         {steps.length > 0 && (
           <section className="mt-14 max-w-3xl">
-            <h2 className="text-xl font-bold text-slate-900">How to use {item.label}</h2>
+            <h2 className="text-xl font-bold text-slate-900">How to use {family.name}</h2>
             <ol className="mt-4 space-y-3">
               {steps.map((step, i) => (
                 <li key={i} className="flex gap-3">
@@ -296,20 +324,25 @@ export default async function SupplyDetailPage({ params }) {
             <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
               {related.map((r) => (
                 <Link
-                  key={r.code}
-                  href={`/flooring-accessories/${r.code}`}
+                  key={r.slug}
+                  href={familyUrl(r)}
                   className="rounded-xl border border-slate-200 p-3 hover:border-amber-400 transition-colors"
                 >
                   <div className="aspect-square rounded-lg bg-slate-50 flex items-center justify-center overflow-hidden">
                     {r.image ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={r.image} alt={r.label} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={r.image} alt={r.name} className="w-full h-full object-cover" loading="lazy" />
                     ) : (
                       <Package className="w-8 h-8 text-slate-300" />
                     )}
                   </div>
-                  <div className="mt-2 text-xs font-semibold text-slate-800 leading-snug line-clamp-2">{r.label}</div>
-                  {r.price != null && <div className="mt-1 text-sm font-bold text-slate-900">${r.price.toFixed(2)}</div>}
+                  <div className="mt-2 text-xs font-semibold text-slate-800 leading-snug line-clamp-2">{r.name}</div>
+                  {r.priceLow != null && (
+                    <div className="mt-1 text-sm font-bold text-slate-900">
+                      {r.isMulti && r.priceLow !== r.priceHigh ? `from $${r.priceLow.toFixed(2)}` : `$${r.priceLow.toFixed(2)}`}
+                    </div>
+                  )}
+                  {r.isMulti && <div className="text-[11px] text-slate-500">{r.items.length} options</div>}
                 </Link>
               ))}
             </div>

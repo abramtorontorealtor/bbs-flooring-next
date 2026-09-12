@@ -1,0 +1,1124 @@
+{
+  "acoustitech-ad280": {
+    "blurb": "General-purpose adhesive for laminate, vinyl and engineered hardwood installs. Available in 1 gal and 4 gal pails to match the size of your job.",
+    "name": "AcoustiTECH AD-280 Multi-Purpose Flooring Adhesive",
+    "picker": "Size",
+    "why": "Reach for this when you need one adhesive that works across laminate, vinyl and engineered wood."
+  },
+  "acoustitech-ad316": {
+    "blurb": "Adhesive built for glue-down engineered and solid hardwood installs, sold as a 4 gal pail.",
+    "name": "AcoustiTECH AD-316 Engineered Wood Adhesive",
+    "picker": "Size",
+    "why": "Use for full-spread glue-down engineered or solid hardwood floors."
+  },
+  "acoustitech-ad532": {
+    "blurb": "Pro-grade urethane adhesive for full-spread engineered wood glue-downs, covering up to 160 sq ft per 4 gal pail.",
+    "name": "AcoustiTECH AD-532+ Urethane Wood Adhesive",
+    "picker": "Size",
+    "why": "Pick this for whole-floor glue-down jobs on engineered hardwood."
+  },
+  "acoustitech-ad844": {
+    "blurb": "Hybrid urethane adhesive for engineered and solid hardwood glue-downs, sold as a 4 gal pail.",
+    "name": "AcoustiTECH AD-844 MS Urethane Hybrid Adhesive",
+    "picker": "Size",
+    "why": "Choose this hybrid urethane formula when you want extra flexibility in the glue line."
+  },
+  "acoustitech-ad860": {
+    "blurb": "Tube adhesive for engineered hardwood and solid hardwood repairs and small installs, packed at 858 mL.",
+    "name": "AcoustiTECH AD-860 Hardwood Adhesive",
+    "picker": "Size",
+    "why": "Grab this for small repairs or spot bonding on hardwood floors."
+  },
+  "acoustitech-lead": {
+    "blurb": "Acoustic underlayment for engineered hardwood, covering 150 sq ft per roll. Choose the thickness that fits your sound and comfort needs, from 3.1 mm to 5.5 mm.",
+    "name": "AcoustiTECH Lead Engineered Hardwood Acoustic Underlayment",
+    "picker": "Thickness",
+    "why": "Use to cut sound transmission under engineered hardwood, thicker options for extra impact noise control."
+  },
+  "acoustitech-lv": {
+    "blurb": "Sound mat for click-LVP floors, condo-board grade acoustic rating. Sold in 150 sq ft and 300 sq ft rolls.",
+    "name": "AcoustiTECH LV Vinyl Acoustic Underlayment",
+    "picker": "Size",
+    "why": "Pick this when a building requires an acoustic rating under vinyl plank."
+  },
+  "acoustitech-premium": {
+    "blurb": "2.4 mm underlayment for engineered hardwood and laminate floors, covering 100 sq ft per roll.",
+    "name": "AcoustiTECH Premium Acoustic Underlayment",
+    "picker": "Size",
+    "why": "Use under engineered or laminate floors where sound control matters."
+  },
+  "acoustitech-series": {
+    "blurb": "Acoustic underlayment for engineered hardwood, 150 sq ft per roll. Available in 3.5 mm, 5 mm and 7 mm thicknesses for different comfort and sound needs.",
+    "name": "AcoustiTECH Series Engineered Hardwood Acoustic Underlayment",
+    "picker": "Thickness",
+    "why": "Step up the thickness for more cushion and sound dampening under engineered hardwood."
+  },
+  "acoustitech-vp": {
+    "blurb": "2.2 mm underlayment for engineered hardwood and laminate floors, covering 100 sq ft per roll.",
+    "name": "AcoustiTECH VP Acoustic Underlayment",
+    "picker": "Size",
+    "why": "An economical acoustic layer for engineered or laminate installs."
+  },
+  "adhesive-remover": {
+    "blurb": "Removes leftover urethane and flooring adhesive from tools and subfloors. Choose the liquid cleaner or the wipe format for quick spot cleanup.",
+    "name": "Adhesive Remover for Flooring Cleanup",
+    "picker": "Type",
+    "why": "Keep on hand to clean adhesive off tools, trowels and subfloors before it cures."
+  },
+  "allglobe-silicone-vb": {
+    "blurb": "6 mil moisture barrier underlayment for solid and engineered wood floors and LVP, covering 400 sq ft per roll.",
+    "name": "Allglobe Silicone Moisture Barrier Underlayment",
+    "picker": "Size",
+    "why": "Roll this out under wood or LVP floors over concrete to block moisture from below."
+  },
+  "ardex-feather-finish": {
+    "blurb": "Cement-based skim coat for feathering seams and low spots to zero before flooring goes down. Available in gray or white, 10 lb bags.",
+    "name": "Ardex Feather Finish Cement-Based Finishing Underlayment",
+    "picker": "Colour",
+    "why": "Use for smoothing seams, gouges and low spots ahead of any floor install."
+  },
+  "ardex-forti-finish": {
+    "blurb": "Self-drying finishing underlayment for smoothing subfloors, sold in a 10 lb bag.",
+    "name": "Ardex Forti Finish Self-Drying Underlayment",
+    "picker": "Size",
+    "why": "Choose this when you need a self-drying skim coat with no waiting on a slow cure."
+  },
+  "ardex-gps": {
+    "blurb": "Fast-setting patch for holes, cracks and plywood seams, packed in a 25 lb bag.",
+    "name": "Ardex GPS General Patch and Skimcoat",
+    "picker": "Size",
+    "why": "Grab this for quick patching of holes and seams before flooring goes down."
+  },
+  "ardex-k10": {
+    "blurb": "High-flow, reactivatable self-leveller for flattening subfloors, gray, 50 lb bag.",
+    "name": "Ardex K 10 Reactivatable Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use when you need a self-leveller that can be reactivated for extra working time."
+  },
+  "ardex-k13": {
+    "blurb": "Premium self-leveling underlayment for flattening subfloors ahead of any flooring install, gray, 50 lb bag.",
+    "name": "Ardex K 13 Premium Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Pick this premium leveller for a smooth, flat base coat before flooring goes down."
+  },
+  "ardex-k15": {
+    "blurb": "Premium self-leveller that flattens uneven slabs before any floor goes down, covering about 50 sq ft per 55 lb bag.",
+    "name": "Ardex K 15 Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use to flatten uneven concrete before installing any floor type."
+  },
+  "ardex-k22f": {
+    "blurb": "High-flow, fiber-reinforced self-leveller for flattening subfloors, gray, 50 lb bag.",
+    "name": "Ardex K 22-F Fiber-Reinforced Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Choose this fiber-reinforced formula for added strength on demanding subfloor conditions."
+  },
+  "ardex-k60": {
+    "blurb": "Rapid-setting latex smoothing and leveling compound kit for subfloor prep.",
+    "name": "Ardex K 60 Arditex Rapid Setting Smoothing Compound Kit",
+    "picker": "Size",
+    "why": "Use when you need a fast-setting patch and level in one kit."
+  },
+  "ardex-liquid-backerboard": {
+    "blurb": "A self-leveling underlayment for interior wood and concrete subfloors, gray finish. Use it to smooth out uneven floors before final flooring goes down.",
+    "name": "Ardex Liquid BackerBoard Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Reach for this when you need a flat, level subfloor over wood or concrete before installing finish flooring."
+  },
+  "ardex-mrf": {
+    "blurb": "A moisture-resistant, rapid-drying skimcoat for patching and smoothing subfloor imperfections, gray finish. Good for small repairs and touch-ups before install.",
+    "name": "Ardex MRF Rapid-Drying Skimcoat Patching Underlayment",
+    "picker": "Size",
+    "why": "Reach for this for quick patch and repair work where fast turnaround to install matters."
+  },
+  "ardex-p4": {
+    "blurb": "A rapid-drying bond and moisture primer for subfloors before adhesive or leveller. Works under vinyl, laminate and engineered hardwood installs. Available in 1 gal and premixed 3.5 gal.",
+    "name": "Ardex P 4 Multipurpose Primer",
+    "picker": "Size",
+    "why": "Reach for this to prep a subfloor before laying adhesive or leveller under vinyl, laminate or engineered hardwood."
+  },
+  "ardex-p51": {
+    "blurb": "The pink primer required under Ardex levellers and patches, sold in 1 gal and 4 gal sizes to match job size.",
+    "name": "Ardex P 51 Primer",
+    "picker": "Size",
+    "why": "Reach for this whenever the Ardex leveller or patch spec calls for a primer coat first."
+  },
+  "ardex-p82": {
+    "blurb": "A two-part Part A and Part B primer kit for demanding subfloor conditions ahead of levelling or patching work.",
+    "name": "Ardex Primer P-82 Two-Part Kit",
+    "picker": "Size",
+    "why": "Reach for this two-part kit when the subfloor needs a stronger primer bond than a standard single-part primer."
+  },
+  "ardex-sdp": {
+    "blurb": "A trowelable, self-drying underlayment for concrete subfloors, gray finish, in standard and Rapid formulas so you can match dry time to your schedule.",
+    "name": "Ardex SD-P Self-Drying Trowelable Concrete Underlayment",
+    "picker": "Type",
+    "why": "Reach for this to build up and smooth concrete subfloors before flooring goes down."
+  },
+  "ardex-skm": {
+    "blurb": "A gray skimcoat compound for patching and finishing subfloor surfaces before final flooring installation.",
+    "name": "Ardex SKM Skimcoat Patch & Finishing Underlayment",
+    "picker": "Size",
+    "why": "Reach for this for final smoothing and finishing passes over patched or repaired subfloor areas."
+  },
+  "ardex-v1000": {
+    "blurb": "A self-leveling underlayment for evening out subfloors before flooring installation, sold in a 50 lb bag.",
+    "name": "Ardex V 1000 Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Reach for this on subfloors that need a straightforward, budget-friendly leveling pass."
+  },
+  "ardex-v1200": {
+    "blurb": "A gray self-leveling underlayment for creating a smooth, even subfloor surface ahead of finish flooring.",
+    "name": "Ardex V 1200 Self-Leveling Flooring Underlayment",
+    "picker": "Size",
+    "why": "Reach for this when the subfloor needs more leveling capability than a basic patch product provides."
+  },
+  "ardex-vb100": {
+    "blurb": "A moisture vapor control coating for subfloors going under vinyl or engineered hardwood, applied before adhesive or underlayment.",
+    "name": "Ardex VB 100 Moisture Vapor Control",
+    "picker": "Size",
+    "why": "Reach for this when subfloor moisture readings are too high to install directly without a vapor barrier."
+  },
+  "barricade-subfloor-panel": {
+    "blurb": "A 23-1/4 by 23-1/4 inch subfloor panel for laminate and vinyl installs, available in a 19 mm Air Plus version and a 25 mm insulated version.",
+    "name": "Barricade Subfloor Panel",
+    "picker": "Profile",
+    "why": "Reach for this to build a stable, even subfloor base with an air gap or added insulation under laminate or vinyl."
+  },
+  "bona-hardwood-care-system": {
+    "blurb": "An 18 inch mop and cleaner kit built for the ongoing care of engineered and solid hardwood floors.",
+    "name": "Bona Hardwood Floor Care System",
+    "picker": "Size",
+    "why": "Reach for this as a complete starter kit for routine hardwood floor cleaning."
+  },
+  "bona-hardwood-cleaner": {
+    "blurb": "A cleaner formulated for engineered and solid hardwood floors, available as a spray, refill cartridge, ready-to-use gallon or concentrate gallon.",
+    "name": "Bona Pro Series Hardwood Floor Cleaner",
+    "picker": "Format",
+    "why": "Reach for this for routine hardwood floor cleaning without leaving residue or dulling the finish."
+  },
+  "bona-quantum-flow": {
+    "blurb": "A 4 gal wood flooring adhesive for installing engineered and solid hardwood floors.",
+    "name": "Bona Quantum Flow Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Reach for this on larger hardwood installs that need a full-spread adhesive."
+  },
+  "bona-r540": {
+    "blurb": "A 5 L moisture barrier for use under engineered and solid hardwood floors where subfloor moisture protection is needed.",
+    "name": "Bona R540 Moisture Barrier",
+    "picker": "Size",
+    "why": "Reach for this to protect hardwood installs from subfloor moisture before adhesive goes down."
+  },
+  "bona-r820": {
+    "blurb": "A 3 gal adhesive for installing engineered and solid hardwood flooring.",
+    "name": "Bona R820 Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Reach for this as a standard full-spread adhesive for hardwood installs."
+  },
+  "bona-r850": {
+    "blurb": "A 600 mL sausage-pack adhesive for engineered and solid hardwood floors, sized for smaller jobs and repairs.",
+    "name": "Bona R850T Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Reach for this on small hardwood installs or repair spots where a full pail is too much."
+  },
+  "bona-r851": {
+    "blurb": "A 3 gal wood flooring adhesive for engineered and solid hardwood installs.",
+    "name": "Bona Quantum R851 Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Reach for this when the job calls for the Quantum-line adhesive over a standard formula."
+  },
+  "bona-trowel": {
+    "blurb": "A flat V-notch trowel for spreading wood flooring adhesive, available in 5/32, 1/4 and 5/16 inch notch sizes to match your adhesive spread rate.",
+    "name": "Bona Adhesive Flat V Trowel",
+    "picker": "Size",
+    "why": "Match the notch size to the adhesive manufacturer's spec to get correct coverage and bond."
+  },
+  "bona-vinyl-care-kit": {
+    "blurb": "A complete cleaning kit built for the upkeep of vinyl flooring.",
+    "name": "Bona Luxury Vinyl Floor Care Kit",
+    "picker": "Size",
+    "why": "Reach for this as a starter kit for regular vinyl floor cleaning."
+  },
+  "bona-vinyl-cleaner": {
+    "blurb": "A ready-to-use cleaner made for luxury vinyl floors. Lifts dirt and grime without leaving a residue or dulling the finish.",
+    "name": "Bona Pro Series Luxury Vinyl Floor Cleaner",
+    "picker": "Format",
+    "why": "Use for routine cleaning of LVT and vinyl plank without a soapy film."
+  },
+  "bostik-915fs": {
+    "blurb": "A premium moisture-cure polyurethane adhesive for gluing down engineered and solid hardwood floors.",
+    "name": "Bostik 915fs Premium Polyurethane Adhesive",
+    "picker": "Size",
+    "why": "Reach for it on hardwood installs where a strong, permanent bond is needed."
+  },
+  "bullet-tapping-block": {
+    "blurb": "Pro-grade tapping block for click floors, sold in a standard and a longer pro length to seat laminate and vinyl planks without damaging the edges.",
+    "name": "Bullet Tools Tapping Block",
+    "picker": "Size",
+    "why": "Use to close click-lock joints tight without marring the plank edge."
+  },
+  "corner-shield": {
+    "blurb": "Protective corner guard that shields stair and floor edges from impact and scuffing during a job.",
+    "name": "Surface Shields Corner Shield",
+    "picker": "Size",
+    "why": "Wrap it around corners and edges before work starts to prevent chips and scrapes."
+  },
+  "crain-lvp-block": {
+    "blurb": "An angled tapping block built for luxury vinyl plank, designed to fit tight against baseboards and walls when seating planks.",
+    "name": "Crain LVP Angle Tapping Block",
+    "picker": "Size",
+    "why": "Use where a straight block cannot reach into corners or against trim."
+  },
+  "custom-levelquik": {
+    "blurb": "Self-leveling underlayment for smoothing subfloors before flooring installation, available in extended-set for larger pours and rapid-set for faster turnaround.",
+    "name": "Custom Building Products LevelQuik Self-Leveling Underlayment",
+    "picker": "Type",
+    "why": "Pick extended-set for bigger areas that need more working time, rapid-set for quick turnaround jobs."
+  },
+  "custom-levelquik-primer": {
+    "blurb": "Acrylic primer that preps subfloors before pouring LevelQuik self-leveling underlayment, sold in a small cartridge or a full gallon.",
+    "name": "Custom Building Products LevelQuik Primer",
+    "picker": "Size",
+    "why": "Prime the subfloor with this before any self-leveller to get proper adhesion."
+  },
+  "custom-mbp": {
+    "blurb": "A multi-surface bonding primer that improves adhesion on hard-to-bond subfloors before leveling or tiling.",
+    "name": "Custom Building Products Multi-Surface Bonding Primer",
+    "picker": "Size",
+    "why": "Use on glossy, dense or otherwise low-porosity substrates that need extra bonding help."
+  },
+  "custom-techlevel-100": {
+    "blurb": "A self-leveling underlayment for smoothing and flattening subfloors ahead of flooring installation.",
+    "name": "CustomTech TechLevel 100 Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use to level out minor dips and unevenness before laying new flooring."
+  },
+  "custom-techlevel-wsf": {
+    "blurb": "A fiber-reinforced self-leveling underlayment built specifically for wood subfloors, adding strength where plywood or OSB needs extra support.",
+    "name": "CustomTech TechLevel WSF Fiber Reinforced Underlayment",
+    "picker": "Size",
+    "why": "Choose this over standard levellers when the substrate is a wood subfloor."
+  },
+  "custom-techpatch-sc": {
+    "blurb": "A patching compound for filling low spots, cracks and holes in subfloors before installing new flooring.",
+    "name": "Custom Building Products TechPatch SC Floor Patch",
+    "picker": "Size",
+    "why": "Use for small repairs where a full self-leveling pour is not needed."
+  },
+  "fittes-lite-damper": {
+    "blurb": "A lightweight matte black floor vent with an adjustable damper to control airflow, sized to fit standard duct openings.",
+    "name": "Fittes Floor Vent Lite Damper",
+    "picker": "Size",
+    "why": "Pick this when you need airflow control built into the register itself."
+  },
+  "fittes-lite-flush": {
+    "blurb": "A low-profile matte black vent cover that sits flush with the floor surface for a clean, modern look.",
+    "name": "Fittes Flushmount Lite Vent Cover",
+    "picker": "Size",
+    "why": "Choose flushmount when you want the vent to disappear into the floor line."
+  },
+  "fittes-lite-framed": {
+    "blurb": "Clean framed register for standard duct openings. Available in matte black, cotton white and warm grey to match most floor tones.",
+    "name": "Fittes Framed Floor Vent Lite",
+    "picker": "Size & finish",
+    "why": "The go-to replacement vent for standard duct sizes."
+  },
+  "fittes-og-framed": {
+    "blurb": "Framed designer register with a heavier build than the Lite line, available in matte black, appliance white and matte grey across a wide range of duct sizes.",
+    "name": "Fittes Framed Floor Vent OG",
+    "picker": "Size & finish",
+    "why": "Choose OG when you want a heavier-duty, higher-end framed vent."
+  },
+  "fittes-pro-flush": {
+    "blurb": "A flushmount register from the Pro line, built for a seamless fit into the floor with a durable matte black finish across a range of sizes.",
+    "name": "Fittes Flushmount Pro Vent Cover",
+    "picker": "Size",
+    "why": "Step up to Pro flushmount for a heavier-duty flush vent than the Lite line."
+  },
+  "floor-protection-board": {
+    "blurb": "Rigid rolled board that protects finished floors from foot traffic, tools and equipment during construction or renovation work.",
+    "name": "Surface Shields Temporary Floor Protection Board",
+    "picker": "Size",
+    "why": "Roll this out on finished floors before heavy work traffic starts."
+  },
+  "floor-protection-paper": {
+    "blurb": "Rolled paper underlayment that shields floors from dust, spills and light traffic during a project, in a recycled kraft or Fiberock option.",
+    "name": "Surface Shields Floor Protection Paper",
+    "picker": "Type",
+    "why": "Use as a lighter-duty cover under board protection or for short jobs."
+  },
+  "floorotex-basic": {
+    "blurb": "A self-adhering protective film that lays over finished floors to guard against dust, debris and foot traffic, sold in three roll sizes.",
+    "name": "Floorotex All Purpose Surface Protection Film Basic",
+    "picker": "Size",
+    "why": "Use for general jobsite protection where a quick roll-out film is enough."
+  },
+  "floorotex-blue": {
+    "blurb": "A heavier-duty self-adhering protective film in blue, made to withstand more traffic and job site wear than the Basic line, sold in three roll sizes.",
+    "name": "Floorotex Blue Floor Protector",
+    "picker": "Size",
+    "why": "Step up to this over Basic film when the job site sees heavier traffic."
+  },
+  "fusion-epo-mvb": {
+    "blurb": "Epoxy moisture vapor barrier applied to concrete subfloors before installing vinyl or engineered hardwood. Comes as a 3 gal kit.",
+    "name": "Fusion EPO MVB Moisture Vapor Barrier",
+    "picker": "Size",
+    "why": "Use over concrete slabs with elevated moisture before flooring goes down."
+  },
+  "fusion-laminate-underlay": {
+    "blurb": "Underlay for laminate flooring. Choose Basic for standard cushioning or Silver with a built-in vapour barrier. Each roll covers 200 sq ft.",
+    "name": "Fusion Laminate Underlay",
+    "picker": "Type",
+    "why": "Pick the Silver version when the subfloor needs a vapour barrier as well as cushioning."
+  },
+  "fusion-stair-post": {
+    "blurb": "Unfinished red oak stair post, 3-1/2 x 48 inches, in plain, fluted, notched, recessed or shaved profiles to match your stair design.",
+    "name": "Fusion Red Oak Unfinished Stair Post",
+    "picker": "Profile",
+    "why": "Match the post profile to the balusters and railing already on the job."
+  },
+  "fusion-tread-maple-round": {
+    "blurb": "Solid maple stair tread with a round nosing, 10-1/2 inches deep. Open box treads in three lengths, or with a finished left or right return end.",
+    "name": "Fusion Maple Round Edge Stair Tread",
+    "picker": "Size & finish",
+    "why": "Choose a return-end tread where the stairs are open on one side."
+  },
+  "fusion-tread-maple-square": {
+    "blurb": "Solid maple stair tread with a square nosing, 10-1/2 inches deep. Open box treads in three lengths, or with a finished left or right return end.",
+    "name": "Fusion Maple Square Edge Stair Tread",
+    "picker": "Size & finish",
+    "why": "Choose a return-end tread where the stairs are open on one side."
+  },
+  "fusion-tread-red-oak-round": {
+    "blurb": "Solid red oak stair tread with a round nosing, 10-1/2 inches deep. Open box treads in three lengths, or with a finished left or right return end.",
+    "name": "Fusion Red Oak Round Edge Stair Tread",
+    "picker": "Size & finish",
+    "why": "Choose a return-end tread where the stairs are open on one side."
+  },
+  "fusion-tread-red-oak-square": {
+    "blurb": "Solid red oak stair tread with a square nosing, 10-1/2 inches deep. Open box treads in three lengths, or with a finished left or right return end.",
+    "name": "Fusion Red Oak Square Edge Stair Tread",
+    "picker": "Size & finish",
+    "why": "Choose a return-end tread where the stairs are open on one side."
+  },
+  "hand-roller": {
+    "blurb": "Rollers for setting glue-down vinyl flat and bonding it to the adhesive, from a compact J-roller to an extendible floor roller for larger areas.",
+    "name": "Hand Floor Rollers",
+    "picker": "Type",
+    "why": "Roll the floor right after gluing to seat seams and squeeze out trapped air."
+  },
+  "henry-1171n": {
+    "blurb": "Acrylic urethane adhesive for glue-down engineered hardwood, covers about 40 sq ft per gallon.",
+    "name": "Henry 1171N SureLock Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use for glue-down engineered hardwood over concrete or plywood subfloors."
+  },
+  "henry-176": {
+    "blurb": "Multipurpose adhesive for gluing down a range of vinyl flooring types over standard subfloors.",
+    "name": "Henry 176 Bulldog Multipurpose Flooring Adhesive",
+    "picker": "Size",
+    "why": "A general-purpose choice when the manufacturer does not call for a specialty adhesive."
+  },
+  "henry-336": {
+    "blurb": "Primer and latex additive used to prep subfloors and improve bond strength before patching or leveling compounds go down.",
+    "name": "Henry 336 Floor Primer & Latex Liquid Additive",
+    "picker": "Size",
+    "why": "Prime porous or troweled subfloors before applying underlayment or patch."
+  },
+  "henry-356c": {
+    "blurb": "Commercial-grade multipurpose adhesive for glue-down vinyl flooring in higher-traffic installations.",
+    "name": "Henry 356C MultiPro Commercial Flooring Adhesive",
+    "picker": "Size",
+    "why": "Reach for this on commercial or high-traffic vinyl jobs that need a stronger bond."
+  },
+  "henry-422": {
+    "blurb": "Wet-set adhesive formulated for vinyl-backed flooring that needs to be laid into wet adhesive rather than tacked down.",
+    "name": "Henry 422 Fortify Wet-Set Vinyl-Backed Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use with vinyl-backed sheet goods that call for a wet-set application."
+  },
+  "henry-564": {
+    "blurb": "Primer applied before self-leveling underlayment to help it bond to the subfloor, packaged in a 946 mL tube.",
+    "name": "Henry 564 FloorPro Underlayment Primer",
+    "picker": "Size",
+    "why": "Prime the subfloor first whenever a self-leveler is going down."
+  },
+  "henry-630": {
+    "blurb": "Pressure-sensitive adhesive for glue-down LVT and LVP, covers about 150 sq ft per gallon.",
+    "name": "Henry 630 PeachPro Glue-Down Vinyl Adhesive",
+    "picker": "Size",
+    "why": "The standard pick for glue-down luxury vinyl plank and tile."
+  },
+  "henry-647": {
+    "blurb": "Roll-apply adhesive for vinyl flooring installations where the adhesive is spread with a roller rather than a trowel.",
+    "name": "Henry 647 PlumPro Roll-Apply Vinyl Flooring Adhesive",
+    "picker": "Size",
+    "why": "Choose this when the vinyl manufacturer specs a roll-applied adhesive."
+  },
+  "henry-695": {
+    "blurb": "Releasable vinyl adhesive rated for high-moisture concrete slabs. Covers about 150 sq ft per gallon at the 1 gallon size.",
+    "name": "Henry 695 High-RH Vinyl Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use in basements or slabs with elevated moisture readings that rule out standard adhesives."
+  },
+  "henry-971": {
+    "blurb": "Moisture-cured urethane adhesive for glue-down engineered and solid hardwood, packaged in a 3.5 gallon pail.",
+    "name": "Henry 971 EZ Plus+ Moisture-Cured Urethane Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Pick this for solid hardwood glue-downs that need a moisture-cured bond."
+  },
+  "integrates-dropin": {
+    "blurb": "Drop-in floor vent register in textured white or black, available in several sizes to fit standard floor duct openings.",
+    "name": "Inte-Grates Drop-In Floor Register",
+    "picker": "Size & finish",
+    "why": "Match the register size to the existing duct opening before ordering."
+  },
+  "laticrete-nxt-flow": {
+    "blurb": "Cement-based self-leveling underlayment used to flatten and smooth concrete or plywood subfloors before flooring installation, packaged in a 50 lb bag.",
+    "name": "Laticrete NXT Level Flow Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use to level out dips and uneven spots before laying new flooring."
+  },
+  "laticrete-nxt-level": {
+    "blurb": "A self-levelling underlayment that fills low spots and evens out concrete or wood subfloors before you install your finish flooring.",
+    "name": "Laticrete NXT Level Floor Underlayment Leveler",
+    "picker": "Size",
+    "why": "Use it to true up an uneven subfloor before any floor covering goes down."
+  },
+  "laticrete-nxt-patch": {
+    "blurb": "A fast drying patching compound for filling small dips, cracks and holes in a subfloor before installation.",
+    "name": "Laticrete NXT Patch Fast Drying Underlayment Patch",
+    "picker": "Size",
+    "why": "Reach for it on small repairs where you cannot wait around for a slow cure."
+  },
+  "mapei-eco-350": {
+    "blurb": "A professional grade adhesive for solid vinyl flooring, available in tube or pail sizes to match the size of your job.",
+    "name": "Mapei Ultrabond ECO 350 Professional Solid Vinyl Flooring Adhesive",
+    "picker": "Size",
+    "why": "Pick this for solid vinyl installs where a dependable, full-spread bond is needed."
+  },
+  "mapei-eco-360": {
+    "blurb": "A high-performance adhesive for vinyl flooring installations, sold in 1 gallon and 4 gallon sizes.",
+    "name": "Mapei Ultrabond ECO 360 Premium High-Performance Adhesive",
+    "picker": "Size",
+    "why": "Choose this when the job calls for a premium bond over a standard adhesive."
+  },
+  "mapei-eco-373": {
+    "blurb": "A pressure-sensitive adhesive that works across multiple vinyl flooring types, available from tube to 4 gallon pail.",
+    "name": "Mapei Ultrabond ECO 373 Universal Pressure-Sensitive Multi-Flooring Adhesive",
+    "picker": "Size",
+    "why": "Grab this one when you need a single adhesive that suits several vinyl products."
+  },
+  "mapei-eco-399": {
+    "blurb": "An adhesive built for resilient vinyl flooring, offered in 1 gallon and 4 gallon pails.",
+    "name": "Mapei Ultrabond ECO 399 Resilient Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use it as your go-to bond for standard resilient vinyl installs."
+  },
+  "mapei-eco-907": {
+    "blurb": "A fast-curing silane-modified polymer adhesive in tube format, sized for smaller jobs and repairs.",
+    "name": "Mapei Ultrabond ECO 907 Fast-Curing Silane-Modified Polymer Adhesive",
+    "picker": "Size",
+    "why": "Pick this when you need a quick-curing bond without mixing a big batch."
+  },
+  "mapei-eco-975": {
+    "blurb": "A standard urethane adhesive for gluing down engineered and solid hardwood flooring, sold in a 4 gallon pail.",
+    "name": "Mapei Ultrabond Eco 975 Standard Urethane Adhesive For Hardwood Flooring",
+    "picker": "Size",
+    "why": "Use it as a reliable everyday choice for glue-down hardwood installs."
+  },
+  "mapei-eco-977": {
+    "blurb": "A fast-set urethane adhesive for engineered and solid hardwood, sold in a 4 gallon pail for jobs that need to move quickly.",
+    "name": "Mapei Ultrabond ECO 977 Fast-Set Urethane Adhesive For Hardwood Flooring",
+    "picker": "Size",
+    "why": "Choose this when the schedule calls for a faster set than standard urethane."
+  },
+  "mapei-eco-980": {
+    "blurb": "A premium grade urethane adhesive for engineered and solid hardwood flooring, sold in a 4 gallon pail.",
+    "name": "Mapei Ultrabond Eco 980 Premium Urethane Adhesive For Hardwood Flooring",
+    "picker": "Size",
+    "why": "Pick this for higher-end hardwood jobs where you want the premium urethane formula."
+  },
+  "mapei-eco-983": {
+    "blurb": "Moisture-control MS-polymer adhesive for glue-down engineered hardwood, covering about 160 sq ft per pail.",
+    "name": "Mapei Ultrabond ECO 983 Wood Adhesive",
+    "picker": "Size",
+    "why": "Use it where moisture control matters as much as bond strength."
+  },
+  "mapei-eco-985": {
+    "blurb": "A hybrid-polymer adhesive for engineered and solid hardwood that adds moisture control and sound reduction in one 4 gallon pail.",
+    "name": "Mapei Ultrabond ECO 985 Hybrid-Polymer Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Choose this when the install also needs sound-reducing performance."
+  },
+  "mapei-eco-987": {
+    "blurb": "An adhesive for engineered and solid hardwood flooring, supplied in a 4 gallon pail.",
+    "name": "Mapei Ultrabond ECO 987 Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use it as a dependable urethane-family bond for hardwood installs."
+  },
+  "mapei-eco-995": {
+    "blurb": "A premium urethane adhesive for engineered and solid hardwood flooring, sold in a 4 gallon pail.",
+    "name": "Mapei Ultrabond Eco 995 Premium Urethane Adhesive For Hardwood Flooring",
+    "picker": "Size",
+    "why": "Pick this top-tier urethane for demanding hardwood installations."
+  },
+  "mapei-eco-prim-grip": {
+    "blurb": "A multipurpose primer that improves adhesive bond on porous and non-porous substrates before flooring installation.",
+    "name": "Mapei ECO Prim Grip Multipurpose Bond-Promoting Primer",
+    "picker": "Size",
+    "why": "Apply it first when the subfloor surface needs extra grip for the adhesive to follow."
+  },
+  "mapei-mapecem-quickpatch": {
+    "blurb": "A high-performance patching compound for repairing and filling concrete subfloors before flooring goes down.",
+    "name": "Mapei Mapecem Quickpatch High-Performance Concrete Patch",
+    "picker": "Size",
+    "why": "Use it to patch concrete defects quickly before levelling or installation."
+  },
+  "mapei-mapesand": {
+    "blurb": "A fine, calibrated mesh sand used as an additive with self-levelling and patching compounds for deeper pours.",
+    "name": "Mapei Mapesand Fine Calibrated Mesh Sand",
+    "picker": "Size",
+    "why": "Blend it in when a leveler or patch needs extra bulk for a deep fill."
+  },
+  "mapei-ms4-lvt": {
+    "blurb": "A hybrid-polymer adhesive built specifically for LVT flooring, sold in 1 gallon and 4 gallon sizes.",
+    "name": "Mapei Ultrabond ECO MS 4 LVT Professional Hybrid-Polymer Adhesive",
+    "picker": "Size",
+    "why": "Reach for this on LVT jobs that need a dedicated hybrid-polymer bond."
+  },
+  "mapei-novoplan-2-plus": {
+    "blurb": "A professional self-levelling underlayment for smoothing subfloors before installing finish flooring.",
+    "name": "Mapei Novoplan 2 Plus Professional Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use it to get a flat, level base ready for tile, vinyl or hardwood."
+  },
+  "mapei-novoplan-dpl": {
+    "blurb": "A deep-pour self-levelling compound for correcting subfloors with larger low spots that need more depth than a standard leveler.",
+    "name": "Mapei Novoplan DPL Deep-Pour Self-Leveling Compound",
+    "picker": "Size",
+    "why": "Choose this when the low spots are too deep for a standard levelling compound."
+  },
+  "mapei-novoplan-easy-plus": {
+    "blurb": "A self-leveling underlayment for smoothing and flattening concrete or wood subfloors before installing your finish flooring. Sold in a 50 lb bag.",
+    "name": "Mapei Novoplan Easy Plus Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Reach for this when you need a flat, even surface before the new floor goes down."
+  },
+  "mapei-novoplan-hfl": {
+    "blurb": "A high-flow self-leveling compound that spreads easily to flatten concrete and wood subfloors ahead of flooring installation. Comes in a 50 lb bag.",
+    "name": "Mapei Novoplan HFL High-Flow Self-Leveling Compound",
+    "picker": "Size",
+    "why": "Choose this when you want a fast, self-spreading pour over a larger subfloor area."
+  },
+  "mapei-planipatch": {
+    "blurb": "A fast-setting, polymer-modified cement-based patch for filling cracks, holes and low spots in concrete and wood subfloors. Available in 4.4 lb, 10 lb and 22 lb bags.",
+    "name": "Mapei Planipatch Fast-Setting Patching Compound",
+    "picker": "Size",
+    "why": "Grab this for quick patch and repair work before laying flooring."
+  },
+  "mapei-planiprep-psc": {
+    "blurb": "A floor patching compound for repairing and smoothing subfloor surfaces before installation. Available in 10 lb and 20 lb bags.",
+    "name": "Mapei Planiprep PSC Floor Patch",
+    "picker": "Size",
+    "why": "Use this to fix imperfections in the subfloor before the finish floor goes down."
+  },
+  "mapei-planiprep-rmp": {
+    "blurb": "A subfloor patching compound for filling and repairing imperfections before flooring installation. Sold in a 25 lb bag.",
+    "name": "Mapei Planiprep RMP Subfloor Patch",
+    "picker": "Size",
+    "why": "Use this to correct subfloor defects prior to installation."
+  },
+  "mapei-planiprep-sc": {
+    "blurb": "A fiber-reinforced skimcoating compound for smoothing textured or uneven subfloors before flooring goes down. Comes in a 10 lb bag.",
+    "name": "Mapei Planiprep SC Fiber-Reinforced Skimcoating Compound",
+    "picker": "Size",
+    "why": "Use this to skim coat rough subfloors for a smooth, even surface."
+  },
+  "mapei-planiseal-pmb": {
+    "blurb": "A one-component polyurethane moisture barrier and bonding agent for concrete subfloors under vinyl and engineered hardwood. Comes in a 3.5 gal pail.",
+    "name": "Mapei Planiseal PMB Moisture Barrier and Bonding Agent",
+    "picker": "Size",
+    "why": "Use this when moisture testing shows the slab needs a barrier before installation."
+  },
+  "mapei-primer-l": {
+    "blurb": "An advanced-technology acrylic latex primer that prepares concrete subfloors for self-leveling underlayments and patching compounds. Available in 1 gal and 5 gal sizes.",
+    "name": "Mapei Primer L Acrylic Latex Primer for Concrete",
+    "picker": "Size",
+    "why": "Prime the concrete with this before pouring a self-leveler or patch."
+  },
+  "mapei-primer-t": {
+    "blurb": "An all-purpose primer designed to prepare subfloors ahead of self-leveling underlayment applications. Available in a 946 mL tube or 2 gal size.",
+    "name": "Mapei Primer T All-Purpose Primer for Self-Leveling Underlayments",
+    "picker": "Size",
+    "why": "Apply this first to help self-leveling underlayment bond properly."
+  },
+  "mapei-ultraplan-1-plus": {
+    "blurb": "A high-performance, quick-setting self-leveling underlayment for flattening subfloors before flooring installation. Sold in a 50 lb bag.",
+    "name": "Mapei Ultraplan 1 Plus Quick-Setting Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use this when you need a smooth subfloor and want to get back to work fast."
+  },
+  "mapei-ultraplan-m20": {
+    "blurb": "A quick-setting self-leveling underlayment for flattening and preparing subfloors before flooring goes down. Sold in a 50 lb bag.",
+    "name": "Mapei Ultraplan M20 Plus Quick-Setting Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use this for a rapid subfloor turnaround before installation."
+  },
+  "mdpro-alu-end-cap": {
+    "blurb": "An aluminum end molding that finishes laminate or vinyl flooring where it meets a doorway or another surface. Available in 5/16\" and 1/2\" profiles in clear anodized, champagne and titanium finishes, 8 ft lengths.",
+    "name": "M-D PRO Aluminum Laminate Floor End Molding",
+    "picker": "Size & finish",
+    "why": "Use this to cap off a floor edge cleanly at a threshold or transition point."
+  },
+  "mdpro-alu-reducer": {
+    "blurb": "An aluminum reducer strip that transitions laminate or vinyl flooring down to a lower surface. Available in 5/16\" and 1/2\" profiles in clear anodized, champagne and titanium finishes, 8 ft lengths.",
+    "name": "M-D PRO Aluminum Laminate Floor Reducer",
+    "picker": "Size & finish",
+    "why": "Use this where your laminate or vinyl meets a lower flooring surface."
+  },
+  "mdpro-alu-stair-nose": {
+    "blurb": "An aluminum stair nosing that finishes and protects the edge of laminate or vinyl flooring on stair treads. Available in 5/16\" and 1/2\" profiles in clear anodized, champagne and titanium finishes, 8 ft lengths.",
+    "name": "M-D PRO Aluminum Laminate Floor Stair Nosing",
+    "picker": "Size & finish",
+    "why": "Use this to finish stair edges where laminate or vinyl flooring is installed."
+  },
+  "mdpro-maple": {
+    "blurb": "Maple transition mouldings for engineered and solid hardwood floors, covering reducers, equalizers, T-mouldings and bull nosing. Choose the profile and length that matches your transition.",
+    "name": "M-D PRO Maple Transition Mouldings",
+    "picker": "Profile",
+    "why": "Pick the profile that matches the transition you need: doorway, stair edge or height change."
+  },
+  "mdpro-oak": {
+    "blurb": "Oak transition mouldings for engineered and solid hardwood floors, including reducers, a carpet reducer, an equalizer and a T-moulding. Choose the profile that fits your transition.",
+    "name": "M-D PRO Oak Transition Mouldings",
+    "picker": "Profile",
+    "why": "Pick the profile that matches the transition you need: doorway, carpet edge or height change."
+  },
+  "mdpro-pine-quarter-round": {
+    "blurb": "Pre-primed white pine quarter round for finishing the edge where flooring meets the baseboard. Available in 5/8\" and 7/16\" profiles, both 12 ft lengths.",
+    "name": "M-D PRO Pre-Primed Pine Quarter Round",
+    "picker": "Size",
+    "why": "Use this to cover the expansion gap along the baseboard after installation."
+  },
+  "moisture-test": {
+    "blurb": "Moisture testing tools for checking a concrete slab or job site before flooring installation, from a calcium chloride test to a thermo-hygrometer and a pinless wood moisture meter kit.",
+    "name": "Concrete Moisture and Humidity Test Kits",
+    "picker": "Type",
+    "why": "Test moisture levels before installation to avoid warranty and adhesive failures down the road."
+  },
+  "nuco-458": {
+    "blurb": "A construction adhesive for bonding subfloor panels to joists before flooring installation. Comes in an 828 mL tube.",
+    "name": "Nuco NuFlex 458 Subfloor Construction Adhesive",
+    "picker": "Size",
+    "why": "Use this to secure subfloor panels and cut down on squeaks."
+  },
+  "polytarp-super-six": {
+    "blurb": "A 6 mil vapor barrier that protects laminate and engineered hardwood floors from below-slab moisture. Covers 1500 sq ft per roll at 10' x 150'.",
+    "name": "Polytarp Super Six Vapor Barrier",
+    "picker": "Size",
+    "why": "Roll this out under laminate or engineered hardwood to block moisture from the subfloor."
+  },
+  "primatech-l-cleat-16ga": {
+    "blurb": "L-shaped cleats for 16 gauge flooring nailers, built for solid and engineered hardwood installs. Choose the length to match your board thickness.",
+    "name": "Primatech 16 Gauge L-Cleat Flooring Nails",
+    "picker": "Size",
+    "why": "Grab the 16 gauge cleat that matches your nailer and board thickness."
+  },
+  "primatech-l-cleat-18ga": {
+    "blurb": "L-shaped cleats for 18 gauge flooring nailers including the Q500, sized for engineered and solid hardwood. Pick the length for your flooring thickness.",
+    "name": "Primatech 18 Gauge L-Cleat Flooring Nails",
+    "picker": "Size",
+    "why": "Use the 18 gauge cleat sized to your board and nailer, including Q500 compatible lengths."
+  },
+  "pull-bar": {
+    "blurb": "Closes the last row tight against the wall on laminate, vinyl, and hardwood floors. Pick the bar style that fits your hand and job.",
+    "name": "Flooring Installation Pull Bar",
+    "picker": "Type",
+    "why": "Reach for it whenever you can't swing a mallet against the wall."
+  },
+  "qep-cork-roll": {
+    "blurb": "Natural cork roll underlayment for laminate, engineered hardwood, and vinyl floors, cutting impact sound and adding cushioning. Choose 1/8 inch or 1/4 inch thickness.",
+    "name": "QEP Natural Cork Sound Dampening Underlayment Roll",
+    "picker": "Thickness",
+    "why": "Pick the thicker roll when sound reduction matters more than floor height."
+  },
+  "qep-cork-sheet": {
+    "blurb": "Sold-by-the-sheet cork underlayment for laminate, engineered hardwood, and vinyl floors, good for patching rolls or small rooms. Available in 6 mm and 12 mm thickness.",
+    "name": "Natural Cork Underlayment Sheets",
+    "picker": "Thickness",
+    "why": "Use sheets instead of a full roll for small rooms or repairs."
+  },
+  "qep-trowel": {
+    "blurb": "Carbon steel trowel with a wood handle for spreading adhesive under laminate, engineered, and solid hardwood floors. Choose V-notch or square-notch.",
+    "name": "QEP Flooring Adhesive Trowel",
+    "picker": "Type",
+    "why": "Match the notch shape to the adhesive spec on your product sheet."
+  },
+  "qr_d09": {
+    "blurb": "5/8 inch by 5/8 inch quarter round in 10 ft lengths. Finishes the floor-to-baseboard gap along any room edge.",
+    "name": "Toucan Quarter Round Trim",
+    "picker": "Size",
+    "why": "Use it to close the gap where flooring meets the baseboard."
+  },
+  "quietmaxx-green": {
+    "blurb": "2.2 mm foam underlayment for laminate and engineered wood floors, made to reduce impact noise between floors. Sold in 100 sq ft and 400 sq ft rolls.",
+    "name": "Foam Solutions QuietMAXX Green Acoustical Underlayment",
+    "picker": "Size",
+    "why": "Choose it for laminate or engineered floors going over a shared ceiling."
+  },
+  "rd-concentrated-cleaner": {
+    "blurb": "Concentrated cleaner for laminate, hardwood, and parquet floors that lifts dirt without leaving residue behind.",
+    "name": "R&D Concentrated Floor Cleaner",
+    "picker": "Size",
+    "why": "Use it for regular maintenance cleaning of finished wood and laminate floors."
+  },
+  "reducer": {
+    "blurb": "8 ft reducer strip that steps a laminate or vinyl floor down to a lower surface like tile, carpet, or concrete.",
+    "name": "Toucan Reducer Molding",
+    "picker": "Size",
+    "why": "Use it wherever your floor meets a lower surface at a doorway or transition."
+  },
+  "richard-steel-trowel": {
+    "blurb": "Steel trowel for spreading vinyl flooring adhesive, available in V-notch and square-notch patterns and notch sizes from 1/16 inch to 1/4 inch.",
+    "name": "Richard Vinyl Adhesive Trowel",
+    "picker": "Type",
+    "why": "Match the notch size and shape to the adhesive manufacturer's spread rate."
+  },
+  "roberts-1406": {
+    "blurb": "Adhesive for tongue and groove laminate and wood flooring installs. Available in 473 mL and 1 gallon sizes to match your job size.",
+    "name": "Roberts 1406 Tongue and Groove Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use it for glue-assist on tongue and groove laminate or wood floors."
+  },
+  "roberts-1487": {
+    "blurb": "Adhesive built for engineered and solid hardwood floor installs, sold in 1 gallon and 4 gallon containers.",
+    "name": "Roberts 1487 Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Reach for it on full-spread engineered or solid wood glue-down jobs."
+  },
+  "roberts-2350": {
+    "blurb": "Hard-set adhesive for vinyl flooring installs, available in 946 mL, 1 gallon, and 4 gallon sizes.",
+    "name": "Roberts 2350 Hard-Set Resilient Flooring Adhesive",
+    "picker": "Size",
+    "why": "Choose it when you need a firm, hard-set bond under vinyl flooring."
+  },
+  "roberts-6300": {
+    "blurb": "Pressure-sensitive adhesive for vinyl flooring, sold in 1 gallon and 5 gallon sizes for larger installs.",
+    "name": "Roberts 6300 Pressure-Sensitive Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use it for vinyl floors that need a pressure-sensitive rather than hard-set bond."
+  },
+  "roberts-7350": {
+    "blurb": "All-purpose adhesive for vinyl flooring installs, available in 946 mL, 1 gallon, and 4 gallon sizes.",
+    "name": "Roberts Universal Flooring Adhesive",
+    "picker": "Size",
+    "why": "Pick it as a general-purpose vinyl adhesive for most standard installs."
+  },
+  "roberts-aquabar-b": {
+    "blurb": "7 mil moisture barrier roll for laminate, engineered, and solid hardwood floors, covering 500 sq ft per roll.",
+    "name": "Roberts Aquabar B Tile Underlayment Roll",
+    "picker": "Size",
+    "why": "Roll it out under flooring where a moisture barrier is called for."
+  },
+  "roberts-black-jack": {
+    "blurb": "2.5 mm foam underlayment for laminate and engineered hardwood floors, sold in 100 sq ft and 600 sq ft rolls.",
+    "name": "Roberts Black Jack Underlayment",
+    "picker": "Size",
+    "why": "Choose the larger roll for whole-house jobs to cut down on seams."
+  },
+  "roberts-first-step": {
+    "blurb": "2 mm foam underlayment with a built-in vapour barrier for laminate and engineered hardwood floors. Sold in 100 sq ft and 630 sq ft rolls.",
+    "name": "Roberts First Step 3-in-1 Underlayment",
+    "picker": "Size",
+    "why": "Use it when you need underlayment and vapour barrier in one product."
+  },
+  "roberts-floor-roller": {
+    "blurb": "35 lb roller for pressing vinyl and linoleum flooring flat after adhesive is applied, removing trapped air and ensuring full contact.",
+    "name": "Roberts Vinyl Flooring Roller",
+    "picker": "Size",
+    "why": "Roll the floor right after adhesive spread to seat vinyl and squeeze out air."
+  },
+  "roberts-install-kit": {
+    "blurb": "Tapping block, pull bar and spacers for click-together floors. Choose the Pro kit for vinyl, laminate and hardwood, or the tongue and groove kit for solid and engineered wood.",
+    "name": "Roberts Flooring Installation Kit",
+    "picker": "Type",
+    "why": "Grab this before starting any floating floor install so you are not hunting for tools mid-job."
+  },
+  "roberts-moisture-barricade": {
+    "blurb": "6-mil poly sheeting laid under floating engineered and laminate floors on concrete subfloors to block moisture from below.",
+    "name": "Roberts Moisture Barricade Poly Vapour Barrier",
+    "picker": "Size",
+    "why": "Always run this under a floating floor over concrete, even if the slab looks dry."
+  },
+  "roberts-nose-bond": {
+    "blurb": "Adhesive built to bond stair nose trim to wood, laminate and rigid PVC flooring.",
+    "name": "Roberts Nose Bond Stair Nose Adhesive",
+    "picker": "Size",
+    "why": "Use it when installing stair nose pieces that need a strong, lasting bond to the subfloor edge."
+  },
+  "roberts-quiet-cushion": {
+    "blurb": "Premium acoustic underlayment roll for laminate and engineered hardwood floors, cutting down on impact and airborne sound.",
+    "name": "Roberts Quiet Cushion Acoustical Underlayment",
+    "picker": "Size",
+    "why": "Choose this when the job calls for extra sound control, such as condos or upper floors."
+  },
+  "roberts-repair-putty": {
+    "blurb": "Fill scratches, chips and gouges in wood, laminate and vinyl flooring. Available in shades to match light, dark and neutral floor colours.",
+    "name": "Roberts Quick-Repair Putty",
+    "picker": "Colour",
+    "why": "Keep a tube on hand for touching up nicks and scratches after the install is done."
+  },
+  "roberts-serenity": {
+    "blurb": "Basic foam underlayment for laminate floors. Pair it with a poly moisture barrier when installing over concrete.",
+    "name": "Roberts Serenity Foam Underlayment",
+    "picker": "Size",
+    "why": "Use for a straightforward foam cushion under laminate where moisture protection is handled separately."
+  },
+  "roberts-soft-stride": {
+    "blurb": "Sound-dampening underlayment roll for laminate and engineered hardwood floors, 0.08 inch thick.",
+    "name": "Roberts Soft Stride Sound Reducing Cushion Underlayment",
+    "picker": "Size",
+    "why": "Reach for this when a floating floor install needs impact sound reduction underfoot."
+  },
+  "roberts-soundbarricade": {
+    "blurb": "Sound control underlayment roll for vinyl, laminate and wood flooring installs.",
+    "name": "Roberts SoundBarricade Underlayment",
+    "picker": "Size",
+    "why": "Specify this on jobs where noise transmission between floors is a concern."
+  },
+  "roberts-super-felt": {
+    "blurb": "3 mm felt underlayment roll for laminate and engineered hardwood floors, 44 inches wide by 27.3 feet long.",
+    "name": "Roberts Super Felt Underlayment",
+    "picker": "Size",
+    "why": "Use as a cushioning layer under laminate or engineered wood where felt is the preferred underlayment type."
+  },
+  "roberts-tapping-block": {
+    "blurb": "Tool for setting laminate and vinyl click-lock planks tight without damaging the edges. Choose the standard block or the reversible DoubleTap for two plank widths.",
+    "name": "Roberts Tapping Block",
+    "picker": "Size",
+    "why": "Use to close plank joints without marring the edge profile during install."
+  },
+  "roberts-unison": {
+    "blurb": "Combined foam and moisture barrier underlayment roll for floating vinyl and laminate floors.",
+    "name": "Roberts Unison 2-in-1 Underlayment",
+    "picker": "Size",
+    "why": "Pick this to cover cushioning and moisture protection in a single layer."
+  },
+  "roberts-universal-repair-kit": {
+    "blurb": "All-in-one repair kit for fixing chips, scratches and gouges across laminate, engineered hardwood, solid hardwood and vinyl flooring.",
+    "name": "Roberts Universal Repair Kit",
+    "picker": "Size",
+    "why": "Keep one on the truck to handle repair calls across any floor type."
+  },
+  "romus-cold-weld": {
+    "blurb": "Liquid seam sealer that fuses vinyl seams and cut edges for a clean, tight finish.",
+    "name": "Romus PVC Cold-Weld Seam Sealer",
+    "picker": "Size",
+    "why": "Use along seams and cut edges on vinyl sheet or plank installs to keep moisture and dirt out."
+  },
+  "shoe_d03": {
+    "blurb": "1/2 inch by 1 3/4 inch doorstop moulding, sold in 10 foot lengths.",
+    "name": "Toucan Doorstop Moulding",
+    "picker": "Size",
+    "why": "Use to trim door frames where a flat doorstop profile is needed."
+  },
+  "shoe_d04": {
+    "blurb": "3/8 inch by 1 3/8 inch bevel doorstop moulding, sold in 10 foot lengths.",
+    "name": "Toucan Bevel Doorstop Moulding 1⅜",
+    "picker": "Size",
+    "why": "Use where a beveled doorstop profile fits the door frame detail."
+  },
+  "shoe_d05": {
+    "blurb": "3/8 inch by 1 3/4 inch bevel doorstop moulding, sold in 10 foot lengths.",
+    "name": "Toucan Bevel Doorstop Moulding 1¾",
+    "picker": "Size",
+    "why": "Use where a wider beveled doorstop profile is called for."
+  },
+  "shoe_d06": {
+    "blurb": "3/8 inch by 1 1/4 inch flat doorstop moulding, sold in 10 foot lengths.",
+    "name": "Toucan Flat Doorstop Moulding 1¼",
+    "picker": "Size",
+    "why": "Use for a slim flat doorstop profile on door frames."
+  },
+  "shurfast-staple-16ga": {
+    "blurb": "16-gauge staples for stapling down solid and engineered hardwood flooring, packed 10000 per box in three lengths.",
+    "name": "Shur-Fast 16-Gauge Flooring Staples",
+    "picker": "Size",
+    "why": "Match the staple length to your flooring thickness for a solid, secure fasten."
+  },
+  "sika-layer-03": {
+    "blurb": "Sound-absorbing acoustic mat for engineered hardwood and laminate floors, sold in a 269 sq ft roll.",
+    "name": "Sika Layer-03 Acoustic Mat",
+    "picker": "Size",
+    "why": "Use where acoustic performance specs matter, such as multi-unit buildings."
+  },
+  "sika-level-01": {
+    "blurb": "Primer for subfloor prep before self-levelling and patching compounds, available in 1 gallon and 5 gallon sizes.",
+    "name": "Sika Level-01 Primer",
+    "picker": "Size",
+    "why": "Apply before self-levelling underlayment to improve bond and reduce pinholing."
+  },
+  "sika-level-115": {
+    "blurb": "A skim coat compound for smoothing minor subfloor imperfections before flooring goes down. Sold in a 10 lb bag.",
+    "name": "Sika SikaLevel-115 Skim Coat",
+    "picker": "Size",
+    "why": "Reach for this when the subfloor just needs a light skim, not a full self-leveling pour."
+  },
+  "sika-level-125": {
+    "blurb": "A polymer-modified, hi-flow self-leveling underlayment that fills and flattens subfloors ahead of flooring installation. Sold in a 50 lb bag.",
+    "name": "Sika Level 125 Polymer-Modified Hi Flow Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Use this on uneven concrete or wood subfloors that need a smooth, flowable pour before install."
+  },
+  "sika-level-250": {
+    "blurb": "A self-leveling underlayment for flattening and smoothing subfloors before installing any flooring type. Sold in a 50 lb bag.",
+    "name": "Sika Level 250 Self-Leveling Underlayment",
+    "picker": "Size",
+    "why": "Grab this to correct low spots and level a subfloor before install."
+  },
+  "sika-t21": {
+    "blurb": "A polyurethane wood flooring adhesive for gluing down engineered and solid hardwood over subfloor. Sold by the pail.",
+    "name": "Sika Sikabond-T21 All-In-One Polyurethane Adhesive",
+    "picker": "Size",
+    "why": "Choose this for a full-spread glue-down install of hardwood or engineered flooring."
+  },
+  "sika-t35": {
+    "blurb": "A polyurethane adhesive for gluing down engineered and solid hardwood floors. Sold in a 5 gal pail.",
+    "name": "Sika Sikabond T35 Polyurethane Adhesive for Wood Flooring",
+    "picker": "Size",
+    "why": "Pick this for standard glue-down hardwood installs over concrete or wood subfloors."
+  },
+  "sika-t55": {
+    "blurb": "A low VOC polyurethane adhesive built for gluing down engineered and solid hardwood floors. Sold in a 5 gal pail.",
+    "name": "Sika Sikabond T55 Low VOC Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Choose this when a low VOC adhesive is required for the job site or client."
+  },
+  "sixpoints-flush": {
+    "blurb": "A 4 inch by 10 inch wood floor vent finished to match engineered and solid hardwood flooring. Choose red oak, white oak, or maple to match your floor.",
+    "name": "Six Points Wood Floor Vent 4x10",
+    "picker": "Colour",
+    "why": "Match the vent to your wood species so the register blends into the floor instead of standing out."
+  },
+  "spacers": {
+    "blurb": "Spacers that hold laminate and vinyl planks off the wall to maintain an even expansion gap during install. Choose fixed plastic spacers or adjustable ones.",
+    "name": "Floor Spacers",
+    "picker": "Type",
+    "why": "Use these to set a consistent expansion gap along walls before the baseboard goes back on."
+  },
+  "spreader-9in": {
+    "blurb": "A 9 inch notched trowel for spreading vinyl flooring adhesive evenly across the subfloor. Available in several V-notch and square-notch sizes.",
+    "name": "Richard 9 Inch Adhesive Spreader",
+    "picker": "Profile",
+    "why": "Pick the notch size that matches your adhesive manufacturer's coverage spec."
+  },
+  "stair_nosing": {
+    "blurb": "Standard 8ft piece finishing a stair edge or landing drop-off.",
+    "name": "Toucan Stair Nosing",
+    "picker": "Size",
+    "why": "Use this to cap and finish the leading edge of a stair tread or landing."
+  },
+  "subfloor-screws": {
+    "blurb": "Screws for fastening subfloor and underlayment panels securely before flooring install. Choose length and pack size to suit the job.",
+    "name": "Subfloor and Underlayment Screws",
+    "picker": "Type",
+    "why": "Use these to eliminate squeaks and secure subfloor or underlayment panels before flooring goes down."
+  },
+  "subfloor-shims": {
+    "blurb": "Shims for leveling low spots in a subfloor before installing underlayment or flooring. Sold in a pack of 24.",
+    "name": "Barricade Subfloor Leveling Shims",
+    "picker": "Size",
+    "why": "Use these to shim out minor high and low spots before laying underlayment."
+  },
+  "surface-shields-film": {
+    "blurb": "Adhesive-backed film that protects finished floors and carpet from dust, foot traffic, and debris during a job. Choose multi-surface film or carpet-specific shield in two roll lengths.",
+    "name": "Surface Shields Protection Film and Carpet Shield",
+    "picker": "Type",
+    "why": "Roll this out to keep finished floors and existing carpet protected while you work."
+  },
+  "t_moulding": {
+    "blurb": "Standard 8ft piece for doorways and room-to-room transitions between floors of equal height.",
+    "name": "Toucan T-Moulding",
+    "picker": "Size",
+    "why": "Use this to transition between two floors that sit at the same height."
+  },
+  "tenco-deccobond-18": {
+    "blurb": "An adhesive for gluing tongue and groove joints on engineered and solid hardwood and laminate flooring. Sold in a 500 mL tube.",
+    "name": "Tenco Westech Deccobond 18 Tongue and Groove Wood Flooring Adhesive",
+    "picker": "Size",
+    "why": "Use this in the tongue and groove joint to tighten seams and add strength to the install."
+  },
+  "tenco-deccobond-38": {
+    "blurb": "A repair adhesive for fixing loose boards, cracks, and damage in engineered and solid hardwood floors. Sold in a 500 mL tube.",
+    "name": "Tenco Westech Deccobond 38 Wood Floor Repair Adhesive",
+    "picker": "Size",
+    "why": "Reach for this to repair squeaks, loose boards, or cracks in an existing hardwood floor."
+  },
+  "toolway-laminate-repair-kit": {
+    "blurb": "A repair kit for filling chips, scratches, and gouges in laminate, engineered, and solid hardwood flooring.",
+    "name": "Toolway Timber and Laminate Repair Kit",
+    "picker": "Size",
+    "why": "Keep this on hand for quick touch-up repairs on site instead of replacing a board."
+  },
+  "toolway-vpro-film": {
+    "blurb": "A 0.05 mm self-adhering film that protects finished floors from dust, dirt, and traffic during construction. Available in 161 sq ft and 323 sq ft rolls.",
+    "name": "Toolway Tooltech V-Pro Surface Protection Film",
+    "picker": "Size",
+    "why": "Lay this down before other trades come through to keep the finished floor scratch and dust free."
+  },
+  "toolway-wax-paper": {
+    "blurb": "Rosin/wax paper under nail-down solid hardwood. 750 sq ft roll.",
+    "name": "Toolway Wax Paper Underlayment",
+    "picker": "Size",
+    "why": "Roll this out under nail-down solid hardwood to cut down on squeaks and moisture transfer."
+  },
+  "toucan-baseboard-bevel-step": {
+    "blurb": "5/8 inch by 7 1/4 inch by 10ft bevel step baseboard for finishing the wall line after flooring install. Choose 5 1/4 inch or 7 inch height.",
+    "name": "Toucan Bevel Step Baseboard",
+    "picker": "Size",
+    "why": "Pick the height that matches the room's existing trim profile."
+  },
+  "toucan-baseboard-colonial": {
+    "blurb": "1/2 inch by 5.5 inch by 10 ft baseboard in the most common residential profile. Choose 4 inch or 5.5 inch to match your room's scale.",
+    "name": "Toucan Colonial Baseboard",
+    "picker": "Size",
+    "why": "Reach for this when you want a classic, safe profile that suits most homes."
+  },
+  "toucan-baseboard-flat-stock": {
+    "blurb": "5/8 inch by 7.25 inch by 10 ft flat profile baseboard for a clean, modern look. Available in 5.25 inch and 7.25 inch heights.",
+    "name": "Toucan Flat Stock Baseboard",
+    "picker": "Size",
+    "why": "Pick this for a simple, contemporary baseboard with no curves or steps."
+  },
+  "toucan-baseboard-two-step": {
+    "blurb": "5/8 inch by 7.25 inch by 10 ft baseboard with a two-step detail for added trim character. Available in 5.25 inch and 7.25 inch heights.",
+    "name": "Toucan Two-Step Baseboard",
+    "picker": "Size",
+    "why": "Choose this when the room calls for more detail than a flat profile gives."
+  },
+  "toucan-doorstop-1-25": {
+    "blurb": "1/2 inch by 1.25 inch doorstop moulding for door jambs and stops. Sold in 7 ft and 10 ft lengths.",
+    "name": "Toucan Doorstop Moulding",
+    "picker": "Length",
+    "why": "Use this to finish or replace door stops on interior door frames."
+  },
+  "underpad_2_5_white": {
+    "blurb": "Budget standard underlay for laminate floors, 200 sq ft per roll. IIC 52 and STC 66 for basic sound control.",
+    "name": "Toucan 2.5mm White Foam Underpad",
+    "picker": "Size",
+    "why": "Pick this for a straightforward, cost-conscious laminate install."
+  },
+  "underpad_3_black": {
+    "blurb": "Quieter underfoot with a built in moisture barrier, 200 sq ft per roll. Best for condos, upper floors and basements under laminate or vinyl. IIC 72 and STC 73.",
+    "name": "Toucan 3mm Black Acoustic Underpad",
+    "picker": "Size",
+    "why": "Our pick when sound control and moisture protection both matter."
+  },
+  "underpad_5_airflow": {
+    "blurb": "Dimpled air-gap underlay for max moisture protection over concrete or basement subfloors, 100 sq ft per roll. Works under laminate or vinyl. IIC 72 and STC 73.",
+    "name": "Toucan 5mm Airflow Bubble Underpad",
+    "picker": "Size",
+    "why": "Use this over concrete or in basements where moisture is a real concern."
+  }
+}

@@ -27,6 +27,22 @@ import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 import { Analytics } from '@/components/analytics';
 import { SUPPLIES_FULFILMENT_STRIP } from '@/lib/fulfilment';
+import { familyUrl, stockInfo } from '@/lib/supplyFamilies';
+
+// S5 (Sep 12 2026): `sections[].items` are now FAMILIES (lib/supplyFamilies
+// buildFamilies shape) — one card per family, not per SKU. A single-member
+// family keeps the inline qty + Add (its `primary` item is the cart line); a
+// multi-member family sends the buyer to the family page to pick a size /
+// colour, because a cart line must always be a real SKU.
+const TONE = {
+  emerald: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+  amber: 'bg-amber-50 border-amber-200 text-amber-800',
+  slate: 'bg-slate-100 border-slate-200 text-slate-600',
+};
+function priceLabel(fam) {
+  if (fam.priceLow == null) return null;
+  return fam.isMulti && fam.priceLow !== fam.priceHigh ? `from $${fam.priceLow.toFixed(2)}` : `$${fam.priceLow.toFixed(2)}`;
+}
 
 const UNIT_PLURAL = { gal: 'gal', pail: 'pails', bag: 'bags', roll: 'rolls', tube: 'tubes', each: 'pieces', kit: 'kits', piece: 'pieces' };
 
@@ -92,22 +108,25 @@ export default function SuppliesShopClient({ sections }) {
     }
   };
 
-  const renderCard = (item) => {
+  const renderCard = (fam) => {
+    const item = fam.primary;
     const qty = quantities[item.key] || 0;
-    const cov = coverageLine(item);
+    const cov = fam.isMulti ? null : coverageLine(item);
+    const tier = stockInfo(fam.bestTier);
+    const href = familyUrl(fam);
     return (
       <Card
-        key={item.key}
-        className={`overflow-hidden ${item.recommended ? 'border-emerald-300 ring-1 ring-emerald-200' : 'border-slate-200'}`}
+        key={fam.slug}
+        className={`overflow-hidden flex flex-col ${fam.recommended ? 'border-emerald-300 ring-1 ring-emerald-200' : 'border-slate-200'}`}
       >
         <button
           type="button"
-          onClick={() => setZoomItem(item)}
+          onClick={() => setZoomItem(fam)}
           className="relative block w-full aspect-square bg-slate-50 group focus:outline-none focus:ring-2 focus:ring-amber-400"
-          aria-label={`View ${item.label}`}
+          aria-label={`View ${fam.name}`}
         >
-          {item.image ? (
-            <img src={item.image} alt={item.label} className="w-full h-full object-cover" loading="lazy" />
+          {fam.image ? (
+            <img src={fam.image} alt={fam.name} className="w-full h-full object-cover" loading="lazy" />
           ) : (
             <span className="w-full h-full flex flex-col items-center justify-center gap-1 text-slate-400">
               <Package className="w-8 h-8" />
@@ -117,45 +136,60 @@ export default function SuppliesShopClient({ sections }) {
           <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors">
             <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
           </span>
-          {item.recommended && (
+          {fam.recommended && (
             <span className="absolute top-2 left-2 rounded-full bg-emerald-600 text-white text-[10px] font-semibold px-2 py-0.5">
               BEST VALUE
             </span>
           )}
-        </button>
-        <CardContent className="p-4">
-          {item.code ? (
-            <Link href={`/flooring-accessories/${item.code}`} className="font-semibold text-slate-800 text-sm leading-snug hover:text-amber-700 hover:underline">
-              {item.label}
-            </Link>
-          ) : (
-            <div className="font-semibold text-slate-800 text-sm leading-snug">{item.label}</div>
+          {fam.isMulti && (
+            <span className="absolute top-2 right-2 rounded-full bg-white/90 border border-slate-200 text-slate-700 text-[10px] font-semibold px-2 py-0.5">
+              {fam.optionCount} options
+            </span>
           )}
-          {item.pack_size && <div className="text-[11px] text-slate-400 mt-0.5">{item.pack_size}</div>}
-          {item.blurb && <p className="text-xs text-slate-500 mt-1 leading-relaxed">{item.blurb}</p>}
+        </button>
+        <CardContent className="p-4 flex flex-col flex-1">
+          {fam.brand && !fam.name.startsWith(fam.brand) && (
+            <div className="text-[10px] font-semibold uppercase tracking-wide text-amber-700">{fam.brand}</div>
+          )}
+          <Link href={href} className="font-semibold text-slate-800 text-sm leading-snug hover:text-amber-700 hover:underline">
+            {fam.name}
+          </Link>
+          {!fam.isMulti && item.pack_size && <div className="text-[11px] text-slate-400 mt-0.5">{item.pack_size}</div>}
+          {fam.blurb && <p className="text-xs text-slate-500 mt-1 leading-relaxed line-clamp-3">{fam.blurb}</p>}
           {cov && <p className="text-xs text-amber-700 font-medium mt-1.5 leading-snug">{cov}</p>}
           <div className="mt-3 flex items-baseline gap-1">
-            <span className="text-lg font-bold text-slate-900">${item.price.toFixed(2)}</span>
-            <span className="text-xs text-slate-500">/ {item.unit}</span>
+            <span className="text-lg font-bold text-slate-900">{priceLabel(fam)}</span>
+            {!fam.isMulti && <span className="text-xs text-slate-500">/ {item.unit}</span>}
           </div>
-          <div className="mt-3 flex items-center gap-2">
-            <Input
-              type="number"
-              min="0"
-              inputMode="numeric"
-              value={qty || ''}
-              placeholder="Qty"
-              onChange={(e) => setQty(item.key, Math.max(0, parseInt(e.target.value) || 0))}
-              className="h-9 w-20"
-              aria-label={`Quantity of ${item.label}`}
-            />
-            <Button
-              type="button"
-              onClick={() => handleAdd(item)}
-              className="h-9 flex-1 bg-amber-600 hover:bg-amber-700 text-white"
-            >
-              <Plus className="w-4 h-4 mr-1" /> Add
-            </Button>
+          <span className={`mt-2 inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold ${TONE[tier.tone]}`}>
+            {tier.short}
+          </span>
+          <div className="mt-auto pt-3">
+            {fam.isMulti ? (
+              <Button asChild className="h-9 w-full bg-amber-600 hover:bg-amber-700 text-white">
+                <Link href={href}>Choose {fam.picker.toLowerCase()}</Link>
+              </Button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Input
+                  type="number"
+                  min="0"
+                  inputMode="numeric"
+                  value={qty || ''}
+                  placeholder="Qty"
+                  onChange={(e) => setQty(item.key, Math.max(0, parseInt(e.target.value) || 0))}
+                  className="h-9 w-20"
+                  aria-label={`Quantity of ${fam.name}`}
+                />
+                <Button
+                  type="button"
+                  onClick={() => handleAdd(item)}
+                  className="h-9 flex-1 bg-amber-600 hover:bg-amber-700 text-white"
+                >
+                  <Plus className="w-4 h-4 mr-1" /> Add
+                </Button>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -185,26 +219,32 @@ export default function SuppliesShopClient({ sections }) {
             <div>
               <div className="bg-slate-50 aspect-square flex items-center justify-center">
                 {zoomItem.image ? (
-                  <img src={zoomItem.image} alt={zoomItem.label} className="w-full h-full object-contain" />
+                  <img src={zoomItem.image} alt={zoomItem.name} className="w-full h-full object-contain" />
                 ) : (
                   <Package className="w-16 h-16 text-slate-300" />
                 )}
               </div>
               <div className="p-5">
-                <div className="font-semibold text-slate-900">{zoomItem.label}</div>
+                <div className="font-semibold text-slate-900">{zoomItem.name}</div>
                 {zoomItem.blurb && <p className="text-sm text-slate-500 mt-1">{zoomItem.blurb}</p>}
-                {coverageLine(zoomItem) && <p className="text-xs text-amber-700 font-medium mt-1.5">{coverageLine(zoomItem)}</p>}
+                {!zoomItem.isMulti && coverageLine(zoomItem.primary) && <p className="text-xs text-amber-700 font-medium mt-1.5">{coverageLine(zoomItem.primary)}</p>}
                 <div className="mt-3 flex items-center justify-between">
                   <span className="text-lg font-bold text-slate-900">
-                    ${zoomItem.price.toFixed(2)} <span className="text-xs font-normal text-slate-500">/ {zoomItem.unit}</span>
+                    {priceLabel(zoomItem)} {!zoomItem.isMulti && <span className="text-xs font-normal text-slate-500">/ {zoomItem.primary.unit}</span>}
                   </span>
-                  <Button
-                    type="button"
-                    onClick={() => { handleAdd(zoomItem, quantities[zoomItem.key] || 1); setZoomItem(null); }}
-                    className="bg-amber-600 hover:bg-amber-700 text-white"
-                  >
-                    <Plus className="w-4 h-4 mr-1" /> Add to Cart
-                  </Button>
+                  {zoomItem.isMulti ? (
+                    <Button asChild className="bg-amber-600 hover:bg-amber-700 text-white">
+                      <Link href={familyUrl(zoomItem)}>Choose {zoomItem.picker.toLowerCase()}</Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      onClick={() => { handleAdd(zoomItem.primary, quantities[zoomItem.primary.key] || 1); setZoomItem(null); }}
+                      className="bg-amber-600 hover:bg-amber-700 text-white"
+                    >
+                      <Plus className="w-4 h-4 mr-1" /> Add to Cart
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
