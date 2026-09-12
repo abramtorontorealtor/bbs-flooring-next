@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { locationData } from '@/data/locationData';
 import { getProductsForGrid } from '@/lib/products-server';
 import { JsonLd, faqSchema } from '@/lib/schemas';
-import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from '@/lib/service-constants';
+import { GOOGLE_RATING, GOOGLE_REVIEW_COUNT, GOOGLE_MAPS_URL } from '@/lib/service-constants';
 import LocationProductGrid from '@/components/LocationProductGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getLocationBreadcrumbs } from '@/lib/breadcrumbs';
@@ -76,7 +76,7 @@ export default async function LocationPage({ params }) {
             ],
             ...(data.isFlagship ? {
               priceRange: '$$',
-              hasMap: 'https://www.google.com/maps?cid=9896263526048495139',
+              hasMap: GOOGLE_MAPS_URL,
               openingHoursSpecification: [
                 { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '17:00' },
               ],

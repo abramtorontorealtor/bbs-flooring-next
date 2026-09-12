@@ -9,7 +9,7 @@ import { CheckCircle, Star, ArrowRight, DollarSign, Shield } from 'lucide-react'
 import { stairsImages } from '@/data/galleryImages';
 import RelatedCategories from '@/components/RelatedCategories';
 import StaticFAQ from '@/components/StaticFAQ';
-import { GOOGLE_RATING } from '@/lib/service-constants';
+import { GOOGLE_RATING, GOOGLE_REVIEWS_URL } from '@/lib/service-constants';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -254,7 +254,7 @@ export default function StairsClient() {
           </div>
 
           <div className="mt-6 text-center">
-            <a href="https://g.page/r/CWJpmP-Dl-g4EBM/review" target="_blank" rel="noopener noreferrer" className="text-amber-600 hover:text-amber-700 font-semibold underline">
+            <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="text-amber-600 hover:text-amber-700 font-semibold underline">
               Read our reviews on Google →
             </a>
           </div>

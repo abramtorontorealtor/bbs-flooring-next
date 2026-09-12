@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
-import { GOOGLE_RATING, CDN_GALLERY, PHONE_HREF, PHONE_DISPLAY, SERVICE_AREAS } from '@/lib/service-constants';
+import { GOOGLE_RATING, GOOGLE_REVIEWS_URL, CDN_GALLERY, PHONE_HREF, PHONE_DISPLAY, SERVICE_AREAS } from '@/lib/service-constants';
 import { PhoneIcon, CheckIcon, StarIcon } from '@/components/service';
 import { MobileStickyBtn } from '@/components/service';
 
@@ -407,7 +407,7 @@ export default function ContractorFlooringClient() {
           </div>
 
           <a
-            href="https://www.google.com/maps/place/BBS+Flooring/@43.8576,-79.2891,17z/"
+            href={GOOGLE_REVIEWS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-amber-600 font-semibold mt-6 hover:text-amber-700 transition-colors"

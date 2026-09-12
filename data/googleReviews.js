@@ -6,10 +6,12 @@
  * To update: run `python scripts/refresh-reviews.py` from workspace root
  */
 
+import { GOOGLE_REVIEWS_URL } from '@/lib/service-constants';
+
 export const GOOGLE_REVIEW_STATS = {
   averageRating: 4.8,
   totalReviews: 54,
-  googleMapsUrl: 'https://www.google.com/maps/place/BBS+Flooring/@43.8561,-79.3372,17z/data=!4m8!3m7!1s0x89d4d5ea9cb856cb:0xd76bc69a2c9e3c3b!8m2!3d43.856092!4d-79.334618!9m1!1b1!16s%2Fg%2F11c1jn5n06',
+  googleMapsUrl: GOOGLE_REVIEWS_URL, // all-reviews view of OUR GBP (was a wrong place ID)
 };
 
 export const GOOGLE_REVIEWS = [

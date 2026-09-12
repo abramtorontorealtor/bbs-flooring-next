@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GOOGLE_RATING } from '@/lib/service-constants';
+import { GOOGLE_RATING, GOOGLE_REVIEWS_URL } from '@/lib/service-constants';
 import { StarIcon } from './ServiceIcons';
 
 /**
@@ -42,7 +42,7 @@ export default function GoogleReviews({ title = 'What Our Customers Say', review
 
         <div className="text-center mt-6">
           <Link
-            href="https://www.google.com/maps/place/BBS+Flooring/@43.8476,-79.3252,17z"
+            href={GOOGLE_REVIEWS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="text-amber-600 hover:text-amber-700 font-semibold text-sm underline underline-offset-2"

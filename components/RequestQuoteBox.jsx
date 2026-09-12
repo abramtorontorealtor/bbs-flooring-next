@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
 import { callUrl, smsUrl, whatsappUrl, PHONE_DISPLAY } from '@/lib/contact';
+import { GOOGLE_MAPS_URL } from '@/lib/service-constants';
 
 export default function RequestQuoteBox({ product, selectedVariant = null, pricePerSqft = null }) {
   const isMTO = !!selectedVariant?.made_to_order;
@@ -321,7 +322,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null, price
           <span className="text-[10px] text-slate-400 text-center leading-tight">We&apos;ll bring samples</span>
         </Link>
         <a
-          href="https://www.google.com/maps/place/BBS+Flooring/@43.8476,-79.3252,17z"
+          href={GOOGLE_MAPS_URL}
           target="_blank" rel="noopener noreferrer"
           className="flex flex-col items-center gap-1 p-3 bg-slate-50 rounded-xl border border-slate-200 hover:border-amber-300 hover:bg-amber-50 transition-all group"
         >
