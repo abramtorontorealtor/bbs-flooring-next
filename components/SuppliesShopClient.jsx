@@ -17,6 +17,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -122,7 +123,13 @@ export default function SuppliesShopClient({ sections }) {
           )}
         </button>
         <CardContent className="p-4">
-          <div className="font-semibold text-slate-800 text-sm leading-snug">{item.label}</div>
+          {item.code ? (
+            <Link href={`/flooring-accessories/${item.code}`} className="font-semibold text-slate-800 text-sm leading-snug hover:text-amber-700 hover:underline">
+              {item.label}
+            </Link>
+          ) : (
+            <div className="font-semibold text-slate-800 text-sm leading-snug">{item.label}</div>
+          )}
           {item.pack_size && <div className="text-[11px] text-slate-400 mt-0.5">{item.pack_size}</div>}
           {item.blurb && <p className="text-xs text-slate-500 mt-1 leading-relaxed">{item.blurb}</p>}
           {cov && <p className="text-xs text-amber-700 font-medium mt-1.5 leading-snug">{cov}</p>}

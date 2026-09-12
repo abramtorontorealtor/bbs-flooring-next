@@ -2,6 +2,7 @@ import { getSupabaseServerClient } from '@/lib/supabase';
 import { locationData } from '@/data/locationData';
 import { getAllCityProductSlugs } from '@/data/cityProductData';
 import { stairsImages, flooringImages, commercialImages } from '@/data/galleryImages';
+import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
 
 // Force dynamic rendering so Supabase queries run at request time (not build time)
 export const dynamic = 'force-dynamic';
@@ -41,6 +42,12 @@ export default async function sitemap() {
     { path: '/laminate', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/waterproof-flooring', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/flooring-accessories', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/flooring-accessories/adhesives-primers', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/flooring-accessories/subfloor-prep', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/flooring-accessories/underlay-moisture-barriers', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/flooring-accessories/floor-vents', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/flooring-accessories/installer-tools', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/flooring-accessories/calculator', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/waterproof-laminate-flooring', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/white-oak-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/vidar-flooring', priority: 0.7, changeFrequency: 'weekly' },
@@ -169,6 +176,28 @@ export default async function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.8,
     });
+  }
+
+  // ── Supply detail pages (S3, Sep 12 2026 — `supplies` table via
+  // lib/suppliesCatalog, same cached loader the pages themselves use) ──
+  try {
+    const catalog = await getSuppliesCatalog();
+    if (catalog.source === 'db') {
+      for (const item of catalog.items) {
+        if (!item.code) continue;
+        const entry = {
+          url: `${SITE_URL}/flooring-accessories/${item.code}`,
+          lastModified: now,
+          changeFrequency: 'weekly',
+          priority: 0.6,
+        };
+        const img = toAbsoluteImageUrl(item.image);
+        if (img) entry.images = [img];
+        entries.push(entry);
+      }
+    }
+  } catch (e) {
+    console.warn('Sitemap: could not fetch supplies catalog', e.message);
   }
 
   // ── Product pages (from Supabase) — with images ──

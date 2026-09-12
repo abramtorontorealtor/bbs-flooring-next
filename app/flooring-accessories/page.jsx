@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import SuppliesShopClient from '@/components/SuppliesShopClient';
-import { faqSchema, JsonLd } from '@/lib/schemas';
+import { faqSchema, JsonLd, SHOWROOM_PLACE } from '@/lib/schemas';
 import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
 
 export const revalidate = 3600;
@@ -10,23 +10,6 @@ export const metadata = {
   description:
     'Underlay, adhesives, primers, subfloor levelling, moisture barriers, floor vents, trim and baseboards to finish your floor. In-stock in Markham, priced per unit, add to your order online.',
   alternates: { canonical: '/flooring-accessories' },
-};
-
-// ── Showroom Place — reused on every supply Offer as a pickup-oriented
-// availableAtOrFrom (this is a pickup/attach catalog, not a shipped-anywhere
-// storefront — S4 will decide standalone fulfilment; S2 keeps schema honest
-// about where the stock physically is). ──
-const SHOWROOM_PLACE = {
-  '@type': 'Place',
-  name: 'BBS Flooring Showroom',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '6061 Highway 7, Unit B',
-    addressLocality: 'Markham',
-    addressRegion: 'ON',
-    postalCode: 'L3P 3B2',
-    addressCountry: 'CA',
-  },
 };
 
 const EXAMPLE_SQFT = 500;

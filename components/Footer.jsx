@@ -127,6 +127,36 @@ export default function Footer() {
                   Stairs
                 </Link>
               </li>
+              <li>
+                <Link href="/flooring-accessories" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  Accessories &amp; Supplies
+                </Link>
+              </li>
+              <li>
+                <Link href="/flooring-accessories/adhesives-primers" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  Adhesives &amp; Primers
+                </Link>
+              </li>
+              <li>
+                <Link href="/flooring-accessories/subfloor-prep" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  Subfloor Prep
+                </Link>
+              </li>
+              <li>
+                <Link href="/flooring-accessories/underlay-moisture-barriers" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  Underlay &amp; Moisture Barriers
+                </Link>
+              </li>
+              <li>
+                <Link href="/flooring-accessories/floor-vents" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  Floor Vents
+                </Link>
+              </li>
+              <li>
+                <Link href="/flooring-accessories/calculator" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  Supplies Calculator
+                </Link>
+              </li>
             </ul>
           </div>
 
