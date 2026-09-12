@@ -5,7 +5,7 @@ const data = {
   "isFlagship": true,
   "title": "Flooring Store in Markham | Showroom, Installation & Prices | BBS Flooring",
   "description": "BBS Flooring — Markham's local flooring store since 2012. 1,000+ hardwood, vinyl & laminate options from $1.49/sqft. Visit our Highway 7 showroom. Free estimates. (647) 428-1111.",
-  "content": "BBS Flooring is Markham's premier flooring specialist, located right on Highway 7 at Unit B, 6061. Since 2012, we've served Markham homeowners — from heritage homes in Unionville and family properties in Cornell to modern condos in Downtown Markham and executive homes in Cachet. Markham's diverse housing stock means we install everything from waterproof luxury vinyl plank in finished basements to wide-plank engineered hardwood in open-concept main floors. As your local showroom, we carry over 1,000 floors in stock and offer same-week installation for most products. Whether you're in Markham Village, Berczy, Wismer, or Cathedraltown, our installers know the area and deliver precision craftsmanship every time.",
+  "content": "BBS Flooring is Markham's premier flooring specialist, located right on Highway 7 at Unit B, 6061. Since 2012, we've served Markham homeowners — from heritage homes in Unionville and family properties in Cornell to modern condos in Downtown Markham and executive homes in Cachet. Markham's diverse housing stock means we install everything from waterproof luxury vinyl plank (LVP) and luxury vinyl tile (LVT) in finished basements and kitchens to wide-plank engineered hardwood in open-concept main floors. As your local showroom, we carry over 1,000 floors in stock and offer same-week installation for most products. Whether you're in Markham Village, Berczy, Wismer, or Cathedraltown, our installers know the area and deliver precision craftsmanship every time.",
   "landmarks": [
     "Unionville",
     "Downtown Markham",
@@ -21,7 +21,7 @@ const data = {
       "icon": "Hammer"
     },
     {
-      "name": "Vinyl & LVP Installation",
+      "name": "Vinyl, LVP & LVT Installation",
       "slug": "/installation",
       "icon": "Layers"
     },
@@ -227,6 +227,10 @@ const data = {
     {
       "q": "What flooring is best for Markham homes with pets?",
       "a": "For pet-friendly flooring in Markham, we recommend waterproof luxury vinyl plank (LVP) or scratch-resistant laminate. Both handle paw traffic, resist scratches, and are easy to clean. LVP starts from $1.89/sqft at BBS Flooring — visit our Highway 7 showroom to see samples."
+    },
+    {
+      "q": "Where can I buy LVT flooring in Markham?",
+      "a": "Right here — BBS Flooring stocks luxury vinyl tile (LVT) and luxury vinyl plank (LVP) at our Markham showroom, 6061 Highway 7, Unit B. LVT is the tile-shaped version of the same 100% waterproof luxury vinyl: stone and concrete looks in 12x24 and 18x36 formats, plus commercial loose-lay and dry-back LVT for offices, clinics and retail along the Highway 7 corridor. 100+ styles from $1.89/sqft, most in stock for same-week pickup or installation."
     },
     {
       "q": "How long does a full-home flooring installation take in Markham?",

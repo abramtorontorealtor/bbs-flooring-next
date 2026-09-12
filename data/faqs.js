@@ -165,7 +165,15 @@ export const VINYL_FAQS = [
   },
   {
     question: 'How much does vinyl flooring cost in Markham?',
-    answer: 'Vinyl flooring at BBS starts from $2.49/sqft for the material. Installation is typically $2.00-$2.25/sqft. Call (647) 428-1111 or book a free measurement for an accurate project quote.',
+    answer: 'Vinyl flooring at BBS starts from $1.89/sqft for the material, with clearance lines as low as $1.69/sqft while stock lasts. Installation is typically $2.00-$2.25/sqft. Call (647) 428-1111 or book a free measurement for an accurate project quote.',
+  },
+  {
+    question: 'What is the difference between LVT and LVP flooring?',
+    answer: 'LVT (luxury vinyl tile) and LVP (luxury vinyl plank) are the same waterproof luxury vinyl product in two shapes. LVT is cut as tiles (12x24 or 18x36) for stone and concrete looks; LVP is cut as long planks for wood looks. Both come with a rigid SPC core, both are 100% waterproof, and both install click-lock or glue-down. The right choice is about the look you want, not durability.',
+  },
+  {
+    question: 'Where can I buy LVT flooring in Markham?',
+    answer: 'BBS Flooring stocks LVT and LVP at our Markham showroom, 6061 Highway 7 (Unit B), with 100+ styles in stock from $1.89/sqft. That includes stone-look SPC vinyl tile for kitchens and baths, wood-look LVP for main floors and basements, and commercial loose-lay and dry-back LVT for offices, clinics and retail. Free in-home measurements across Markham and the GTA, installed by our own crews.',
   },
 ];
 

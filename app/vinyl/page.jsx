@@ -18,8 +18,8 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export async function generateMetadata() {
   const stats = await getCategoryPriceStats('vinyl');
   return {
-    title: `Vinyl Plank Flooring Markham | LVP & SPC from $${stats.lowPrice}/sqft`,
-    description: `Shop luxury vinyl plank (LVP) and SPC waterproof flooring in Markham from $${stats.lowPrice}/sqft. 100% waterproof, scratch-resistant. Perfect for basements, kitchens, bathrooms. Free in-home measurements across the GTA. Call (647) 428-1111.`,
+    title: `Vinyl Plank Flooring Markham | LVP, LVT & SPC from $${stats.lowPrice}/sqft`,
+    description: `Shop luxury vinyl plank (LVP), luxury vinyl tile (LVT) and SPC waterproof flooring in Markham from $${stats.lowPrice}/sqft. 100% waterproof, scratch-resistant. Perfect for basements, kitchens, bathrooms. Free in-home measurements across the GTA. Call (647) 428-1111.`,
     alternates: { canonical: '/vinyl' },
   };
 }
@@ -72,8 +72,8 @@ export default async function VinylPage() {
         {
           '@context': 'https://schema.org',
           '@type': 'Product',
-          name: 'Vinyl LVP & SPC Flooring',
-          description: `${stats.count} waterproof vinyl flooring options (LVP/SPC) from 6 brands. 100% waterproof, click-lock installation. Serving the Greater Toronto Area.`,
+          name: 'Vinyl LVP, LVT & SPC Flooring',
+          description: `${stats.count} waterproof luxury vinyl flooring options (LVP plank, LVT tile, SPC rigid core) from 6 brands. 100% waterproof, click-lock installation. Markham showroom, serving the Greater Toronto Area.`,
           category: 'Vinyl Flooring',
           brand: { '@type': 'Brand', name: 'BBS Flooring' },
           additionalProperty: { '@type': 'PropertyValue', name: 'Waterproof', value: 'Yes — 100% permanently waterproof' },
@@ -102,10 +102,10 @@ export default async function VinylPage() {
         {/* ── SSR Page Header ── */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
-            Vinyl Plank Flooring in Markham | LVP &amp; SPC
+            Vinyl Plank Flooring in Markham | LVP, LVT &amp; SPC
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl">
-            100% waterproof, scratch-resistant SPC &amp; LVP vinyl plank from <strong>${low}/sqft</strong> — shop online or visit our Markham showroom.
+            100% waterproof, scratch-resistant luxury vinyl — LVP plank, LVT tile and rigid-core SPC — from <strong>${low}/sqft</strong>. Shop online or visit our Markham showroom on Hwy 7.
           </p>
         </div>
 
@@ -183,7 +183,7 @@ export default async function VinylPage() {
             <h2 className="text-lg font-bold text-slate-800 mb-3">💰 Vinyl Pricing at BBS</h2>
             <div className="text-slate-700 text-sm space-y-2">
               <p>
-                <strong>Entry SPC (6mm):</strong> From $1.79/sqft — great for rental units.
+                <strong>Entry SPC (6mm):</strong> From ${low}/sqft — great for rental units.
               </p>
               <p>
                 <strong>Mid-Range (8mm):</strong> $2.49–$3.49/sqft — the most popular price point.
@@ -203,6 +203,34 @@ export default async function VinylPage() {
               Get an Instant Quote →
             </Link>
           </div>
+        </div>
+
+        {/* ── LVT vs LVP vs SPC (the "lvt markham" query cluster never saw the word LVT on this page) ── */}
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 mb-10 max-w-4xl">
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-3">LVT, LVP or SPC — What&apos;s the Difference?</h2>
+          <p className="text-slate-700 text-sm md:text-base leading-relaxed mb-4">
+            They&apos;re all <strong>luxury vinyl</strong> — the same waterproof family, just different shapes and cores. If you searched
+            &ldquo;LVT flooring Markham&rdquo; and landed here, you&apos;re in the right place: every floor on this page is LVT or LVP.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-4 text-sm text-slate-700">
+            <div className="rounded-xl bg-slate-50 border border-slate-100 p-4">
+              <p className="font-bold text-slate-900 mb-1">LVT — Luxury Vinyl Tile</p>
+              <p>Tile-shaped luxury vinyl: stone, concrete and slate looks in 12&times;24 and 18&times;36 formats. Glue-down and loose-lay LVT is the go-to for{' '}
+                <Link href="/commercial-vinyl-flooring" className="text-amber-700 font-semibold hover:underline">commercial and high-traffic floors</Link>;
+                click-lock LVT works in residential kitchens, baths and entries.</p>
+            </div>
+            <div className="rounded-xl bg-slate-50 border border-slate-100 p-4">
+              <p className="font-bold text-slate-900 mb-1">LVP — Luxury Vinyl Plank</p>
+              <p>Plank-shaped luxury vinyl with wood looks — the bestseller for Markham homes. Same waterproof construction as LVT, cut long and narrow like hardwood boards.</p>
+            </div>
+            <div className="rounded-xl bg-slate-50 border border-slate-100 p-4">
+              <p className="font-bold text-slate-900 mb-1">SPC — Stone Polymer Composite</p>
+              <p>Not a shape but a <em>core</em>: the rigid mineral core inside most modern LVP and LVT. SPC stays flat over imperfect concrete and shrugs off temperature swings — ideal for basements.</p>
+            </div>
+          </div>
+          <p className="text-slate-600 text-sm mt-4">
+            Our Markham showroom carries {stats.count ? `${stats.count}+` : '100+'} LVT and LVP styles from <strong>${low}/sqft</strong> — most in stock for same-week pickup or installation.
+          </p>
         </div>
 
         {/* ── SSR Financing Banner ── */}

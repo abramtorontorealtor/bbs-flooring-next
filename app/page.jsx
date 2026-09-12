@@ -73,7 +73,7 @@ const CATEGORIES = [
     title: 'Vinyl',
     image: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/categories/vinyl.webp',
     imageAlt: 'Vinyl Flooring - Luxury vinyl plank and tile',
-    description: 'Luxury vinyl plank and tile with waterproof protection.',
+    description: 'Luxury vinyl plank (LVP) and luxury vinyl tile (LVT) — 100% waterproof.',
   },
   {
     category: 'waterproof',
@@ -168,7 +168,7 @@ export default function HomePage() {
               <span className="text-amber-500">1,000+ Floors. Wholesale Prices.</span>
             </h1>
             <p className="text-base md:text-xl text-slate-300 mb-4 md:mb-6 leading-relaxed max-w-lg">
-              Laminate from $1.49 · Vinyl from $1.79 · Engineered hardwood from $3.29/sqft. Free in-home measurements. Installed by our own crew.
+              Laminate from $1.49 · Vinyl (LVP/LVT) from $1.89 · Engineered hardwood on sale from $3.00/sqft. Free in-home measurements. Installed by our own crew.
             </p>
             {/* ONE primary (amber) + ONE secondary. Phone lives in the top bar, the desktop card and the mobile sticky bar —
                 a third copy here was noise (D1/D8). Finder demoted to a text link so it stays in viewport 1 without competing. */}
@@ -276,7 +276,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
           <span className="text-lg">🔥</span>
           <p className="text-sm font-semibold">
-            <span className="font-bold">Lee Flooring Clearance — Real Engineered Oak from $3.29 &amp; 7mm Vinyl from $1.79/sqft.</span>{' '}
+            <span className="font-bold">Lee Flooring Clearance — Real Engineered Oak $3.49 &amp; 7mm Vinyl $1.79/sqft while stock lasts.</span>{' '}
             <Link href="/lee-flooring" className="underline underline-offset-2 hover:no-underline">Shop Lee Clearance →</Link>
           </p>
         </div>
