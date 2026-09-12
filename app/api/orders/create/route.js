@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib/email';
 import { sendTelegramAlert, formatOrderAlert } from '@/lib/telegram';
-import { priceAccessoryLine } from '@/lib/accessoryCatalog';
+import { getSuppliesCatalog, priceSupplyLine } from '@/lib/suppliesCatalog';
 
 async function generateOrderNumber(supabase) {
   // Sequential: BBS-10001, BBS-10002, etc. via Postgres sequence
@@ -72,6 +72,11 @@ export async function POST(request) {
     // opaque lump. (Fix Aug 14 2026: accessory/transition lines were saving a
     // flat line_total with no quantity — orders/emails/admin couldn't show
     // "12 × Reducer @ $25".)
+    // Supplies catalog (S2, Sep 12 2026): loaded ONCE per request, DB-backed
+    // with an in-memory static fallback (see lib/suppliesCatalog.js). Never
+    // let a DB hiccup zero out an order's accessory/supply lines.
+    const suppliesCatalog = await getSuppliesCatalog();
+
     let subtotal = 0;
     const normalizedItems = [];
     for (const it of orderData.items || []) {
@@ -87,12 +92,14 @@ export async function POST(request) {
         continue;
       }
 
-      // 2) Accessory / transition line — tagged (item_type) OR detected by SKU.
-      //    priceAccessoryLine handles BOTH shapes and returns a trusted total
-      //    from accessoryCatalog. The SKU fallback catches lines sent by a
-      //    checkout bundle loaded BEFORE the payload-tag fix deployed, so an
-      //    in-flight customer is billed correctly regardless of their browser.
-      const accTotal = priceAccessoryLine(it);
+      // 2) Accessory / transition / supply line — tagged (item_type) OR
+      //    detected by SKU. priceSupplyLine tries the original 21-Toucan +
+      //    2-legacy-Prosol resolver first (unchanged behavior), then falls
+      //    through to the live `supplies` table for every other Prosol SKU.
+      //    The SKU fallback catches lines sent by a checkout bundle loaded
+      //    BEFORE the payload-tag fix deployed, so an in-flight customer is
+      //    billed correctly regardless of their browser.
+      const accTotal = await priceSupplyLine(it, suppliesCatalog);
       if (accTotal != null && Number.isFinite(accTotal) && accTotal > 0) {
         const qty = Math.max(0, parseInt(it.transition_quantity ?? it.quantity ?? 0, 10) || 0);
         subtotal += accTotal;

@@ -37,7 +37,7 @@ import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 /* ── FAST_PICKUP_BRANDS — warehouse-stocked brands with quick turnaround ── */
 const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
 
-export default function ProductDetailClient({ slug, initialProduct = null, initialSiblings = [] }) {
+export default function ProductDetailClient({ slug, initialProduct = null, initialSiblings = [], suppliesCatalog = null }) {
   const router = useRouter();
   const { user: currentUser, isLoadingAuth } = useAuth();
   const authResolved = !isLoadingAuth;
@@ -924,6 +924,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
               floorSqft={calculation?.hasUserSqft ? calculation.sqftNeeded : null}
               onBrowseAll={scrollToAccessories}
               className="mt-4"
+              suppliesCatalog={suppliesCatalog}
             />
           )}
 

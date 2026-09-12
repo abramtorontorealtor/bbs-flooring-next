@@ -1,10 +1,19 @@
 'use client';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// AccessoriesShopClient — standalone add-to-cart grid for /flooring-accessories.
-// Reuses the SAME CartItem POST shape as the PDP AccessoryBox so the server
-// billing resolver (lib/accessoryCatalog.priceAccessoryLine) prices every line
-// correctly. No parent product here (standalone buyer), so parent_* is null.
+// SuppliesShopClient — standalone add-to-cart grid for /flooring-accessories.
+//
+// S2 (Sep 12 2026, memory/ACCESSORY-ATTACH-PLAN.md): replaces the old
+// AccessoriesShopClient (Toucan-only, hardcoded) with a DB-driven grid that
+// renders every `retail_approved` row in the `supplies` table — 21 Toucan +
+// 29 Prosol as of this build. `sections` is computed SERVER-SIDE from
+// lib/suppliesCatalog.getSuppliesCatalog() and passed down as a plain prop, so
+// this component never touches Supabase directly (keeps the DB round-trip
+// server-side + cached, per CODE-QUALITY.md's server-vs-client split).
+//
+// Reuses the SAME CartItem POST shape as the PDP AccessoryBox/InstallKit so the
+// server billing resolver (lib/suppliesCatalog.priceSupplyLine) prices every
+// line correctly. No parent product here (standalone buyer), so parent_* is null.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import React, { useState } from 'react';
@@ -12,33 +21,24 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Plus, ZoomIn } from 'lucide-react';
+import { Plus, ZoomIn, Package } from 'lucide-react';
 import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
-import { UNDERPAD_CATALOG, TRIM_CATALOG, BASEBOARD_CATALOG } from '@/lib/accessoryCatalog';
+import { Analytics } from '@/components/analytics';
 
-const SECTIONS = [
-  {
-    id: 'underlay',
-    title: 'Underlay & Moisture Barrier',
-    note: 'Sold per full roll. Underlay is mandatory under floating laminate — it soundproofs, cushions, and (on the 3mm black + 5mm airflow) blocks moisture from concrete or below-grade subfloors.',
-    items: Object.values(UNDERPAD_CATALOG),
-  },
-  {
-    id: 'quarter-round',
-    title: 'Shoe Moulding & Quarter Round',
-    note: 'Finishes the floor-to-baseboard gap for a clean edge. Sold per full piece.',
-    items: Object.values(TRIM_CATALOG),
-  },
-  {
-    id: 'baseboards',
-    title: 'Baseboards',
-    note: 'Paint-grade MDF, eight profiles. Sold per full 10ft piece.',
-    items: Object.values(BASEBOARD_CATALOG),
-  },
-];
+const UNIT_PLURAL = { gal: 'gal', pail: 'pails', bag: 'bags', roll: 'rolls', tube: 'tubes', each: 'pieces', kit: 'kits', piece: 'pieces' };
 
-export default function AccessoriesShopClient() {
+// "1 gal covers ~150 sqft → 500 sqft needs 4 gal" style line, computed live
+// from coverage_sqft — never a hand-typed number that can drift from the DB.
+const EXAMPLE_SQFT = 500;
+function coverageLine(item) {
+  if (!item.coverage_sqft) return null;
+  const needed = Math.ceil(EXAMPLE_SQFT / item.coverage_sqft);
+  const word = needed === 1 ? item.unit : (UNIT_PLURAL[item.unit] || `${item.unit}s`);
+  return `1 ${item.unit} covers ~${item.coverage_sqft} sqft \u2192 ${EXAMPLE_SQFT} sqft needs ${needed} ${word}`;
+}
+
+export default function SuppliesShopClient({ sections }) {
   const [quantities, setQuantities] = useState({});
   const [zoomItem, setZoomItem] = useState(null);
 
@@ -57,14 +57,15 @@ export default function AccessoriesShopClient() {
     const qty = qtyOverride != null ? qtyOverride : (quantities[item.key] || 0);
     if (qty <= 0) { toast.error('Please enter a quantity greater than 0'); return; }
     const sid = getSessionId();
+    const unitDesc = item.pack_size || (item.coverage_sqft ? `${item.coverage_sqft} sqft ${item.unit}` : `${item.unit}`);
     const data = {
       session_id: sid,
       item_type: 'accessory',
-      transition_type: item.key, // reused column: holds the accessory key
+      transition_type: item.key, // reused column: holds the accessory/supply key
       sku: item.key,
       quantity: qty,
       transition_quantity: qty,
-      product_name: `${item.label} (${item.unit === 'roll' ? item.coverage_sqft + ' sqft roll' : item.length_ft + 'ft'})`,
+      product_name: `${item.label} (${unitDesc})`,
       parent_product_id: null,
       parent_product_name: null,
       image_url: item.image,
@@ -72,9 +73,17 @@ export default function AccessoriesShopClient() {
     };
     try {
       await entities.CartItem.create(data);
-      toast.success(`Added ${qty}× ${item.label}`);
+      toast.success(`Added ${qty}\u00d7 ${item.label}`);
       setQty(item.key, 0);
       window.dispatchEvent(new Event('cartUpdated'));
+      // GA4 — mirrors the install_kit_add event shape (Sep 11 S1), tagged
+      // separately so hub-page attach can be measured on its own (deliverable
+      // #6, S2 spec).
+      Analytics.trackEvent(
+        'supplies_page_add',
+        'accessory',
+        `${item.category || 'unknown'}:${item.key}x${qty}:${(item.price * qty).toFixed(2)}`
+      );
     } catch (error) {
       toast.error('Failed to add to cart');
       console.error(error);
@@ -83,6 +92,7 @@ export default function AccessoriesShopClient() {
 
   const renderCard = (item) => {
     const qty = quantities[item.key] || 0;
+    const cov = coverageLine(item);
     return (
       <Card
         key={item.key}
@@ -94,7 +104,14 @@ export default function AccessoriesShopClient() {
           className="relative block w-full aspect-square bg-slate-50 group focus:outline-none focus:ring-2 focus:ring-amber-400"
           aria-label={`View ${item.label}`}
         >
-          <img src={item.image} alt={item.label} className="w-full h-full object-cover" loading="lazy" />
+          {item.image ? (
+            <img src={item.image} alt={item.label} className="w-full h-full object-cover" loading="lazy" />
+          ) : (
+            <span className="w-full h-full flex flex-col items-center justify-center gap-1 text-slate-400">
+              <Package className="w-8 h-8" />
+              <span className="text-[10px] font-bold uppercase tracking-wide">{item.unit}</span>
+            </span>
+          )}
           <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors">
             <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
           </span>
@@ -106,7 +123,9 @@ export default function AccessoriesShopClient() {
         </button>
         <CardContent className="p-4">
           <div className="font-semibold text-slate-800 text-sm leading-snug">{item.label}</div>
+          {item.pack_size && <div className="text-[11px] text-slate-400 mt-0.5">{item.pack_size}</div>}
           {item.blurb && <p className="text-xs text-slate-500 mt-1 leading-relaxed">{item.blurb}</p>}
+          {cov && <p className="text-xs text-amber-700 font-medium mt-1.5 leading-snug">{cov}</p>}
           <div className="mt-3 flex items-baseline gap-1">
             <span className="text-lg font-bold text-slate-900">${item.price.toFixed(2)}</span>
             <span className="text-xs text-slate-500">/ {item.unit}</span>
@@ -137,7 +156,7 @@ export default function AccessoriesShopClient() {
 
   return (
     <div className="space-y-12">
-      {SECTIONS.map((section) => (
+      {sections.filter((s) => s.items.length > 0).map((section) => (
         <section key={section.id} id={section.id} className="scroll-mt-24">
           <h2 className="text-2xl font-bold text-slate-900">{section.title}</h2>
           <p className="mt-1 text-sm text-slate-600 max-w-2xl">{section.note}</p>
@@ -152,11 +171,16 @@ export default function AccessoriesShopClient() {
           {zoomItem && (
             <div>
               <div className="bg-slate-50 aspect-square flex items-center justify-center">
-                <img src={zoomItem.image} alt={zoomItem.label} className="w-full h-full object-contain" />
+                {zoomItem.image ? (
+                  <img src={zoomItem.image} alt={zoomItem.label} className="w-full h-full object-contain" />
+                ) : (
+                  <Package className="w-16 h-16 text-slate-300" />
+                )}
               </div>
               <div className="p-5">
                 <div className="font-semibold text-slate-900">{zoomItem.label}</div>
                 {zoomItem.blurb && <p className="text-sm text-slate-500 mt-1">{zoomItem.blurb}</p>}
+                {coverageLine(zoomItem) && <p className="text-xs text-amber-700 font-medium mt-1.5">{coverageLine(zoomItem)}</p>}
                 <div className="mt-3 flex items-center justify-between">
                   <span className="text-lg font-bold text-slate-900">
                     ${zoomItem.price.toFixed(2)} <span className="text-xs font-normal text-slate-500">/ {zoomItem.unit}</span>

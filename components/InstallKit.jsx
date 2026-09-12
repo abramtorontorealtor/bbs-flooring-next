@@ -35,8 +35,11 @@ function getSessionId() {
   return sid;
 }
 
-export default function InstallKit({ product, floorSqft = null, onBrowseAll, className = '' }) {
-  const kit = useMemo(() => buildInstallKit(product), [product]);
+export default function InstallKit({ product, floorSqft = null, onBrowseAll, className = '', suppliesCatalog = null }) {
+  // suppliesCatalog is fetched server-side (S2, Sep 12 2026 — the DB-backed
+  // `supplies` table) and passed down as a plain prop; buildInstallKit prefers
+  // its live prices/images and falls back to the static catalog if omitted.
+  const kit = useMemo(() => buildInstallKit(product, suppliesCatalog), [product, suppliesCatalog]);
   const hasSqft = !!(parseFloat(floorSqft) > 0);
 
   // checked[key] + qty[key] are seeded from the kit and re-sized whenever the

@@ -4,6 +4,7 @@ import ProductDetailClient from '@/components/ProductDetailClient';
 import { entities } from '@/lib/base44-compat-server';
 import { getSupabaseServerClient } from '@/lib/supabase';
 import { generateProductMetaTags, generateProductSchema } from '@/lib/seo';
+import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
 
 // ISR: revalidate product pages every hour
 export const revalidate = 3600;
@@ -141,6 +142,10 @@ export default async function ProductDetailPage({ params }) {
     ? await getChildVariants(product.id)
     : [];
   const siblings = await getSiblings(product);
+  // Supplies catalog (S2, Sep 12 2026) — DB-backed, cached ~10min, falls back
+  // to the static catalog on a DB hiccup. Fetched once server-side and passed
+  // down so the client Install Kit never needs its own DB round trip.
+  const suppliesCatalog = await getSuppliesCatalog();
 
   // JSON-LD: ProductGroup + hasVariant + AggregateOffer for parents, single Product for others
   const hidePrice = product?.hide_price === true;
@@ -203,7 +208,7 @@ export default async function ProductDetailPage({ params }) {
           </div>
         )
       }>
-        <ProductDetailClient slug={slug} initialProduct={product} initialSiblings={siblings} />
+        <ProductDetailClient slug={slug} initialProduct={product} initialSiblings={siblings} suppliesCatalog={suppliesCatalog} />
       </Suspense>
     </>
   );
