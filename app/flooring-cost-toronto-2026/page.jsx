@@ -51,7 +51,7 @@ export const metadata = {
   description: 'Complete 2026 flooring cost guide for Toronto and the GTA. Real prices: material from $1.49/sqft, installation from $2.00/sqft. Room-by-room budgets, hidden costs, and money-saving tips from BBS Flooring.',
   alternates: { canonical: '/flooring-cost-toronto-2026' },
   openGraph: {
-    title: 'Flooring Cost Guide for Toronto & the GTA (2026) | BBS Flooring',
+    title: 'Flooring Cost Guide for Toronto & the GTA (2026)',
     description: 'Real 2026 flooring prices for Toronto homeowners. Material + labour breakdowns, room-size calculators, and expert tips from BBS Flooring.',
     url: 'https://bbsflooring.ca/flooring-cost-toronto-2026',
     type: 'article',

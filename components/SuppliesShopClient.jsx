@@ -56,8 +56,44 @@ function coverageLine(item) {
   return `1 ${item.unit} covers ~${item.coverage_sqft} sqft \u2192 ${EXAMPLE_SQFT} sqft needs ${needed} ${word}`;
 }
 
-export default function SuppliesShopClient({ sections }) {
+// Hub cap (Sep 13): 166 cards made the hub 38k px on mobile. Each section shows
+// at most `cap` families + "See all N →" to its category page. The cheapest
+// family in the section is ALWAYS in the visible set (Abram: "at least one
+// cheapest option for each category") and carries a LOWEST PRICE badge.
+// Cheapest = lowest $/sqft when the section has coverage numbers, else lowest
+// unit price — computed from live DB fields, never a hand-picked slug.
+function unitCost(fam) {
+  if (fam.priceLow == null) return null;
+  const cov = fam.primary?.coverage_sqft;
+  return cov ? fam.priceLow / cov : fam.priceLow;
+}
+export function cheapestSlug(items) {
+  const priced = items.filter((f) => f.priceLow != null);
+  if (priced.length < 2) return null;
+  const withCov = priced.filter((f) => f.primary?.coverage_sqft);
+  // Compare like with like: if most of the section has coverage, rank by $/sqft.
+  const useCov = withCov.length >= priced.length / 2;
+  const pool = useCov ? withCov : priced;
+  let best = null;
+  for (const f of pool) {
+    const c = useCov ? f.priceLow / f.primary.coverage_sqft : f.priceLow;
+    if (best == null || c < best.c) best = { c, slug: f.slug };
+  }
+  return best ? best.slug : null;
+}
+export function visibleItems(items, cap, cheapest) {
+  if (!cap || items.length <= cap) return items;
+  const head = items.slice(0, cap);
+  if (cheapest && !head.some((f) => f.slug === cheapest)) {
+    const c = items.find((f) => f.slug === cheapest);
+    if (c) head[cap - 1] = c;
+  }
+  return head;
+}
+
+export default function SuppliesShopClient({ sections, cap = null }) {
   const [quantities, setQuantities] = useState({});
+  const [expanded, setExpanded] = useState({});
   const [zoomItem, setZoomItem] = useState(null);
 
   const getSessionId = () => {
@@ -108,16 +144,18 @@ export default function SuppliesShopClient({ sections }) {
     }
   };
 
-  const renderCard = (fam) => {
+  const renderCard = (fam, cheapest) => {
     const item = fam.primary;
     const qty = quantities[item.key] || 0;
     const cov = fam.isMulti ? null : coverageLine(item);
     const tier = stockInfo(fam.bestTier);
     const href = familyUrl(fam);
+    const isCheapest = !!cheapest && fam.slug === cheapest;
+    const perSqft = unitCost(fam);
     return (
       <Card
         key={fam.slug}
-        className={`overflow-hidden flex flex-col ${fam.recommended ? 'border-emerald-300 ring-1 ring-emerald-200' : 'border-slate-200'}`}
+        className={`overflow-hidden flex flex-col ${fam.recommended ? 'border-emerald-300 ring-1 ring-emerald-200' : isCheapest ? 'border-sky-300 ring-1 ring-sky-200' : 'border-slate-200'}`}
       >
         <button
           type="button"
@@ -141,6 +179,11 @@ export default function SuppliesShopClient({ sections }) {
               BEST VALUE
             </span>
           )}
+          {isCheapest && (
+            <span className={`absolute ${fam.recommended ? 'bottom-2' : 'top-2'} left-2 rounded-full bg-sky-700 text-white text-[10px] font-semibold px-2 py-0.5`}>
+              LOWEST PRICE
+            </span>
+          )}
           {fam.isMulti && (
             <span className="absolute top-2 right-2 rounded-full bg-white/90 border border-slate-200 text-slate-700 text-[10px] font-semibold px-2 py-0.5">
               {fam.optionCount} options
@@ -160,6 +203,9 @@ export default function SuppliesShopClient({ sections }) {
           <div className="mt-3 flex items-baseline gap-1">
             <span className="text-lg font-bold text-slate-900">{priceLabel(fam)}</span>
             {!fam.isMulti && <span className="text-xs text-slate-500">/ {item.unit}</span>}
+            {isCheapest && item.coverage_sqft && perSqft != null && (
+              <span className="ml-auto text-[11px] font-semibold text-sky-700">${perSqft.toFixed(2)}/sqft</span>
+            )}
           </div>
           <span className={`mt-2 inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold ${TONE[tier.tone]}`}>
             {tier.short}
@@ -203,15 +249,46 @@ export default function SuppliesShopClient({ sections }) {
         <Store className="w-4 h-4 text-amber-600 flex-shrink-0" />
         <span>{SUPPLIES_FULFILMENT_STRIP}</span>
       </p>
-      {sections.filter((s) => s.items.length > 0).map((section) => (
-        <section key={section.id} id={section.id} className="scroll-mt-24">
-          <h2 className="text-2xl font-bold text-slate-900">{section.title}</h2>
-          <p className="mt-1 text-sm text-slate-600 max-w-2xl">{section.note}</p>
-          <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {section.items.map(renderCard)}
-          </div>
-        </section>
-      ))}
+      {sections.filter((s) => s.items.length > 0).map((section) => {
+        const cheapest = cheapestSlug(section.items);
+        const isExpanded = !!expanded[section.id];
+        const shown = isExpanded ? section.items : visibleItems(section.items, cap, cheapest);
+        const hidden = section.items.length - shown.length;
+        return (
+          <section key={section.id} id={section.id} className="scroll-mt-24">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h2 className="text-2xl font-bold text-slate-900">{section.title}</h2>
+              {section.seeAllHref && hidden > 0 && (
+                <Link href={section.seeAllHref} className="text-sm font-semibold text-amber-700 hover:underline">
+                  See all {section.items.length} →
+                </Link>
+              )}
+            </div>
+            <p className="mt-1 text-sm text-slate-600 max-w-2xl">{section.note}</p>
+            <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {shown.map((fam) => renderCard(fam, cheapest))}
+            </div>
+            {hidden > 0 && (
+              <div className="mt-5 flex justify-center">
+                {section.seeAllHref ? (
+                  <Button asChild variant="outline" className="h-10 px-6 border-slate-300 text-slate-800">
+                    <Link href={section.seeAllHref}>See all {section.items.length} {section.title.toLowerCase()} →</Link>
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-10 px-6 border-slate-300 text-slate-800"
+                    onClick={() => setExpanded((e) => ({ ...e, [section.id]: true }))}
+                  >
+                    Show all {section.items.length}
+                  </Button>
+                )}
+              </div>
+            )}
+          </section>
+        );
+      })}
 
       <Dialog open={!!zoomItem} onOpenChange={(o) => !o && setZoomItem(null)}>
         <DialogContent className="max-w-md p-0 overflow-hidden">

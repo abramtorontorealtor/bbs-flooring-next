@@ -51,7 +51,7 @@ export const metadata = {
   description: 'Complete comparison of hardwood, vinyl, and laminate flooring with real 2026 pricing from BBS Flooring. 900+ options compared — costs, durability, best uses, and room-by-room recommendations for GTA homeowners.',
   alternates: { canonical: '/flooring-comparison-guide' },
   openGraph: {
-    title: 'Hardwood vs Vinyl vs Laminate Flooring Comparison (2026) | BBS Flooring',
+    title: 'Hardwood vs Vinyl vs Laminate Flooring Comparison (2026)',
     description: 'Compare 900+ flooring options with real Canadian pricing. Hardwood, vinyl, and laminate — head-to-head on cost, durability, and room suitability.',
     url: 'https://bbsflooring.ca/flooring-comparison-guide',
     type: 'article',

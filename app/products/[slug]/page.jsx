@@ -96,7 +96,7 @@ export async function generateMetadata({ params }) {
   const product = await getProduct(slug);
   if (!product) {
     return {
-      title: 'Product Not Found | BBS Flooring',
+      title: 'Product Not Found',
       robots: { index: false, follow: true },
     };
   }

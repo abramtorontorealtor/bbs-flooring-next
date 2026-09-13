@@ -14,7 +14,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Staircase Refinishing Pickering | Sand & Restain $125/Step | BBS Flooring',
+  title: 'Staircase Refinishing Pickering | Sand & Restain $125/Step',
   description: 'Staircase refinishing in Pickering & Durham — sand & restain existing hardwood stairs from $125/step, recapping from $185/step. Dust-contained, custom colour-matched, WSIB insured. Serving Rosebank, Amberlea, Bay Ridges, Seaton. Free estimate: (647) 428-1111.',
   alternates: { canonical: '/stair-refinishing-pickering' },
 };

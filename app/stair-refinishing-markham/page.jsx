@@ -17,7 +17,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Staircase Refinishing in Markham 2026 | Recapping $185/Step | BBS Flooring',
+  title: 'Staircase Refinishing in Markham 2026 | Recapping $185/Step',
   description: 'Staircase refinishing & recapping in Markham. New hardwood treads from $185/step, refinishing from $125/step, carpet-to-hardwood conversions. Custom colour-matched, WSIB insured. Serving Unionville, Cornell, Cachet & all Markham. Free estimate: (647) 428-1111.',
   alternates: { canonical: '/stair-refinishing-markham' },
 };

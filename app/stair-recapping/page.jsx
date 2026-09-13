@@ -12,7 +12,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Stair Recapping & Cladding Markham & GTA | From $185/Step | BBS Flooring',
+  title: 'Stair Recapping & Cladding Markham & GTA | From $185/Step',
   description: 'Stair recapping across the GTA — new solid-hardwood treads and risers installed over your existing staircase. No demolition. From $185/step, custom colour-matched, 2-3 day turnaround. WSIB insured. Call (647) 428-1111.',
   alternates: { canonical: '/stair-recapping' },
 };

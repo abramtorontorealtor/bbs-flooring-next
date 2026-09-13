@@ -30,7 +30,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'How to Clean Engineered Hardwood Floors — The Right Way (2026) | BBS Flooring',
+  title: 'How to Clean Engineered Hardwood Floors — The Right Way (2026)',
   description: 'How to clean engineered hardwood the right way: daily, weekly & seasonal routines, the pH-neutral cleaners to use, and why steam mops & vinegar destroy your floor. Markham flooring experts.',
   alternates: { canonical: '/how-to-clean-engineered-hardwood' },
 };

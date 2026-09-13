@@ -30,7 +30,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'How to Clean Vinyl Plank Flooring — The Right Way (2026) | BBS Flooring',
+  title: 'How to Clean Vinyl Plank Flooring — The Right Way (2026)',
   description: 'How to clean vinyl plank (LVP/SPC) the right way: simple daily & weekly routines, the best cleaners, removing scuffs, and why steam mops still damage waterproof vinyl. Markham flooring experts.',
   alternates: { canonical: '/how-to-clean-vinyl-plank-flooring' },
 };

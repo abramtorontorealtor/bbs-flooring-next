@@ -7,7 +7,7 @@ import { JsonLd } from '@/lib/schemas';
 export const revalidate = 600;
 
 export const metadata = {
-  title: 'Flooring Supplies Calculator — Adhesive, Underlay & Primer | BBS Flooring',
+  title: 'Flooring Supplies Calculator — Adhesive, Underlay & Primer',
   description:
     'Pick your floor type, subfloor, and square footage — get the exact adhesive, underlay, primer or moisture barrier kit and quantity you need. Free tool from BBS Flooring, Markham.',
   alternates: { canonical: '/flooring-accessories/calculator' },
