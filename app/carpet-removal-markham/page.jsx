@@ -21,7 +21,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Carpet Removal in Markham 2026 | $1.00/sqft + Haul-Away | BBS Flooring',
+  title: 'Carpet Removal in Markham 2026 | $1.00/sqft + Haul-Away',
   description: 'Professional carpet removal in Markham for $1.00/sqft + $75 haul-away. Tack strips, staples & underpad removed, install-ready subfloor, 24-hr turnaround. Serving Unionville, Cornell, Cachet & all Markham. WSIB insured. Call (647) 428-1111.',
   alternates: { canonical: '/carpet-removal-markham' },
 };

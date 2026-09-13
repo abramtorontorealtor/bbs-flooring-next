@@ -51,7 +51,7 @@ export const metadata = {
   description: 'Complete guide to vinyl flooring in Canada. SPC vs WPC, wear layers, costs, installation, and the best LVP brands. 280+ options from $2.19/sqft ($1.79 on clearance) at BBS Flooring Markham.',
   alternates: { canonical: '/vinyl-flooring-guide' },
   openGraph: {
-    title: 'Vinyl Flooring Buying Guide 2026 | LVP & SPC Explained | BBS Flooring',
+    title: 'Vinyl Flooring Buying Guide 2026 | LVP & SPC Explained',
     description: '280+ vinyl options from $2.19/sqft ($1.79 on clearance). SPC vs WPC, wear layers, costs, and installation explained. Real Canadian pricing from BBS Flooring Markham.',
     url: 'https://bbsflooring.ca/vinyl-flooring-guide',
     type: 'article',

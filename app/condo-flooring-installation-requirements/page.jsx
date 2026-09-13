@@ -39,7 +39,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'Condo Flooring Installation Requirements Toronto & GTA (2026) | BBS Flooring',
+  title: 'Condo Flooring Installation Requirements Toronto & GTA (2026)',
   description: 'What your condo board or property manager requires before a flooring install: COI, WSIB clearance, IIC/STC underlay specs, and the approval process. BBS Flooring supplies all the paperwork. Serving Toronto, North York, Markham, Vaughan & Mississauga.',
   alternates: { canonical: '/condo-flooring-installation-requirements' },
   openGraph: {

@@ -14,7 +14,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Stair Recapping Richmond Hill | New Hardwood Treads $185/Step | BBS Flooring',
+  title: 'Stair Recapping Richmond Hill | New Hardwood Treads $185/Step',
   description: 'Stair recapping & cladding in Richmond Hill — new solid-hardwood treads and risers over your existing staircase. No demolition. From $185/step, custom colour-matched, 2-3 day turnaround. Serving Oak Ridges, Bayview Hill, Mill Pond. WSIB insured. (647) 428-1111.',
   alternates: { canonical: '/stair-recapping-richmond-hill' },
 };

@@ -12,7 +12,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Stair Renovation Markham | Treads, Railings & Iron Pickets | BBS Flooring',
+  title: 'Stair Renovation Markham | Treads, Railings & Iron Pickets',
   description: 'Full staircase renovation in Markham — new hardwood treads, iron pickets, refinished railings, newel posts and structural work. Custom colour-matched, WSIB insured. Typical full reno $3,500–$5,500. Serving Unionville, Cornell, Cathedraltown. (647) 428-1111.',
   alternates: { canonical: '/stair-renovation-markham' },
 };

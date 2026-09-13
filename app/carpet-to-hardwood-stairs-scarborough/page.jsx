@@ -14,7 +14,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Carpet to Hardwood Stairs Scarborough | $185/Step | BBS Flooring',
+  title: 'Carpet to Hardwood Stairs Scarborough | $185/Step',
   description: 'Convert carpet stairs to hardwood in Scarborough — new treads from $185/step, refinishing from $125/step, custom colour-matched. Serving Agincourt, Birch Cliff, the Bluffs, Malvern & Guildwood. WSIB insured. Free estimate: (647) 428-1111.',
   alternates: { canonical: '/carpet-to-hardwood-stairs-scarborough' },
 };

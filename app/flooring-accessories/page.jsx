@@ -9,9 +9,11 @@ import { Package } from 'lucide-react';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Flooring Accessories & Installation Supplies — Markham | BBS Flooring',
+  // No "| BBS Flooring" here — the root layout's title template appends it
+  // (Sep 13 fix: the live tag read "… | BBS Flooring | BBS Flooring").
+  title: 'Flooring Accessories & Installation Supplies — Markham',
   description:
-    'Underlay, adhesives, primers, subfloor levelling, moisture barriers, floor vents, trim and baseboards to finish your floor. In-stock in Markham, priced per unit, add to your order online.',
+    'Underlay (foam, DMX 1-Step, cork), adhesives, primers, subfloor levelling, moisture barriers, floor vents, trim and baseboards to finish your floor. In stock in Markham, priced per unit, add to your order online.',
   alternates: { canonical: '/flooring-accessories' },
 };
 
@@ -28,32 +30,40 @@ function coverageSentence(item) {
 // (underlay/moisture first — highest existing traffic — down to tools).
 // 'transition' is intentionally excluded: the live T-Mould/Reducer/Stair
 // Nosing box stays PDP-only per the hard constraint in this build's brief.
+// Hub shows ≤ SECTION_CAP families per section; `seeAllHref` = the category
+// page that carries the full list (sections without one get a client-side
+// "Show all" instead).
+const SECTION_CAP = 8;
 function buildSections(catalog) {
-  const sec = (def) => buildCategorySection(catalog, def);
+  const sec = ({ seeAllHref, ...def }) => ({ ...buildCategorySection(catalog, def), seeAllHref: seeAllHref || null });
   return [
     sec({
       id: 'underlay',
       title: 'Underlay & Acoustic Mats',
-      note: 'Sold per full roll. Underlay is mandatory under floating laminate — it soundproofs, cushions, and (on the 3mm black + 5mm airflow) blocks moisture from concrete or below-grade subfloors.',
+      note: 'Sold per full roll. Underlay is mandatory under floating laminate — foam for most rooms, DMX 1-Step or the 5mm airflow pad over concrete, natural cork when sound is the priority.',
       categories: ['underlay'],
+      seeAllHref: '/flooring-accessories/underlay-moisture-barriers',
     }),
     sec({
       id: 'moisture-barriers',
       title: 'Moisture Barriers',
       note: 'Poly film and wax paper laid under the floor to stop moisture wicking up from a slab or subfloor before it can warp or mould your new flooring.',
       categories: ['moisture_barrier'],
+      seeAllHref: '/flooring-accessories/underlay-moisture-barriers',
     }),
     sec({
       id: 'adhesives-primers',
       title: 'Adhesives & Primers',
       note: 'Glue-down vinyl and engineered hardwood adhesives, seam sealer, and the primers that make them bond properly to concrete or plywood subfloors.',
       categories: ['adhesive', 'primer'],
+      seeAllHref: '/flooring-accessories/adhesives-primers',
     }),
     sec({
       id: 'subfloor-prep',
       title: 'Subfloor Prep',
       note: 'Self-levelling underlayment and patch/skimcoat compounds — flatten a subfloor before any floating or glue-down install so the new floor doesn\u2019t telegraph every dip.',
       categories: ['subfloor_prep'],
+      seeAllHref: '/flooring-accessories/subfloor-prep',
     }),
     sec({
       id: 'quarter-round',
@@ -72,6 +82,7 @@ function buildSections(catalog) {
       title: 'Floor Vents',
       note: 'Wood and metal floor registers finished to match your new floor — the easiest whole-room add-on there is.',
       categories: ['floor_vent'],
+      seeAllHref: '/flooring-accessories/floor-vents',
     }),
     sec({
       id: 'stairs',
@@ -84,6 +95,7 @@ function buildSections(catalog) {
       title: 'Installer Tools',
       note: 'Pro-grade tapping blocks, pull bars, trowels, spreaders and install kits for DIY installs.',
       categories: ['tools'],
+      seeAllHref: '/flooring-accessories/installer-tools',
     }),
     sec({
       id: 'fasteners',
@@ -185,6 +197,85 @@ function buildSupplyFaq(catalog) {
     items.push({
       question: 'What goes under nail-down solid hardwood flooring?',
       answer: `Rosin/wax paper goes down first, stapled to the subfloor, before every nail-down solid hardwood install — it reduces squeaks and blocks moisture wicking from the subfloor. ${coverageSentence(waxPaper)} It's a required line item on every solid hardwood Install Kit on our product pages.`,
+    });
+  }
+  return items;
+}
+
+// "Foam vs DMX vs cork" — the GEO/AEO block Abram asked for (Sep 13). Every
+// price is read live from the catalogue (per-sqft = retail / coverage_sqft) so
+// a Prosol re-import or price change never leaves a stale number in the copy.
+// A row only renders when its family is ACTIVE, so this stays truthful while
+// DMX / cork are hidden.
+const UNDERLAY_COMPARE = [
+  { key: 'underpad_2_5_white', label: 'Foam (2.5–3mm)', best: 'Most laminate rooms above grade', moisture: '3mm black adds a barrier', sound: 'IIC 52–72', feel: 'Standard' },
+  { key: 'DMX1-STEP2', label: 'DMX 1-Step 2.0', best: 'Basements & concrete slabs', moisture: 'Air-gap + vapour barrier', sound: 'Sound + thermal break', feel: 'Firm, warm' },
+  { key: 'underpad_5_airflow', label: '5mm airflow bubble', best: 'Concrete when height allows', moisture: 'Air-gap dimples', sound: 'IIC 72', feel: 'Cushioned' },
+  { key: 'CRZR-3', label: 'Natural cork (3–6mm)', best: 'Condos with a strict sound spec', moisture: 'Needs a poly barrier over concrete', sound: 'Best of the four', feel: 'Warm, eco' },
+];
+function buildUnderlayCompare(catalog) {
+  const byKey = catalog.byKey || {};
+  return UNDERLAY_COMPARE.map((row) => {
+    const item = byKey[row.key];
+    if (!item || item.price == null || !item.coverage_sqft) return null;
+    return { ...row, perSqft: item.price / item.coverage_sqft, price: item.price, unit: item.unit, coverage: item.coverage_sqft };
+  }).filter(Boolean);
+}
+function UnderlayCompare({ rows }) {
+  if (rows.length < 2) return null;
+  return (
+    <div className="mt-6 overflow-x-auto">
+      <h3 className="font-semibold text-slate-900">Foam vs DMX vs cork — which underlay?</h3>
+      <table className="mt-3 w-full text-sm text-left border-separate border-spacing-0">
+        <thead>
+          <tr className="text-xs uppercase tracking-wide text-slate-500">
+            <th className="py-2 pr-3 font-semibold">Underlay</th>
+            <th className="py-2 pr-3 font-semibold">Best for</th>
+            <th className="py-2 pr-3 font-semibold">Moisture</th>
+            <th className="py-2 pr-3 font-semibold">Sound</th>
+            <th className="py-2 pr-3 font-semibold whitespace-nowrap">Price / sqft</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.key} className="border-t border-slate-200 align-top">
+              <td className="py-2.5 pr-3 font-semibold text-slate-900 whitespace-nowrap">{r.label}</td>
+              <td className="py-2.5 pr-3 text-slate-600">{r.best}</td>
+              <td className="py-2.5 pr-3 text-slate-600">{r.moisture}</td>
+              <td className="py-2.5 pr-3 text-slate-600">{r.sound}</td>
+              <td className="py-2.5 pr-3 text-slate-900 whitespace-nowrap">
+                ${r.perSqft.toFixed(2)}
+                <span className="block text-[11px] text-slate-500">${r.price.toFixed(2)} / {r.coverage} sqft {r.unit}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// DMX / cork FAQs — rendered only while those families are active, prices live.
+function buildUnderlayFaq(catalog) {
+  const byKey = catalog.byKey || {};
+  const dmx = byKey['DMX1-STEP2'];
+  const cork = byKey['CRZR-3'];
+  const foam = byKey['underpad_2_5_white'];
+  const items = [];
+  if (dmx) {
+    items.push({
+      question: 'What is DMX 1-Step underlay and when should I use it?',
+      answer: `DMX 1-Step 2.0 is a dimpled polyethylene underlay for floating laminate, click vinyl and engineered hardwood over concrete. The dimples create an air gap under the floor so slab moisture can evaporate instead of soaking into the planks, and the sheet doubles as a vapour barrier, thermal break and sound layer. Use it in basements, slab-on-grade rooms and any concrete floor without in-floor heat. ${coverageSentence(dmx)} Tape the seams; no separate poly is needed.${foam ? ` It costs about ${(dmx.price / dmx.coverage_sqft / (foam.price / foam.coverage_sqft)).toFixed(0)}× a basic foam pad per square foot, which is the price of not replacing a mouldy basement floor.` : ''}`,
+    });
+    items.push({
+      question: 'DMX vs foam underlay — which is better?',
+      answer: 'Above grade over plywood, standard foam is all a laminate floor needs. Over concrete or below grade, DMX 1-Step (or our 5mm airflow bubble pad) wins because the air-gap dimples let moisture escape while a flat foam pad traps it against the slab. If a condo board asks for a sound rating, the 3mm black foam (IIC 72) or natural cork is the better lever than DMX.',
+    });
+  }
+  if (cork) {
+    items.push({
+      question: 'Is cork underlay worth it?',
+      answer: `Yes when sound is the priority. Natural cork is the quietest common underlay and it is what most Toronto condo boards recognise for impact-sound compliance under floating floors. It is warmer underfoot and made from a renewable material. Two caveats: cork is not a moisture barrier, so over concrete lay 6-mil poly first, and it is priced per square foot well above foam. ${coverageSentence(cork)} We sell 3mm and 6mm rolls plus 2 × 3 ft sheets for small rooms.`,
     });
   }
   return items;
@@ -299,7 +390,8 @@ export default async function FlooringAccessoriesPage() {
   const catalog = await getSuppliesCatalog();
   const sections = buildSections(catalog);
   const picks = resolveProPicks(catalog);
-  const faqItems = [...BASE_FAQ_ITEMS, ...buildSupplyFaq(catalog)];
+  const underlayCompare = buildUnderlayCompare(catalog);
+  const faqItems = [...BASE_FAQ_ITEMS, ...buildUnderlayFaq(catalog), ...buildSupplyFaq(catalog)];
 
   return (
     <>
@@ -315,18 +407,22 @@ export default async function FlooringAccessoriesPage() {
 
         {/* Hero */}
         <header className="max-w-3xl">
-          <h1 className="text-4xl font-bold text-slate-900">Flooring Accessories & Installation Supplies</h1>
-          <p className="mt-3 text-lg text-slate-600">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">Flooring Accessories & Installation Supplies</h1>
+          {/* Mobile: one line, so the first product is on screen 1 (Sep 13). */}
+          <p className="mt-2 text-slate-600 sm:hidden">
+            Underlay, adhesives, subfloor prep, trim and vents — Markham pickup, priced per unit.
+          </p>
+          <p className="mt-3 text-lg text-slate-600 hidden sm:block">
             Everything you need to finish the job — underlay, adhesives, primers, subfloor levelling,
             moisture barriers, floor vents, trim and baseboards. In stock at our Markham showroom,
             priced per unit, and easy to add to your flooring order online.
           </p>
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mt-4 sm:mt-5 flex flex-wrap gap-2 sm:gap-3">
             <Link href="#shop-by-floor" className="rounded-lg bg-amber-600 px-4 py-2 text-white text-sm font-semibold hover:bg-amber-700">Shop by your floor</Link>
             <Link href="#underlay" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Underlay</Link>
             <Link href="#adhesives-primers" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Adhesives & primers</Link>
-            <Link href="/products" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Browse flooring</Link>
-            <Link href="/contact" className="rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Ask about your project</Link>
+            <Link href="/products" className="hidden sm:inline-flex rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Browse flooring</Link>
+            <Link href="/contact" className="hidden sm:inline-flex rounded-lg border border-slate-300 px-4 py-2 text-slate-700 text-sm font-semibold hover:border-amber-400">Ask about your project</Link>
           </div>
         </header>
 
@@ -359,11 +455,12 @@ export default async function FlooringAccessoriesPage() {
             <div className="rounded-xl bg-white border border-slate-200 p-5">
               <h3 className="font-semibold text-slate-900">Basement / concrete</h3>
               <p className="mt-1 text-sm text-slate-600">
-                Moisture is the risk. The 5mm airflow bubble pad lets the slab breathe and lifts the
-                floor off surface moisture, while soundproofing at IIC 72.
+                Moisture is the risk. Use a dimpled air-gap pad — DMX 1-Step or our 5mm airflow bubble —
+                so the slab can breathe and the floor sits above any surface moisture.
               </p>
             </div>
           </div>
+          <UnderlayCompare rows={underlayCompare} />
           <p className="mt-5 text-sm text-slate-500">
             Still unsure? Tell us your floor and where it is going — <Link href="/contact" className="text-amber-700 underline">we will tell you the exact underlay</Link> your SKU needs, no guessing.
           </p>
@@ -371,7 +468,7 @@ export default async function FlooringAccessoriesPage() {
 
         {/* The shop grid */}
         <div className="mt-14">
-          <SuppliesShopClient sections={sections} />
+          <SuppliesShopClient sections={sections} cap={SECTION_CAP} />
         </div>
 
         {/* Cross-links */}

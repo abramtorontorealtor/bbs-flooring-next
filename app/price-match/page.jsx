@@ -30,7 +30,7 @@ export const faqItems = [
 ];
 
 export const metadata = {
-  title: 'Best Price Guarantee — We Beat Any Local Flooring Price | BBS Flooring',
+  title: 'Best Price Guarantee — We Beat Any Local Flooring Price',
   description: 'Found the same flooring cheaper at another local GTA store? BBS Flooring will beat it. Same brand, same product — we beat any local competitor price. Plus a real Markham showroom, pro installation, and financing. Message us on WhatsApp at (647) 428-1111.',
   alternates: { canonical: '/price-match' },
 };

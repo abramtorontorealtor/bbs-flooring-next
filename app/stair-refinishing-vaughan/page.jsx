@@ -14,7 +14,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Staircase Refinishing Vaughan | Sand & Restain $125/Step | BBS Flooring',
+  title: 'Staircase Refinishing Vaughan | Sand & Restain $125/Step',
   description: 'Staircase refinishing in Vaughan — sand & restain existing hardwood stairs from $125/step, recapping from $185/step. Dust-contained, custom colour-matched, WSIB insured. Serving Woodbridge, Maple, Vellore Village, Kleinburg. Free estimate: (647) 428-1111.',
   alternates: { canonical: '/stair-refinishing-vaughan' },
 };

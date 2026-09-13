@@ -51,7 +51,7 @@ export const metadata = {
   description: 'Complete guide to buying engineered hardwood flooring in Canada. Compare 400+ options from 9 brands ($3.29–$8.99/sqft), installation costs, species, and grades. Based in Markham, serving the GTA.',
   alternates: { canonical: '/engineered-hardwood-guide' },
   openGraph: {
-    title: 'Engineered Hardwood Buying Guide 2026 | BBS Flooring',
+    title: 'Engineered Hardwood Buying Guide 2026',
     description: 'Compare 400+ engineered hardwood options from 9 brands. Real pricing, installation costs, and expert advice from BBS Flooring in Markham.',
     url: 'https://bbsflooring.ca/engineered-hardwood-guide',
     type: 'article',

@@ -30,7 +30,7 @@ const faqItems = [
 ];
 
 export const metadata = {
-  title: 'How to Clean Laminate Flooring — The Right Way (2026) | BBS Flooring',
+  title: 'How to Clean Laminate Flooring — The Right Way (2026)',
   description: 'How to clean laminate floors the right way: the barely-damp method, the best cleaners, and why steam mops, vinegar & wet-mopping ruin laminate (it is water-resistant, not waterproof). Markham flooring experts.',
   alternates: { canonical: '/how-to-clean-laminate-flooring' },
 };

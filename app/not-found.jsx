@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: '404 — Page Not Found | BBS Flooring',
+  title: '404 — Page Not Found',
   description: 'The page you were looking for could not be found. Browse our flooring products, services, or contact us.',
   robots: { index: false, follow: true },
 };

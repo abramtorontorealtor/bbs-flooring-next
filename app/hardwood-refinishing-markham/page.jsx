@@ -17,7 +17,7 @@ const FAQ_ITEMS = [
 ];
 
 export const metadata = {
-  title: 'Hardwood Floor Refinishing in Markham 2026 | From $5.25/sqft | BBS Flooring',
+  title: 'Hardwood Floor Refinishing in Markham 2026 | From $5.25/sqft',
   description: 'Hardwood floor refinishing in Markham from $5.25/sqft. Dust-contained sanding, custom staining, polyurethane finish — 60–75% cheaper than replacement. Serving Unionville, Cornell, Cachet & all of Markham. Free in-home estimate: (647) 428-1111.',
   alternates: { canonical: '/hardwood-refinishing-markham' },
 };

@@ -59,7 +59,7 @@ export const metadata = {
   description: 'Complete guide to basement flooring in Ontario. 280+ waterproof vinyl options from $2.19/sqft ($1.79 on clearance), moisture barrier advice, cost breakdowns, and installation tips for concrete subfloors. Based in Markham, serving the GTA.',
   alternates: { canonical: '/basement-flooring-guide' },
   openGraph: {
-    title: 'Best Basement Flooring in Ontario (2026) | BBS Flooring',
+    title: 'Best Basement Flooring in Ontario (2026)',
     description: '280+ waterproof options from $2.19/sqft ($1.79 on clearance). Vinyl, laminate, and engineered hardwood compared for basements. Real pricing and Ontario-specific advice.',
     url: 'https://bbsflooring.ca/basement-flooring-guide',
     type: 'article',
