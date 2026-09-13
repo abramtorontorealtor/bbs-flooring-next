@@ -156,6 +156,53 @@ async function getPost(slug) {
 }
 
 // Strip trailing "| BBS Flooring" — root layout template adds it
+// FAQPage JSON-LD for posts whose body has an in-body FAQ section (<h2>FAQ…</h2>
+// followed by <h3>Q</h3><p>A</p> pairs) but no FAQPage script of its own. Posts that
+// already embed a FAQPage <script> in `content` (cannon v3 output) are left alone so we
+// never emit two FAQPage blocks for one URL. Returns null when <2 clean Q/A pairs.
+function stripTags(s) {
+  return String(s || '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function buildFaqSchema(post, slug) {
+  const html = post?.content;
+  if (!html || typeof html !== 'string') return null;
+  if (/FAQPage/.test(html)) return null; // already carries its own schema
+  const h2 = /<h2[^>]*>[^<]*(?:Frequently Asked|FAQ)[^<]*<\/h2>/i.exec(html);
+  if (!h2) return null;
+  let section = html.slice(h2.index + h2[0].length);
+  const next = /<h2\b/i.exec(section);
+  if (next) section = section.slice(0, next.index);
+  const pairRe = /<h3[^>]*>([\s\S]*?)<\/h3>[\s+]*<p[^>]*>([\s\S]*?)<\/p>/gi;
+  const faqs = [];
+  let m;
+  while ((m = pairRe.exec(section)) !== null) {
+    const q = stripTags(m[1]).replace(/^\d+[.)]\s*/, '');
+    const a = stripTags(m[2]);
+    if (q.length >= 8 && a.length >= 20) faqs.push({ q, a });
+    if (faqs.length >= 12) break;
+  }
+  if (faqs.length < 2) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `https://bbsflooring.ca/blog/${slug}#faq`,
+    mainEntity: faqs.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
+}
+
 function cleanTitle(t) { return t ? t.replace(/\s*\|\s*BBS\s*Flooring\s*$/i, '').trim() : t; }
 
 export async function generateMetadata({ params }) {
@@ -228,12 +275,16 @@ export default async function BlogPostPage({ params }) {
     ],
   } : null;
 
+  const faqSchema = post ? buildFaqSchema(post, slug) : null;
+
   const internalLinks = buildInternalLinks(post);
   const captureProductType = post ? inferProductType(post) : null;
 
   return (
     <>
-      {articleSchema && <JsonLd data={[articleSchema, breadcrumbSchema]} />}
+      {articleSchema && (
+        <JsonLd data={faqSchema ? [articleSchema, breadcrumbSchema, faqSchema] : [articleSchema, breadcrumbSchema]} />
+      )}
       <BlogPostClient slug={slug} initialPost={post} />
       {internalLinks.length > 0 && (
         <nav
