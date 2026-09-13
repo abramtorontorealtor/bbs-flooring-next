@@ -334,37 +334,13 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
         // Ranking column: per-category `sort_score` when scoped to one category
         // (category prop, or a single category selected on a brand page);
         // global `sort_score_all` when the visible set spans categories.
+        // The score already encodes demand + brand/collection diversity (max 2 in a
+        // row, scripts/showroom-sort.py) — do NOT re-interleave by brand here; the old
+        // round-robin gave every brand's 3rd-best product a page-1 slot regardless of demand.
         const scoreKey = pickScoreKey(result, category);
-        // Brand-diversity interleaving: sort by score within each brand,
-        // then round-robin across brands so no single brand dominates page 1.
-        // Brands are ordered by their top product's score.
-        const brandBuckets = new Map();
-        // First sort all products by score
-        result.sort((a, b) => (b[scoreKey] || 0) - (a[scoreKey] || 0));
-        // Group into brand buckets (preserving score order within each)
-        for (const p of result) {
-          const brand = p.brand || 'Other';
-          if (!brandBuckets.has(brand)) brandBuckets.set(brand, []);
-          brandBuckets.get(brand).push(p);
-        }
-        // Sort brands by their top product's score (highest first)
-        const sortedBrands = [...brandBuckets.entries()]
-          .sort(([, a], [, b]) => (b[0][scoreKey] || 0) - (a[0][scoreKey] || 0));
-        // Round-robin interleave: pick one from each brand in rotation
-        const interleaved = [];
-        const cursors = new Map(sortedBrands.map(([brand]) => [brand, 0]));
-        let remaining = result.length;
-        while (remaining > 0) {
-          for (const [brand, products] of sortedBrands) {
-            const cursor = cursors.get(brand);
-            if (cursor < products.length) {
-              interleaved.push(products[cursor]);
-              cursors.set(brand, cursor + 1);
-              remaining--;
-            }
-          }
-        }
-        result = interleaved;
+        result.sort((a, b) =>
+          ((b[scoreKey] || 0) - (a[scoreKey] || 0)) ||
+          (new Date(b.created_at || 0) - new Date(a.created_at || 0)));
         break;
       }
       case 'price_low':
