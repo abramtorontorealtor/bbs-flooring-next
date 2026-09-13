@@ -464,11 +464,11 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     }
   }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── GA4: view_item_list ──
+  // ── GA4: view_item_list + select_item (same list name → position-CTR) ──
+  const gaListName = category ? category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Brand Products';
   useEffect(() => {
     if (!isLoading && filteredProducts.length > 0) {
-      const listName = category ? category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Brand Products';
-      Analytics.trackViewItemList(filteredProducts, listName);
+      Analytics.trackViewItemList(filteredProducts, gaListName);
     }
   }, [filteredProducts, isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -751,8 +751,8 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
                 ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4'
                 : 'grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'
             }>
-              {visibleProducts.map((product) => (
-                <ProductCard key={product.id} product={product} isSaved={savedProductIds.has(product.id)} user={currentUser} />
+              {visibleProducts.map((product, index) => (
+                <ProductCard key={product.id} product={product} index={index} listName={gaListName} isSaved={savedProductIds.has(product.id)} user={currentUser} />
               ))}
             </div>
 

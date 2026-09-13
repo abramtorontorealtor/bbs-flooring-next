@@ -115,6 +115,23 @@ export const Analytics = {
     });
   },
 
+  // Grid-card click -> PDP. `index` = 0-based position in the rendered list
+  // (position-CTR for Showroom Sort); `listName` matches view_item_list.
+  trackSelectItem: (product, index, listName = 'Product Listing') => {
+    if (typeof window === 'undefined' || !window.gtag || !product) return;
+    window.gtag('event', 'select_item', {
+      item_list_name: listName,
+      items: [{
+        item_id: product.sku || product.id,
+        item_name: product.name,
+        item_category: product.category,
+        item_brand: product.brand,
+        price: product.price_per_sqft || product.sale_price_per_sqft || 0,
+        index: typeof index === 'number' ? index : undefined,
+      }],
+    });
+  },
+
   trackAddToCart: (productName = '', value = 0) => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'add_to_cart', {

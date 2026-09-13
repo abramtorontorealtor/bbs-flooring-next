@@ -7,6 +7,7 @@ import { createPageUrl } from '@/lib/routes';
 import SaveButton from './SaveButton';
 import { useAuth } from '@/lib/auth-context';
 import { callUrl, smsUrl, whatsappUrl } from '@/lib/contact';
+import { Analytics } from '@/components/analytics';
 
 /* Inline SVGs — avoids importing entire lucide-react */
 function MapPinIcon({ className }) {
@@ -37,7 +38,7 @@ function getProductBadges(product) {
 
 const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
 
-const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref) => {
+const ProductCard = React.forwardRef(({ product, isSaved, user: userProp, index, listName }, ref) => {
   const isOutOfStock = product.in_stock === false;
   const autoBadges = getProductBadges(product);
   const { user: authUser } = useAuth();
@@ -47,6 +48,7 @@ const ProductCard = React.forwardRef(({ product, isSaved, user: userProp }, ref)
   const handleClick = () => {
     sessionStorage.setItem('products_scroll', window.scrollY.toString());
     sessionStorage.setItem('product_referrer', window.location.pathname + window.location.search);
+    if (listName) Analytics.trackSelectItem(product, index, listName);
   };
 
   const getImageUrl = (url) => {
