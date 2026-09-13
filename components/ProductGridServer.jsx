@@ -1,4 +1,5 @@
 import ProductCardStatic from '@/components/ProductCardStatic';
+import { pickScoreKey } from '@/lib/sort-score';
 
 /* ── Server-Rendered Product Grid ──
  * Renders the first batch of product cards as real HTML in the server response.
@@ -18,14 +19,15 @@ function filterProducts(products) {
   });
 }
 
-function sortProducts(products) {
-  return [...products].sort((a, b) => (b.sort_score || 0) - (a.sort_score || 0));
+function sortProducts(products, scoreKey) {
+  return [...products].sort((a, b) => (b[scoreKey] || 0) - (a[scoreKey] || 0));
 }
 
-export default function ProductGridServer({ products, viewMode = 'grid', limit = ITEMS_PER_PAGE }) {
+export default function ProductGridServer({ products, category, viewMode = 'grid', limit = ITEMS_PER_PAGE }) {
   if (!products || products.length === 0) return null;
 
-  const filtered = sortProducts(filterProducts(products));
+  const eligible = filterProducts(products);
+  const filtered = sortProducts(eligible, pickScoreKey(eligible, category));
   const visible = filtered.slice(0, limit);
 
   return (

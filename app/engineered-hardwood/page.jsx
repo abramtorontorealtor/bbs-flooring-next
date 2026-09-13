@@ -39,7 +39,7 @@ export default async function EngineeredHardwoodPage() {
     getCategoryPriceStats('engineered_hardwood'),
   ]);
   const low = stats.lowPrice || '3.19';
-  const serverGrid = <ProductGridServer products={products} />;
+  const serverGrid = <ProductGridServer products={products} category="engineered_hardwood" />;
 
   return (
     <>

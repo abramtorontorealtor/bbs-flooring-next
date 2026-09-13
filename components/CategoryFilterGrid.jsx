@@ -13,6 +13,7 @@ import { X, ChevronDown, RotateCcw } from 'lucide-react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Analytics } from '@/components/analytics';
+import { pickScoreKey } from '@/lib/sort-score';
 
 // ── Constants ──
 const ITEMS_PER_PAGE = 24;
@@ -330,12 +331,16 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     // Sort
     switch (filters.sortBy) {
       case 'recommended': {
+        // Ranking column: per-category `sort_score` when scoped to one category
+        // (category prop, or a single category selected on a brand page);
+        // global `sort_score_all` when the visible set spans categories.
+        const scoreKey = pickScoreKey(result, category);
         // Brand-diversity interleaving: sort by score within each brand,
         // then round-robin across brands so no single brand dominates page 1.
         // Brands are ordered by their top product's score.
         const brandBuckets = new Map();
         // First sort all products by score
-        result.sort((a, b) => (b.sort_score || 0) - (a.sort_score || 0));
+        result.sort((a, b) => (b[scoreKey] || 0) - (a[scoreKey] || 0));
         // Group into brand buckets (preserving score order within each)
         for (const p of result) {
           const brand = p.brand || 'Other';
@@ -344,7 +349,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
         }
         // Sort brands by their top product's score (highest first)
         const sortedBrands = [...brandBuckets.entries()]
-          .sort(([, a], [, b]) => (b[0].sort_score || 0) - (a[0].sort_score || 0));
+          .sort(([, a], [, b]) => (b[0][scoreKey] || 0) - (a[0][scoreKey] || 0));
         // Round-robin interleave: pick one from each brand in rotation
         const interleaved = [];
         const cursors = new Map(sortedBrands.map(([brand]) => [brand, 0]));
@@ -376,7 +381,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     }
 
     return result;
-  }, [products, filters]);
+  }, [products, filters, category]);
 
   // Visible products (load more pagination)
   const visibleProducts = useMemo(() => filteredProducts.slice(0, visibleCount), [filteredProducts, visibleCount]);

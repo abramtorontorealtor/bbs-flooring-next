@@ -77,7 +77,7 @@ async function buildClientCache() {
   cacheBuilding = true;
   try {
     // Lean grid API — card-level fields only
-    const res = await fetch('/api/products/grid?limit=1000');
+    const res = await fetch('/api/products/grid');
     const all = res.ok ? await res.json() : [];
 
     productCache = all.filter(p => p.name && !p.is_archived_variant && !p.parent_product_id).map(p => {

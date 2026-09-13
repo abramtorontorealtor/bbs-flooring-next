@@ -63,7 +63,7 @@ export default async function VinylPage() {
     getCategoryPriceStats('vinyl'),
   ]);
   const low = stats.lowPrice || '1.99';
-  const serverGrid = <ProductGridServer products={products} />;
+  const serverGrid = <ProductGridServer products={products} category="vinyl" />;
 
   return (
     <>

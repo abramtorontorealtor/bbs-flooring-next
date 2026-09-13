@@ -16,7 +16,7 @@ export const metadata = {
 export default async function CheapFlooringGtaPage() {
   const [products, allForStats] = await Promise.all([
     getProductsForGrid({ limit: 100 }),
-    getProductsForGrid({ limit: 1000 }),
+    getProductsForGrid(), // all rows (paged past the 1000-row cap) for accurate stats
   ]);
   const filter = cheapFlooringGtaData.productFilter;
   const budgetProducts = typeof filter === 'function' ? products.filter(filter) : products;

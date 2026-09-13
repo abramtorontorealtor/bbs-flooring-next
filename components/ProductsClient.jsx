@@ -294,9 +294,12 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     if (isSearchMode && filters.sortBy === 'recommended') return result;
 
     switch (filters.sortBy) {
-      case 'recommended':
-        result.sort((a, b) => (b.sort_score_all || 0) - (a.sort_score_all || 0));
+      case 'recommended': {
+        // All Flooring → global `sort_score_all`; a single category tab → per-category `sort_score`.
+        const scoreKey = filters.category !== 'all' ? 'sort_score' : 'sort_score_all';
+        result.sort((a, b) => (b[scoreKey] || 0) - (a[scoreKey] || 0));
         break;
+      }
       case 'price_low':
         result.sort((a, b) => (a.price_per_sqft || a.sale_price_per_sqft || 0) - (b.price_per_sqft || b.sale_price_per_sqft || 0));
         break;

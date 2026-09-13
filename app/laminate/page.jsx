@@ -38,7 +38,7 @@ export default async function LaminatePage() {
     getCategoryPriceStats('laminate'),
   ]);
   const low = stats.lowPrice || '1.49';
-  const serverGrid = <ProductGridServer products={products} />;
+  const serverGrid = <ProductGridServer products={products} category="laminate" />;
 
   return (
     <>

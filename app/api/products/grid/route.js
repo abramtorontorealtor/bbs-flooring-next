@@ -1,22 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServerClient } from '@/lib/supabase';
+import { CARD_COLUMNS, fetchAllRows, sortScoreKey } from '@/lib/products-server';
 
 // Card-level product endpoint for ALL listing/grid pages
 // Returns only the fields needed by ProductCard + filters + sorting
-// ~890KB vs ~1.8MB for select(*), plus 5-min edge cache
-const CARD_COLUMNS = [
-  'id', 'slug', 'sku', 'name', 'brand', 'category', 'subcategory',
-  'image_url', 'image_alt_text',
-  'price_per_sqft', 'sale_price_per_sqft',
-  'starting_price', 'has_variants', 'variant_count',
-  'is_variant', 'is_on_sale', 'is_clearance', 'is_new_arrival', 'is_waterproof', 'is_canadian',
-  'in_stock', 'made_in',
-  'dimensions', 'thickness', 'colour', 'finish', 'grade', 'species', 'wear_layer', 'ac_rating',
-  'collection',
-  'sort_score', 'sort_score_all', 'is_archived_variant',
-  'hide_price',
-  'created_at',
-].join(', ');
+// (CARD_COLUMNS shared with lib/products-server.js), plus 5-min edge cache.
+//
+// Supabase/PostgREST caps a single request at 1000 rows; the catalogue has >1000
+// grid-eligible products, so results are fetched in pages and concatenated.
+// `?limit=N` is optional — omitted = every matching row.
 
 export async function GET(request) {
   const supabase = getSupabaseServerClient();
@@ -28,29 +20,34 @@ export async function GET(request) {
   const category = searchParams.get('category');
   const clearance = searchParams.get('clearance') === 'true';
   const sale = searchParams.get('sale') === 'true';
-  const limit = Math.min(parseInt(searchParams.get('limit') || '1000', 10), 1000);
+  const limitParam = parseInt(searchParams.get('limit') || '', 10);
+  const limit = Number.isFinite(limitParam) && limitParam > 0 ? limitParam : null;
 
-  let query = supabase
-    .from('products')
-    .select(CARD_COLUMNS)
-    .eq('is_variant', false)
-    .range(0, limit - 1);
+  const buildPage = (from, to) => {
+    let query = supabase
+      .from('products')
+      .select(CARD_COLUMNS)
+      .eq('is_variant', false);
 
-  if (category) query = query.eq('category', category);
-  if (clearance) query = query.or('is_clearance.eq.true,is_on_sale.eq.true').eq('hide_price', false);
-  if (sale) query = query.eq('is_on_sale', true);
+    if (category) query = query.eq('category', category);
+    if (clearance) query = query.or('is_clearance.eq.true,is_on_sale.eq.true').eq('hide_price', false);
+    if (sale) query = query.eq('is_on_sale', true);
 
-  // Default sort: smart tier sort (on-sale → regular → clearance → OOS), then newest within tier
-  query = query.order('sort_score', { ascending: false }).order('created_at', { ascending: false });
+    // Default sort: showroom score (per-category `sort_score` on category pages,
+    // global `sort_score_all` for All Flooring / brand pages), then newest.
+    return query
+      .order(sortScoreKey(category), { ascending: false })
+      .order('created_at', { ascending: false })
+      .range(from, to);
+  };
 
-  const { data, error } = await query;
+  const { rows, error } = await fetchAllRows(buildPage, { limit, label: 'products/grid' });
 
   if (error) {
-    console.error('[products/grid] Supabase error:', error);
     return NextResponse.json({ error: 'Failed to load products' }, { status: 500 });
   }
 
-  return NextResponse.json(data || [], {
+  return NextResponse.json(rows, {
     headers: {
       'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
     },

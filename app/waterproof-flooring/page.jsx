@@ -18,7 +18,7 @@ export const metadata = {
 export default async function WaterproofFlooringPage() {
   const [products, allForStats] = await Promise.all([
     getProductsForGrid({ limit: 100 }),
-    getProductsForGrid({ limit: 1000 }),
+    getProductsForGrid(), // all rows (paged past the 1000-row cap) for accurate stats
   ]);
   const serverGrid = <ProductGridServer products={products} />;
   const filtered = typeof waterproofFlooringData.productFilter === 'function'
