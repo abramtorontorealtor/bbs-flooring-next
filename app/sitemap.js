@@ -290,5 +290,37 @@ export default async function sitemap() {
     console.warn('Sitemap: could not fetch blog posts from Supabase', e.message);
   }
 
+  // ── Hosted manufacturer PDFs (Docs P3, Sep 14 2026) — /docs/<path>, one URL
+  // per unique file (the same PDF can be attached to several collections).
+  // Google indexes PDFs like pages; listing them here gets "<brand> warranty /
+  // install guide / TDS" queries onto OUR copy instead of the manufacturer's.
+  try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data: docs } = await supabase
+        .from('product_documents')
+        .select('hosted_path, verified_at')
+        .eq('active', true)
+        .not('hosted_path', 'is', null)
+        .limit(5000);
+      if (docs) {
+        const seen = new Set();
+        for (const d of docs) {
+          const p = String(d.hosted_path || '').replace(/^\/+/, '');
+          if (!p || !p.endsWith('.pdf') || seen.has(p)) continue;
+          seen.add(p);
+          entries.push({
+            url: `${SITE_URL}/docs/${p}`,
+            lastModified: d.verified_at || now,
+            changeFrequency: 'yearly',
+            priority: 0.3,
+          });
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('Sitemap: could not fetch product documents from Supabase', e.message);
+  }
+
   return entries;
 }

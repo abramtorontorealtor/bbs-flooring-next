@@ -6,6 +6,8 @@ import { JsonLd, faqSchema, SHOWROOM_PLACE } from '@/lib/schemas';
 import { RETURN_POLICY } from '@/lib/seo';
 import SupplyFamilyBuyBox from '@/components/SupplyFamilyBuyBox';
 import { familyUrl, stockInfo } from '@/lib/supplyFamilies';
+import { getSupplyFamilyDocuments, documentsToSchema } from '@/lib/productDocuments';
+import DocumentsDownloads from '@/components/DocumentsDownloads';
 import { Package } from 'lucide-react';
 
 export const revalidate = 600;
@@ -191,9 +193,10 @@ function schemaDescription(family) {
 // Offer per member with its own sku/gtin/availability/url — Google shows the
 // price range on the family result, Merchant Center gets one row per member
 // sharing item_group_id = family slug.
-function productSchema(family) {
+function productSchema(family, documents = []) {
   const p = family.primary;
   const priced = family.items.filter((i) => i.price != null);
+  const subjectOf = documentsToSchema(documents);
   const node = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -204,6 +207,8 @@ function productSchema(family) {
     category: CATEGORY_LABELS[family.category] || family.category,
     sku: p.code,
     ...(family.isMulti ? { productGroupID: family.slug } : {}),
+    // Docs P3: TDS / SDS / install guide as DigitalDocument nodes on the entity.
+    ...(subjectOf.length ? { subjectOf } : {}),
   };
   if (priced.length === 0) return node;
   if (!family.isMulti) {
@@ -239,10 +244,13 @@ export default async function SupplyDetailPage({ params, searchParams }) {
   const related = relatedFamilies(catalog, family);
   const categoryLabel = CATEGORY_LABELS[family.category] || family.category;
   const hubAnchor = CATEGORY_HUB_ANCHOR[family.category] || '';
+  // Manufacturer documents (Docs P3): brand-level ∪ this family's TDS / SDS /
+  // install / warranty PDFs, served from /docs/. [] on any failure.
+  const documents = await getSupplyFamilyDocuments(family);
 
   return (
     <>
-      <JsonLd data={[productSchema(family), breadcrumbSchema(family), faqItems.length ? faqSchema(faqItems) : null].filter(Boolean)} />
+      <JsonLd data={[productSchema(family, documents), breadcrumbSchema(family), faqItems.length ? faqSchema(faqItems) : null].filter(Boolean)} />
 
       <div className="max-w-6xl mx-auto px-4 py-10">
         {/* Breadcrumb */}
@@ -315,6 +323,11 @@ export default async function SupplyDetailPage({ params, searchParams }) {
             </table>
           </div>
         </section>
+
+        {/* Documents & Downloads (Docs P3) — the TDS/SDS installers actually ask for */}
+        {documents.length > 0 && (
+          <DocumentsDownloads documents={documents} brand={family.brand} subject={family.name} className="mt-14" />
+        )}
 
         {/* How to use */}
         {steps.length > 0 && (

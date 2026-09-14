@@ -1,3 +1,9 @@
+// Docs P3 (Sep 14 2026): manufacturer PDFs live in the public Supabase Storage
+// bucket `docs`, but are served from OUR domain at /docs/<path> so the rankings
+// and AI citations accrue to bbsflooring.ca (lib/productDocuments.js).
+const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/+$/, '');
+const DOCS_ORIGIN = SUPABASE_URL ? `${SUPABASE_URL}/storage/v1/object/public/docs` : null;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // NOTE: experimental.optimizeCss (critters) does NOT work with Turbopack — produces zero
@@ -59,6 +65,24 @@ const nextConfig = {
           { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
         ],
       },
+      // Hosted manufacturer PDFs: long edge cache (files are immutable per
+      // sha256; the loader writes a new path when a document changes) and an
+      // explicit self-canonical so the bucket's own URL never competes.
+      {
+        source: '/docs/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=2592000, stale-while-revalidate=604800' },
+          { key: 'Link', value: '<https://bbsflooring.ca/docs/:path*>; rel="canonical"' },
+        ],
+      },
+    ];
+  },
+  async rewrites() {
+    if (!DOCS_ORIGIN) return [];
+    return [
+      // /docs/<brand>/<collection>/<type>.pdf → public bucket object. Only .pdf
+      // is proxied; anything else under /docs stays a 404.
+      { source: '/docs/:path*.pdf', destination: `${DOCS_ORIGIN}/:path*.pdf` },
     ];
   },
   // Redirect old Base44 PascalCase URLs to new kebab-case paths.

@@ -31,13 +31,14 @@ import RequestQuoteBox from '@/components/RequestQuoteBox';
 import SampleTrapModal from '@/components/SampleTrapModal';
 import TrustStrip from '@/components/TrustStrip';
 import CollectionSiblings from '@/components/CollectionSiblings';
+import DocumentsDownloads from '@/components/DocumentsDownloads';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 
 /* ── FAST_PICKUP_BRANDS — warehouse-stocked brands with quick turnaround ── */
 const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
 
-export default function ProductDetailClient({ slug, initialProduct = null, initialSiblings = [], suppliesCatalog = null }) {
+export default function ProductDetailClient({ slug, initialProduct = null, initialSiblings = [], suppliesCatalog = null, documents = [] }) {
   const router = useRouter();
   const { user: currentUser, isLoadingAuth } = useAuth();
   const authResolved = !isLoadingAuth;
@@ -1020,6 +1021,17 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
             )}
           </div>
         </section>
+      )}
+
+      {/* ── Documents & Downloads (Docs P3, Sep 14 2026) — manufacturer warranty /
+          install / care / TDS / SDS PDFs for this brand + collection, served from
+          /docs/. Server-fetched in page.jsx; pure markup so it SSRs with real links. */}
+      {documents?.length > 0 && (
+        <DocumentsDownloads
+          documents={documents}
+          brand={product.brand}
+          subject={product.collection || null}
+        />
       )}
 
       {/* ── All accessories & trim (collapsed by default since S1, Sep 11 2026) ──
