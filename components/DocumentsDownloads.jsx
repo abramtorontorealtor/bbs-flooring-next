@@ -124,7 +124,7 @@ export default function DocumentsDownloads({
       )}
       {!compact && (
         <p className="mt-3 text-xs text-slate-500">
-          Need a document that isn&apos;t listed, or help reading a spec? Call <a href={PHONE_HREF} className="font-medium text-slate-700 hover:text-amber-700">{PHONE_DISPLAY}</a> — we&apos;ll pull it from the manufacturer for you.
+          Need a document that isn&apos;t listed, or help reading a spec? Call <a href={PHONE_HREF} className="font-medium text-slate-700 hover:text-amber-700">{PHONE_DISPLAY}</a>{' '}— we&apos;ll pull it from the manufacturer for you.
         </p>
       )}
     </section>
