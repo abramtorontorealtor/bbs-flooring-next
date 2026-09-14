@@ -146,8 +146,14 @@ export default async function ProductDetailPage({ params }) {
   // Manufacturer documents (Docs P3, Sep 14 2026): brand-level + this
   // collection's warranty / install / care / TDS / SDS PDFs, served from
   // /docs/<path>. Child variants resolve through their parent's brand +
-  // collection (same values on the row) so nothing extra is fetched.
-  const documents = await getProductDocuments(product);
+  // collection when the row carries them; variant rows often have a NULL
+  // collection, so fall back to the parent's brand + collection.
+  let docSubject = product;
+  if (!product.collection && product.parent_product_id) {
+    const parent = await getProductById(product.parent_product_id);
+    if (parent?.brand) docSubject = { brand: parent.brand, collection: parent.collection || null };
+  }
+  const documents = await getProductDocuments(docSubject);
   // Supplies catalog (S2, Sep 12 2026) — DB-backed, cached ~10min, falls back
   // to the static catalog on a DB hiccup. Fetched once server-side and passed
   // down so the client Install Kit never needs its own DB round trip.
