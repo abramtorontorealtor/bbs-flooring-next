@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import { createPageUrl } from '@/lib/routes';
 import ProductCard from '@/components/ProductCard';
-import Breadcrumbs from '@/components/Breadcrumbs';
 import { CATEGORY_PAGES } from '@/lib/breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -626,26 +625,18 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     </div>
   );
 
-  // ── Breadcrumbs ──
-  const breadcrumbItems = useMemo(() => {
-    const items = [{ label: 'Home', url: '/' }];
-    if (filters.category && filters.category !== 'all') {
-      const cat = CATEGORY_PAGES[filters.category];
-      items.push({ label: cat ? cat.label : filters.category });
-    } else {
-      items.push({ label: 'All Products' });
-    }
-    return items;
-  }, [filters.category]);
+  // Page shell (max-w/px-4/breadcrumbs/H1 "All Products") is rendered by app/products/page.jsx.
+  // This island must NOT repeat it — doing so doubled the side padding on phones and produced 2 H1s + 2 breadcrumbs.
+  const contextTitle = getCategoryTitle();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-12 pt-10 md:pt-14">
-      <Breadcrumbs items={breadcrumbItems} />
-
-      {/* Header */}
-      <div className="mb-3 sm:mb-5">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800">{getCategoryTitle()}</h1>
-      </div>
+    <div>
+      {/* Dynamic context line only when the grid is narrowed (search / category filter) — the static H1 stays "All Products" */}
+      {contextTitle !== 'All Products' && (
+        <div className="mb-3 sm:mb-5">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-800">{contextTitle}</h2>
+        </div>
+      )}
 
       {/* Store-wide negotiation bar — catches comparison-shoppers before they bounce */}
       <GridPriceMatchBar className="mb-3 sm:mb-4" />
