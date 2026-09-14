@@ -19,6 +19,19 @@ const BADGE_TONE = {
   cert: 'bg-violet-50 text-violet-800 ring-violet-200',
 };
 
+// Mobile prefix ("Warranty: …") only when the title itself doesn't already say
+// what it is — "Warranty Document Adhesive Bond" needs no "Warranty:" in front.
+function titleCarriesType(d) {
+  const t = (d.title || '').toLowerCase();
+  const words = [d.typeLabel, d.typeShort, d.type === 'tds' ? 'technical data' : null, d.type === 'tds' ? 'fiche technique' : null,
+    d.type === 'sds' ? 'safety data' : null, d.type === 'sds' ? 'feuillet de s' : null, d.type === 'warranty' ? 'garantie' : null,
+    d.type === 'install_guide' ? 'install' : null, d.type === 'care_maintenance' ? 'care' : null, d.type === 'care_maintenance' ? 'maintenance' : null,
+    d.type === 'cert' ? 'certif' : null, d.type === 'brochure_catalogue' ? 'catalog' : null, d.type === 'brochure_catalogue' ? 'brochure' : null,
+    d.type === 'spec_sheet' ? 'spec' : null, d.type === 'sell_sheet' ? 'sheet' : null, d.type === 'info' ? 'information' : null]
+    .filter(Boolean).map((w) => w.toLowerCase());
+  return words.some((w) => t.includes(w));
+}
+
 export default function DocumentsDownloads({
   documents = [],
   brand = null,
@@ -52,12 +65,15 @@ export default function DocumentsDownloads({
         href={d.href}
         target="_blank"
         rel="noopener"
-        className="flex-1 min-w-0 text-sm font-medium text-slate-800 hover:text-amber-700 hover:underline truncate"
+        className="flex-1 min-w-0 text-sm font-medium text-slate-800 hover:text-amber-700 hover:underline line-clamp-2 sm:line-clamp-none sm:truncate"
         title={`${d.typeLabel}: ${d.title}`}
         data-doc-type={d.type}
       >
-        <span className="sm:hidden text-slate-500 font-normal">{d.typeLabel}: </span>
+        {!titleCarriesType(d) && (
+          <span className="sm:hidden text-slate-500 font-normal">{d.typeLabel}: </span>
+        )}
         {d.title}
+        {d.lang === 'fr' && <span className="md:hidden text-slate-500 font-normal"> (FR)</span>}
       </a>
       <span className="hidden md:inline text-xs text-slate-500 shrink-0 tabular-nums">
         {[d.langLabel, d.pages ? `${d.pages} pg` : null, d.size].filter(Boolean).join(' · ')}
