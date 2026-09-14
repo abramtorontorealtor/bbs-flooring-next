@@ -240,7 +240,18 @@ def build_entry(fam, member):
         'shipping': SHIPPING,
     }
     if member.get('upc'):
-        entry['gtin'] = member['upc']
+        upc = re.sub(r'\D', '', str(member['upc']))
+        # UPC-A is 12 digits; supplier lists drop the leading zero (14 rows were
+        # 11 digits) -> MC flags "Ambiguous GTIN value". Pad to 12.
+        if len(upc) == 11:
+            upc = '0' + upc
+        if len(upc) in (12, 13, 14):
+            entry['gtin'] = upc
+    if availability == 'preorder':
+        # MC requires availability_date for preorder offers ("Missing attribute
+        # [availability_date]"). Order-in stock = longest handling window of the tier.
+        from datetime import date, timedelta
+        entry['availabilityDate'] = (date.today() + timedelta(days=14)).isoformat() + 'T00:00:00Z'
     entry['_unmapped_category'] = unmapped  # internal flag, stripped before push/print
     return entry
 
