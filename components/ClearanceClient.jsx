@@ -197,7 +197,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
     brands: [],
     priceMin: 0,
     priceMax: 20,
-    sortBy: 'price_low',
+    sortBy: 'recommended',
   });
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
 
@@ -303,7 +303,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
         results.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
         break;
       default:
-        // recommended — keep original order (newest first from API)
+        // recommended — keep server order (sort_score desc from getClearanceProducts / grid API)
         break;
     }
 
@@ -429,7 +429,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
                         brands: [],
                         priceMin: 0,
                         priceMax: maxPriceInStock,
-                        sortBy: 'price_low',
+                        sortBy: 'recommended',
                       })
                     }
                     className="text-xs text-slate-500 hover:text-red-500 flex items-center gap-1"
@@ -502,7 +502,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
                       brands: [],
                       priceMin: 0,
                       priceMax: maxPriceInStock,
-                      sortBy: 'price_low',
+                      sortBy: 'recommended',
                     })
                   }
                   className="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-6 py-2 rounded-xl text-sm transition-colors"
