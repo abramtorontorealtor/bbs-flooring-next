@@ -404,6 +404,12 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     }
   }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const getCategoryTitle = () => {
+    if (isSearchMode) return `Search results for "${urlSearchParam}"`;
+    const cat = CATEGORIES.find(c => c.value === filters.category);
+    return cat?.value && cat.value !== 'all' ? cat.label : 'All Products';
+  };
+
   // GA4 view_item_list + select_item (same list name -> position-CTR)
   const gaListName = isSearchMode ? `Search: ${urlSearchParam}` : getCategoryTitle();
   useEffect(() => {
@@ -422,12 +428,6 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
       setTimeout(() => { window.scrollTo(0, parseInt(savedScroll)); sessionStorage.removeItem('products_scroll'); }, 100);
     }
   }, []);
-
-  const getCategoryTitle = () => {
-    if (isSearchMode) return `Search results for "${urlSearchParam}"`;
-    const cat = CATEGORIES.find(c => c.value === filters.category);
-    return cat?.value && cat.value !== 'all' ? cat.label : 'All Products';
-  };
 
   // ── Filter Sidebar ──
   const FilterSidebar = () => (
