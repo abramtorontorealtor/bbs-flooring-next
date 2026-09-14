@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
 import { getSupplySteps, getSupplyFaq, FLOOR_TYPE_LINKS } from '@/lib/supplyGuides';
 import { JsonLd, faqSchema, SHOWROOM_PLACE } from '@/lib/schemas';
+import { RETURN_POLICY } from '@/lib/seo';
 import SupplyFamilyBuyBox from '@/components/SupplyFamilyBuyBox';
 import { familyUrl, stockInfo } from '@/lib/supplyFamilies';
 import { Package } from 'lucide-react';
@@ -153,6 +154,8 @@ function shippingDetails(tier) {
     deliveryTime: {
       '@type': 'ShippingDeliveryTime',
       handlingTime: { '@type': 'QuantitativeValue', minValue: Math.max(1, minD), maxValue: Math.max(1, maxD), unitCode: 'DAY' },
+      // GTA garage-drop delivery once the order is ready (same tier as flooring PDPs).
+      transitTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 2, unitCode: 'DAY' },
     },
   };
 }
@@ -169,7 +172,18 @@ function memberOffer(family, item) {
     availableAtOrFrom: SHOWROOM_PLACE,
     url: `https://bbsflooring.ca${familyUrl(family, item)}`,
     shippingDetails: shippingDetails(item.stockTier),
+    hasMerchantReturnPolicy: RETURN_POLICY,
   };
+}
+
+// Merchant-listings schema requires `description`; 116/168 live supplies have no
+// DB description yet (copy pass pending), so fall back to a factual one-liner
+// rather than omit the field. Never mentions the supplier.
+function schemaDescription(family) {
+  if (family.blurb) return family.blurb;
+  const label = (CATEGORY_LABELS[family.category] || family.category || 'installation supply').toLowerCase();
+  const brand = family.brand ? ` by ${family.brand}` : '';
+  return `${family.name}${brand}: ${label} for flooring installation, sold by BBS Flooring in Markham. Showroom pickup or GTA delivery; pricing and stock shown live.`;
 }
 
 // ONE Product node per family. Single-member family = a plain Offer (same as
@@ -186,7 +200,7 @@ function productSchema(family) {
     name: family.name,
     ...(family.brand ? { brand: { '@type': 'Brand', name: family.brand } } : {}),
     ...(family.image ? { image: family.image } : {}),
-    ...(family.blurb ? { description: family.blurb } : {}),
+    description: schemaDescription(family),
     category: CATEGORY_LABELS[family.category] || family.category,
     sku: p.code,
     ...(family.isMulti ? { productGroupID: family.slug } : {}),
