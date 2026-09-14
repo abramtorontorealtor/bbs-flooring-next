@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { entities } from '@/lib/base44-compat';
-import ProductCard from '@/components/ProductCard';
+import CollectionCard from '@/components/CollectionCard';
 import ProductToolbar from '@/components/ProductToolbar';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
@@ -91,6 +91,47 @@ function getProductPrice(product) {
 
 function getProductBrand(product) {
   return product.brand || '';
+}
+
+function getDiscountPct(product) {
+  const reg = parseFloat(product.price_per_sqft || 0);
+  const sale = parseFloat(product.sale_price_per_sqft || 0);
+  if (reg > 0 && sale > 0 && sale < reg) return Math.round(((reg - sale) / reg) * 100);
+  return 0;
+}
+
+/**
+ * Collapse an already-filtered + sorted list of colours into one group per
+ * brand+collection, preserving sorted order (group position = its first colour's
+ * position; hero = that first colour). Rows without a collection stand alone.
+ */
+function groupByCollection(products) {
+  const map = new Map();
+  const order = [];
+  for (const p of products) {
+    const brand = (p.brand || '').trim().toLowerCase();
+    const coll = (p.collection || '').trim().toLowerCase();
+    const key = coll ? `${brand}||${coll}` : `single||${p.id || p.slug}`;
+    let g = map.get(key);
+    if (!g) {
+      g = { key, hero: p, colours: [] };
+      map.set(key, g);
+      order.push(key);
+    }
+    g.colours.push(p);
+  }
+  return order.map((key) => {
+    const g = map.get(key);
+    const discounts = g.colours.map(getDiscountPct);
+    const maxDiscountPct = Math.max(0, ...discounts);
+    return {
+      ...g,
+      count: g.colours.length,
+      minPrice: Math.min(...g.colours.map(getProductPrice)),
+      maxDiscountPct,
+      discountsVary: new Set(discounts).size > 1,
+    };
+  });
 }
 
 function isClearance(product) {
@@ -310,6 +351,9 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
     return results;
   }, [clearanceProducts, filters]);
 
+  // One card per brand+collection — the PDP's CollectionSiblings shows the rest.
+  const collectionGroups = useMemo(() => groupByCollection(displayedProducts), [displayedProducts]);
+
   const handleFilterChange = (newFilters) => setFilters(newFilters);
   const handleSortChange = (sortBy) => setFilters((prev) => ({ ...prev, sortBy }));
 
@@ -470,8 +514,8 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
             {/* Results count */}
             <div className="flex items-center justify-between mb-4 px-1">
               <p className="text-sm text-slate-500">
-                {displayedProducts.length} clearance item
-                {displayedProducts.length !== 1 ? 's' : ''} available
+                {collectionGroups.length} collection{collectionGroups.length !== 1 ? 's' : ''} ·{' '}
+                {displayedProducts.length} colour{displayedProducts.length !== 1 ? 's' : ''} on clearance
               </p>
               {filters.category !== 'All' && (
                 <button
@@ -512,8 +556,8 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-                {displayedProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                {collectionGroups.map((group, i) => (
+                  <CollectionCard key={group.key} group={group} index={i} listName="clearance_collections" />
                 ))}
               </div>
             )}
