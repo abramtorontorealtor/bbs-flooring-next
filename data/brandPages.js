@@ -425,10 +425,10 @@ export const simbaFlooringData = {
 
 export const leeFlooringData = {
   route: 'LeeFlooring',
-  title: 'Lee Flooring Clearance Markham | Oak from $3.29 · Vinyl from $1.79',
-  description: 'Lee Flooring clearance pricing in Markham — real engineered American oak from $3.29/sqft and 7mm vinyl from $1.79/sqft. In-stock running line, reorderable. Call (647) 428-1111.',
+  title: 'Lee Flooring Clearance Markham | Oak from $3.49 · Vinyl from $1.79',
+  description: 'Lee Flooring clearance pricing in Markham — real engineered American oak from $3.49/sqft and 7mm vinyl from $1.79/sqft. In-stock running line, reorderable. Call (647) 428-1111.',
   h1: 'Lee Flooring Clearance — Real Oak & 7mm Vinyl',
-  subtitle: 'Engineered American oak from $3.29/sqft (reg $3.99) and 7mm vinyl with condo-approved underpad from $1.79/sqft (reg $2.49). First-quality, in stock, and a running line you can reorder anytime — special direct pricing, not a discontinued lot.',
+  subtitle: 'Engineered American oak from $3.49/sqft (reg $4.19) and 7mm vinyl with condo-approved underpad from $1.79/sqft (reg $2.49). First-quality, in stock, and a running line you can reorder anytime — special direct pricing, not a discontinued lot.',
   parentPage: null,
   schemaType: 'product',
   content: [
@@ -438,9 +438,9 @@ export const leeFlooringData = {
 <p>Their engineered hardwood is genuine American oak (plus one American walnut), and their vinyl is a single well-spec'd 7mm plank with condo-approved underpad. It's a current, first-quality running line — you can reorder to patch a repair or finish the next room. If you know what you want, Lee gets you there fast — at direct pricing.</p>`
     },
     {
-      heading: 'Lee Engineered Hardwood — 11 Options from $3.29/sqft',
-      body: `<p>Lee's hardwood line focuses on <strong>6½" Select &amp; Better engineered American oak</strong>, plus one warm American walnut. Right now, oak is just $3.29/sqft (reg $3.99) — genuinely entry-level pricing for real wood flooring.</p>
-<p>At $3.29/sqft, these compete directly with premium vinyl on price — but you're getting actual hardwood. For homeowners who want real wood and thought it was out of budget, Lee changes the math.</p>`
+      heading: 'Lee Engineered Hardwood — 11 Options from $3.49/sqft',
+      body: `<p>Lee's hardwood line focuses on <strong>6½" Select &amp; Better engineered American oak</strong>, plus one warm American walnut. Right now, oak is just $3.49/sqft (reg $4.19) — genuinely entry-level pricing for real wood flooring.</p>
+<p>At $3.49/sqft, these compete directly with premium vinyl on price — but you're getting actual hardwood. For homeowners who want real wood and thought it was out of budget, Lee changes the math.</p>`
     },
     {
       heading: 'Lee Vinyl — 8 Options at $1.79/sqft',
@@ -449,11 +449,11 @@ export const leeFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Why is Lee the best flooring value in the GTA right now?', answer: 'Because Lee is a first-quality running line we buy direct, so you get real engineered American oak at vinyl-level pricing: $3.29/sqft (reg $3.99) for genuine 6½" Select & Better oak, plus 7mm vinyl with a condo-approved underpad at just $1.79/sqft (reg $2.49). Both are first-quality, not seconds — the price is low because we buy Lee direct and pass the savings on, not because it is discontinued. For anyone who wants real wood but thought it was out of budget, Lee is the best dollar-for-dollar flooring value at BBS Flooring in Markham.' },
-    { question: 'Is Lee Flooring affordable?', answer: 'Yes — and right now it is at a special direct price. Lee engineered American oak is $3.29/sqft (reg $3.99), among the lowest prices for real wood flooring at BBS Flooring, and their 7mm vinyl is $1.79/sqft (reg $2.49). Both represent exceptional value for budget-conscious renovations — and it is a current running line you can reorder anytime.' },
+    { question: 'Why is Lee the best flooring value in the GTA right now?', answer: 'Because Lee is a first-quality running line we buy direct, so you get real engineered American oak at vinyl-level pricing: $3.49/sqft (reg $4.19) for genuine 6½" Select & Better oak, plus 7mm vinyl with a condo-approved underpad at just $1.79/sqft (reg $2.49). Both are first-quality, not seconds — the price is low because we buy Lee direct and pass the savings on, not because it is discontinued. For anyone who wants real wood but thought it was out of budget, Lee is the best dollar-for-dollar flooring value at BBS Flooring in Markham.' },
+    { question: 'Is Lee Flooring affordable?', answer: 'Yes — and right now it is at a special direct price. Lee engineered American oak is $3.49/sqft (reg $4.19), among the lowest prices for real wood flooring at BBS Flooring, and their 7mm vinyl is $1.79/sqft (reg $2.49). Both represent exceptional value for budget-conscious renovations — and it is a current running line you can reorder anytime.' },
     { question: 'What type of hardwood does Lee offer?', answer: 'Lee offers 6½" Select & Better engineered American oak, plus one warm American walnut. All options are engineered construction for dimensional stability and radiant heat compatibility.' },
     { question: 'Is Lee vinyl condo approved?', answer: 'Lee offers 7mm vinyl with 2mm condo-approved underpad — thicker than the typical 1.5mm pad. This meets most condo board sound requirements. Verify your specific building\'s STC/IIC requirements with property management.' },
-    { question: 'How does Lee compare to other flooring brands?', answer: 'Lee competes on value. Their engineered American oak at $3.29/sqft is priced below most competitors while offering real oak in 6½" widths. Their 7mm vinyl at $1.79/sqft is straightforward — one well-spec\'d product at an unbeatable price. Visit BBS Flooring in Markham to compare Lee with other brands side by side.' },
+    { question: 'How does Lee compare to other flooring brands?', answer: 'Lee competes on value. Their engineered American oak at $3.49/sqft is priced below most competitors while offering real oak in 6½" widths. Their 7mm vinyl at $1.79/sqft is straightforward — one well-spec\'d product at an unbeatable price. Visit BBS Flooring in Markham to compare Lee with other brands side by side.' },
     { question: 'Where can I buy Lee Flooring in the GTA?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham carries 19 Lee products — engineered American oak and 7mm vinyl. Walk-ins welcome Monday–Saturday. Free in-home measurements across the GTA.' },
   ],
   hideBrandFilter: true,

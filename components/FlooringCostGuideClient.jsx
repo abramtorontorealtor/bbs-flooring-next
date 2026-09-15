@@ -79,7 +79,7 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '600+ options', '$3.29–$8.99/sqft', '$4.89/sqft', 'Lee ($3.29) · Woden ($3.50) · Falcon ($3.89)'],
+                  ['Engineered Hardwood', '600+ options', '$3.29–$8.99/sqft', '$4.89/sqft', 'Lee ($3.49) · Woden ($3.50) · Falcon ($3.89)'],
                   ['Solid Hardwood', '100+ options', '$5.10–$7.59/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
                   ['Vinyl (LVP/SPC)', '340+ options', '$2.19–$4.35/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($1.79 clearance) · Triforest ($2.29)'],
                   ['Laminate', '170+ options', '$1.49–$3.39/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.29)'],

@@ -146,7 +146,7 @@ export default function FlooringComparisonGuideClient() {
           <p className="text-stone-600 leading-relaxed mb-6">
             A popular entry point is the{' '}
             <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee</Link>
-            {' '}— a 6.5" Select &amp; Better American Oak on clearance at $3.29/sqft (reg $3.99) with genuine warmth and character. For a wider-plank statement floor, the{' '}
+            {' '}— a 6.5" Select &amp; Better American Oak on clearance at $3.49/sqft (reg $4.19) with genuine warmth and character. For a wider-plank statement floor, the{' '}
             <Link href="/products/arizona-naf-elegant-collection-7-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Arizona by NAF Elegant</Link>
             {' '}(7.5" Oak, $4.69/sqft) is one of our best-selling wide-plank options for open-concept main floors in 2026.
           </p>
