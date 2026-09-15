@@ -69,6 +69,13 @@ function diversePick(items, count, maxPerBrand = 2) {
     brandCount[b] = (brandCount[b] || 0) + 1;
   }
 
+  // Third pass: never ship a ragged grid — if the brand cap left slots empty,
+  // relax it (a full 8-up row beats an orphan card on row 2).
+  for (const p of items) {
+    if (result.length >= count) break;
+    if (!result.includes(p)) result.push(p);
+  }
+
   return result;
 }
 
@@ -88,6 +95,7 @@ export async function GET(request) {
     .eq('is_variant', false)
     .eq('in_stock', true)
     .not('image_url', 'is', null)
+    .not('image_url', 'ilike', '%placeholder%')
     .or('hide_price.is.null,hide_price.eq.false')
     .gt('price_per_sqft', 0);
 

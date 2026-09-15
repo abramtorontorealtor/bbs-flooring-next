@@ -638,9 +638,6 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
         </div>
       )}
 
-      {/* Store-wide negotiation bar — catches comparison-shoppers before they bounce */}
-      <GridPriceMatchBar className="mb-3 sm:mb-4" />
-
       {/* Category chips — horizontal, scrollable */}
       <div className="flex gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-2 sm:pb-3 -mx-4 px-4">
         {CATEGORIES.map((cat) => (
@@ -763,6 +760,9 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
               )}
             </>
           )}
+
+          {/* Store-wide negotiation bar — below the grid (Sep 15 2026 audit: strips above the grid trimmed) */}
+          <GridPriceMatchBar className="mt-8" />
 
           {/* Brand Authority SEO Section */}
           {filters.brands.length === 1 && (

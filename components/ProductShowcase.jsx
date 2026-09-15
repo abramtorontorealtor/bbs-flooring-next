@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import ProductCard from '@/components/ProductCard';
 import { createPageUrl } from '@/lib/routes';
+import { hasRealImage } from '@/lib/imagePlaceholder';
 
 function ArrowRightIcon({ className = 'w-4 h-4' }) {
   return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
@@ -40,7 +41,7 @@ export default function ProductShowcase() {
     queryFn: async () => {
       const res = await fetch('/api/products/grid?clearance=true&limit=4');
       if (!res.ok) return [];
-      return (await res.json()).filter(p => p.image_url && !p.hide_price).slice(0, 4);
+      return (await res.json()).filter(p => hasRealImage(p) && !p.hide_price).slice(0, 4);
     },
   });
 

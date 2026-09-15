@@ -643,8 +643,6 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
 
   return (
     <>
-    {/* Store-wide negotiation bar — catches comparison-shoppers before they bounce */}
-    <GridPriceMatchBar className="mb-3 sm:mb-4" />
     <div className="flex gap-6">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:block w-64 flex-shrink-0">
@@ -752,6 +750,8 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
         )}
       </div>
     </div>
+    {/* Store-wide negotiation bar — below the grid (Sep 15 2026 audit: 4 stacked strips pushed the first product ~700px down on desktop) */}
+    <GridPriceMatchBar className="mt-8" />
     </>
   );
 }

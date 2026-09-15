@@ -34,6 +34,7 @@ import CollectionSiblings from '@/components/CollectionSiblings';
 import DocumentsDownloads from '@/components/DocumentsDownloads';
 import { useAuth } from '@/lib/auth-context';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
+import { hasRealImage } from '@/lib/imagePlaceholder';
 
 /* ── FAST_PICKUP_BRANDS — warehouse-stocked brands with quick turnaround ── */
 const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
@@ -245,7 +246,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
 
   const relatedProducts = useMemo(() => {
     if (!product || allRelatedProducts.length === 0) return [];
-    const candidates = allRelatedProducts.filter(p => p.image_url && p.id !== product.id);
+    // Placeholder "coming soon" art never earns a related slot — dead click on a real product's page.
+    const candidates = allRelatedProducts.filter(p => hasRealImage(p) && p.id !== product.id);
     if (candidates.length === 0) return [];
     const basePrice = product.sale_price_per_sqft || product.price_per_sqft || 0;
     const scored = candidates.map(p => {

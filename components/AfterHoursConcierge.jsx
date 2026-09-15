@@ -25,7 +25,30 @@ const HIDDEN_PATHS = [
   '/quote-calculator',
   '/floor-finder',
   '/carpet-removal',
+  // Sep 15 2026 visual audit: the card stacked on top of the cookie banner + sticky
+  // pills in the bottom-left corner and covered hero / pro-pick content. Grid and
+  // catalogue pages already carry a Find-my-floor banner inline, and the homepage
+  // hero links to the finder itself — no nudge needed there.
+  '/products',
+  '/vinyl',
+  '/laminate',
+  '/engineered-hardwood',
+  '/solid-hardwood',
+  '/waterproof-flooring',
+  '/clearance',
+  '/flooring-accessories',
+  '/cheap-flooring-gta',
 ];
+
+const CONSENT_KEY = 'bbs_cookie_consent';
+
+function consentDecided() {
+  try {
+    return !!localStorage.getItem(CONSENT_KEY);
+  } catch (_) {
+    return true;
+  }
+}
 
 export default function AfterHoursConcierge() {
   const pathname = usePathname();
@@ -34,7 +57,8 @@ export default function AfterHoursConcierge() {
   const shownTracked = useRef(false);
 
   const isProductDetail = /^\/products\/[^/]+/.test(pathname);
-  const isHiddenPage = isProductDetail || HIDDEN_PATHS.some((p) => pathname.startsWith(p));
+  const isHome = pathname === '/';
+  const isHiddenPage = isHome || isProductDetail || HIDDEN_PATHS.some((p) => pathname.startsWith(p));
 
   useEffect(() => {
     if (open !== false || isHiddenPage) {
@@ -50,8 +74,28 @@ export default function AfterHoursConcierge() {
     }
     if (dismissed) return;
 
-    const timer = setTimeout(() => setShow(true), SHOW_DELAY_MS);
-    return () => clearTimeout(timer);
+    // Never stack on the cookie banner: wait for consent to be decided first,
+    // then apply the usual delay. Polls cheaply until the banner is gone.
+    let timer = null;
+    let poll = null;
+    const arm = () => {
+      timer = setTimeout(() => setShow(true), SHOW_DELAY_MS);
+    };
+    if (consentDecided()) {
+      arm();
+    } else {
+      poll = setInterval(() => {
+        if (consentDecided()) {
+          clearInterval(poll);
+          poll = null;
+          arm();
+        }
+      }, 1000);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+      if (poll) clearInterval(poll);
+    };
   }, [open, isHiddenPage, pathname]);
 
   useEffect(() => {

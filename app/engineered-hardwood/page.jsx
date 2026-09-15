@@ -9,7 +9,6 @@ import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import QuoteContextBanner from '@/components/QuoteContextBanner';
 import CityLinks from '@/components/CityLinks';
-import CategoryShopBar from '@/components/CategoryShopBar';
 import FloorFinderCTA from '@/components/FloorFinderCTA';
 import GuidedUseCaseChips from '@/components/GuidedUseCaseChips';
 
@@ -84,8 +83,6 @@ export default async function EngineeredHardwoodPage() {
           </p>
         </div>
 
-        {/* ── SSR Shop-intent + trust bar ── */}
-        <CategoryShopBar count={stats.count ? `${stats.count}+` : '100+'} low={low} label="Engineered Hardwood" />
 
         {/* ── Guided "help me choose" + shop-by-need (overload killers) ── */}
         <FloorFinderCTA context="engineered hardwood" />

@@ -193,9 +193,9 @@ export default function HomePage() {
               Not sure where to start? Find my floor in 60 seconds <ArrowIcon className="w-4 h-4" />
             </Link>
 
-            {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 on phones/tablets ═══ */}
-            {/* Hidden at lg+ where the hero has the contact card and the full category grid is one scroll away (D4 dedupe). */}
-            <div className="mt-6 md:mt-9 lg:hidden">
+            {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 on every breakpoint ═══ */}
+            {/* Sep 15 2026: restored on desktop (Abram) — browsers self-segment into a category from viewport 1 instead of hunting. */}
+            <div className="mt-6 md:mt-9">
               <p className="text-xs md:text-sm font-medium text-slate-300 uppercase tracking-wider mb-2.5 md:mb-3">
                 Shop by category
               </p>

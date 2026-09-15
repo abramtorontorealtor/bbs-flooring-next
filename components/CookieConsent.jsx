@@ -43,28 +43,31 @@ export default function CookieConsent() {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-slide-up">
-      <div className="max-w-4xl mx-auto bg-slate-900 text-white rounded-2xl shadow-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="flex-1 text-sm leading-relaxed">
+    // Compact by design (Sep 15 2026 audit): the old card ate ~30% of a phone's first
+    // screen and covered the homepage category strip. One line of copy, buttons inline.
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-2 sm:p-4 animate-slide-up">
+      <div className="max-w-3xl mx-auto bg-slate-900 text-white rounded-xl sm:rounded-2xl shadow-2xl px-3 py-2.5 sm:px-5 sm:py-3.5 flex flex-row items-center gap-3">
+        <div className="flex-1 text-xs sm:text-sm leading-snug">
           <p>
-            We use cookies to improve your experience, analyze site traffic, and measure advertising effectiveness.{' '}
+            <span className="hidden sm:inline">We use cookies to improve your experience, analyze traffic, and measure advertising. </span>
+            <span className="sm:hidden">We use cookies for analytics &amp; ads. </span>
             <Link href="/privacy-policy" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
               Privacy Policy
             </Link>
           </p>
         </div>
-        <div className="flex gap-3 shrink-0">
+        <div className="flex gap-2 shrink-0">
           <button
             onClick={handleDecline}
-            className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white border border-slate-600 rounded-lg hover:border-slate-400 transition-colors"
+            className="px-3 py-1.5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white border border-slate-600 rounded-lg hover:border-slate-400 transition-colors"
           >
             Decline
           </button>
           <button
             onClick={handleAccept}
-            className="px-5 py-2 text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-lg transition-colors shadow-lg shadow-amber-500/20"
+            className="px-3.5 py-1.5 text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-900 rounded-lg transition-colors shadow-lg shadow-amber-500/20"
           >
-            Accept All
+            Accept
           </button>
         </div>
       </div>
