@@ -79,7 +79,7 @@ export default function FlooringCostGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', '600+ options', '$3.29–$8.99/sqft', '$4.89/sqft', 'Lee ($3.49) · Woden ($3.50) · Falcon ($3.89)'],
+                  ['Engineered Hardwood', '600+ options', '$3.00–$8.99/sqft', '$4.89/sqft', 'Woden ($3.00) · Falcon ($3.39) · Lee ($3.49)'],
                   ['Solid Hardwood', '100+ options', '$5.10–$7.59/sqft', '$6.05/sqft', 'Northernest ($5.10) · Sherwood ($6.99)'],
                   ['Vinyl (LVP/SPC)', '340+ options', '$2.19–$4.35/sqft', '$2.75/sqft', 'Falcon ($2.19) · Lee ($1.79 clearance) · Triforest ($2.29)'],
                   ['Laminate', '170+ options', '$1.49–$3.39/sqft', '$2.39/sqft', 'Tosca ($1.49) · Triforest ($2.29)'],
@@ -98,7 +98,7 @@ export default function FlooringCostGuideClient() {
 
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
             <p className="text-stone-700 font-medium">
-              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $3.29/sqft (like the <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee Flooring</Link>) when big-box stores start at $5.00+ for comparable American Oak. Same quality, fewer markups.
+              <strong>Why BBS prices are lower:</strong> BBS buys direct from manufacturers — no distributor middleman. That&apos;s why our engineered hardwood starts at $3.00/sqft (like the <Link href="/products/hudson-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Woden Vermont Oak</Link> on sale) when big-box stores start at $5.00+ for comparable American Oak. Same quality, fewer markups.
             </p>
           </div>
 
@@ -365,7 +365,7 @@ export default function FlooringCostGuideClient() {
               ['What is the cheapest type of flooring?', 'Laminate is the cheapest at BBS, starting at $1.49/sqft (Tosca Floors). With installation from $2.00/sqft, total cost starts around $3.49/sqft. Vinyl starts at $1.79/sqft material — the second most affordable option.'],
               ['How much does it cost to floor 1,000 square feet?', 'At BBS Flooring: Laminate $3,490–$5,290 installed. Vinyl $4,190–$5,590 installed. Engineered hardwood $4,740–$12,240 installed. Solid hardwood $7,350–$10,500 installed. These include material + professional installation.'],
               ['Does BBS Flooring offer free estimates?', 'Yes. BBS provides free in-home measurements across the GTA. A technician measures every room, checks subfloor conditions, and provides a detailed quote — no obligation. Book at bbsflooring.ca/free-measurement or call (647) 428-1111.'],
-              ['Is hardwood flooring worth the extra cost over vinyl?', 'For primary residences — usually yes. Hardwood adds more resale value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $3.29/sqft while vinyl starts at $2.19/sqft ($1.79 on clearance). For rentals or basements, vinyl wins on practicality.'],
+              ['Is hardwood flooring worth the extra cost over vinyl?', 'For primary residences — usually yes. Hardwood adds more resale value and lasts 25–100 years vs 15–25 for vinyl. The cost gap has narrowed: BBS engineered hardwood starts at $3.00/sqft while vinyl starts at $2.19/sqft ($1.79 on clearance). For rentals or basements, vinyl wins on practicality.'],
               ['Is installation included in BBS flooring prices?', 'Material and labour are quoted separately for transparency. Material prices are per square foot on the website. Installation starts from $2.00/sqft for vinyl/laminate and from $2.25/sqft for hardwood. This lets you compare material costs fairly.'],
               ['How should I budget for a flooring project?', 'Rule of thumb: material cost × 2 covers materials + installation + most extras. For precision, add: material + labour + old floor removal ($1.00–$3.00/sqft) + baseboards (from $3.50/linear ft) + delivery ($140–$200) + 10% waste factor. BBS provides free detailed quotes.'],
               ['How much do stairs cost?', 'At BBS: Stair refinishing starts from $125/step. New straight hardwood treads from $185/step. Specialty stairs (open/curved) from $225/step. A typical 13-step straight staircase starts around $1,625–$2,405 for new treads.'],

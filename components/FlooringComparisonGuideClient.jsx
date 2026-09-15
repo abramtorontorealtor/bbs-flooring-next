@@ -69,7 +69,7 @@ export default function FlooringComparisonGuideClient() {
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              ['Hardwood (Engineered + Solid)', '700+ options from $3.29/sqft', 'Real wood — either a solid plank or an engineered core topped with a genuine wood veneer. Nothing replicates its warmth, character, or how it lifts a home\u2019s resale value. Engineered handles moisture better; solid is refinishable for generations.', '/engineered-hardwood-flooring'],
+              ['Hardwood (Engineered + Solid)', '700+ options from $3.00/sqft', 'Real wood — either a solid plank or an engineered core topped with a genuine wood veneer. Nothing replicates its warmth, character, or how it lifts a home\u2019s resale value. Engineered handles moisture better; solid is refinishable for generations.', '/engineered-hardwood-flooring'],
               ['Vinyl (LVP/SPC)', '340+ options from $1.79/sqft on clearance', '100% synthetic, 100% waterproof. Luxury Vinyl Plank is built from multiple PVC layers printed with hyper-realistic wood or stone visuals. The fastest-growing category — handles moisture, pets, and heavy traffic without flinching.', '/vinyl-flooring'],
               ['Laminate', '170+ options from $1.49/sqft', 'A high-density fibreboard core with a photographic wood layer sealed under a tough wear surface. Budget-friendly and scratch-resistant, but not waterproof — placement matters. Best for bedrooms, offices, and dry living spaces.', '/laminate-flooring'],
             ].map(([title, price, desc, link]) => (
@@ -102,7 +102,7 @@ export default function FlooringComparisonGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Price at BBS', '$3.29–$8.99/sqft', '$5.10–$7.59/sqft', '$2.19–$4.35/sqft', '$1.49–$3.39/sqft'],
+                  ['Price at BBS', '$3.00–$8.99/sqft', '$5.10–$7.59/sqft', '$2.19–$4.35/sqft', '$1.49–$3.39/sqft'],
                   ['Options at BBS', '600+ products', '100+ products', '340+ products', '170+ products'],
                   ['Waterproof', '❌ Moisture-resistant', '❌ No', '✅ 100% waterproof', '⚠️ Water-resistant only'],
                   ['Durability', '25–50 years', '50–100 years', '15–25 years', '10–20 years'],
@@ -135,7 +135,7 @@ export default function FlooringComparisonGuideClient() {
           <h2 className="text-3xl font-bold text-stone-900 mb-6">Engineered Hardwood Deep Dive</h2>
           <div className="flex gap-3 mb-4">
             <span className="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">360+ OPTIONS</span>
-            <span className="text-stone-400 text-sm mt-0.5">$3.29–$8.99/sqft · Avg $5.02/sqft</span>
+            <span className="text-stone-400 text-sm mt-0.5">$3.00–$8.99/sqft · Avg $5.02/sqft</span>
           </div>
           <p className="text-stone-600 text-lg leading-relaxed mb-6">
             Engineered hardwood is the most popular flooring category at BBS — and the most popular in Canada, period. It delivers authentic wood look and feel at better dimensional stability than solid hardwood. The construction is a real hardwood veneer (2–6mm thick) bonded to a cross-ply plywood or HDF core. That layered core resists the expansion and contraction that causes solid wood to cup and gap during Ontario&apos;s extreme humidity swings.
@@ -366,7 +366,7 @@ export default function FlooringComparisonGuideClient() {
 
           <div className="space-y-4">
             {[
-              ['🏠 Living Room', 'Engineered Hardwood', 'The living room is where you see the most flooring and where resale value matters most. White Oak in 6½"–7½" wide-plank with a matte finish is the 2026 standard. From $3.29/sqft at BBS.'],
+              ['🏠 Living Room', 'Engineered Hardwood', 'The living room is where you see the most flooring and where resale value matters most. White Oak in 6½"–7½" wide-plank with a matte finish is the 2026 standard. From $3.00/sqft at BBS.'],
               ['🍳 Kitchen', 'Vinyl (LVP/SPC) or Engineered Hardwood', 'Kitchens see water spills, dropped utensils, and heavy foot traffic. Vinyl is the safest bet — 100% waterproof from $1.79/sqft. Engineered hardwood works if you wipe spills quickly.'],
               ['🏚️ Basement', 'Vinyl (LVP/SPC)', 'Below-grade moisture makes vinyl the only worry-free choice. 340+ waterproof options from $1.79/sqft on clearance ($2.19 regular). Engineered hardwood is possible in dry basements with moisture barriers. Never use solid hardwood. See our complete basement flooring guide at bbsflooring.ca/basement-flooring-guide.'],
               ['🛏️ Bedroom', 'Engineered Hardwood or Laminate', 'Low traffic and no moisture — any type works. Hardwood maximizes resale value. Laminate from $1.49/sqft is the budget pick. Both install with underlayment for sound dampening.'],
@@ -406,7 +406,7 @@ export default function FlooringComparisonGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Engineered Hardwood', 'Budget', '$3.29–$3.99', '$2.25', '$5.54–$6.24', '$2,770–$3,120'],
+                  ['Engineered Hardwood', 'Budget', '$3.00–$3.99', '$2.25', '$5.25–$6.24', '$2,625–$3,120'],
                   ['Engineered Hardwood', 'Mid-Range', '$4.19–$6.19', '$2.25–$3.25', '$6.44–$9.44', '$3,220–$4,720'],
                   ['Engineered Hardwood', 'Premium', '$6.19–$8.99', '$3.25–$4.25', '$9.44–$13.24', '$4,720–$6,620'],
                   ['Solid Hardwood', 'Standard', '$5.10–$6.39', '$2.25', '$7.35–$8.64', '$3,675–$4,320'],
@@ -445,7 +445,7 @@ export default function FlooringComparisonGuideClient() {
             {[
               ['1. What&apos;s your budget per square foot (material only)?', [
                 ['Under $2.50/sqft', '→ Laminate ($1.49–$3.29) or budget vinyl ($1.79–$2.49)'],
-                ['$2.50–$5.00/sqft', '→ Vinyl ($1.79–$3.59) or budget engineered hardwood ($3.29–$4.99)'],
+                ['$2.50–$5.00/sqft', '→ Vinyl ($1.79–$3.59) or budget engineered hardwood ($3.00–$4.99)'],
                 ['$5.00+/sqft', '→ Premium engineered hardwood or solid hardwood'],
               ]],
               ['2. Will the floor be exposed to moisture?', [

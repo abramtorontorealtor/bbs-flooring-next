@@ -421,7 +421,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
                 Lee Flooring — Wholesale-Direct Pricing
               </h2>
               <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Real engineered American oak from <strong className="text-red-600">$3.29/sqft</strong> and
+                Real engineered American oak from <strong className="text-red-600">$3.49/sqft</strong> and
                 22mil waterproof vinyl from <strong className="text-red-600">$1.79/sqft</strong>.
                 First-quality Lee flooring at special direct pricing — {leeStats.count} colours,
                 in stock and reorderable anytime.

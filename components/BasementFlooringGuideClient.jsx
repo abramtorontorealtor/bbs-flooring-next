@@ -154,7 +154,7 @@ export default function BasementFlooringGuideClient() {
             <div className="border border-stone-200 rounded-xl p-6">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-stone-600 text-white text-sm font-bold px-3 py-1 rounded-full">#3 PREMIUM LOOK</span>
-                <span className="text-stone-400 text-sm">360+ options · $3.29–$8.99/sqft</span>
+                <span className="text-stone-400 text-sm">360+ options · $3.00–$8.99/sqft</span>
               </div>
               <h3 className="text-2xl font-bold text-stone-900 mb-3">Engineered Hardwood</h3>
               <p className="text-stone-600 leading-relaxed mb-4">

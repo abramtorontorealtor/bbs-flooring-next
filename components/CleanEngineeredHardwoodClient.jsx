@@ -62,7 +62,7 @@ export default function CleanEngineeredHardwoodClient() {
             Engineered hardwood is real wood — a hardwood veneer bonded to a multi-ply plywood or HDF core. That construction makes it more stable than solid hardwood, but it is still <strong>wood</strong>, which means it reacts to moisture and abrasion. The thin protective finish on top is the only thing standing between daily life and the raw wood underneath. Clean it correctly and it lasts decades. Clean it wrong and you can dull, scratch, or swell it in a single mistake.
           </p>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            The two enemies are <strong>grit</strong> and <strong>moisture</strong>. Grit (sand, dust, pet kibble crumbs) acts like sandpaper underfoot and slowly grinds the finish away in walkways. Moisture seeps into the micro-bevels between planks and swells the veneer or delaminates it from the core. Every routine below is designed to manage those two threats. Shop our full <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood collection</Link> (from $3.29/sqft) if you&apos;re comparing floors, or browse popular in-stock options like the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard Woden Vermont Oak</Link>.
+            The two enemies are <strong>grit</strong> and <strong>moisture</strong>. Grit (sand, dust, pet kibble crumbs) acts like sandpaper underfoot and slowly grinds the finish away in walkways. Moisture seeps into the micro-bevels between planks and swells the veneer or delaminates it from the core. Every routine below is designed to manage those two threats. Shop our full <Link href="/engineered-hardwood" className="text-amber-700 underline hover:text-amber-800">engineered hardwood collection</Link> (from $3.00/sqft) if you&apos;re comparing floors, or browse popular in-stock options like the <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard Woden Vermont Oak</Link>.
           </p>
         </section>
 
@@ -191,7 +191,7 @@ export default function CleanEngineeredHardwoodClient() {
         <section className="bg-gradient-to-br from-slate-800 to-emerald-900 text-white rounded-2xl p-8 md:p-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Time for a New Floor?</h2>
           <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
-            If your engineered hardwood is worn beyond cleaning, BBS Flooring has 360+ engineered hardwood options from $3.29/sqft — plus professional installation and refinishing across Markham &amp; the GTA.
+            If your engineered hardwood is worn beyond cleaning, BBS Flooring has 360+ engineered hardwood options from $3.00/sqft — plus professional installation and refinishing across Markham &amp; the GTA.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/engineered-hardwood" className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-6 py-3 rounded-lg transition">Browse Engineered Hardwood</Link>

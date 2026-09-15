@@ -53,7 +53,7 @@ export default function EngineeredHardwoodGuideClient() {
           Quick Answer: Best Engineered Hardwood in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 500+ in-stock engineered hardwood options from $3.29&#8211;$8.99/sqft across 10 brands, including a premium Vidar Design line (call-for-pricing). Species include White Oak, Hickory, Maple, and Walnut. Common widths run 6&#189;&quot; and 7&#189;&quot;. Professional installation from $2.25/sqft (nail-down) or $3.25/sqft (glue-down). Free in-home measurement: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring stocks 500+ in-stock engineered hardwood options from $3.00&#8211;$8.99/sqft across 10 brands, including a premium Vidar Design line (call-for-pricing). Species include White Oak, Hickory, Maple, and Walnut. Common widths run 6&#189;&quot; and 7&#189;&quot;. Professional installation from $2.25/sqft (nail-down) or $3.25/sqft (glue-down). Free in-home measurement: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -116,7 +116,7 @@ export default function EngineeredHardwoodGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Price at BBS', '$3.29–$8.99/sqft', '$5.10–$7.59/sqft'],
+                  ['Price at BBS', '$3.00–$8.99/sqft', '$5.10–$7.59/sqft'],
                   ['Options at BBS', '600+ options, 10 brands', '100+ options, 6 brands'],
                   ['Construction', 'Multi-layer (veneer + plywood core)', 'Single piece of wood, 3/4" thick'],
                   ['Install over concrete', '✅ Yes — glue-down or floating', '❌ No — nail-down on wood only'],
@@ -334,7 +334,7 @@ export default function EngineeredHardwoodGuideClient() {
               <p className="font-semibold text-green-800 mb-1">💰 Best Value</p>
               <p className="text-stone-600 text-sm">
                 Woden Flooring and Lee Flooring offer the lowest entry points for real engineered hardwood. Top picks:{' '}
-                <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee (6½" American Oak, $3.29/sqft on clearance)</Link>,{' '}
+                <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee (6½" American Oak, $3.49/sqft on clearance)</Link>,{' '}
                 <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Linen by Falcon (6½" Red Oak, $3.89/sqft)</Link>, and{' '}
                 <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard by Woden (6½" Vermont Oak, $3.79/sqft)</Link>.
               </p>
@@ -412,7 +412,7 @@ export default function EngineeredHardwoodGuideClient() {
               </thead>
               <tbody>
                 {[
-                  ['Budget', '$3.29–$3.99', '$2.25', '$5.54–$6.24', '$2,770–$3,120', 'Lee, Woden, Falcon'],
+                  ['Budget', '$3.00–$3.99', '$2.25', '$5.25–$6.24', '$2,625–$3,120', 'Woden, Falcon, Lee'],
                   ['Mid-Range', '$4.19–$6.19', '$2.25–$3.25', '$6.44–$9.44', '$3,220–$4,720', 'NAF, Northernest'],
                   ['Premium', '$6.19–$9.29', '$3.25–$4.25', '$9.44–$13.54', '$4,720–$6,770', 'Vidar, Canadian Standard'],
                 ].map(([tier, material, labour, total, room, brands], i) => (
@@ -440,11 +440,11 @@ export default function EngineeredHardwoodGuideClient() {
 
           <div className="space-y-6">
             {[
-              ['🏠 Basements', 'Click-lock engineered hardwood over a quality underlayment with vapour barrier. Avoid nail-down (no wood subfloor in basements). Budget picks: Lee from $3.29/sqft (clearance), Falcon from $3.89/sqft. For extra moisture protection, consider vinyl (LVP) — 240+ waterproof options, from $1.79/sqft on clearance at BBS.'],
+              ['🏠 Basements', 'Click-lock engineered hardwood over a quality underlayment with vapour barrier. Avoid nail-down (no wood subfloor in basements). Budget picks: Woden from $3.00/sqft (sale), Lee from $3.49/sqft (clearance). For extra moisture protection, consider vinyl (LVP) — 240+ waterproof options, from $1.79/sqft on clearance at BBS.'],
               ['🏢 Condos', 'Glue-down installation over concrete is the standard for Toronto condos. Check your building\'s acoustic requirements — some require specific underlayments or STC/IIC ratings. Engineered hardwood is condo-friendly by design. BBS installs glue-down at $3.25/sqft.'],
               ['♨️ Radiant Heat', 'Engineered hardwood is the only real wood option for radiant heat. Thinner profiles (1/2") conduct heat better than 3/4". Avoid very wide planks (9"+) over radiant — more expansion movement. White Oak handles heat well. Solid hardwood is not recommended over radiant systems.'],
               ['🐾 Pets & Kids', 'Hickory (Janka 1820) is the hardest species — best for scratches and dents. Wire-brushed or hand-scraped finishes hide wear between maintenance. Matte finishes show less scratching than gloss. Avoid softer species like Walnut.'],
-              ['💰 Best Value Overall', 'Lee Flooring American Oak from $3.29/sqft (clearance) or Woden Flooring European Oak from $3.50/sqft. Both offer genuine engineered hardwood at prices that compete with luxury vinyl. At $3.29/sqft material + $2.25/sqft labour = real hardwood floors for under $6/sqft installed.'],
+              ['💰 Best Value Overall', 'Woden Flooring Vermont Oak from $3.00/sqft (sale) or Lee Flooring American Oak from $3.49/sqft (clearance). Both offer genuine engineered hardwood at prices that compete with luxury vinyl. At $3.00/sqft material + $2.25/sqft labour = real hardwood floors for under $5.50/sqft installed.'],
               ['✨ Best for Resale Value', 'White Oak in 5"–7½" wide-plank, natural or matte finish. This is what buyers expect in 2026. Vidar and Canadian Standard are the premium choices. Engineered hardwood consistently adds more resale value than laminate or vinyl.'],
             ].map(([title, desc]) => (
               <div key={title} className="bg-stone-50 border border-stone-200 rounded-xl p-6">
@@ -512,7 +512,7 @@ export default function EngineeredHardwoodGuideClient() {
               ['How long does engineered hardwood last?', 'With proper care, engineered hardwood lasts 25–50 years. Premium products with thick wear layers and quality finishes can last a lifetime. Key factors: wear layer thickness, species hardness, finish quality, and maintenance habits.'],
               ['Can you install engineered hardwood over concrete?', 'Yes — this is one of its biggest advantages. Use glue-down installation ($3.25/sqft labour at BBS) or a floating click-lock system ($2.00/sqft). Always moisture-test the concrete first. Solid hardwood cannot be installed over concrete.'],
               ['What\'s the best wood species for high-traffic areas?', 'Hickory (Janka hardness 1820) is the hardest common species and most dent-resistant. White Oak (Janka 1360) is a close second and more aesthetically versatile. Avoid Walnut (Janka 1010) in hallways and kitchens.'],
-              ['How much does engineered hardwood cost in Toronto?', 'At BBS Flooring, in-stock engineered hardwood materials range from $3.29–$8.99/sqft. With professional installation ($2.25–$4.25/sqft labour), total installed cost is $5.54–$13.54/sqft. A 500-square-foot room costs $2,770–$6,770 fully installed. Free in-home measurement included.'],
+              ['How much does engineered hardwood cost in Toronto?', 'At BBS Flooring, in-stock engineered hardwood materials range from $3.00–$8.99/sqft. With professional installation ($2.25–$4.25/sqft labour), total installed cost is $5.54–$13.54/sqft. A 500-square-foot room costs $2,770–$6,770 fully installed. Free in-home measurement included.'],
               ['What width is most popular in 2026?', 'Wide plank (7"–9") dominates new installations in 2026. The trend is toward fewer seams and a more open, modern look. However, 5" remains the most versatile and best-selling width overall in Ontario.'],
               ['Should I choose engineered or solid hardwood?', 'Choose engineered if: installing over concrete, using radiant heat, in a condo, or you want wide planks at lower cost. Choose solid if: you have a wood subfloor and want maximum refinishing potential (5–7 times over the floor\'s life). BBS carries 400+ engineered and 80+ solid hardwood options.'],
               ['Does BBS Flooring install engineered hardwood?', 'Yes. BBS provides professional installation with WSIB-insured contractors throughout the Greater Toronto Area. Nail-down: $2.25/sqft, glue-down: $3.25/sqft, herringbone: $4.25/sqft. Same-week installation is often available. Call (647) 428-1111 or book a free in-home measurement online.'],
@@ -533,7 +533,7 @@ export default function EngineeredHardwoodGuideClient() {
         <section className="bg-gradient-to-br from-stone-900 to-amber-900 text-white rounded-2xl p-10 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Choose Your Engineered Hardwood?</h2>
           <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
-            BBS Flooring stocks 500+ in-stock engineered hardwood options across 10 brands, starting at $3.29/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
+            BBS Flooring stocks 500+ in-stock engineered hardwood options across 10 brands, starting at $3.00/sqft. Visit our Markham showroom, get a free quote, or book a free in-home measurement.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/engineered-hardwood-flooring" className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-6 py-3 font-semibold transition-colors">
