@@ -137,6 +137,30 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
     }
   }, [selectedVariantId, productVariants, imageGallery]);
 
+  // Jump to the matching per-variant photo when a variants_json option (VariantSelector chips) is picked.
+  // variants_json rows carry sku/width/grade/dimensions but no image_url — resolve via the variant DB rows.
+  useEffect(() => {
+    if (!selectedJsonVariant || !productVariants?.length) return;
+    const jv = selectedJsonVariant;
+    const norm = (s) => String(s || '').replace(/["”]/g, '').trim().toLowerCase();
+    let row = jv.sku ? productVariants.find(p => p.sku && p.sku === jv.sku) : null;
+    if (!row) {
+      const grade = norm(jv.grade || jv.label);
+      const dims = norm(jv.dimensions);
+      const width = norm(jv.width);
+      row = productVariants.find(p => {
+        const g = norm(p.variant_grade);
+        return (!grade || g.startsWith(grade))
+          && (!dims || g.includes(dims))
+          && (!width || norm(p.variant_width) === width);
+      });
+    }
+    if (row?.image_url) {
+      const idx = imageGallery.findIndex(i => i.url === row.image_url);
+      if (idx >= 0) setActiveImageIdx(idx);
+    }
+  }, [selectedJsonVariant, productVariants, imageGallery]);
+
   // Parse spec-based variants
   const variants = useMemo(() => {
     if (!product?.specifications) return null;
