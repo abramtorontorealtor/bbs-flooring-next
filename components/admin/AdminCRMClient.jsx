@@ -73,6 +73,10 @@ const STATUS_CONFIG = {
   quoted:    { color: 'bg-orange-100 text-orange-800 border-orange-200', label: '🟠 Quoted', priority: 2 },
   booked:    { color: 'bg-green-100 text-green-800 border-green-200', label: '🟢 Booked', priority: 3 },
   confirmed: { color: 'bg-blue-100 text-blue-800 border-blue-200', label: '📅 Confirmed', priority: 3 },
+  // Bookings insert as status 'pending' — same key orders use for 'Order Received'.
+  // Booking rows are remapped to this key in displayStatus so a measurement
+  // request never reads like a purchase.
+  booking_requested: { color: 'bg-red-100 text-red-800 border-red-200', label: '📏 Measurement Requested', priority: 0 },
   order:     { color: 'bg-blue-100 text-blue-800 border-blue-200', label: '🔵 Order', priority: 4 },
   pending_payment: { color: 'bg-yellow-100 text-yellow-800 border-yellow-200', label: '⏳ Pending Payment', priority: 4 },
   awaiting_payment: { color: 'bg-orange-100 text-orange-800 border-orange-200', label: '💳 Awaiting Card', priority: 4 },
@@ -580,6 +584,7 @@ export default function AdminCRMClient() {
 
     leads.forEach(l => {
       if (l.status === 'new' && isUrgent(l.date)) l.displayStatus = 'urgent';
+      else if (l.source === 'booking' && (l.status === 'pending' || l.status === 'new')) l.displayStatus = 'booking_requested';
       // Freight-quote order already called → show Contacted, not a red badge.
       else if (l.source === 'order' && l.status === 'quote_requested' && l.raw.contacted_at) l.displayStatus = 'contacted';
       else l.displayStatus = l.status;
