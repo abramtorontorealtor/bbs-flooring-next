@@ -1,5 +1,8 @@
+'use client';
+
 import { FileText, Download } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_HREF } from '@/lib/service-constants';
+import { track } from '@/lib/track';
 
 // "Documents & Downloads" — manufacturer PDFs for a product / supplies family.
 // Pure markup (no hooks) so it renders server-side inside both server pages and
@@ -36,12 +39,22 @@ export default function DocumentsDownloads({
   documents = [],
   brand = null,
   subject = null,
+  productSlug = null,
+  productName = null,
   className = 'mt-12',
   headingId = 'documents-downloads-heading',
   compact = false,
 }) {
   const docs = (documents || []).filter((d) => d?.href && d?.title);
   if (!docs.length) return null;
+
+  const handleDocClick = (d) => {
+    track('doc_download', {
+      product_slug: productSlug,
+      product_name: productName,
+      meta: { title: d.title, doc_type: d.type, href: d.href },
+    });
+  };
 
   const who = brand ? `${brand}` : 'the manufacturer';
   const what = subject ? ` for ${subject}` : '';
@@ -65,6 +78,7 @@ export default function DocumentsDownloads({
         href={d.href}
         target="_blank"
         rel="noopener"
+        onClick={() => handleDocClick(d)}
         className="flex-1 min-w-0 text-sm font-medium text-slate-800 hover:text-amber-700 hover:underline line-clamp-2 sm:line-clamp-none sm:truncate"
         title={`${d.typeLabel}: ${d.title}`}
         data-doc-type={d.type}
@@ -81,6 +95,7 @@ export default function DocumentsDownloads({
       <a
         href={d.href}
         download
+        onClick={() => handleDocClick(d)}
         className="shrink-0 inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-slate-600 hover:text-amber-700 hover:bg-amber-50"
         aria-label={`Download ${d.typeLabel}: ${d.title}`}
       >

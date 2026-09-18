@@ -3,6 +3,7 @@ import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib/email';
 import { sendTelegramAlert, formatOrderAlert } from '@/lib/telegram';
 import { getSuppliesCatalog, priceSupplyLine } from '@/lib/suppliesCatalog';
+import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
 
 async function generateOrderNumber(supabase) {
   // Sequential: BBS-10001, BBS-10002, etc. via Postgres sequence
@@ -36,6 +37,7 @@ export async function POST(request) {
     }
 
     const supabase = getSupabaseAdminClient();
+    const visitorId = getVisitorIdFromRequest(request, orderData);
     const orderNumber = await generateOrderNumber(supabase);
 
     // ── SECURITY: recompute money SERVER-SIDE from DB product prices ──
@@ -157,11 +159,20 @@ export async function POST(request) {
         payment_status: isCreditCard ? 'awaiting_payment' : 'pending',
         status: isCustomZone ? 'quote_requested' : (isCreditCard ? 'awaiting_payment' : 'pending_payment'),
         terms_accepted_at: termsAcceptedAt,
+        visitor_id: visitorId,
       })
       .select()
       .single();
 
     if (error) throw error;
+
+    await identifyVisitor(supabase, {
+      visitorId,
+      email: orderData.customer_email,
+      phone: orderData.customer_phone,
+      name: orderData.customer_name,
+      source: 'order',
+    });
 
     // Only send emails for non-credit-card orders.
     // CC orders: emails sent by Stripe webhook after successful authorization.

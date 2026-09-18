@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendContactAdminNotification, sendContractorCustomerConfirmation } from '@/lib/email';
 import { sendTelegramAlert, formatContractorAlert } from '@/lib/telegram';
+import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
 
 export async function POST(request) {
   try {
@@ -13,6 +14,7 @@ export async function POST(request) {
     }
 
     const supabase = getSupabaseAdminClient();
+    const visitorId = getVisitorIdFromRequest(request, body);
 
     const detailMessage = [
       `Company: ${company_name || 'N/A'}`,
@@ -35,9 +37,18 @@ export async function POST(request) {
         status: 'new',
         lead_status: 'new',
         metadata: { company_name: company_name || null, trade_type: trade_type || null, monthly_volume: monthly_volume || null },
+        visitor_id: visitorId,
       });
 
     if (error) throw error;
+
+    await identifyVisitor(supabase, {
+      visitorId,
+      email,
+      phone,
+      name: contact_name,
+      source: 'contractor',
+    });
 
     // Send emails — AWAIT so the serverless function doesn't terminate before Brevo responds.
     try {

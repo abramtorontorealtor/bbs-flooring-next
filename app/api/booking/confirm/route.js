@@ -4,6 +4,7 @@ import { sendBookingRequestReceived, sendBookingAdminNotification } from '@/lib/
 import { sendTelegramAlert, formatBookingAlert } from '@/lib/telegram';
 import { createCalendarEvent } from '@/lib/google-calendar';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
+import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
 
 // Rate limit: 3 booking submissions per IP per 15 minutes
 const RATE_LIMIT = { maxRequests: 3, windowMs: 15 * 60 * 1000 };
@@ -29,6 +30,8 @@ export async function POST(request) {
       );
     }
 
+    const visitorId = getVisitorIdFromRequest(request, booking);
+
     // Persist booking as PENDING (not confirmed — admin confirms later)
     const supabase = getSupabaseAdminClient();
     const { data: savedBooking, error: dbError } = await supabase
@@ -48,6 +51,7 @@ export async function POST(request) {
         quote_total: booking.quote_total,
         notes: booking.notes,
         status: 'pending',
+        visitor_id: visitorId,
       })
       .select()
       .single();
@@ -55,6 +59,14 @@ export async function POST(request) {
     if (dbError) {
       console.error('[Booking] DB insert failed:', dbError);
     }
+
+    await identifyVisitor(supabase, {
+      visitorId,
+      email: booking.customer_email || booking.email,
+      phone: booking.customer_phone || booking.phone,
+      name: booking.customer_name || booking.name,
+      source: 'booking',
+    });
 
     const emailBooking = savedBooking || booking;
 

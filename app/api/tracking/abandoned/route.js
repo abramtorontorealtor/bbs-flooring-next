@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendTelegramAlert, formatAbandonedCartAlert } from '@/lib/telegram';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
+import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
 
 // Rate limit: 2 abandoned-cart logs per IP per hour (anti-flood on the beacon endpoint)
 const RATE_LIMIT = { maxRequests: 2, windowMs: 60 * 60 * 1000 };
@@ -15,13 +16,23 @@ const RATE_LIMIT = { maxRequests: 2, windowMs: 60 * 60 * 1000 };
 
 export async function POST(request) {
   try {
-    const { customerName, customerEmail, customerPhone, cartItems, cartValue, pageUrl } = await request.json();
+    const body = await request.json();
+    const { customerName, customerEmail, customerPhone, cartItems, cartValue, pageUrl } = body;
 
     if (!customerEmail) {
       return NextResponse.json({ success: true }); // Silent — don't fail UX
     }
 
     const supabase = getSupabaseAdminClient();
+    const visitorId = getVisitorIdFromRequest(request, body);
+
+    await identifyVisitor(supabase, {
+      visitorId,
+      email: customerEmail,
+      phone: customerPhone,
+      name: customerName,
+      source: 'abandoned_cart',
+    });
 
     // Rate limit to prevent log/alert flooding
     const ip = getClientIP(request);
@@ -65,6 +76,7 @@ export async function POST(request) {
           source: 'abandoned_checkout',
           status: 'new',
           metadata: { followup_stage: 0, cart_value: cartValue || null },
+          visitor_id: visitorId,
         });
 
       if (error) {

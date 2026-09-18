@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendQuoteToCustomer, sendQuoteAdminNotification } from '@/lib/email';
 import { sendTelegramAlert, formatQuoteAlert } from '@/lib/telegram';
+import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
 
 export async function POST(request) {
   try {
@@ -17,6 +18,8 @@ export async function POST(request) {
 
     // Generate a resume token so the customer can view/resume this quote via email link
     const resumeToken = randomUUID();
+
+    const visitorId = getVisitorIdFromRequest(request, quote);
 
     // Persist quote to database
     const supabase = getSupabaseAdminClient();
@@ -60,6 +63,7 @@ export async function POST(request) {
         stair_landing: quote.stair_landing || null,
         stair_species: quote.stair_species || null,
         stair_total: quote.total && !quote.flooring_cost ? quote.total : (quote.stair_total || null),
+        visitor_id: visitorId,
       })
       .select()
       .single();
@@ -68,6 +72,14 @@ export async function POST(request) {
       console.error('[Quote] DB insert failed:', dbError);
       // Don't fail — still send emails
     }
+
+    await identifyVisitor(supabase, {
+      visitorId,
+      email: quote.customer_email || quote.email,
+      phone: quote.customer_phone || quote.phone,
+      name: quote.customer_name || quote.name,
+      source: 'quote',
+    });
 
     const emailQuote = savedQuote || quote;
 

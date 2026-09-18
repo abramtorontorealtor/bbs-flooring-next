@@ -5,6 +5,7 @@ import { Phone, MessageCircle, FileText, Compass } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import useBusinessHours from '@/components/useBusinessHours';
+import { track } from '@/lib/track';
 
 const HIDDEN_PATHS = [
   '/carpet-removal',
@@ -43,6 +44,7 @@ export default function StickyMobileCTA() {
         hours,
       });
     }
+    track('cta_click', { meta: { cta: button } });
   };
 
   const handleCallClick = () => {

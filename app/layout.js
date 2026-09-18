@@ -1,4 +1,5 @@
 import './globals.css';
+import { Suspense } from 'react';
 import { Inter } from 'next/font/google';
 import { LocalBusinessJsonLd } from '@/components/LocalBusinessJsonLd';
 import { ClientProviders } from './providers';
@@ -6,6 +7,7 @@ import FooterServer from '@/components/FooterServer';
 import AfterHoursConcierge from '@/components/AfterHoursConcierge';
 import ClosurePopup from '@/components/ClosurePopup';
 import { DeferredAnalytics } from '@/components/DeferredAnalytics';
+import { VisitorTracker } from '@/components/VisitorTracker';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -92,6 +94,10 @@ export default function RootLayout({ children }) {
             `})();`,
           ].join('') }}
         />
+
+        <Suspense fallback={null}>
+          <VisitorTracker />
+        </Suspense>
 
         <ClientProviders>
           {children}

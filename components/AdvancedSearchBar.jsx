@@ -11,6 +11,7 @@ import { Search, Loader2 } from 'lucide-react';
 import { entities } from '@/lib/base44-compat';
 import { createPageUrl } from '@/lib/routes';
 import { useRouter } from 'next/navigation';
+import { track } from '@/lib/track';
 
 const Product = entities.Product;
 
@@ -220,6 +221,10 @@ export default function AdvancedSearchBar({ onClose }) {
   }, [router, onClose]);
 
   const navigateToAll = useCallback(function() {
+    const submittedQuery = query.trim();
+    if (submittedQuery.length >= 3) {
+      track('search', { meta: { query: submittedQuery } });
+    }
     router.push(createPageUrl('Products') + '?search=' + encodeURIComponent(query));
     setQuery('');
     setResults([]);

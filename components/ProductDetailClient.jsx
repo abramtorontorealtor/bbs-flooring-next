@@ -33,6 +33,7 @@ import TrustStrip from '@/components/TrustStrip';
 import CollectionSiblings from '@/components/CollectionSiblings';
 import DocumentsDownloads from '@/components/DocumentsDownloads';
 import { useAuth } from '@/lib/auth-context';
+import { track } from '@/lib/track';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { hasRealImage } from '@/lib/imagePlaceholder';
 
@@ -308,6 +309,12 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
     const displayedPrice = resolvePrice(product) || 0;
     Analytics.trackProductView(product.name);
     Analytics.trackViewItem(product, displayedPrice);
+    track('pdp_view', {
+      product_id: product.id,
+      product_slug: slug,
+      product_name: product.name,
+      meta: { brand: product.brand, price_per_sqft: product.price_per_sqft, category: product.category, collection: product.collection },
+    });
     if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
       window.fbq('track', 'ViewContent', {
         content_name: product.name, content_category: product.category,
@@ -368,6 +375,12 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
       if (window.gtag) window.gtag('event', 'add_to_cart', { currency: 'CAD', value: calculation.lineTotal, items: [{ item_id: trackProduct.id, item_name: trackProduct.name, price: calculation.pricePerSqft, quantity: calculation.actualSqft }] });
       if (typeof window.fbq === 'function') window.fbq('track', 'AddToCart', { content_name: trackProduct.name, content_ids: [trackProduct.sku || trackProduct.id], content_type: 'product', value: calculation.lineTotal, currency: 'CAD' });
       Analytics.trackAddToCart(trackProduct.name, calculation.lineTotal);
+      track('add_to_cart', {
+        product_id: trackProduct.id,
+        product_slug: slug,
+        product_name: trackProduct.name,
+        meta: { qty: 1, boxes: calculation.boxesRequired, sqft: calculation.actualSqft, price: calculation.lineTotal, price_per_sqft: calculation.pricePerSqft },
+      });
     } catch {
       toast.error('Failed to add to cart');
     } finally {
@@ -1057,6 +1070,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
           documents={documents}
           brand={product.brand}
           subject={product.collection || null}
+          productSlug={slug}
+          productName={product.name}
         />
       )}
 

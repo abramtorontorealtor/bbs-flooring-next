@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { track } from '@/lib/track';
 
 function formatPostalCode(value) {
   const cleaned = value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
@@ -74,6 +75,12 @@ export default function SampleTrapModal({ open, onOpenChange, product }) {
       });
       if (!res.ok) throw new Error('Request failed');
       setStep('sent');
+      track('sample_request', {
+        product_id: product?.id,
+        product_slug: product?.slug,
+        product_name: productName,
+        meta: { product_name: productName },
+      });
     } catch {
       setError('Something went wrong. Please call us at (647) 428-1111 or try again.');
     } finally {

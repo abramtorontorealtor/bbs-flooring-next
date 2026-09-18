@@ -9,6 +9,7 @@ import {
 import { sendTelegramAlert, formatContactAlert } from '@/lib/telegram';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 import { detectSpamLead } from '@/lib/spam-filter';
+import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
 
 // Rate limit: 5 contact submissions per IP per 15 minutes
 const RATE_LIMIT = { maxRequests: 5, windowMs: 15 * 60 * 1000 };
@@ -47,6 +48,7 @@ export async function POST(request) {
     }
 
     const supabase = getSupabaseAdminClient();
+    const visitorId = getVisitorIdFromRequest(request, body);
 
     // Save to contact_leads table (write to both column sets for CRM compatibility)
     const { error } = await supabase
@@ -63,9 +65,18 @@ export async function POST(request) {
         status: 'new',
         lead_status: 'new',
         metadata: smsConsent != null ? { sms_consent: smsConsent } : undefined,
+        visitor_id: visitorId,
       });
 
     if (error) throw error;
+
+    await identifyVisitor(supabase, {
+      visitorId,
+      email,
+      phone,
+      name,
+      source: 'contact',
+    });
 
     // Determine email type based on source
     const isRemovalEstimate = (source || '').includes('removal-estimator');

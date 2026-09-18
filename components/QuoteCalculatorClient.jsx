@@ -23,6 +23,7 @@ import { useAuth } from '@/lib/auth-context';
 
 import { Analytics } from '@/components/analytics';
 import { validatePhone } from '@/lib/validations';
+import { track } from '@/lib/track';
 import StairCalculatorWidget from '@/components/StairCalculatorWidget';
 import RemovalEstimator from '@/components/RemovalEstimator';
 
@@ -294,6 +295,9 @@ export default function QuoteCalculatorClient() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const topRef = useRef(null);
   const formRef = useRef(null);
+  const calcTrackTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(calcTrackTimeoutRef.current), []);
 
   const { data: products = [], isLoading: productsLoading, error: productsError } = useQuery({
     queryKey: ['calculator-products'],
@@ -442,6 +446,23 @@ export default function QuoteCalculatorClient() {
     const newQuote = { flooringCost, installationCost, removalCost, baseboardCost, shoeMouldingCost, deliveryCost, linearFeet, subtotal, tax, total, displayTotal, minimumApplied, pricePerSqft, isMember: !!currentUser };
     setQuote(newQuote);
 
+    clearTimeout(calcTrackTimeoutRef.current);
+    calcTrackTimeoutRef.current = setTimeout(() => {
+      track('calculator', {
+        product_id: selectedProduct?.id,
+        product_slug: selectedProduct?.slug || selectedProduct?.id,
+        product_name: selectedProduct?.name,
+        meta: {
+          sqft,
+          total: displayTotal,
+          material_cost: flooringCost,
+          installation_cost: installationCost,
+          removal_type: formData.removal_type,
+          product_name: selectedProduct?.name,
+        },
+      });
+    }, 1500);
+
     localStorage.setItem('bbs_quote_project', JSON.stringify({
       sqft: formData.square_footage, removal_type: formData.removal_type,
       needs_baseboards: formData.needs_baseboards, needs_shoe_moulding: formData.needs_shoe_moulding,
@@ -514,6 +535,12 @@ export default function QuoteCalculatorClient() {
       if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
         window.fbq('track', 'Lead', { content_name: selectedProduct?.name || 'unknown', value: quote.displayTotal, currency: 'CAD' });
       }
+      track('quote_saved', {
+        product_id: selectedProduct?.id,
+        product_slug: selectedProduct?.slug || selectedProduct?.id,
+        product_name: selectedProduct?.name,
+        meta: { total: quote.total, sqft: parseFloat(formData.square_footage) },
+      });
     }
 
     try {

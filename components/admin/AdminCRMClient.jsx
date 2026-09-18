@@ -23,6 +23,7 @@ import {
   History, FileText, MailPlus
 } from 'lucide-react';
 import { toast } from 'sonner';
+import CustomerTimeline from '@/components/admin/CustomerTimeline';
 import { format } from 'date-fns';
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
@@ -1941,6 +1942,9 @@ export default function AdminCRMClient() {
                         </div>
                       )}
                     </div>
+
+                    {/* ── CUSTOMER TIMELINE (browsing + quotes + orders + calls/texts + emails) ── */}
+                    <CustomerTimeline email={lead.email || o?.customer_email || null} phone={lead.phone || o?.customer_phone || null} />
                   </div>
                 </>
               );
