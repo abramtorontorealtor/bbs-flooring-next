@@ -61,7 +61,7 @@ export async function POST(request) {
 
     // Update order in DB
     const cancelReason = reason || 'out_of_stock';
-    await supabase
+    const { error: updateError } = await supabase
       .from('orders')
       .update({
         status: 'cancelled',
@@ -70,6 +70,18 @@ export async function POST(request) {
         cancel_reason: cancelReason,
       })
       .eq('id', orderId);
+
+    // DB is the source of truth — never tell the customer "cancelled" if the row didn't change.
+    if (updateError) {
+      console.error('[Cancel] DB update failed:', updateError);
+      return NextResponse.json(
+        {
+          error: `Order NOT cancelled — database update failed (${updateError.message}). No customer email sent.`,
+          stripe: stripeResult ? { status: stripeResult.status || stripeResult.object } : null,
+        },
+        { status: 500 }
+      );
+    }
 
     // Send cancellation email to customer (skippable for silent DB corrections)
     let emailed = false;
