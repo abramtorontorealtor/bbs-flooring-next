@@ -26,7 +26,7 @@ export default async function LeeFlooringPage() {
     .filter((n) => Number.isFinite(n) && n > 0);
   const offerSchema = leePrices.length
     ? brandAggregateOfferSchema({
-        name: 'Lee Flooring Clearance — Engineered Oak & 7mm Vinyl',
+        name: 'Lee Flooring — Engineered Oak & 7mm Vinyl',
         description: leeFlooringData.description,
         url: 'https://bbsflooring.ca/lee-flooring',
         lowPrice: Math.min(...leePrices).toFixed(2),

@@ -311,7 +311,7 @@ export default function BasementFlooringGuideClient() {
                   ['Triforest Flooring', '39', '$2.29–$3.19', 'Reliable mid-range, 4.2–7mm options'],
                   ['Simba Flooring', '40', '$2.49–$3.59', 'Budget to premium range, Venus herringbone'],
                   ['Falcon Flooring', '13', '$2.19–$2.59', 'Lowest regular price point — best budget vinyl at BBS'],
-                  ['Lee Flooring', '8', '$2.49 ($1.79 clearance)', 'Affordable 7mm with 22mil wear layer, clearance pricing'],
+                  ['Lee Flooring', '8', 'Call for pricing', 'Affordable 7mm with 22mil wear layer — ask for in-store pricing'],
                 ].map(([brand, count, price, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{brand}</td>
@@ -530,7 +530,7 @@ export default function BasementFlooringGuideClient() {
                 <p className="font-semibold text-stone-800 text-sm mb-2">Our recommendation:</p>
                 <p className="text-stone-600 text-sm">
                   <strong>SPC vinyl, 6mm+, 20mil wear layer.</strong> Mid-range is plenty here — kids outgrow playrooms before they outwear decent vinyl. The{' '}
-                  <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Lee Weathered Barnwood 7mm ($1.79/sqft on clearance)</Link>{' '}
+                  <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Lee Weathered Barnwood 7mm (call for pricing)</Link>{' '}
                   with its 22mil wear layer handles toy impacts and cleans up easily. Add foam play mats over the vinyl in the main play area for extra cushioning — they&apos;re removable as kids grow.
                 </p>
               </div>

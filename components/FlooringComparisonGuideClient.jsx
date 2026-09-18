@@ -243,7 +243,7 @@ export default function FlooringComparisonGuideClient() {
             Vinyl flooring has undergone a revolution. Today&apos;s luxury vinyl plank (LVP) and stone polymer composite (SPC) products look remarkably like real wood, are 100% waterproof through the core, and handle the abuse of pets, kids, and heavy foot traffic without showing damage. It&apos;s the single most practical flooring type for Canadian families — and at $1.79–$3.59/sqft, it&apos;s far more affordable than hardwood.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
-            BBS stocks 340+ vinyl options from 8 brands: NAF (128, $2.29–$4.29/sqft), Triforest (90, $2.29–$3.99/sqft), Woden (49, $2.39–$4.35/sqft), Impressive (48, $1.79–$2.89/sqft), Simba (42, $1.99–$3.59/sqft), Falcon (19, $1.69–$2.59/sqft), Lee (10, from $1.79/sqft on clearance), and Vidar (7, call for pricing). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
+            BBS stocks 340+ vinyl options from 8 brands: NAF (128, $2.29–$4.29/sqft), Triforest (90, $2.29–$3.99/sqft), Woden (49, $2.39–$4.35/sqft), Impressive (48, $1.79–$2.89/sqft), Simba (42, $1.99–$3.59/sqft), Falcon (19, $1.69–$2.59/sqft), Lee (10, call for pricing), and Vidar (7, call for pricing). Wear layers range from 12mil to 28mil, with click-lock installation standard across all products.
           </p>
           <p className="text-stone-600 leading-relaxed mb-6">
             At the entry level, the{' '}

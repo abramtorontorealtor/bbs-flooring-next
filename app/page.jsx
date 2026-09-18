@@ -276,7 +276,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
           <span className="text-lg">🔥</span>
           <p className="text-sm font-semibold">
-            <span className="font-bold">Lee Flooring Clearance — Real Engineered Oak $3.49 &amp; 7mm Vinyl $1.79/sqft while stock lasts.</span>{' '}
+            <span className="font-bold">Clearance — real engineered oak &amp; waterproof vinyl deals, in-store pricing while stock lasts.</span>{' '}
             <Link href="/lee-flooring" className="underline underline-offset-2 hover:no-underline">Shop Lee Clearance →</Link>
           </p>
         </div>
