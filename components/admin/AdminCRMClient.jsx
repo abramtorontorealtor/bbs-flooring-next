@@ -370,6 +370,8 @@ export default function AdminCRMClient() {
   const [followUpSubject, setFollowUpSubject] = useState('');
   const [followUpBody, setFollowUpBody] = useState('');
   const [followUpNextDate, setFollowUpNextDate] = useState('');
+  const [followUpPrice, setFollowUpPrice] = useState('');   // $/sq ft typed by agent (price_quote template)
+  const [followUpSqft, setFollowUpSqft] = useState('');     // sq ft override (pre-filled from the lead)
   const [followUpSending, setFollowUpSending] = useState(false);
 
   const FOLLOW_UP_TEMPLATES = [
@@ -767,7 +769,7 @@ export default function AdminCRMClient() {
       product: productLabel,
       product_config: pdpConfig,
       product_full: pdpConfig ? `${productLabel} (${pdpConfig})` : productLabel,
-      sqft: o.square_footage || o.sqft || '',
+      sqft: o.square_footage || o.sqft || (message.match(/([\d,]+)\s*(?:sq\.?\s*ft|square\s*feet|sqft|sf)\b/i) || [])[1] || '',
       quote_total: lead.value > 0 ? lead.value.toLocaleString('en-CA', { minimumFractionDigits: 0 }) : '',
       address: o.customer_address || o.address || '',
       variant_sku: (message.match(/Variant SKU:\s*(.+)/i) || [])[1]?.trim()
@@ -790,7 +792,18 @@ export default function AdminCRMClient() {
         // Tight + confident: price, terms, one compete line, one ask. The email
         // wrapper already appends the Book Free Measurement button + Abram's
         // sign-off with phone, so no CTA/contact repetition here.
-        body: `Hi ${name},\n\nHere\u2019s the pricing on ${product}${vars.product_config ? ` (${vars.product_config})` : ''}:\n\n\u2022 Material: [$__.__/sq ft]${sqft ? `\n\u2022 ${sqft} sq ft: approx. [$______] (includes ~10% for cuts)` : ''}\n\u2022 Delivery from $140, or free warehouse pickup\n\u2022 Installation available \u2014 quoted from your measurements\n\nComparing? Send me any written quote and we\u2019ll beat it.\n\nReply with your square footage and postal code for an exact all-in number, or book a free in-home measurement below and I\u2019ll bring samples.`,
+        body: (() => {
+          const priceNum = parseFloat(String(vars.price_per_sqft || '').replace(/[^0-9.]/g, ''));
+          const sqftNum = parseFloat(String(sqft || '').replace(/[^0-9.]/g, ''));
+          const hasPrice = !isNaN(priceNum) && priceNum > 0;
+          const hasSqft = !isNaN(sqftNum) && sqftNum > 0;
+          const sqftLabel = hasSqft ? sqftNum.toLocaleString('en-CA') : sqft;
+          const materialLine = hasPrice ? `$${priceNum.toFixed(2)}/sq ft` : '[$__.__/sq ft]';
+          const totalLine = hasPrice && hasSqft
+            ? `$${(priceNum * sqftNum).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+            : '[$______]';
+          return `Hi ${name},\n\nHere\u2019s the pricing on ${product}${vars.product_config ? ` (${vars.product_config})` : ''}:\n\n\u2022 Material: ${materialLine}${sqft ? `\n\u2022 ${sqftLabel} sq ft: approx. ${totalLine} (plan ~10% extra for cuts)` : ''}\n\u2022 Delivery from $140, or free warehouse pickup\n\u2022 Installation available \u2014 quoted from your measurements\n\nComparing? Send me any written quote and we\u2019ll beat it.\n\nReply with your square footage and postal code for an exact all-in number, or book a free in-home measurement below and I\u2019ll bring samples.`;
+        })(),
       },
       quote_followup: {
         subject: `Following Up \u2014 Your ${product || 'Flooring'} Quote`,
@@ -817,30 +830,51 @@ export default function AdminCRMClient() {
     return templates[templateKey] || templates.general_checkin;
   }, []);
 
-  const openFollowUpCompose = useCallback((lead) => {
+  // vars + agent-entered price/sqft (price fills the price_quote template's $ lines)
+  const buildFollowUpVars = useCallback((lead, price, sqftOverride) => {
     const vars = getFollowUpVars(lead);
-    const isPdpQuote = lead.source === 'contact' && /pdp quote request/i.test(vars.message || '');
+    return { ...vars, price_per_sqft: price || '', sqft: sqftOverride || vars.sqft };
+  }, []);
+
+  const openFollowUpCompose = useCallback((lead, seed = {}) => {
+    const isPdpQuote = (lead.source === 'contact' && /pdp quote request/i.test(lead.raw?.message || ''))
+      || lead.raw?.source === 'pdp_quote_request';
     const bestTemplate = isPdpQuote
       ? 'price_quote'
       : (lead.source === 'booking' ? 'measurement_followup' : 'quote_followup');
+    const price = seed.price ? String(seed.price) : '';
+    const sqftSeed = seed.sqft ? String(seed.sqft) : '';
+    const vars = buildFollowUpVars(lead, price, sqftSeed);
     const preview = generateFollowUpPreview(bestTemplate, vars);
 
     setFollowUpLead(lead);
     setFollowUpTemplate(bestTemplate);
+    setFollowUpPrice(price);
+    setFollowUpSqft(sqftSeed || vars.sqft || '');
     setFollowUpSubject(preview.subject);
     setFollowUpBody(preview.body);
     setFollowUpNextDate('');
     setFollowUpOpen(true);
-  }, [generateFollowUpPreview]);
+  }, [generateFollowUpPreview, buildFollowUpVars]);
 
   const handleFollowUpTemplateChange = useCallback((templateKey) => {
     if (!followUpLead) return;
-    const vars = getFollowUpVars(followUpLead);
+    const vars = buildFollowUpVars(followUpLead, followUpPrice, followUpSqft);
     const preview = generateFollowUpPreview(templateKey, vars);
     setFollowUpTemplate(templateKey);
     setFollowUpSubject(preview.subject);
     setFollowUpBody(preview.body);
-  }, [followUpLead, generateFollowUpPreview]);
+  }, [followUpLead, followUpPrice, followUpSqft, generateFollowUpPreview, buildFollowUpVars]);
+
+  // Price / sq ft typed in the composer → regenerate the price_quote body with real numbers
+  const handleFollowUpPriceChange = useCallback((price, sqftVal) => {
+    setFollowUpPrice(price);
+    setFollowUpSqft(sqftVal);
+    if (!followUpLead || followUpTemplate !== 'price_quote') return;
+    const vars = buildFollowUpVars(followUpLead, price, sqftVal);
+    const preview = generateFollowUpPreview('price_quote', vars);
+    setFollowUpBody(preview.body);
+  }, [followUpLead, followUpTemplate, generateFollowUpPreview, buildFollowUpVars]);
 
   const sendFollowUp = useCallback(async () => {
     if (!followUpLead || !followUpSubject || !followUpBody) {
@@ -1692,7 +1726,7 @@ export default function AdminCRMClient() {
                     {lead.source !== 'order' && (
                       <LeadPlaybook
                         lead={lead}
-                        onSendEmail={() => openFollowUpCompose(lead)}
+                        onSendEmail={(seed) => openFollowUpCompose(lead, seed)}
                         onLogInteraction={async (method, outcome, notes) => {
                           try {
                             const supabaseLeadSource = getLeadSourceForFollowUp(lead);
@@ -2073,6 +2107,23 @@ export default function AdminCRMClient() {
               </div>
             </div>
 
+            {/* Price inputs — price_quote only; typing regenerates the $ lines in the body */}
+            {followUpTemplate === 'price_quote' && (
+              <div className="flex items-end gap-2 rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
+                <div className="flex-1">
+                  <Label className="text-[11px] font-semibold text-slate-500 mb-0.5 block">Price $/sq ft</Label>
+                  <Input type="number" step="0.01" inputMode="decimal" placeholder="4.29"
+                    value={followUpPrice} onChange={(e) => handleFollowUpPriceChange(e.target.value, followUpSqft)} />
+                </div>
+                <div className="flex-1">
+                  <Label className="text-[11px] font-semibold text-slate-500 mb-0.5 block">Sq ft</Label>
+                  <Input type="number" inputMode="numeric" placeholder="1100"
+                    value={followUpSqft} onChange={(e) => handleFollowUpPriceChange(followUpPrice, e.target.value)} />
+                </div>
+                <p className="flex-[1.4] text-xs text-slate-500 text-right pb-1.5">Fills the price lines below. Edit the message freely after.</p>
+              </div>
+            )}
+
             {/* Subject */}
             <div>
               <Label className="text-sm font-semibold mb-1.5 block">Subject</Label>
@@ -2301,11 +2352,11 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
   // PDP price requests get their own scripts: the customer asked for PRICING on a
   // specific product — they never built a quote, so "following up on your quote" is wrong.
   const callScript = isPdpPriceRequest
-    ? `Hey ${firstName}, it's Abram from BBS Flooring. You asked us for pricing on ${product}${effectiveSqft ? ` for about ${Number(effectiveSqft).toLocaleString('en-CA')} sq ft` : ''} — I've got that ready for you.\n\n${priceLine ? `Quote them: ${priceLine}` : 'Give them the price'}, then:\n“${sqftNum > 0 ? "That's the all-in total for your space." : "That's our all-in price per sq ft. Want me to work out the total for your space?"}”\n\nIf they're comparing prices:\n“We beat any written quote by 5% — bring it in and we'll match it, guaranteed.”\n\nIf they're ready:\n“I can book a free in-home measurement this week and bring samples — what day works?”`
+    ? `Hey ${firstName}, it's Abram from BBS Flooring. You asked us for pricing on ${product}${effectiveSqft ? ` for about ${Number(effectiveSqft).toLocaleString('en-CA')} sq ft` : ''} — I've got that ready for you.\n\n${priceLine ? `Quote them: ${priceLine}` : 'Give them the price'}, then:\n“${sqftNum > 0 ? "That's the all-in total for your space." : "That's our all-in price per sq ft. Want me to work out the total for your space?"}”\n\nIf they're comparing prices:\n“Send me any written quote and we'll beat it.”\n\nIf they're ready:\n“I can book a free in-home measurement this week and bring samples — what day works?”`
     : `Hey ${firstName}, it's Abram from BBS Flooring. ${lead.status === 'new'
       ? `You were looking at ${product}${sqft ? ` for about ${sqft} square feet` : ''} on our site — just wanted to check in and see if you had any questions.`
       : `Just following up on your ${product} project — wanted to see how things are going.`
-    }\n\nIf they're comparing prices:\n“We beat any written quote by 5%. Bring it in and we'll match it — guaranteed.”\n\nIf they need more time:\n“No rush at all. Want me to hold that pricing for you?”\n\nIf they're ready:\n“Great! I can book a free measurement this week — what day works best?”`;
+    }\n\nIf they're comparing prices:\n“Send me any written quote and we'll beat it.”\n\nIf they need more time:\n“No rush at all. Want me to hold that pricing for you?”\n\nIf they're ready:\n“Great! I can book a free measurement this week — what day works best?”`;
 
   const textScript = isPdpPriceRequest
     ? (priceLine
@@ -2366,8 +2417,8 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
         </div>
 
         <div className="p-3">
-          {/* Price inputs — shown on Call + Text tabs for price-request leads so the agent can drop the quoted price into the script */}
-          {isPdpPriceRequest && (activeTab === 'call' || activeTab === 'text') && (lead.phone) && (
+          {/* Price inputs — price-request leads, all tabs: fills the call/text scripts and seeds the email composer */}
+          {isPdpPriceRequest && (
             <div className="mb-3 flex items-end gap-2 rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
               <div className="flex-1">
                 <label className="block text-[11px] font-semibold text-slate-500 mb-0.5">Price $/sq ft</label>
@@ -2431,9 +2482,11 @@ function LeadPlaybook({ lead, onSendEmail, onLogInteraction }) {
           {/* Email Tab */}
           {activeTab === 'email' && lead.email && (
             <div className="space-y-3">
-              <p className="text-sm text-slate-600">Opens the follow-up email composer with a pre-written template personalized to this lead.</p>
+              <p className="text-sm text-slate-600">{isPdpPriceRequest && hasPrice
+                ? `Opens the email composer with the price filled in: ${priceLine}.`
+                : 'Opens the follow-up email composer with a pre-written template personalized to this lead.'}</p>
               <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={onSendEmail}>
+                onClick={() => onSendEmail(isPdpPriceRequest ? { price: hasPrice ? priceNum : '', sqft: effectiveSqft } : {})}>
                 <MailPlus className="w-4 h-4 mr-2" /> Compose Follow-Up Email
               </Button>
             </div>
