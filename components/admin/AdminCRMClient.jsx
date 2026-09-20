@@ -786,8 +786,11 @@ export default function AdminCRMClient() {
 
     const templates = {
       price_quote: {
-        subject: `Your Price on ${product || 'Vidar Flooring'} — BBS Flooring`,
-        body: `Hi ${name},\n\nThanks for reaching out about the floor below — great choice. Here are the details on record and our current pricing:\n\nPRODUCT DETAILS\n────────────────────\n• Product: ${product || '\u2014'}${vars.product_config ? `\n• Options: ${vars.product_config}` : ''}${vars.variant_sku ? `\n• SKU: ${vars.variant_sku}` : ''}${sqft ? `\n• Approx. area: ${sqft} sq ft` : ''}\n\nPRICING\n────────────────────\n• Material (list price): [$__.__ /sq ft]${sqft ? `\n• Est. material total: [$______] (${sqft} sq ft)` : ''}\n• Delivery: from $140 (or FREE warehouse pickup)\n• Professional installation: we handle it too if you’d like — just say the word\n\nI want to be upfront: the number above is our published list price. I’m happy to sharpen my pencil to earn your business — if you’ve got a written quote from another store, send it over and I’ll do my best to earn your business.\n\nWhat I need from you for an exact, all-in number:\n• Your total square footage (I add ~10% for waste/cuts)\n• Whether you want material only, or material + installation\n• Your postal code (for delivery)\n\nWe also offer a FREE in-home measurement if you’d rather I confirm the numbers on-site — no obligation.\n\nReply here, or call/text me directly at (647) 428-1111.`,
+        subject: `${product || 'Flooring'} Pricing \u2014 BBS Flooring`,
+        // Tight + confident: price, terms, one compete line, one ask. The email
+        // wrapper already appends the Book Free Measurement button + Abram's
+        // sign-off with phone, so no CTA/contact repetition here.
+        body: `Hi ${name},\n\nHere\u2019s the pricing on ${product}${vars.product_config ? ` (${vars.product_config})` : ''}:\n\n\u2022 Material: [$__.__/sq ft]${sqft ? `\n\u2022 ${sqft} sq ft: approx. [$______] (includes ~10% for cuts)` : ''}\n\u2022 Delivery from $140, or free warehouse pickup\n\u2022 Installation available \u2014 quoted from your measurements\n\nComparing? Send me any written quote and we\u2019ll beat it.\n\nReply with your square footage and postal code for an exact all-in number, or book a free in-home measurement below and I\u2019ll bring samples.`,
       },
       quote_followup: {
         subject: `Following Up \u2014 Your ${product || 'Flooring'} Quote`,
