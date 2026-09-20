@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import CustomerTimeline from '@/components/admin/CustomerTimeline';
+import CustomerGroupCard, { CustomerGroupHeader } from '@/components/admin/CustomerGroupCard';
+import { buildDisplayList } from '@/components/admin/crmGrouping';
 import { format } from 'date-fns';
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
@@ -628,6 +630,11 @@ export default function AdminCRMClient() {
     });
     return result;
   }, [allLeads, filterSource, filterStatus, searchTerm, sortField, sortDir]);
+
+  // ─── CUSTOMER GROUPING ──────────────────────────────────────────────────
+  // Filters/sort apply to records first (above); group same-customer
+  // records (by normalized email OR phone) for display only.
+  const displayList = useMemo(() => buildDisplayList(filteredLeads), [filteredLeads]);
 
   // ─── KPIs ───────────────────────────────────────────────────────────────
   const kpis = useMemo(() => {
