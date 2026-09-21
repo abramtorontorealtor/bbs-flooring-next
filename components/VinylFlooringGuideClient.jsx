@@ -193,7 +193,7 @@ export default function VinylFlooringGuideClient() {
               <strong>Real example:</strong> The{' '}
               <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham NAF AquaPlus Platinum (9mm) at $3.69/sqft</Link>{' '}
               features a 28mil wear layer — premium-grade protection for busy family homes, large dogs, or commercial-adjacent spaces. For most main-floor living areas, a 20mil product like{' '}
-              <Link href="/products/uxbridge-bbs-reserve-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Uxbridge by BBS Reserve (7mm, our house brand)</Link>{' '}
+              <Link href="/products/uxbridge-bbs-reserve-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Uxbridge by BBS Reserve (7mm, $1.79/sqft)</Link>{' '}
               is the practical sweet spot.
             </p>
           </div>

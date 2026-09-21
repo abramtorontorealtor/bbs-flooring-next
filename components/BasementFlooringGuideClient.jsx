@@ -311,7 +311,7 @@ export default function BasementFlooringGuideClient() {
                   ['Triforest Flooring', '39', '$2.29–$3.19', 'Reliable mid-range, 4.2–7mm options'],
                   ['Simba Flooring', '40', '$2.49–$3.59', 'Budget to premium range, Venus herringbone'],
                   ['Falcon Flooring', '13', '$2.19–$2.59', 'Lowest regular price point — best budget vinyl at BBS'],
-                  ['BBS Reserve (house brand)', '8', 'Call for pricing', 'Our own 7mm with 22mil wear layer and 2mm condo-approved pad'],
+                  ['BBS Reserve (house brand)', '10', '$1.79/sqft', 'Our own 7mm with 22mil wear layer and 2mm condo-approved pad'],
                 ].map(([brand, count, price, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
                     <td className="p-4 font-medium text-stone-800">{brand}</td>

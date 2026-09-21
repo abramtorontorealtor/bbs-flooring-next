@@ -314,7 +314,7 @@ export default function EngineeredHardwoodGuideClient() {
                   ['Impressive', '47', '$4.25–$7.99', 'White Oak, Hickory', 'Mid-range value, wide selection'],
                   ['Simba', '46', '$3.69–$8.99', 'White Oak, Hickory', 'Wide range, budget to premium'],
                   ['Falcon', '25', '$3.89–$3.99', 'White Oak, Red Oak', 'Budget Oak'],
-                  ['BBS Reserve (house brand)', '18', 'Call for pricing', 'American & European Oak', 'Our own line — Select & Better oak, backed by BBS'],
+                  ['BBS Reserve (house brand)', '18', '$3.39–$4.99/sqft', 'American & European Oak', 'Our own line — Select & Better oak, backed by BBS'],
                   ['Triforest', '12', '$4.79–$6.29', 'White Oak', 'Specialty engineered lines'],
                 ].map(([brand, products, price, species, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
