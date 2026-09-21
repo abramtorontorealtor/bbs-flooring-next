@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { Fragment, useState, useEffect, useMemo, useCallback } from 'react';
 import { describeItemQty, formatItemQty } from '@/lib/orderItemQty';
 import { useSearchParams } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -25,7 +25,7 @@ import {
 import { toast } from 'sonner';
 import CustomerTimeline from '@/components/admin/CustomerTimeline';
 import CustomerGroupCard, { CustomerGroupHeader } from '@/components/admin/CustomerGroupCard';
-import { buildDisplayList } from '@/components/admin/crmGrouping';
+import { groupLeadsByContact } from '@/components/admin/crmGrouping';
 import { format } from 'date-fns';
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
@@ -634,7 +634,8 @@ export default function AdminCRMClient() {
   // ─── CUSTOMER GROUPING ──────────────────────────────────────────────────
   // Filters/sort apply to records first (above); group same-customer
   // records (by normalized email OR phone) for display only.
-  const displayList = useMemo(() => buildDisplayList(filteredLeads), [filteredLeads]);
+  const groupedLeads = useMemo(() => groupLeadsByContact(filteredLeads), [filteredLeads]);
+  const groupedCount = useMemo(() => groupedLeads.filter(g => g.count > 1).length, [groupedLeads]);
 
   // ─── KPIs ───────────────────────────────────────────────────────────────
   const kpis = useMemo(() => {
@@ -1119,6 +1120,7 @@ export default function AdminCRMClient() {
               </Select>
               <div className="text-sm text-slate-500 self-center ml-auto hidden sm:block">
                 {filteredLeads.length} lead{filteredLeads.length !== 1 ? 's' : ''}
+                {groupedCount > 0 && <span className="text-slate-400"> · {groupedLeads.length} customers</span>}
               </div>
             </div>
           </CardContent>
@@ -1133,7 +1135,8 @@ export default function AdminCRMClient() {
           <>
             {/* Mobile cards */}
             <div className="sm:hidden space-y-3">
-              {filteredLeads.map(lead => {
+              {groupedLeads.map(group => {
+              const renderCard = (lead) => {
                 const cfg = STATUS_CONFIG[lead.displayStatus] || STATUS_CONFIG.new;
                 const SourceIcon = SOURCE_ICONS[lead.source] || MessageSquare;
                 const o = lead.raw;
@@ -1183,6 +1186,10 @@ export default function AdminCRMClient() {
                     </CardContent>
                   </Card>
                 );
+              };
+              return group.count > 1
+                ? <CustomerGroupCard key={group.id} group={group}>{group.records.map(renderCard)}</CustomerGroupCard>
+                : renderCard(group.records[0]);
               })}
             </div>
 
@@ -1203,13 +1210,15 @@ export default function AdminCRMClient() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredLeads.map(lead => {
+                    {groupedLeads.map(group => {
+                    const isGroup = group.count > 1;
+                    const renderRow = (lead) => {
                       const cfg = STATUS_CONFIG[lead.displayStatus] || STATUS_CONFIG.new;
                       const SourceIcon = SOURCE_ICONS[lead.source] || MessageSquare;
                       const o = lead.raw;
                       return (
                         <TableRow key={lead.id}
-                          className={`hover:bg-slate-50 cursor-pointer ${lead.source === 'order' && o.fraud_flag ? 'bg-red-50 hover:bg-red-100' : ''}`}
+                          className={`hover:bg-slate-50 cursor-pointer ${isGroup ? 'border-l-4 border-l-amber-300 bg-amber-50/20' : ''} ${lead.source === 'order' && o.fraud_flag ? 'bg-red-50 hover:bg-red-100' : ''}`}
                           onClick={() => lead.source === 'order' ? openOrderLead(lead) : setSelectedLead(lead)}>
                           <TableCell>
                             <div className="space-y-1">
@@ -1323,6 +1332,18 @@ export default function AdminCRMClient() {
                           </TableCell>
                         </TableRow>
                       );
+                    };
+                    if (!isGroup) return renderRow(group.records[0]);
+                    return (
+                      <Fragment key={group.id}>
+                        <TableRow className="bg-amber-50/70 hover:bg-amber-50/70 border-l-4 border-l-amber-400">
+                          <TableCell colSpan={8} className="py-2">
+                            <CustomerGroupHeader group={group} />
+                          </TableCell>
+                        </TableRow>
+                        {group.records.map(renderRow)}
+                      </Fragment>
+                    );
                     })}
                   </TableBody>
                 </Table>

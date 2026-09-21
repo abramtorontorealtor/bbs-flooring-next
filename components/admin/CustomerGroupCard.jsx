@@ -2,14 +2,14 @@
 
 // CustomerGroupCard.jsx — header UI for a grouped CRM customer (2+ source
 // records sharing an email/phone — see crmGrouping.js). Renders the
-// summary header + mounts CustomerTimeline once per group; the existing
-// per-record rows/cards render as `children` (or as sibling <TableRow>s
-// in the desktop table — see CustomerGroupHeader for that case).
+// summary header only; per-record rows/cards render as `children`
+// (mobile) or as sibling <TableRow>s under a header row (desktop).
+// CustomerTimeline stays in the lead detail dialog — one fetch per opened
+// lead, not one per group on every list render.
 
 import { Badge } from "@/components/ui/badge";
 import { Users, Phone, Mail } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import CustomerTimeline from '@/components/admin/CustomerTimeline';
 
 export function CustomerGroupHeader({ group }) {
   if (!group) return null;
@@ -44,7 +44,6 @@ export function CustomerGroupHeader({ group }) {
           )}
         </div>
       </div>
-      <CustomerTimeline email={group.email || null} phone={group.phone || null} />
     </div>
   );
 }

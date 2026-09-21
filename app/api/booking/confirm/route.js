@@ -32,8 +32,42 @@ export async function POST(request) {
 
     const visitorId = getVisitorIdFromRequest(request, booking);
 
-    // Persist booking as PENDING (not confirmed — admin confirms later)
     const supabase = getSupabaseAdminClient();
+
+    // Dedupe: same customer (email OR phone) + same preferred date/time within
+    // 24h = a double-tap / resubmit, not a second appointment. Return the
+    // existing booking instead of inserting a 2nd row + sending a 2nd email.
+    const email = (booking.customer_email || booking.email || '').trim().toLowerCase();
+    const phoneDigits = String(booking.customer_phone || booking.phone || '').replace(/\D/g, '');
+    const prefDate = booking.preferred_date || booking.date || null;
+    const prefTime = booking.preferred_time || booking.time || null;
+    if (prefDate) {
+      try {
+        const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const { data: recent } = await supabase
+          .from('bookings')
+          .select('id, customer_email, customer_phone, preferred_date, preferred_time, status')
+          .eq('preferred_date', prefDate)
+          .gte('created_at', since)
+          .neq('status', 'cancelled')
+          .limit(50);
+        const dup = (recent || []).find(b => {
+          const sameTime = (b.preferred_time || null) === prefTime;
+          if (!sameTime) return false;
+          const bEmail = (b.customer_email || '').trim().toLowerCase();
+          const bPhone = String(b.customer_phone || '').replace(/\D/g, '');
+          return (email && bEmail === email) || (phoneDigits.length >= 7 && bPhone === phoneDigits);
+        });
+        if (dup) {
+          console.log('[Booking] Duplicate submission suppressed:', dup.id);
+          return NextResponse.json({ success: true, emailSent: false, bookingId: dup.id, duplicate: true });
+        }
+      } catch (e) {
+        console.warn('[Booking] Dedupe check failed (continuing):', e?.message);
+      }
+    }
+
+    // Persist booking as PENDING (not confirmed — admin confirms later)
     const { data: savedBooking, error: dbError } = await supabase
       .from('bookings')
       .insert({
