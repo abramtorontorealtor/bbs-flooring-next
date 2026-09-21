@@ -246,7 +246,7 @@ const data = {
     },
     {
       "q": "What brands of flooring does BBS carry for Markham customers?",
-      "a": "BBS Flooring stocks 15+ premium brands including Vidar, NAF, Appalachian, Triforest, Woden, Simba, Canadian Standard, Lee, and more — over 1,000 products total. Visit our Markham showroom at 6061 Highway 7 to browse the full selection in person."
+      "a": "BBS Flooring stocks 15+ premium brands including Vidar, NAF, Appalachian, Triforest, Woden, Simba, Canadian Standard, our own BBS Reserve line, and more — over 1,000 products total. Visit our Markham showroom at 6061 Highway 7 to browse the full selection in person."
     },
     {
       "q": "Is BBS Flooring the cheapest flooring store in Markham?",

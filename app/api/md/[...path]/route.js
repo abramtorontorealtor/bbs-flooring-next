@@ -40,7 +40,7 @@ const BRANDS = {
   'appalachian-flooring': 'Appalachian Flooring',
   'sherwood-flooring': 'Sherwood Forest Products',
   'tosca-flooring': 'Tosca Floors',
-  'lee-flooring': 'Lee Flooring',
+  'bbs-reserve': 'BBS Reserve',
   'evergreen-flooring': 'Evergreen Building Materials',
   'golden-choice-flooring': 'Golden Choice',
 };

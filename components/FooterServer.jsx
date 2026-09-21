@@ -60,7 +60,7 @@ export default function FooterServer() {
                 { name: 'NAF Flooring', path: '/naf-flooring' },
                 { name: 'Simba Flooring', path: '/simba-flooring' },
                 { name: 'Wickham Hardwood', path: '/wickham-flooring' },
-                { name: 'Lee Flooring', path: '/lee-flooring' },
+                { name: 'BBS Reserve', path: '/bbs-reserve' },
                 { name: 'Triforest Flooring', path: '/triforest-flooring' },
               ].map(({ name, path }) => (
                 <li key={name}>

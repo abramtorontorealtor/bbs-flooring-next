@@ -22,7 +22,7 @@ export const GENERAL_FAQ_SECTIONS = [
       },
       {
         question: 'What brands do you carry?',
-        answer: 'We carry 15 flooring brands: Vidar Design Flooring, NAF Flooring, Northernest, Simba Flooring, Woden Flooring, Triforest Flooring, Falcon Flooring, Canadian Standard, Wickham Hardwood Flooring, Lee Flooring, Tosca Floors, Appalachian Flooring, Evergreen Building Materials, Sherwood Forest Products, and Golden Choice. Visit our Markham showroom at 6061 Highway 7, Unit B to see samples from every brand.',
+        answer: 'We carry 15 flooring brands: Vidar Design Flooring, NAF Flooring, Northernest, Simba Flooring, Woden Flooring, Triforest Flooring, Falcon Flooring, Canadian Standard, Wickham Hardwood Flooring, BBS Reserve (our house brand), Tosca Floors, Appalachian Flooring, Evergreen Building Materials, Sherwood Forest Products, and Golden Choice. Visit our Markham showroom at 6061 Highway 7, Unit B to see samples from every brand.',
       },
       {
         question: 'How much does flooring cost per square foot?',

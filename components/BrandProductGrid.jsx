@@ -18,7 +18,7 @@ const BRAND_DATA_MAP = {
   'canadian-standard': brandData.canadianStandardFlooringData,
   triforest: brandData.triforestFlooringData,
   simba: brandData.simbaFlooringData,
-  lee: brandData.leeFlooringData,
+  'bbs-reserve': brandData.bbsReserveData,
   tosca: brandData.toscaFlooringData,
   appalachian: brandData.appalachianFlooringData,
   evergreen: brandData.evergreenFlooringData,

@@ -182,7 +182,7 @@ const data = {
       {
         "heading": "Why Ajax Homeowners Buy from a Markham Showroom Instead of Big Box",
         "paragraphs": [
-          "Buying direct from a flooring installer rather than a big box store means BBS Flooring can source from 15 brands, including Vidar, NAF, Northernest, Canadian Standard, Impressive Floors, Lee Flooring, and Tosca, without the markup a general retailer adds on top. That typically puts our pricing 20-40% below big box for comparable product, and every installation is handled by our own crews rather than a subcontractor we've never met.",
+          "Buying direct from a flooring installer rather than a big box store means BBS Flooring can source from 15 brands, including Vidar, NAF, Northernest, Canadian Standard, Impressive Floors, our own BBS Reserve line, and Tosca, without the markup a general retailer adds on top. That typically puts our pricing 20-40% below big box for comparable product, and every installation is handled by our own crews rather than a subcontractor we've never met.",
           "We've been family-owned since 2012, with roughly 2,000 completed projects and a 4.8-star Google rating. Every installation carries a 2-year workmanship warranty on top of whatever warranty the manufacturer provides on the product itself. If you find the identical product for less elsewhere, our price-match policy covers it."
         ],
         "link": { "href": "/price-match", "label": "Price Match" }

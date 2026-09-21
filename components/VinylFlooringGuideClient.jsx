@@ -57,7 +57,7 @@ export default function VinylFlooringGuideClient() {
           Quick Answer: Best Vinyl Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring carries 240+ luxury vinyl plank (LVP/SPC) options from $1.79/sqft on clearance ($2.19&#8211;$4.35/sqft regular) &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include NAF, Triforest, Woden, Simba, Falcon, Lee, and Vidar. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring carries 240+ luxury vinyl plank (LVP/SPC) options from $1.79/sqft on clearance ($2.19&#8211;$4.35/sqft regular) &#8212; one of the largest vinyl selections in the Greater Toronto Area. All 100% waterproof with click-lock installation. Brands include NAF, Triforest, Woden, Simba, Falcon, Vidar, and our own BBS Reserve line. Professional installation from $2.00/sqft. Showroom: 6061 Hwy 7, Markham | <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -193,7 +193,7 @@ export default function VinylFlooringGuideClient() {
               <strong>Real example:</strong> The{' '}
               <Link href="/products/fulham-naf-aquaplus-platinum-9mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Fulham NAF AquaPlus Platinum (9mm) at $3.69/sqft</Link>{' '}
               features a 28mil wear layer — premium-grade protection for busy family homes, large dogs, or commercial-adjacent spaces. For most main-floor living areas, a 20mil product like{' '}
-              <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Weathered Barnwood by Lee (7mm, call for pricing)</Link>{' '}
+              <Link href="/products/uxbridge-bbs-reserve-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Uxbridge by BBS Reserve (7mm, our house brand)</Link>{' '}
               is the practical sweet spot.
             </p>
           </div>
@@ -243,7 +243,7 @@ export default function VinylFlooringGuideClient() {
               <div>
                 <p className="font-semibold text-slate-800 mb-1">Mid-Range Residential — Better Feel, More Subfloor Forgiveness</p>
                 <p className="text-slate-600 text-sm leading-relaxed">Noticeably more solid than 6mm. Better thermal insulation and less sound transmission. The extra millimetre makes a real difference if you have older concrete with small dips or uneven areas. Most of our mid-range lineup sits here — like the{' '}
-                  <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Weathered Barnwood Lee 7mm (call for pricing)</Link>{' '}
+                  <Link href="/products/uxbridge-bbs-reserve-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Uxbridge — BBS Reserve 7mm</Link>{' '}
                   and{' '}
                   <Link href="/products/madagascar-naf-classic-7mm-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800">Madagascar NAF Classic 7mm at $2.99/sqft</Link>.
                 </p>
@@ -350,7 +350,7 @@ export default function VinylFlooringGuideClient() {
                   <td className="p-3">Best budget option, reliable basics for rentals and basements</td>
                 </tr>
                 <tr>
-                  <td className="p-3 font-medium">Lee Flooring</td>
+                  <td className="p-3 font-medium">BBS Reserve (house brand)</td>
                   <td className="p-3 text-center">8</td>
                   <td className="p-3 text-center">$2.49 ($1.79 clearance)</td>
                   <td className="p-3">Value-focused, clearance pricing on select lines</td>
@@ -416,7 +416,7 @@ export default function VinylFlooringGuideClient() {
                   <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
                     <p className="text-xs font-semibold text-slate-500 uppercase mb-2">Example Product A</p>
                     <p className="text-sm text-slate-700">
-                      <Link href="/products/weathered-barnwood-lee-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">Weathered Barnwood — Lee 7mm</Link>
+                      <Link href="/products/uxbridge-bbs-reserve-vinyl-flooring" className="text-amber-700 underline hover:text-amber-800 font-semibold">Uxbridge — BBS Reserve 7mm</Link>
                       {' '}— $2.49/sqft · 20mil · Warm oak tone
                     </p>
                   </div>

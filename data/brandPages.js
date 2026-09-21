@@ -420,46 +420,46 @@ export const simbaFlooringData = {
 };
 
 // ══════════════════════════════════════════════════════════
-// LEE FLOORING — 24 products (EH 14, vinyl 10)
+// BBS RESERVE — house brand (ex-Lee Flooring, Sep 21 2026): 18 engineered hardwood + 10 vinyl
 // ══════════════════════════════════════════════════════════
 
-export const leeFlooringData = {
-  route: 'LeeFlooring',
-  title: 'Lee Flooring Markham | Engineered American Oak & 7mm Vinyl',
-  description: 'Lee Flooring at BBS in Markham — real 6½" Select & Better engineered oak and 7mm vinyl with attached underpad. First-quality, buy direct. Call (647) 428-1111.',
-  h1: 'Lee Flooring — Engineered American Oak & 7mm Vinyl',
-  subtitle: 'Engineered American oak (6½" Select & Better, plus American walnut) and 7mm vinyl with condo-approved underpad. First-quality, in stock, and a running line you can reorder anytime — bought direct, not a discontinued lot. Contact us for pricing.',
+export const bbsReserveData = {
+  route: 'BbsReserve',
+  title: 'BBS Reserve | Our Own Engineered Oak & 7mm Vinyl — Markham',
+  description: 'BBS Reserve is BBS Flooring\'s own line — 6½" Select & Better engineered oak and 7mm vinyl with 2mm condo-approved underpad. Sourced direct, backed by us, in stock in Markham. Call (647) 428-1111.',
+  h1: 'BBS Reserve — Our Own Engineered Oak & 7mm Vinyl',
+  subtitle: 'The line we put our own name on: 6½" Select & Better engineered American and European oak (plus one American walnut) and 7mm vinyl with 2mm condo-approved underpad. First-quality, in stock in Markham, reorderable anytime — and because it\'s ours, the price is ours too.',
   parentPage: null,
   schemaType: 'product',
   content: [
     {
-      heading: 'A Focused Collection That Gets It Right',
-      body: `<p>Lee keeps it simple — <strong>11 engineered hardwood and 8 vinyl options</strong> bought at special direct pricing. No bloated catalog of overlapping products. Every SKU has a clear purpose, which makes the selection process easier for homeowners and contractors alike.</p>
-<p>Their engineered hardwood is genuine American oak (plus one American walnut), and their vinyl is a single well-spec'd 7mm plank with condo-approved underpad. It's a current, first-quality running line — you can reorder to patch a repair or finish the next room. If you know what you want, Lee gets you there fast — contact us for pricing.</p>`
+      heading: 'Why We Put Our Name On It',
+      body: `<p>Most of the flooring we sell carries a manufacturer's brand. BBS Reserve is different — <strong>we source it direct from the mill and sell it under our own label</strong>, which cuts out the distributor layer that inflates most flooring prices in the GTA. That's the whole reason it exists: real engineered oak and a well-spec'd vinyl at a price we control, not one set for us.</p>
+<p>It's a focused range — <strong>18 engineered hardwood colours and 10 vinyl colours</strong>, every one a current running line you can reorder to patch a repair or finish the next room. No discontinued lots, no "while supplies last". And since it's our name on the box, we're the ones who stand behind it — one call to (647) 428-1111, no manufacturer runaround.</p>`
     },
     {
-      heading: 'Lee Engineered Hardwood — 11 Real Oak Options',
-      body: `<p>Lee's hardwood line focuses on <strong>6½" Select &amp; Better engineered American oak</strong>, plus one warm American walnut. It's a first-quality running line we buy direct — genuine engineered hardwood at an accessible, direct-buy price.</p>
-<p>These options compete directly with premium vinyl on cost — but you're getting actual hardwood. For homeowners who want real wood and thought it was out of budget, Lee changes the math. Contact us for current pricing.</p>`
+      heading: 'BBS Reserve Engineered Hardwood — 18 Real Oak Options',
+      body: `<p>The hardwood side is <strong>6½" wide Select &amp; Better engineered oak</strong> — American oak in warm and natural tones, European oak in the greyer, Scandinavian looks — plus one American walnut. Engineered construction means it's stable over concrete and compatible with in-floor radiant heat, and the wide plank suits open-concept GTA layouts.</p>
+<p>Colours are named after the neighbourhoods and towns we install in most — Unionville, Thornhill, Bloor West, Leaside, Deer Park, Baby Point. These options compete with premium vinyl on cost but you're getting real wood. For homeowners who wanted hardwood and assumed it was out of budget, this is the line that changes the math.</p>`
     },
     {
-      heading: 'Lee Vinyl — 8 Options, Condo-Approved Underpad',
-      body: `<p>Lee's vinyl is a single product line: <strong>7mm with 22mil wear layer and condo-approved underpad</strong>. The thicker pad beats the industry-standard 1.5mm, which translates to better sound dampening and a cushier feel underfoot.</p>
-<p>Eight colour choices, one thickness, straightforward direct pricing — contact us for current pricing.</p>`
+      heading: 'BBS Reserve Vinyl — 10 Colours, 22mil Wear Layer, Condo-Approved Underpad',
+      body: `<p>One vinyl spec, done properly: <strong>7mm total thickness, 22mil wear layer, 2mm attached underpad</strong>. The 2mm pad beats the industry-standard 1.5mm, which means better sound dampening (the number condo boards ask about) and a warmer, quieter feel underfoot. 100% waterproof and click-lock, so it floats over most existing subfloors.</p>
+<p>Ten colours from light driftwood greys to deep walnut browns — Bala, Creemore, Goderich, Huntsville, Uxbridge and more. Straightforward pricing, in stock in Markham, and the same line every time you reorder.</p>`
     },
   ],
   faqItems: [
-    { question: 'Why is Lee the best flooring value in the GTA right now?', answer: 'Because Lee is a first-quality running line we buy direct, so you get real engineered American oak — genuine 6½" Select & Better oak — plus 7mm vinyl with a condo-approved underpad, both at direct pricing. Both are first-quality, not seconds — the value comes from buying Lee direct and passing the savings on, not because it is discontinued. For anyone who wants real wood but thought it was out of budget, Lee is one of the best dollar-for-dollar flooring values at BBS Flooring in Markham. Contact us for current pricing.' },
-    { question: 'Is Lee Flooring affordable?', answer: 'Yes — Lee is bought direct with no middleman markup, so it stays among the more accessible prices for real wood and premium vinyl at BBS Flooring. Both the engineered American oak and the 7mm vinyl represent exceptional value for budget-conscious renovations — and it is a current running line you can reorder anytime. Call (647) 428-1111 for current pricing.' },
-    { question: 'What type of hardwood does Lee offer?', answer: 'Lee offers 6½" Select & Better engineered American oak, plus one warm American walnut. All options are engineered construction for dimensional stability and radiant heat compatibility.' },
-    { question: 'Is Lee vinyl condo approved?', answer: 'Lee offers 7mm vinyl with 2mm condo-approved underpad — thicker than the typical 1.5mm pad. This meets most condo board sound requirements. Verify your specific building\'s STC/IIC requirements with property management.' },
-    { question: 'How does Lee compare to other flooring brands?', answer: 'Lee competes on value. Their engineered American oak is priced below most competitors while offering real oak in 6½" widths, and their 7mm vinyl is straightforward — one well-spec\'d product at a strong direct-buy price. Visit BBS Flooring in Markham or call (647) 428-1111 to compare Lee with other brands side by side.' },
-    { question: 'Where can I buy Lee Flooring in the GTA?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham carries 19 Lee products — engineered American oak and 7mm vinyl. Walk-ins welcome Monday–Saturday. Free in-home measurements across the GTA. Call (647) 428-1111 for pricing.' },
+    { question: 'What is BBS Reserve?', answer: 'BBS Reserve is BBS Flooring\'s own house brand — engineered oak hardwood and 7mm vinyl that we source direct from the mill and sell under our own name. Because there is no distributor or national-brand markup in the chain, it is one of the best dollar-for-dollar flooring values in our Markham showroom, and because it carries our name, we stand behind it directly.' },
+    { question: 'Is BBS Reserve real hardwood?', answer: 'Yes. The BBS Reserve hardwood line is genuine 6½" Select & Better engineered oak — American oak and European oak — plus one American walnut, with a real wood veneer over an engineered core. Engineered construction gives dimensional stability and radiant-heat compatibility that solid hardwood cannot match.' },
+    { question: 'Is BBS Reserve vinyl condo approved?', answer: 'BBS Reserve vinyl is 7mm with a 2mm attached underpad — thicker than the typical 1.5mm pad — which meets most condo board sound requirements. Always verify your specific building\'s STC/IIC requirements with property management before ordering.' },
+    { question: 'Who backs the BBS Reserve warranty?', answer: 'We do. BBS Reserve is sold under our own name, so any product concern is handled directly by BBS Flooring in Markham — one call to (647) 428-1111, no manufacturer runaround. Ask in store for the current written warranty terms for the hardwood and vinyl lines.' },
+    { question: 'Can I reorder BBS Reserve later for a repair or another room?', answer: 'Yes — BBS Reserve is a current running line, not a closeout lot. Every colour is reorderable, so you can patch a repair or finish the next room in the same colour months or years later.' },
+    { question: 'Where can I buy BBS Reserve flooring?', answer: 'Only at BBS Flooring, 6061 Highway 7, Unit B, Markham — it is our exclusive house brand. Walk-ins welcome Monday–Saturday, samples in store, and free in-home measurements across the GTA. Call (647) 428-1111 for pricing and stock.' },
   ],
   hideBrandFilter: true,
-  productFilter: (p) => has(p.brand, 'lee'),
-  productSessionKey: 'lee',
-  productQueryKey: 'products-lee',
+  productFilter: (p) => has(p.brand, 'bbs reserve'),
+  productSessionKey: 'bbs-reserve',
+  productQueryKey: 'products-bbs-reserve',
 };
 
 // ══════════════════════════════════════════════════════════

@@ -314,7 +314,7 @@ export default function EngineeredHardwoodGuideClient() {
                   ['Impressive', '47', '$4.25–$7.99', 'White Oak, Hickory', 'Mid-range value, wide selection'],
                   ['Simba', '46', '$3.69–$8.99', 'White Oak, Hickory', 'Wide range, budget to premium'],
                   ['Falcon', '25', '$3.89–$3.99', 'White Oak, Red Oak', 'Budget Oak'],
-                  ['Lee', '18', 'Call for pricing', 'American Oak', 'Affordable American Oak'],
+                  ['BBS Reserve (house brand)', '18', 'Call for pricing', 'American & European Oak', 'Our own line — Select & Better oak, backed by BBS'],
                   ['Triforest', '12', '$4.79–$6.29', 'White Oak', 'Specialty engineered lines'],
                 ].map(([brand, products, price, species, best], i) => (
                   <tr key={brand} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
@@ -333,8 +333,8 @@ export default function EngineeredHardwoodGuideClient() {
             <div className="bg-green-50 border border-green-200 rounded-xl p-5">
               <p className="font-semibold text-green-800 mb-1">💰 Best Value</p>
               <p className="text-stone-600 text-sm">
-                Woden Flooring and Lee Flooring offer the lowest entry points for real engineered hardwood. Top picks:{' '}
-                <Link href="/products/radnor-lee-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Radnor by Lee (6½" American Oak, call for pricing)</Link>,{' '}
+                Woden Flooring and our own BBS Reserve line offer the lowest entry points for real engineered hardwood. Top picks:{' '}
+                <Link href="/products/don-valley-bbs-reserve-select-better-engineered-american-oak-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Don Valley by BBS Reserve (6½" American Oak)</Link>,{' '}
                 <Link href="/products/linen-falcon-floor-products-6-1-2-red-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Linen by Falcon (6½" Red Oak, $3.89/sqft)</Link>, and{' '}
                 <Link href="/products/blizzard-woden-vermont-6-1-2-oak-engineered-hardwood-flooring" className="text-amber-700 underline hover:text-amber-800">Blizzard by Woden (6½" Vermont Oak, $3.79/sqft)</Link>.
               </p>

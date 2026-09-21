@@ -271,13 +271,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ LEE CLEARANCE URGENCY STRIP ═══ */}
+      {/* ═══ BBS RESERVE CLEARANCE URGENCY STRIP ═══ */}
       <div className="bg-orange-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
           <span className="text-lg">🔥</span>
           <p className="text-sm font-semibold">
             <span className="font-bold">Clearance — real engineered oak &amp; waterproof vinyl deals, in-store pricing while stock lasts.</span>{' '}
-            <Link href="/lee-flooring" className="underline underline-offset-2 hover:no-underline">Shop Lee Clearance →</Link>
+            <Link href="/bbs-reserve" className="underline underline-offset-2 hover:no-underline">Shop BBS Reserve →</Link>
           </p>
         </div>
       </div>
@@ -622,7 +622,7 @@ export default function HomePage() {
                 { label: 'Simba Flooring', href: '/simba-flooring' },
                 { label: 'Canadian Standard Flooring', href: '/canadian-standard-flooring' },
                 { label: 'Northernest Flooring', href: '/northernest-flooring' },
-                { label: 'Lee Flooring', href: '/lee-flooring' },
+                { label: 'BBS Reserve', href: '/bbs-reserve' },
               ].map(link => (
                 <Link key={link.href} href={link.href} className="text-amber-700 underline underline-offset-2 decoration-amber-300 hover:text-amber-900 hover:decoration-amber-500 transition-colors">
                   {link.label}

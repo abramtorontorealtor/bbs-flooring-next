@@ -62,7 +62,7 @@ export default async function sitemap() {
     { path: '/canadian-made-flooring-toronto', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/triforest-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/simba-flooring', priority: 0.7, changeFrequency: 'weekly' },
-    { path: '/lee-flooring', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/bbs-reserve',  priority: 0.7, changeFrequency: 'weekly' },
     { path: '/tosca-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/appalachian-flooring', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/evergreen-flooring', priority: 0.7, changeFrequency: 'weekly' },
