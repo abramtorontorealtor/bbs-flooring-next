@@ -338,3 +338,52 @@ test('DB update failure on a transition → success:false, no calendar, no notif
   assert.deepEqual([r.success, r.code], [false, 'db_error']);
   assert.equal(google.log.length + notify.sent.length, 0);
 });
+
+// ── R14 (red-team BLOCKER, service half): only explicit `cancelled` deletes ──
+for (const status of ['contacted', 'quoted', 'booked', 'new', '', null, undefined]) {
+  test(`R14: retrySync on status ${JSON.stringify(status)} row with a live event → no Google call, event intact, skipped/unrecognised_status`, async () => {
+    const { db, google, notify, svc } = setup();
+    const b = db.seed({ ...REQUEST, status, calendar_event_id: 'evtlive42', calendar_sync_status: 'failed', revision: 3 });
+    google.events.set('evtlive42', { id: 'evtlive42', status: 'confirmed', date: '2026-10-05' });
+    const r = await svc.retrySync(b.id);
+    assert.equal(r.success, true);
+    assert.equal(r.calendarSync.status, 'skipped');
+    assert.equal(r.calendarSync.reason, 'unrecognised_status');
+    assert.equal(r.calendarSync.eventId, 'evtlive42');
+    assert.equal(google.log.length, 0, 'no Google call at all');
+    assert.equal(google.events.get('evtlive42').status, 'confirmed');
+    const row = db.row(b.id);
+    assert.equal(row.calendar_event_id, 'evtlive42');
+    assert.equal(row.status, status);
+    assert.equal(row.revision, 3);
+    assert.equal(notify.sent.length, 0);
+  });
+}
+
+test('R14: a status flipped to an unrecognised value mid-sync is not treated as a cancellation', async () => {
+  const { db, google, svc } = setup();
+  const { booking } = await svc.create(REQUEST);
+  const eventId = db.row(booking.id).calendar_event_id;
+  let fired = false;
+  google.hooks.afterPatch = () => {
+    if (fired) return;
+    fired = true; // CRM generic writer marks it 'quoted' (bumps revision here)
+    db.external(booking.id, { status: 'quoted' });
+  };
+  const r = await svc.reschedule(booking.id, { date: '2026-10-15', time: '11:30 AM' }, 'customer');
+  assert.equal(r.success, true);
+  assert.equal(r.calendarSync.status, 'skipped');
+  assert.equal(r.calendarSync.reason, 'unrecognised_status');
+  assert.equal(google.events.get(eventId).status, 'confirmed', 'event not deleted');
+  assert.equal(google.log.filter((l) => l[0] === 'delete').length, 0);
+  assert.equal(db.row(booking.id).calendar_event_id, eventId);
+});
+
+test('R14: explicit cancelled still deletes (regression guard)', async () => {
+  const { db, google, svc } = setup();
+  const b = db.seed({ ...REQUEST, status: 'cancelled', calendar_event_id: 'evtdel77' });
+  google.events.set('evtdel77', { id: 'evtdel77', status: 'confirmed' });
+  const r = await svc.retrySync(b.id);
+  assert.equal(r.calendarSync.status, 'absent');
+  assert.equal(google.events.get('evtdel77').status, 'cancelled');
+});
