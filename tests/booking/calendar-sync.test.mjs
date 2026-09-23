@@ -30,7 +30,9 @@ test('thrown error and {success:false} normalise to the same result shape', asyn
   g.faults.insert.push({ success: false, httpStatus: 500, error: 'Backend Error' });
   const b = await sync.ensureEvent(booking());
   for (const r of [a, b]) {
-    assert.deepEqual(Object.keys(r).sort(), ['error', 'eventId', 'ok', 'status']);
+    // throw / 5xx are ambiguous (may commit remotely), flagged as such (R7).
+    assert.deepEqual(Object.keys(r).sort(), ['ambiguous', 'error', 'eventId', 'ok', 'status']);
+    assert.equal(r.ambiguous, true);
     assert.equal(r.ok, false);
     assert.equal(r.status, 'failed');
     assert.equal(r.eventId, null);
@@ -59,7 +61,8 @@ test('stored legacy id is patched in place; never replaced while it exists', asy
   g.events.set('legacy9xyz', { id: 'legacy9xyz', status: 'confirmed' });
   const r = await sync.ensureEvent(booking({ calendar_event_id: 'legacy9xyz' }));
   assert.equal(r.eventId, 'legacy9xyz');
-  assert.deepEqual(g.log.map((l) => l[0]), ['patch']);
+  // R7: read etag first, then a conditional (If-Match) PATCH.
+  assert.deepEqual(g.log.map((l) => l[0]), ['get', 'patch']);
 });
 
 test('delete: 2xx/404/410 ok+absent; 500 and throw are failures that keep the id', async () => {

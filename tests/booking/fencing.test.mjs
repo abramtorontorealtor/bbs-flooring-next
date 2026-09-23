@@ -86,10 +86,10 @@ test('R7 (c): restore PATCH that lands after a cross-instance cancel is undone b
   google.events.set(L, { id: L, status: 'cancelled', date: '2026-10-05' });
 
   const g = gate();
-  google.faults.patch.push(async () => null); // plain PATCH passes → sees cancelled
-  google.faults.patch.push(async () => { await g.p; return null; }); // restore PATCH slow
+  // GET sees cancelled → recheck says live → conditional restore sent, delayed in transit.
+  google.faults.patch.push(async () => { await g.p; return null; });
   const retry = svc.retrySync(b.id);
-  await until(() => ops(google, 'patch') === 2); // recheck said live; restore in flight
+  await until(() => ops(google, 'patch') === 1);
 
   const c = await svc.cancel(b.id, '', 'admin'); // other instance: deletes L (410) + S (404)
   assert.equal(c.calendarSync.status, 'absent');
@@ -109,10 +109,9 @@ test('R7 (c): handles this call touched are deleted even if another writer nulle
   google.events.set(L, { id: L, status: 'cancelled', date: '2026-10-05' });
 
   const g = gate();
-  google.faults.patch.push(async () => null);
   google.faults.patch.push(async () => { await g.p; return null; });
   const retry = svc.retrySync(b.id);
-  await until(() => ops(google, 'patch') === 2);
+  await until(() => ops(google, 'patch') === 1);
   // An out-of-band writer (e.g. pre-Phase-A code) cancels AND clears the id.
   db.external(b.id, { status: 'cancelled', calendar_event_id: null });
 
@@ -128,11 +127,11 @@ test('R7: restore is never sent when the re-read row is already cancelled', asyn
   const L = 'legacyabc';
   const b = db.seed({ ...REQUEST, status: 'confirmed', calendar_event_id: L, revision: 1 });
   google.events.set(L, { id: L, status: 'cancelled' });
-  // plain PATCH → sees cancelled; before the restore the row is cancelled by someone else
-  google.faults.patch.push(async () => { db.external(b.id, { status: 'cancelled' }); return null; });
+  // GET sees cancelled; before the restore the row is cancelled by someone else
+  google.faults.get.push(async () => { db.external(b.id, { status: 'cancelled' }); return null; });
   const r = await svc.retrySync(b.id);
   assert.equal(r.calendarSync.status, 'absent');
-  assert.equal(ops(google, 'patch'), 1, 'no restore PATCH');
+  assert.equal(google.log.filter((l) => l[0] === 'patch' && l[2] === 'restore').length, 0, 'no restore PATCH');
   assertNothingLive(google, [L, stableEventId(b.id)]);
 });
 

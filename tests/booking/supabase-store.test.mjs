@@ -252,7 +252,8 @@ test('R10 trace (legacy mode): timeout-after-create racing a cancel ends with th
   assert.equal(sb.rows.get(id).status, 'cancelled');
   assert.equal(google.events.get(sid)?.status, 'cancelled', 'stable event S deleted by reconciliation');
   assert.equal(google.liveEvents().length, 0);
-  assert.deepEqual(google.log.map((l) => l[0]), ['insert', 'delete', 'delete']);
+  // 2nd delete succeeds → tombstone write moves the etag (R7 fencing).
+  assert.deepEqual(google.log.map((l) => l[0]), ['insert', 'delete', 'delete', 'tombstone']);
 });
 
 test('R10: legacy-mode calendar failure is reported recorded:false (no durable failure state)', async () => {

@@ -13,7 +13,7 @@ export const testOwnership = createOwnership({ secret: TEST_OWNERSHIP_SECRET });
 export function createFakeDb({ failInsert = false } = {}) {
   const rows = new Map();
   const calls = { insert: 0, update: 0, get: 0 };
-  const hooks = { beforeUpdate: null }; // (id, patch) => void — simulate concurrent writers
+  const hooks = { beforeUpdate: null, failUpdate: null }; // simulate concurrent writers / DB faults
   return {
     rows, calls, hooks,
     failInsert,
@@ -45,11 +45,13 @@ export function createFakeDb({ failInsert = false } = {}) {
     async update(id, patch, { expected } = {}) {
       calls.update++;
       if (hooks.beforeUpdate) await hooks.beforeUpdate(id, patch);
+      if (hooks.failUpdate && hooks.failUpdate(id, patch)) return { data: null, error: { message: 'db down' }, conflict: false };
       const cur = rows.get(id);
       if (!cur) return { data: null, error: { message: 'not found' }, conflict: false };
       if (expected && (cur.revision || 0) !== (expected.revision || 0)) {
         return { data: null, error: null, conflict: true };
       }
+
       const next = { ...cur, ...patch };
       rows.set(id, next);
       return { data: { ...next }, error: null, conflict: false };
@@ -72,9 +74,10 @@ function summaryFor(b) {
 export function createFakeGoogle() {
   const events = new Map();
   const log = [];
-  const faults = { insert: [], get: [], patch: [], delete: [] };
+  const faults = { insert: [], get: [], patch: [], delete: [], tombstone: [] };
   const hooks = { afterPatch: null, afterInsert: null };
   let autoId = 0;
+  let etagSeq = 0;
 
   async function takeFault(op, ...args) {
     const f = faults[op].shift();
@@ -98,7 +101,7 @@ export function createFakeGoogle() {
         }
         if (f) return f;
         if (events.has(id)) return { success: false, httpStatus: 409, error: '{"error":{"code":409,"message":"The requested identifier already exists."}}' };
-        events.set(id, { id, status: 'confirmed', summary: summaryFor(booking), date: booking.preferred_date, time: booking.preferred_time, attendees: undefined });
+        events.set(id, { id, status: 'confirmed', etag: `"${++etagSeq}"`, summary: summaryFor(booking), date: booking.preferred_date, time: booking.preferred_time, attendees: undefined });
         if (hooks.afterInsert) await hooks.afterInsert(id);
         return { success: true, httpStatus: 200, eventId: id };
       },
@@ -107,19 +110,37 @@ export function createFakeGoogle() {
         const f = await takeFault('get', eventId);
         if (f) return f;
         const e = events.get(eventId);
+        if (e && !e.etag) e.etag = `"${++etagSeq}"`;
         return e ? { success: true, httpStatus: 200, event: { ...e } } : { success: false, httpStatus: 404, error: 'Not Found' };
       },
-      async patch(eventId, booking, { restore = false } = {}) {
-        log.push(['patch', eventId]);
+      // NOTE: faults run BEFORE the write is applied, and the write ignores the caller's
+      // AbortSignal. A gated fault therefore models a request Google commits AFTER the
+      // local abort/timeout (the remote-write-after-abort case).
+      async patch(eventId, booking, { restore = false, ifMatch = null } = {}) {
+        log.push(['patch', eventId, ...(restore ? ['restore'] : [])]);
         const f = await takeFault('patch', eventId, booking);
         if (f) return f;
         const e = events.get(eventId);
         if (!e) return { success: false, httpStatus: 404, error: 'Not Found' };
+        if (ifMatch && e.etag && ifMatch !== e.etag) {
+          return { success: false, httpStatus: 412, error: 'Precondition Failed' };
+        }
+        e.etag = `"${++etagSeq}"`;
         Object.assign(e, { summary: summaryFor(booking), date: booking.preferred_date, time: booking.preferred_time });
         if (restore) e.status = 'confirmed';
         if (hooks.afterPatch) await hooks.afterPatch(eventId);
         // Like Google: PATCH answers with the event, incl. status 'cancelled' when a
         // plain (non-restore) PATCH touched a deleted event.
+        return { success: true, httpStatus: 200, eventId, event: { ...e } };
+      },
+      async tombstone(eventId) {
+        log.push(['tombstone', eventId]);
+        const f = await takeFault('tombstone', eventId);
+        if (f) return f;
+        const e = events.get(eventId);
+        if (!e) return { success: false, httpStatus: 404, error: 'Not Found' };
+        e.status = 'cancelled';
+        e.etag = `"${++etagSeq}"`;
         return { success: true, httpStatus: 200, eventId, event: { ...e } };
       },
       async delete(eventId) {
@@ -130,6 +151,7 @@ export function createFakeGoogle() {
         if (!e) return { success: false, httpStatus: 404, error: 'Not Found' };
         if (e.status === 'cancelled') return { success: false, httpStatus: 410, error: 'Resource has been deleted' };
         e.status = 'cancelled';
+        e.etag = `"${++etagSeq}"`; // assumption (sandbox-verify): deleting changes the etag
         return { success: true, httpStatus: 204 };
       },
     },
