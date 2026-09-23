@@ -49,7 +49,7 @@ function fakeSupabase({ migrated }) {
       if (st.op === 'insert') {
         const bad = missing(st.body);
         if (bad) return { data: null, error: { code: 'PGRST204', message: `Could not find the '${bad}' column of 'bookings' in the schema cache` } };
-        const r = { ...defaults(), ...st.body, id: `id-${++n}`, updated_at: '2026-09-23T00:00:00.000001+00:00' };
+        const r = { ...defaults(), ...st.body, id: st.body.id || `id-${++n}`, updated_at: '2026-09-23T00:00:00.000001+00:00' };
         rows.set(r.id, r);
         return { data: { ...r }, error: null };
       }
@@ -239,7 +239,9 @@ test('R10 trace (legacy mode): timeout-after-create racing a cancel ends with th
   const id = [...sb.rows.keys()][0];
   const sid = stableEventId(id);
 
-  const c = await lc.cancel(id, 'changed my mind', 'customer');
+  // Admin cancel: in legacy mode ownership proofs are stripped, so a CUSTOMER cancel
+  // fails closed on calendar (fix R15; see the legacy fail-closed test below).
+  const c = await lc.cancel(id, 'changed my mind', 'admin');
   assert.equal(c.success, true);
   assert.equal(c.calendarSync.status, 'absent', 'S did not exist yet when cancel ran');
 
@@ -278,4 +280,22 @@ test('R10: legacy-mode calendar failure is reported recorded:false (no durable f
   const c2 = await lc2.create({ customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
   assert.equal(c2.calendarSync.recorded, undefined);
   assert.equal(sb2.rows.get(c2.booking.id).calendar_sync_status, 'failed');
+});
+
+test('R15: legacy mode strips ownership proofs → customer-driven calendar change fails closed (no Google call)', async () => {
+  const sb = fakeSupabase({ migrated: false });
+  const google = createFakeGoogle();
+  const lc = createBookingLifecycle({
+    db: createSupabaseBookingStore(sb, { mode: 'legacy', logger: silentLogger }),
+    calendar: createCalendarSync(google.adapter), notify: null,
+    now: () => new Date('2026-09-23T12:00:00Z'), logger: silentLogger,
+  });
+  const c = await lc.create({ customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  assert.equal(c.calendarSync.status, 'synced', 'server create still syncs');
+  assert.ok(!('ownership_proof' in sb.rows.get(c.booking.id)), 'proof not storable pre-migration');
+  const before = google.log.length;
+  const r = await lc.cancel(c.booking.id, '', 'customer');
+  assert.equal(r.success, true, 'DB cancellation stands');
+  assert.deepEqual([r.calendarSync.status, r.calendarSync.reason], ['failed', 'unverified_calendar_owner']);
+  assert.equal(google.log.length, before, 'no Google call');
 });

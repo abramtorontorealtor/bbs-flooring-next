@@ -1,5 +1,13 @@
 // In-memory fakes for lifecycle tests. No network, no Supabase, no Google.
 import { randomUUID } from 'node:crypto';
+import { createOwnership } from '../../lib/booking/ownership.js';
+
+// Fix R15: lifecycles built in tests sign/verify ownership with this test-only secret
+// (createOwnership() reads the env at construction). Seeded rows are trusted by default
+// (proof added) unless the seed passes ownership_proof explicitly.
+export const TEST_OWNERSHIP_SECRET = 'test-only-ownership-secret-0123456789abcdef';
+if (!process.env.BOOKING_OWNERSHIP_SECRET) process.env.BOOKING_OWNERSHIP_SECRET = TEST_OWNERSHIP_SECRET;
+export const testOwnership = createOwnership({ secret: TEST_OWNERSHIP_SECRET });
 
 /** Fake `db` honouring the lifecycle contract, incl. revision-conditional updates. */
 export function createFakeDb({ failInsert = false } = {}) {
@@ -11,6 +19,8 @@ export function createFakeDb({ failInsert = false } = {}) {
     failInsert,
     seed(row) {
       const r = { id: randomUUID(), status: 'pending', revision: 1, calendar_event_id: null, ...row };
+      if (!('ownership_proof' in row)) r.ownership_proof = testOwnership.signRow(r.id);
+      if (!('calendar_event_proof' in row) && r.calendar_event_id) r.calendar_event_proof = testOwnership.signEvent(r.id, r.calendar_event_id);
       rows.set(r.id, { ...r });
       return { ...r };
     },
@@ -23,7 +33,7 @@ export function createFakeDb({ failInsert = false } = {}) {
     async insert(row) {
       calls.insert++;
       if (this.failInsert) return { data: null, error: { message: 'insert failed: connection reset' } };
-      const r = { ...row, id: randomUUID(), created_at: new Date().toISOString() };
+      const r = { ...row, id: row.id || randomUUID(), created_at: new Date().toISOString() };
       rows.set(r.id, r);
       return { data: { ...r }, error: null };
     },
