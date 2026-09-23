@@ -10,6 +10,7 @@ import {
 } from '../../lib/booking/availability.js';
 import { handleAvailability } from '../../lib/booking/availability-handler.js';
 import { stableEventId } from '../../lib/booking/calendar-sync.js';
+import { testOwnership } from './fakes.mjs';
 
 const P = resolveSchedulePolicy({}, {});
 const at = (iso) => Date.parse(iso);
@@ -90,8 +91,9 @@ test('availability: buffer and daily cap are configurable; untimed live booking 
 test('availability: Google busy — timed, all-day (exclusive end), transparent/cancelled ignored, own events not double-counted', () => {
   const own = 'a1111111-1111-4111-8111-111111111111';
   const bookings = [
-    { id: own, status: 'pending', preferred_date: D, preferred_time: '5:00 PM' },
-    { id: 'f6666666-6666-4666-8666-666666666666', status: 'cancelled', preferred_date: D, preferred_time: '11:00 AM', calendar_event_id: 'legacyevt1' },
+    { id: own, status: 'pending', preferred_date: D, preferred_time: '5:00 PM', ownership_proof: testOwnership.signRow(own) },
+    { id: 'f6666666-6666-4666-8666-666666666666', status: 'cancelled', preferred_date: D, preferred_time: '11:00 AM', calendar_event_id: 'legacyevt1',
+      calendar_event_proof: testOwnership.signEvent('f6666666-6666-4666-8666-666666666666', 'legacyevt1') },
   ];
   const googleEvents = [
     { id: stableEventId(own), status: 'confirmed', start: { dateTime: '2026-09-26T17:00:00-04:00' }, end: { dateTime: '2026-09-26T18:00:00-04:00' } },
@@ -101,7 +103,7 @@ test('availability: Google busy — timed, all-day (exclusive end), transparent/
     { id: 'x3', status: 'cancelled', start: { dateTime: '2026-09-26T12:00:00-04:00' }, end: { dateTime: '2026-09-26T15:00:00-04:00' } },
     { id: 'x4', status: 'confirmed', start: { date: '2026-09-25' }, end: { date: '2026-09-26' } }, // ends before D
   ];
-  const r = computeAvailability({ date: D, policy: P, nowMs: NOW, bookings, googleEvents });
+  const r = computeAvailability({ date: D, policy: P, nowMs: NOW, bookings, googleEvents, ownership: testOwnership });
   // x1 kills 11:00 + 11:30. Own pending booking kills 5:00 via the DB row (once). legacyevt1 is ours (cancelled row) → ignored.
   assert.deepEqual(times(r), ['12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM']);
   assert.equal(r.reliability, 'full');
