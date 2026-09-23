@@ -51,7 +51,7 @@ comment on column public.bookings.ownership_proof is
 comment on column public.bookings.calendar_event_proof is
   'HMAC(BOOKING_OWNERSHIP_SECRET, event|id|calendar_event_id) for a non-derived (legacy) event id, written only by admin trust_calendar_event. NULL = the stored event id is never sent to Google.';
 comment on column public.bookings.calendar_op_started_at is
-  'When a Google Calendar insert for this booking was started and its outcome is not yet definite (timeout/abort). While set, a cancellation must reserve the stable id instead of reporting it absent; cleared only when Google state rules out a late insert, never by time.';
+  'Per-attempt uncertainty token for a Google Calendar insert whose outcome may not be definite. Each insert attempt writes its own unique value first. It is cleared automatically only by the attempt that claimed it from NULL, after that attempt''s own insert got a definite answer, and only if the value still matches exactly. Otherwise it is cleared only by the explicit admin action resolve_calendar_uncertainty, which acknowledges the risk and echoes the exact value. Never cleared by time. While set, a cancelled booking is reported failed, never absent. Reserving the stable id is NOT proof: Google does not guarantee id-collision detection at insert time.';
 comment on column public.bookings.revision is
   'Optimistic-concurrency counter, +1 on every lifecycle state change. 0 = pre-Phase-A row.';
 

@@ -1,6 +1,8 @@
 # Booking Phase A: external verification harness (REVIEWABLE, NOT EXECUTED)
 
-Nothing here has been run. Each block needs **Abram's explicit OK** and the stated isolation before anyone runs it. The offline suite (`npm test`) already covers logic with fakes. These checks cover what fakes cannot prove: real Google semantics, real DDL, and the real deployed wiring.
+Nothing here has been run by the owner. Approval depends on what a check touches:
+- **No permission needed:** isolated, reversible local checks on synthetic data. Examples: §B on a throwaway local Postgres or PGlite in `/tmp`, and `npm test`. These don't prove exact Supabase/PostgREST/RLS behaviour. For that, use a Supabase branch.
+- **Abram's explicit OK required:** anything that touches the business Google account (§A, even with a disposable calendar), Vercel (preview env/deploy, §C), a Supabase project or branch, reading production schema, and every production step (runbook §2). The offline suite (`npm test`) already covers logic with fakes. These checks cover what fakes cannot prove: real Google semantics, real DDL, and the real deployed wiring.
 
 ## A. Google Calendar contract checks (disposable, isolated calendar ONLY)
 **Isolation:** create a NEW secondary calendar (e.g. `bbs-phaseA-sandbox`) under the business account. Never use `primary`. Every call uses `sendUpdates=none` and **no attendees**, so no one is invited or emailed. Delete the calendar afterwards.
@@ -30,7 +32,7 @@ body='{"id":"'"$ID"'","summary":"sandbox","start":{"date":"2030-01-01"},"end":{"
 
 **If G4, G8 or G9 differs from the expected result, the conditional-write fencing is not valid: launch is blocked.** G2/G5 are informational only. Google documents that id collisions may go undetected at creation time, so a 409 in the sandbox does not prove that an uncertain insert can never land (runbook §9).
 
-## B. SQL up/down verification (disposable DB ONLY: a Supabase branch or local Postgres ≥ 11 with a schema-only copy of `bookings`)
+## B. SQL up/down verification (disposable DB ONLY: local Postgres ≥ 11 / PGlite with synthetic rows needs no permission; a Supabase branch or a production schema dump needs Abram's OK)
 ```bash
 pg_dump --schema-only -t public.bookings "$PROD_RO_URL" > bookings_schema.sql   # read-only, schema only, no rows
 psql "$SANDBOX_URL" -f bookings_schema.sql

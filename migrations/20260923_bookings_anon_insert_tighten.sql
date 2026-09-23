@@ -1,7 +1,11 @@
 -- ============================================================================
--- NOT PART OF PHASE A — needs Abram's review.
--- DRAFT ONLY. Do not apply as part of the booking-lifecycle rollout.
--- (Boss decision 3, phaseA-slices.md: out of Phase A code; draft + flag only.)
+-- PHASE A LAUNCH PREREQUISITE (red-team R15), APPROVAL-GATED.
+-- DRAFT. Apply only with Abram's explicit OK, in the rollout order of
+-- README-booking-phaseA.md §2 step 2: after the policy snapshot and anon-insert log
+-- review, BEFORE the Phase A deploy. Phase A ownership proofs rely on no new
+-- anon-forged rows. Dropping the policy does NOT make existing rows trusted (§8).
+-- (Originally drafted as out of Phase A scope under boss decision 3; promoted to a
+--  launch prerequisite in fix-3 once R15 showed forged rows could drive Calendar.)
 --
 -- Problem (phaseA-inventory.md §7): RLS policy `bookings_anon_insert` on
 -- public.bookings is PERMISSIVE, cmd=INSERT, with_check = true. Anyone holding
@@ -63,5 +67,7 @@ commit;
 -- drop policy if exists bookings_anon_insert on public.bookings;
 -- create policy bookings_anon_insert on public.bookings
 --   as permissive for insert to public with check (true);
--- NOTE: confirm the original `roles` from the §4 snapshot (pg_policies.roles)
--- and use it in `to ...` — the inventory recorded cmd/with_check but not roles.
+-- roles: the parent owner's read of pg_policies (Sep 23 2026) shows roles = {public},
+-- so `to public` above matches. Still compare against the §4 snapshot taken right before
+-- applying, and use its value if it differs. Re-creating this policy reopens R15, so
+-- Phase A code must not be live while it exists.
