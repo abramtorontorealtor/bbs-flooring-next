@@ -26,6 +26,7 @@ import { toast } from 'sonner';
 import CustomerTimeline from '@/components/admin/CustomerTimeline';
 import CustomerGroupCard, { CustomerGroupHeader } from '@/components/admin/CustomerGroupCard';
 import { groupLeadsByContact } from '@/components/admin/crmGrouping';
+import { bookingSyncWarning } from '@/lib/booking/sync-warning';
 import { format } from 'date-fns';
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
@@ -339,6 +340,8 @@ export default function AdminCRMClient() {
   // Stored as a human 12-hour string (e.g. "2:45 PM") to match what email/calendar expect.
   const [bookingRescheduleTime, setBookingRescheduleTime] = useState('');
   const [bookingCancelReason, setBookingCancelReason] = useState('');
+  // calendarSync from the last admin-action response per booking id (newer than the list).
+  const [bookingLastSync, setBookingLastSync] = useState({});
 
   // Convert a native <input type="time"> value ("HH:MM", 24h) into a 12-hour label.
   const to12Hour = (hhmm) => {
@@ -395,7 +398,16 @@ export default function AdminCRMClient() {
       if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || `${action} failed`); }
       return res.json();
     },
-    onSuccess: (data, { action }) => {
+    onSuccess: (data, { bookingId, action }) => {
+      if (data?.calendarSync) setBookingLastSync((m) => ({ ...m, [bookingId]: data.calendarSync }));
+      if (action === 'retry_sync') {
+        // Calendar only — no email was sent. Keep the dialog open.
+        refreshAll();
+        const s = data?.calendarSync?.status;
+        if (s === 'synced' || s === 'absent') toast.success('Calendar synced');
+        else toast.warning(`Calendar sync still ${s || 'failing'}${data?.calendarSync?.error ? ` — ${data.calendarSync.error}` : ''}`);
+        return;
+      }
       refreshAll();
       const actionLabels = { confirm: 'Booking confirmed', reschedule: 'Rescheduled', cancel: 'Cancelled', complete: 'Marked complete' };
       const label = actionLabels[action] || 'Done';
@@ -485,6 +497,18 @@ export default function AdminCRMClient() {
     }[status] || { label: status, cls: 'bg-slate-100 text-slate-600' };
     return <Badge className={`${v.cls} border-0`}>{v.label}</Badge>;
   };
+
+  // Booking calendar-sync warning (decision 9(1)): red on failed, quiet amber on pending/unknown.
+  const renderBookingSyncBadge = (lead) => {
+    if (lead.source !== 'booking') return null;
+    const w = bookingSyncWarning(lead.raw, bookingLastSync[lead.entityId]);
+    if (!w) return null;
+    if (w.level === 'failed') {
+      return <Badge title={w.title} className="bg-red-100 text-red-800 text-xs border border-red-300 whitespace-nowrap">Calendar sync failed</Badge>;
+    }
+    return <span title={w.title} className="text-[11px] text-amber-700 whitespace-nowrap">Calendar not verified</span>;
+  };
+  const retryBookingSync = (lead) => bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'retry_sync' });
 
   const getPaymentBadge = (method, status) => {
     if (method === 'credit_card') {
@@ -1152,6 +1176,7 @@ export default function AdminCRMClient() {
                           <div className="flex items-center gap-2 flex-wrap">
                             <Badge className={`${cfg.color} text-xs border`}>{cfg.label}</Badge>
                             <SourceIcon className="w-3.5 h-3.5 text-slate-400" />
+                            {renderBookingSyncBadge(lead)}
                             {lead.source === 'order' && o.fraud_flag && (
                               <Badge className="bg-red-200 text-red-900 text-xs border border-red-300">🚨 FRAUD</Badge>
                             )}
@@ -1226,6 +1251,7 @@ export default function AdminCRMClient() {
                           <TableCell>
                             <div className="space-y-1">
                               <Badge className={`${cfg.color} text-xs border whitespace-nowrap`}>{cfg.label}</Badge>
+                              {renderBookingSyncBadge(lead)}
                               {lead.source === 'order' && o.fraud_flag && (
                                 <div className="flex items-center gap-1 text-red-600 text-xs">
                                   <AlertTriangle className="w-3 h-3" /> FRAUD
@@ -1331,6 +1357,15 @@ export default function AdminCRMClient() {
                                   <CheckCircle className="w-3 h-3 mr-1" /> Confirm
                                 </Button>
                               )}
+                              {/* Booking: Retry calendar sync (failed only, no email) */}
+                              {lead.source === 'booking' && bookingSyncWarning(o, bookingLastSync[lead.entityId])?.level === 'failed' && (
+                                <Button variant="outline" size="sm" className="h-7 text-xs text-red-700 border-red-300 hover:bg-red-50"
+                                  title={bookingSyncWarning(o, bookingLastSync[lead.entityId]).title}
+                                  disabled={bookingAdminAction.isPending}
+                                  onClick={() => retryBookingSync(lead)}>
+                                  <RefreshCw className="w-3 h-3 mr-1" /> Retry calendar sync
+                                </Button>
+                              )}
                             </div>
                           </TableCell>
                         </TableRow>
@@ -1378,6 +1413,7 @@ export default function AdminCRMClient() {
                         <>
                           {lead.name}
                           <Badge className={`${cfg.color} text-xs border`}>{cfg.label}</Badge>
+                          {renderBookingSyncBadge(lead)}
                         </>
                       )}
                     </DialogTitle>
@@ -1892,6 +1928,21 @@ export default function AdminCRMClient() {
                       {lead.source === 'booking' && (
                         <div className="space-y-3">
                           <Label className="text-sm font-semibold">Booking Actions</Label>
+
+                          {/* Calendar sync failed — retry from current DB state (no email) */}
+                          {bookingSyncWarning(o, bookingLastSync[lead.entityId])?.level === 'failed' && (
+                            <div className="bg-red-50 border border-red-200 rounded-lg p-3 space-y-2"
+                              title={bookingSyncWarning(o, bookingLastSync[lead.entityId]).title}>
+                              <p className="text-xs text-red-700 flex items-center gap-1">
+                                <AlertTriangle className="w-3 h-3" /> Calendar sync failed — the Google Calendar event may not match this booking.
+                              </p>
+                              <Button size="sm" variant="outline" className="w-full border-red-300 text-red-700 hover:bg-red-100"
+                                disabled={bookingAdminAction.isPending}
+                                onClick={() => retryBookingSync(lead)}>
+                                <RefreshCw className="w-3 h-3 mr-1" /> Retry calendar sync (no email)
+                              </Button>
+                            </div>
+                          )}
 
                           {/* Confirm button — only for pending bookings */}
                           {(o.status === 'pending' || o.status === 'new') && (
