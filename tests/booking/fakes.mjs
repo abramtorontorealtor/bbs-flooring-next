@@ -108,7 +108,9 @@ export function createFakeGoogle() {
         Object.assign(e, { summary: summaryFor(booking), date: booking.preferred_date, time: booking.preferred_time });
         if (restore) e.status = 'confirmed';
         if (hooks.afterPatch) await hooks.afterPatch(eventId);
-        return { success: true, httpStatus: 200, eventId };
+        // Like Google: PATCH answers with the event, incl. status 'cancelled' when a
+        // plain (non-restore) PATCH touched a deleted event.
+        return { success: true, httpStatus: 200, eventId, event: { ...e } };
       },
       async delete(eventId) {
         log.push(['delete', eventId]);

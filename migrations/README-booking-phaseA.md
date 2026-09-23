@@ -82,3 +82,13 @@ Grep (Sep 23): nothing in app/, components/, lib/, scripts/ or public/ inserts i
 | `legacy` | never (sync-only writes become a guarded read → `persisted:false` / `calendarSync.recorded:false`) | `updated_at` + `status` | n/a |
 
 In full mode the guard also checks `updated_at`. During a rolling deploy, an old or legacy-mode instance bumps `updated_at` but not `revision`, so without that check its writes would not register as conflicts. `send-followup` writes only `next_follow_up_date` and bumps neither, so it never conflicts. Tests: `tests/booking/supabase-store.test.mjs` runs both schemas under auto/full/legacy, including a lifecycle end-to-end run over the real adapter.
+
+## 6. Calendar handle fencing (red-team R7/R8, fix-2): no schema change
+No new column is needed. The existing `calendar_event_id` carries the extra meaning:
+
+- **Cancelled rows can keep a legacy `calendar_event_id`** on purpose, as a tombstone. Before Phase A a cancel cleared it. Now a Google-assigned (pre-Phase-A) id stays on the row after cancellation, so a later Retry still deletes it if a delayed request restored it. A stable `bbs…` id is always derivable from the booking UUID, so it is still cleared.
+- Every cancellation / Retry on a cancelled row deletes **all** candidates: the stored id, the derived stable id, and any id that request restored or created. It reports `absent` only when each one answers 2xx or 404/410.
+- Stored ids are PATCHed **without** `status:'confirmed'`. A restore is sent only when Google says the event is cancelled **and** a re-read shows the booking still live at the same revision.
+- A Google change whose sync-state write then fails reports `calendarSync.status:'failed'` (red badge + Retry), never `synced`.
+
+Reports or scripts that treat "cancelled with a `calendar_event_id`" as a leaked event must check the event in Google instead. Residual window: if the sync budget runs out between a restore and its CAS re-read, the row is recorded `failed`, and the admin's Retry deletes every candidate.
