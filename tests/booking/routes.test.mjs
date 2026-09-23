@@ -333,3 +333,60 @@ test('concurrent send-followup write: no revision/updated_at bump → no conflic
   assert.equal(ctx2.db.row(b2.id).next_follow_up_date, '2026-10-02');
   assert.equal(ctx2.email.sent.length, 1, 'notified once despite retry');
 });
+
+// ── admin-action retry_sync (A4) ────────────────────────────────────────────
+test('admin retry_sync: after a calendar outage, creates the event from current state, sends NO email', async () => {
+  const ctx = setup();
+  ctx.google.faults.insert.push({ success: false, httpStatus: 503, error: 'Backend Error' });
+  const b = await seedLive(ctx);
+  assert.equal(ctx.db.row(b.id).calendar_sync_status, 'failed');
+  assert.equal(ctx.google.liveEvents().length, 0);
+
+  const res = await handleAdminAction(req({ bookingId: b.id, action: 'retry_sync' }), ctx.deps);
+  assert.equal(res.status, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.action, 'retry_sync');
+  assert.equal(res.body.emailSent, false);
+  assert.equal(res.body.calendarSync.status, 'synced');
+  assert.equal(res.body.calendarSync.eventId, stableEventId(b.id));
+  assert.equal(ctx.google.liveEvents().length, 1);
+  assert.equal(ctx.db.row(b.id).calendar_sync_status, 'synced');
+  assert.equal(ctx.db.row(b.id).revision, b.revision, 'retry does not bump revision');
+  assert.equal(ctx.email.sent.length, 0, 'no customer/admin email');
+  assert.equal(ctx.telegram.alerts.length, 0, 'no Telegram');
+});
+
+test('admin retry_sync: still failing → 200 with calendarSync failed + sanitized error; cancelled booking event never recreated', async () => {
+  const ctx = setup();
+  const b = await seedLive(ctx);
+  ctx.google.faults.patch.push('throw');
+  const res = await handleAdminAction(req({ bookingId: b.id, action: 'retry_sync' }), ctx.deps);
+  assert.equal(res.status, 200);
+  assert.equal(res.body.calendarSync.status, 'failed');
+  assert.doesNotMatch(res.body.calendarSync.error, /ya29|SECRET/);
+  assert.equal(ctx.email.sent.length, 0);
+
+  await ctx.deps.lifecycle.cancel(b.id, '', 'admin');
+  ctx.email.sent.length = 0;
+  const inserts = ctx.google.log.filter(([op]) => op === 'insert').length;
+  const r2 = await handleAdminAction(req({ bookingId: b.id, action: 'retry_sync' }), ctx.deps);
+  assert.equal(r2.status, 200);
+  assert.equal(r2.body.calendarSync.status, 'absent');
+  assert.equal(ctx.google.log.filter(([op]) => op === 'insert').length, inserts, 'no insert for cancelled');
+  assert.equal(ctx.google.liveEvents().length, 0);
+  assert.equal(ctx.email.sent.length, 0);
+});
+
+test('admin retry_sync: requireAdmin enforced; unknown booking → 404', async () => {
+  const denied = setup({ admin: false });
+  const b = await seedLive(denied);
+  const calls = denied.google.log.length;
+  const r = await handleAdminAction(req({ bookingId: b.id, action: 'retry_sync' }), denied.deps);
+  assert.deepEqual(r.passthrough, { denied: true, status: 403 });
+  assert.equal(denied.google.log.length, calls, 'no calendar call when denied');
+
+  const ctx = setup();
+  const nf = await handleAdminAction(req({ bookingId: 'nope', action: 'retry_sync' }), ctx.deps);
+  assert.equal(nf.status, 404);
+  assert.equal(nf.body.success, false);
+});
