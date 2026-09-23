@@ -142,3 +142,21 @@ group by 1 order by 2 desc;
 3. Keep `BOOKING_STORE_MODE=full`. In legacy mode proofs cannot be stored.
 
 **Residual.** Rate limits are in-memory per serverless instance, so they are burst protection, not a global limit (a shared store like Upstash is out of scope). A leaked `lookup_token` still grants cancel/reschedule of that one real booking (the calendar change only applies to a proven row, which is intended). Lookup responses are uniform (404 on any mismatch) but not constant-time.
+
+## 9. Delayed Google writes, ETag fencing, recovery visibility (red-team R7/R13/R19, fix-3)
+**Basis.** Google Calendar "conditional modification" (developers.google.com/workspace/calendar/api/guides/version-resources): a write with `If-Match: <etag>` is refused with **412** if the event changed since that etag was read. An AbortSignal only stops *our* wait. A request Google already received may still commit afterwards, so an abort never proves anything.
+
+**Design.**
+- Every PATCH of an existing event is `GET` → `PATCH If-Match`. A restore (`status:'confirmed'`) is sent only after a re-read shows the booking is still live at the same revision, and it is also etag-conditional. A 412 → re-read and reconcile the latest row.
+- Cancellation = DELETE, then a **tombstone write** (`PATCH {status:'cancelled'}`) on anything that exists. The event changes, so its etag moves and every in-flight conditional write holding an older etag gets 412, including one committed after our abort. The tombstone is the last write, so it also overrides a conditional write that landed just before it. This does not rely on "a plain PATCH cannot resurrect" or on DELETE itself moving the etag.
+- Inserts cannot be conditional. Before any insert, `calendar_op_started_at` is written under CAS (if that fails or the row changed, no insert). A cancel/retry that finds the stable id 404 while the marker is younger than `BOOKING_CALENDAR_OP_WINDOW_MS` (default 10 min) reports **failed** ("create may still be in progress; press Retry after HH:MM UTC"), never absent. The marker is cleared on success or on a definite (4xx / not-sent) failure.
+- Timeouts, aborts, network errors and 5xx are **ambiguous**. They are recorded `failed` (red + Retry), never synced/absent.
+- R13: exhausted reconciliation passes record a durable `failed` ("press Retry"). There is **no** promise of automatic sync, because no worker exists. The CRM offers Retry for `failed`, for `pending`/`unknown` on live rows, and for cancelled rows with something to recover (stored id, in-flight marker, unfinished cancel).
+- R19: the CRM stamps each cached admin-action response with `{receivedAt, revision}`. It is ignored once the bookings list was refetched after it, or the row's revision moved on, so the newest durable state always wins.
+
+**Residual (honest distributed boundary).**
+- No worker: convergence after an ambiguous outcome needs an admin Retry. The state stays red/amber until then; it is never shown as green.
+- Op window: 10 min is an assumption about how long Google may still apply a received insert. It needs a vendor/sandbox check. An insert committing later than the window, *after* a Retry already reported absent, could leave one live event. Mitigation: the cancel/retry sweep also tries the stable id every time, so any later Retry finds it.
+- A restore whose tombstone write itself times out stays `failed` → Retry.
+- Etag behaviour of DELETE/tombstone and 412 on PATCH are documented, but still **need a sandbox check** before launch (checklist).
+- The legacy schema cannot store `calendar_op_started_at` (a warning is logged). Full mode is required (§2).
