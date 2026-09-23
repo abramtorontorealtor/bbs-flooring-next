@@ -25,6 +25,9 @@ export default function SlotPicker({ date, time, onDateChange, onTimeChange, tok
   const [fetched, setFetched] = useState({ key: null, result: null, failed: false });
   const [expanded, setExpanded] = useState(false);
   const [reload, setReload] = useState(0);
+  // A 409 override is shown until the user asks to reload; then fresh data wins (a later 409
+  // brings a NEW override object, which is shown again).
+  const [dismissedOverride, setDismissedOverride] = useState(null);
   const [nowMs] = useState(() => Date.now()); // once per mount (lazy init, not during render)
   const key = date ? `${date}|${token || ''}|${reload}` : null;
 
@@ -43,7 +46,7 @@ export default function SlotPicker({ date, time, onDateChange, onTimeChange, tok
   }, [key, date, token]);
 
   // 409 → the refreshed options the server returned win for that date (parent clears on date change).
-  const useOverride = !!(override && override.date === date);
+  const useOverride = !!(override && override.date === date && override !== dismissedOverride);
   const loading = !!key && !useOverride && fetched.key !== key;
   const result = useOverride ? override : (fetched.key === key ? fetched.result : null);
   const failed = !useOverride && fetched.key === key && fetched.failed;
@@ -103,7 +106,7 @@ export default function SlotPicker({ date, time, onDateChange, onTimeChange, tok
           )}
           {view.state === 'unavailable' && (
             <div className="flex flex-wrap gap-2 mt-2">
-              <button type="button" onClick={() => setReload((n) => n + 1)} className="min-h-[44px] px-4 rounded-lg border border-slate-300 text-sm font-semibold">Try again</button>
+              <button type="button" onClick={() => { setDismissedOverride(override); setReload((n) => n + 1); }} className="min-h-[44px] px-4 rounded-lg border border-slate-300 text-sm font-semibold">Try again</button>
               <a href={BOOKING_COPY.phoneHref} className="min-h-[44px] inline-flex items-center px-4 rounded-lg bg-slate-800 text-white text-sm font-semibold">Call {BOOKING_COPY.phone}</a>
             </div>
           )}

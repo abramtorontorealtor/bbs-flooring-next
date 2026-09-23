@@ -117,7 +117,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
           type="button"
           onClick={prevMonth}
           disabled={!canGoPrev}
-          className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           aria-label="Previous month"
         >
           <ChevronLeft className="w-4 h-4 text-slate-600" />
@@ -129,7 +129,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
           type="button"
           onClick={nextMonth}
           disabled={!canGoNext}
-          className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           aria-label="Next month"
         >
           <ChevronRight className="w-4 h-4 text-slate-600" />
@@ -169,7 +169,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
                     if (!disabled) onSelect(formatDateStr(cell.date));
                   }}
                   className={`
-                    relative w-full aspect-square flex items-center justify-center
+                    relative w-full aspect-square min-h-[44px] flex items-center justify-center
                     text-sm rounded-lg transition-all duration-150
                     ${sel
                       ? 'bg-amber-500 text-white font-bold shadow-md shadow-amber-200 ring-2 ring-amber-300'

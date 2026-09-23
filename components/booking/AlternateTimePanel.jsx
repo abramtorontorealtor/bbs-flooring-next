@@ -44,7 +44,14 @@ export default function AlternateTimePanel({ prefill = {}, context = {}, onClose
   }
   const field = 'w-full mt-1 min-h-[44px] px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400';
   return (
-    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+    // This panel sits INSIDE the booking <form>. Enter in one of its inputs would implicitly submit
+    // the booking form, so Enter (outside the textarea) sends THIS request instead.
+    <div
+      className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && e.target?.tagName !== 'TEXTAREA' && e.target?.tagName !== 'BUTTON') { e.preventDefault(); submit(e); }
+      }}
+    >
       <h3 ref={headRef} tabIndex={-1} className="font-semibold text-slate-800 focus:outline-none">{ALTERNATE_COPY.title}</h3>
       <p className="text-xs text-slate-600 mt-1">{ALTERNATE_COPY.intro}</p>
       <div className="grid gap-2 mt-3">
