@@ -246,3 +246,67 @@ test('R-B2-REPLAY: read-only lookup failure falls through to the atomic RPC (whi
   const retry = await handleConfirm(req({ booking: B() }, key), deps);
   assert.deepEqual([retry.status, retry.body.bookingId, retry.body.duplicate], [200, first.body.bookingId, true]);
 });
+
+// ── R-B2-ADMIN: policy override ≠ occupancy override ────────────────────
+function adminSetup({ events = [], owned = [], dbDown = false } = {}) {
+  NOW = T0;
+  const db = createFakeDb(); db.now = () => NOW;
+  const google = createFakeGoogle();
+  let forDateCalls = 0;
+  const svc = createAvailabilityService({
+    policy, now: () => NOW, logger: silentLogger,
+    listLiveBookings: async ({ dates }) => { if (dbDown) throw new Error('db down'); return [...db.rows.values()].filter((r) => dates.includes(r.preferred_date)); },
+    resolveOwnedEventIds: async ({ eventIds }) => eventIds.filter((x) => owned.includes(x)),
+    listGoogleEvents: async () => ({ ok: true, events }),
+  });
+  const availability = { ...svc, forDate: async (...a) => { forDateCalls++; return svc.forDate(...a); } };
+  const lifecycle = createBookingLifecycle({ db, calendar: createCalendarSync(google.adapter), notify: null, now: () => new Date(NOW), logger: silentLogger,
+    slotGate: createSlotGate({ policy, availability, now: () => NOW, logger: silentLogger }) });
+  return { db, lifecycle, deps: { supabase: {}, lifecycle, logger: silentLogger, requireAdmin: async () => ({ error: null }) }, calls: () => forDateCalls };
+}
+const sunEv = (over = {}) => ({ id: 'ext1', status: 'confirmed', start: { dateTime: '2026-10-11T19:00:00-04:00' }, end: { dateTime: '2026-10-11T20:00:00-04:00' }, calendarTimeZone: 'America/Toronto', ...over });
+async function seedAdmin(ctx) {
+  const r = await ctx.db.reserveCreate({ id: 'bk-1', customer_email: 'k@example.com', preferred_date: '2026-10-06', preferred_time: '11:00 AM', status: 'confirmed', revision: 1 }, null, null);
+  return r.booking.id;
+}
+
+test('R-B2-ADMIN: opaque Google event OUTSIDE candidate hours (Sun 7:15 PM) blocks an admin off-policy reschedule → 409, original kept', async () => {
+  const ctx = adminSetup({ events: [sunEv()] });
+  const id = await seedAdmin(ctx);
+  const r = await handleAdminAction(req({ bookingId: id, action: 'reschedule', preferred_date: '2026-10-11', preferred_time: '7:15 PM' }), ctx.deps);
+  assert.equal(r.status, 409);
+  assert.equal(ctx.db.row(id).preferred_date, '2026-10-06');
+});
+
+test('R-B2-ADMIN: transparent / cancelled / booking-owned events do not block; free off-policy time allowed (override flagged)', async () => {
+  for (const ev of [sunEv({ transparency: 'transparent' }), sunEv({ status: 'cancelled' }), sunEv({ id: 'mine1' })]) {
+    const ctx = adminSetup({ events: [ev], owned: ['mine1'] });
+    const id = await seedAdmin(ctx);
+    const r = await handleAdminAction(req({ bookingId: id, action: 'reschedule', preferred_date: '2026-10-11', preferred_time: '7:15 PM' }), ctx.deps);
+    assert.equal(r.status, 200, JSON.stringify(ev));
+    assert.equal(r.body.policyOverride, true);
+  }
+});
+
+test('R-B2-ADMIN: DB outage on the admin occupancy check → 503, nothing written; all-day admin reschedule checks the whole day', async () => {
+  const down = adminSetup({ dbDown: true });
+  const id = await seedAdmin(down);
+  const r = await handleAdminAction(req({ bookingId: id, action: 'reschedule', preferred_date: '2026-10-11', preferred_time: '7:15 PM' }), down.deps);
+  assert.equal(r.status, 503);
+  assert.equal(down.db.row(id).preferred_date, '2026-10-06');
+  const allDay = adminSetup({ events: [sunEv()] });
+  const id2 = await seedAdmin(allDay);
+  const u = await handleAdminAction(req({ bookingId: id2, action: 'reschedule', preferred_date: '2026-10-11', preferred_time: '' }), allDay.deps);
+  assert.equal(u.status, 409, 'untimed = whole day overlaps the evening event');
+});
+
+test('R-B2-ADMIN: self-owned old interval is excluded; admin NEW nonexistent time (spring gap 2:30 AM) → 400', async () => {
+  const ctx = adminSetup();
+  const id = await seedAdmin(ctx);
+  const same = await handleAdminAction(req({ bookingId: id, action: 'reschedule', preferred_date: '2026-10-06', preferred_time: '11:30 AM' }), ctx.deps);
+  assert.equal(same.status, 200);
+  const gap = await handleAdminAction(req({ bookingId: id, action: 'reschedule', preferred_date: '2026-03-08', preferred_time: '2:30 AM' }), ctx.deps);
+  assert.equal(gap.status, 400);
+  assert.equal(reservationSlot('2026-03-08', '2:30 AM', policy), null);
+  assert.ok(reservationSlot('2026-11-01', '1:30 AM', policy), 'ambiguous fall-back time exists (earlier instant)');
+});
