@@ -43,5 +43,6 @@ test('lib/email.js sendBookingRescheduled renders the builder with actor', () =>
 test('customer success screen shows pending status after reschedule (inventory §4, unchanged)', () => {
   const src = readFileSync(new URL('../../components/ViewBookingClient.jsx', import.meta.url), 'utf8');
   assert.match(src, /pending: \{[^}]*Awaiting Confirmation/);
-  assert.match(src, /action: 'reschedule'[\s\S]{0,400}setBooking\(data\.booking\)/);
+  // B3: the reschedule success merges the returned customer DTO into the shown booking.
+  assert.match(src, /action: 'reschedule'[\s\S]{0,600}setBooking\((?:data\.booking|\(b\) => \(\{ \.\.\.b, \.\.\.data\.booking \}\))\)/);
 });
