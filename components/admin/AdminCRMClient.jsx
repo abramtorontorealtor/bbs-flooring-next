@@ -27,6 +27,7 @@ import CustomerTimeline from '@/components/admin/CustomerTimeline';
 import CustomerGroupCard, { CustomerGroupHeader } from '@/components/admin/CustomerGroupCard';
 import { groupLeadsByContact } from '@/components/admin/crmGrouping';
 import { bookingSyncWarning } from '@/lib/booking/sync-warning';
+import { planLeadStatusUpdate, leadStatusToast } from '@/lib/booking/crm-followup';
 import { format } from 'date-fns';
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
@@ -728,24 +729,40 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
   };
 
   // ─── LEAD STATUS UPDATE ────────────────────────────────────────────────
-  const updateLeadStatus = async (lead, newStatus, extraFields = {}) => {
+  // Red-team R14: booking rows never get `bookings.status` written from here.
+  // Follow-up outcomes (contacted/quoted/booked/lost) are logged to lead_follow_ups via
+  // send-followup; "completed" goes through the lifecycle admin-action API; confirm/cancel
+  // must use the Booking Actions buttons. Decision logic: lib/booking/crm-followup.js.
+  // Quotes / saved quotes / contact leads keep the direct lead_status write.
+  const updateLeadStatus = async (lead, newStatus, extraFields = {}, { alreadyLogged = false } = {}) => {
+    const plan = planLeadStatusUpdate(lead, newStatus, extraFields, { alreadyLogged });
     try {
-      const updates = { ...extraFields };
-      if (lead.source === 'quote' && lead.entityType === 'SavedQuote') {
-        updates.lead_status = newStatus;
-        await entities.SavedQuote.update(lead.entityId, updates);
-      } else if (lead.source === 'quote') {
-        updates.lead_status = newStatus;
-        await entities.Quote.update(lead.entityId, updates);
-      } else if (lead.source === 'contact') {
-        updates.lead_status = newStatus;
-        await entities.ContactLead.update(lead.entityId, updates);
-      } else if (lead.source === 'booking') {
-        updates.status = newStatus;
-        await entities.Booking.update(lead.entityId, updates);
+      if (plan.kind === 'entity_update') {
+        await entities[plan.entity].update(plan.id, plan.updates);
+      } else if (plan.kind === 'booking_followup') {
+        if (plan.log) {
+          const res = await fetch('/api/admin/send-followup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(plan.log),
+          });
+          if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Could not log follow-up'); }
+        }
+      } else if (plan.kind === 'booking_lifecycle') {
+        // The mutation's own onSuccess/onError refresh and toast; don't double-toast.
+        try {
+          await bookingAdminAction.mutateAsync({ bookingId: plan.id, action: plan.action });
+          setSelectedLead(null);
+        } catch { /* already reported by bookingAdminAction.onError */ }
+        return;
+      } else if (plan.kind === 'explicit_action') {
+        toast.info(plan.message);
+        return;
+      } else {
+        return;
       }
       refreshAll();
-      toast.success(`Lead marked as ${newStatus}`);
+      toast.success(leadStatusToast(plan));
       setSelectedLead(null);
     } catch (error) {
       toast.error('Failed to update: ' + error.message);
@@ -1824,13 +1841,16 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
                                 method: method,
                               }),
                             });
-                            // Also update lead status if appropriate
+                            if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Could not log interaction'); }
+                            // Also update lead status if appropriate. For bookings the interaction
+                            // above IS the follow-up record: no bookings.status write (R14).
+                            const logged = { alreadyLogged: true };
                             if (['booked_measurement', 'sent_quote'].includes(outcome)) {
-                              await updateLeadStatus(lead, outcome === 'booked_measurement' ? 'booked' : 'quoted');
+                              await updateLeadStatus(lead, outcome === 'booked_measurement' ? 'booked' : 'quoted', {}, logged);
                             } else if (outcome !== 'not_interested' && lead.status === 'new') {
-                              await updateLeadStatus(lead, 'contacted');
+                              await updateLeadStatus(lead, 'contacted', {}, logged);
                             } else if (outcome === 'not_interested') {
-                              await updateLeadStatus(lead, 'lost', { lost_reason: 'Ghosted / no response' });
+                              await updateLeadStatus(lead, 'lost', { lost_reason: 'Ghosted / no response' }, logged);
                             }
                             refreshAll();
                             toast.success(`Logged ${method} — ${outcome.replace(/_/g, ' ')}${nextDate ? ` · Next follow-up: ${nextDate}` : ''}`);

@@ -92,3 +92,31 @@ No new column is needed. The existing `calendar_event_id` carries the extra mean
 - A Google change whose sync-state write then fails reports `calendarSync.status:'failed'` (red badge + Retry), never `synced`.
 
 Reports or scripts that treat "cancelled with a `calendar_event_id`" as a leaked event must check the event in Google instead. Residual window: if the sync budget runs out between a restore and its CAS re-read, the row is recorded `failed`, and the admin's Retry deletes every candidate.
+
+## 7. Non-canonical booking statuses (red-team R14, fix-2): READ-ONLY audit, no repair
+Before fix-2, the CRM's generic lead writer could set `bookings.status` to lead-pipeline values (`contacted`, `quoted`, `booked`, `lost`, …) from follow-up ✅ Done, LeadPlaybook outcomes and the lead buttons. It now logs those outcomes to `lead_follow_ups` (via `/api/admin/send-followup`, `skipEmail`) and never writes `bookings.status` (`lib/booking/crm-followup.js`). "Completed" goes through admin-action `complete`, and confirm/cancel only through Booking Actions. **No new column** was needed. The follow-up log and `next_follow_up_date` already exist and are already read by the CRM history panel.
+
+Rows written before the fix may still hold such statuses. The lifecycle now skips them (`skipped/unrecognised_status`, no Google call, no deletion, fix-1), so they are safe but stuck: Confirm/Reschedule/Cancel still work on them, but Retry does nothing. Run this **read-only** query (do NOT run any UPDATE from it) and review the result with Abram:
+```sql
+-- READ-ONLY. Bookings whose status is not one of the four lifecycle states.
+select id, status, preferred_date, preferred_time, calendar_event_id,
+       next_follow_up_date, updated_at, created_at,
+       left(coalesce(notes, ''), 120) as notes_head,
+       (select count(*) from public.lead_follow_ups f
+         where f.lead_source = 'booking' and f.lead_id = b.id) as follow_up_logs
+from public.bookings b
+where status is null
+   or status not in ('pending', 'confirmed', 'cancelled', 'completed')
+order by preferred_date nulls last, created_at;
+
+-- Summary by value:
+select coalesce(status, '<null>') as status, count(*)
+from public.bookings
+where status is null or status not in ('pending', 'confirmed', 'cancelled', 'completed')
+group by 1 order by 2 desc;
+```
+**Proposed handling (per row, human decision, no bulk repair):**
+- `contacted` / `quoted` / `booked` / `new` / null with a **future** `preferred_date` → most likely still a live appointment. Check the Google event. Restore the real state through the lifecycle (Confirm in the CRM if it was confirmed; leave it for a manual single-row decision if it was pending). The CRM Confirm button only shows for `pending`/`new` today, so a one-off single-row `status` correction to `pending`/`confirmed` needs Abram's OK and should be followed by a Retry sync.
+- Same statuses with a **past** date → was the visit done? Mark it completed via admin-action `complete`, or cancel via Booking Actions if it never happened (the cancel emails the customer, so decide first).
+- `lost` → the lead was lost. If an appointment exists, cancelling is a customer-facing action: Abram decides per row.
+- Record each decision in the follow-up log, not in `status`.
