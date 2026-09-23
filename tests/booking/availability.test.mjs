@@ -73,7 +73,7 @@ test('availability: live bookings block their full hour (overlapping starts too)
   assert.equal(r.reliability, 'db_only');
 });
 
-test('availability: buffer and daily cap are configurable; untimed booking counts toward cap only', () => {
+test('availability: buffer and daily cap are configurable; untimed live booking blocks its whole day (B1-R2)', () => {
   const bookings = [{ id: 'a1111111-1111-4111-8111-111111111111', status: 'confirmed', preferred_date: D, preferred_time: '12:00 PM' }];
   const buf = resolveSchedulePolicy({}, { BOOKING_BUFFER_MINUTES: '30' });
   assert.deepEqual(times(computeAvailability({ date: D, policy: buf, nowMs: NOW, bookings })), ['1:30 PM', '5:00 PM']);
@@ -82,8 +82,9 @@ test('availability: buffer and daily cap are configurable; untimed booking count
   const r = computeAvailability({ date: D, policy: cap, nowMs: NOW, bookings: two });
   assert.deepEqual(r.slots, []);
   assert.equal(r.reason, 'cap_reached');
-  // Untimed alone blocks no interval.
-  assert.equal(computeAvailability({ date: D, policy: P, nowMs: NOW, bookings: [two[1]] }).slots.length, 7);
+  // Untimed/unreadable live booking = whole local day occupied, never free.
+  assert.deepEqual(computeAvailability({ date: D, policy: P, nowMs: NOW, bookings: [two[1]] }).slots, []);
+  assert.deepEqual(computeAvailability({ date: D, policy: P, nowMs: NOW, bookings: [{ ...two[1], preferred_time: 'around noon' }] }).slots, []);
 });
 
 test('availability: Google busy — timed, all-day (exclusive end), transparent/cancelled ignored, own events not double-counted', () => {
@@ -121,13 +122,13 @@ test('availability: reschedule excludes only the authenticated booking', () => {
 });
 
 test('service: DB failure → unavailable (never free); Google failure/timeout → partial, DB-checked only', async () => {
-  const dbDown = createAvailabilityService({ listBookingsForDate: async () => { throw new Error('db down'); }, now: () => NOW, logger: { error() {}, warn() {} } });
+  const dbDown = createAvailabilityService({ listLiveBookings: async () => { throw new Error('db down'); }, now: () => NOW, logger: { error() {}, warn() {} } });
   const u = await dbDown.forDate(D);
   assert.equal(u.status, 'unavailable');
   assert.deepEqual(u.slots, []);
 
   const hang = createAvailabilityService({
-    listBookingsForDate: async () => [],
+    listLiveBookings: async () => [],
     listGoogleEvents: () => new Promise(() => {}),
     googleBudgetMs: 30, now: () => NOW, logger: { error() {}, warn() {} },
   });
@@ -135,7 +136,7 @@ test('service: DB failure → unavailable (never free); Google failure/timeout �
   assert.equal(p.reliability, 'partial');
   assert.equal(p.slots.length, 7);
 
-  const denied = createAvailabilityService({ listBookingsForDate: async () => [], listGoogleEvents: async () => ({ ok: false, error: '403' }), now: () => NOW, logger: { warn() {} } });
+  const denied = createAvailabilityService({ listLiveBookings: async () => [], listGoogleEvents: async () => ({ ok: false, error: '403' }), now: () => NOW, logger: { warn() {} } });
   assert.equal((await denied.forDate(D)).reliability, 'partial');
 });
 
@@ -156,7 +157,7 @@ const baseDeps = (over = {}) => ({
 test('handler: no-store, 400 bad date, 429, 503 on DB outage, token resolves to own booking only', async () => {
   const mine = 'a1111111-1111-4111-8111-111111111111';
   const rows = [{ id: mine, status: 'pending', preferred_date: D, preferred_time: '12:00 PM', lookup_token: 'tok-1' }];
-  const availability = createAvailabilityService({ listBookingsForDate: async () => rows, now: () => NOW });
+  const availability = createAvailabilityService({ listLiveBookings: async () => rows, now: () => NOW });
   const deps = baseDeps({ availability, findBookingByToken: async (t) => rows.find((r) => r.lookup_token === t) || null });
 
   const ok = await handleAvailability(req(`https://x/api/booking/availability?date=${D}`), deps);
@@ -176,7 +177,7 @@ test('handler: no-store, 400 bad date, 429, 503 on DB outage, token resolves to 
   const limited = await handleAvailability(req(`https://x/api/booking/availability?date=${D}`), baseDeps({ availability, checkRateLimit: () => ({ ok: false, resetAt: Date.now() + 5000 }) }));
   assert.equal(limited.status, 429);
   assert.match(limited.headers['Cache-Control'], /no-store/);
-  const down = createAvailabilityService({ listBookingsForDate: async () => { throw new Error('x'); }, now: () => NOW, logger: { error() {} } });
+  const down = createAvailabilityService({ listLiveBookings: async () => { throw new Error('x'); }, now: () => NOW, logger: { error() {} } });
   const r503 = await handleAvailability(req(`https://x/api/booking/availability?date=${D}`), baseDeps({ availability: down }));
   assert.equal(r503.status, 503);
   assert.deepEqual(r503.body.slots, []);
