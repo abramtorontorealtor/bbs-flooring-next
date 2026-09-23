@@ -9,6 +9,7 @@ import {
 import { createBookingLifecycle } from '../../lib/booking/lifecycle.js';
 import { createCalendarSync } from '../../lib/booking/calendar-sync.js';
 import { createFakeGoogle, silentLogger } from './fakes.mjs';
+import { stableEventId } from '../../lib/booking/calendar-sync.js';
 
 const BASE_COLS = ['id', 'customer_name', 'customer_email', 'customer_phone', 'status', 'notes',
   'preferred_date', 'preferred_time', 'created_at', 'updated_at', 'lookup_token',
@@ -102,15 +103,16 @@ test('auto on PRE-migration schema: insert falls back once, strips sync cols, CA
   const up = await store.update(row.id, { status: 'confirmed', revision: 2, updated_at: 'T2' }, { expected: row });
   assert.equal(up.conflict, false);
   assert.equal(up.data.status, 'confirmed');
-  assert.deepEqual(sb.log.at(-1).filters, ['eq:id', 'eq:updated_at']);
+  assert.deepEqual(sb.log.at(-1).filters, ['eq:id', 'eq:updated_at', 'eq:status']);
   // stale expected.updated_at → conflict
   const stale = await store.update(row.id, { status: 'cancelled', updated_at: 'T3' }, { expected: row });
   assert.equal(stale.conflict, true);
-  // sync-only patch has nothing persistable → reported applied, no DB call
+  // sync-only patch has nothing persistable → guarded READ (R10), no write, persisted:false
   const before = sb.log.length;
-  const s = await store.update(row.id, { calendar_sync_status: 'synced' }, { expected: { ...row, updated_at: 'T2' } });
-  assert.equal(s.error, null);
-  assert.equal(sb.log.length, before);
+  const s = await store.update(row.id, { calendar_sync_status: 'synced' }, { expected: up.data });
+  assert.deepEqual([s.error, s.conflict, s.persisted], [null, false, false]);
+  assert.equal(sb.log.length, before + 1);
+  assert.equal(sb.log.at(-1).op, 'select');
 });
 
 test('auto on POST-migration schema: full rows persisted, CAS on revision (+updated_at), no fallback', async () => {
@@ -195,3 +197,85 @@ for (const migrated of [false, true]) {
     }
   });
 }
+
+// ── R10 (red-team BLOCKER): legacy no-op update must still CAS ──────────────
+test('R10: legacy sync-only (stripped) update does a guarded read: stale → conflict, current → applied but not persisted', async () => {
+  const sb = fakeSupabase({ migrated: false });
+  const store = createSupabaseBookingStore(sb, { mode: 'legacy', logger: silentLogger });
+  const { data: row } = await store.insert({ customer_email: 'a@example.com', status: 'pending' });
+  const ok = await store.update(row.id, { calendar_sync_status: 'failed', calendar_sync_error: 'x' }, { expected: row });
+  assert.deepEqual([ok.conflict, ok.error, ok.persisted], [false, null, false]);
+  assert.equal(ok.data.id, row.id);
+  assert.ok(!('calendar_sync_status' in ok.data), 'does not pretend the sync state was stored');
+  assert.equal(sb.log.at(-1).op, 'select', 'read, not write');
+  // someone else changed the row (updated_at bumped)
+  sb.rows.get(row.id).updated_at = 'T-other';
+  sb.rows.get(row.id).status = 'cancelled';
+  const stale = await store.update(row.id, { calendar_sync_status: 'failed' }, { expected: row });
+  assert.equal(stale.conflict, true);
+  // status changed but updated_at not (CRM writer) → still a conflict
+  const snap = { ...sb.rows.get(row.id), status: 'pending' };
+  assert.equal((await store.update(row.id, { calendar_sync_status: 'failed' }, { expected: snap })).conflict, true);
+  // gone row → error, not success
+  const gone = await store.update('nope', { calendar_sync_status: 'failed' }, { expected: row });
+  assert.ok(gone.error);
+  assert.equal(gone.data, null);
+});
+
+test('R10 trace (legacy mode): timeout-after-create racing a cancel ends with the stable event deleted', async () => {
+  const sb = fakeSupabase({ migrated: false });
+  const google = createFakeGoogle();
+  let release;
+  const gate = new Promise((r) => { release = r; });
+  google.faults.insert.push(async () => { await gate; return 'timeoutAfterCreate'; });
+  let clock = Date.parse('2026-09-23T12:00:00Z');
+  const lc = createBookingLifecycle({
+    db: createSupabaseBookingStore(sb, { mode: 'legacy', logger: silentLogger }),
+    calendar: createCalendarSync(google.adapter), notify: null,
+    now: () => new Date(clock++), logger: silentLogger,
+  });
+  const creating = lc.create({ customer_email: 'k@example.com', customer_name: 'K', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  while (!google.log.some((l) => l[0] === 'insert')) await new Promise((r) => setImmediate(r));
+  const id = [...sb.rows.keys()][0];
+  const sid = stableEventId(id);
+
+  const c = await lc.cancel(id, 'changed my mind', 'customer');
+  assert.equal(c.success, true);
+  assert.equal(c.calendarSync.status, 'absent', 'S did not exist yet when cancel ran');
+
+  release(); // Google now creates S, but the old caller sees a timeout
+  const created = await creating;
+  assert.equal(created.success, true);
+
+  assert.equal(sb.rows.get(id).status, 'cancelled');
+  assert.equal(google.events.get(sid)?.status, 'cancelled', 'stable event S deleted by reconciliation');
+  assert.equal(google.liveEvents().length, 0);
+  assert.deepEqual(google.log.map((l) => l[0]), ['insert', 'delete', 'delete']);
+});
+
+test('R10: legacy-mode calendar failure is reported recorded:false (no durable failure state)', async () => {
+  const sb = fakeSupabase({ migrated: false });
+  const google = createFakeGoogle();
+  google.faults.insert.push({ success: false, httpStatus: 503, error: 'down' });
+  const lc = createBookingLifecycle({
+    db: createSupabaseBookingStore(sb, { mode: 'legacy', logger: silentLogger }),
+    calendar: createCalendarSync(google.adapter), notify: null,
+    now: () => new Date('2026-09-23T12:00:00Z'), logger: silentLogger,
+  });
+  const c = await lc.create({ customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  assert.equal(c.success, true);
+  assert.deepEqual([c.calendarSync.status, c.calendarSync.recorded], ['failed', false]);
+  assert.ok(!('calendar_sync_status' in sb.rows.get(c.booking.id)));
+  // full mode has no recorded flag
+  const sb2 = fakeSupabase({ migrated: true });
+  const g2 = createFakeGoogle();
+  g2.faults.insert.push({ success: false, httpStatus: 503, error: 'down' });
+  const lc2 = createBookingLifecycle({
+    db: createSupabaseBookingStore(sb2, { mode: 'full', logger: silentLogger }),
+    calendar: createCalendarSync(g2.adapter), notify: null,
+    now: () => new Date('2026-09-23T12:00:00Z'), logger: silentLogger,
+  });
+  const c2 = await lc2.create({ customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  assert.equal(c2.calendarSync.recorded, undefined);
+  assert.equal(sb2.rows.get(c2.booking.id).calendar_sync_status, 'failed');
+});

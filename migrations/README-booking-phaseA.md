@@ -41,24 +41,27 @@ create table public.bookings_backup_20260923 as select * from public.bookings;
 ```
 If you use the in-DB snapshot, drop it once the release is verified. It holds customer PII, and RLS is *not* enabled on a table created this way. Enable RLS on it or keep it only briefly.
 
-## 2. Apply order
-1. Deploy the Phase A code **first**, leaving `BOOKING_STORE_MODE` unset (`auto`). Against today's schema the adapter detects the missing columns (PGRST204/42703) on first write and runs in legacy mode, with CAS on `updated_at`.
-2. Take the backup (§1).
-3. Run `20260923_booking_calendar_sync.up.sql`. It ends with `notify pgrst, 'reload schema'` so PostgREST sees the new columns.
-4. Verify:
+## 2. Apply order (revised after red-team R10: schema FIRST)
+**Legacy mode cannot record durable sync failures.** Without the four new columns, a Google failure or timeout is not stored anywhere. The CRM gets no red "Calendar sync failed" badge and no Retry for that booking, and the API only returns `calendarSync.recorded:false` for that one response. Legacy CAS guards on `updated_at` + `status` only, which is weaker than `revision` (red-team R11). So the new booking flow must **not** go live on the pre-migration schema. Legacy/auto fallback exists only as a safety net for rollback and emergencies.
+
+1. Take the backup (§1).
+2. Run `20260923_booking_calendar_sync.up.sql` **before** deploying the Phase A code. The migration is additive with defaults, so today's production code keeps working unchanged. It ends with `notify pgrst, 'reload schema'` so PostgREST sees the new columns.
+3. Verify:
    ```sql
    select calendar_sync_status, count(*), min(revision), max(revision)
    from public.bookings group by 1;          -- expect only ('unknown', n, 0, 0)
    ```
    Then re-run the §1a fingerprint. It must be identical.
-5. **Redeploy with the same commit** (or restart the functions). Auto mode is sticky per process: an instance that already fell back to legacy stays legacy until it restarts. New instances probe the full row, succeed, and switch to revision CAS.
-6. Optional, after a clean day: set `BOOKING_STORE_MODE=full` to turn off the fallback. A missing column then surfaces as an error and is never silently downgraded.
+4. Deploy the Phase A code with `BOOKING_STORE_MODE=full`. A missing column then surfaces as an error (`db_error`), never a silent downgrade to legacy. Before that deploy, check old booking mutations are drained. See red-team R12 for the cutover question, which is still open for the boss/Abram.
+5. Smoke check (with Abram's OK): one admin `retry_sync` on a test booking returns `calendarSync` with **no** `recorded:false`.
 
-Order does not matter for safety: auto mode works before and after the migration. Deploying code before migrating is simply the path that never has a window where the columns exist but no code uses them.
+Do **not** deploy first and migrate later. That was the earlier order, and it runs the new flow in legacy mode, where a timeout-after-create racing a cancellation had no durable trace (R10). The adapter now CAS-checks even no-op legacy writes, but that stops the event leak, not the missing failure record.
+
+Auto-mode fallback state lives in each store instance. Today that means per request, not per process (red-team R18). With `full` pinned, that detail no longer matters for rollout.
 
 ## 3. Rollback
 - **Code only:** revert the deploy. The old routes ignore the new columns, and their defaults keep old-code inserts valid.
-- **Schema:** if `BOOKING_STORE_MODE=full` is set, change it to `legacy` or unset it and redeploy **first**. Then run `20260923_booking_calendar_sync.down.sql`. Auto-mode instances fall back to legacy on their next write. Only sync state and revision values are lost. Bookings, statuses, dates and `calendar_event_id` are untouched.
+- **Schema:** change `BOOKING_STORE_MODE=full` to `legacy` (or unset it) and redeploy **first**. Remember that legacy mode records no sync failures (§2). Then run `20260923_booking_calendar_sync.down.sql`. Auto-mode instances fall back to legacy on their next write. Only sync state and revision values are lost. Bookings, statuses, dates and `calendar_event_id` are untouched.
 - **Data restore:** only needed if something other than these columns changed. Compare against the §1a fingerprint and restore rows from §1b.
 
 ## 4. `bookings_anon_insert` (NOT Phase A)
@@ -74,8 +77,8 @@ Grep (Sep 23): nothing in app/, components/, lib/, scripts/ or public/ inserts i
 
 | Mode | Writes sync columns | CAS guard | On missing column |
 |---|---|---|---|
-| `auto` (default) | yes, until the first PGRST204/42703 | revision + updated_at, or updated_at in legacy | switches to legacy for the life of the process |
+| `auto` (default) | yes, until the first PGRST204/42703 | revision + updated_at, or updated_at + status in legacy | switches that store instance to legacy (per request today, see R18) |
 | `full` | yes | `revision` (`is null or = 0` for pre-migration rows) **and** `updated_at` | returns the error, which the lifecycle reports as `db_error` |
-| `legacy` | never | `updated_at` | n/a |
+| `legacy` | never (sync-only writes become a guarded read → `persisted:false` / `calendarSync.recorded:false`) | `updated_at` + `status` | n/a |
 
 In full mode the guard also checks `updated_at`. During a rolling deploy, an old or legacy-mode instance bumps `updated_at` but not `revision`, so without that check its writes would not register as conflicts. `send-followup` writes only `next_follow_up_date` and bumps neither, so it never conflicts. Tests: `tests/booking/supabase-store.test.mjs` runs both schemas under auto/full/legacy, including a lifecycle end-to-end run over the real adapter.
