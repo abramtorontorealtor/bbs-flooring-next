@@ -423,6 +423,14 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
       refreshAll();
       const actionLabels = { confirm: 'Booking confirmed', reschedule: 'Rescheduled', cancel: 'Cancelled', complete: 'Marked complete' };
       const label = actionLabels[action] || 'Done';
+      if (data?.unchanged) {
+        toast.info(`${label}: already up to date, no email sent`);
+        return;
+      }
+      if (data?.emailSuperseded) {
+        toast.info(`${label}, but the booking changed again meanwhile, so that email was not sent`);
+        return;
+      }
       if (action === 'complete') {
         // No email / calendar side effect for completion.
         toast.success(label);
