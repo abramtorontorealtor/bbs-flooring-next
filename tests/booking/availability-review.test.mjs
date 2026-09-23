@@ -307,3 +307,31 @@ test('N1/N2: policy-only answers are not_checked with a reason; DST-gap rejectio
   const { validateRequestedSlot } = await import('../../lib/booking/schedule-policy.js');
   assert.equal(validateRequestedSlot('2026-03-08', '2:30 AM', gap, Date.parse('2026-03-01T12:00:00Z')).reason, 'nonexistent_time');
 });
+
+// ── Recheck2 (phaseB-B1-recheck2.md) regressions ───────────────────────────
+test('C1: a malformed item keeps valid busy events from the same page (adapter + service)', async () => {
+  globalThis.fetch = async (url) => (String(url).includes('oauth2')
+    ? new Response(JSON.stringify({ access_token: 'x' }), { status: 200 })
+    : new Response(JSON.stringify({ items: [{ id: 'n', ...NOON }, null, 42] }), { status: 200 }));
+  const seen = [];
+  const r = await listCalendarBusyEvents('c', { timeMin: 'a', timeMax: 'b', onPage: (e) => seen.push(...e) });
+  assert.equal(r.ok, false);
+  assert.equal(r.code, 'bad_response');
+  assert.deepEqual(r.events.map((e) => e.id), ['n']);
+  assert.deepEqual(seen.map((e) => e.id), ['n']);
+  const svc = createAvailabilityService({ listLiveBookings: async () => [], resolveOwnedEventIds: async () => [], now: () => NOW, logger: silent,
+    listGoogleEvents: async ({ timeMin, timeMax, signal, collect }) => listCalendarBusyEvents('c', { timeMin, timeMax, signal, onPage: collect }) });
+  const a = await svc.forDate(D);
+  assert.equal(a.reliability, 'partial');
+  assert.ok(!times(a).includes('12:00 PM'));
+});
+
+test('C2: collected and returned events are merged, never one chosen by length', async () => {
+  const LATE = { id: 'late', status: 'confirmed', start: { dateTime: '2026-09-26T17:00:00-04:00' }, end: { dateTime: '2026-09-26T18:00:00-04:00' } };
+  const run = (collected, returned) => createAvailabilityService({ listLiveBookings: async () => [], resolveOwnedEventIds: async () => [], now: () => NOW, logger: silent,
+    listGoogleEvents: async ({ collect }) => { collect(collected); return { ok: true, events: returned }; } }).forDate(D);
+  const tie = await run([{ id: 'n', ...NOON }], [LATE]);
+  assert.ok(!times(tie).includes('12:00 PM') && !times(tie).includes('5:00 PM'));
+  const dup = await run([{ id: 'n', ...NOON }, { id: 'n', ...NOON }, { id: 'n', ...NOON }], [{ id: 'n', ...NOON }, LATE]);
+  assert.ok(!times(dup).includes('12:00 PM') && !times(dup).includes('5:00 PM'));
+});
