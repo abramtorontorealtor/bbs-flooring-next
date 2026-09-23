@@ -300,3 +300,16 @@ test('R15: legacy mode strips ownership proofs → customer-driven calendar chan
   assert.deepEqual([r.calendarSync.status, r.calendarSync.reason], ['failed', 'unverified_calendar_owner']);
   assert.equal(google.log.length, before, 'no Google call');
 });
+
+test('R7: opMarker filter — null means IS NULL, a string means exact match; mismatch = conflict', async () => {
+  const sb = fakeSupabase({ migrated: true });
+  const store = createSupabaseBookingStore(sb, { mode: 'full', logger: silentLogger });
+  const c = await store.insert({ customer_email: 'a@b.co', status: 'pending' });
+  const id = c.data.id;
+  assert.equal((await store.update(id, { calendar_op_started_at: 't1' }, { opMarker: null })).conflict, false);
+  assert.equal((await store.update(id, { calendar_op_started_at: 't2' }, { opMarker: null })).conflict, true, 'already claimed');
+  assert.equal((await store.update(id, { calendar_op_started_at: null }, { opMarker: 't9' })).conflict, true, 'not ours');
+  assert.equal(sb.rows.get(id).calendar_op_started_at, 't1');
+  assert.equal((await store.update(id, { calendar_op_started_at: null }, { opMarker: 't1' })).conflict, false);
+  assert.equal(sb.rows.get(id).calendar_op_started_at ?? null, null);
+});

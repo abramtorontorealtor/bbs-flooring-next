@@ -26,7 +26,7 @@ import { toast } from 'sonner';
 import CustomerTimeline from '@/components/admin/CustomerTimeline';
 import CustomerGroupCard, { CustomerGroupHeader } from '@/components/admin/CustomerGroupCard';
 import { groupLeadsByContact } from '@/components/admin/crmGrouping';
-import { bookingSyncWarning, isUnverifiedOwnership } from '@/lib/booking/sync-warning';
+import { bookingSyncWarning, isUnverifiedOwnership, isUncertainCreate } from '@/lib/booking/sync-warning';
 import { planLeadStatusUpdate, leadStatusToast } from '@/lib/booking/crm-followup';
 import { format } from 'date-fns';
 
@@ -407,6 +407,11 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
           [bookingId]: { ...data.calendarSync, receivedAt: Date.now(), revision: data?.booking?.revision ?? null },
         }));
       }
+      if (action === 'resolve_calendar_uncertainty') {
+        refreshAll();
+        toast.success('Marked as checked. Now run Retry calendar sync.');
+        return;
+      }
       if (action === 'trust_calendar_event') {
         refreshAll();
         toast.success('Calendar event verified. Now run Retry calendar sync.');
@@ -532,6 +537,13 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
   // One place that decides the sync warning (store mode + list freshness, fixes R13/R19).
   const syncWarningFor = (row, id) => bookingSyncWarning(row, bookingLastSync[id], { storeMode: bookingStoreMode, rowFetchedAt: bookingsFetchedAt || null });
   const retryBookingSync = (lead) => bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'retry_sync' });
+  // Fix R7: explicit, reviewed resolution of an uncertain earlier calendar create.
+  const resolveCalendarUncertainty = (lead) => {
+    const marker = lead.raw?.calendar_op_started_at || null;
+    if (!marker) return;
+    if (!confirm(`A calendar create for ${lead.name} (started ${marker}) had an unknown outcome, and Google can't guarantee it won't still appear.\n\nSearch Google Calendar for this customer now. Delete any live event for this booking, then confirm. After that, press Retry.`)) return;
+    bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'resolve_calendar_uncertainty', marker });
+  };
   // Fix R15: vouch for a booking whose calendar ownership can't be proven (pre-migration /
   // possibly forged rows). Only after checking the event in Google Calendar by hand.
   const verifyBookingCalendar = (lead) => {
@@ -1998,6 +2010,13 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
                                 onClick={() => retryBookingSync(lead)}>
                                 <RefreshCw className="w-3 h-3 mr-1" /> Retry calendar sync (no email)
                               </Button>
+                              {isUncertainCreate(o, bookingLastSync[lead.entityId], { rowFetchedAt: bookingsFetchedAt || null }) && (
+                                <Button size="sm" variant="outline" className="w-full border-amber-300 text-amber-800 hover:bg-amber-50"
+                                  disabled={bookingAdminAction.isPending}
+                                  onClick={() => resolveCalendarUncertainty(lead)}>
+                                  <CheckCircle className="w-3 h-3 mr-1" /> Resolve uncertain calendar create (after checking Google Calendar)
+                                </Button>
+                              )}
                               {isUnverifiedOwnership(o, bookingLastSync[lead.entityId], { rowFetchedAt: bookingsFetchedAt || null }) && (
                                 <Button size="sm" variant="outline" className="w-full border-amber-300 text-amber-800 hover:bg-amber-50"
                                   disabled={bookingAdminAction.isPending}

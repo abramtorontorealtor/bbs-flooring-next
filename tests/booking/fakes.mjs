@@ -42,13 +42,16 @@ export function createFakeDb({ failInsert = false } = {}) {
       const r = rows.get(id);
       return { data: r ? { ...r } : null, error: null };
     },
-    async update(id, patch, { expected } = {}) {
+    async update(id, patch, { expected, opMarker } = {}) {
       calls.update++;
       if (hooks.beforeUpdate) await hooks.beforeUpdate(id, patch);
       if (hooks.failUpdate && hooks.failUpdate(id, patch)) return { data: null, error: { message: 'db down' }, conflict: false };
       const cur = rows.get(id);
       if (!cur) return { data: null, error: { message: 'not found' }, conflict: false };
       if (expected && (cur.revision || 0) !== (expected.revision || 0)) {
+        return { data: null, error: null, conflict: true };
+      }
+      if (opMarker !== undefined && (cur.calendar_op_started_at ?? null) !== opMarker) {
         return { data: null, error: null, conflict: true };
       }
 

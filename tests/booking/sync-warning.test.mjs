@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { bookingSyncWarning, cleanSyncError, isUnverifiedOwnership, freshLastSync } from '../../lib/booking/sync-warning.js';
+import { bookingSyncWarning, cleanSyncError, isUnverifiedOwnership, freshLastSync, isUncertainCreate } from '../../lib/booking/sync-warning.js';
 
 test('failed → red level with sanitized error title; synced/absent → nothing', () => {
   const w = bookingSyncWarning({ status: 'confirmed', calendar_sync_status: 'failed',
@@ -103,4 +103,11 @@ test('R13: Retry offered for pending/unknown on live rows and cancelled rows wit
   assert.equal(bookingSyncWarning({ status: 'cancelled', calendar_sync_status: 'unknown' }, null, FULL), null);
   assert.equal(bookingSyncWarning({ status: 'completed', calendar_sync_status: 'pending' }, null, FULL), null);
   assert.equal(bookingSyncWarning({ status: 'confirmed', calendar_sync_status: 'failed' }).canRetry, true);
+});
+
+test('R7: Resolve offered only when an uncertain-create marker exists', () => {
+  assert.equal(isUncertainCreate({ status: 'cancelled', calendar_op_started_at: 't' }), true);
+  assert.equal(isUncertainCreate({ status: 'confirmed', calendar_op_started_at: 't' }, { status: 'failed', reason: 'uncertain_calendar_create' }), true);
+  assert.equal(isUncertainCreate({ status: 'confirmed', calendar_op_started_at: 't' }), false);
+  assert.equal(isUncertainCreate({ status: 'cancelled' }), false);
 });

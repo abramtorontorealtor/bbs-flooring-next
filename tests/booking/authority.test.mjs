@@ -251,3 +251,15 @@ test('security: public create (handleConfirm) returns calendarSync status only, 
   assert.deepEqual(r.body.calendarSync, { status: 'failed' });
   assert.doesNotMatch(JSON.stringify(r.body), /private-calendar-handle|internal provider diagnostic/);
 });
+
+test('R7: admin resolve_calendar_uncertainty goes through the handler; needs the exact marker shown; no Google call', async () => {
+  const { db, google, deps } = setup();
+  const b = db.seed({ customer_email: 'k@example.com', preferred_date: '2026-10-05', status: 'cancelled',
+    calendar_sync_status: 'failed', calendar_op_started_at: '2026-09-23T11:00:00.000123Z' });
+  const bad = await handleAdminAction(req({ bookingId: b.id, action: 'resolve_calendar_uncertainty', marker: 'x' }), deps);
+  assert.equal(bad.status, 409);
+  const ok = await handleAdminAction(req({ bookingId: b.id, action: 'resolve_calendar_uncertainty', marker: '2026-09-23T11:00:00.000123Z' }), deps);
+  assert.equal(ok.status, 200);
+  assert.equal(db.row(b.id).calendar_op_started_at, null);
+  assert.equal(google.log.length, 0);
+});
