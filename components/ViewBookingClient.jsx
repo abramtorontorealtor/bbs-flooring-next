@@ -259,8 +259,9 @@ export default function ViewBookingClient() {
           <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">Your Booking</h1>
         </div>
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 text-red-700 text-sm flex items-center gap-2">
+        {/* While rescheduling, the error is shown next to the picker instead (one alert, not two). */}
+        {error && !showReschedule && (
+          <div role="alert" className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 text-red-700 text-sm flex items-center gap-2">
             <AlertCircle className="w-4 h-4 flex-shrink-0" /> {error}
           </div>
         )}
