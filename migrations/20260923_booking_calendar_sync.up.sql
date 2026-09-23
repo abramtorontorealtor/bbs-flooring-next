@@ -7,7 +7,7 @@
 -- public.bookings, used by lib/booking/lifecycle.js via lib/booking/supabase-store.js.
 --
 -- Additive only:
---   * 6 new columns (4 with defaults, 2 nullable proofs) → existing reads/writes are unaffected.
+--   * 7 new columns (4 with defaults, 3 nullable) → existing reads/writes are unaffected.
 --   * NO backfill. Existing rows become calendar_sync_status='unknown' and
 --     revision=0 ("not checked yet"). Nothing is marked 'synced' automatically.
 --   * No existing column, index, policy or row value is changed.
@@ -35,7 +35,9 @@ alter table public.bookings
   -- Fix R15: server-issued HMAC ownership proofs (lib/booking/ownership.js). NULL on
   -- every existing row: historical rows are NOT trusted automatically (no backfill).
   add column if not exists ownership_proof text,
-  add column if not exists calendar_event_proof text;
+  add column if not exists calendar_event_proof text,
+  -- Fix R7: set just before a Google insert; cleared once the outcome is definite.
+  add column if not exists calendar_op_started_at timestamptz;
 
 comment on column public.bookings.calendar_sync_status is
   'Google Calendar reconciliation state (lib/booking/lifecycle.js): unknown = pre-Phase-A row, never checked; pending = state changed, sync not done; synced; failed (see calendar_sync_error); absent = event confirmed deleted.';
@@ -47,6 +49,8 @@ comment on column public.bookings.ownership_proof is
   'HMAC(BOOKING_OWNERSHIP_SECRET, row|id) written by lifecycle.create() or admin trust_calendar_event. NULL = unverified (anon-insertable) row: no customer-driven Google Calendar change.';
 comment on column public.bookings.calendar_event_proof is
   'HMAC(BOOKING_OWNERSHIP_SECRET, event|id|calendar_event_id) for a non-derived (legacy) event id, written only by admin trust_calendar_event. NULL = the stored event id is never sent to Google.';
+comment on column public.bookings.calendar_op_started_at is
+  'When a Google Calendar insert for this booking was started and its outcome is not yet definite (timeout/abort). While recent, a cancellation cannot report the event absent.';
 comment on column public.bookings.revision is
   'Optimistic-concurrency counter, +1 on every lifecycle state change. 0 = pre-Phase-A row.';
 

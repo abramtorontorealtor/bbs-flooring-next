@@ -31,7 +31,8 @@ test('thrown error and {success:false} normalise to the same result shape', asyn
   const b = await sync.ensureEvent(booking());
   for (const r of [a, b]) {
     // throw / 5xx are ambiguous (may commit remotely), flagged as such (R7).
-    assert.deepEqual(Object.keys(r).sort(), ['ambiguous', 'error', 'eventId', 'ok', 'status']);
+    // touched: the stable id an insert was SENT to (a later cancel must delete it, R7(c)).
+    assert.deepEqual(Object.keys(r).sort(), ['ambiguous', 'error', 'eventId', 'ok', 'status', 'touched']);
     assert.equal(r.ambiguous, true);
     assert.equal(r.ok, false);
     assert.equal(r.status, 'failed');

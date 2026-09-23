@@ -75,7 +75,7 @@ export function createFakeGoogle() {
   const events = new Map();
   const log = [];
   const faults = { insert: [], get: [], patch: [], delete: [], tombstone: [] };
-  const hooks = { afterPatch: null, afterInsert: null };
+  const hooks = { afterPatch: null, afterInsert: null, beforePatch: null };
   let autoId = 0;
   let etagSeq = 0;
 
@@ -120,6 +120,9 @@ export function createFakeGoogle() {
         log.push(['patch', eventId, ...(restore ? ['restore'] : [])]);
         const f = await takeFault('patch', eventId, booking);
         if (f) return f;
+        // Awaited before the write is applied; ignores AbortSignal → models a request that
+        // Google commits after the caller gave up.
+        if (hooks.beforePatch) await hooks.beforePatch(eventId, { restore, ifMatch });
         const e = events.get(eventId);
         if (!e) return { success: false, httpStatus: 404, error: 'Not Found' };
         if (ifMatch && e.etag && ifMatch !== e.etag) {
