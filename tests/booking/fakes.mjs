@@ -1,6 +1,19 @@
 // In-memory fakes for lifecycle tests. No network, no Supabase, no Google.
 import { randomUUID } from 'node:crypto';
 import { createOwnership } from '../../lib/booking/ownership.js';
+import { slotInterval, dayInterval, isIsoDate, addDaysIso } from '../../lib/booking/schedule-policy.js';
+
+/**
+ * In-memory mirror of migrations/20260924_booking_reservations.up.sql (B2). Serialised by a
+ * promise mutex (≈ the advisory lock). This is a LOGIC model for lifecycle tests, NOT proof of
+ * Postgres transaction/lock behaviour (see phaseB-B2-local-sql-check.mjs + release checklist).
+ */
+function fakeRowInterval(date, time, durationMinutes) {
+  if (!isIsoDate(date)) return null;
+  const pol = { timeZone: 'America/Toronto', durationMinutes };
+  const iv = time ? slotInterval(date, time, pol) : null;
+  return iv || dayInterval(date, pol);
+}
 
 // Fix R15: lifecycles built in tests sign/verify ownership with this test-only secret
 // (createOwnership() reads the env at construction). Seeded rows are trusted by default
@@ -10,13 +23,69 @@ if (!process.env.BOOKING_OWNERSHIP_SECRET) process.env.BOOKING_OWNERSHIP_SECRET 
 export const testOwnership = createOwnership({ secret: TEST_OWNERSHIP_SECRET });
 
 /** Fake `db` honouring the lifecycle contract, incl. revision-conditional updates. */
-export function createFakeDb({ failInsert = false } = {}) {
-  const rows = new Map();
+export function createFakeDb({ failInsert = false, rows = new Map() } = {}) {
   const calls = { insert: 0, update: 0, get: 0 };
-  const hooks = { beforeUpdate: null, failUpdate: null }; // simulate concurrent writers / DB faults
+  const hooks = { beforeUpdate: null, failUpdate: null, beforeReserve: null }; // simulate concurrent writers / DB faults
+  const idem = new Map();
+  let lock = Promise.resolve();
+  const locked = (fn) => { const run = lock.then(fn, fn); lock = run.catch(() => {}); return run; };
+  function problem(slot, exclude) {
+    const pad = (slot.padMinutes || 0) * 60000;
+    const ws = Date.parse(slot.start) - pad; const we = Date.parse(slot.end) + pad;
+    const near = [addDaysIso(slot.localDate, -1), slot.localDate, addDaysIso(slot.localDate, 1)];
+    let count = 0;
+    for (const r of rows.values()) {
+      if (!['pending', 'confirmed'].includes(r.status) || r.id === exclude || !near.includes(r.preferred_date)) continue;
+      const iv = fakeRowInterval(r.preferred_date, r.preferred_time, slot.durationMinutes);
+      if (iv && iv.start < we && ws < iv.end) return 'overlap';
+      if (r.preferred_date === slot.localDate) count++;
+    }
+    return slot.dailyCap != null && count >= slot.dailyCap ? 'cap_reached' : null;
+  }
   return {
-    rows, calls, hooks,
+    rows, calls, hooks, idem,
     failInsert,
+    failReserve: false,
+    reserveCalls: 0,
+    async reserveCreate(row, slot, keyHash = null) {
+      this.reserveCalls++;
+      if (hooks.beforeReserve) await hooks.beforeReserve('create', row);
+      if (this.failReserve || this.failInsert) return { error: { message: 'rpc failed: connection reset' } };
+      return locked(async () => {
+        if (keyHash && idem.has(keyHash)) return { outcome: 'replay', booking: { ...rows.get(idem.get(keyHash)) } };
+        const email = String(row.customer_email || '').trim().toLowerCase();
+        const phone = String(row.customer_phone || '').replace(/\D/g, '');
+        const since = Date.now() - 24 * 3600e3;
+        const dup = [...rows.values()].find((b) => b.preferred_date === row.preferred_date
+          && (b.preferred_time || '') === (row.preferred_time || '') && b.status !== 'cancelled'
+          && Date.parse(b.created_at || 0) >= since
+          && ((email && String(b.customer_email || '').trim().toLowerCase() === email)
+            || (phone.length >= 7 && String(b.customer_phone || '').replace(/\D/g, '') === phone)));
+        if (dup) { if (keyHash) idem.set(keyHash, dup.id); return { outcome: 'replay', booking: { ...dup } }; }
+        if (slot) { const p = problem(slot, null); if (p) return { outcome: 'conflict', reason: p }; }
+        calls.insert++;
+        const r = { ...row, id: row.id || randomUUID(), created_at: new Date().toISOString() };
+        rows.set(r.id, r);
+        if (keyHash) idem.set(keyHash, r.id);
+        return { outcome: 'created', booking: { ...r } };
+      });
+    },
+    async reserveReschedule(id, expectedRevision, patch, slot) {
+      this.reserveCalls++;
+      if (hooks.beforeReserve) await hooks.beforeReserve('reschedule', patch);
+      if (this.failReserve) return { error: { message: 'rpc failed: connection reset' } };
+      return locked(async () => {
+        const cur = rows.get(id);
+        if (!cur) return { outcome: 'not_found' };
+        if ((cur.revision || 0) !== (Number(expectedRevision) || 0)) return { outcome: 'stale', booking: { ...cur } };
+        if (!['pending', 'confirmed'].includes(cur.status)) return { outcome: 'invalid_state', booking: { ...cur } };
+        if (slot) { const p = problem(slot, id); if (p) return { outcome: 'conflict', reason: p }; }
+        calls.update++;
+        const next = { ...cur, ...patch };
+        rows.set(id, next);
+        return { outcome: 'updated', booking: { ...next } };
+      });
+    },
     seed(row) {
       const r = { id: randomUUID(), status: 'pending', revision: 1, calendar_event_id: null, ...row };
       if (!('ownership_proof' in row)) r.ownership_proof = testOwnership.signRow(r.id);

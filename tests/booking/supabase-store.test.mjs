@@ -8,7 +8,7 @@ import {
 } from '../../lib/booking/supabase-store.js';
 import { createBookingLifecycle } from '../../lib/booking/lifecycle.js';
 import { createCalendarSync } from '../../lib/booking/calendar-sync.js';
-import { createFakeGoogle, silentLogger } from './fakes.mjs';
+import { createFakeDb, createFakeGoogle, silentLogger } from './fakes.mjs';
 import { stableEventId } from '../../lib/booking/calendar-sync.js';
 
 const BASE_COLS = ['id', 'customer_name', 'customer_email', 'customer_phone', 'status', 'notes',
@@ -65,7 +65,19 @@ function fakeSupabase({ migrated }) {
     }
     return b;
   }
-  return { rows, log, from: (t) => builder(t) };
+  // B2 reservation RPCs: migrated → in-memory model (logic only, fakes.mjs); pre-migration →
+  // the function does not exist (PostgREST PGRST202), so the lifecycle must fail closed (503).
+  const model = createFakeDb({ rows });
+  async function rpc(fn, a) {
+    log.push({ table: 'rpc', op: fn });
+    if (!migrated) return { data: null, error: { code: 'PGRST202', message: `Could not find the function public.${fn}` } };
+    const slot = a.p_start ? { start: a.p_start, end: a.p_end, localDate: a.p_local_date, durationMinutes: a.p_duration_minutes, padMinutes: a.p_pad_minutes, dailyCap: a.p_daily_cap } : null;
+    const r = fn === 'booking_reserve_create'
+      ? await model.reserveCreate({ ...defaults(), ...a.p_row, updated_at: '2026-09-23T00:00:00.000001+00:00' }, slot, a.p_key_hash)
+      : await model.reserveReschedule(a.p_id, a.p_expected_revision, a.p_patch, slot);
+    return { data: r, error: null };
+  }
+  return { rows, log, from: (t) => builder(t), rpc };
 }
 
 test('resolveStoreMode: env flag, default auto, junk → auto', () => {
@@ -182,6 +194,13 @@ for (const migrated of [false, true]) {
       now: () => new Date('2026-09-23T12:00:00Z'), logger: silentLogger,
     });
     const c = await lc.create({ customer_email: 'k@example.com', customer_name: 'K', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+    if (!migrated) {
+      // B2: no reservation RPC before the migrations → fail closed (retriable 503), nothing written.
+      assert.deepEqual([c.success, c.code, c.httpStatus], [false, 'unavailable', 503]);
+      assert.equal(sb.rows.size, 0);
+      assert.equal(google.log.length, 0);
+      return;
+    }
     assert.equal(c.success, true);
     assert.equal(c.calendarSync.status, 'synced');
     const r = await lc.reschedule(c.booking.id, { date: '2026-10-07', time: '11:00 AM' }, 'customer');
@@ -234,9 +253,11 @@ test('R10 trace (legacy mode): timeout-after-create racing a cancel ends with th
     calendar: createCalendarSync(google.adapter), notify: null,
     now: () => new Date(clock++), logger: silentLogger,
   });
-  const creating = lc.create({ customer_email: 'k@example.com', customer_name: 'K', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
-  while (!google.log.some((l) => l[0] === 'insert')) await new Promise((r) => setImmediate(r));
-  const id = [...sb.rows.keys()][0];
+  const seeded = await legacySeed(sb, { customer_email: 'k@example.com', customer_name: 'K', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  const creating = lc.retrySync(seeded.id);
+  for (let i = 0; i < 2000 && !google.log.some((l) => l[0] === 'insert'); i++) await new Promise((r) => setImmediate(r));
+  assert.ok(google.log.some((l) => l[0] === 'insert'), 'insert started');
+  const id = seeded.id;
   const sid = stableEventId(id);
 
   // Admin cancel: in legacy mode ownership proofs are stripped, so a CUSTOMER cancel
@@ -256,6 +277,17 @@ test('R10 trace (legacy mode): timeout-after-create racing a cancel ends with th
   assert.deepEqual(google.log.map((l) => l[0]), ['insert', 'delete', 'delete', 'tombstone']);
 });
 
+/**
+ * B2: lifecycle.create() needs the reservation RPC, which does not exist pre-migration (it fails
+ * closed, see the end-to-end test). Legacy-mode calendar behaviour is still exercised on rows
+ * written directly through the legacy adapter, then synced with retrySync (same sync path).
+ */
+async function legacySeed(sb, row) {
+  const store = createSupabaseBookingStore(sb, { mode: 'legacy', logger: silentLogger });
+  const { data } = await store.insert({ status: 'pending', calendar_event_id: null, ...row });
+  return data;
+}
+
 test('R10: legacy-mode calendar failure is reported recorded:false (no durable failure state)', async () => {
   const sb = fakeSupabase({ migrated: false });
   const google = createFakeGoogle();
@@ -265,7 +297,8 @@ test('R10: legacy-mode calendar failure is reported recorded:false (no durable f
     calendar: createCalendarSync(google.adapter), notify: null,
     now: () => new Date('2026-09-23T12:00:00Z'), logger: silentLogger,
   });
-  const c = await lc.create({ customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  const seeded = await legacySeed(sb, { customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  const c = await lc.retrySync(seeded.id);
   assert.equal(c.success, true);
   assert.deepEqual([c.calendarSync.status, c.calendarSync.recorded], ['failed', false]);
   assert.ok(!('calendar_sync_status' in sb.rows.get(c.booking.id)));
@@ -291,8 +324,9 @@ test('R15: legacy mode strips ownership proofs → customer-driven calendar chan
     calendar: createCalendarSync(google.adapter), notify: null,
     now: () => new Date('2026-09-23T12:00:00Z'), logger: silentLogger,
   });
-  const c = await lc.create({ customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
-  assert.equal(c.calendarSync.status, 'synced', 'server create still syncs');
+  const seeded = await legacySeed(sb, { customer_email: 'k@example.com', preferred_date: '2026-10-05', preferred_time: '1:30 PM' });
+  const c = await lc.retrySync(seeded.id);
+  assert.equal(c.calendarSync.status, 'synced', 'admin/server sync still works');
   assert.ok(!('ownership_proof' in sb.rows.get(c.booking.id)), 'proof not storable pre-migration');
   const before = google.log.length;
   const r = await lc.cancel(c.booking.id, '', 'customer');

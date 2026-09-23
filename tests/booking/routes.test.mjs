@@ -59,8 +59,14 @@ const BOOKING = {
   preferred_date: '2026-10-05', preferred_time: '1:30 PM', notes: 'Project Type: Basement',
 };
 
+const SEED_DATES = ['2026-10-05', '2026-10-06', '2026-10-07', '2026-10-08', '2026-10-09'];
 async function seedLive(ctx, extra = {}) {
-  const r = await ctx.deps.lifecycle.create({ ...BOOKING, lookup_token: 'tok-1', ...extra });
+  // B2: each extra seed in one store gets its own date + contact, so the atomic reservation
+  // neither replays (same contact/slot) nor conflicts (same slot) with an earlier seed.
+  ctx.seedN = (ctx.seedN || 0) + 1;
+  const n = ctx.seedN - 1;
+  const vary = n === 0 ? {} : { preferred_date: SEED_DATES[n % SEED_DATES.length], customer_email: `seed${n}@example.com`, customer_phone: `416-555-01${String(n).padStart(2, '0')}` };
+  const r = await ctx.deps.lifecycle.create({ ...BOOKING, lookup_token: 'tok-1', ...vary, ...extra });
   assert.equal(r.success, true);
   ctx.email.sent.length = 0;
   ctx.telegram.alerts.length = 0;
@@ -125,17 +131,15 @@ test('confirm: rate limit and dedupe run before create()', async () => {
   assert.equal(limited.status, 429);
   assert.ok(limited.headers['Retry-After']);
 
+  // B2: the 24 h same-contact dedupe runs INSIDE the reservation lock → replay of the original.
   const ctx2 = setup();
-  ctx2.deps.findDuplicate = async () => ({ id: 'existing-id' });
-  const dup = await handleConfirm(req({ booking: BOOKING }), ctx2.deps);
-  assert.deepEqual(dup.body, { success: true, emailSent: false, bookingId: 'existing-id', duplicate: true });
-  assert.equal(ctx2.db.calls.insert + ctx2.email.sent.length + ctx2.google.log.length, 0);
-
-  const ctx3 = setup();
-  ctx3.deps.findDuplicate = async () => { throw new Error('select failed'); };
-  const cont = await handleConfirm(req({ booking: BOOKING }), ctx3.deps);
-  assert.equal(cont.status, 200, 'dedupe lookup failure does not block booking');
-  assert.equal(ctx3.db.calls.insert, 1);
+  const first = await handleConfirm(req({ booking: BOOKING }), ctx2.deps);
+  ctx2.email.sent.length = 0;
+  const calls = ctx2.google.log.length;
+  const dup = await handleConfirm(req({ booking: { ...BOOKING, customer_email: 'KAREN@example.com ' } }), ctx2.deps);
+  assert.deepEqual(dup.body, { success: true, emailSent: false, bookingId: first.body.bookingId, duplicate: true });
+  assert.equal(ctx2.db.calls.insert + ctx2.email.sent.length, 1, 'only the first insert; no new email');
+  assert.equal(ctx2.google.log.length, calls, 'no calendar call on replay');
 });
 
 test('confirm: missing email / bad JSON → 400, nothing written', async () => {

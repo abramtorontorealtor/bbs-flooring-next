@@ -36,13 +36,13 @@ test('create: persists pending, creates event under stable id, then notifies', a
   assert.equal(r.calendarSync.status, 'synced');
 });
 
-test('create: DB insert failure → success:false, NO calendar call, NO notification', async () => {
+test('create: reservation/DB failure → retriable 503, NO calendar call, NO notification (B2)', async () => {
   const { db, google, notify, svc } = setup();
   db.failInsert = true;
   const r = await svc.create(REQUEST);
   assert.equal(r.success, false);
-  assert.equal(r.code, 'db_error');
-  assert.equal(r.httpStatus, 500);
+  assert.equal(r.code, 'unavailable');
+  assert.equal(r.httpStatus, 503);
   assert.equal(google.log.length, 0);
   assert.equal(notify.sent.length, 0);
   assert.equal(db.rows.size, 0);
@@ -51,7 +51,8 @@ test('create: DB insert failure → success:false, NO calendar call, NO notifica
 test('create: invalid input rejected before any write', async () => {
   const { db, google, notify, svc } = setup();
   assert.equal((await svc.create({ ...REQUEST, customer_email: ' ' })).code, 'invalid_input');
-  assert.equal((await svc.create({ ...REQUEST, preferred_date: '2026-02-31' })).code, 'invalid_input');
+  const bad = await svc.create({ ...REQUEST, preferred_date: '2026-02-31' });
+  assert.deepEqual([bad.code, bad.httpStatus], ['invalid_slot', 400]);
   assert.equal(db.calls.insert + google.log.length + notify.sent.length, 0);
 });
 
