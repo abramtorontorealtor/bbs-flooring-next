@@ -229,3 +229,25 @@ test('R16: lookup + lookup-token are rate limited, fail closed without service r
   assert.equal(ok.status, 200);
   assert.ok(!('calendar_event_id' in ok.body.booking) && !('notes' in ok.body.booking));
 });
+
+test('security: malformed same-character-length non-ASCII proof → false, never throws', () => {
+  const own = createOwnership({ secret: TEST_OWNERSHIP_SECRET });
+  const good = own.signRow('row-1');
+  const evil = 'é'.repeat(good.length); // same JS length, different byte length
+  assert.equal(evil.length, good.length);
+  assert.doesNotThrow(() => own.verifyRow({ id: 'row-1', ownership_proof: evil }));
+  assert.equal(own.verifyRow({ id: 'row-1', ownership_proof: evil }), false);
+  assert.equal(own.verifyEvent({ id: 'row-1', calendar_event_proof: evil }, 'evt'), false);
+  assert.equal(own.verifyRow({ id: 'row-1', ownership_proof: good }), true);
+});
+
+test('security: public create (handleConfirm) returns calendarSync status only, no provider diagnostics', async () => {
+  const { deps } = setup();
+  const d = { ...deps, findDuplicate: async () => null, getVisitorIdFromRequest: () => null, identifyVisitor: async () => [],
+    lifecycle: { create: async () => ({ success: true, booking: { id: 'b1' }, notifications: [],
+      calendarSync: { status: 'failed', error: 'internal provider diagnostic', eventId: 'private-calendar-handle' } }) } };
+  const r = await handleConfirm(req({ booking: { customer_email: 'a@b.co' } }), d);
+  assert.equal(r.status, 200);
+  assert.deepEqual(r.body.calendarSync, { status: 'failed' });
+  assert.doesNotMatch(JSON.stringify(r.body), /private-calendar-handle|internal provider diagnostic/);
+});
