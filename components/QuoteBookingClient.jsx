@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import BookingCalendar from '@/components/BookingCalendar';
-import { CheckCircle, Clock, ArrowRight, Loader2, MapPin, Phone, Star, CalendarCheck, FileText } from 'lucide-react';
+import SlotPicker from '@/components/booking/SlotPicker';
+import AlternateTimePanel from '@/components/booking/AlternateTimePanel';
+import { CheckCircle, ArrowRight, Loader2, MapPin, Phone, Star, CalendarCheck, FileText } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { Analytics } from '@/components/analytics';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
@@ -17,6 +18,7 @@ import { stairsImages, flooringImages } from '@/data/galleryImages';
 import { GOOGLE_RATING } from '@/lib/service-constants';
 import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
 import { trackBookingConversion } from '@/lib/booking/conversion';
+import { BOOKING_COPY, submitFailure, newIdempotencyKey, formatBookingDate } from '@/lib/booking/picker-model';
 
 const QUOTE_PROOF = [
   stairsImages[2], flooringImages[3], stairsImages[0],
@@ -27,33 +29,6 @@ function formatPostalCode(value) {
   const clean = value.replace(/\s/g, '').toUpperCase();
   if (clean.length <= 3) return clean;
   return clean.slice(0, 3) + ' ' + clean.slice(3, 6);
-}
-
-function addDays(date, days) {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d;
-}
-
-function formatDate(date, fmt) {
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  if (fmt === 'EEEE, MMM d') return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
-  if (fmt === 'MMM d, yyyy') return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-  return date.toLocaleDateString();
-}
-
-function getNextAvailableDate() {
-  const now = new Date();
-  const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-  let d = addDays(new Date(), 1);
-  while (true) {
-    if (d.getDay() === 0) { d = addDays(d, 1); continue; }
-    const lastSlot = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 17, 0, 0);
-    if (lastSlot >= minDateTime) break;
-    d = addDays(d, 1);
-  }
-  return formatDate(d, 'EEEE, MMM d');
 }
 
 export default function QuoteBookingClient() {
@@ -107,7 +82,11 @@ export default function QuoteBookingClient() {
   });
 
   const formRef = useRef(null);
-  const nextAvailableDate = useMemo(() => getNextAvailableDate(), []);
+  // B2/B3: per-request idempotency key, 409 picker override, alternate-time panel.
+  const [idemKey] = useState(() => newIdempotencyKey());
+  const [slotOverride, setSlotOverride] = useState(null);
+  const [showAlternate, setShowAlternate] = useState(false);
+  const [submittedSlot, setSubmittedSlot] = useState(null);
 
   useEffect(() => {
     if (submitted) return;
@@ -121,25 +100,6 @@ export default function QuoteBookingClient() {
   }, [submitted, step]);
 
   // Mon-Sat 11am–2pm & 5pm
-  const allTimeSlots = ['11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '5:00 PM'];
-
-  const availableTimeSlots = useMemo(() => {
-    if (!formData.preferred_date) return allTimeSlots;
-    const now = new Date();
-    const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-    return allTimeSlots.filter(timeSlot => {
-      const [year, month, day] = formData.preferred_date.split('-').map(Number);
-      const slotDate = new Date(year, month - 1, day);
-      const [time, period] = timeSlot.split(' ');
-      const [hours, minutes] = time.split(':').map(Number);
-      let hour24 = hours;
-      if (period === 'PM' && hours !== 12) hour24 += 12;
-      if (period === 'AM' && hours === 12) hour24 = 0;
-      slotDate.setHours(hour24, minutes, 0, 0);
-      return slotDate >= minDateTime;
-    });
-  }, [formData.preferred_date]);
-
   const handleCheckAvailability = () => {
     if (!postalCode || postalCode.replace(/\s/g, '').length < 6) {
       setError('Please enter a valid postal code');
@@ -197,12 +157,23 @@ export default function QuoteBookingClient() {
 
       const res = await fetch('/api/booking/confirm', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Idempotency-Key': idemKey },
         body: JSON.stringify(bookingPayload),
       });
       // Success ONLY when the server persisted a booking (res.ok && success && bookingId).
-      const outcome = interpretBookingSubmit(res, await readJsonSafe(res));
-      if (!outcome.success) throw new Error('Booking submission failed');
+      const data = await readJsonSafe(res);
+      const outcome = interpretBookingSubmit(res, data);
+      if (!outcome.success) {
+        // B2: 409 → refreshed options, time cleared, contact + quote details kept.
+        const f = submitFailure(res.status, data);
+        if (f.kind === 'slot_taken') {
+          setSlotOverride(f.availability);
+          setFormData((d) => ({ ...d, preferred_time: '' }));
+        }
+        setError(f.message);
+        return;
+      }
+      setSubmittedSlot({ date: formData.preferred_date, time: formData.preferred_time });
 
       // R3: the booking is saved. Commit the success UI now, before any optional work,
       // so analytics or the secondary quote save can never show "failed" for a saved booking.
@@ -242,7 +213,7 @@ export default function QuoteBookingClient() {
 
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch { /* ignore */ }
     } catch {
-      setError('Failed to submit booking. Please try again or call us.');
+      setError('We couldn\'t send your request. Please try again or call (647) 428-1111.');
     } finally {
       setIsSubmitting(false);
     }
@@ -261,10 +232,10 @@ export default function QuoteBookingClient() {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-10 h-10 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-800 mb-3">Booking Request Received!</h2>
-            <p className="text-slate-600 mb-2">
-              Thank you! We&apos;ll review your request and confirm your appointment within a few hours.
-            </p>
+            <h2 className="text-2xl font-bold text-slate-800 mb-3">{BOOKING_COPY.success}</h2>
+            {submittedSlot && (
+              <p className="text-slate-700 mb-2 font-medium">Requested: {formatBookingDate(submittedSlot.date)} at {submittedSlot.time} ET</p>
+            )}
             <p className="text-slate-500 text-sm mb-6">Check your email for details and a confirmation link.</p>
             {estimate && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-6 text-sm text-amber-900">
@@ -304,11 +275,11 @@ export default function QuoteBookingClient() {
             <CalendarCheck className="w-3.5 h-3.5 md:w-4 md:h-4" /> Book Your Free In-Home Estimate
           </div>
           <h1 className="text-2xl md:text-5xl font-bold text-slate-800 mb-2 md:mb-4">
-            Book Your Free Measurement
+            {BOOKING_COPY.h1}
           </h1>
           <p className="text-base md:text-xl text-slate-600 max-w-3xl">
             {productName
-              ? `You've calculated your quote — now let's get exact measurements to lock in your price.`
+              ? `You've calculated your quote. Next, we measure your space and go over installation and your flooring options.`
               : `Serving Markham, Durham & Toronto (GTA) — Professional measurement and no-obligation quote.`}
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs font-medium text-slate-700 md:hidden">
@@ -398,8 +369,9 @@ export default function QuoteBookingClient() {
                   <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                   <p className="text-green-800 font-semibold text-sm">We have installers near <span className="font-bold">{postalCode}</span>!</p>
                 </div>
-                <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-1">Book Your Free Measurement</h2>
-                <p className="text-slate-500 text-sm mb-5">Spots are limited — secure yours now.</p>
+                <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-1">Choose your consultation time</h2>
+                <p className="text-slate-600 text-sm mb-1">{BOOKING_COPY.support}</p>
+                <p className="text-slate-700 text-sm font-semibold mb-5">{BOOKING_COPY.reassurance}</p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <Label className="font-semibold">Full Name *</Label>
@@ -420,56 +392,26 @@ export default function QuoteBookingClient() {
                     <Input className="mt-1" placeholder="123 Main St" value={formData.customer_address} onChange={(e) => setFormData({ ...formData, customer_address: e.target.value })} />
                   </div>
 
-                  {/* Next available slot hint */}
-                  <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-sm text-amber-800">
-                    <Clock className="w-4 h-4 flex-shrink-0" />
-                    <span><strong>Next Available:</strong> {nextAvailableDate}</span>
-                  </div>
-
-                  {/* Custom Booking Calendar */}
                   <div>
-                    <Label className="font-semibold mb-2 block">Preferred Date & Time *</Label>
-                    <BookingCalendar
-                      selected={formData.preferred_date}
-                      onSelect={(dateStr) => {
-                        setError('');
-                        setFormData({ ...formData, preferred_date: dateStr, preferred_time: '' });
-                      }}
-                      isDateDisabled={(date) => {
-                        const now = new Date();
-                        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                        const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-                        const maxDate = new Date(todayStart.getTime() + 60 * 24 * 60 * 60 * 1000);
-                        if (date < todayStart) return true;
-                        if (date.getDay() === 0) return true;
-                        if (date > maxDate) return true;
-                        const lastSlotOnDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
-                        if (lastSlotOnDate < minDateTime) return true;
-                        return false;
-                      }}
+                    <SlotPicker
+                      idPrefix="qb"
+                      date={formData.preferred_date}
+                      time={formData.preferred_time}
+                      override={slotOverride}
+                      onDateChange={(d) => { setError(''); setSlotOverride(null); setFormData((f) => ({ ...f, preferred_date: d, preferred_time: '' })); }}
+                      onTimeChange={(t) => { setError(''); setFormData((f) => (f.preferred_time === t ? f : { ...f, preferred_time: t })); }}
+                      onAlternate={() => setShowAlternate(true)}
                     />
-                    {formData.preferred_date && (
-                      <div className="mt-3">
-                        <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5 block">Select a Time</Label>
-                        <div className="grid grid-cols-4 gap-1.5">
-                          {availableTimeSlots.map(t => (
-                            <button
-                              key={t}
-                              type="button"
-                              onClick={() => setFormData({ ...formData, preferred_time: t })}
-                              className={`py-2 px-1 rounded-lg text-xs font-medium transition-all ${
-                                formData.preferred_time === t
-                                  ? 'bg-amber-500 text-white shadow-md shadow-amber-200'
-                                  : 'bg-slate-50 text-slate-600 hover:bg-amber-50 hover:text-amber-700 border border-slate-200'
-                              }`}
-                            >
-                              {t}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                    {showAlternate && (
+                      <AlternateTimePanel
+                        idPrefix="qb-alt"
+                        prefill={{ name: formData.customer_name, phone: formData.customer_phone, email: formData.customer_email }}
+                        context={{ postalCode, serviceInterest, flooringInterests, productName, quoteSummary: estimate ? `Estimate C$${estimate}` : '', page: 'quote-booking', triedDate: formData.preferred_date }}
+                        onClose={() => setShowAlternate(false)}
+                      />
                     )}
                   </div>
+                  {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
 
                   {/* Flooring interests (Phase E) */}
                   {serviceInterest && (
@@ -517,7 +459,7 @@ export default function QuoteBookingClient() {
 
                   <Button type="submit" disabled={isSubmitting || !formData.customer_name || !formData.customer_phone || !formData.customer_email || !formData.customer_address || !formData.preferred_date || !formData.preferred_time}
                     className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base py-6 disabled:opacity-50 disabled:cursor-not-allowed" size="lg">
-                    {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Booking...</> : 'Book Free Measurement'}
+                    {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> {BOOKING_COPY.submitting}</> : BOOKING_COPY.submit}
                   </Button>
                   <div className="flex items-center justify-center gap-2 text-sm text-slate-600">
                     <div className="flex">{[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}</div>
