@@ -16,7 +16,8 @@
 --     another person's contact never matches and discloses nothing.
 --   * The pre-Phase-B 24 h same-contact/date/time dedupe is re-checked INSIDE the lock.
 --
--- Additive only: 1 new table, 3 functions. No existing column/policy/row changes.
+-- Additive only: 1 new table, 4 functions (booking_row_interval, booking_slot_problem,
+-- booking_reserve_create, booking_reserve_reschedule). No existing column/policy/row changes.
 -- Functions are SECURITY INVOKER, EXECUTE granted to service_role only (it
 -- bypasses RLS); anon/authenticated get nothing. search_path pinned.
 -- Rollback: 20260924_booking_reservations.down.sql
@@ -48,6 +49,7 @@ declare
   mi int;
   d date;
   s timestamptz;
+  lt timestamp;
 begin
   if p_date is null or p_date !~ '^\d{4}-\d{2}-\d{2}$' then return null; end if;
   begin
@@ -69,7 +71,17 @@ begin
   end if;
   if upper(m[3]) = 'PM' and h <> 12 then h := h + 12; end if;
   if upper(m[3]) = 'AM' and h = 12 then h := 0; end if;
-  s := (d::timestamp + make_interval(hours => h, mins => mi)) at time zone 'America/Toronto';
+  lt := d::timestamp + make_interval(hours => h, mins => mi);
+  s := lt at time zone 'America/Toronto';
+  -- Parity with JS zonedWallTimeToUtcMs (B2 review): a nonexistent wall time (spring-forward
+  -- gap) is unusable → whole local day; an ambiguous one (fall-back) → the EARLIER instant.
+  if (s at time zone 'America/Toronto') <> lt then
+    return tstzrange((d::timestamp) at time zone 'America/Toronto',
+                     ((d + 1)::timestamp) at time zone 'America/Toronto', '[)');
+  end if;
+  if ((s - interval '1 hour') at time zone 'America/Toronto') = lt then
+    s := s - interval '1 hour';
+  end if;
   return tstzrange(s, s + make_interval(mins => p_duration_minutes), '[)');
 end;
 $$;
