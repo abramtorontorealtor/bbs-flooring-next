@@ -117,7 +117,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
           type="button"
           onClick={prevMonth}
           disabled={!canGoPrev}
-          className="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-11 h-11 shrink-0 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           aria-label="Previous month"
         >
           <ChevronLeft className="w-4 h-4 text-slate-600" />
@@ -129,7 +129,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
           type="button"
           onClick={nextMonth}
           disabled={!canGoNext}
-          className="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-11 h-11 shrink-0 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           aria-label="Next month"
         >
           <ChevronRight className="w-4 h-4 text-slate-600" />
