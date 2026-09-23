@@ -14,46 +14,45 @@
  *   onAlternate()              optional: "Ask for a different time" (B4 panel)
  *   idPrefix                   unique DOM id prefix
  */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BookingCalendar from '@/components/BookingCalendar';
 import {
   BOOKING_COPY, pickerView, reconcileSelection, isCalendarDateDisabled,
 } from '@/lib/booking/picker-model';
 
 export default function SlotPicker({ date, time, onDateChange, onTimeChange, token = null, override = null, onAlternate = null, idPrefix = 'slot' }) {
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [failed, setFailed] = useState(false);
+  // Fetched availability keyed by request; loading/override are DERIVED (no sync setState in effects).
+  const [fetched, setFetched] = useState({ key: null, result: null, failed: false });
   const [expanded, setExpanded] = useState(false);
   const [reload, setReload] = useState(0);
-  const liveRef = useRef(null);
   const [nowMs] = useState(() => Date.now()); // once per mount (lazy init, not during render)
-
-  // 409 → show the refreshed options the server returned (no extra round trip).
-  useEffect(() => {
-    if (override && override.date === date) { setResult(override); setFailed(false); setLoading(false); }
-  }, [override, date]);
+  const key = date ? `${date}|${token || ''}|${reload}` : null;
 
   useEffect(() => {
-    if (!date) { setResult(null); return undefined; }
+    if (!key) return undefined;
     const ctrl = new AbortController();
-    setLoading(true); setFailed(false); setExpanded(false);
     const qs = new URLSearchParams({ date, ...(token ? { token } : {}) });
     fetch(`/api/booking/availability?${qs}`, { cache: 'no-store', signal: ctrl.signal })
       .then(async (res) => {
         const body = await res.json().catch(() => null);
         if (!body || (res.status !== 200 && res.status !== 503)) throw new Error('bad');
-        setResult({ ...body, date: body.date || date });
+        setFetched({ key, result: { ...body, date: body.date || date }, failed: false });
       })
-      .catch((e) => { if (e?.name !== 'AbortError') { setFailed(true); setResult(null); } })
-      .finally(() => { if (!ctrl.signal.aborted) setLoading(false); });
+      .catch((e) => { if (e?.name !== 'AbortError') setFetched({ key, result: null, failed: true }); });
     return () => ctrl.abort();
-  }, [date, token, reload]);
+  }, [key, date, token]);
 
-  // Clear a selected time that is no longer offered (date change, refresh, 409).
+  // 409 → the refreshed options the server returned win for that date (parent clears on date change).
+  const useOverride = !!(override && override.date === date);
+  const loading = !!key && !useOverride && fetched.key !== key;
+  const result = useOverride ? override : (fetched.key === key ? fetched.result : null);
+  const failed = !useOverride && fetched.key === key && fetched.failed;
+
+  // Clear a selected time that is no longer offered (date change, refresh, 409). Parent callback,
+  // not local state.
   useEffect(() => {
-    if (!time || loading) return;
-    if (result && result.date === date && reconcileSelection(time, result, date) === '') onTimeChange('');
+    if (!time || loading || !result || result.date !== date) return;
+    if (reconcileSelection(time, result, date) === '') onTimeChange('');
   }, [result, loading, date, time, onTimeChange]);
 
   const view = pickerView(result, { expanded, loading, error: failed });
@@ -85,7 +84,7 @@ export default function SlotPicker({ date, time, onDateChange, onTimeChange, tok
       <p className="text-[11px] text-slate-500 mt-2">{BOOKING_COPY.timeZoneNote}</p>
       {date && (
         <div className="mt-3" aria-labelledby={`${idPrefix}-label`}>
-          <div ref={liveRef} role="status" aria-live="polite" className="text-sm text-slate-600">
+          <div role="status" aria-live="polite" className="text-sm text-slate-600">
             {view.message && <p className={view.state === 'unavailable' ? 'text-red-700' : ''}>{view.message}</p>}
           </div>
           {view.state === 'ready' && (
