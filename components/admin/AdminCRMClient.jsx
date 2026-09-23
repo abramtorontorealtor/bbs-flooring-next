@@ -397,9 +397,12 @@ export default function AdminCRMClient() {
     },
     onSuccess: (data, { action }) => {
       refreshAll();
-      const actionLabels = { confirm: 'Booking confirmed', reschedule: 'Rescheduled', cancel: 'Cancelled' };
+      const actionLabels = { confirm: 'Booking confirmed', reschedule: 'Rescheduled', cancel: 'Cancelled', complete: 'Marked complete' };
       const label = actionLabels[action] || 'Done';
-      if (data.emailSent) {
+      if (action === 'complete') {
+        // No email / calendar side effect for completion.
+        toast.success(label);
+      } else if (data.emailSent) {
         toast.success(`✅ ${label} — customer emailed`);
       } else {
         toast.warning(`⚠️ ${label} — but email failed to send. Call the customer.`);
@@ -1953,7 +1956,8 @@ export default function AdminCRMClient() {
                           {/* Mark complete — for confirmed bookings after the visit */}
                           {o.status === 'confirmed' && (
                             <Button size="sm" variant="outline" className="w-full border-emerald-300 text-emerald-800 hover:bg-emerald-50"
-                              onClick={() => entities.Booking.update(lead.entityId, { status: 'completed' }).then(() => { refreshAll(); toast.success('Marked complete'); setSelectedLead(null); })}>
+                              disabled={bookingAdminAction.isPending}
+                              onClick={() => bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'complete' })}>
                               ✅ Mark as Completed
                             </Button>
                           )}

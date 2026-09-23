@@ -9,6 +9,7 @@ import BookingCalendar from '@/components/BookingCalendar';
 import { CheckCircle, Clock, Phone, Star, ArrowRight, Loader2, MapPin } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { GOOGLE_RATING } from '@/lib/service-constants';
+import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
 
 const PROJECT_TYPES = [
   { value: 'hardwood', label: '🪵 Hardwood' },
@@ -207,10 +208,12 @@ export default function FreeMeasurementClient() {
           },
         }),
       });
-      if (!res.ok) throw new Error('Booking submission failed');
+      // Success ONLY when the server persisted a booking (res.ok && success && bookingId).
+      const outcome = interpretBookingSubmit(res, await readJsonSafe(res));
+      if (!outcome.success) throw new Error('Booking submission failed');
 
-      // Conversion tracking — fire ONLY after a confirmed successful submit
-      if (typeof window !== 'undefined' && window.gtag) {
+      // Conversion tracking — fire ONLY for a newly persisted booking (not a duplicate resubmit)
+      if (outcome.fireConversion && typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'book_appointment', {
           event_category: 'appointment',
           event_label: 'free_measurement',
@@ -224,7 +227,7 @@ export default function FreeMeasurementClient() {
           currency: 'CAD',
         });
       }
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      if (outcome.fireConversion && typeof window !== 'undefined' && typeof window.fbq === 'function') {
         window.fbq('track', 'Schedule', { content_name: 'Free Measurement' });
       }
 

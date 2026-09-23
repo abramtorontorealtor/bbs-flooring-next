@@ -15,6 +15,7 @@ import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import { ServiceGallery } from '@/components/service';
 import { stairsImages, flooringImages } from '@/data/galleryImages';
 import { GOOGLE_RATING } from '@/lib/service-constants';
+import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
 
 const QUOTE_PROOF = [
   stairsImages[2], flooringImages[3], stairsImages[0],
@@ -198,10 +199,12 @@ export default function QuoteBookingClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingPayload),
       });
-      if (!res.ok) throw new Error('Booking submission failed');
+      // Success ONLY when the server persisted a booking (res.ok && success && bookingId).
+      const outcome = interpretBookingSubmit(res, await readJsonSafe(res));
+      if (!outcome.success) throw new Error('Booking submission failed');
 
-      // Conversion tracking — fire ONLY after a confirmed successful submit
-      if (typeof window !== 'undefined' && window.gtag) {
+      // Conversion tracking — fire ONLY for a newly persisted booking (not a duplicate resubmit)
+      if (outcome.fireConversion && typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'book_appointment', {
           event_category: 'appointment',
           event_label: 'quote_booking',
@@ -218,7 +221,7 @@ export default function QuoteBookingClient() {
         });
       }
       // Meta Pixel — Schedule event
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      if (outcome.fireConversion && typeof window !== 'undefined' && typeof window.fbq === 'function') {
         window.fbq('track', 'Schedule', {
           content_name: productName || 'Quote Booking',
           value: estimate ? parseFloat(estimate) : 0,

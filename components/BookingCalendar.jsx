@@ -114,6 +114,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-100">
         <button
+          type="button"
           onClick={prevMonth}
           disabled={!canGoPrev}
           className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
@@ -125,6 +126,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
           {MONTHS[viewMonth]} {viewYear}
         </h3>
         <button
+          type="button"
           onClick={nextMonth}
           disabled={!canGoNext}
           className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
