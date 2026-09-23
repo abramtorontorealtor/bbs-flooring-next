@@ -4,8 +4,8 @@ Branch `feat/booking-lifecycle-phase-a`. Every step below needs **Abram's explic
 
 | File | What | Phase A? |
 |---|---|---|
-| `20260923_booking_calendar_sync.up.sql` | Adds `calendar_sync_status` (text, default `'unknown'`, CHECK unknown/pending/synced/failed/absent), `calendar_sync_error` (text), `calendar_synced_at` (timestamptz), `revision` (int not null default 0), `ownership_proof` (text, NULL) and `calendar_event_proof` (text, NULL) (R15). No backfill. | **Yes** |
-| `20260923_booking_calendar_sync.down.sql` | Drops only those 6 columns (the CHECK constraint goes with the column). | Yes (rollback) |
+| `20260923_booking_calendar_sync.up.sql` | Adds `calendar_sync_status` (text, default `'unknown'`, CHECK unknown/pending/synced/failed/absent), `calendar_sync_error` (text), `calendar_synced_at` (timestamptz), `revision` (int not null default 0), `ownership_proof` (text, NULL), `calendar_event_proof` (text, NULL) (R15) and `calendar_op_started_at` (timestamptz, NULL) (R7). 7 columns; only `calendar_sync_status` and `revision` have defaults. No backfill. | **Yes** |
+| `20260923_booking_calendar_sync.down.sql` | Drops only those 7 columns (the CHECK constraint goes with the column). | Yes (rollback) |
 | `20260923_bookings_anon_insert_tighten.sql` | Drops the unused `bookings_anon_insert` (`with_check true`) RLS policy. Option B (a constrained policy) is included, commented out. | **Launch prerequisite** since fix-3 (R15, §8). Still needs Abram's explicit OK |
 
 ## 0. Pre-flight (read-only)
@@ -21,7 +21,7 @@ where conrelid = 'public.bookings'::regclass;
 
 select server_version();   -- expect ≥ 11 (ADD COLUMN ... DEFAULT is metadata-only)
 ```
-Stop if any of the 6 columns or `bookings_calendar_sync_status_check` already exist with a different definition.
+Stop if any of the 7 columns or `bookings_calendar_sync_status_check` already exist with a different definition.
 
 ## 1. Backup (right before applying): private only (red-team R17)
 a) Row count plus a fingerprint, so you can prove afterwards that no booking changed:
@@ -79,7 +79,7 @@ Do **not** deploy first and migrate later (that runs the new flow in legacy mode
 - **Schema:** switch `BOOKING_STORE_MODE` off `full` and redeploy **first**, then run the down migration. It drops the 7 columns, which loses sync state, revision, ownership proofs (all rows become unverified again) and in-flight markers. Check `select count(*) from bookings where calendar_op_started_at is not null` first: those rows have an unresolved Google create. Resolve them (Retry) before dropping.
 - **Data restore:** only if something other than these columns changed. Compare against the §1a fingerprint and restore single rows from the private §1b copy.
 
-## 4. `bookings_anon_insert` (NOT Phase A)
+## 4. `bookings_anon_insert`: LAUNCH PREREQUISITE (R15, see §8)
 Snapshot the policy before any change:
 ```sql
 select policyname, permissive, roles, cmd, qual, with_check

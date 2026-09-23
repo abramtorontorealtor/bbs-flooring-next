@@ -7,7 +7,8 @@
 -- public.bookings, used by lib/booking/lifecycle.js via lib/booking/supabase-store.js.
 --
 -- Additive only:
---   * 7 new columns (4 with defaults, 3 nullable) → existing reads/writes are unaffected.
+--   * 7 new columns: 2 with defaults (calendar_sync_status 'unknown', revision 0),
+--     5 nullable without defaults → existing reads/writes are unaffected.
 --   * NO backfill. Existing rows become calendar_sync_status='unknown' and
 --     revision=0 ("not checked yet"). Nothing is marked 'synced' automatically.
 --   * No existing column, index, policy or row value is changed.
@@ -50,7 +51,7 @@ comment on column public.bookings.ownership_proof is
 comment on column public.bookings.calendar_event_proof is
   'HMAC(BOOKING_OWNERSHIP_SECRET, event|id|calendar_event_id) for a non-derived (legacy) event id, written only by admin trust_calendar_event. NULL = the stored event id is never sent to Google.';
 comment on column public.bookings.calendar_op_started_at is
-  'When a Google Calendar insert for this booking was started and its outcome is not yet definite (timeout/abort). While recent, a cancellation cannot report the event absent.';
+  'When a Google Calendar insert for this booking was started and its outcome is not yet definite (timeout/abort). While set, a cancellation must reserve the stable id instead of reporting it absent; cleared only when Google state rules out a late insert, never by time.';
 comment on column public.bookings.revision is
   'Optimistic-concurrency counter, +1 on every lifecycle state change. 0 = pre-Phase-A row.';
 

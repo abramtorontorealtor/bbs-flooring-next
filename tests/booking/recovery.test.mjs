@@ -134,3 +134,47 @@ test('R13: sync that keeps conflicting records a durable failure and promises no
   assert.match(r.calendarSync.error, /retry/i);
   assert.equal(db.row(b.id).calendar_sync_status, 'failed');
 });
+
+// ── R7 marker ownership (release-package review) ───────────────────────────
+test('R7: a later DEFINITE insert failure does not clear an EARLIER uncertain insert → cancel reserves, nothing live', async () => {
+  const { db, google, svc } = setup();
+  const g = gate();
+  google.faults.insert.push(async () => { await g.p; return null; }); // insert #1 in transit
+  const c1 = await svc.create(REQUEST);
+  const id = c1.booking.id;
+  assert.ok(db.row(id).calendar_op_started_at);
+  google.faults.insert.push({ success: false, httpStatus: 403, error: 'rateLimitExceeded' }); // insert #2 definite
+  const r = await svc.retrySync(id);
+  assert.equal(r.calendarSync.status, 'failed');
+  assert.ok(db.row(id).calendar_op_started_at, 'earlier uncertainty kept');
+  const c = await svc.cancel(id, '', 'customer'); // must reserve the stable id
+  assert.equal(c.calendarSync.status, 'absent');
+  g.release(); // insert #1 reaches Google now
+  for (let i = 0; i < 20; i++) await tick();
+  assert.equal(db.row(id).status, 'cancelled');
+  assert.equal(google.liveEvents().length, 0, 'late insert #1 refused (id reserved)');
+});
+
+test('R7: concurrent same-revision retries (one definite failure, one uncertain) → marker kept; cancel leaves nothing live', async () => {
+  const { db, google, svc } = setup();
+  const b = db.seed({ ...REQUEST, status: 'confirmed', calendar_event_id: null, calendar_sync_status: 'failed' });
+  const g = gate();
+  google.faults.insert.push(async () => { await g.p; return null; }, { success: false, httpStatus: 400, error: 'bad' });
+  const [r1, r2] = await Promise.all([svc.retrySync(b.id), svc.retrySync(b.id)]);
+  assert.ok([r1, r2].every((r) => r.calendarSync.status === 'failed'));
+  assert.ok(db.row(b.id).calendar_op_started_at, 'the uncertain attempt still owns the marker');
+  const c = await svc.cancel(b.id, '', 'admin');
+  assert.equal(c.calendarSync.status, 'absent');
+  g.release();
+  for (let i = 0; i < 20; i++) await tick();
+  assert.equal(google.liveEvents().length, 0);
+});
+
+test('R7: cancel that cannot resolve the stable id (ownership skip) never clears the marker', async () => {
+  const { db, svc } = setup();
+  const b = db.seed({ ...REQUEST, status: 'confirmed', calendar_event_id: null, calendar_op_started_at: '2026-09-23T11:00:00.000Z' });
+  // ambiguous reservation → failed, marker kept (covered above); success → cleared only by observation
+  const c = await svc.cancel(b.id, '', 'admin');
+  assert.equal(c.calendarSync.status, 'absent');
+  assert.equal(db.row(b.id).calendar_op_started_at, null, 'cleared because the stable id was reserved (observed)');
+});

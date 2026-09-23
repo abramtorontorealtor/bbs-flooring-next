@@ -46,7 +46,11 @@ psql "$SANDBOX_URL" -c "\\d public.bookings"   # 7 columns gone, all original co
 Anon-insert drop (`20260923_bookings_anon_insert_tighten.sql`): apply in the sandbox, confirm with `pg_policies` that only `admin_bookings_all` remains, then run the rollback statement from runbook §3 and confirm the policy is restored exactly as snapshotted.
 
 ## C. Isolated preview checks (Vercel preview, NOT production; test data only)
-Preconditions: a preview deployment pointed at a **sandbox** Supabase + the sandbox calendar (A); `BOOKING_STORE_MODE=full`; `BOOKING_OWNERSHIP_SECRET` set; email/Telegram senders pointed at a test inbox, or disabled.
+Preconditions (all mandatory; stop if any is missing):
+- `GOOGLE_CALENDAR_ID` set **explicitly** on the preview environment to the disposable sandbox calendar id from §A (never unset: unset means `primary`, the production calendar). Before any booking test, confirm with one read-only call that the id resolves to the sandbox calendar's summary.
+- Preview-scoped Supabase URL + service-role key for a **sandbox** project, not inherited from production.
+- **No production send credentials inherited:** leave the Brevo key and Telegram bot token/chat id unset on the preview environment (the code skips sending without them), or point them at a test inbox/chat. Check the preview env list before deploying.
+- `BOOKING_STORE_MODE=full`; `BOOKING_OWNERSHIP_SECRET` set (a preview-only value, not the production secret).
 1. **Function budget:** read the actual `maxDuration` / Fluid Compute setting for the booking routes (parent is checking the Vercel config read-only). Confirm the worst case (sync 4.5 s + record 1 s + notify 2.5 s + identify 1 s ≈ 9 s, plus DB/parse/network headroom, plus the R7 extra GET/fence calls) fits. If the limit is 10 s, lower `BOOKING_TIMEOUT_SYNC_MS` so there are ≥2 s of headroom.
 2. **Create:** submit the free-measurement form → 200, sandbox event created, customer page shows success, the response `calendarSync` is `{status}` only.
 3. **Customer reschedule / cancel** via `/booking/view?token=…` → same event moved / deleted + fenced. The lookup response has no calendar ids or notes.

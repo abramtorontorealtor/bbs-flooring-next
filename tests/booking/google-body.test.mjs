@@ -63,3 +63,24 @@ test('R20: every real request uses sendUpdates=none and never adds attendees; co
   assert.deepEqual(calls[2].body, { status: 'cancelled', extendedProperties: { private: { bbs_fence: 'nonce-1' } } });
   assert.equal(calls[3].method, 'DELETE');
 });
+
+test('harness: GOOGLE_CALENDAR_ID targets a sandbox calendar (URL-encoded); unset → primary', async () => {
+  const prev = process.env.GOOGLE_CALENDAR_ID;
+  try {
+    process.env.GOOGLE_CALENDAR_ID = 'bbs-sandbox_1@group.calendar.google.com';
+    await insertCalendarEventWithId('bbsx', b({ preferred_time: '1:30 PM' }));
+    await patchCalendarEvent('bbsx', b({ preferred_time: '1:30 PM' }), { ifMatch: '"1"' });
+    await markCalendarEventCancelled('bbsx', { fence: 'n' });
+    await deleteCalendarEventById('bbsx');
+    for (const c of calls) {
+      assert.ok(c.url.includes('/calendars/bbs-sandbox_1%40group.calendar.google.com/events'), c.url);
+      assert.ok(!c.url.includes('/calendars/primary/'));
+    }
+    delete process.env.GOOGLE_CALENDAR_ID;
+    calls.length = 0;
+    await deleteCalendarEventById('bbsx');
+    assert.match(calls[0].url, /\/calendars\/primary\/events\/bbsx/);
+  } finally {
+    if (prev === undefined) delete process.env.GOOGLE_CALENDAR_ID; else process.env.GOOGLE_CALENDAR_ID = prev;
+  }
+});
