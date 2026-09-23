@@ -1,126 +1,26 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/api-auth';
-import { getSupabaseAdminClient } from '@/lib/supabase';
+import { getSupabaseAdminClient, getServiceClientOrNull } from '@/lib/supabase';
+import { handleSendFollowup } from '@/lib/followup/send-followup';
 import { sendFollowUpEmail } from '@/lib/email';
 
 /**
  * POST /api/admin/send-followup
- * 
- * Admin-only: Send a follow-up email to a lead and log it in lead_follow_ups.
- * 
- * Body: {
- *   leadId: UUID,
- *   leadSource: 'quote' | 'saved_quote' | 'contact' | 'booking',
- *   to: string (email),
- *   template: string (template key),
- *   customSubject?: string,
- *   customBody?: string,
- *   vars: { name, product, sqft, quote_total, address },
- *   nextFollowUpDate?: string (YYYY-MM-DD),
- *   notes?: string,
- * }
+ *
+ * Admin-only: send a follow-up email to a lead (unless skipEmail) and log it in
+ * lead_follow_ups. Logic + response semantics: lib/followup/send-followup.js.
+ * A log-only call that could not write its log (or next_follow_up_date) returns
+ * success:false; a sent email is never reported as failed (no accidental resend).
  */
 export async function POST(request) {
-  const { error } = await requireAdmin();
-  if (error) return error;
-
-  try {
-    const body = await request.json();
-    const {
-      leadId, leadSource, to, template,
-      customSubject, customBody, vars = {},
-      nextFollowUpDate, notes, skipEmail,
-      method: logMethod,
-    } = body;
-
-    // Validate required fields
-    if (!leadId || !leadSource || !template) {
-      return NextResponse.json(
-        { success: false, error: 'Missing required fields: leadId, leadSource, template' },
-        { status: 400 }
-      );
-    }
-
-    if (!['quote', 'saved_quote', 'contact', 'booking'].includes(leadSource)) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid leadSource' },
-        { status: 400 }
-      );
-    }
-
-    // Send the email (unless skipEmail — used for logging calls/texts)
-    let emailSent = false;
-    if (!skipEmail && to) {
-      const emailResult = await sendFollowUpEmail({
-        to,
-        template,
-        vars,
-        customSubject: customSubject || undefined,
-        customBody: customBody || undefined,
-      });
-
-      if (!emailResult.success) {
-        return NextResponse.json(
-          { success: false, error: `Email failed: ${emailResult.reason || emailResult.error || 'Unknown'}` },
-          { status: 500 }
-        );
-      }
-      emailSent = true;
-    }
-
-    // Log to lead_follow_ups table
-    const supabase = getSupabaseAdminClient();
-
-    const subject = customSubject || `Follow-up: ${template.replace(/_/g, ' ')}`;
-
-    const { error: insertError } = await supabase
-      .from('lead_follow_ups')
-      .insert({
-        lead_id: leadId,
-        lead_source: leadSource,
-        method: logMethod || 'email',
-        template,
-        subject,
-        body: customBody || `Template: ${template}`,
-        recipient_email: to,
-        next_follow_up_date: nextFollowUpDate || null,
-        sent_by: 'admin',
-        notes: notes || null,
-      });
-
-    if (insertError) {
-      // Email sent successfully but logging failed — don't fail the whole request
-      console.error('[SendFollowup] Failed to log follow-up:', insertError);
-    }
-
-    // Update next_follow_up_date on the lead record if provided
-    if (nextFollowUpDate) {
-      const tableMap = {
-        quote: 'quotes',
-        saved_quote: 'saved_quotes',
-        contact: 'contact_leads',
-        booking: 'bookings',
-      };
-      const tableName = tableMap[leadSource];
-
-      const { error: updateError } = await supabase
-        .from(tableName)
-        .update({ next_follow_up_date: nextFollowUpDate })
-        .eq('id', leadId);
-
-      if (updateError) {
-        console.error(`[SendFollowup] Failed to update ${tableName}.next_follow_up_date:`, updateError);
-      }
-    }
-
-    return NextResponse.json({ success: true, emailSent, logged: true });
-  } catch (err) {
-    console.error('[SendFollowup] Error:', err);
-    return NextResponse.json(
-      { success: false, error: err.message || 'Internal server error' },
-      { status: 500 }
-    );
-  }
+  const r = await handleSendFollowup(request, {
+    requireAdmin,
+    getSupabase: getServiceClientOrNull,
+    sendFollowUpEmail,
+    logger: console,
+  });
+  if (r.passthrough) return r.passthrough;
+  return NextResponse.json(r.body, { status: r.status });
 }
 
 /**

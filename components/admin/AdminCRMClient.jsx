@@ -746,7 +746,8 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(plan.log),
           });
-          if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Could not log follow-up'); }
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || !data.success) throw new Error(data.error || 'Could not log follow-up');
         }
       } else if (plan.kind === 'booking_lifecycle') {
         // The mutation's own onSuccess/onError refresh and toast; don't double-toast.
@@ -963,7 +964,8 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
         throw new Error(data.error || 'Failed to send');
       }
 
-      toast.success(`\u2709\ufe0f Follow-up sent to ${followUpLead.name}`);
+      if (data.warning) toast.warning(`\u2709\ufe0f Sent to ${followUpLead.name}. ${data.warning}`);
+      else toast.success(`\u2709\ufe0f Follow-up sent to ${followUpLead.name}`);
       setFollowUpOpen(false);
       setFollowUpLead(null);
       refreshAll();
@@ -1841,7 +1843,8 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
                                 method: method,
                               }),
                             });
-                            if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Could not log interaction'); }
+                            const logData = await res.json().catch(() => ({}));
+                            if (!res.ok || !logData.success) throw new Error(logData.error || 'Could not log interaction');
                             // Also update lead status if appropriate. For bookings the interaction
                             // above IS the follow-up record: no bookings.status write (R14).
                             const logged = { alreadyLogged: true };

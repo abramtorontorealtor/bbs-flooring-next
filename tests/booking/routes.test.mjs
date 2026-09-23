@@ -294,8 +294,9 @@ test('legacy reschedule: routes through lifecycle (event moves, revision bump), 
 
 // ── send-followup / updated_at interplay (decision 8e) ──────────────────────
 test('send-followup writes only next_follow_up_date (no updated_at, no revision) on bookings', () => {
-  const src = readFileSync(new URL('../../app/api/admin/send-followup/route.js', import.meta.url), 'utf8');
-  const m = src.match(/\.from\(tableName\)\s*\.update\(\{([^}]*)\}\)/);
+  // Behaviour is also exercised through the real handler in send-followup.test.mjs.
+  const src = readFileSync(new URL('../../lib/followup/send-followup.js', import.meta.url), 'utf8');
+  const m = src.match(/\.from\(LEAD_TABLES\[leadSource\]\)\s*\.update\(\{([^}]*)\}\)/);
   assert.ok(m, 'send-followup lead update found');
   assert.match(m[1], /next_follow_up_date/);
   assert.doesNotMatch(m[1], /updated_at|revision|status/);
