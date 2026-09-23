@@ -170,3 +170,72 @@ test('R7: one candidate delete failing → failed, handle kept, retry finishes t
   assert.equal(r.calendarSync.status, 'absent');
   assertNothingLive(google, [L, S]);
 });
+
+// ── R8 ─────────────────────────────────────────────────────────────────────
+
+test('R8 trace: stable replacement S created for missing legacy L, id write fails → failed (retryable); cancel deletes S; nothing live', async () => {
+  const { db, google, notify, svc } = setup();
+  const L = 'legacygone1';
+  const b = db.seed({ ...REQUEST, status: 'confirmed', calendar_event_id: L, calendar_sync_status: 'failed' });
+  const S = stableEventId(b.id);
+  // L no longer exists in Google (404 on PATCH) → sync creates S.
+  const realUpdate = db.update.bind(db);
+  let failNext = true;
+  db.update = async (id, patch, opts) => {
+    if (failNext && patch.calendar_event_id === S) {
+      failNext = false;
+      return { data: null, error: { message: 'connection reset' }, conflict: false };
+    }
+    return realUpdate(id, patch, opts);
+  };
+  const r = await svc.retrySync(b.id);
+  assert.equal(r.success, true);
+  assert.equal(r.calendarSync.status, 'failed', 'not synced: the replacement id was not saved');
+  assert.match(r.calendarSync.error, /could not be saved; retry sync/);
+  assert.equal(r.calendarSync.eventId, S);
+  assert.equal(db.row(b.id).calendar_event_id, L, 'DB still points at L');
+  assert.equal(google.events.get(S).status, 'confirmed', 'S really exists');
+
+  const sent = notify.sent.length;
+  const c = await svc.cancel(b.id, '', 'admin');
+  assert.equal(c.success, true);
+  assert.equal(c.calendarSync.status, 'absent');
+  assert.equal(db.row(b.id).status, 'cancelled');
+  assert.ok(google.log.some(([op, id]) => op === 'delete' && id === S), 'cancellation tried S');
+  assert.ok(google.log.some(([op, id]) => op === 'delete' && id === L), 'cancellation tried L');
+  assertNothingLive(google, [L, S]);
+  assert.equal(notify.sent.length, sent + 1, 'only the cancellation email');
+});
+
+test('R8: metadata write failure after a plain successful sync is failed, not synced', async () => {
+  const { db, svc } = setup();
+  const { booking } = await svc.create(REQUEST);
+  const realUpdate = db.update.bind(db);
+  db.update = async (id, patch, opts) => (patch.calendar_sync_status === 'synced'
+    ? { data: null, error: { message: 'timeout' }, conflict: false }
+    : realUpdate(id, patch, opts));
+  const r = await svc.retrySync(booking.id);
+  assert.equal(r.calendarSync.status, 'failed');
+  assert.match(r.calendarSync.error, /sync state not saved; retry sync/);
+});
+
+test('R8: retry after the failed id write persists S; cancel then deletes it', async () => {
+  const { db, google, svc } = setup();
+  const L = 'legacygone2';
+  const b = db.seed({ ...REQUEST, status: 'confirmed', calendar_event_id: L });
+  const S = stableEventId(b.id);
+  const realUpdate = db.update.bind(db);
+  let failNext = true;
+  db.update = async (id, patch, opts) => {
+    if (failNext && patch.calendar_event_id === S) { failNext = false; return { data: null, error: { message: 'x' }, conflict: false }; }
+    return realUpdate(id, patch, opts);
+  };
+  assert.equal((await svc.retrySync(b.id)).calendarSync.status, 'failed');
+  const again = await svc.retrySync(b.id); // L gone (404) → insert 409 → adopt S
+  assert.equal(again.calendarSync.status, 'synced');
+  assert.equal(db.row(b.id).calendar_event_id, S);
+  assert.equal(google.liveEvents().length, 1);
+  await svc.cancel(b.id, '', 'customer');
+  assertNothingLive(google, [L, S]);
+  assert.equal(db.row(b.id).calendar_event_id, null, 'stable id is derivable → cleared');
+});
