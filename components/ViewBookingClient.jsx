@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import BookingCalendar from '@/components/BookingCalendar';
+import SlotPicker from '@/components/booking/SlotPicker';
+import { submitFailure } from '@/lib/booking/picker-model';
 import { MapPin, Calendar as CalendarIcon, Clock, Phone, Mail, AlertCircle, CheckCircle, Search, Loader2, ArrowLeft, X } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
@@ -19,7 +20,6 @@ const STATUS_CONFIG = {
   cancelled: { color: 'bg-red-100 text-red-800', label: 'Cancelled', icon: '✗', message: 'This appointment has been cancelled.' },
 };
 
-const TIME_SLOTS = ['11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '5:00 PM'];
 
 function formatDate(dateStr) {
   if (!dateStr) return 'TBD';
@@ -79,23 +79,7 @@ export default function ViewBookingClient() {
     fetchBooking();
   }, [tokenParam, idParam]);
 
-  // Available time slots (24h filter)
-  const availableTimeSlots = useMemo(() => {
-    if (!rescheduleDate) return TIME_SLOTS;
-    const now = new Date();
-    const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-    return TIME_SLOTS.filter(timeSlot => {
-      const [year, month, day] = rescheduleDate.split('-').map(Number);
-      const slotDate = new Date(year, month - 1, day);
-      const [time, period] = timeSlot.split(' ');
-      const [hours, minutes] = time.split(':').map(Number);
-      let hour24 = hours;
-      if (period === 'PM' && hours !== 12) hour24 += 12;
-      if (period === 'AM' && hours === 12) hour24 = 0;
-      slotDate.setHours(hour24, minutes, 0, 0);
-      return slotDate >= minDateTime;
-    });
-  }, [rescheduleDate]);
+  const [rescheduleOverride, setRescheduleOverride] = useState(null);
 
   // Lookup by email + phone
   const handleLookup = async (e) => {
@@ -129,22 +113,27 @@ export default function ViewBookingClient() {
 
   // Reschedule
   const handleReschedule = async () => {
-    if (!rescheduleDate) return;
+    if (!rescheduleDate || !rescheduleTime) return;
     setActionLoading(true);
+    setError('');
     try {
       const res = await fetch('/api/booking/customer-action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: booking.lookup_token, action: 'reschedule', preferred_date: rescheduleDate, preferred_time: rescheduleTime }),
       });
-      const data = await res.json();
-      if (data.success) {
-        setBooking(data.booking);
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        setBooking((b) => ({ ...b, ...data.booking }));
         setShowReschedule(false);
         setRescheduleDate('');
         setRescheduleTime('');
+        setRescheduleOverride(null);
       } else {
-        setError(data.error || 'Failed to reschedule');
+        // B2: 409 → your original booking is unchanged; pick from the refreshed options.
+        const f = submitFailure(res.status, data);
+        if (f.kind === 'slot_taken') { setRescheduleOverride(f.availability); setRescheduleTime(''); }
+        setError(f.kind === 'slot_taken' ? `${f.message} Your current appointment has not changed.` : (data.error || f.message));
       }
     } catch {
       setError('Failed to reschedule. Please try again or call us.');
@@ -351,48 +340,18 @@ export default function ViewBookingClient() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <BookingCalendar
-                selected={rescheduleDate}
-                onSelect={(dateStr) => {
-                  setRescheduleDate(dateStr);
-                  setRescheduleTime('');
-                }}
-                isDateDisabled={(date) => {
-                  const now = new Date();
-                  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                  const minDateTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-                  const maxDate = new Date(todayStart.getTime() + 60 * 24 * 60 * 60 * 1000);
-                  if (date < todayStart) return true;
-                  if (date.getDay() === 0) return true;
-                  if (date > maxDate) return true;
-                  const lastSlotOnDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17, 0, 0);
-                  if (lastSlotOnDate < minDateTime) return true;
-                  return false;
-                }}
+              <SlotPicker
+                idPrefix="rs"
+                date={rescheduleDate}
+                time={rescheduleTime}
+                token={booking?.lookup_token || null}
+                override={rescheduleOverride}
+                onDateChange={(d) => { setError(''); setRescheduleOverride(null); setRescheduleDate(d); setRescheduleTime(''); }}
+                onTimeChange={(t) => { setError(''); setRescheduleTime(t); }}
               />
-              {rescheduleDate && (
-                <div>
-                  <Label className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5 block">Select a Time</Label>
-                  <div className="grid grid-cols-4 gap-1.5">
-                    {availableTimeSlots.map(t => (
-                      <button
-                        key={t}
-                        type="button"
-                        onClick={() => setRescheduleTime(t)}
-                        className={`py-2 px-1 rounded-lg text-xs font-medium transition-all ${
-                          rescheduleTime === t
-                            ? 'bg-amber-500 text-white shadow-md shadow-amber-200'
-                            : 'bg-slate-50 text-slate-600 hover:bg-amber-50 hover:text-amber-700 border border-slate-200'
-                        }`}
-                      >
-                        {t}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
               <div className="flex gap-3">
-                <Button onClick={handleReschedule} disabled={!rescheduleDate || actionLoading}
+                <Button onClick={handleReschedule} disabled={!rescheduleDate || !rescheduleTime || actionLoading}
                   className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-semibold">
                   {actionLoading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Rescheduling...</> : 'Confirm New Date'}
                 </Button>

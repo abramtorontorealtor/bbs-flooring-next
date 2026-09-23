@@ -324,7 +324,7 @@ export default function QuoteBookingClient() {
               </div>
             )}
 
-            {error && <p className="text-red-500 text-sm mb-4 font-medium">{error}</p>}
+            {error && step !== 2 && <p role="alert" className="text-red-500 text-sm mb-4 font-medium">{error}</p>}
 
             {/* Step 1 — Postal Code */}
             {step === 1 && (
