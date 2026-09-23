@@ -186,7 +186,7 @@ export default function BookingCalendar({ selected, onSelect, isDateDisabled }) 
                     ${disabled && !cell.outside ? 'line-through decoration-slate-300' : ''}
                   `}
                   aria-label={cell.date.toDateString()}
-                  aria-selected={sel}
+                  aria-pressed={sel}
                 >
                   {cell.day}
                   {tod && !sel && (
