@@ -285,7 +285,6 @@ export default function QuoteBookingClient() {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs font-medium text-slate-700 md:hidden">
             <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-green-600" /> Free</span>
             <span className="flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-green-600" /> No Obligation</span>
-            <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-amber-600" /> Same-Week Booking</span>
             <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" /> {GOOGLE_RATING}★ on Google</span>
           </div>
         </div>
@@ -479,7 +478,7 @@ export default function QuoteBookingClient() {
                 { icon: FileText, title: 'Accurate Quotes', desc: 'We measure your space for a precise, all-in quote—no surprises.' },
                 { icon: CheckCircle, title: 'No Pressure, Guaranteed', desc: '100% free, no obligation. Every job ends with a final walkthrough — we make it right until you\'re satisfied.' },
                 { icon: Clock, title: 'Quick & Easy', desc: 'Flexible scheduling, including weekend availability across the GTA.' },
-                { icon: CalendarCheck, title: 'Same-Week Availability', desc: 'Most appointments are confirmed within 24 hours.' },
+                { icon: CalendarCheck, title: 'Real-Time Availability', desc: 'Choose from the times that are actually open. We confirm your appointment by email.' },
               ].map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="flex gap-4">
                   <Icon className="w-10 h-10 text-amber-600 flex-shrink-0" />
