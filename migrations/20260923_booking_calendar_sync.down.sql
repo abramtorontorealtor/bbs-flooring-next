@@ -1,7 +1,7 @@
 -- ============================================================================
 -- DRAFT — NOT APPLIED. Rollback for 20260923_booking_calendar_sync.up.sql.
 --
--- Drops ONLY the four columns the up migration added (and, with them, the
+-- Drops ONLY the six columns the up migration added (and, with them, the
 -- bookings_calendar_sync_status_check constraint and column comments).
 -- Every other column, row, index and RLS policy is untouched.
 --
@@ -23,7 +23,9 @@ alter table public.bookings
   drop column if exists calendar_sync_status,
   drop column if exists calendar_sync_error,
   drop column if exists calendar_synced_at,
-  drop column if exists revision;
+  drop column if exists revision,
+  drop column if exists ownership_proof,
+  drop column if exists calendar_event_proof;
 
 commit;
 

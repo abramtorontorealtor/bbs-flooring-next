@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { bookingSyncWarning, cleanSyncError } from '../../lib/booking/sync-warning.js';
+import { bookingSyncWarning, cleanSyncError, isUnverifiedOwnership } from '../../lib/booking/sync-warning.js';
 
 test('failed → red level with sanitized error title; synced/absent → nothing', () => {
   const w = bookingSyncWarning({ status: 'confirmed', calendar_sync_status: 'failed',
@@ -61,4 +61,11 @@ test('CRM wires the warning + retry_sync through the existing admin-action mutat
   const page = readFileSync(new URL('../../app/admin/crm/page.jsx', import.meta.url), 'utf8');
   assert.match(page, /resolveStoreMode\(process\.env\)/);
   assert.match(page, /<AdminCRMClient bookingStoreMode=\{bookingStoreMode\} \/>/);
+});
+
+test('R15: isUnverifiedOwnership from last response reason or durable row error', () => {
+  assert.equal(isUnverifiedOwnership({}, { status: 'failed', reason: 'unverified_calendar_owner' }), true);
+  assert.equal(isUnverifiedOwnership({ calendar_sync_error: "calendar event x is not verified as this booking's event" }), true);
+  assert.equal(isUnverifiedOwnership({ calendar_sync_error: 'HTTP 500: Backend Error' }), false);
+  assert.equal(isUnverifiedOwnership({ calendar_sync_error: 'not verified' }, { status: 'synced', error: null }), false);
 });

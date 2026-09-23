@@ -4,9 +4,9 @@ Branch `feat/booking-lifecycle-phase-a`. Every step below needs **Abram's explic
 
 | File | What | Phase A? |
 |---|---|---|
-| `20260923_booking_calendar_sync.up.sql` | Adds `calendar_sync_status` (text, default `'unknown'`, CHECK unknown/pending/synced/failed/absent), `calendar_sync_error` (text), `calendar_synced_at` (timestamptz), `revision` (int not null default 0). No backfill. | **Yes** |
-| `20260923_booking_calendar_sync.down.sql` | Drops only those 4 columns (the CHECK constraint goes with the column). | Yes (rollback) |
-| `20260923_bookings_anon_insert_tighten.sql` | Drops the unused `bookings_anon_insert` (`with_check true`) RLS policy. Option B (a constrained policy) is included, commented out. | **NO**, it needs Abram's separate review |
+| `20260923_booking_calendar_sync.up.sql` | Adds `calendar_sync_status` (text, default `'unknown'`, CHECK unknown/pending/synced/failed/absent), `calendar_sync_error` (text), `calendar_synced_at` (timestamptz), `revision` (int not null default 0), `ownership_proof` (text, NULL) and `calendar_event_proof` (text, NULL) (R15). No backfill. | **Yes** |
+| `20260923_booking_calendar_sync.down.sql` | Drops only those 6 columns (the CHECK constraint goes with the column). | Yes (rollback) |
+| `20260923_bookings_anon_insert_tighten.sql` | Drops the unused `bookings_anon_insert` (`with_check true`) RLS policy. Option B (a constrained policy) is included, commented out. | **Launch prerequisite** since fix-3 (R15, §8). Still needs Abram's explicit OK |
 
 ## 0. Pre-flight (read-only)
 ```sql
@@ -21,7 +21,7 @@ where conrelid = 'public.bookings'::regclass;
 
 select server_version();   -- expect ≥ 11 (ADD COLUMN ... DEFAULT is metadata-only)
 ```
-Stop if any of the 4 columns or `bookings_calendar_sync_status_check` already exist with a different definition.
+Stop if any of the 6 columns or `bookings_calendar_sync_status_check` already exist with a different definition.
 
 ## 1. Backup (right before applying)
 a) Row count plus a fingerprint, so you can prove afterwards that no booking changed:
@@ -42,7 +42,7 @@ create table public.bookings_backup_20260923 as select * from public.bookings;
 If you use the in-DB snapshot, drop it once the release is verified. It holds customer PII, and RLS is *not* enabled on a table created this way. Enable RLS on it or keep it only briefly.
 
 ## 2. Apply order (revised after red-team R10: schema FIRST)
-**Legacy mode cannot record durable sync failures.** Without the four new columns, a Google failure or timeout is not stored anywhere. The CRM gets no red "Calendar sync failed" badge and no Retry for that booking, and the API only returns `calendarSync.recorded:false` for that one response. Legacy CAS guards on `updated_at` + `status` only, which is weaker than `revision` (red-team R11). So the new booking flow must **not** go live on the pre-migration schema. Legacy/auto fallback exists only as a safety net for rollback and emergencies.
+**Legacy mode cannot record durable sync failures.** Without the new columns, a Google failure or timeout is not stored anywhere. The CRM gets no red "Calendar sync failed" badge and no Retry for that booking, and the API only returns `calendarSync.recorded:false` for that one response. Legacy CAS guards on `updated_at` + `status` only, which is weaker than `revision` (red-team R11). So the new booking flow must **not** go live on the pre-migration schema. Legacy/auto fallback exists only as a safety net for rollback and emergencies.
 
 1. Take the backup (§1).
 2. Run `20260923_booking_calendar_sync.up.sql` **before** deploying the Phase A code. The migration is additive with defaults, so today's production code keeps working unchanged. It ends with `notify pgrst, 'reload schema'` so PostgREST sees the new columns.
@@ -120,3 +120,25 @@ group by 1 order by 2 desc;
 - Same statuses with a **past** date → was the visit done? Mark it completed via admin-action `complete`, or cancel via Booking Actions if it never happened (the cancel emails the customer, so decide first).
 - `lost` → the lead was lost. If an appointment exists, cancelling is a customer-facing action: Abram decides per row.
 - Record each decision in the follow-up log, not in `status`.
+
+## 8. Calendar authority + customer token exposure (red-team R15/R16, fix-3)
+**Threat.** `bookings_anon_insert` lets anyone insert a row with an id, `lookup_token` and `calendar_event_id` of their choosing. The customer token then drives the server's Google credentials. A matching token or stable id proves nothing, because the attacker picked both.
+
+**Design (minimal, fail closed).** `lib/booking/ownership.js`: HMAC proofs keyed by the server-only env `BOOKING_OWNERSHIP_SECRET` (≥32 chars).
+- `lifecycle.create()` picks the booking UUID itself and writes `ownership_proof = HMAC(row|id)`. A direct anon insert cannot produce it.
+- Derived stable id (`bbs…`): Google is touched only for a proven row, or when the actor is admin/server.
+- Any other stored id (legacy Google id, or whatever a forged row claims): **no Google call for any actor** without `calendar_event_proof = HMAC(event|id|eventId)`. Only the admin action `trust_calendar_event` (with the exact stored id echoed back) writes that proof.
+- Blocked → `calendarSync:{status:'failed', reason:'unverified_calendar_owner'}` (red badge), never synced/absent. The DB change (e.g. the customer's cancellation) still stands and emails still go.
+- No secret, or legacy store mode (proof columns stripped) → nothing verifies. Customer-driven calendar changes fail closed. Server create and admin actions on stable ids still work.
+- No service-role key → booking APIs, lookup and send-followup return **503** (`getServiceClientOrNull`, no anon fallback).
+
+**R16.** Lookup requires a valid email and ≥10 phone digits. The email is matched literally (ILIKE wildcards escaped plus an exact JS re-check). The phone must equal the stored last 10 digits, so blank stored phones never match. `lookup-token` requires a UUID. Per-IP rate limits: lookup 5/15 min, token 30/15 min, customer-action 10/15 min. All customer responses use a DTO: no calendar ids, proofs, sync errors, notes, email/phone, revision or visitor id.
+
+**Legacy reconciliation tradeoff (no auto-trust, no backfill).** Every pre-migration row has NULL proofs. Until an admin verifies it, a customer cancelling an old booking cancels it in the DB and emails normally, but the Google event stays. The CRM then shows a red "not verified" badge. Per row: open the event in Google Calendar, check it really is this customer's appointment, then use **Verify calendar event** (sends `trust_calendar_event`) followed by **Retry**. This is the price of not trusting rows an attacker could have written. Rows are few (see the §7 query / `select count(*) from bookings where status in ('pending','confirmed') and ownership_proof is null`).
+
+**Rollout prerequisites (add to §2, all need Abram's OK):**
+1. Snapshot `pg_policies`, then apply `20260923_bookings_anon_insert_tighten.sql` **before** the Phase A deploy (a live log review for unknown anon writers first). Dropping the policy stops new forged rows. It does **not** make old rows trustworthy; the proofs do that.
+2. Set `BOOKING_OWNERSHIP_SECRET` (random ≥32 chars, server-only, never `NEXT_PUBLIC_`) and `SUPABASE_SERVICE_ROLE_KEY` in Vercel. Rotating the secret un-trusts every row (they then need re-verification), so treat it like a signing key.
+3. Keep `BOOKING_STORE_MODE=full`. In legacy mode proofs cannot be stored.
+
+**Residual.** Rate limits are in-memory per serverless instance, so they are burst protection, not a global limit (a shared store like Upstash is out of scope). A leaked `lookup_token` still grants cancel/reschedule of that one real booking (the calendar change only applies to a proven row, which is intended). Lookup responses are uniform (404 on any mismatch) but not constant-time.

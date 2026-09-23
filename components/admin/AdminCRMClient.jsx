@@ -26,7 +26,7 @@ import { toast } from 'sonner';
 import CustomerTimeline from '@/components/admin/CustomerTimeline';
 import CustomerGroupCard, { CustomerGroupHeader } from '@/components/admin/CustomerGroupCard';
 import { groupLeadsByContact } from '@/components/admin/crmGrouping';
-import { bookingSyncWarning } from '@/lib/booking/sync-warning';
+import { bookingSyncWarning, isUnverifiedOwnership } from '@/lib/booking/sync-warning';
 import { planLeadStatusUpdate, leadStatusToast } from '@/lib/booking/crm-followup';
 import { format } from 'date-fns';
 
@@ -401,6 +401,11 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
     },
     onSuccess: (data, { bookingId, action }) => {
       if (data?.calendarSync) setBookingLastSync((m) => ({ ...m, [bookingId]: data.calendarSync }));
+      if (action === 'trust_calendar_event') {
+        refreshAll();
+        toast.success('Calendar event verified. Now run Retry calendar sync.');
+        return;
+      }
       if (action === 'retry_sync') {
         // Calendar only — no email was sent. Keep the dialog open.
         refreshAll();
@@ -511,6 +516,16 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
     return <span title={w.title} className="text-[11px] text-amber-700 whitespace-nowrap">Calendar not verified</span>;
   };
   const retryBookingSync = (lead) => bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'retry_sync' });
+  // Fix R15: vouch for a booking whose calendar ownership can't be proven (pre-migration /
+  // possibly forged rows). Only after checking the event in Google Calendar by hand.
+  const verifyBookingCalendar = (lead) => {
+    const evId = lead.raw?.calendar_event_id || null;
+    const msg = evId
+      ? `Verify calendar event ${evId}?\n\nOpen it in Google Calendar first and check it is THIS customer's appointment (${lead.name}). Then run Retry.`
+      : `Verify this booking as genuine (${lead.name})? Check it in the CRM/phone log first. Then run Retry.`;
+    if (!confirm(msg)) return;
+    bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'trust_calendar_event', eventId: evId });
+  };
 
   const getPaymentBadge = (method, status) => {
     if (method === 'credit_card') {
@@ -1965,6 +1980,13 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
                                 onClick={() => retryBookingSync(lead)}>
                                 <RefreshCw className="w-3 h-3 mr-1" /> Retry calendar sync (no email)
                               </Button>
+                              {isUnverifiedOwnership(o, bookingLastSync[lead.entityId]) && (
+                                <Button size="sm" variant="outline" className="w-full border-amber-300 text-amber-800 hover:bg-amber-50"
+                                  disabled={bookingAdminAction.isPending}
+                                  onClick={() => verifyBookingCalendar(lead)}>
+                                  <CheckCircle className="w-3 h-3 mr-1" /> Verify calendar event (after checking Google Calendar)
+                                </Button>
+                              )}
                             </div>
                           )}
 
