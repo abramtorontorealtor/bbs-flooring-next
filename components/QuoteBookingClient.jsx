@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SlotPicker from '@/components/booking/SlotPicker';
 import AlternateTimePanel from '@/components/booking/AlternateTimePanel';
-import { CheckCircle, ArrowRight, Loader2, MapPin, Phone, Star, CalendarCheck, FileText } from 'lucide-react';
+import { CheckCircle, Clock, ArrowRight, Loader2, MapPin, Phone, Star, CalendarCheck, FileText } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { Analytics } from '@/components/analytics';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
