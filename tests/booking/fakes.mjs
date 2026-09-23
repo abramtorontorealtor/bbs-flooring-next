@@ -136,14 +136,18 @@ export function createFakeGoogle() {
         // plain (non-restore) PATCH touched a deleted event.
         return { success: true, httpStatus: 200, eventId, event: { ...e } };
       },
-      async tombstone(eventId) {
+      // Realistic etag model: the etag changes only when the resource actually changes.
+      // A same-value PATCH (status already 'cancelled', no new fence) leaves it unchanged.
+      async tombstone(eventId, { fence = null } = {}) {
         log.push(['tombstone', eventId]);
         const f = await takeFault('tombstone', eventId);
         if (f) return f;
         const e = events.get(eventId);
         if (!e) return { success: false, httpStatus: 404, error: 'Not Found' };
+        const before = JSON.stringify([e.status, e.private]);
         e.status = 'cancelled';
-        e.etag = `"${++etagSeq}"`;
+        if (fence) e.private = { ...(e.private || {}), bbs_fence: fence };
+        if (JSON.stringify([e.status, e.private]) !== before) e.etag = `"${++etagSeq}"`;
         return { success: true, httpStatus: 200, eventId, event: { ...e } };
       },
       async delete(eventId) {

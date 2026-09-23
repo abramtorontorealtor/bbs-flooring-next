@@ -103,9 +103,10 @@ test('confirm: persisted + calendar failure → 200 success, calendarSync failed
   assert.equal(res.status, 200);
   assert.equal(res.body.success, true);
   assert.ok(res.body.bookingId);
-  assert.equal(res.body.calendarSync.status, 'failed');
-  assert.match(res.body.calendarSync.error, /503/);
+  // Public response: status only (security review); the diagnostic is kept durably for admins.
+  assert.deepEqual(res.body.calendarSync, { status: 'failed' });
   assert.equal(ctx.db.row(res.body.bookingId).calendar_sync_status, 'failed');
+  assert.match(ctx.db.row(res.body.bookingId).calendar_sync_error, /503/);
   assert.equal(ctx.email.sent.length, 2);
 });
 
