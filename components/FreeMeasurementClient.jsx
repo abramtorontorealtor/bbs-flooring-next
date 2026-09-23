@@ -383,7 +383,7 @@ export default function FreeMeasurementClient() {
             {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
 
             <Button type="submit" disabled={isSubmitting || !formData.customer_name || !formData.customer_phone || !formData.customer_email || !formData.customer_address || !formData.preferred_date || !formData.preferred_time}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base py-6 disabled:opacity-50 disabled:cursor-not-allowed" size="lg">
+              className="w-full h-auto whitespace-normal bg-amber-500 hover:bg-amber-600 text-white font-semibold text-base py-6 disabled:opacity-50 disabled:cursor-not-allowed" size="lg">
               {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> {BOOKING_COPY.submitting}</> : BOOKING_COPY.submit}
             </Button>
             <div className="flex items-center justify-center gap-2 text-sm text-slate-600">
