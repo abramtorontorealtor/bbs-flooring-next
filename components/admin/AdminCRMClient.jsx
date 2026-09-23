@@ -130,7 +130,7 @@ const LOST_REASONS = [
 
 // ─── MAIN COMPONENT ─────────────────────────────────────────────────────────
 
-export default function AdminCRMClient() {
+export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
   const queryClient = useQueryClient();
   const urlParams = useSearchParams();
   const initialSource = urlParams.get('source') || 'all';
@@ -501,7 +501,8 @@ export default function AdminCRMClient() {
   // Booking calendar-sync warning (decision 9(1)): red on failed, quiet amber on pending/unknown.
   const renderBookingSyncBadge = (lead) => {
     if (lead.source !== 'booking') return null;
-    const w = bookingSyncWarning(lead.raw, bookingLastSync[lead.entityId]);
+    // Amber only in store mode 'full' (decision 10(2)); red failed always shows.
+    const w = bookingSyncWarning(lead.raw, bookingLastSync[lead.entityId], { storeMode: bookingStoreMode });
     if (!w) return null;
     if (w.level === 'failed') {
       return <Badge title={w.title} className="bg-red-100 text-red-800 text-xs border border-red-300 whitespace-nowrap">Calendar sync failed</Badge>;

@@ -18,12 +18,25 @@ test('failed shows even on a cancelled booking (event may still be on the calend
   assert.equal(bookingSyncWarning({ status: 'cancelled', calendar_sync_status: 'failed' }).level, 'failed');
 });
 
-test('pending/unknown → amber on live bookings only; missing column = unknown', () => {
-  assert.equal(bookingSyncWarning({ status: 'pending', calendar_sync_status: 'pending' }).level, 'pending');
-  assert.equal(bookingSyncWarning({ status: 'confirmed' }).level, 'pending', 'pre-migration row');
-  assert.match(bookingSyncWarning({ status: 'confirmed' }).title, /not verified/);
-  assert.equal(bookingSyncWarning({ status: 'completed' }), null);
-  assert.equal(bookingSyncWarning({ status: 'cancelled', calendar_sync_status: 'unknown' }), null);
+const FULL = { storeMode: 'full' };
+
+test('pending/unknown → amber on live bookings only (store mode full); missing column = unknown', () => {
+  assert.equal(bookingSyncWarning({ status: 'pending', calendar_sync_status: 'pending' }, null, FULL).level, 'pending');
+  assert.equal(bookingSyncWarning({ status: 'confirmed' }, null, FULL).level, 'pending', 'pre-migration row');
+  assert.match(bookingSyncWarning({ status: 'confirmed' }, null, FULL).title, /not verified/);
+  assert.equal(bookingSyncWarning({ status: 'completed' }, null, FULL), null);
+  assert.equal(bookingSyncWarning({ status: 'cancelled', calendar_sync_status: 'unknown' }, null, FULL), null);
+});
+
+test('decision 10(2): amber hidden unless store mode = full; red failed always shown', () => {
+  for (const storeMode of [undefined, null, 'auto', 'legacy', 'FULL', 'yolo']) {
+    const opts = storeMode === undefined ? undefined : { storeMode };
+    assert.equal(bookingSyncWarning({ status: 'confirmed' }, null, opts), null, `unknown hidden in ${storeMode}`);
+    assert.equal(bookingSyncWarning({ status: 'pending', calendar_sync_status: 'pending' }, null, opts), null);
+    assert.equal(bookingSyncWarning({ status: 'pending' }, { status: 'pending' }, opts), null);
+    assert.equal(bookingSyncWarning({ status: 'confirmed', calendar_sync_status: 'failed' }, null, opts).level, 'failed');
+    assert.equal(bookingSyncWarning({ status: 'confirmed' }, { status: 'failed', error: 'x' }, opts).level, 'failed');
+  }
 });
 
 test('last admin-action response overrides the listed row', () => {
@@ -42,4 +55,10 @@ test('CRM wires the warning + retry_sync through the existing admin-action mutat
   assert.match(src, /Calendar sync failed/);
   assert.match(src, /Retry calendar sync/);
   assert.doesNotMatch(src, /fetch\([^)]*retry/i, 'no separate fetch for retry');
+  // decision 10(2): amber badge path passes the server store mode through
+  assert.match(src, /export default function AdminCRMClient\(\{ bookingStoreMode = 'auto' \}/);
+  assert.match(src, /bookingSyncWarning\(lead\.raw, bookingLastSync\[lead\.entityId\], \{ storeMode: bookingStoreMode \}\)/);
+  const page = readFileSync(new URL('../../app/admin/crm/page.jsx', import.meta.url), 'utf8');
+  assert.match(page, /resolveStoreMode\(process\.env\)/);
+  assert.match(page, /<AdminCRMClient bookingStoreMode=\{bookingStoreMode\} \/>/);
 });
