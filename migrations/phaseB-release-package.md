@@ -33,10 +33,33 @@ Local only: nothing pushed, deployed, migrated, or sent. No `next build/dev` on 
   - down + re-apply.
 - B3/B4: `tests/booking/phaseb-ui.test.mjs`. Covers the picker model, copy (no scarcity words), dates, failure mapping, the alternate builder/receipt, the **real** `/api/contact` core (fake Supabase), and UI source guards.
 
+
+## Review fixes after 4d1b1cf (reviewer findings + harness-found defects)
+| Finding | Fix | Evidence |
+|---|---|---|
+| R-B2-REPLAY (blocking): same-request retry hit the availability pre-check → false 409; replay UI showed the unsaved new time | Read-only `booking_find_replay` RPC runs **before** the pre-check (fresh 24 h owner-scoped key, or same contact + date + time within 24 h; never a cancelled booking). The reservation RPC releases stale/cancelled keys under the lock. Public create/replay responses carry the **saved** `booking.{preferred_date, preferred_time, status}` and both clients display that (a changed replay is flagged "We already have your request…"). | `tests/booking/reservation.test.mjs` R-B2-REPLAY ×5 (3 fail on 4d1b1cf); PGlite `find_replay`/key-release checks; harness replay case |
+| R-B2-ADMIN: admin off-policy skipped all occupancy checks | `availability.checkInterval()` checks the exact requested interval (or whole day) against live bookings (self excluded) and opaque Google events; transparent/cancelled/booking-owned are ignored. Busy → 409, DB outage → 503, Google failure → known blocks + manual confirmation. New nonexistent admin times (spring gap) → 400. | R-B2-ADMIN ×4 (3 fail pre-fix) |
+| Contact receipt could hang on optional side effects | identify / email / Telegram run under injectable wall-clock budgets (1 s / 2.5 s / 1.5 s); the receipt returns regardless | "never-settling" test (the old code never finishes) |
+| SlotPicker stale 409 override stuck (unavailable) | "Try again" dismisses that override; a new 409 shows again | harness 3b (fails on 51561e2) |
+| AlternateTimePanel Enter submitted the booking form; tel link Enter | Enter is intercepted only on the panel's own `<input>`s (not IME composition, links, buttons or the textarea) | harness alt + fm Enter cases (the fm one POSTed a real booking on 51561e2) |
+| QuoteBookingClient crashed at render (`Clock is not defined`, introduced in B3 wiring 1633ca4) | import restored; no-undef scan over every changed file is clean | harness qb (crash on 51561e2); `phaseB-browser-evidence/harness/eslint.undef.mjs` |
+| Manage page showed the reschedule error twice | page-level alert hidden while rescheduling | harness view |
+| Calendar a11y / touch | nav buttons 44×44 (were 32×32); day cells min 44 px tall; `aria-pressed` instead of the invalid `aria-selected` on buttons | class change + lint |
+
+**Touch-size truth:** day-cell **width** is `1/7` of the calendar card (about 44–46 px at 390 px viewports, less on 320 px screens). Height is ≥ 44 px. The harness does not compile Tailwind, so real rendered sizes are a preview check.
+
+## Evidence update
+- `npm test`: 244/244 (UTC and Asia/Tokyo) at d4e7212; `git diff --check e119924..HEAD` clean; scoped eslint 0 problems.
+- **Native PostgreSQL concurrency: PASS**, run by the parent (PostgreSQL 16.15, synthetic production-type fixture, 26 proven advisory-lock waits incl. 20 overlapping create races, same-key/no-key dedupe, cap, cross-date reschedule, grants, rollback/reapply; rerun at d46be70 including replay). See `projects/measurement-booking/phaseB-native-pg-{review.py,evidence.json}` and `phaseB-B2-B4-review.md`. The SQL is unchanged since.
+- **Isolated browser harness: 54/54** (`projects/measurement-booking/phaseB-browser-evidence/`: `results.json`, `run-fixed.log`, pre-fix run `run-prefix-51561e2.log`, harness source under `harness/`).
+  - Setup: real components built with Next's own SWC, headless Chromium, fake origin; **every non-harness request aborted (0 escaped)**; `/api/*` from fixtures; clock fixed.
+  - Covers: 0/1/2/3/7 slots + See more; ET across Tokyo/Los Angeles; outage + Try again; stale-409 override; keyboard-only selection; mobile 390 px; alternate panel (Enter on inputs/textarea/tel link, 500 retry, double click, receipt vs no-receipt); free-measurement 409 keeps contact + refreshed options + same idempotency key + saved slot, replay with a changed slot, double submit, 503; quote-booking alternate with quote context; manage-page reschedule with token + 409.
+  - Not covered: Tailwind is not compiled, so no visual/pixel verification. Decorative components (reviews banner, gallery, breadcrumbs, analytics) are stubbed. `next/navigation` is stubbed.
+
 ## Explicitly unproven / external checks (none executed)
-1. **Concurrent sessions against real Postgres.** PGlite is single-connection and ran sequentially, so it proves the SQL logic, **not** the advisory-lock behaviour under simultaneous sessions. Needs a Supabase branch (Abram's OK: new environment) or any real local Postgres server (none on this host). Suggested check: two sessions each call `booking_reserve_create` for overlapping slots inside `begin … pg_sleep(2) … commit`; expect exactly one `created`.
+1. ~~Concurrent sessions against real Postgres~~: **done** by the parent on native PostgreSQL 16.15 (see Evidence update). Supabase-hosted behaviour is still item 2.
 2. **Supabase specifics:** PostgREST `rpc()` argument names/shape, the `service_role` grant, RLS on `booking_idempotency`, and `jsonb_populate_record` against the real `bookings` column types. Apply both drafts on a Supabase branch.
-3. **Preview (hydrated browser):** picker behaviour on mobile/keyboard/screen reader; 409 flow keeps contact details; the alternate panel inside the booking `<form>` never submits it; ET labels under a non-Toronto browser time zone; the manage-page reschedule with a token.
+3. **Preview (styled, real Next runtime):** behaviour is covered by the isolated harness. Still open: rendered Tailwind layout and touch sizes on real phones (320–430 px), screen-reader announcement quality, real `next/navigation`/metadata, and real email/Telegram delivery for the alternate request (disabled or pointed at test destinations).
 4. **Launch settings still undecided (exposed, not decided here):**
    - which calendars block measurement time (`BOOKING_AVAILABILITY_CALENDAR_IDS`; none are read until it is set);
    - visit duration (default 60) and buffer (default 0);
@@ -47,7 +70,7 @@ Local only: nothing pushed, deployed, migrated, or sent. No `next build/dev` on 
 5. **Residuals by design:**
    - Google and Postgres cannot share a transaction: a manual Google edit between the fresh check and the commit is not caught (confirmation stays manual).
    - An idempotency replay returns the original booking even if the retry picked another slot (double-click semantics).
-   - Admin off-policy reschedules skip the Google freshness check (DB occupancy is still enforced) and are logged.
+   - Admin off-policy reschedules check real occupancy (R-B2-ADMIN) but not the online schedule policy (logged, `policyOverride:true`).
    - Before the B2 migration, create/reschedule **fail closed (503)**. Rollout order: Phase A migration → B2 migration → deploy.
    - `/api/contact` returning `.select('id')` after insert needs SELECT on `contact_leads` for the client in use (service role in production; the anon fallback would fail → 500, conservative).
 
