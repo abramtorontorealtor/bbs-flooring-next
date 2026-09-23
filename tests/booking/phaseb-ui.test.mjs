@@ -201,3 +201,17 @@ test('R-B2-REPLAY: success screen uses the SAVED slot from the response; changed
     assert.doesNotMatch(src, /setSubmittedSlot\(\{ date: formData/, f);
   }
 });
+
+test('B4 contact: never-settling identity / email / Telegram cannot hold the saved receipt (short injected budgets)', async () => {
+  const { calls, deps } = contactDeps();
+  const never = () => new Promise(() => {});
+  deps.identifyVisitor = never;
+  deps.email = { sendContactAdminNotification: never, sendContactCustomerConfirmation: never, sendRemovalEstimateCustomerConfirmation: never, sendRemovalEstimateAdminNotification: never };
+  deps.sendTelegramAlert = never;
+  deps.budgets = { identifyMs: 20, emailMs: 20, telegramMs: 20 };
+  const t0 = Date.now();
+  const r = await handleContact(creq({ ...ALT, email: 'k@example.com' }), deps);
+  assert.deepEqual([r.status, r.body.saved, r.body.id], [200, true, 'lead-1']);
+  assert.ok(Date.now() - t0 < 1000, 'bounded');
+  assert.equal(calls.insert.length, 1);
+});
