@@ -23,7 +23,7 @@ select server_version();   -- expect ≥ 11 (ADD COLUMN ... DEFAULT is metadata-
 ```
 Stop if any of the 6 columns or `bookings_calendar_sync_status_check` already exist with a different definition.
 
-## 1. Backup (right before applying)
+## 1. Backup (right before applying): private only (red-team R17)
 a) Row count plus a fingerprint, so you can prove afterwards that no booking changed:
 ```sql
 select count(*) as n,
@@ -32,37 +32,52 @@ select count(*) as n,
                       coalesce(updated_at::text,''), ',' order by id)) as fingerprint
 from public.bookings;
 ```
-b) A full table copy, which covers the columns that later lifecycle writes will touch (status, dates, notes, `calendar_event_id`, `updated_at`):
-```sql
--- Via psql / bbs-sql.sh (client-side file):
-\copy (select * from public.bookings order by created_at) to 'bookings_backup_20260923.csv' with csv header
--- or in-DB snapshot:
-create table public.bookings_backup_20260923 as select * from public.bookings;
-```
-If you use the in-DB snapshot, drop it once the release is verified. It holds customer PII, and RLS is *not* enabled on a table created this way. Enable RLS on it or keep it only briefly.
+b) A full copy **outside any API-exposed schema**. The table holds names, addresses, phone numbers, lookup tokens and calendar ids.
+- Preferred: client-side CSV on the operator box, owner-only permissions:
+  ```bash
+  umask 077
+  psql "$DB_URL" -c "\copy (select * from public.bookings order by created_at) to 'bookings_backup_20260923.csv' with csv header"
+  chmod 600 bookings_backup_20260923.csv   # never commit, never upload; shred once the release is verified
+  ```
+- Only if an in-DB copy is required: a **private** schema with no grants to `anon`/`authenticated`, created and locked down in ONE transaction (nothing exposed at commit):
+  ```sql
+  begin;
+  create schema if not exists backup_private;
+  revoke all on schema backup_private from public, anon, authenticated;
+  create table backup_private.bookings_20260923 as select * from public.bookings;
+  revoke all on backup_private.bookings_20260923 from public, anon, authenticated;
+  commit;
+  -- verify: select has_table_privilege('anon','backup_private.bookings_20260923','select'); -- false
+  ```
+  Never `create table public.… as select`. CTAS in `public` inherits no RLS and may be readable through the REST API. Drop the copy once the release is verified.
 
-## 2. Apply order (revised after red-team R10: schema FIRST)
-**Legacy mode cannot record durable sync failures.** Without the new columns, a Google failure or timeout is not stored anywhere. The CRM gets no red "Calendar sync failed" badge and no Retry for that booking, and the API only returns `calendarSync.recorded:false` for that one response. Legacy CAS guards on `updated_at` + `status` only, which is weaker than `revision` (red-team R11). So the new booking flow must **not** go live on the pre-migration schema. Legacy/auto fallback exists only as a safety net for rollback and emergencies.
+## 2. Apply order / controlled cutover (red-team R10, R11, R12, R15)
+**Full revision mode is REQUIRED for launch (R11).** Legacy mode guards on `updated_at`+`status`, which is not DB-monotonic. It records no sync failures, stores no ownership proofs (so customer calendar changes fail closed) and no in-flight marker. `auto`/`legacy` exist only for emergency rollback.
 
-1. Take the backup (§1).
-2. Run `20260923_booking_calendar_sync.up.sql` **before** deploying the Phase A code. The migration is additive with defaults, so today's production code keeps working unchanged. It ends with `notify pgrst, 'reload schema'` so PostgREST sees the new columns.
-3. Verify:
+Old (pre-Phase-A) deployments write `calendar_event_id` and `status` without any guard and create random-id events (R12). Mixed old/new instances cannot be fenced by row CAS. So the cutover is a **short controlled window**, not a rolling mix:
+
+1. Take the private backup (§1) and the fingerprint (§1a). Snapshot `pg_policies` for `bookings`.
+2. Review the anon-insert logs, then apply `20260923_bookings_anon_insert_tighten.sql` (§8, launch prerequisite). Old code does not use the anon insert, so this is safe first.
+3. Run `20260923_booking_calendar_sync.up.sql` (additive; old code keeps working). Verify:
    ```sql
-   select calendar_sync_status, count(*), min(revision), max(revision)
-   from public.bookings group by 1;          -- expect only ('unknown', n, 0, 0)
+   select calendar_sync_status, count(*), min(revision), max(revision),
+          count(ownership_proof) as proofs, count(calendar_op_started_at) as markers
+   from public.bookings group by 1;   -- expect ('unknown', n, 0, 0, 0, 0)
    ```
-   Then re-run the §1a fingerprint. It must be identical.
-4. Deploy the Phase A code with `BOOKING_STORE_MODE=full`. A missing column then surfaces as an error (`db_error`), never a silent downgrade to legacy. Before that deploy, check old booking mutations are drained. See red-team R12 for the cutover question, which is still open for the boss/Abram.
-5. Smoke check (with Abram's OK): one admin `retry_sync` on a test booking returns `calendarSync` with **no** `recorded:false`.
+   Re-run the §1a fingerprint. It must be identical.
+4. Set env in Vercel **before** the deploy: `BOOKING_STORE_MODE=full`, `BOOKING_OWNERSHIP_SECRET` (≥32 random chars, server-only), `SUPABASE_SERVICE_ROLE_KEY` present.
+5. Quiet window (e.g. late evening, no booking form traffic expected). Deploy Phase A and promote only after the preview checks (see `phaseA-verification-harness.md`). Vercel routes new requests to the new deployment. Old instances can still finish requests already in flight, so wait for the function max duration (verify it in the Vercel project; do not assume 10 s) before step 6.
+6. Run the §7 non-canonical status query and the §8 unverified-row list. Triage per row (verify / retry) with Abram. No bulk trust, no bulk repair.
+7. Smoke check (Abram OK): one admin `retry_sync` on a test booking returns `calendarSync` without `recorded:false`.
 
-Do **not** deploy first and migrate later. That was the earlier order, and it runs the new flow in legacy mode, where a timeout-after-create racing a cancellation had no durable trace (R10). The adapter now CAS-checks even no-op legacy writes, but that stops the event leak, not the missing failure record.
+Do **not** deploy first and migrate later (that runs the new flow in legacy mode, R10).
 
-Auto-mode fallback state lives in each store instance. Today that means per request, not per process (red-team R18). With `full` pinned, that detail no longer matters for rollout.
-
-## 3. Rollback
-- **Code only:** revert the deploy. The old routes ignore the new columns, and their defaults keep old-code inserts valid.
-- **Schema:** change `BOOKING_STORE_MODE=full` to `legacy` (or unset it) and redeploy **first**. Remember that legacy mode records no sync failures (§2). Then run `20260923_booking_calendar_sync.down.sql`. Auto-mode instances fall back to legacy on their next write. Only sync state and revision values are lost. Bookings, statuses, dates and `calendar_event_id` are untouched.
-- **Data restore:** only needed if something other than these columns changed. Compare against the §1a fingerprint and restore rows from §1b.
+## 3. Rollback (red-team R12: what you actually get back)
+- **Code rollback reintroduces the known baseline defects:** false success on a failed insert, customer actions that never touch Calendar, admin cancel clearing the id without a confirmed delete, and the CRM writing booking status directly. Roll back only for a Phase A defect worse than those, and prefer a forward fix.
+- **Code only:** revert the deploy. The old code ignores the new columns (their defaults keep old inserts valid). Rows written by Phase A keep their proofs and markers; if you later redeploy Phase A they are still valid, **if** `BOOKING_OWNERSHIP_SECRET` is unchanged.
+- **Anon-insert policy:** re-create it only if a real consumer broke, using the snapshot: `create policy bookings_anon_insert on public.bookings as permissive for insert to public with check (true);`. This reopens R15, so Phase A code must not be live at the same time.
+- **Schema:** switch `BOOKING_STORE_MODE` off `full` and redeploy **first**, then run the down migration. It drops the 7 columns, which loses sync state, revision, ownership proofs (all rows become unverified again) and in-flight markers. Check `select count(*) from bookings where calendar_op_started_at is not null` first: those rows have an unresolved Google create. Resolve them (Retry) before dropping.
+- **Data restore:** only if something other than these columns changed. Compare against the §1a fingerprint and restore single rows from the private §1b copy.
 
 ## 4. `bookings_anon_insert` (NOT Phase A)
 Snapshot the policy before any change:
@@ -77,7 +92,7 @@ Grep (Sep 23): nothing in app/, components/, lib/, scripts/ or public/ inserts i
 
 | Mode | Writes sync columns | CAS guard | On missing column |
 |---|---|---|---|
-| `auto` (default) | yes, until the first PGRST204/42703 | revision + updated_at, or updated_at + status in legacy | switches that store instance to legacy (per request today, see R18) |
+| `auto` (default) | yes, until the first PGRST204/42703 | revision + updated_at, or updated_at + status in legacy | switches that store instance to legacy. Stores are built per request, so every request re-probes: this is **not** sticky per process (R18) |
 | `full` | yes | `revision` (`is null or = 0` for pre-migration rows) **and** `updated_at` | returns the error, which the lifecycle reports as `db_error` |
 | `legacy` | never (sync-only writes become a guarded read → `persisted:false` / `calendarSync.recorded:false`) | `updated_at` + `status` | n/a |
 
@@ -148,15 +163,20 @@ group by 1 order by 2 desc;
 
 **Design.**
 - Every PATCH of an existing event is `GET` → `PATCH If-Match`. A restore (`status:'confirmed'`) is sent only after a re-read shows the booking is still live at the same revision, and it is also etag-conditional. A 412 → re-read and reconcile the latest row.
-- Cancellation = DELETE, then a **tombstone write** (`PATCH {status:'cancelled'}`) on anything that exists. The event changes, so its etag moves and every in-flight conditional write holding an older etag gets 412, including one committed after our abort. The tombstone is the last write, so it also overrides a conditional write that landed just before it. This does not rely on "a plain PATCH cannot resurrect" or on DELETE itself moving the etag.
-- Inserts cannot be conditional. Before any insert, `calendar_op_started_at` is written under CAS (if that fails or the row changed, no insert). A cancel/retry that finds the stable id 404 while the marker is younger than `BOOKING_CALENDAR_OP_WINDOW_MS` (default 10 min) reports **failed** ("create may still be in progress; press Retry after HH:MM UTC"), never absent. The marker is cleared on success or on a definite (4xx / not-sent) failure.
+- Cancellation = DELETE, then a **fenced tombstone** (`PATCH {status:'cancelled', extendedProperties.private.bbs_fence:<fresh nonce>}`) on anything that exists. The nonce guarantees the resource changes even when it was already cancelled (a same-value PATCH is not documented to move the etag). Every PATCH is also refused locally when a GET returned no etag (never an unconditional write). The event changes, so its etag moves and every in-flight conditional write holding an older etag gets 412, including one committed after our abort. The tombstone is the last write, so it also overrides a conditional write that landed just before it. This does not rely on "a plain PATCH cannot resurrect" or on DELETE itself moving the etag.
+- Inserts cannot be conditional. Before any insert, `calendar_op_started_at` is written under CAS (if that fails or the row changed, no insert). While that marker is set, a cancel/retry that finds the stable id 404 **reserves** it: insert under the stable id, then delete and fence it. Success proves the uncertain insert had not committed and now never can (the id exists, so Google answers 409, and that request's 409 path re-checks the booking and finds it cancelled). A 409 proves it did commit, and it is deleted. The marker is cleared **only** by such a positive provider observation (or a live success / definite 4xx), **never by elapsed time**. An ambiguous answer keeps the row `failed` with Retry. (Superseded the earlier 10-minute window, fix-4.)
 - Timeouts, aborts, network errors and 5xx are **ambiguous**. They are recorded `failed` (red + Retry), never synced/absent.
 - R13: exhausted reconciliation passes record a durable `failed` ("press Retry"). There is **no** promise of automatic sync, because no worker exists. The CRM offers Retry for `failed`, for `pending`/`unknown` on live rows, and for cancelled rows with something to recover (stored id, in-flight marker, unfinished cancel).
 - R19: the CRM stamps each cached admin-action response with `{receivedAt, revision}`. It is ignored once the bookings list was refetched after it, or the row's revision moved on, so the newest durable state always wins.
 
 **Residual (honest distributed boundary).**
-- No worker: convergence after an ambiguous outcome needs an admin Retry. The state stays red/amber until then; it is never shown as green.
-- Op window: 10 min is an assumption about how long Google may still apply a received insert. It needs a vendor/sandbox check. An insert committing later than the window, *after* a Retry already reported absent, could leave one live event. Mitigation: the cancel/retry sweep also tries the stable id every time, so any later Retry finds it.
-- A restore whose tombstone write itself times out stays `failed` → Retry.
-- Etag behaviour of DELETE/tombstone and 412 on PATCH are documented, but still **need a sandbox check** before launch (checklist).
-- The legacy schema cannot store `calendar_op_started_at` (a warning is logged). Full mode is required (§2).
+- No worker: convergence after an ambiguous outcome needs an admin Retry. The row stays red/amber until then, never green.
+- Reservation relies on Google semantics that must be sandbox-verified: the id of a deleted event stays reserved (a re-insert gets 409), 412 on a stale If-Match, PATCH merging `extendedProperties.private`, and the fence changing the etag of an already-cancelled event. If a sandbox check fails, the R7 fix is not valid and launch is blocked.
+- A restore or tombstone whose own call times out stays `failed` → Retry.
+- An event edited by hand in Google changes its etag. Our next conditional write gets 412, re-reads, and re-applies the booking state, which overwrites the manual edit (same as before Phase A).
+- Legacy schema cannot store the marker; full mode is required (§2).
+
+## 10. Notification ordering and duplicate transitions (red-team R5/R6, fix-4)
+- **R6:** confirming an already-confirmed booking, or rescheduling to the identical date+time+status, is a no-op: no revision bump, no email. The response carries `unchanged:true` and the CRM shows "already up to date". An explicit "resend confirmation" action is not part of Phase A.
+- **R5:** right before sending a confirmation or reschedule email, the booking is re-read. If a newer change has superseded this one (cancelled, or rescheduled again), the email is skipped (`emailSuperseded:true`; the CRM says so). Cancellation and request-received emails always go.
+- **Residual:** check-then-send is not atomic. A change that lands in the milliseconds between the re-read and the provider accepting the email can still let one obsolete email through. Full ordering needs a per-booking outbox, which is out of Phase A scope. The newest email still follows, so the customer's last message is correct.
