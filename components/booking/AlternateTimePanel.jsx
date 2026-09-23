@@ -49,7 +49,10 @@ export default function AlternateTimePanel({ prefill = {}, context = {}, onClose
     <div
       className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4"
       onKeyDown={(e) => {
-        if (e.key === 'Enter' && e.target?.tagName !== 'TEXTAREA' && e.target?.tagName !== 'BUTTON') { e.preventDefault(); submit(e); }
+        // Only the panel's own <input>s: links (tel:), buttons and the textarea keep native Enter.
+        if (e.key !== 'Enter' || e.nativeEvent?.isComposing || e.target?.tagName !== 'INPUT') return;
+        e.preventDefault();
+        submit(e);
       }}
     >
       <h3 ref={headRef} tabIndex={-1} className="font-semibold text-slate-800 focus:outline-none">{ALTERNATE_COPY.title}</h3>
