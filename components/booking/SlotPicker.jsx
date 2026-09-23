@@ -14,7 +14,7 @@
  *   onAlternate()              optional: "Ask for a different time" (B4 panel)
  *   idPrefix                   unique DOM id prefix
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BookingCalendar from '@/components/BookingCalendar';
 import {
   BOOKING_COPY, pickerView, reconcileSelection, isCalendarDateDisabled,
@@ -27,7 +27,7 @@ export default function SlotPicker({ date, time, onDateChange, onTimeChange, tok
   const [expanded, setExpanded] = useState(false);
   const [reload, setReload] = useState(0);
   const liveRef = useRef(null);
-  const nowMs = useMemo(() => Date.now(), []);
+  const [nowMs] = useState(() => Date.now()); // once per mount (lazy init, not during render)
 
   // 409 → show the refreshed options the server returned (no extra round trip).
   useEffect(() => {
