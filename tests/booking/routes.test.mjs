@@ -137,7 +137,8 @@ test('confirm: rate limit and dedupe run before create()', async () => {
   ctx2.email.sent.length = 0;
   const calls = ctx2.google.log.length;
   const dup = await handleConfirm(req({ booking: { ...BOOKING, customer_email: 'KAREN@example.com ' } }), ctx2.deps);
-  assert.deepEqual(dup.body, { success: true, emailSent: false, bookingId: first.body.bookingId, duplicate: true });
+  assert.deepEqual(dup.body, { success: true, emailSent: false, bookingId: first.body.bookingId, duplicate: true,
+    booking: { preferred_date: BOOKING.preferred_date, preferred_time: BOOKING.preferred_time, status: 'pending' } });
   assert.equal(ctx2.db.calls.insert + ctx2.email.sent.length, 1, 'only the first insert; no new email');
   assert.equal(ctx2.google.log.length, calls, 'no calendar call on replay');
 });

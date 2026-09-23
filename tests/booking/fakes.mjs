@@ -47,26 +47,46 @@ export function createFakeDb({ failInsert = false, rows = new Map() } = {}) {
     failInsert,
     failReserve: false,
     reserveCalls: 0,
+    now: () => Date.now(),
+    /** Mirrors booking_find_replay (read-only). */
+    async findReplay(row, keyHash = null) {
+      this.findCalls = (this.findCalls || 0) + 1;
+      if (this.failReserve) return { error: { message: 'rpc failed' } };
+      const hit = this.replayOf(row, keyHash);
+      return hit ? { outcome: 'replay', booking: { ...hit } } : { outcome: 'none' };
+    },
+    /** Fresh (24 h) non-cancelled key, else same contact+date+time within 24 h (not cancelled). */
+    replayOf(row, keyHash) {
+      const since = this.now() - 24 * 3600e3;
+      if (keyHash && idem.has(keyHash)) {
+        const k = idem.get(keyHash);
+        const b = rows.get(k.id);
+        if (k.at >= since && b && b.status !== 'cancelled') return b;
+      }
+      const email = String(row.customer_email || '').trim().toLowerCase();
+      const phone = String(row.customer_phone || '').replace(/\D/g, '');
+      return [...rows.values()].find((b) => b.preferred_date === row.preferred_date
+        && (b.preferred_time || '') === (row.preferred_time || '') && b.status !== 'cancelled'
+        && Date.parse(b.created_at || 0) >= since
+        && ((email && String(b.customer_email || '').trim().toLowerCase() === email)
+          || (phone.length >= 7 && String(b.customer_phone || '').replace(/\D/g, '') === phone))) || null;
+    },
     async reserveCreate(row, slot, keyHash = null) {
       this.reserveCalls++;
       if (hooks.beforeReserve) await hooks.beforeReserve('create', row);
       if (this.failReserve || this.failInsert) return { error: { message: 'rpc failed: connection reset' } };
       return locked(async () => {
-        if (keyHash && idem.has(keyHash)) return { outcome: 'replay', booking: { ...rows.get(idem.get(keyHash)) } };
-        const email = String(row.customer_email || '').trim().toLowerCase();
-        const phone = String(row.customer_phone || '').replace(/\D/g, '');
-        const since = Date.now() - 24 * 3600e3;
-        const dup = [...rows.values()].find((b) => b.preferred_date === row.preferred_date
-          && (b.preferred_time || '') === (row.preferred_time || '') && b.status !== 'cancelled'
-          && Date.parse(b.created_at || 0) >= since
-          && ((email && String(b.customer_email || '').trim().toLowerCase() === email)
-            || (phone.length >= 7 && String(b.customer_phone || '').replace(/\D/g, '') === phone)));
-        if (dup) { if (keyHash) idem.set(keyHash, dup.id); return { outcome: 'replay', booking: { ...dup } }; }
+        const dup = this.replayOf(row, keyHash);
+        if (dup) {
+          if (keyHash && !(idem.has(keyHash) && idem.get(keyHash).id === dup.id)) idem.set(keyHash, { id: dup.id, at: this.now() });
+          return { outcome: 'replay', booking: { ...dup } };
+        }
+        if (keyHash) idem.delete(keyHash); // stale / cancelled key released
         if (slot) { const p = problem(slot, null); if (p) return { outcome: 'conflict', reason: p }; }
         calls.insert++;
-        const r = { ...row, id: row.id || randomUUID(), created_at: new Date().toISOString() };
+        const r = { ...row, id: row.id || randomUUID(), created_at: new Date(this.now()).toISOString() };
         rows.set(r.id, r);
-        if (keyHash) idem.set(keyHash, r.id);
+        if (keyHash) idem.set(keyHash, { id: r.id, at: this.now() });
         return { outcome: 'created', booking: { ...r } };
       });
     },

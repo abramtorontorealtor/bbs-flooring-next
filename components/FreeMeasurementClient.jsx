@@ -12,7 +12,7 @@ import { validatePhone, validateEmail } from '@/lib/validations';
 import { GOOGLE_RATING } from '@/lib/service-constants';
 import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
 import { trackBookingConversion } from '@/lib/booking/conversion';
-import { BOOKING_COPY, submitFailure, newIdempotencyKey, formatBookingDate } from '@/lib/booking/picker-model';
+import { BOOKING_COPY, submitFailure, newIdempotencyKey, formatBookingDate, savedSlotFromResponse } from '@/lib/booking/picker-model';
 
 const PROJECT_TYPES = [
   { value: 'hardwood', label: '🪵 Hardwood' },
@@ -184,7 +184,8 @@ export default function FreeMeasurementClient() {
       }
 
       // R3: commit the saved-booking UI FIRST; analytics are isolated and can never undo it.
-      setSubmittedSlot({ date: formData.preferred_date, time: formData.preferred_time });
+      // R-B2-REPLAY: show the SAVED slot from the server (a replay may differ from what was just sent).
+      setSubmittedSlot(savedSlotFromResponse(data, formData));
       setSubmitted(true);
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch { /* ignore */ }
       // Conversion tracking — ONLY for a newly persisted booking (not a duplicate resubmit).
@@ -210,7 +211,10 @@ export default function FreeMeasurementClient() {
             </div>
             <h2 className="text-2xl font-bold text-slate-800 mb-3">{BOOKING_COPY.success}</h2>
             {submittedSlot && (
-              <p className="text-slate-700 mb-2 font-medium">Requested: {formatBookingDate(submittedSlot.date)} at {submittedSlot.time} ET</p>
+              <p className="text-slate-700 mb-2 font-medium">Requested: {formatBookingDate(submittedSlot.date)}{submittedSlot.time ? ` at ${submittedSlot.time} ET` : ''}</p>
+            )}
+            {submittedSlot?.changed && (
+              <p className="text-amber-800 text-sm mb-2">{BOOKING_COPY.alreadyRequested}</p>
             )}
             <p className="text-slate-600 mb-6">Check your email for the details and a link to manage your request.</p>
             <button

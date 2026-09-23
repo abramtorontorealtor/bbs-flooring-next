@@ -6,6 +6,7 @@
 begin;
 set local lock_timeout = '5s';
 drop function if exists public.booking_reserve_reschedule(uuid, int, jsonb, timestamptz, timestamptz, text, int, int, int);
+drop function if exists public.booking_find_replay(text, text, text, text, text);
 drop function if exists public.booking_reserve_create(jsonb, timestamptz, timestamptz, text, int, int, int, text);
 drop function if exists public.booking_slot_problem(timestamptz, timestamptz, text, int, int, int, uuid);
 drop function if exists public.booking_row_interval(text, text, int);

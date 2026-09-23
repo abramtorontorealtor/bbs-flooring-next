@@ -188,3 +188,16 @@ test('B3/B4 source guards: all three clients use SlotPicker; no preset time list
   assert.match(picker, /cache: 'no-store'/);
   assert.match(picker, /type="button"/);
 });
+
+test('R-B2-REPLAY: success screen uses the SAVED slot from the response; changed replay is flagged; no server slot → no time shown', async () => {
+  const { savedSlotFromResponse } = await import('../../lib/booking/picker-model.js');
+  const form = { preferred_date: '2026-10-05', preferred_time: '11:00 AM' };
+  assert.deepEqual(savedSlotFromResponse({ booking: { preferred_date: '2026-10-05', preferred_time: '1:00 PM' } }, form), { date: '2026-10-05', time: '1:00 PM', changed: true });
+  assert.deepEqual(savedSlotFromResponse({ booking: { preferred_date: '2026-10-05', preferred_time: '11:00 AM' } }, form), { date: '2026-10-05', time: '11:00 AM', changed: false });
+  assert.equal(savedSlotFromResponse({}, form), null);
+  for (const f of ['FreeMeasurementClient.jsx', 'QuoteBookingClient.jsx']) {
+    const src = readFileSync(new URL(`../../components/${f}`, import.meta.url), 'utf8');
+    assert.match(src, /setSubmittedSlot\(savedSlotFromResponse\(data, formData\)\)/, f);
+    assert.doesNotMatch(src, /setSubmittedSlot\(\{ date: formData/, f);
+  }
+});

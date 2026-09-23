@@ -16,8 +16,8 @@
 --     another person's contact never matches and discloses nothing.
 --   * The pre-Phase-B 24 h same-contact/date/time dedupe is re-checked INSIDE the lock.
 --
--- Additive only: 1 new table, 4 functions (booking_row_interval, booking_slot_problem,
--- booking_reserve_create, booking_reserve_reschedule). No existing column/policy/row changes.
+-- Additive only: 1 new table, 5 functions (booking_row_interval, booking_slot_problem,
+-- booking_find_replay, booking_reserve_create, booking_reserve_reschedule). No existing column/policy/row changes.
 -- Functions are SECURITY INVOKER, EXECUTE granted to service_role only (it
 -- bypasses RLS); anon/authenticated get nothing. search_path pinned.
 -- Rollback: 20260924_booking_reservations.down.sql
@@ -131,7 +131,6 @@ language plpgsql volatile
 set search_path = pg_catalog, public
 as $$
 declare
-  v_id uuid;
   v_row public.bookings;
   v_problem text;
   v_cols text;
@@ -141,11 +140,16 @@ begin
   perform pg_advisory_xact_lock(hashtextextended('bbs:measurement-resource', 0));
 
   if p_key_hash is not null then
-    select k.booking_id into v_id from public.booking_idempotency k where k.key_hash = p_key_hash;
+    -- A key replays only while it is fresh (24 h) and its booking is not cancelled. A stale or
+    -- cancelled key is released so this request is treated as new.
+    select * into v_row from public.bookings b
+    where b.id = (select k.booking_id from public.booking_idempotency k
+                  where k.key_hash = p_key_hash and k.created_at >= now() - interval '24 hours')
+      and b.status is distinct from 'cancelled';
     if found then
-      select * into v_row from public.bookings where id = v_id;
       return jsonb_build_object('outcome', 'replay', 'booking', to_jsonb(v_row));
     end if;
+    delete from public.booking_idempotency where key_hash = p_key_hash;
   end if;
 
   -- Same contact + date + time within 24 h, not cancelled (pre-Phase-B intent), now atomic.
@@ -186,6 +190,43 @@ begin
     insert into public.booking_idempotency(key_hash, booking_id) values (p_key_hash, v_row.id);
   end if;
   return jsonb_build_object('outcome', 'created', 'booking', to_jsonb(v_row));
+end;
+$$;
+
+-- Read-only replay lookup (R-B2-REPLAY). Runs BEFORE the availability pre-check, so a retry of
+-- an already-saved request gets the saved booking even though that booking now occupies the
+-- slot (or the notice window has passed since). Same rules as booking_reserve_create: a fresh
+-- (24 h) owner-scoped key, or the same contact + date + time within 24 h; never cancelled.
+-- Returns { outcome: 'replay', booking } | { outcome: 'none' }. Writes nothing.
+create or replace function public.booking_find_replay(
+  p_key_hash text, p_email text, p_phone text, p_date text, p_time text)
+returns jsonb
+language plpgsql stable
+set search_path = pg_catalog, public
+as $$
+declare
+  v_row public.bookings;
+  v_email text := lower(btrim(coalesce(p_email, '')));
+  v_phone text := regexp_replace(coalesce(p_phone, ''), '\D', '', 'g');
+begin
+  if p_key_hash is not null then
+    select * into v_row from public.bookings b
+    where b.id = (select k.booking_id from public.booking_idempotency k
+                  where k.key_hash = p_key_hash and k.created_at >= now() - interval '24 hours')
+      and b.status is distinct from 'cancelled';
+    if found then return jsonb_build_object('outcome', 'replay', 'booking', to_jsonb(v_row)); end if;
+  end if;
+  select * into v_row from public.bookings b
+  where b.preferred_date = p_date
+    and coalesce(b.preferred_time, '') = coalesce(p_time, '')
+    and b.status is distinct from 'cancelled'
+    and b.created_at >= now() - interval '24 hours'
+    and ((v_email <> '' and lower(btrim(coalesce(b.customer_email, ''))) = v_email)
+      or (length(v_phone) >= 7 and regexp_replace(coalesce(b.customer_phone, ''), '\D', '', 'g') = v_phone))
+  order by b.created_at
+  limit 1;
+  if found then return jsonb_build_object('outcome', 'replay', 'booking', to_jsonb(v_row)); end if;
+  return jsonb_build_object('outcome', 'none');
 end;
 $$;
 
@@ -236,6 +277,8 @@ revoke all on function public.booking_row_interval(text, text, int) from public,
 revoke all on function public.booking_slot_problem(timestamptz, timestamptz, text, int, int, int, uuid) from public, anon, authenticated;
 revoke all on function public.booking_reserve_create(jsonb, timestamptz, timestamptz, text, int, int, int, text) from public, anon, authenticated;
 revoke all on function public.booking_reserve_reschedule(uuid, int, jsonb, timestamptz, timestamptz, text, int, int, int) from public, anon, authenticated;
+revoke all on function public.booking_find_replay(text, text, text, text, text) from public, anon, authenticated;
+grant execute on function public.booking_find_replay(text, text, text, text, text) to service_role;
 grant execute on function public.booking_row_interval(text, text, int) to service_role;
 grant execute on function public.booking_slot_problem(timestamptz, timestamptz, text, int, int, int, uuid) to service_role;
 grant execute on function public.booking_reserve_create(jsonb, timestamptz, timestamptz, text, int, int, int, text) to service_role;

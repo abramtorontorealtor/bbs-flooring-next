@@ -12,12 +12,15 @@ import { createAvailabilityService } from '../../lib/booking/availability.js';
 import { handleConfirm, handleCustomerAction, handleAdminAction, handleLegacyReschedule } from '../../lib/booking/handlers.js';
 import { createFakeDb, createFakeGoogle, createFakeNotify, silentLogger } from './fakes.mjs';
 
-const NOW = Date.parse('2026-09-23T12:00:00Z');
+let NOW = Date.parse('2026-09-23T12:00:00Z');
+const T0 = NOW;
 const policy = resolveSchedulePolicy({}, {});
 const B = (o = {}) => ({ customer_name: 'K', customer_email: 'k@example.com', customer_phone: '416-555-0100', preferred_date: '2026-10-05', preferred_time: '1:00 PM', ...o });
 
 function setup({ withAvailability = true, google: gOpts } = {}) {
+  NOW = T0;
   const db = createFakeDb();
+  db.now = () => NOW;
   const google = createFakeGoogle();
   const notify = createFakeNotify();
   const availability = withAvailability ? createAvailabilityService({
@@ -32,7 +35,7 @@ function setup({ withAvailability = true, google: gOpts } = {}) {
     getVisitorIdFromRequest: () => null, identifyVisitor: async () => [], requireAdmin: async () => ({ error: null }),
     findBookingByToken: async (t) => [...db.rows.values()].find((r) => r.lookup_token === t) || null,
   };
-  return { db, google, notify, lifecycle, deps };
+  return { db, google, notify, lifecycle, deps, advance: (ms) => { NOW += ms; } };
 }
 const req = (body, key) => ({ json: async () => body, headers: { get: (h) => (h.toLowerCase() === 'idempotency-key' ? key || null : null) } });
 
@@ -99,8 +102,10 @@ test('B2: idempotency key replays the original for the SAME owner only; no secon
   const key = 'k'.repeat(24);
   const first = await handleConfirm(req({ booking: B() }, key), deps);
   const gl = google.log.length;
-  const again = await handleConfirm(req({ booking: B({ preferred_time: '11:00 AM' }) }, key), deps); // double-click after edit
-  assert.deepEqual(again.body, { success: true, emailSent: false, bookingId: first.body.bookingId, duplicate: true });
+  const again = await handleConfirm(req({ booking: B({ preferred_time: '11:00 AM' }) }, key), deps); // lost response, then a new time
+  // The SAVED slot comes back (1:00 PM), never the time this retry submitted (R-B2-REPLAY).
+  assert.deepEqual(again.body, { success: true, emailSent: false, bookingId: first.body.bookingId, duplicate: true,
+    booking: { preferred_date: '2026-10-05', preferred_time: '1:00 PM', status: 'pending' } });
   assert.equal(google.log.length, gl);
   assert.equal(notify.sent.filter((n) => n.type === 'created').length, 1);
   // Same key under someone else's contact → no match, no disclosure: a normal new booking (or 409).
@@ -176,4 +181,68 @@ test('B2: reservationSlot — untimed = whole local day; DST-transition day leng
   assert.equal(reservationSlot('2026-10-05', '1:00 PM', policy).start, '2026-10-05T17:00:00.000Z');
   assert.equal(reservationSlot('2026-10-05', 'noonish', policy), null);
   assert.equal(reservationSlot('2026-02-31', '1:00 PM', policy), null);
+});
+
+// ── R-B2-REPLAY (reviewer, blocking): production-wired retries must replay, not 409/400 ──
+test('R-B2-REPLAY: SAME payload + SAME key with real availability → replay of the saved booking (not 409), no side effects', async () => {
+  const { db, notify, google, deps } = setup();
+  const key = 'r'.repeat(24);
+  const first = await handleConfirm(req({ booking: B() }, key), deps);
+  assert.equal(first.status, 200);
+  assert.deepEqual(first.body.booking, { preferred_date: '2026-10-05', preferred_time: '1:00 PM', status: 'pending' });
+  const gl = google.log.length;
+  const retry = await handleConfirm(req({ booking: B() }, key), deps);
+  assert.equal(retry.status, 200, JSON.stringify(retry.body));
+  assert.deepEqual([retry.body.duplicate, retry.body.bookingId, retry.body.emailSent], [true, first.body.bookingId, false]);
+  assert.equal(db.rows.size, 1);
+  assert.equal(google.log.length, gl);
+  assert.equal(notify.sent.filter((n) => n.type === 'created').length, 1);
+});
+
+test('R-B2-REPLAY: SAME payload WITHOUT a key (24 h same-contact dedupe) → replay, not 409', async () => {
+  const { db, deps } = setup();
+  const first = await handleConfirm(req({ booking: B() }), deps);
+  const retry = await handleConfirm(req({ booking: B({ customer_email: ' K@EXAMPLE.com' }) }), deps);
+  assert.equal(retry.status, 200);
+  assert.deepEqual([retry.body.duplicate, retry.body.bookingId], [true, first.body.bookingId]);
+  assert.equal(db.rows.size, 1);
+});
+
+test('R-B2-REPLAY: retry after the notice boundary passed still replays (no 400); different customer still gets 409', async () => {
+  const { db, deps, advance } = setup();
+  const key = 'n'.repeat(24);
+  const first = await handleConfirm(req({ booking: B({ preferred_date: '2026-09-25', preferred_time: '11:00 AM' }) }, key), deps);
+  assert.equal(first.status, 200);
+  advance(24 * 3600e3); // now inside the 24 h notice window of that slot
+  const retry = await handleConfirm(req({ booking: B({ preferred_date: '2026-09-25', preferred_time: '11:00 AM' }) }, key), deps);
+  assert.deepEqual([retry.status, retry.body.duplicate], [200, true]);
+  const stranger = await handleConfirm(req({ booking: B({ customer_email: 'z@example.com', customer_phone: '', preferred_date: '2026-10-05' }) }), deps);
+  assert.equal(stranger.status, 200);
+  const clash = await handleConfirm(req({ booking: B({ customer_email: 'y@example.com', customer_phone: '', preferred_date: '2026-10-05' }) }), deps);
+  assert.equal(clash.status, 409);
+  assert.equal(db.rows.size, 2);
+});
+
+test('R-B2-REPLAY: key expires after 24 h and never replays a CANCELLED booking (new request instead)', async () => {
+  const { db, deps, advance } = setup();
+  const key = 'e'.repeat(24);
+  const first = await handleConfirm(req({ booking: B() }, key), deps);
+  await deps.lifecycle.cancel(first.body.bookingId, '', 'customer');
+  const again = await handleConfirm(req({ booking: B() }, key), deps);
+  assert.equal(again.status, 200);
+  assert.ok(!again.body.duplicate, 'cancelled booking is not replayed');
+  assert.notEqual(again.body.bookingId, first.body.bookingId);
+  advance(25 * 3600e3);
+  const late = await handleConfirm(req({ booking: B({ preferred_date: '2026-10-07' }) }, key), deps);
+  assert.ok(!late.body.duplicate, 'expired key');
+  assert.equal(db.rows.size, 3);
+});
+
+test('R-B2-REPLAY: read-only lookup failure falls through to the atomic RPC (which still replays under the lock)', async () => {
+  const { db, deps } = setup({ withAvailability: false });
+  const key = 'f'.repeat(24);
+  const first = await handleConfirm(req({ booking: B() }, key), deps);
+  db.findReplay = async () => ({ error: { message: 'down' } });
+  const retry = await handleConfirm(req({ booking: B() }, key), deps);
+  assert.deepEqual([retry.status, retry.body.bookingId, retry.body.duplicate], [200, first.body.bookingId, true]);
 });

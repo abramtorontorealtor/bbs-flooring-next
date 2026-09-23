@@ -18,7 +18,7 @@ import { stairsImages, flooringImages } from '@/data/galleryImages';
 import { GOOGLE_RATING } from '@/lib/service-constants';
 import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
 import { trackBookingConversion } from '@/lib/booking/conversion';
-import { BOOKING_COPY, submitFailure, newIdempotencyKey, formatBookingDate } from '@/lib/booking/picker-model';
+import { BOOKING_COPY, submitFailure, newIdempotencyKey, formatBookingDate, savedSlotFromResponse } from '@/lib/booking/picker-model';
 
 const QUOTE_PROOF = [
   stairsImages[2], flooringImages[3], stairsImages[0],
@@ -173,7 +173,8 @@ export default function QuoteBookingClient() {
         setError(f.message);
         return;
       }
-      setSubmittedSlot({ date: formData.preferred_date, time: formData.preferred_time });
+      // R-B2-REPLAY: show the SAVED slot from the server (a replay may differ from what was just sent).
+      setSubmittedSlot(savedSlotFromResponse(data, formData));
 
       // R3: the booking is saved. Commit the success UI now, before any optional work,
       // so analytics or the secondary quote save can never show "failed" for a saved booking.
@@ -234,7 +235,10 @@ export default function QuoteBookingClient() {
             </div>
             <h2 className="text-2xl font-bold text-slate-800 mb-3">{BOOKING_COPY.success}</h2>
             {submittedSlot && (
-              <p className="text-slate-700 mb-2 font-medium">Requested: {formatBookingDate(submittedSlot.date)} at {submittedSlot.time} ET</p>
+              <p className="text-slate-700 mb-2 font-medium">Requested: {formatBookingDate(submittedSlot.date)}{submittedSlot.time ? ` at ${submittedSlot.time} ET` : ''}</p>
+            )}
+            {submittedSlot?.changed && (
+              <p className="text-amber-800 text-sm mb-2">{BOOKING_COPY.alreadyRequested}</p>
             )}
             <p className="text-slate-500 text-sm mb-6">Check your email for details and a confirmation link.</p>
             {estimate && (
