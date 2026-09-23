@@ -83,7 +83,7 @@ export default function FreeMeasurementPage() {
                   <span className="text-3xl flex-shrink-0">✅</span>
                   <div>
                     <h3 className="font-bold text-lg text-slate-800 mb-1">No Pressure, Guaranteed</h3>
-                    <p className="text-slate-600 text-sm">100% free, no obligation. Every job ends with a final walkthrough — we don't consider it done until you're satisfied.</p>
+                    <p className="text-slate-600 text-sm">100% free, no obligation. Every job ends with a final walkthrough — we don&apos;t consider it done until you&apos;re satisfied.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
