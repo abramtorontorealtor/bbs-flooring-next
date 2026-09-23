@@ -10,6 +10,7 @@ import { CheckCircle, Clock, Phone, Star, ArrowRight, Loader2, MapPin } from 'lu
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { GOOGLE_RATING } from '@/lib/service-constants';
 import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
+import { trackBookingConversion } from '@/lib/booking/conversion';
 
 const PROJECT_TYPES = [
   { value: 'hardwood', label: '🪵 Hardwood' },
@@ -212,27 +213,11 @@ export default function FreeMeasurementClient() {
       const outcome = interpretBookingSubmit(res, await readJsonSafe(res));
       if (!outcome.success) throw new Error('Booking submission failed');
 
-      // Conversion tracking — fire ONLY for a newly persisted booking (not a duplicate resubmit)
-      if (outcome.fireConversion && typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'book_appointment', {
-          event_category: 'appointment',
-          event_label: 'free_measurement',
-          value: 75,
-          currency: 'CAD',
-        });
-        // Direct Google Ads conversion tracking
-        window.gtag('event', 'conversion', {
-          send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
-          value: 75.0,
-          currency: 'CAD',
-        });
-      }
-      if (outcome.fireConversion && typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('track', 'Schedule', { content_name: 'Free Measurement' });
-      }
-
+      // R3: commit the saved-booking UI FIRST; analytics are isolated and can never undo it.
       setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch { /* ignore */ }
+      // Conversion tracking — ONLY for a newly persisted booking (not a duplicate resubmit).
+      if (outcome.fireConversion && typeof window !== 'undefined') trackBookingConversion(window, 'free_measurement');
     } catch {
       setError('Failed to submit booking. Please try again or call us.');
     } finally {

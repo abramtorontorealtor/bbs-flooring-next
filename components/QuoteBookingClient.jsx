@@ -16,6 +16,7 @@ import { ServiceGallery } from '@/components/service';
 import { stairsImages, flooringImages } from '@/data/galleryImages';
 import { GOOGLE_RATING } from '@/lib/service-constants';
 import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
+import { trackBookingConversion } from '@/lib/booking/conversion';
 
 const QUOTE_PROOF = [
   stairsImages[2], flooringImages[3], stairsImages[0],
@@ -203,30 +204,11 @@ export default function QuoteBookingClient() {
       const outcome = interpretBookingSubmit(res, await readJsonSafe(res));
       if (!outcome.success) throw new Error('Booking submission failed');
 
-      // Conversion tracking — fire ONLY for a newly persisted booking (not a duplicate resubmit)
-      if (outcome.fireConversion && typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'book_appointment', {
-          event_category: 'appointment',
-          event_label: 'quote_booking',
-          value: 75,
-          currency: 'CAD',
-          quote_value: estimate ? parseFloat(estimate) : undefined,
-          product_name: productName || undefined,
-        });
-        // Direct Google Ads conversion tracking
-        window.gtag('event', 'conversion', {
-          send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',
-          value: 75.0,
-          currency: 'CAD',
-        });
-      }
-      // Meta Pixel — Schedule event
-      if (outcome.fireConversion && typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('track', 'Schedule', {
-          content_name: productName || 'Quote Booking',
-          value: estimate ? parseFloat(estimate) : 0,
-          currency: 'CAD',
-        });
+      // R3: the booking is saved. Commit the success UI now, before any optional work,
+      // so analytics or the secondary quote save can never show "failed" for a saved booking.
+      setSubmitted(true);
+      if (outcome.fireConversion && typeof window !== 'undefined') {
+        trackBookingConversion(window, 'quote_booking', { quoteValue: estimate, productName });
       }
 
       // 2. If we have quote data, also persist the quote for the admin quotes panel
@@ -258,8 +240,7 @@ export default function QuoteBookingClient() {
         }
       }
 
-      setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch { /* ignore */ }
     } catch {
       setError('Failed to submit booking. Please try again or call us.');
     } finally {
