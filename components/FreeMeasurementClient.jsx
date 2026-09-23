@@ -295,7 +295,7 @@ export default function FreeMeasurementClient() {
             <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
             <p className="text-green-800 font-semibold text-sm">We have installers near <span className="font-bold">{postalCode}</span>!</p>
           </div>
-          <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-1">{BOOKING_COPY.h1}</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-1">Choose your consultation time</h2>
           <p className="text-slate-600 text-sm mb-1">{BOOKING_COPY.support}</p>
           <p className="text-slate-700 text-sm font-semibold mb-5">{BOOKING_COPY.reassurance}</p>
           <form onSubmit={handleSubmit} className="space-y-4">

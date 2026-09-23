@@ -35,15 +35,14 @@ export default function FreeMeasurementPage() {
               ✓ 100% Free &amp; No Obligation
             </div>
             <h1 className="text-2xl md:text-5xl font-bold text-slate-800 mb-2 md:mb-4">
-              Book Your FREE In-Home Flooring Measurement
+              Free In-Home Flooring Consultation &amp; Measurement
             </h1>
             <p className="text-base md:text-xl text-slate-600 max-w-3xl">
-              Serving Markham, Durham &amp; Toronto (GTA) — Professional measurement and no-obligation quote.
+              Dedicated time for your flooring project. Get professional measurements, discuss installation, and understand your flooring options. Serving Markham, Durham &amp; Toronto (GTA).
             </p>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs font-medium text-slate-700 md:hidden">
               <span className="flex items-center gap-1">✓ Free</span>
               <span className="flex items-center gap-1">✓ No Obligation</span>
-              <span className="flex items-center gap-1">⏰ Same-Week Booking</span>
               <span className="flex items-center gap-1">⭐ {GOOGLE_RATING}★ on Google</span>
             </div>
           </div>
