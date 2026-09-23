@@ -165,7 +165,7 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
     refetchInterval: 60000,
   });
 
-  const { data: bookings = [], isLoading: loadingBookings } = useQuery({
+  const { data: bookings = [], isLoading: loadingBookings, dataUpdatedAt: bookingsFetchedAt } = useQuery({
     queryKey: ['crm-bookings'],
     queryFn: () => entities.Booking.list('-created_date', 500),
     refetchInterval: 60000,
@@ -400,7 +400,13 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
       return res.json();
     },
     onSuccess: (data, { bookingId, action }) => {
-      if (data?.calendarSync) setBookingLastSync((m) => ({ ...m, [bookingId]: data.calendarSync }));
+      // Fix R19: stamp the cached response so a later list refetch / newer revision wins over it.
+      if (data?.calendarSync) {
+        setBookingLastSync((m) => ({
+          ...m,
+          [bookingId]: { ...data.calendarSync, receivedAt: Date.now(), revision: data?.booking?.revision ?? null },
+        }));
+      }
       if (action === 'trust_calendar_event') {
         refreshAll();
         toast.success('Calendar event verified. Now run Retry calendar sync.');
@@ -508,13 +514,15 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
   const renderBookingSyncBadge = (lead) => {
     if (lead.source !== 'booking') return null;
     // Amber only in store mode 'full' (decision 10(2)); red failed always shows.
-    const w = bookingSyncWarning(lead.raw, bookingLastSync[lead.entityId], { storeMode: bookingStoreMode });
+    const w = syncWarningFor(lead.raw, lead.entityId);
     if (!w) return null;
     if (w.level === 'failed') {
       return <Badge title={w.title} className="bg-red-100 text-red-800 text-xs border border-red-300 whitespace-nowrap">Calendar sync failed</Badge>;
     }
     return <span title={w.title} className="text-[11px] text-amber-700 whitespace-nowrap">Calendar not verified</span>;
   };
+  // One place that decides the sync warning (store mode + list freshness, fixes R13/R19).
+  const syncWarningFor = (row, id) => bookingSyncWarning(row, bookingLastSync[id], { storeMode: bookingStoreMode, rowFetchedAt: bookingsFetchedAt || null });
   const retryBookingSync = (lead) => bookingAdminAction.mutate({ bookingId: lead.entityId, action: 'retry_sync' });
   // Fix R15: vouch for a booking whose calendar ownership can't be proven (pre-migration /
   // possibly forged rows). Only after checking the event in Google Calendar by hand.
@@ -1392,10 +1400,10 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
                                   <CheckCircle className="w-3 h-3 mr-1" /> Confirm
                                 </Button>
                               )}
-                              {/* Booking: Retry calendar sync (failed only, no email) */}
-                              {lead.source === 'booking' && bookingSyncWarning(o, bookingLastSync[lead.entityId])?.level === 'failed' && (
+                              {/* Booking: Retry calendar sync (failed, or pending/unknown with something to recover; no email) */}
+                              {lead.source === 'booking' && syncWarningFor(o, lead.entityId)?.canRetry && (
                                 <Button variant="outline" size="sm" className="h-7 text-xs text-red-700 border-red-300 hover:bg-red-50"
-                                  title={bookingSyncWarning(o, bookingLastSync[lead.entityId]).title}
+                                  title={syncWarningFor(o, lead.entityId).title}
                                   disabled={bookingAdminAction.isPending}
                                   onClick={() => retryBookingSync(lead)}>
                                   <RefreshCw className="w-3 h-3 mr-1" /> Retry calendar sync
@@ -1968,19 +1976,21 @@ export default function AdminCRMClient({ bookingStoreMode = 'auto' } = {}) {
                         <div className="space-y-3">
                           <Label className="text-sm font-semibold">Booking Actions</Label>
 
-                          {/* Calendar sync failed — retry from current DB state (no email) */}
-                          {bookingSyncWarning(o, bookingLastSync[lead.entityId])?.level === 'failed' && (
+                          {/* Calendar sync failed / not confirmed — retry from current DB state (no email) */}
+                          {syncWarningFor(o, lead.entityId)?.canRetry && (
                             <div className="bg-red-50 border border-red-200 rounded-lg p-3 space-y-2"
-                              title={bookingSyncWarning(o, bookingLastSync[lead.entityId]).title}>
+                              title={syncWarningFor(o, lead.entityId).title}>
                               <p className="text-xs text-red-700 flex items-center gap-1">
-                                <AlertTriangle className="w-3 h-3" /> Calendar sync failed — the Google Calendar event may not match this booking.
+                                <AlertTriangle className="w-3 h-3" /> {syncWarningFor(o, lead.entityId).level === 'failed'
+                                  ? 'Calendar sync failed — the Google Calendar event may not match this booking.'
+                                  : syncWarningFor(o, lead.entityId).title}
                               </p>
                               <Button size="sm" variant="outline" className="w-full border-red-300 text-red-700 hover:bg-red-100"
                                 disabled={bookingAdminAction.isPending}
                                 onClick={() => retryBookingSync(lead)}>
                                 <RefreshCw className="w-3 h-3 mr-1" /> Retry calendar sync (no email)
                               </Button>
-                              {isUnverifiedOwnership(o, bookingLastSync[lead.entityId]) && (
+                              {isUnverifiedOwnership(o, bookingLastSync[lead.entityId], { rowFetchedAt: bookingsFetchedAt || null }) && (
                                 <Button size="sm" variant="outline" className="w-full border-amber-300 text-amber-800 hover:bg-amber-50"
                                   disabled={bookingAdminAction.isPending}
                                   onClick={() => verifyBookingCalendar(lead)}>
