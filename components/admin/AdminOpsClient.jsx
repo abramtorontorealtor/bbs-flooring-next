@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { Check, Clock, Pause, RotateCcw, ArrowRightLeft, Plus, Bell, MessageSquare, X, RefreshCw } from 'lucide-react';
-import { sectionFor, compareRows, permissions, isOverdue, needsVerification, makBlocked, ET } from '@/lib/ops/brief-rules';
+import { sectionFor, compareRows, permissions, isOverdue, needsVerification, makBlocked, boardNotes, ET } from '@/lib/ops/brief-rules';
 
 /**
  * /admin/ops — Ops board for Abram + Mak over public.brief_items (the same ledger the Telegram brief reads).
@@ -233,6 +233,7 @@ function ItemCard({ row, at, actor, section, onAction }) {
   const overdue = isOverdue(row, at);
   const settled = section === 'SETTLED?';
   const pendingCheck = row.status === 'pending_verification' && !meta.auto_resolved;
+  const notes = boardNotes(row, 2);
   const waitingLine = row.status === 'snoozed' ? `Deferred; review ${fmtET(row.snooze_until)}` : row.status === 'waiting' ? `${row.close_note || 'Waiting for their reply'}${row.followup_at ? `; review ${fmtET(row.followup_at)}` : '; follow-up date missing'}` : null;
   const btn = (action, Icon, label, variant = 'outline') => {
     const p = perms[action];
@@ -260,6 +261,15 @@ function ItemCard({ row, at, actor, section, onAction }) {
       )}
       {row.due_at && <div className={`mt-1 text-xs ${overdue ? 'text-red-600 font-medium' : 'text-slate-600'}`}>{overdue ? '⏰ OVERDUE — ' : ''}{meta.due_display || `${meta.due_is_request ? 'Target' : 'Due'}: ${fmtET(row.due_at, !meta.date_only)} ET`}</div>}
       {waitingLine && <div className="mt-1 text-xs text-amber-800">{waitingLine}</div>}
+      {notes.length > 0 && (
+        <ul className="mt-1.5 space-y-0.5" data-testid="notes">
+          {notes.map((n, i) => (
+            <li key={`${n.at}-${i}`} className="text-xs text-slate-700 bg-slate-50 rounded px-2 py-1">
+              <span className="font-medium">📝 {who(n.by)}</span> <span className="text-slate-400">{fmtET(n.at)}{n.action && n.action !== 'note' ? ` · ${ACTION_LABEL[n.action] || n.action}` : ''}</span>: {n.note}
+            </li>
+          ))}
+        </ul>
+      )}
       <div className="mt-2 flex flex-wrap gap-1">
         {settled || pendingCheck ? (
           <>
