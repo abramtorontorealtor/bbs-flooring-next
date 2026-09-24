@@ -4,10 +4,11 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { Loader2, LayoutDashboard, ShoppingCart, BarChart3, Calendar, FileText,
-  Users, Package, Wrench, MessageSquare, Star, Search, ArrowLeft } from 'lucide-react';
+  Users, Package, Wrench, MessageSquare, Star, Search, ArrowLeft, ClipboardList } from 'lucide-react';
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { href: '/admin/ops', label: 'Ops', icon: ClipboardList },
   { href: '/admin/crm', label: 'CRM', icon: BarChart3 },
   { href: '/admin/orders', label: 'Orders', icon: ShoppingCart },
   { href: '/admin/bookings', label: 'Bookings', icon: Calendar },
