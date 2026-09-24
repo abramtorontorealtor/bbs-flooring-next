@@ -25,6 +25,11 @@ const SECTION_HELP = {
   CLOSED: 'Done or dropped in the last 48 h',
 };
 const ACTION_LABEL = { done: 'Done', confirm: 'Confirm', drop: 'Drop', snooze: 'Snooze', wait: 'Waiting on them', reopen: 'Reopen', reassign: 'Reassign', note: 'Note' };
+const SECTIONS = ['NOW', 'SETTLED?', 'NEXT', 'WAITING'];
+const SECTION_SHORT = { NOW: 'Now', 'SETTLED?': 'Settled?', NEXT: 'Next', WAITING: 'Waiting' };
+// Phone: dialogs slide up as a bottom sheet; ≥sm they stay centred. 16px inputs stop iOS Safari's focus-zoom.
+const SHEET = 'sm:max-w-md max-sm:top-auto max-sm:bottom-0 max-sm:translate-y-0 max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:max-h-[92dvh] max-sm:overflow-y-auto max-sm:pb-[max(1.5rem,env(safe-area-inset-bottom))] max-sm:data-[state=open]:slide-in-from-bottom max-sm:data-[state=closed]:slide-out-to-bottom max-sm:data-[state=open]:slide-in-from-top-0 max-sm:data-[state=closed]:slide-out-to-top-0';
+const FIELD = 'text-base sm:text-sm';
 
 const fmtET = (value, withTime = true) => {
   if (!value) return '';
@@ -74,6 +79,7 @@ export default function AdminOpsClient() {
   const actor = useSyncExternalStore(actorStore.subscribe, actorStore.get, actorStore.getServer);
   const switchActor = actorStore.set;
   const [view, setView] = useState('mine'); // mine | all
+  const [mobileSection, setMobileSection] = useState('NOW'); // phone: one section at a time (lg+ shows all four)
   const [dialog, setDialog] = useState(null); // { row, action }
   const [adding, setAdding] = useState(false);
 
@@ -126,17 +132,18 @@ export default function AdminOpsClient() {
   if (error) return <div className="max-w-7xl mx-auto px-4 py-8 text-red-600 text-sm">Could not load the ops board: {error.message}</div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 space-y-5" data-testid="ops-board">
-      <header className="flex flex-wrap items-center gap-3 justify-between">
-        <div>
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 pt-3 pb-24 lg:py-6 space-y-4 lg:space-y-5" data-testid="ops-board">
+      {/* Toolbar — sticks under the admin top nav on phones (layout pads pt-12, so top-12 here). */}
+      <header className="sticky top-12 lg:static z-30 -mx-3 sm:-mx-4 lg:mx-0 px-3 sm:px-4 lg:px-0 py-2 lg:py-0 bg-slate-50/95 backdrop-blur lg:bg-transparent lg:backdrop-blur-none border-b border-slate-200 lg:border-0 flex flex-wrap items-center gap-2 lg:gap-3 justify-between">
+        <div className="hidden lg:block">
           <h1 className="text-xl font-semibold text-slate-800">Ops board</h1>
           <p className="text-xs text-slate-500">{fmtET(at)} ET · same ledger as the Telegram brief · stable #IDs</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
           <div className="inline-flex rounded-lg border border-slate-200 bg-white p-0.5 text-sm" role="tablist" aria-label="Working as">
             {['abram', 'mak'].map((a) => (
               <button key={a} type="button" role="tab" aria-selected={actor === a} onClick={() => switchActor(a)} data-testid={`actor-${a}`}
-                className={`px-3 py-1.5 rounded-md transition ${actor === a ? 'bg-amber-100 text-amber-800 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}>
+                className={`px-3 py-2 lg:py-1.5 rounded-md transition ${actor === a ? 'bg-amber-100 text-amber-800 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}>
                 {who(a)} <span className="text-xs opacity-70">· {counts[a]}</span>
               </button>
             ))}
@@ -144,32 +151,38 @@ export default function AdminOpsClient() {
           <div className="inline-flex rounded-lg border border-slate-200 bg-white p-0.5 text-sm">
             {[['mine', `${who(actor)}'s`], ['all', 'Everyone']].map(([v, label]) => (
               <button key={v} type="button" onClick={() => setView(v)} aria-pressed={view === v}
-                className={`px-3 py-1.5 rounded-md transition ${view === v ? 'bg-slate-800 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>{label}</button>
+                className={`px-3 py-2 lg:py-1.5 rounded-md transition ${view === v ? 'bg-slate-800 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>{label}</button>
             ))}
           </div>
-          <Button size="sm" variant="outline" onClick={() => refetch()} disabled={isFetching} aria-label="Refresh"><RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin' : ''}`} /></Button>
-          <Button size="sm" onClick={() => setAdding(true)} data-testid="add-task"><Plus className="w-4 h-4 mr-1" /> Add task</Button>
+          <Button size="sm" variant="outline" className="hidden lg:inline-flex" onClick={() => refetch()} disabled={isFetching} aria-label="Refresh"><RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin' : ''}`} /></Button>
+          <Button size="sm" className="h-9 lg:h-8 hidden sm:inline-flex" onClick={() => setAdding(true)} data-testid="add-task"><Plus className="w-4 h-4 mr-1" /> Add task</Button>
+        </div>
+        <div className="lg:hidden w-full flex items-center justify-between gap-2 text-[11px] text-slate-500">
+          <span>{fmtET(at)} ET · same ledger as the Telegram brief</span>
+          <button type="button" onClick={() => refetch()} disabled={isFetching} aria-label="Refresh" className="inline-flex items-center gap-1 h-8 px-2 -mr-2 rounded-md text-slate-600 active:bg-slate-200">
+            <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} /> {isFetching ? 'Updating…' : 'Refresh'}
+          </button>
         </div>
       </header>
 
       {actor === 'mak' && (
         <section className="rounded-xl border border-sky-200 bg-sky-50/60 p-4" data-testid="chase-abram">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">
             <Bell className="w-4 h-4 text-sky-700" />
             <h2 className="text-sm font-semibold text-sky-900">Chase Abram · {chase.length}</h2>
-            <span className="text-xs text-sky-800/70">Abram&apos;s urgent items. Remind him, ask how, or log that you asked — don&apos;t close these yourself.</span>
+            <span className="basis-full sm:basis-auto text-xs text-sky-800/70">Abram&apos;s urgent items. Remind him, ask how, or log that you asked — don&apos;t close these yourself.</span>
           </div>
           {chase.length === 0 ? <p className="text-xs text-sky-800/70">Nothing urgent on Abram&apos;s plate right now.</p> : (
             <ul className="grid gap-2 md:grid-cols-2">
               {chase.map((r) => (
-                <li key={r.id} className="rounded-lg bg-white border border-sky-100 p-3 text-sm">
-                  <div className="flex items-start justify-between gap-2">
+                <li key={r.id} className="min-w-0 rounded-lg bg-white border border-sky-100 p-3 text-sm">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                     <div className="min-w-0">
                       <div className="font-medium text-slate-800 truncate">#{r.id} · {r.label}</div>
                       <div className="text-xs text-slate-600 line-clamp-2">{r.meta?.ask || r.completion_rule}</div>
                       {r.due_at && <div className={`text-xs mt-1 ${isOverdue(r, at) ? 'text-red-600 font-medium' : 'text-slate-500'}`}>{isOverdue(r, at) ? '⏰ OVERDUE — ' : ''}{r.meta?.due_is_request ? 'Target' : 'Due'}: {fmtET(r.due_at, !r.meta?.date_only)}</div>}
                     </div>
-                    <Button size="sm" variant="outline" className="shrink-0" onClick={() => openDialog(r, 'note')}><MessageSquare className="w-3.5 h-3.5 mr-1" /> Asked Abram</Button>
+                    <Button size="sm" variant="outline" className="shrink-0 h-9 sm:h-8 self-start" onClick={() => openDialog(r, 'note')}><MessageSquare className="w-3.5 h-3.5 mr-1" /> Asked Abram</Button>
                   </div>
                 </li>
               ))}
@@ -179,11 +192,31 @@ export default function AdminOpsClient() {
       )}
 
       {isLoading ? <div className="h-64 rounded-2xl bg-slate-100 animate-pulse" /> : (
-        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
-          {['NOW', 'SETTLED?', 'NEXT', 'WAITING'].map((name) => (
-            <Column key={name} name={name} rows={grouped[name]} at={at} actor={actor} onAction={openDialog} />
-          ))}
-        </div>
+        <>
+          {/* Phone: one section at a time, switched by tabs (lg+ shows all four side by side). */}
+          <div className="lg:hidden grid grid-cols-4 gap-1 rounded-xl border border-slate-200 bg-white p-1" role="tablist" aria-label="Section" data-testid="section-tabs">
+            {SECTIONS.map((name) => {
+              const n = grouped[name].length;
+              const active = mobileSection === name;
+              const tone = { NOW: 'bg-red-600 text-white', 'SETTLED?': 'bg-emerald-600 text-white', NEXT: 'bg-slate-800 text-white', WAITING: 'bg-amber-500 text-white' }[name];
+              const dot = { NOW: 'bg-red-500', 'SETTLED?': 'bg-emerald-500', NEXT: 'bg-slate-500', WAITING: 'bg-amber-500' }[name];
+              return (
+                <button key={name} type="button" role="tab" aria-selected={active} onClick={() => setMobileSection(name)} data-testid={`tab-${name.replace('?', '')}`}
+                  className={`min-h-11 rounded-lg px-1 text-xs font-medium leading-tight transition ${active ? tone : 'text-slate-600 active:bg-slate-100'}`}>
+                  <span className="block">{SECTION_SHORT[name]}</span>
+                  <span className={`inline-flex items-center gap-1 text-[11px] ${active ? 'opacity-90' : 'text-slate-500'}`}>
+                    {!active && n > 0 && <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />}{n}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
+            {SECTIONS.map((name) => (
+              <Column key={name} name={name} rows={grouped[name]} at={at} actor={actor} onAction={openDialog} className={mobileSection === name ? '' : 'hidden lg:block'} />
+            ))}
+          </div>
+        </>
       )}
 
       {!isLoading && (
@@ -191,12 +224,12 @@ export default function AdminOpsClient() {
           <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-slate-700">Closed (48 h) · {grouped.CLOSED.length}</summary>
           <ul className="divide-y divide-slate-100">
             {grouped.CLOSED.map((r) => (
-              <li key={r.id} className="px-4 py-2.5 text-sm flex items-start justify-between gap-3">
+              <li key={r.id} className="px-4 py-3 lg:py-2.5 text-sm flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <span className="font-medium text-slate-700">#{r.id} · {r.label}</span>
                   <div className="text-xs text-slate-500">{r.status === 'dropped' ? 'Dropped' : r.verification_source === 'abram_confirmation' ? 'Abram-confirmed' : r.verification_source === 'mak_confirmation' ? 'Mak-confirmed' : 'Verified'}{r.close_note ? `: ${r.close_note}` : ''} · {fmtET(r.closed_at)}</div>
                 </div>
-                <Button size="sm" variant="ghost" onClick={() => openDialog(r, 'reopen')}><RotateCcw className="w-3.5 h-3.5 mr-1" /> Reopen</Button>
+                <Button size="sm" variant="ghost" className="h-9 lg:h-8 shrink-0" onClick={() => openDialog(r, 'reopen')}><RotateCcw className="w-3.5 h-3.5 mr-1" /> Reopen</Button>
               </li>
             ))}
             {grouped.CLOSED.length === 0 && <li className="px-4 py-3 text-xs text-slate-500">Nothing closed in the last 48 h.</li>}
@@ -204,23 +237,29 @@ export default function AdminOpsClient() {
         </details>
       )}
 
+      {/* Phone: thumb-reach Add button (the toolbar one is hidden below sm). */}
+      <Button onClick={() => setAdding(true)} aria-label="Add task" data-testid="add-task-fab"
+        className="sm:hidden fixed z-30 right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] h-12 w-12 rounded-full p-0 shadow-lg">
+        <Plus className="w-5 h-5" />
+      </Button>
+
       {dialog && <ActionDialog dialog={dialog} actor={actor} pending={act.isPending} onClose={() => setDialog(null)} onSubmit={(payload) => act.mutate({ ...payload, id: dialog.row.id, action: dialog.action })} />}
       {adding && <AddDialog actor={actor} pending={act.isPending} onClose={() => setAdding(false)} onSubmit={(payload) => act.mutate({ ...payload, action: 'add' })} />}
     </div>
   );
 }
 
-function Column({ name, rows, at, actor, onAction }) {
+function Column({ name, rows, at, actor, onAction, className = '' }) {
   const tone = { NOW: 'border-red-200 bg-red-50/40', 'SETTLED?': 'border-emerald-200 bg-emerald-50/40', NEXT: 'border-slate-200 bg-white', WAITING: 'border-amber-200 bg-amber-50/40' }[name];
   return (
-    <section className={`rounded-xl border p-3 ${tone}`} data-testid={`col-${name.replace('?', '')}`} aria-label={name}>
+    <section className={`rounded-xl border p-3 ${tone} ${className}`} data-testid={`col-${name.replace('?', '')}`} aria-label={name}>
       <div className="flex items-baseline justify-between mb-2">
         <h2 className="text-sm font-semibold text-slate-800">{name} · {rows.length}</h2>
       </div>
       <p className="text-[11px] text-slate-500 mb-2">{SECTION_HELP[name]}</p>
       <ul className="space-y-2">
         {rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} onAction={onAction} />)}
-        {rows.length === 0 && <li className="text-xs text-slate-400 py-2">Empty.</li>}
+        {rows.length === 0 && <li className="text-xs text-slate-400 py-6 lg:py-2 text-center lg:text-left">Empty.</li>}
       </ul>
     </section>
   );
@@ -238,7 +277,7 @@ function ItemCard({ row, at, actor, section, onAction }) {
   const btn = (action, Icon, label, variant = 'outline') => {
     const p = perms[action];
     return (
-      <Button key={action} size="sm" variant={variant} disabled={!p.allowed} title={p.allowed ? label : p.reason} onClick={() => onAction(row, action)} className="h-7 px-2 text-xs">
+      <Button key={action} size="sm" variant={variant} disabled={!p.allowed} title={p.allowed ? label : p.reason} onClick={() => onAction(row, action)} className="h-9 lg:h-7 px-3 lg:px-2 text-xs">
         <Icon className="w-3.5 h-3.5 mr-1" /> {label}
       </Button>
     );
@@ -252,7 +291,7 @@ function ItemCard({ row, at, actor, section, onAction }) {
           <Badge variant="secondary" className="text-[10px]">{who(row.assignee)}</Badge>
         </div>
       </div>
-      <div className="mt-1 text-xs text-slate-600">
+      <div className="mt-1 text-[13px] lg:text-xs text-slate-600">
         {settled ? <>Looks settled: {row.close_note}</> : pendingCheck ? <><span className="font-medium text-red-700">CHECK TO CLOSE:</span> {row.completion_rule}</> : (meta.ask || row.completion_rule)}
       </div>
       {meta.facts && !settled && <div className="mt-1 text-xs text-slate-500">{meta.facts}</div>}
@@ -270,7 +309,7 @@ function ItemCard({ row, at, actor, section, onAction }) {
           ))}
         </ul>
       )}
-      <div className="mt-2 flex flex-wrap gap-1">
+      <div className="mt-2.5 lg:mt-2 flex flex-wrap gap-1.5 lg:gap-1">
         {settled || pendingCheck ? (
           <>
             {btn('confirm', Check, 'Confirm', 'default')}
@@ -322,7 +361,7 @@ function ActionDialog({ dialog, actor, pending, onClose, onSubmit }) {
   };
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className={SHEET}>
         <DialogHeader><DialogTitle className="text-base">{title}</DialogTitle></DialogHeader>
         <form onSubmit={submit} className="space-y-3">
           <p className="text-xs text-slate-500">{hint}</p>
@@ -331,16 +370,16 @@ function ActionDialog({ dialog, actor, pending, onClose, onSubmit }) {
             <div className="space-y-1.5">
               <div className="flex flex-wrap gap-1">
                 {[['+4h', 4, 'h'], ['Tomorrow 9am', 1, 'd'], ['+3 days', 3, 'd'], ['Next week', 7, 'd']].map(([l, n, u]) => (
-                  <Button key={l} type="button" size="sm" variant="outline" className="h-7 text-xs" onClick={() => setUntil(quickUntil(n, u))}>{l}</Button>
+                  <Button key={l} type="button" size="sm" variant="outline" className="h-9 sm:h-7 text-xs" onClick={() => setUntil(quickUntil(n, u))}>{l}</Button>
                 ))}
               </div>
-              <Input type="datetime-local" value={until} onChange={(e) => setUntil(e.target.value)} required aria-label="Until" />
+              <Input type="datetime-local" value={until} onChange={(e) => setUntil(e.target.value)} required aria-label="Until" className={FIELD} />
             </div>
           )}
-          <Textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder={noteRequired ? 'Required' : 'Optional'} aria-label="Note" />
+          <Textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder={noteRequired ? 'Required' : 'Optional'} aria-label="Note" className={FIELD} />
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
-            <Button type="submit" disabled={pending}>{pending ? 'Saving…' : ACTION_LABEL[action]}</Button>
+            <Button type="button" variant="ghost" className="h-11 sm:h-9" onClick={onClose}>Cancel</Button>
+            <Button type="submit" disabled={pending} className="h-11 sm:h-9 flex-1 sm:flex-none">{pending ? 'Saving…' : ACTION_LABEL[action]}</Button>
           </div>
           <p className="text-[11px] text-slate-400">Recorded as {who(actor)}.</p>
         </form>
@@ -361,25 +400,25 @@ function AddDialog({ actor, pending, onClose, onSubmit }) {
   };
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className={SHEET}>
         <DialogHeader><DialogTitle className="text-base">Add a task</DialogTitle></DialogHeader>
         <form onSubmit={submit} className="space-y-3">
           <p className="text-xs text-slate-500">{actor === 'mak' ? 'Reminders for Abram go here — he sees them in his NOW/NEXT and in the Telegram brief.' : 'Hand something to Mak or note a task for yourself.'}</p>
-          <Input value={label} onChange={(e) => setLabel(e.target.value)} placeholder="e.g. Ask Abram: send Dan the breakdown" maxLength={160} required aria-label="Task" />
-          <Textarea value={ask} onChange={(e) => setAsk(e.target.value)} rows={2} placeholder="Next action / context (optional)" maxLength={240} aria-label="Next action" />
+          <Input value={label} onChange={(e) => setLabel(e.target.value)} placeholder="e.g. Ask Abram: send Dan the breakdown" maxLength={160} required aria-label="Task" className={FIELD} />
+          <Textarea value={ask} onChange={(e) => setAsk(e.target.value)} rows={2} placeholder="Next action / context (optional)" maxLength={240} aria-label="Next action" className={FIELD} />
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="text-slate-600">For</span>
             {['abram', 'mak'].map((a) => (
-              <Button key={a} type="button" size="sm" variant={assignee === a ? 'default' : 'outline'} className="h-7 text-xs" onClick={() => setAssignee(a)} aria-pressed={assignee === a}>{who(a)}</Button>
+              <Button key={a} type="button" size="sm" variant={assignee === a ? 'default' : 'outline'} className="h-9 sm:h-7 text-xs" onClick={() => setAssignee(a)} aria-pressed={assignee === a}>{who(a)}</Button>
             ))}
             <span className="text-slate-600 ml-2">Priority</span>
             {[[1, 'Today'], [2, 'Normal'], [3, 'Low']].map(([p, l]) => (
-              <Button key={p} type="button" size="sm" variant={priority === p ? 'default' : 'outline'} className="h-7 text-xs" onClick={() => setPriority(p)} aria-pressed={priority === p}>{l}</Button>
+              <Button key={p} type="button" size="sm" variant={priority === p ? 'default' : 'outline'} className="h-9 sm:h-7 text-xs" onClick={() => setPriority(p)} aria-pressed={priority === p}>{l}</Button>
             ))}
           </div>
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
-            <Button type="submit" disabled={pending}>{pending ? 'Adding…' : 'Add'}</Button>
+            <Button type="button" variant="ghost" className="h-11 sm:h-9" onClick={onClose}>Cancel</Button>
+            <Button type="submit" disabled={pending} className="h-11 sm:h-9 flex-1 sm:flex-none">{pending ? 'Adding…' : 'Add'}</Button>
           </div>
         </form>
       </DialogContent>

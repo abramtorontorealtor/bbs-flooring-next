@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import { LocalBusinessJsonLd } from '@/components/LocalBusinessJsonLd';
 import { ClientProviders } from './providers';
 import FooterServer from '@/components/FooterServer';
+import HideOnAdmin from '@/components/HideOnAdmin';
 import AfterHoursConcierge from '@/components/AfterHoursConcierge';
 import ClosurePopup from '@/components/ClosurePopup';
 import { DeferredAnalytics } from '@/components/DeferredAnalytics';
@@ -110,7 +111,7 @@ export default function RootLayout({ children }) {
         <ClosurePopup />
 
         {/* Footer is a server component — zero client JS */}
-        <FooterServer />
+        <HideOnAdmin><FooterServer /></HideOnAdmin>
 
         {/* Vercel Analytics + Speed Insights — deferred until after hydration */}
         <DeferredAnalytics />

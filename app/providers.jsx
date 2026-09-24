@@ -22,6 +22,10 @@ export function ClientProviders({ children }) {
   const [cartCount, setCartCount] = useState(0);
   const [overlaysReady, setOverlaysReady] = useState(false);
   const isHomePage = pathname === '/';
+  // /admin/* is a back-office, not a storefront: no store header (it sat on top of the admin's own mobile nav at
+  // z-50 and pushed content 128px down), no marketing overlays (sticky CTAs / exit-intent covered the ops board's
+  // action buttons on phones). Footer is hidden in app/layout.js via HideOnAdmin. Toaster stays; the cookie banner sat over the phone FAB and staff aren't visitors.
+  const isAdmin = pathname === '/admin' || pathname?.startsWith('/admin/');
 
   // Track Meta Pixel PageView on route changes (script already loaded via next/script)
   useEffect(() => {
@@ -86,16 +90,16 @@ export function ClientProviders({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Header cartCount={cartCount} />
-        <main className={`flex-1 ${isHomePage ? '' : 'pt-32'}`}>
+        {!isAdmin && <Header cartCount={cartCount} />}
+        <main className={`flex-1 ${isHomePage || isAdmin ? '' : 'pt-32'}`}>
           {children}
         </main>
         {overlaysReady && (
           <Suspense fallback={null}>
-            <StickyMobileCTA />
-            <DesktopStickyCTA />
-            <ExitIntentPopup />
-            <CookieConsent />
+            {!isAdmin && <StickyMobileCTA />}
+            {!isAdmin && <DesktopStickyCTA />}
+            {!isAdmin && <ExitIntentPopup />}
+            {!isAdmin && <CookieConsent />}
             <LazyToaster richColors position="top-right" duration={4000} />
           </Suspense>
         )}

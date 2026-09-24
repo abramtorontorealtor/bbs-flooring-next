@@ -18,6 +18,7 @@ const SHOW_DELAY_MS = 8000;
 const WHATSAPP_URL = 'https://wa.me/message/CQQRGZKI3U2VH1';
 
 const HIDDEN_PATHS = [
+  '/admin',
   '/cart',
   '/checkout',
   '/view-booking',

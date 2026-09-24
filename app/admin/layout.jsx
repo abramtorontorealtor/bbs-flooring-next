@@ -76,7 +76,7 @@ export default function AdminLayout({ children }) {
       </aside>
 
       {/* Mobile top nav */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-2 flex items-center gap-3 overflow-x-auto">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-2 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" style={{ paddingTop: 'max(0.5rem, env(safe-area-inset-top))' }}>
         <Link href="/" className="shrink-0 text-slate-400 hover:text-amber-600">
           <ArrowLeft className="w-4 h-4" />
         </Link>
@@ -86,7 +86,7 @@ export default function AdminLayout({ children }) {
             <Link
               key={href}
               href={href}
-              className={`whitespace-nowrap px-2.5 py-1.5 rounded-full text-xs font-medium transition ${
+              className={`whitespace-nowrap px-3 py-2 rounded-full text-xs font-medium transition ${
                 active ? 'bg-amber-100 text-amber-700' : 'text-slate-500 hover:bg-slate-100'
               }`}
             >
