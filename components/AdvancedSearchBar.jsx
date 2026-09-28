@@ -12,6 +12,7 @@ import { entities } from '@/lib/base44-compat';
 import { createPageUrl } from '@/lib/routes';
 import { useRouter } from 'next/navigation';
 import { track } from '@/lib/track';
+import { getBrandAlias } from '@/lib/brandAliases';
 
 const Product = entities.Product;
 
@@ -94,7 +95,8 @@ async function buildClientCache() {
         hide_price: p.hide_price !== false, // default true (hidden) unless explicitly false
         category: p.category || '',
         _name: (p.name || '').toLowerCase(),
-        _brand: (p.brand || '').toLowerCase(),
+        // Brand + consumer alias (e.g. Triforest → Toucan) so "toucan" finds the planks
+        _brand: ((p.brand || '') + ' ' + (getBrandAlias(p.brand)?.alias || '')).trim().toLowerCase(),
         _sku: (p.sku || '').toLowerCase(),
         _category: (p.category || '').toLowerCase(),
         _colour: (p.colour || '').toLowerCase(),

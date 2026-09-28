@@ -96,6 +96,8 @@ const nextConfig = {
       // appear in any public URL — feeds/JSON-LD/og:image). Old path 301s so
       // already-indexed image URLs and un-migrated DB image_url rows keep working.
       { source: '/images/accessories/prosol/:file*', destination: '/images/accessories/install-supplies/:file*', permanent: true },
+      // Brand alias: Toucan Flooring is Triforest's consumer brand — one landing page, no duplicate.
+      { source: '/toucan-flooring', destination: '/triforest-flooring', permanent: true },
       // Category pages (multi-word only — single-word handled by Cloudflare)
       { source: '/SolidHardwood', destination: '/solid-hardwood', permanent: true },
       { source: '/EngineeredHardwood', destination: '/engineered-hardwood', permanent: true },

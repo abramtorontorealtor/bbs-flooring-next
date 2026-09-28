@@ -36,6 +36,7 @@ import { useAuth } from '@/lib/auth-context';
 import { track } from '@/lib/track';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { hasRealImage } from '@/lib/imagePlaceholder';
+import { getBrandAlias, brandDisplayLabel, brandSpecValue } from '@/lib/brandAliases';
 
 /* ── FAST_PICKUP_BRANDS — warehouse-stocked brands with quick turnaround ── */
 const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
@@ -532,7 +533,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
 
           {/* Brand */}
           {product.brand && (
-            <p className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">{product.brand}</p>
+            <p className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">{brandDisplayLabel(product.brand)}</p>
           )}
 
           {/* Title */}
@@ -1049,7 +1050,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
             {product.brand && (
               <div className={`flex justify-between items-center px-4 py-3 text-sm ${specItems.length % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
                 <span className="text-slate-600">Brand</span>
-                <span className="font-medium text-slate-900">{product.brand}</span>
+                <span className="font-medium text-slate-900">{brandSpecValue(product.brand)}</span>
               </div>
             )}
             {product.category && (
@@ -1163,6 +1164,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
             <><h2 className="text-xl font-bold text-slate-900 mb-3">Why Markham Homeowners Choose Vidar Wide Plank</h2><p className="text-sm text-slate-600 leading-relaxed">Vidar&apos;s UV-cured oil finish and 3mm dry-sawn wear layer offer superior stability for Southern Ontario&apos;s humid summers and dry winters. As an authorized Vidar dealer, BBS Flooring carries the full collection with expert installation available across the GTA.</p></>
           ) : (product.brand.toLowerCase().includes('twelve oaks')) ? (
             <><h2 className="text-xl font-bold text-slate-900 mb-3">The Twelve Oaks Durability Standard</h2><p className="text-sm text-slate-600 leading-relaxed">With FloorScore certification and commercial-grade wear layers, Twelve Oaks is the preferred choice for high-traffic GTA homes. Visit our Markham showroom to see the full Twelve Oaks collection.</p></>
+          ) : getBrandAlias(product.brand)?.match === 'triforest' ? (
+            <><h2 className="text-xl font-bold text-slate-900 mb-3">Triforest Flooring — the Brand Behind Toucan</h2><p className="text-sm text-slate-600 leading-relaxed">Triforest Inc. is the Toronto-area manufacturer that sells its laminate and SPC vinyl under the <strong>Toucan Flooring</strong> name — if your sample board says Toucan, this is the same plank. Triforest has built laminate just outside Toronto since 2023 and opened Canada&apos;s first SPC vinyl plant in Ajax, Ontario in 2025. BBS Flooring stocks the full Triforest / Toucan range in Markham — <a href="/triforest-flooring" className="text-amber-700 font-semibold hover:underline">browse every series</a> or call (647) 428-1111 to match a colour name or code.</p></>
           ) : (product.brand.toLowerCase().includes('northernest')) ? (
             <><h2 className="text-xl font-bold text-slate-900 mb-3">Northernest — Canadian-Made Quality</h2><p className="text-sm text-slate-600 leading-relaxed">Proudly Canadian-made, Northernest flooring combines European design with domestic manufacturing excellence. Built for Canadian climates and available for fast pickup from our Markham location.</p></>
           ) : (

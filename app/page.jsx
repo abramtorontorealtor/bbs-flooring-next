@@ -617,7 +617,7 @@ export default function HomePage() {
                 { label: 'NAF Flooring', href: '/naf-flooring' },
                 { label: 'Wickham Flooring', href: '/wickham-flooring' },
                 { label: 'Appalachian Flooring', href: '/appalachian-flooring' },
-                { label: 'Triforest Flooring', href: '/triforest-flooring' },
+                { label: 'Triforest / Toucan Flooring', href: '/triforest-flooring' },
                 { label: 'Woden Flooring', href: '/woden-flooring' },
                 { label: 'Simba Flooring', href: '/simba-flooring' },
                 { label: 'Canadian Standard Flooring', href: '/canadian-standard-flooring' },

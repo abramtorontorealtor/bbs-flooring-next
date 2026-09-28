@@ -286,58 +286,82 @@ export const canadianStandardFlooringData = {
 };
 
 // ══════════════════════════════════════════════════════════
-// TRIFOREST FLOORING — 38 products (vinyl 32, laminate 6)
+// TRIFOREST / TOUCAN FLOORING — 130 live products (vinyl 83, laminate 35, engineered 12)
+// Triforest Inc. = manufacturer; Toucan Flooring = its consumer brand (same planks,
+// same warranty). Counts/prices verified against Supabase Sep 28, 2026.
 // ══════════════════════════════════════════════════════════
 
 export const triforestFlooringData = {
   route: 'TriforestFlooring',
-  title: 'Triforest Flooring Review & Prices Markham | Waterproof Vinyl In Stock',
-  description: 'Is Triforest flooring good? 100% waterproof SPC vinyl, AC4-rated, 25-year warranty, condo-approved underpad, from $2.29/sqft. In stock at BBS Flooring Markham. Call (647) 428-1111.',
-  h1: 'Triforest Vinyl Plank & Laminate Flooring',
-  subtitle: '100% waterproof SPC vinyl, AC4-rated and backed by a 25-year warranty — Triforest products from $2.29/sqft, in stock at our Markham showroom. Condo-approved options and one of the tightest value price bands we carry.',
+  title: 'Toucan / Triforest Flooring Markham | Vinyl & Laminate In Stock',
+  description: 'Toucan Flooring is Triforest\'s brand — same planks, same warranty. 130 SPC vinyl, waterproof laminate & engineered oak options from $2.29/sqft, in stock at BBS Flooring Markham. (647) 428-1111.',
+  h1: 'Triforest Flooring (Toucan) — Vinyl, Laminate & Engineered Oak',
+  subtitle: 'Toucan Flooring and Triforest are the same company: Triforest Inc. makes the planks, Toucan is the name on the sample board. BBS Flooring stocks 130 Triforest / Toucan options in Markham — 100% waterproof SPC vinyl from $2.29/sqft, 72–120 hour waterproof laminate from $2.29/sqft, and 3/4" engineered oak from $4.79/sqft.',
   parentPage: null,
   schemaType: 'product',
   content: [
     {
-      heading: 'Is Triforest Flooring Good? Why It\'s Worth It',
-      body: `<p>Triforest punches well above its price — here's what you're actually getting:</p>
+      heading: 'Toucan vs Triforest — Same Floor, Two Names',
+      body: `<p><strong>Toucan Flooring is a brand owned by Triforest Inc.</strong>, a Toronto-based manufacturer of laminate, SPC luxury vinyl and MDF panels. Triforest has produced laminate just outside Toronto since 2023 and opened Canada's first SPC vinyl plant in Ajax, Ontario in 2025. Sample boards, boxes and spec sheets may say either name — the product, the codes (TF SPC 707, TF 8005, TF CET 1001…) and the 25-year residential warranty are identical.</p>
+<p>On bbsflooring.ca every Toucan product is listed under <strong>Triforest</strong> with its Toucan colour name — so "Toucan Cali Bluffs" is our <a href="/products/triforest-tfspc510-triforest-vinyl-6mm-flooring">TF SPC 510 — Cali Bluffs</a>, and "Toucan Terracotta" is <a href="/products/tf-8005-triforest-laminate-flooring">TF 8005 — Terracotta</a>. Bring the code or the colour name and we'll match it on the spot.</p>`
+    },
+    {
+      heading: 'Is Triforest / Toucan Flooring Good? Why It Earns Shelf Space Here',
+      body: `<p>Triforest punches well above its price band — here's what you're actually getting:</p>
 <ul>
-<li><strong>100% waterproof SPC core</strong> — every vinyl plank is safe for basements, kitchens, bathrooms, and laundry rooms.</li>
-<li><strong>AC4 commercial wear rating</strong> — rated for heavy residential and light commercial traffic, not just bedrooms.</li>
-<li><strong>25-year residential warranty</strong> — real backing at a budget price point.</li>
-<li><strong>Condo-approved underpad options</strong> — meets the sound-transmission rules most GTA condo boards require, no separate underlay needed.</li>
-<li><strong>One of the tightest price bands we carry</strong> — you're not penalized for choosing the thicker, better-feeling plank.</li>
+<li><strong>Waterproof SPC core on every vinyl plank</strong> — stone-plastic composite doesn't swell, so it's safe for basements, kitchens, bathrooms and laundry rooms.</li>
+<li><strong>20 mil wear layer on most SPC series</strong> — the commercial-grade spec, not the 6–12 mil found on box-store vinyl.</li>
+<li><strong>Waterproof laminate</strong> — the TF66, TF80 and TF83 series carry 72–120 hour spill ratings, and the TF80 series is AC4-rated for heavy residential and light commercial traffic.</li>
+<li><strong>Attached underpad on the condo-friendly series</strong> — SPC4, SPC6, SPC86, SPC9 and CET10 ship with 1.5–2 mm pad for sound reduction.</li>
+<li><strong>25-year residential warranty</strong> on the current SPC, waterproof laminate and engineered collections.</li>
+<li><strong>Made by the manufacturer, sold by the dealer</strong> — no importer markup in the middle, which is why the price band is so tight.</li>
 </ul>
-<p>If you know you want waterproof vinyl and you want genuine value without cutting corners on durability, Triforest delivers.</p>`
+<p>If you want genuine waterproof performance without paying a premium-brand name tax, Triforest / Toucan is the value pick in our showroom.</p>`
     },
     {
-      heading: 'Vinyl-Forward, Value-Driven',
-      body: `<p>Triforest is primarily a vinyl brand — <strong>32 of their 38 products are waterproof vinyl plank</strong> — with a small laminate collection rounding out the lineup. If you know you want vinyl and you want options, Triforest delivers.</p>
-<p>Their vinyl range covers multiple thickness levels, from <strong>ultra-thin 3.2mm glue-down to 5.5mm condo-approved SPC</strong>. This spread means you can find the right product whether you're refinishing a rental basement or upgrading your main floor.</p>`
+      heading: 'Triforest / Toucan SPC Vinyl Plank — 83 Colours, $2.29–$3.99/sqft',
+      body: `<p>Vinyl is Triforest's core business, and the series ladder is simple — thicker plank and attached pad as you move up:</p>
+<ul>
+<li><strong>SPC3 Series — 4.2mm (3.2mm + 1mm pad), $2.29/sqft:</strong> thinnest profile for low-clearance jobs (over existing floors, tight door thresholds). 6 colours.</li>
+<li><strong>SPC5 Series — 6mm, 20 mil wear layer, $2.55/sqft:</strong> 1520 × 230 mm wide planks, 12 colours including Cali Bluffs, French Grey and Golden Hour. Our best-value mid-weight plank.</li>
+<li><strong>SPC2 Series — 6.5mm, 20 mil, $2.65/sqft:</strong> 1220 × 183 mm classic plank format.</li>
+<li><strong>SPC86 Series — 8mm (6mm + 2mm pad), $2.69/sqft:</strong> 10 Canadian-inspired colours (Morning Mist, Northern Linen, Driftwood Shore…).</li>
+<li><strong>SPC4 Series — 7mm with 1.5mm condo pad, $2.75–$3.19/sqft:</strong> 1520 × 228 mm long planks in 6 colours (Lemon Pepper, Winter Air, River Rock…); the go-to for GTA condos with sound requirements.</li>
+<li><strong>SPC7 Series — 8mm, 6" × 48", $2.79/sqft:</strong> 10 New England colours (Cape Elizabeth, Camden, Bar Harbor…). Our best-selling Triforest series.</li>
+<li><strong>SPC6 Series — 8mm (5.5mm + 1.5mm pad), $3.09/sqft:</strong> 12 European-city colours (Barcelona, Vienna, Amsterdam…).</li>
+<li><strong>SPC9 Series — 9mm (7mm + 2mm pad), $3.59/sqft:</strong> narrower 180 × 1520 mm plank, 12 oak tones (Century Oak, Smoked Oak, Sawn Oak…).</li>
+<li><strong>CET10 Series — 10mm (8mm + 2mm pad), $3.99/sqft:</strong> the flagship — thickest plank, 12 designer colours (Archon, Lumina, Terra…).</li>
+</ul>
+<p>All SPC series click-lock together and can be installed over most existing hard floors. Add <a href="/flooring-accessories">matching T-moulding, reducers and stair nosing</a> from the accessories page.</p>`
     },
     {
-      heading: 'Triforest Vinyl — 32 Options from $2.79/sqft',
+      heading: 'Triforest / Toucan Laminate — 35 Colours, $2.29–$2.69/sqft',
       body: `<ul>
-<li><strong>3.2mm + 1mm pad:</strong> Ultra-thin profile for low-clearance installations (basements with low ceilings, over existing floors).</li>
-<li><strong>4.5mm + 1.5mm pad:</strong> Mid-range thickness, good balance of comfort and price.</li>
-<li><strong>5mm + 1.5mm pad:</strong> Our recommendation for most rooms — substantial feel without premium pricing.</li>
-<li><strong>5.5mm + 1.5mm condo pad:</strong> Meets condo board sound transmission requirements.</li>
-</ul>
-<p>All 32 options are waterproof and click-lock. Prices range from <strong>$2.79 to $3.49/sqft</strong> — one of the tighter price bands in our showroom, which means you're not paying a premium for the thicker options.</p>`
+<li><strong>TF83 Series — 12.3mm, 120-hour waterproof, $2.69/sqft:</strong> extra-wide 238 × 1520 mm planks, 12 Canadian-wildlife colours (Arctic Hare, Beaver, Caribou, Lynx…). Newest series.</li>
+<li><strong>TF66 Series — 12.3mm, 72-hour waterproof, $2.59/sqft:</strong> 196 × 1218 mm, 12 Southwest colours (Santa Fe, Taos, Mesilla, Silver City…).</li>
+<li><strong>TF80 Series — 12.3mm, AC4, 72-hour waterproof, $2.59/sqft:</strong> 7.7" × 72" six-foot planks with Uniclic joints, 7 colours in stock including Terracotta, Arctic Fox and Summer Hare.</li>
+<li><strong>Matt / Hand Scraped Collection — 12.3mm, AC4, $2.29/sqft:</strong> the entry laminate — narrow 126 mm planks in Nature Classic, Hickory Classic, Nature Lite and Titan Oak. Not rated waterproof; best for bedrooms, hallways and offices.</li>
+</ul>`
     },
     {
-      heading: 'Triforest Laminate — 6 Options at $2.29/sqft',
-      body: `<p>Triforest's 12mm laminate rounds out their lineup at $2.29/sqft. It's a straightforward, well-made laminate — no waterproof claims, just solid 12mm construction with realistic wood-grain finishes.</p>
-<p>At this price point, it's one of the most affordable laminate options we carry and a strong choice for bedrooms, hallways, and home offices.</p>`
+      heading: 'Triforest Engineered Oak — Studio & Towne Collections, $4.79–$6.29/sqft',
+      body: `<p>Less known than the vinyl, Triforest also makes two 3/4" (18mm) engineered hardwood lines with a light wire-brushed, character-grade oak face:</p>
+<ul>
+<li><strong>Studio Collection — $4.79/sqft:</strong> 2mm white oak top layer, 165 mm wide, 6 colours (Oyster, Tusk, Sable, Woodland, Sky, Shadow).</li>
+<li><strong>Towne Collection — $6.29/sqft:</strong> 3mm European oak top layer, 190 mm wide, 6 colours (Silk, Shell, Satin, Hazelnut, Cashmere, Solitude).</li>
+</ul>
+<p>Both carry the 25-year residential warranty and can be refinished thanks to the real-wood wear layer.</p>`
     },
   ],
   faqItems: [
-    { question: 'Is Triforest flooring good quality?', answer: 'Yes — Triforest is strong value. Its vinyl uses a 100% waterproof SPC core, carries an AC4 commercial wear rating (rated for heavy residential and light commercial traffic), and is backed by a 25-year residential warranty, all at one of the most competitive price points in our showroom. Condo-approved underpad options are available. BBS Flooring carries 38 Triforest products in Markham.' },
-    { question: 'Is Triforest vinyl plank waterproof?', answer: 'Yes. All 32 Triforest vinyl plank options are 100% waterproof with SPC cores. They can be installed in basements, kitchens, bathrooms, and laundry rooms without moisture concerns.' },
-    { question: 'Does Triforest have condo-approved vinyl?', answer: 'Yes. Triforest offers 5.5mm + 1.5mm vinyl plank with integrated condo-approved underpad that meets the sound transmission requirements of most GTA condo boards. Verify your building\'s specific STC/IIC requirements with property management.' },
-    { question: 'How much does Triforest flooring cost?', answer: 'Triforest vinyl ranges from $2.79 to $3.49/sqft and laminate is $2.29/sqft at BBS Flooring. These are among the most competitive prices in our Markham showroom. Call (647) 428-1111 for current pricing.' },
-    { question: 'What thickness of Triforest vinyl is best?', answer: 'For most residential applications, we recommend 5mm + 1.5mm underpad or thicker. The 3.2mm option works for low-clearance situations. If you live in a condo, the 5.5mm condo-approved option is the right choice. Visit our showroom for samples.' },
-    { question: 'Where can I buy Triforest Flooring?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham carries 38 Triforest products in stock. Walk-ins welcome Monday–Saturday. Free in-home measurements across the GTA.' },
+    { question: 'Is Toucan Flooring the same as Triforest?', answer: 'Yes. Toucan Flooring is the consumer brand of Triforest Inc., the Toronto-based manufacturer. The planks, product codes (e.g. TF SPC 707, TF 8005) and 25-year residential warranty are identical — only the name on the box differs. BBS Flooring lists every Toucan product under Triforest with its Toucan colour name.' },
+    { question: 'Where can I buy Toucan flooring in Toronto or Markham?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham stocks 130 Triforest / Toucan products — SPC vinyl, waterproof laminate and engineered oak — with samples in the showroom. Walk-ins welcome Monday–Saturday; free in-home measurements across the GTA. Call (647) 428-1111 to check a specific colour.' },
+    { question: 'Is Triforest flooring good quality?', answer: 'Yes — Triforest is strong value. Its SPC vinyl uses a waterproof stone-plastic composite core with a 20 mil wear layer on most series, its TF66/TF80/TF83 laminates carry 72–120 hour waterproof ratings (TF80 is AC4-rated), and current collections are backed by a 25-year residential warranty, all at one of the tightest price bands in our showroom.' },
+    { question: 'Is Triforest / Toucan vinyl plank waterproof?', answer: 'Yes. Every Triforest vinyl series uses an SPC (stone-plastic composite) core that does not swell or warp when wet, so it can be installed in basements, kitchens, bathrooms and laundry rooms. The TF66, TF80 and TF83 laminate series are also waterproof-rated (72–120 hours); the Matt/Hand Scraped laminate is not.' },
+    { question: 'Which Triforest vinyl is condo-approved?', answer: 'The SPC4 Series (7mm with a 1.5mm attached condo pad) is the usual pick, and the SPC6, SPC86, SPC9 and CET10 series also ship with 1.5–2mm attached underpad. Always confirm your building\'s specific IIC/STC requirement with property management — we can supply the acoustic spec sheet for the series you choose.' },
+    { question: 'How much does Triforest / Toucan flooring cost?', answer: 'At BBS Flooring, Triforest SPC vinyl runs $2.29–$3.99/sqft depending on thickness and attached pad, waterproof laminate $2.29–$2.69/sqft, and Studio/Towne engineered oak $4.79–$6.29/sqft. Prices are for material; installation is quoted during your free in-home measurement.' },
+    { question: 'Is Triforest flooring made in Canada?', answer: 'Triforest Inc. is a Toronto-based company that has manufactured laminate just outside Toronto since 2023 and opened Canada\'s first SPC vinyl plant in Ajax, Ontario in July 2025; some lines are still produced at its overseas factories. Ask us about the specific series you are considering and we will confirm its origin from the manufacturer spec sheet.' },
+    { question: 'I have a Toucan sample with a code on it — how do I find it on your site?', answer: 'Search the code (for example "SPC 510" or "TF 8005") or the colour name ("Cali Bluffs", "Terracotta") in our product search, or browse the grid below. Every Triforest / Toucan product page shows the code and the Toucan colour name together. If it is not listed, call (647) 428-1111 — we can usually order it.' },
   ],
   hideBrandFilter: true,
   productFilter: (p) => has(p.brand, 'triforest'),

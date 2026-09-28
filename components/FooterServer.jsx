@@ -61,7 +61,7 @@ export default function FooterServer() {
                 { name: 'Simba Flooring', path: '/simba-flooring' },
                 { name: 'Wickham Hardwood', path: '/wickham-flooring' },
                 { name: 'BBS Reserve', path: '/bbs-reserve' },
-                { name: 'Triforest Flooring', path: '/triforest-flooring' },
+                { name: 'Triforest / Toucan Flooring', path: '/triforest-flooring' },
               ].map(({ name, path }) => (
                 <li key={name}>
                   <Link href={path} className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
