@@ -42,6 +42,27 @@ const fmtET = (value, withTime = true) => {
 };
 
 const who = (a) => (a === 'mak' ? 'Mak' : 'Abram');
+const ACTIVE_STATUSES = ['open', 'waiting', 'pending_verification', 'snoozed'];
+/** "Eduardo Cammisa — arrange payment" → "Eduardo Cammisa" (leading emoji/marks stripped). */
+const labelHead = (label) => String(label || '').split(' — ')[0].replace(/^[^\p{L}\p{N}#]+/u, '').replace(/\(.*?\)/g, ' ').replace(/\s+/g, ' ').trim();
+/**
+ * Contact clusters come from the brief's judgment layer (meta.contact_key on every active card, same person across
+ * phone/email/QB identities). Returns { key: { key, name, ids } } for contacts with 2+ active cards.
+ */
+function contactIndex(items) {
+  const out = {};
+  for (const r of items) {
+    const key = r.meta?.contact_key;
+    if (!key || !ACTIVE_STATUSES.includes(r.status)) continue;
+    const c = (out[key] ||= { key, name: '', ids: [] });
+    c.ids.push(r.id);
+    const head = labelHead(r.label);
+    // Prefer a real full name over a bare phone or a first name.
+    if (head && !/^\d{7,}/.test(head) && (!c.name || head.split(' ').length > c.name.split(' ').length)) c.name = head;
+  }
+  for (const k of Object.keys(out)) { if (out[k].ids.length < 2) delete out[k]; else out[k].ids.sort((a, b) => a - b); }
+  return out;
+}
 
 // "Working as" persists per browser (single admin login for now). External store => no setState-in-effect, SSR-safe.
 const actorStore = {
@@ -126,6 +147,7 @@ export default function AdminOpsClient() {
     const active = items.filter((r) => !['done', 'dropped'].includes(r.status));
     return { abram: active.filter((r) => r.assignee === 'abram').length, mak: active.filter((r) => r.assignee === 'mak').length };
   }, [items]);
+  const contacts = useMemo(() => contactIndex(items), [items]);
 
   const openDialog = useCallback((row, action) => setDialog({ row, action }), []);
 
@@ -213,7 +235,7 @@ export default function AdminOpsClient() {
           </div>
           <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
             {SECTIONS.map((name) => (
-              <Column key={name} name={name} rows={grouped[name]} at={at} actor={actor} onAction={openDialog} className={mobileSection === name ? '' : 'hidden lg:block'} />
+              <Column key={name} name={name} rows={grouped[name]} at={at} actor={actor} contacts={contacts} onAction={openDialog} className={mobileSection === name ? '' : 'hidden lg:block'} />
             ))}
           </div>
         </>
@@ -227,9 +249,9 @@ export default function AdminOpsClient() {
               <li key={r.id} className="px-4 py-3 lg:py-2.5 text-sm flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <span className="font-medium text-slate-700">#{r.id} · {r.label}</span>
-                  <div className="text-xs text-slate-500">{r.status === 'dropped' ? 'Dropped' : r.verification_source === 'abram_confirmation' ? 'Abram-confirmed' : r.verification_source === 'mak_confirmation' ? 'Mak-confirmed' : 'Verified'}{r.close_note ? `: ${r.close_note}` : ''} · {fmtET(r.closed_at)}</div>
+                  <div className="text-xs text-slate-500">{r.meta?.merged_into ? `Merged into #${r.meta.merged_into} (duplicate)` : r.status === 'dropped' ? 'Dropped' : r.verification_source === 'abram_confirmation' ? 'Abram-confirmed' : r.verification_source === 'mak_confirmation' ? 'Mak-confirmed' : 'Verified'}{r.close_note && !r.meta?.merged_into ? `: ${r.close_note}` : ''} · {fmtET(r.closed_at)}</div>
                 </div>
-                <Button size="sm" variant="ghost" className="h-9 lg:h-8 shrink-0" onClick={() => openDialog(r, 'reopen')}><RotateCcw className="w-3.5 h-3.5 mr-1" /> Reopen</Button>
+                <Button size="sm" variant="ghost" className="h-9 lg:h-8 shrink-0" onClick={() => openDialog(r, 'reopen')}><RotateCcw className="w-3.5 h-3.5 mr-1" /> {r.meta?.merged_into ? 'Not a duplicate' : 'Reopen'}</Button>
               </li>
             ))}
             {grouped.CLOSED.length === 0 && <li className="px-4 py-3 text-xs text-slate-500">Nothing closed in the last 48 h.</li>}
@@ -249,8 +271,18 @@ export default function AdminOpsClient() {
   );
 }
 
-function Column({ name, rows, at, actor, onAction, className = '' }) {
+function Column({ name, rows, at, actor, contacts = {}, onAction, className = '' }) {
   const tone = { NOW: 'border-red-200 bg-red-50/40', 'SETTLED?': 'border-emerald-200 bg-emerald-50/40', NEXT: 'border-slate-200 bg-white', WAITING: 'border-amber-200 bg-amber-50/40' }[name];
+  // Cards of the same contact sit together under one header (placed where the contact's best-ranked card sorts); singles stay flat.
+  const blocks = [];
+  const byKey = {};
+  for (const r of rows) {
+    const key = r.meta?.contact_key;
+    const c = key && contacts[key];
+    if (!c) { blocks.push({ rows: [r] }); continue; }
+    if (!byKey[key]) { byKey[key] = { contact: c, rows: [] }; blocks.push(byKey[key]); }
+    byKey[key].rows.push(r);
+  }
   return (
     <section className={`rounded-xl border p-3 ${tone} ${className}`} data-testid={`col-${name.replace('?', '')}`} aria-label={name}>
       <div className="flex items-baseline justify-between mb-2">
@@ -258,14 +290,28 @@ function Column({ name, rows, at, actor, onAction, className = '' }) {
       </div>
       <p className="text-[11px] text-slate-500 mb-2">{SECTION_HELP[name]}</p>
       <ul className="space-y-2">
-        {rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} onAction={onAction} />)}
+        {blocks.map((b) => {
+          if (!b.contact || b.rows.length < 2) return b.rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} contact={b.contact} onAction={onAction} />);
+          const elsewhere = b.contact.ids.filter((id) => !b.rows.some((r) => r.id === id));
+          return (
+            <li key={`contact-${b.contact.key}`} className="rounded-xl border border-indigo-200 bg-indigo-50/50 p-2" data-testid={`contact-${b.contact.key}`}>
+              <div className="flex items-baseline justify-between gap-2 px-1 pb-1.5">
+                <span className="text-xs font-semibold text-indigo-900 truncate">👤 {b.contact.name || 'Same contact'} · {b.rows.length} here</span>
+                {elsewhere.length > 0 && <span className="text-[11px] text-indigo-700/80 shrink-0">also #{elsewhere.join(', #')}</span>}
+              </div>
+              <ul className="space-y-2">
+                {b.rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} contact={b.contact} grouped onAction={onAction} />)}
+              </ul>
+            </li>
+          );
+        })}
         {rows.length === 0 && <li className="text-xs text-slate-400 py-6 lg:py-2 text-center lg:text-left">Empty.</li>}
       </ul>
     </section>
   );
 }
 
-function ItemCard({ row, at, actor, section, onAction }) {
+function ItemCard({ row, at, actor, section, contact, grouped = false, onAction }) {
   const meta = row.meta || {};
   const perms = permissions(row, actor);
   const critical = makBlocked(row);
@@ -274,6 +320,8 @@ function ItemCard({ row, at, actor, section, onAction }) {
   const pendingCheck = row.status === 'pending_verification' && !meta.auto_resolved;
   const notes = boardNotes(row, 2);
   const waitingLine = row.status === 'snoozed' ? `Deferred; review ${fmtET(row.snooze_until)}` : row.status === 'waiting' ? `${row.close_note || 'Waiting for their reply'}${row.followup_at ? `; review ${fmtET(row.followup_at)}` : '; follow-up date missing'}` : null;
+  const siblings = contact && !grouped ? contact.ids.filter((id) => id !== row.id) : [];
+  const sharedFacts = meta.shared_facts && meta.shared_facts !== meta.facts ? meta.shared_facts : null;
   const btn = (action, Icon, label, variant = 'outline') => {
     const p = perms[action];
     return (
@@ -295,6 +343,8 @@ function ItemCard({ row, at, actor, section, onAction }) {
         {settled ? <>Looks settled: {row.close_note}</> : pendingCheck ? <><span className="font-medium text-red-700">CHECK TO CLOSE:</span> {row.completion_rule}</> : (meta.ask || row.completion_rule)}
       </div>
       {meta.facts && !settled && <div className="mt-1 text-xs text-slate-500">{meta.facts}</div>}
+      {sharedFacts && <div className="mt-1 text-xs text-indigo-800" data-testid="shared-facts">👤 {sharedFacts}</div>}
+      {siblings.length > 0 && <div className="mt-1 text-[11px] text-indigo-700/80">Same contact: #{siblings.join(', #')}</div>}
       {meta.calendar_urgent && Array.isArray(meta.calendar) && meta.calendar.length > 0 && (
         <div className="mt-1 text-xs text-slate-700">📅 {meta.calendar.filter((c) => ['delivery', 'install'].includes(c.kind)).map((c) => `${c.summary} ${fmtET(c.start, false)}`).join('; ')}</div>
       )}
