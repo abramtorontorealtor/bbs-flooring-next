@@ -17,7 +17,7 @@ import TransitionPieces from '@/components/TransitionPieces';
 import CompleteInstallStrip from '@/components/CompleteInstallStrip';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
-import { isSuppliesOnlyCart } from '@/lib/fulfilment';
+import { isSuppliesOnlyCart, hasNoFlooringLines } from '@/lib/fulfilment';
 
 export default function CartClient() {
   const queryClient = useQueryClient();
@@ -70,6 +70,7 @@ export default function CartClient() {
   const accessoryItems = cartItems.filter(item => item.item_type === 'accessory');
   // S4: no flooring line → free showroom pickup default at checkout
   const suppliesOnly = isSuppliesOnlyCart(cartItems);
+  const noFlooring = hasNoFlooringLines(cartItems); // cosmetic only (box/sqft blocks)
   
   // Get vinyl and laminate products for transition piece section
   const vinylLaminateProducts = productItems.filter(item => {
@@ -535,7 +536,7 @@ export default function CartClient() {
             </CardHeader>
             <CardContent className="space-y-4">
               {/* S4: boxes/coverage are flooring metrics — hide "0 boxes / 0.0 sq.ft" for supplies-only carts */}
-              {!suppliesOnly && (
+              {!noFlooring && (
               <div className="bg-amber-50 rounded-xl p-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-600">Total Boxes</span>
@@ -551,7 +552,7 @@ export default function CartClient() {
               </div>
               )}
 
-              {!suppliesOnly && <Separator />}
+              {!noFlooring && <Separator />}
 
               {isVerified && (
                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-center gap-2">
@@ -708,7 +709,7 @@ export default function CartClient() {
               </Link>
 
               <div className="space-y-2 mt-4">
-                {!suppliesOnly && (
+                {!noFlooring && (
                 <div className="flex items-start gap-2 text-xs text-slate-500">
                   <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>Flooring is sold in full boxes only. Prices shown are per square foot.</span>

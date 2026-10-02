@@ -19,7 +19,7 @@ import { Analytics } from '@/components/analytics';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import TrustStrip from '@/components/TrustStrip';
-import { isSuppliesOnlyCart, SHOWROOM_PICKUP_ADDRESS, SUPPLIES_PICKUP_LEAD_COPY, SUPPLIES_PICKUP_LABEL } from '@/lib/fulfilment';
+import { isSuppliesOnlyCart, hasNoFlooringLines, SHOWROOM_PICKUP_ADDRESS, SUPPLIES_PICKUP_LEAD_COPY, SUPPLIES_PICKUP_LABEL } from '@/lib/fulfilment';
 import { formatItemQty } from '@/lib/orderItemQty';
 
 export default function CheckoutClient() {
@@ -232,6 +232,7 @@ export default function CheckoutClient() {
 
   // S4: supplies-only cart (every line is accessory/transition, no flooring).
   const suppliesOnly = useMemo(() => isSuppliesOnlyCart(cartItems), [cartItems]);
+  const noFlooring = useMemo(() => hasNoFlooringLines(cartItems), [cartItems]); // cosmetic only
 
   // S4: supplies-only carts default to free showroom pickup. Applied exactly
   // once, the first time a non-empty cart loads — never re-applied, so a user
@@ -1011,7 +1012,7 @@ export default function CheckoutClient() {
                 <Separator />
 
                 {/* S4: boxes/coverage are flooring metrics — hide the "0 boxes / 0.0 sq.ft" block for supplies-only carts */}
-                {!suppliesOnly && (
+                {!noFlooring && (
                 <div className="bg-amber-50 rounded-xl p-4 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-600">Total Boxes</span>
@@ -1102,7 +1103,7 @@ export default function CheckoutClient() {
                       <ul className="space-y-1 text-slate-600">
                         <li>• Returns are subject to a 25% Manufacturer Restocking Fee.</li>
                         <li>• Customer is responsible for return shipping costs.</li>
-                        <li>• I must inspect all {suppliesOnly ? 'items' : 'boxes'} upon delivery/pickup and report damages within 24 hours.</li>
+                        <li>• I must inspect all {noFlooring ? 'items' : 'boxes'} upon delivery/pickup and report damages within 24 hours.</li>
                       </ul>
                     </div>
                   </label>
