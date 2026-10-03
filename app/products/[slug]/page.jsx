@@ -5,6 +5,7 @@ import { entities } from '@/lib/base44-compat-server';
 import { getSupabaseServerClient } from '@/lib/supabase';
 import { generateProductMetaTags, generateProductSchema } from '@/lib/seo';
 import { getSuppliesCatalog } from '@/lib/suppliesCatalog';
+import { slimKitCatalog } from '@/lib/installKit';
 import { getProductDocuments } from '@/lib/productDocuments';
 
 // ISR: revalidate product pages every hour
@@ -157,7 +158,9 @@ export default async function ProductDetailPage({ params }) {
   // Supplies catalog (S2, Sep 12 2026) — DB-backed, cached ~10min, falls back
   // to the static catalog on a DB hiccup. Fetched once server-side and passed
   // down so the client Install Kit never needs its own DB round trip.
-  const suppliesCatalog = await getSuppliesCatalog();
+  // Oct 3 2026: slimmed to the 6 Install Kit rows only — the full catalog
+  // serialized to ~1.5 MB per PDP and drove ISR writes +732% (see installKit.js).
+  const suppliesCatalog = slimKitCatalog(await getSuppliesCatalog());
 
   // JSON-LD: ProductGroup + hasVariant + AggregateOffer for parents, single Product for others
   const hidePrice = product?.hide_price === true;
