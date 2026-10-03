@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 /**
  * One-off temporary closure popup (floating modal — does NOT affect page layout).
  *
- * Notice: showroom closed Wed September 30, 2026.
+ * Notice: showroom closed Sat October 3, 2026.
  *
- * Self-expiring: only renders through end of day September 30, 2026 America/Toronto.
+ * Self-expiring: only renders through end of day October 3, 2026 America/Toronto.
  * After that it renders nothing, so a forgotten popup cannot linger.
  * Dismissible per-visitor via sessionStorage (won't nag on every page view).
  *
@@ -15,9 +15,9 @@ import { useEffect, useState } from 'react';
  * reserves space in the document flow and cannot push/break the header layout.
  */
 
-// Show through 2026-10-01 04:00 UTC == 2026-10-01 00:00 ET (end of Sep 30 ET).
-const EXPIRES_AT = Date.parse('2026-10-01T04:00:00Z');
-const DISMISS_KEY = 'bbs-closure-2026-09-30-dismissed';
+// Show through 2026-10-04 04:00 UTC == 2026-10-04 00:00 ET (end of Oct 3 ET).
+const EXPIRES_AT = Date.parse('2026-10-04T04:00:00Z');
+const DISMISS_KEY = 'bbs-closure-2026-10-03-dismissed';
 
 export default function ClosurePopup() {
   const [show, setShow] = useState(false);
@@ -75,12 +75,12 @@ export default function ClosurePopup() {
         <h2 id="closure-title" className="text-lg font-bold text-slate-900">
           Showroom Closed Today
         </h2>
-        <p className="mt-1 text-sm font-medium text-amber-700">Wednesday, September&nbsp;30</p>
+        <p className="mt-1 text-sm font-medium text-amber-700">Saturday, October&nbsp;3</p>
 
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
           Our showroom is closed today. Online orders &amp; quote requests are
           still open — call or request a quote and we&apos;ll get right back to
-          you. Back in the showroom tomorrow. Thanks for your patience!
+          you. Back in the showroom Monday. Thanks for your patience!
         </p>
 
         <button
