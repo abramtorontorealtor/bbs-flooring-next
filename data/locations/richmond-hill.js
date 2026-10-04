@@ -1,8 +1,8 @@
 // /flooring-in/richmond-hill — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Richmond Hill",
-  "title": "Flooring Installation Richmond Hill — Hardwood & Vinyl | BBS Flooring",
-  "description": "Flooring installation in Richmond Hill — hardwood, vinyl & laminate from $1.49/sqft. 15-20 min from Markham, or free in-home estimate. (647) 428-1111.",
+  "title": "Flooring Richmond Hill — Hardwood & Vinyl From $1.49 + Installation | BBS Flooring",
+  "description": "Hardwood, engineered & vinyl flooring in Richmond Hill from $1.49/sqft — 15-20 min from our Markham showroom. Supply-only or installed (floating from $2.00/sqft). (647) 428-1111.",
   "content": "BBS Flooring handles flooring installation in Richmond Hill from our Markham showroom, about 15 to 20 minutes west along Highway 7 or 16th Avenue. Homeowners across the city call us for hardwood flooring installation, laminate, and vinyl plank — from a single room refresh to a full main-floor tear-out and replace. We run our own installation crews, so the same team that measures your home removes the old floor, preps the subfloor, and installs the new one, backed by a 2-year workmanship warranty. Our showroom stocks engineered and solid hardwood, waterproof vinyl, and laminate from 15 brands, including wide-plank options and pet-friendly, scratch-resistant finishes suited to Richmond Hill's mix of established subdivisions, newer builds, and condos along the Yonge corridor.",
   "landmarks": [
     "Oak Ridges",

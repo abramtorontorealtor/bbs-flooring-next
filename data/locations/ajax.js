@@ -1,8 +1,8 @@
 // /flooring-in/ajax — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Ajax",
-  "title": "Flooring Installation Ajax — Hardwood, Vinyl & Removal | BBS Flooring",
-  "description": "Flooring installation in Ajax — hardwood from $3.69/sqft, vinyl from $1.89/sqft. ~35 min from Markham. Free in-home estimate: (647) 428-1111.",
+  "title": "Flooring Ajax — Hardwood & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Hardwood, vinyl & laminate flooring in Ajax from $1.49/sqft — buy supply-only or installed by our own crews (floating from $2.00/sqft). Free in-home estimate: (647) 428-1111.",
   "content": "Searching for flooring installation in Ajax? BBS Flooring is a family-owned flooring store based in Markham — Ajax sits about 35 minutes east of our showroom via Highway 407/412 or the 401 — and our crews cover all of Ajax, from Pickering Village to the newer Northeast Ajax subdivisions near Audley. Hardwood flooring in Ajax homes is a common upgrade: solid and engineered options in wide-plank widths that suit both the two-storeys built through the 1990s and 2000s and the older character homes near Pickering Village. We also handle vinyl plank, laminate, full flooring removal, and complete install sequencing from subfloor prep to the final trim, backed by a 2-year workmanship warranty.",
   "landmarks": [
     "Ajax Waterfront",

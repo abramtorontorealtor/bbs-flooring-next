@@ -1,8 +1,8 @@
 // /flooring-in/oshawa — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Oshawa",
-  "title": "Flooring Installation Oshawa — Hardwood, Vinyl & Basements | BBS Flooring",
-  "description": "Flooring installation in Oshawa: vinyl from $1.89/sqft, hardwood, basement-ready SPC. About 45 min east of Markham, or a free in-home estimate. (647) 428-1111.",
+  "title": "Flooring Oshawa — Laminate & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Laminate, vinyl & hardwood flooring in Oshawa from $1.49/sqft — supply-only or installed by our own crews (floating from $2.00/sqft). Free in-home estimate: (647) 428-1111.",
   "content": "BBS Flooring handles flooring installation in Oshawa for homeowners across North Oshawa, downtown, Lakeview, Eastdale, and Samac. Whether you need hardwood flooring in Oshawa's older central neighbourhoods, waterproof vinyl for a basement rec room, or carpet removed before a resale, our crews handle the whole job — removal, subfloor prep, and installation — start to finish. Homeowners searching for a flooring store in Oshawa often assume they need to shop in the city for selection; our Markham showroom carries 15 brands of hardwood, engineered wood, laminate, and vinyl, about 45 minutes east via Highway 407/418 or Highway 401. Free in-home estimates cover all of Oshawa, and we bring samples so you can compare finishes under your own lighting before you commit.",
   "landmarks": [
     "Oshawa Centre",

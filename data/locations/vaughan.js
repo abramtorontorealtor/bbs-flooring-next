@@ -1,8 +1,8 @@
 // /flooring-in/vaughan — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Vaughan",
-  "title": "Hardwood & Vinyl Flooring Vaughan | BBS Flooring",
-  "description": "Hardwood, engineered & vinyl flooring in Vaughan — installation, basements, refinishing. Vinyl from $1.89/sqft. 25-35 min from Markham. Call (647) 428-1111.",
+  "title": "Flooring Vaughan — Hardwood & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Hardwood, engineered & waterproof vinyl flooring in Vaughan from $1.49/sqft — supply-only or installed by our own crews (floating from $2.00/sqft). (647) 428-1111.",
   "content": "BBS Flooring serves Vaughan homeowners across Kleinburg, Maple, Woodbridge, Concord, and Thornhill with hardwood flooring, engineered hardwood, and vinyl plank installation. Our Markham showroom sits roughly 25 to 35 minutes east along Highway 7 or the 407, and our install crews cover every part of Vaughan. Whether you're refinishing original oak in a Concord family home, choosing waterproof vinyl for a walkout basement in Woodbridge, or fitting a condo near Vaughan Metropolitan Centre with acoustic underlay, we carry the products and the experience to do it right. We're a family-owned flooring store, not a big box — buying direct from manufacturers across 15 brands, running our own installation crews, and backing every job with a 2-year workmanship warranty.",
   "landmarks": [
     "Vaughan Mills",
