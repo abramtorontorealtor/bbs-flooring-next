@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import { createPageUrl } from '@/lib/routes';
@@ -725,6 +726,12 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
               <div className="text-5xl mb-3">🔍</div>
               <h3 className="text-lg font-semibold text-slate-800 mb-1">No products match your filters</h3>
               <p className="text-sm text-slate-500 mb-4">Try removing some filters or search for something else</p>
+              {(filters.search || urlSearchParam) && (
+                <p className="text-sm text-slate-600 mb-4">
+                  Looking for underlay, trim, adhesive or installer tools?{' '}
+                  <Link href="/flooring-accessories" className="text-amber-600 hover:text-amber-700 font-medium underline underline-offset-2">Browse accessories &amp; supplies &rarr;</Link>
+                </p>
+              )}
               <Button variant="outline" onClick={clearAllFilters} className="gap-1.5">
                 <RotateCcw className="w-3.5 h-3.5" />
                 Reset Filters
