@@ -24,7 +24,7 @@ const SECTION_HELP = {
   WAITING: 'Ball is in their court (or snoozed) — auto-returns to NOW on the follow-up date',
   CLOSED: 'Done or dropped in the last 48 h',
 };
-const ACTION_LABEL = { done: 'Done', confirm: 'Confirm', drop: 'Drop', snooze: 'Snooze', wait: 'Waiting on them', reopen: 'Reopen', reassign: 'Reassign', note: 'Note' };
+const ACTION_LABEL = { done: 'Done', confirm: 'Confirm', drop: 'Drop', snooze: 'Snooze', wait: 'Waiting on them', reopen: 'Reopen', reassign: 'Reassign', note: 'Note', clawde: 'reacted' };
 const SECTIONS = ['NOW', 'SETTLED?', 'NEXT', 'WAITING'];
 const SECTION_SHORT = { NOW: 'Now', 'SETTLED?': 'Settled?', NEXT: 'Next', WAITING: 'Waiting' };
 // Phone: dialogs slide up as a bottom sheet; ≥sm they stay centred. 16px inputs stop iOS Safari's focus-zoom.
@@ -41,7 +41,7 @@ const fmtET = (value, withTime = true) => {
   }).format(d);
 };
 
-const who = (a) => (a === 'mak' ? 'Mak' : 'Abram');
+const who = (a) => (a === 'mak' ? 'Mak' : a === 'clawde' ? 'Clawde' : 'Abram');
 const ACTIVE_STATUSES = ['open', 'waiting', 'pending_verification', 'snoozed'];
 /** "Eduardo Cammisa — arrange payment" → "Eduardo Cammisa" (leading emoji/marks stripped). */
 const labelHead = (label) => String(label || '').split(' — ')[0].replace(/^[^\p{L}\p{N}#]+/u, '').replace(/\(.*?\)/g, ' ').replace(/\s+/g, ' ').trim();
@@ -336,6 +336,7 @@ function ItemCard({ row, at, actor, section, contact, grouped = false, onAction 
         <div className="font-medium text-slate-800 leading-snug">#{row.id} · {row.label}</div>
         <div className="flex items-center gap-1 shrink-0">
           {critical && <Badge variant="outline" className="text-[10px] border-red-300 text-red-700">critical</Badge>}
+          {row.meta?.watch && <Badge variant="outline" className="text-[10px] border-violet-300 text-violet-700" title="Clawde is watching emails/texts for this; it comes back to you on a hit">watching</Badge>}
           <Badge variant="secondary" className="text-[10px]">{who(row.assignee)}</Badge>
         </div>
       </div>
@@ -354,7 +355,7 @@ function ItemCard({ row, at, actor, section, contact, grouped = false, onAction 
         <ul className="mt-1.5 space-y-0.5" data-testid="notes">
           {notes.map((n, i) => (
             <li key={`${n.at}-${i}`} className="text-xs text-slate-700 bg-slate-50 rounded px-2 py-1">
-              <span className="font-medium">📝 {who(n.by)}</span> <span className="text-slate-400">{fmtET(n.at)}{n.action && n.action !== 'note' ? ` · ${ACTION_LABEL[n.action] || n.action}` : ''}</span>: {n.note}
+              <span className={`font-medium${n.by === 'clawde' ? ' text-violet-700' : ''}`}>{n.by === 'clawde' ? '↻' : '📝'} {who(n.by)}</span> <span className="text-slate-400">{fmtET(n.at)}{n.action && n.action !== 'note' && n.by !== 'clawde' ? ` · ${ACTION_LABEL[n.action] || n.action}` : ''}</span>: {n.note}
             </li>
           ))}
         </ul>
