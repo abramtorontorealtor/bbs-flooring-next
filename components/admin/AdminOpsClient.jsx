@@ -154,7 +154,7 @@ export default function AdminOpsClient() {
   if (error) return <div className="max-w-7xl mx-auto px-4 py-8 text-red-600 text-sm">Could not load the ops board: {error.message}</div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-4 pt-3 pb-24 lg:py-6 space-y-4 lg:space-y-5" data-testid="ops-board">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 pt-3 pb-24 lg:py-6 space-y-4 lg:space-y-5 overflow-x-clip" data-testid="ops-board">
       {/* Toolbar — sticks under the admin top nav on phones (layout pads pt-12, so top-12 here). */}
       <header className="sticky top-12 lg:static z-30 -mx-3 sm:-mx-4 lg:mx-0 px-3 sm:px-4 lg:px-0 py-2 lg:py-0 bg-slate-50/95 backdrop-blur lg:bg-transparent lg:backdrop-blur-none border-b border-slate-200 lg:border-0 flex flex-wrap items-center gap-2 lg:gap-3 justify-between">
         <div className="hidden lg:block">
@@ -197,7 +197,7 @@ export default function AdminOpsClient() {
           {chase.length === 0 ? <p className="text-xs text-sky-800/70">Nothing urgent on Abram&apos;s plate right now.</p> : (
             <ul className="grid gap-2 md:grid-cols-2">
               {chase.map((r) => (
-                <li key={r.id} className="min-w-0 rounded-lg bg-white border border-sky-100 p-3 text-sm">
+                <li key={r.id} className="min-w-0 rounded-lg bg-white border border-sky-100 p-3 text-sm break-words [overflow-wrap:anywhere]">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                     <div className="min-w-0">
                       <div className="font-medium text-slate-800 truncate">#{r.id} · {r.label}</div>
@@ -246,7 +246,7 @@ export default function AdminOpsClient() {
           <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-slate-700">Closed (48 h) · {grouped.CLOSED.length}</summary>
           <ul className="divide-y divide-slate-100">
             {grouped.CLOSED.map((r) => (
-              <li key={r.id} className="px-4 py-3 lg:py-2.5 text-sm flex items-start justify-between gap-3">
+              <li key={r.id} className="px-4 py-3 lg:py-2.5 text-sm flex items-start justify-between gap-3 break-words [overflow-wrap:anywhere]">
                 <div className="min-w-0">
                   <span className="font-medium text-slate-700">#{r.id} · {r.label}</span>
                   <div className="text-xs text-slate-500">{r.meta?.merged_into ? `Merged into #${r.meta.merged_into} (duplicate)` : r.status === 'dropped' ? 'Dropped' : r.verification_source === 'abram_confirmation' ? 'Abram-confirmed' : r.verification_source === 'mak_confirmation' ? 'Mak-confirmed' : 'Verified'}{r.close_note && !r.meta?.merged_into ? `: ${r.close_note}` : ''} · {fmtET(r.closed_at)}</div>
@@ -284,7 +284,7 @@ function Column({ name, rows, at, actor, contacts = {}, onAction, className = ''
     byKey[key].rows.push(r);
   }
   return (
-    <section className={`rounded-xl border p-3 ${tone} ${className}`} data-testid={`col-${name.replace('?', '')}`} aria-label={name}>
+    <section className={`min-w-0 rounded-xl border p-3 ${tone} ${className}`} data-testid={`col-${name.replace('?', '')}`} aria-label={name}>
       <div className="flex items-baseline justify-between mb-2">
         <h2 className="text-sm font-semibold text-slate-800">{name} · {rows.length}</h2>
       </div>
@@ -294,7 +294,7 @@ function Column({ name, rows, at, actor, contacts = {}, onAction, className = ''
           if (!b.contact || b.rows.length < 2) return b.rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} contact={b.contact} onAction={onAction} />);
           const elsewhere = b.contact.ids.filter((id) => !b.rows.some((r) => r.id === id));
           return (
-            <li key={`contact-${b.contact.key}`} className="rounded-xl border border-indigo-200 bg-indigo-50/50 p-2" data-testid={`contact-${b.contact.key}`}>
+            <li key={`contact-${b.contact.key}`} className="min-w-0 rounded-xl border border-indigo-200 bg-indigo-50/50 p-2" data-testid={`contact-${b.contact.key}`}>
               <div className="flex items-baseline justify-between gap-2 px-1 pb-1.5">
                 <span className="text-xs font-semibold text-indigo-900 truncate">👤 {b.contact.name || 'Same contact'} · {b.rows.length} here</span>
                 {elsewhere.length > 0 && <span className="text-[11px] text-indigo-700/80 shrink-0">also #{elsewhere.join(', #')}</span>}
@@ -331,9 +331,9 @@ function ItemCard({ row, at, actor, section, contact, grouped = false, onAction 
     );
   };
   return (
-    <li className="rounded-lg bg-white border border-slate-200 p-3 text-sm shadow-sm" data-testid={`item-${row.id}`}>
+    <li className="min-w-0 rounded-lg bg-white border border-slate-200 p-3 text-sm shadow-sm break-words [overflow-wrap:anywhere]" data-testid={`item-${row.id}`}>
       <div className="flex items-start justify-between gap-2">
-        <div className="font-medium text-slate-800 leading-snug">#{row.id} · {row.label}</div>
+        <div className="min-w-0 font-medium text-slate-800 leading-snug">#{row.id} · {row.label}</div>
         <div className="flex items-center gap-1 shrink-0">
           {critical && <Badge variant="outline" className="text-[10px] border-red-300 text-red-700">critical</Badge>}
           {row.meta?.watch && <Badge variant="outline" className="text-[10px] border-violet-300 text-violet-700" title="Clawde is watching emails/texts for this; it comes back to you on a hit">watching</Badge>}
