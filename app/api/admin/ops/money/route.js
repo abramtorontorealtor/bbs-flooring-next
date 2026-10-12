@@ -8,14 +8,11 @@ import { getSupabaseAdminClient } from '@/lib/supabase';
  *  in  = money received in the last 7 days.
  *        Source A: public.customer_payments (amount, received_at, match_status, payer_name, customer_name) when it exists.
  *        Source B (fallback): Interac "received" notifications in public.emails (doc_type='etransfer_received', amount).
- *  owe = unpaid supplier invoices (public.supplier_invoices where paid_on_pdf = false), per vendor.
- *        "Overdue" = invoice date > 30 days ago (assumed net-30; supplier_invoices carries no due date).
- *  ar  = NOT SOURCEABLE from Supabase yet.
- *        TODO(ops-money): QuickBooks A/R lives only in the workspace file data/qb/snapshot.json (invoices[].balance),
- *        which is not reachable on Vercel. Needs a small sync that upserts QB open-invoice balances into a Supabase table
- *        (e.g. public.qb_open_invoices: txn_id, customer, balance, due_date) — then sum(balance) here. Until then
- *        the strip simply omits "A/R". The same sync could replace supplier_invoices for "Owe" with real QB bills
- *        (bills[].openAmount, dueDate) so overdue is exact instead of the net-30 guess.
+ *  owe = PREFERRED: public.qb_open_bills (QuickBooks open bills, synced by scripts/qb/qb_ar_sync.py after each QB snapshot pull);
+ *        overdue is exact (due_date < today, Toronto). FALLBACK when that table is missing/empty: unpaid supplier invoices
+ *        (public.supplier_invoices where paid_on_pdf = false), per vendor, "overdue" = invoice date > 30 days ago (assumed net-30).
+ *  ar  = public.qb_open_invoices (QuickBooks invoices with balance > 0, same sync). null when the table is missing/empty.
+ *        Both QB tables carry snapshot_at so the UI/API can tell how fresh the numbers are.
  */
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +40,57 @@ async function moneyIn(supabase, sinceIso) {
   } catch { return null; }
 }
 
+const torontoToday = (now) => new Date(now).toLocaleDateString('en-CA', { timeZone: 'America/Toronto' }); // YYYY-MM-DD
+const dayDiff = (aStr, bStr) => Math.round((Date.parse(aStr) - Date.parse(bStr)) / DAY); // a - b in days (date-only strings)
+
+async function moneyAr(supabase, now) {
+  try {
+    const { data, error } = await supabase.from('qb_open_invoices')
+      .select('customer,ref,balance,due_date,txn_date,snapshot_at').order('balance', { ascending: false }).limit(2000);
+    if (error || !Array.isArray(data) || data.length === 0) return null;
+    const today = torontoToday(now);
+    let total = 0; let overdue = 0; let snapshotAt = null;
+    const rows = data.map((r) => {
+      const bal = Number(r.balance) || 0;
+      const isOverdue = !!r.due_date && r.due_date < today;
+      total += bal; if (isOverdue) overdue += 1;
+      if (r.snapshot_at && (!snapshotAt || r.snapshot_at > snapshotAt)) snapshotAt = r.snapshot_at;
+      const ref = r.due_date || r.txn_date;
+      return { customer: r.customer || 'Unknown customer', ref: r.ref || null, balance: round2(bal), due_date: r.due_date || null,
+        age_days: ref ? Math.max(0, dayDiff(today, ref)) : null, overdue: isOverdue };
+    });
+    return { total: round2(total), count: rows.length, overdue, list: rows.slice(0, 8), snapshot_at: snapshotAt, source: 'qb_open_invoices' };
+  } catch { return null; }
+}
+
+async function moneyOweQb(supabase, now) {
+  try {
+    const { data, error } = await supabase.from('qb_open_bills')
+      .select('ref,vendor,txn_date,due_date,open_amount,po_refs,snapshot_at').order('due_date', { ascending: true }).limit(2000);
+    if (error || !Array.isArray(data) || data.length === 0) return null;
+    const today = torontoToday(now);
+    const byVendor = new Map();
+    let total = 0; let overdue = 0; let snapshotAt = null;
+    for (const r of data) {
+      const amt = Number(r.open_amount) || 0;
+      const name = r.vendor || 'Unknown vendor';
+      const isOverdue = !!r.due_date && r.due_date < today;
+      total += amt; if (isOverdue) overdue += 1;
+      if (r.snapshot_at && (!snapshotAt || r.snapshot_at > snapshotAt)) snapshotAt = r.snapshot_at;
+      const v = byVendor.get(name) || { vendor: name, total: 0, overdue: 0, invoices: [] };
+      v.total += amt; if (isOverdue) v.overdue += 1;
+      v.invoices.push({ inv_no: r.ref || null, inv_date: r.txn_date, total: round2(amt), po_ref: (r.po_refs && r.po_refs[0]) || null,
+        age_days: r.txn_date ? dayDiff(today, r.txn_date) : null, due_date: r.due_date || null, overdue: isOverdue });
+      byVendor.set(name, v);
+    }
+    const vendors = [...byVendor.values()].map((v) => ({ ...v, total: round2(v.total) })).sort((a, b) => b.total - a.total);
+    return { total: round2(total), vendors: vendors.length, overdue, list: vendors, snapshot_at: snapshotAt, source: 'qb_open_bills' };
+  } catch { return null; }
+}
+
 async function moneyOwe(supabase, now) {
+  const qb = await moneyOweQb(supabase, now);
+  if (qb) return qb;
   try {
     const { data, error } = await supabase.from('supplier_invoices')
       .select('id,qb_vendor,vendor_email,inv_no,inv_date,total,po_ref,paid_on_pdf').eq('paid_on_pdf', false).order('inv_date', { ascending: true }).limit(500);
@@ -71,6 +118,6 @@ export async function GET() {
   if (error) return error;
   const supabase = getSupabaseAdminClient();
   const now = Date.now();
-  const [inn, owe] = await Promise.all([moneyIn(supabase, new Date(now - 7 * DAY).toISOString()), moneyOwe(supabase, now)]);
-  return NextResponse.json({ in: inn, owe, ar: null, at: new Date(now).toISOString() });
+  const [inn, owe, ar] = await Promise.all([moneyIn(supabase, new Date(now - 7 * DAY).toISOString()), moneyOwe(supabase, now), moneyAr(supabase, now)]);
+  return NextResponse.json({ in: inn, owe, ar, at: new Date(now).toISOString() });
 }

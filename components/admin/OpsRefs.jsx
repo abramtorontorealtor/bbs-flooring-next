@@ -219,6 +219,7 @@ export function SearchBox({ value, onChange, onOpenResult }) {
 /** 💰 In · Owe · A/R strip. Parts the server could not source are omitted. */
 export function MoneyStrip() {
   const [open, setOpen] = useState(false);
+  const [openAr, setOpenAr] = useState(false);
   const { data } = useQuery({ queryKey: ['ops-money'], queryFn: () => getJson('/api/admin/ops/money'), refetchInterval: 5 * 60_000, retry: false });
   if (!data || (!data.in && !data.owe && !data.ar)) return null;
   const { in: inn, owe, ar } = data;
@@ -232,7 +233,11 @@ export function MoneyStrip() {
             Owe: <b>{money(owe.total)}</b> <span className="text-slate-500">({owe.vendors} vendor{owe.vendors === 1 ? '' : 's'}{owe.overdue ? `, ` : ''}{owe.overdue ? <span className="text-red-600 font-medium">{owe.overdue} overdue</span> : null})</span> {open ? '▴' : '▾'}
           </button>
         )}
-        {ar && <span>A/R: <b>{money(ar.total)}</b></span>}
+        {ar && (
+          <button type="button" onClick={() => setOpenAr((v) => !v)} aria-expanded={openAr} data-testid="money-ar" className="min-w-0 text-left active:bg-slate-100 rounded px-1 -mx-1 min-h-8 [overflow-wrap:anywhere]">
+            A/R: <b>{money(ar.total)}</b> <span className="text-slate-500">({ar.count} inv{ar.overdue ? `, ` : ''}{ar.overdue ? <span className="text-red-600 font-medium">{ar.overdue} overdue</span> : null})</span> {openAr ? '▴' : '▾'}
+          </button>
+        )}
       </div>
       {open && owe && (
         <ul className="border-t border-slate-100 divide-y divide-slate-100">
@@ -242,6 +247,17 @@ export function MoneyStrip() {
               <div className="text-[11px] text-slate-500">{v.invoices.map((i) => `${i.inv_no || 'inv'} ${money(i.total)}${i.age_days != null ? ` (${i.age_days}d)` : ''}`).join(' · ')}</div>
             </li>
           ))}
+        </ul>
+      )}
+      {openAr && ar && (
+        <ul className="border-t border-slate-100 divide-y divide-slate-100" data-testid="money-ar-list">
+          {ar.list.map((i, n) => (
+            <li key={`${i.ref || 'inv'}-${n}`} className="px-3 py-1.5 break-words [overflow-wrap:anywhere]">
+              <div className="flex justify-between gap-2"><span className="font-medium text-slate-800 min-w-0">{i.customer}{i.overdue ? <span className="ml-1 text-red-600">· overdue</span> : null}</span><span className="shrink-0">{money(i.balance)}</span></div>
+              <div className="text-[11px] text-slate-500">{i.ref ? `#${i.ref}` : 'inv'}{i.due_date ? ` · due ${i.due_date}` : ''}{i.age_days != null ? ` (${i.age_days}d)` : ''}</div>
+            </li>
+          ))}
+          {ar.count > ar.list.length && <li className="px-3 py-1.5 text-[11px] text-slate-500">+{ar.count - ar.list.length} more · QB as of {ar.snapshot_at ? ar.snapshot_at.slice(0, 10) : '?'}</li>}
         </ul>
       )}
     </div>
