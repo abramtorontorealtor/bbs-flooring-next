@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo, useCallback, useSyncExternalStore } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useSyncExternalStore } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { Check, Clock, Pause, RotateCcw, ArrowRightLeft, Plus, Bell, MessageSquare, X, RefreshCw } from 'lucide-react';
+import { Linkified, SmsButton, RefDrawer, SearchBox, MoneyStrip } from '@/components/admin/OpsRefs';
 import { sectionFor, compareRows, permissions, isOverdue, needsVerification, makBlocked, boardNotes, ET } from '@/lib/ops/brief-rules';
 
 /**
@@ -103,6 +104,9 @@ export default function AdminOpsClient() {
   const [mobileSection, setMobileSection] = useState('NOW'); // phone: one section at a time (lg+ shows all four)
   const [dialog, setDialog] = useState(null); // { row, action }
   const [adding, setAdding] = useState(false);
+  const [refTarget, setRefTarget] = useState(null); // { kind:'comms'|'emails', id, to? } → ref drawer
+  const [filter, setFilter] = useState(''); // debounced client-side card filter (≥2 chars)
+  const [flash, setFlash] = useState(null); // card id to scroll to after a search-result tap
 
   const { data, isLoading, error, refetch, isFetching } = useQuery({
     queryKey: ['admin-ops'],
@@ -129,12 +133,17 @@ export default function AdminOpsClient() {
   const items = useMemo(() => rawItems || [], [rawItems]);
 
   const grouped = useMemo(() => {
-    const scope = view === 'all' ? items : items.filter((r) => r.assignee === actor);
+    let scope = view === 'all' ? items : items.filter((r) => r.assignee === actor);
+    const f = filter.toLowerCase();
+    if (f) {
+      scope = scope.filter((r) => [r.label, labelHead(r.label), r.meta?.ask, r.meta?.facts, r.meta?.shared_facts, r.completion_rule, r.close_note, r.meta?.phone]
+        .some((t) => typeof t === 'string' && t.toLowerCase().includes(f)));
+    }
     const g = { NOW: [], 'SETTLED?': [], NEXT: [], WAITING: [], CLOSED: [] };
     for (const r of scope) g[sectionFor(r, at)].push(r);
     for (const k of Object.keys(g)) g[k].sort(compareRows);
     return g;
-  }, [items, actor, view, at]);
+  }, [items, actor, view, at, filter]);
 
   // Mak's "chase Abram" list: Abram's NOW items + anything overdue — Mak reminds, asks how, or adds a reminder.
   const chase = useMemo(() => {
@@ -150,6 +159,27 @@ export default function AdminOpsClient() {
   const contacts = useMemo(() => contactIndex(items), [items]);
 
   const openDialog = useCallback((row, action) => setDialog({ row, action }), []);
+  const openRef = useCallback((t) => setRefTarget(t), []);
+  const closeRef = useCallback(() => setRefTarget(null), []);
+  const openLead = useCallback((id8) => setFilter(id8), []); // lead refs have no drawer yet: filter the board by the id
+  const onResult = useCallback((r) => {
+    if (r.kind === 'comms') setRefTarget({ kind: 'comms', id: r.id });
+    else if (r.kind === 'email') setRefTarget({ kind: 'emails', id: r.id });
+    else if (r.kind === 'contact' && r.phone) window.location.href = `tel:+1${r.phone}`;
+    else if (r.kind === 'card') {
+      const row = items.find((x) => x.id === r.card_id);
+      if (!row) return toast.message(`#${r.card_id} is closed or older than 48 h`);
+      setView('all'); setFilter('');
+      const sec = sectionFor(row, at);
+      if (SECTIONS.includes(sec)) setMobileSection(sec);
+      setFlash(r.card_id);
+    }
+  }, [items, at]);
+  useEffect(() => {
+    if (!flash) return undefined;
+    const t = setTimeout(() => { document.querySelector(`[data-testid="item-${flash}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); setFlash(null); }, 150);
+    return () => clearTimeout(t);
+  }, [flash]);
 
   if (error) return <div className="max-w-7xl mx-auto px-4 py-8 text-red-600 text-sm">Could not load the ops board: {error.message}</div>;
 
@@ -186,6 +216,9 @@ export default function AdminOpsClient() {
           </button>
         </div>
       </header>
+
+      <SearchBox value={filter} onChange={setFilter} onOpenResult={onResult} />
+      <MoneyStrip />
 
       {actor === 'mak' && (
         <section className="rounded-xl border border-sky-200 bg-sky-50/60 p-4" data-testid="chase-abram">
@@ -235,7 +268,7 @@ export default function AdminOpsClient() {
           </div>
           <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
             {SECTIONS.map((name) => (
-              <Column key={name} name={name} rows={grouped[name]} at={at} actor={actor} contacts={contacts} onAction={openDialog} className={mobileSection === name ? '' : 'hidden lg:block'} />
+              <Column key={name} name={name} rows={grouped[name]} at={at} actor={actor} contacts={contacts} onAction={openDialog} onRef={openRef} onLead={openLead} className={mobileSection === name ? '' : 'hidden lg:block'} />
             ))}
           </div>
         </>
@@ -266,12 +299,13 @@ export default function AdminOpsClient() {
       </Button>
 
       {dialog && <ActionDialog dialog={dialog} actor={actor} pending={act.isPending} onClose={() => setDialog(null)} onSubmit={(payload) => act.mutate({ ...payload, id: dialog.row.id, action: dialog.action })} />}
+      {refTarget && <RefDrawer target={refTarget} onClose={closeRef} />}
       {adding && <AddDialog actor={actor} pending={act.isPending} onClose={() => setAdding(false)} onSubmit={(payload) => act.mutate({ ...payload, action: 'add' })} />}
     </div>
   );
 }
 
-function Column({ name, rows, at, actor, contacts = {}, onAction, className = '' }) {
+function Column({ name, rows, at, actor, contacts = {}, onAction, onRef, onLead, className = '' }) {
   const tone = { NOW: 'border-red-200 bg-red-50/40', 'SETTLED?': 'border-emerald-200 bg-emerald-50/40', NEXT: 'border-slate-200 bg-white', WAITING: 'border-amber-200 bg-amber-50/40' }[name];
   // Cards of the same contact sit together under one header (placed where the contact's best-ranked card sorts); singles stay flat.
   const blocks = [];
@@ -291,7 +325,7 @@ function Column({ name, rows, at, actor, contacts = {}, onAction, className = ''
       <p className="text-[11px] text-slate-500 mb-2">{SECTION_HELP[name]}</p>
       <ul className="space-y-2">
         {blocks.map((b) => {
-          if (!b.contact || b.rows.length < 2) return b.rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} contact={b.contact} onAction={onAction} />);
+          if (!b.contact || b.rows.length < 2) return b.rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} contact={b.contact} onAction={onAction} onRef={onRef} onLead={onLead} />);
           const elsewhere = b.contact.ids.filter((id) => !b.rows.some((r) => r.id === id));
           return (
             <li key={`contact-${b.contact.key}`} className="min-w-0 rounded-xl border border-indigo-200 bg-indigo-50/50 p-2" data-testid={`contact-${b.contact.key}`}>
@@ -300,7 +334,7 @@ function Column({ name, rows, at, actor, contacts = {}, onAction, className = ''
                 {elsewhere.length > 0 && <span className="text-[11px] text-indigo-700/80 shrink-0">also #{elsewhere.join(', #')}</span>}
               </div>
               <ul className="space-y-2">
-                {b.rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} contact={b.contact} grouped onAction={onAction} />)}
+                {b.rows.map((r) => <ItemCard key={r.id} row={r} at={at} actor={actor} section={name} contact={b.contact} grouped onAction={onAction} onRef={onRef} onLead={onLead} />)}
               </ul>
             </li>
           );
@@ -311,7 +345,7 @@ function Column({ name, rows, at, actor, contacts = {}, onAction, className = ''
   );
 }
 
-function ItemCard({ row, at, actor, section, contact, grouped = false, onAction }) {
+function ItemCard({ row, at, actor, section, contact, grouped = false, onAction, onRef, onLead }) {
   const meta = row.meta || {};
   const perms = permissions(row, actor);
   const critical = makBlocked(row);
@@ -341,10 +375,10 @@ function ItemCard({ row, at, actor, section, contact, grouped = false, onAction 
         </div>
       </div>
       <div className="mt-1 text-[13px] lg:text-xs text-slate-600">
-        {settled ? <>Looks settled: {row.close_note}</> : pendingCheck ? <><span className="font-medium text-red-700">CHECK TO CLOSE:</span> {row.completion_rule}</> : (meta.ask || row.completion_rule)}
+        {settled ? <>Looks settled: {row.close_note}</> : pendingCheck ? <><span className="font-medium text-red-700">CHECK TO CLOSE:</span> {row.completion_rule}</> : (meta.ask ? <Linkified text={meta.ask} onRef={onRef} onLead={onLead} /> : row.completion_rule)}
       </div>
-      {meta.facts && !settled && <div className="mt-1 text-xs text-slate-500">{meta.facts}</div>}
-      {sharedFacts && <div className="mt-1 text-xs text-indigo-800" data-testid="shared-facts">👤 {sharedFacts}</div>}
+      {meta.facts && !settled && <div className="mt-1 text-xs text-slate-500"><Linkified text={meta.facts} onRef={onRef} onLead={onLead} /></div>}
+      {sharedFacts && <div className="mt-1 text-xs text-indigo-800" data-testid="shared-facts">👤 <Linkified text={sharedFacts} onRef={onRef} onLead={onLead} /></div>}
       {siblings.length > 0 && <div className="mt-1 text-[11px] text-indigo-700/80">Same contact: #{siblings.join(', #')}</div>}
       {meta.calendar_urgent && Array.isArray(meta.calendar) && meta.calendar.length > 0 && (
         <div className="mt-1 text-xs text-slate-700">📅 {meta.calendar.filter((c) => ['delivery', 'install'].includes(c.kind)).map((c) => `${c.summary} ${fmtET(c.start, false)}`).join('; ')}</div>
@@ -376,6 +410,7 @@ function ItemCard({ row, at, actor, section, contact, grouped = false, onAction 
         )}
         {btn('reassign', ArrowRightLeft, row.assignee === 'mak' ? '→ Abram' : '→ Mak', 'ghost')}
         {btn('note', MessageSquare, 'Note', 'ghost')}
+        <SmsButton row={row} />
       </div>
     </li>
   );
