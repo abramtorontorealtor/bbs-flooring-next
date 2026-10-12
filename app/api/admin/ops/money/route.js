@@ -27,7 +27,8 @@ async function moneyIn(supabase, sinceIso) {
   try {
     const { data, error } = await supabase.from('customer_payments').select('amount,received_at,match_status,payer_name,customer_name')
       .gte('received_at', sinceIso).order('received_at', { ascending: false }).limit(500);
-    if (!error && Array.isArray(data)) {
+    // Empty table (reflex cron not enabled yet) → fall through to the email notices so the strip is never blank.
+    if (!error && Array.isArray(data) && data.length > 0) {
       const total = data.reduce((s, r) => s + (Number(r.amount) || 0), 0);
       return { total: round2(total), count: data.length, source: 'customer_payments', unmatched: data.filter((r) => r.match_status && r.match_status !== 'matched').length };
     }
