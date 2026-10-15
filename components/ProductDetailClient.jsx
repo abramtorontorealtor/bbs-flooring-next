@@ -832,8 +832,9 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
 
                 {/* ── 2. Common sizes — secondary shortcut, fills the hero field ── */}
                 {!hidePrice && !isOutOfStock && currentPricing.price_per_sqft > 0 && (
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-[11px] text-slate-500 mr-0.5">Common sizes:</span>
+                  <div>
+                    <p className="text-[11px] text-slate-500 mb-1">Or tap a common size:</p>
+                    <div className="grid grid-cols-3 gap-1.5">
                     {[100, 200, 500].map((sqft) => {
                       const sqftPerBox = currentPricing.sqft_per_box || 20;
                       const boxes = Math.ceil(sqft / sqftPerBox);
@@ -849,12 +850,13 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                           type="button"
                           onClick={() => setSqftNeeded(String(sqft))}
                           disabled={product.has_variants && !selectedJsonVariant}
-                          className={`px-2.5 py-1 rounded-full border text-[11px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${active ? 'bg-amber-500 border-amber-500 text-white' : 'bg-white border-slate-300 text-slate-700 hover:border-amber-400 hover:text-amber-800'}`}
+                          className={`px-2 py-1.5 rounded-lg border text-[11px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${active ? 'bg-amber-500 border-amber-500 text-white' : 'bg-white border-slate-300 text-slate-700 hover:border-amber-400 hover:text-amber-800'}`}
                         >
                           {sqft} sqft <span className={active ? 'text-amber-100' : 'text-slate-400'}>· C${total.toFixed(0)}</span>
                         </button>
                       );
                     })}
+                    </div>
                   </div>
                 )}
 
@@ -862,9 +864,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                 {calculation && (
                   <div className={`rounded-xl border p-3 space-y-1.5 animate-fade-in-up ${calculation.hasUserSqft ? 'bg-white border-amber-300 shadow-sm' : 'bg-slate-50 border-slate-200'}`}>
                     {calculation.hasUserSqft ? (
-                      <div className="flex justify-between text-sm">
-                        <span className="text-slate-700 font-medium">✓ {calculation.boxesRequired} {calculation.boxesRequired === 1 ? 'box' : 'boxes'} covers your {Number(calculation.sqftNeeded).toLocaleString()} sqft</span>
-                        <span className="text-slate-500">{calculation.actualSqft.toFixed(1)} sqft</span>
+                      <div className="text-sm text-slate-700 font-medium">
+                        ✓ {calculation.boxesRequired} {calculation.boxesRequired === 1 ? 'box' : 'boxes'} ({calculation.actualSqft.toFixed(1)} sqft) covers your {Number(calculation.sqftNeeded).toLocaleString()} sqft
                       </div>
                     ) : (
                       <div className="flex justify-between text-sm">
