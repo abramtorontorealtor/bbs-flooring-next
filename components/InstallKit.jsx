@@ -17,9 +17,9 @@
 // price here. Cart payloads mirror AccessoryBox/TransitionPieces exactly.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Check, Minus, Plus, ShoppingCart, Wrench, ChevronDown } from 'lucide-react';
+import { Check, Minus, Plus, ShoppingCart, Wrench, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 import { Analytics } from '@/components/analytics';
@@ -35,7 +35,12 @@ function getSessionId() {
   return sid;
 }
 
-export default function InstallKit({ product, floorSqft = null, onBrowseAll, className = '', suppliesCatalog = null }) {
+// Oct 15 2026 (Abram: "the install kit is nice but doesn't that just confuse
+// people? It should be something they seek"): the kit now starts COLLAPSED as a
+// one-line "Need underlay, trim or mouldings?" strip so the floor is the only
+// decision on screen. It opens on tap, or automatically the moment the floor
+// lands in the cart (openSignal bumps) — the classic post-yes upsell window.
+export default function InstallKit({ product, floorSqft = null, onBrowseAll, className = '', suppliesCatalog = null, openSignal = 0, defaultOpen = false }) {
   // suppliesCatalog is fetched server-side (S2, Sep 12 2026 — the DB-backed
   // `supplies` table) and passed down as a plain prop; buildInstallKit prefers
   // its live prices/images and falls back to the static catalog if omitted.
@@ -50,6 +55,20 @@ export default function InstallKit({ product, floorSqft = null, onBrowseAll, cla
   const [touched, setTouched] = useState({});
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
+  const [justAddedFloor, setJustAddedFloor] = useState(false);
+  const rootRef = useRef(null);
+
+  // Floor just went into the cart → open the kit and bring it into view.
+  useEffect(() => {
+    if (!openSignal) return;
+    setOpen(true);
+    setJustAddedFloor(true);
+    const t = setTimeout(() => {
+      rootRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 150);
+    return () => clearTimeout(t);
+  }, [openSignal]);
 
   useEffect(() => {
     setQty((prev) => {
@@ -98,14 +117,47 @@ export default function InstallKit({ product, floorSqft = null, onBrowseAll, cla
 
   if (kit.lines.length === 0) return null;
 
+  // Pre-checked total at the current sizing — shown on the collapsed strip so the
+  // number is already anchored before they open it.
+  const defaultTotal = kit.lines
+    .filter((l) => l.checked)
+    .reduce((s, l) => s + l.price * ((hasSqft ? suggestQty(l, floorSqft) : 1) || 1), 0);
+
+  if (!open) {
+    return (
+      <button
+        ref={rootRef}
+        type="button"
+        onClick={() => setOpen(true)}
+        className={`w-full flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-left hover:border-amber-300 hover:bg-amber-50/40 transition-colors ${className}`}
+      >
+        <Wrench className="w-4 h-4 text-amber-600 flex-shrink-0" />
+        <span className="flex-1 min-w-0">
+          <span className="block text-sm font-semibold text-slate-800 leading-tight">Need underlay, trim or mouldings?</span>
+          <span className="block text-[11px] text-slate-500 leading-snug">
+            Add the install kit for this floor{defaultTotal > 0 ? ` · from C$${defaultTotal.toFixed(2)}` : ''}
+          </span>
+        </span>
+        <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
+      </button>
+    );
+  }
+
   return (
-    <div className={`rounded-2xl border-2 border-amber-200 bg-white p-4 ${className}`}>
+    <div ref={rootRef} className={`rounded-2xl border-2 ${justAddedFloor ? 'border-amber-400 bg-amber-50/40' : 'border-amber-200 bg-white'} p-4 scroll-mt-24 ${className}`}>
       <div className="flex items-start gap-2">
         <Wrench className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-slate-900 text-sm leading-tight">Install Kit — everything this floor needs</h3>
+          <h3 className="font-bold text-slate-900 text-sm leading-tight">
+            {justAddedFloor ? 'Floor added ✓ — finish the install' : 'Install kit for this floor'}
+          </h3>
           <p className="text-xs text-slate-500 mt-0.5 leading-snug">{kit.note}</p>
         </div>
+        {!justAddedFloor && (
+          <button type="button" onClick={() => setOpen(false)} aria-label="Collapse install kit" className="text-slate-400 hover:text-slate-600 flex-shrink-0">
+            <ChevronUp className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
       <ul className="mt-3 space-y-1.5">

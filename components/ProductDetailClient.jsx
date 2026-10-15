@@ -53,6 +53,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
   const [selectedVariantId, setSelectedVariantId] = useState(null);
   const [selectedJsonVariant, setSelectedJsonVariant] = useState(null);
   const [buyMode, setBuyMode] = useState('material');
+  // Oct 15 2026 — post-add upsell: the Install Kit stays collapsed until the
+  // floor is in the cart (one decision at a time), then opens sized to the sqft
+  // that was just added. kitOpenSignal bumps once per successful add.
+  const [kitOpenSignal, setKitOpenSignal] = useState(0);
+  const [addedSqft, setAddedSqft] = useState(null);
   // Start visible: on mobile the buy/quote box loads below the fold, so the sticky
   // CTA should be present from first paint. The observer then hides it only while the
   // box is actually on screen. Prevents a brief no-CTA flash on PDP load.
@@ -370,6 +375,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
       }
       window.dispatchEvent(new Event('cartUpdated'));
       toast.success('Added to cart!');
+      setAddedSqft(calculation.hasUserSqft ? calculation.sqftNeeded : null);
+      setKitOpenSignal((n) => n + 1);
       setSqftNeeded('');
       setSelectedVariantId(null);
       const trackProduct = (product.has_variants && selectedJsonVariant) ? product : (product.is_parent_product && selectedVariantId ? productVariants.find(v => v.id === selectedVariantId) || product : product);
@@ -815,40 +822,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
 
             {buyMode === 'material' ? (
               <div className="space-y-3">
-                {/* ── Quick-Buy shortcuts — common room sizes ── */}
-                {!hidePrice && !isOutOfStock && currentPricing.price_per_sqft > 0 && (
-                  <div>
-                    <p className="text-xs text-slate-500 font-medium mb-1.5">Quick estimate by room size:</p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {[100, 200, 500].map((sqft) => {
-                        const sqftPerBox = currentPricing.sqft_per_box || 20;
-                        const boxes = Math.ceil(sqft / sqftPerBox);
-                        const actualSqft = boxes * sqftPerBox;
-                        const pricePerSqft = currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft
-                          ? currentPricing.sale_price_per_sqft
-                          : currentPricing.price_per_sqft;
-                        const total = actualSqft * pricePerSqft;
-                        return (
-                          <button
-                            key={sqft}
-                            onClick={() => setSqftNeeded(String(sqft))}
-                            disabled={product.has_variants && !selectedJsonVariant}
-                            className="flex flex-col items-center justify-center py-2.5 px-2 rounded-xl border-2 border-amber-200 bg-amber-50 hover:bg-amber-100 hover:border-amber-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                          >
-                            <span className="text-xs font-bold text-amber-800">{sqft} sqft</span>
-                            <span className="text-[10px] text-slate-600 mt-0.5">C${total.toFixed(0)}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <div className="flex items-center gap-2 my-2">
-                      <div className="flex-1 h-px bg-slate-200" />
-                      <span className="text-[10px] text-slate-400 uppercase tracking-wider">or enter your exact sqft below</span>
-                      <div className="flex-1 h-px bg-slate-200" />
-                    </div>
-                  </div>
-                )}
-                {/* Calculator */}
+                {/* ── 1. HERO: the sqft field is the one thing to do on this page (Oct 15 2026) ── */}
                 <SqftCalculator
                   variants={product.has_variants ? ((() => { try { const s = JSON.parse(product.specifications); return s.variants || []; } catch { return []; } })()) : []}
                   currentVariant={selectedJsonVariant}
@@ -856,23 +830,68 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                   currentSqft={sqftNeeded}
                 />
 
+                {/* ── 2. Common sizes — secondary shortcut, fills the hero field ── */}
+                {!hidePrice && !isOutOfStock && currentPricing.price_per_sqft > 0 && (
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[11px] text-slate-500 mr-0.5">Common sizes:</span>
+                    {[100, 200, 500].map((sqft) => {
+                      const sqftPerBox = currentPricing.sqft_per_box || 20;
+                      const boxes = Math.ceil(sqft / sqftPerBox);
+                      const actualSqft = boxes * sqftPerBox;
+                      const pricePerSqft = currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft
+                        ? currentPricing.sale_price_per_sqft
+                        : currentPricing.price_per_sqft;
+                      const total = actualSqft * pricePerSqft;
+                      const active = String(sqft) === String(sqftNeeded);
+                      return (
+                        <button
+                          key={sqft}
+                          type="button"
+                          onClick={() => setSqftNeeded(String(sqft))}
+                          disabled={product.has_variants && !selectedJsonVariant}
+                          className={`px-2.5 py-1 rounded-full border text-[11px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${active ? 'bg-amber-500 border-amber-500 text-white' : 'bg-white border-slate-300 text-slate-700 hover:border-amber-400 hover:text-amber-800'}`}
+                        >
+                          {sqft} sqft <span className={active ? 'text-amber-100' : 'text-slate-400'}>· C${total.toFixed(0)}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
                 {/* Live calculation result */}
                 {calculation && (
-                  <div className="bg-white rounded-xl border border-slate-200 p-3 space-y-1.5 animate-fade-in-up">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-slate-600">{calculation.boxesRequired} boxes × {calculation.sqftPerBox} sqft</span>
-                      <span className="text-slate-600">{calculation.actualSqft} sqft</span>
-                    </div>
-                    {calculation.extraSqft > 0 && (
+                  <div className={`rounded-xl border p-3 space-y-1.5 animate-fade-in-up ${calculation.hasUserSqft ? 'bg-white border-amber-300 shadow-sm' : 'bg-slate-50 border-slate-200'}`}>
+                    {calculation.hasUserSqft ? (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-700 font-medium">✓ {calculation.boxesRequired} {calculation.boxesRequired === 1 ? 'box' : 'boxes'} covers your {Number(calculation.sqftNeeded).toLocaleString()} sqft</span>
+                        <span className="text-slate-500">{calculation.actualSqft.toFixed(1)} sqft</span>
+                      </div>
+                    ) : (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-slate-600">1 box · {calculation.sqftPerBox} sqft</span>
+                        <span className="text-slate-500">C${calculation.pricePerSqft.toFixed(2)}/sqft</span>
+                      </div>
+                    )}
+                    {calculation.hasUserSqft && calculation.extraSqft > 0 && (
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Extra coverage</span>
+                        <span className="text-slate-400">Includes extra for cuts &amp; waste</span>
                         <span className="text-slate-400">+{calculation.extraSqft.toFixed(1)} sqft</span>
                       </div>
                     )}
                     <div className="flex justify-between items-baseline pt-1.5 border-t border-slate-100">
-                      <span className="text-sm font-semibold text-slate-800">Total</span>
-                      <span className="text-xl font-bold text-slate-900">C${calculation.lineTotal.toFixed(2)}</span>
+                      <span className="text-sm font-semibold text-slate-800">{calculation.hasUserSqft ? 'Your price' : 'Per box'}</span>
+                      <span className="text-right">
+                        {hasDiscount && (
+                          <span className="block text-[11px] font-semibold text-red-600">
+                            You save C${((parseFloat(currentPricing.price_per_sqft) - calculation.pricePerSqft) * calculation.actualSqft).toFixed(2)}
+                          </span>
+                        )}
+                        <span className="text-xl font-bold text-slate-900">C${calculation.lineTotal.toFixed(2)}</span>
+                      </span>
                     </div>
+                    {!calculation.hasUserSqft && (
+                      <p className="text-[11px] text-slate-500 pt-0.5">Enter your sq ft above for your exact total — or add a box now and adjust in the cart.</p>
+                    )}
                     {/* Dynamic financing — only when total qualifies */}
                     {dynamicFinancing && (
                       <Link href="/financing" className="flex items-center justify-between pt-1.5 border-t border-dashed border-slate-200 group">
@@ -962,10 +981,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
           {!isOutOfStock && (
             <InstallKit
               product={product}
-              floorSqft={calculation?.hasUserSqft ? calculation.sqftNeeded : null}
+              floorSqft={calculation?.hasUserSqft ? calculation.sqftNeeded : addedSqft}
               onBrowseAll={scrollToAccessories}
               className="mt-4"
               suppliesCatalog={suppliesCatalog}
+              openSignal={kitOpenSignal}
             />
           )}
 

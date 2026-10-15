@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Calculator, Ruler, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Calculator, Ruler, ChevronDown, ChevronUp } from 'lucide-react';
 
 const WASTE_OPTIONS = [
   { value: 5, label: '5%', desc: 'Simple rectangular room' },
@@ -9,7 +9,11 @@ const WASTE_OPTIONS = [
   { value: 15, label: '15%', desc: 'Complex layout / diagonal install' },
 ];
 
-export default function SqftCalculator({ variants = [], currentVariant = null, onSqftChange, currentSqft = '' }) {
+// Oct 15 2026 (Abram: "the input bar should be THE primary target — it blends
+// in"): the sqft field is now the hero of the buy box — big, bold, amber, with a
+// question as its label. The L×W helper is tucked behind a text link instead of
+// a competing tab row, so there is exactly one obvious thing to do.
+export default function SqftCalculator({ variants = [], currentVariant = null, onSqftChange, currentSqft = '', inputId = 'pdp-sqft' }) {
   const [mode, setMode] = useState('direct'); // 'direct' | 'dimensions'
   const [length, setLength] = useState('');
   const [width, setWidth] = useState('');
@@ -66,45 +70,30 @@ export default function SqftCalculator({ variants = [], currentVariant = null, o
   const mostExpensive = comparison?.[comparison.length - 1]?.total;
 
   return (
-    <div className="space-y-4">
-      {/* Mode Toggle */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => setMode('dimensions')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-            mode === 'dimensions'
-              ? 'bg-amber-100 text-amber-800 border border-amber-300'
-              : 'bg-slate-100 text-slate-500 border border-transparent hover:bg-slate-200'
-          }`}
-        >
-          <Ruler className="w-3.5 h-3.5" />
-          Room Dimensions
-        </button>
-        <button
-          onClick={() => setMode('direct')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-            mode === 'direct'
-              ? 'bg-amber-100 text-amber-800 border border-amber-300'
-              : 'bg-slate-100 text-slate-500 border border-transparent hover:bg-slate-200'
-          }`}
-        >
-          <Calculator className="w-3.5 h-3.5" />
-          Enter Sqft
-        </button>
-      </div>
-
+    <div className="space-y-3">
       {mode === 'dimensions' ? (
         <div className="space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <label className="text-sm font-bold text-slate-900">Measure your room</label>
+            <button
+              type="button"
+              onClick={() => setMode('direct')}
+              className="text-xs font-semibold text-amber-700 hover:text-amber-800 hover:underline"
+            >
+              I know my sq ft →
+            </button>
+          </div>
           {/* L × W inputs */}
           <div className="flex gap-3 items-end">
             <div className="flex-1">
               <label className="text-xs text-slate-500 mb-1 block">Length (ft)</label>
               <input
                 type="number"
+                inputMode="decimal"
                 placeholder="e.g. 20"
                 value={length}
                 onChange={(e) => setLength(e.target.value)}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                className="w-full px-3 py-3 border-2 border-amber-300 bg-white rounded-xl text-base font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-500"
                 min="1"
                 step="0.5"
               />
@@ -114,10 +103,11 @@ export default function SqftCalculator({ variants = [], currentVariant = null, o
               <label className="text-xs text-slate-500 mb-1 block">Width (ft)</label>
               <input
                 type="number"
+                inputMode="decimal"
                 placeholder="e.g. 15"
                 value={width}
                 onChange={(e) => setWidth(e.target.value)}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                className="w-full px-3 py-3 border-2 border-amber-300 bg-white rounded-xl text-base font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-500"
                 min="1"
                 step="0.5"
               />
@@ -164,15 +154,31 @@ export default function SqftCalculator({ variants = [], currentVariant = null, o
         </div>
       ) : (
         <div>
-          <input
-            type="number"
-            placeholder="Enter square footage (e.g., 500)"
-            value={currentSqft}
-            onChange={(e) => onSqftChange(e.target.value)}
-            className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
-            min="1"
-            step="1"
-          />
+          <label htmlFor={inputId} className="block text-sm font-bold text-slate-900 mb-1.5">
+            How many sq ft do you need?
+          </label>
+          <div className="relative">
+            <input
+              id={inputId}
+              type="number"
+              inputMode="decimal"
+              placeholder="e.g. 500"
+              value={currentSqft}
+              onChange={(e) => onSqftChange(e.target.value)}
+              className="w-full h-14 pl-4 pr-16 border-2 border-amber-500 bg-white rounded-xl text-2xl font-bold text-slate-900 placeholder:text-slate-300 placeholder:font-semibold shadow-sm focus:outline-none focus:ring-4 focus:ring-amber-200 focus:border-amber-600 transition-shadow"
+              min="1"
+              step="1"
+            />
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-amber-700 uppercase tracking-wide">sq ft</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMode('dimensions')}
+            className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-amber-700 hover:underline"
+          >
+            <Ruler className="w-3.5 h-3.5" />
+            Not sure? Enter room length × width
+          </button>
         </div>
       )}
 
