@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
 import { createPageUrl } from '@/lib/routes';
-import ProductCard from '@/components/ProductCard';
+import CollectionCard from '@/components/CollectionCard';
+import { groupByCollection } from '@/lib/collection-groups';
 import { CATEGORY_PAGES } from '@/lib/breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -316,9 +317,12 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     return result;
   }, [products, filters, isSearchMode]);
 
-  // Visible products (load more pagination)
-  const visibleProducts = useMemo(() => filteredProducts.slice(0, visibleCount), [filteredProducts, visibleCount]);
-  const hasMore = visibleCount < filteredProducts.length;
+  // One card per brand+collection (Oct 15 2026) — grouped AFTER filters + sort so a
+  // colour filter leaves each card showing only the matching colours. Pagination is
+  // in collections, not colours: 1,027 colours -> ~105 cards, ~5 pages instead of 43.
+  const collectionGroups = useMemo(() => groupByCollection(filteredProducts), [filteredProducts]);
+  const visibleGroups = useMemo(() => collectionGroups.slice(0, visibleCount), [collectionGroups, visibleCount]);
+  const hasMore = visibleCount < collectionGroups.length;
 
   // Reset visible count when filters change
   useEffect(() => { setVisibleCount(ITEMS_PER_PAGE); }, [filters]);
@@ -410,8 +414,11 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
     return cat?.value && cat.value !== 'all' ? cat.label : 'All Products';
   };
 
-  // GA4 view_item_list + select_item (same list name -> position-CTR)
-  const gaListName = isSearchMode ? `Search: ${urlSearchParam}` : getCategoryTitle();
+  // GA4 view_item_list + select_item (same list name -> position-CTR). Distinct from the
+  // category pages' names so /products tabs and /engineered-hardwood etc. can be read apart.
+  const gaListName = isSearchMode
+    ? `Search: ${urlSearchParam}`
+    : (filters.category === 'all' ? 'All Products' : `All Products · ${getCategoryTitle()}`);
   useEffect(() => {
     if (!isLoading && filteredProducts.length > 0) {
       Analytics.trackViewItemList(filteredProducts, gaListName);
@@ -676,6 +683,7 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
             FilterSidebar={FilterSidebar}
             activeFilterCount={activeFilterCount}
             resultCount={filteredProducts.length}
+            collectionCount={collectionGroups.length}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
           />
@@ -744,8 +752,8 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
                   ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4'
                   : 'grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'
               }>
-                {visibleProducts.map((product, index) => (
-                  <ProductCard key={product.id} product={product} index={index} listName={gaListName} isSaved={savedProductIds.has(product.id)} user={currentUser} />
+                {visibleGroups.map((group, index) => (
+                  <CollectionCard key={group.key} group={group} index={index} listName={gaListName} isSaved={savedProductIds.has(group.hero.id)} user={currentUser} />
                 ))}
               </div>
 
@@ -758,9 +766,9 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
                     onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
                     className="px-8 gap-2 text-sm"
                   >
-                    Load More Products
+                    Load More Collections
                     <span className="text-xs text-slate-400">
-                      ({visibleCount} of {filteredProducts.length})
+                      ({Math.min(visibleCount, collectionGroups.length)} of {collectionGroups.length})
                     </span>
                   </Button>
                 </div>

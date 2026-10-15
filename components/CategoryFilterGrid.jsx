@@ -3,7 +3,8 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { entities } from '@/lib/base44-compat';
-import ProductCard from '@/components/ProductCard';
+import CollectionCard from '@/components/CollectionCard';
+import { groupByCollection } from '@/lib/collection-groups';
 import ProductToolbar from '@/components/ProductToolbar';
 import GridPriceMatchBar from '@/components/GridPriceMatchBar';
 import { Button } from '@/components/ui/button';
@@ -359,9 +360,12 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
     return result;
   }, [products, filters, category]);
 
-  // Visible products (load more pagination)
-  const visibleProducts = useMemo(() => filteredProducts.slice(0, visibleCount), [filteredProducts, visibleCount]);
-  const hasMore = visibleCount < filteredProducts.length;
+  // One card per brand+collection (Oct 15 2026) — grouped AFTER filters + sort so a
+  // colour filter leaves each card showing only the matching colours. Pagination is
+  // in collections, not colours (engineered: 508 colours -> 41 cards, 2 pages not 21).
+  const collectionGroups = useMemo(() => groupByCollection(filteredProducts), [filteredProducts]);
+  const visibleGroups = useMemo(() => collectionGroups.slice(0, visibleCount), [collectionGroups, visibleCount]);
+  const hasMore = visibleCount < collectionGroups.length;
 
   // Reset visible count when filters change
   useEffect(() => { setVisibleCount(ITEMS_PER_PAGE); }, [filters]);
@@ -441,7 +445,9 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
   }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── GA4: view_item_list + select_item (same list name → position-CTR) ──
-  const gaListName = category ? category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Brand Products';
+  const gaListName = category
+    ? category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    : `Brand: ${queryKey || sessionKey || 'landing'}`;
   useEffect(() => {
     if (!isLoading && filteredProducts.length > 0) {
       Analytics.trackViewItemList(filteredProducts, gaListName);
@@ -662,6 +668,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
           FilterSidebar={FilterSidebar}
           activeFilterCount={activeFilterCount}
           resultCount={filteredProducts.length}
+          collectionCount={collectionGroups.length}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
         />
@@ -725,8 +732,8 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
                 ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4'
                 : 'grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'
             }>
-              {visibleProducts.map((product, index) => (
-                <ProductCard key={product.id} product={product} index={index} listName={gaListName} isSaved={savedProductIds.has(product.id)} user={currentUser} />
+              {visibleGroups.map((group, index) => (
+                <CollectionCard key={group.key} group={group} index={index} listName={gaListName} isSaved={savedProductIds.has(group.hero.id)} user={currentUser} />
               ))}
             </div>
 
@@ -739,9 +746,9 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
                   onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
                   className="px-8 gap-2 text-sm"
                 >
-                  Load More Products
+                  Load More Collections
                   <span className="text-xs text-slate-400">
-                    ({visibleCount} of {filteredProducts.length})
+                    ({Math.min(visibleCount, collectionGroups.length)} of {collectionGroups.length})
                   </span>
                 </Button>
               </div>

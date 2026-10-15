@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { createPageUrl } from '@/lib/routes';
 import { entities } from '@/lib/base44-compat';
 import CollectionCard from '@/components/CollectionCard';
+import { groupByCollection, getProductPrice } from '@/lib/collection-groups';
 import ProductToolbar from '@/components/ProductToolbar';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
@@ -85,54 +86,10 @@ const SORT_OPTIONS = [
   { value: 'name', label: 'Name A–Z' },
 ];
 
-function getProductPrice(product) {
-  return parseFloat(product.sale_price_per_sqft || product.price_per_sqft || 0);
-}
-
 function getProductBrand(product) {
   return product.brand || '';
 }
 
-function getDiscountPct(product) {
-  const reg = parseFloat(product.price_per_sqft || 0);
-  const sale = parseFloat(product.sale_price_per_sqft || 0);
-  if (reg > 0 && sale > 0 && sale < reg) return Math.round(((reg - sale) / reg) * 100);
-  return 0;
-}
-
-/**
- * Collapse an already-filtered + sorted list of colours into one group per
- * brand+collection, preserving sorted order (group position = its first colour's
- * position; hero = that first colour). Rows without a collection stand alone.
- */
-function groupByCollection(products) {
-  const map = new Map();
-  const order = [];
-  for (const p of products) {
-    const brand = (p.brand || '').trim().toLowerCase();
-    const coll = (p.collection || '').trim().toLowerCase();
-    const key = coll ? `${brand}||${coll}` : `single||${p.id || p.slug}`;
-    let g = map.get(key);
-    if (!g) {
-      g = { key, hero: p, colours: [] };
-      map.set(key, g);
-      order.push(key);
-    }
-    g.colours.push(p);
-  }
-  return order.map((key) => {
-    const g = map.get(key);
-    const discounts = g.colours.map(getDiscountPct);
-    const maxDiscountPct = Math.max(0, ...discounts);
-    return {
-      ...g,
-      count: g.colours.length,
-      minPrice: Math.min(...g.colours.map(getProductPrice)),
-      maxDiscountPct,
-      discountsVary: new Set(discounts).size > 1,
-    };
-  });
-}
 
 function isClearance(product) {
   const hasClearanceFlag = product.is_clearance === true;

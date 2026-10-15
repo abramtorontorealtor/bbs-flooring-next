@@ -538,6 +538,14 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
         {/* ── Right: Product Info + Buy Box ── */}
         <div className="animate-fade-in-up min-w-0" style={{ animationDelay: '0.1s' }}>
 
+          {/* ── Collection siblings — other colours in this brand+collection (SSR, real links).
+              Oct 15 2026: FIRST thing in the buy box = directly under the photo on mobile,
+              top of the buy box on desktop. Swatch links navigate with scroll={false} so
+              comparing colours never bounces the page back to the top (Abram). ── */}
+          {!product.is_parent_product && !product.has_variants && initialSiblings?.length >= 2 && (
+            <CollectionSiblings siblings={initialSiblings} current={product} hidePrice={hidePrice} />
+          )}
+
           {/* Brand */}
           {product.brand && (
             <p className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">{brandDisplayLabel(product.brand)}</p>
@@ -643,11 +651,6 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
             <div className="w-px h-4 bg-slate-200" />
             <SaveButton product={product} user={currentUser} />
           </div>
-
-          {/* ── Collection siblings — other colours in this brand+collection (SSR, real links) ── */}
-          {!product.is_parent_product && !product.has_variants && initialSiblings?.length >= 2 && (
-            <CollectionSiblings siblings={initialSiblings} current={product} hidePrice={hidePrice} />
-          )}
 
           {/* ── Variant Selector (chip-based for has_variants) ── */}
           {product.has_variants && (

@@ -1,5 +1,6 @@
-import ProductCardStatic from '@/components/ProductCardStatic';
+import CollectionCardStatic from '@/components/CollectionCardStatic';
 import { pickScoreKey } from '@/lib/sort-score';
+import { groupByCollection } from '@/lib/collection-groups';
 
 /* ── Server-Rendered Product Grid ──
  * Renders the first batch of product cards as real HTML in the server response.
@@ -7,6 +8,9 @@ import { pickScoreKey } from '@/lib/sort-score';
  *
  * The client-side CategoryFilterGrid overlays this with its interactive grid
  * once React hydrates. The server grid is hidden via CSS when the client takes over.
+ *
+ * Oct 15 2026: one card per brand+collection (CollectionCardStatic) — same
+ * grouping as the hydrated grids (lib/collection-groups.js) so SSR == client.
  */
 
 const ITEMS_PER_PAGE = 24;
@@ -28,7 +32,7 @@ export default function ProductGridServer({ products, category, viewMode = 'grid
 
   const eligible = filterProducts(products);
   const filtered = sortProducts(eligible, pickScoreKey(eligible, category));
-  const visible = filtered.slice(0, limit);
+  const visible = groupByCollection(filtered).slice(0, limit);
 
   return (
     <div
@@ -39,8 +43,8 @@ export default function ProductGridServer({ products, category, viewMode = 'grid
           : 'grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'
       }
     >
-      {visible.map((product, index) => (
-        <ProductCardStatic key={product.id} product={product} priority={index < 4} />
+      {visible.map((group, index) => (
+        <CollectionCardStatic key={group.key} group={group} priority={index < 4} />
       ))}
     </div>
   );

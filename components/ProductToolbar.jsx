@@ -23,6 +23,7 @@ export default function ProductToolbar({
   FilterSidebar,
   activeFilterCount = 0,
   resultCount = 0,
+  collectionCount = 0,
   viewMode = 'grid',
   onViewModeChange,
 }) {
@@ -79,7 +80,11 @@ export default function ProductToolbar({
         )}
 
         {/* Result count — desktop */}
-        <span className="hidden md:block text-xs text-slate-500 whitespace-nowrap tabular-nums">{resultCount} products</span>
+        <span className="hidden md:block text-xs text-slate-500 whitespace-nowrap tabular-nums">
+          {collectionCount > 0 && collectionCount < resultCount
+            ? `${collectionCount} collections · ${resultCount} colours`
+            : `${resultCount} products`}
+        </span>
 
         {/* Filter button — mobile */}
         <Sheet open={filterSheetOpen} onOpenChange={onFilterSheetOpenChange}>
@@ -124,7 +129,9 @@ export default function ProductToolbar({
         ))}
 
         {/* Mobile result count */}
-        <span className="md:hidden text-[11px] text-slate-400 ml-auto whitespace-nowrap tabular-nums">{resultCount}</span>
+        <span className="md:hidden text-[11px] text-slate-400 ml-auto whitespace-nowrap tabular-nums">
+          {collectionCount > 0 && collectionCount < resultCount ? `${collectionCount} · ${resultCount} colours` : resultCount}
+        </span>
       </div>
     </div>
   );

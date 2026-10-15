@@ -11,12 +11,18 @@
  * ("aquaplus vinyl flooring", "falcon 7mm vinyl") that today splits across
  * 8–16 sibling pages. See memory/COLLECTION-SIBLINGS-PLAN.md (Phase 2).
  *
+ * Oct 15 2026 (Abram: "colour comparison clicks somewhere smart"): the strip now
+ * sits FIRST in the buy box (under the photo on mobile), swatch links navigate
+ * with scroll={false} so the page stays put while the photo/name/price swap, and
+ * the mobile scroller auto-centres the current colour so the next one is a flick
+ * away. Compare 12 colours in 12 taps without scrolling.
+ *
  * Renders nothing when siblings.length < 2 (self is included in siblings).
  * Parent/variant products (Vidar, Impressive) never receive siblings — they
  * have VariantSelector — the server query already excludes them.
  */
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronDown, ChevronUp } from 'lucide-react';
@@ -38,6 +44,20 @@ function swatchLabel(p) {
 
 export default function CollectionSiblings({ siblings = [], current, hidePrice = false }) {
   const [expanded, setExpanded] = useState(false);
+  const stripRef = useRef(null);
+  const currentId = current?.id;
+
+  // Mobile: keep the current colour centred in the horizontal scroller. Adjust
+  // scrollLeft directly (not scrollIntoView) so the page never moves vertically.
+  useEffect(() => {
+    const strip = stripRef.current;
+    if (!strip) return;
+    const el = strip.querySelector('[aria-current="page"]');
+    if (!el) return;
+    if (strip.scrollWidth <= strip.clientWidth) return; // desktop grid — nothing to scroll
+    const target = el.offsetLeft - strip.clientWidth / 2 + el.clientWidth / 2;
+    strip.scrollLeft = Math.max(0, target);
+  }, [currentId]);
 
   if (!current || !Array.isArray(siblings) || siblings.length < 2) return null;
 
@@ -62,7 +82,7 @@ export default function CollectionSiblings({ siblings = [], current, hidePrice =
     const Wrapper = isCurrent ? 'div' : Link;
     const wrapperProps = isCurrent
       ? { 'aria-current': 'page' }
-      : { href: `/products/${p.slug}`, prefetch: false, onClick: () => handleClick(p), title: `${label} — ${brand} ${collection}` };
+      : { href: `/products/${p.slug}`, prefetch: false, scroll: false, onClick: () => handleClick(p), title: `${label} — ${brand} ${collection}` };
 
     return (
       <Wrapper
@@ -101,7 +121,7 @@ export default function CollectionSiblings({ siblings = [], current, hidePrice =
   };
 
   return (
-    <section aria-labelledby="collection-siblings-heading" className="mb-6 min-w-0 max-w-full">
+    <section aria-labelledby="collection-siblings-heading" className="mb-5 min-w-0 max-w-full scroll-mt-28">
       <div className="flex items-baseline justify-between gap-3 mb-2">
         <h2 id="collection-siblings-heading" className="text-sm font-semibold text-slate-800">
           {collection && collection !== brand ? (
@@ -126,6 +146,7 @@ export default function CollectionSiblings({ siblings = [], current, hidePrice =
       {/* Mobile: horizontal snap strip (~4.5 visible). Desktop: wrapping grid,
           max 2 rows then "+N more". */}
       <div
+        ref={stripRef}
         className="flex sm:grid gap-2 sm:gap-3 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none pb-1 -mx-1 px-1 min-w-0 max-w-full [-webkit-overflow-scrolling:touch]
                    sm:grid-cols-6 md:grid-cols-8 [scrollbar-width:thin]"
       >
