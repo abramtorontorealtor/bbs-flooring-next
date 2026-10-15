@@ -18,6 +18,10 @@ function getProductBadges(product) {
   const badges = [];
   const name = (product.name || '').toLowerCase();
   const category = (product.category || '').toLowerCase();
+  // House brand first (Oct 15, 2026): BBS Reserve is our own label — the card must read as
+  // "ours" at a glance so it stands apart from the manufacturer brands without hiding them.
+  const isHouseBrand = (product.brand || '').toLowerCase().includes('bbs reserve');
+  if (isHouseBrand) badges.push({ key: 'house', label: '★ BBS Reserve · Our label', className: 'bg-amber-500 text-slate-900' });
   const isCanadian = !!product.is_canadian;
   if (isCanadian) badges.push({ key: 'canada', label: '🇨🇦 Canadian', className: 'bg-red-600 text-white' });
   const isVinylType = category.includes('vinyl') || name.includes('lvp') || name.includes('spc');

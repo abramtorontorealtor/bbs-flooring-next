@@ -271,13 +271,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ BBS RESERVE CLEARANCE URGENCY STRIP ═══ */}
-      <div className="bg-orange-600 text-white">
+      {/* ═══ BBS RESERVE — HOUSE BRAND STRIP (Oct 15, 2026: was a "Clearance" strip; Reserve is our own label, not a closeout) ═══ */}
+      <div className="bg-amber-500 text-slate-900">
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
-          <span className="text-lg">🔥</span>
+          <span className="text-lg">★</span>
           <p className="text-sm font-semibold">
-            <span className="font-bold">Clearance — real engineered oak &amp; waterproof vinyl deals, in-store pricing while stock lasts.</span>{' '}
-            <Link href="/bbs-reserve" className="underline underline-offset-2 hover:no-underline">Shop BBS Reserve →</Link>
+            <span className="font-bold">BBS Reserve — our own label.</span>{' '}
+            6½&quot; engineered oak from $3.49/sqft &amp; 7mm vinyl from $1.79 — sourced direct, no distributor markup.{' '}
+            <Link href="/bbs-reserve" className="underline underline-offset-2 hover:no-underline font-bold">Shop BBS Reserve →</Link>
           </p>
         </div>
       </div>
@@ -612,7 +613,7 @@ export default function HomePage() {
             <h3 className="text-xl font-bold text-slate-800 mb-4">Shop by Brand</h3>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
               {[
-                { label: 'Impressive Flooring 🇨🇦', href: '/impressive-flooring' },
+                { label: 'BBS Reserve — Our Own Label', href: '/bbs-reserve' },
                 { label: 'Vidar Flooring', href: '/vidar-flooring' },
                 { label: 'NAF Flooring', href: '/naf-flooring' },
                 { label: 'Wickham Flooring', href: '/wickham-flooring' },
@@ -622,7 +623,6 @@ export default function HomePage() {
                 { label: 'Simba Flooring', href: '/simba-flooring' },
                 { label: 'Canadian Standard Flooring', href: '/canadian-standard-flooring' },
                 { label: 'Northernest Flooring', href: '/northernest-flooring' },
-                { label: 'BBS Reserve', href: '/bbs-reserve' },
               ].map(link => (
                 <Link key={link.href} href={link.href} className="text-amber-700 underline underline-offset-2 decoration-amber-300 hover:text-amber-900 hover:decoration-amber-500 transition-colors">
                   {link.label}

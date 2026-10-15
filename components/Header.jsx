@@ -23,6 +23,7 @@ const NAV_ITEMS = [
       { name: 'Laminate', path: '/laminate' },
       { name: 'Engineered Hardwood', path: '/engineered-hardwood' },
       { name: 'Solid Hardwood', path: '/solid-hardwood' },
+      { name: 'BBS Reserve — Our Label', path: '/bbs-reserve' },
       { name: 'Waterproof Flooring', path: '/waterproof-flooring' },
       { name: 'Accessories & Supplies', path: '/flooring-accessories' },
     ],

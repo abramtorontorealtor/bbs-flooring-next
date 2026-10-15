@@ -161,7 +161,7 @@ const data = {
       {
         "heading": "Why Stouffville homeowners buy from a Markham showroom instead of big box",
         "paragraphs": [
-          "BBS Flooring buys directly from manufacturers and carries about 15 brands in-house, including Vidar, NAF, Northernest, Canadian Standard, and Impressive Floors, which typically keeps our pricing 20 to 40% below big-box comparable products. We've been family-owned since 2012, and our installers are our own crews, not subcontractors, so the person quoting your job is accountable for the person installing it.",
+          "BBS Flooring buys directly from manufacturers and carries more than a dozen brands in-house, including Vidar, NAF, Northernest, Canadian Standard, and BBS Reserve, which typically keeps our pricing 20 to 40% below big-box comparable products. We've been family-owned since 2012, and our installers are our own crews, not subcontractors, so the person quoting your job is accountable for the person installing it.",
           "That shows up in our 4.8-star Google rating and around 2,000 completed projects across the GTA, including a steady stream of work in Whitchurch-Stouffville. Every installation comes with a 2-year workmanship warranty on top of the manufacturer's product warranty, so if something isn't right after the crew leaves, it's on us to fix it."
         ],
         "link": { "href": "/price-match", "label": "Price match" }

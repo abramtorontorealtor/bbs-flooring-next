@@ -17,6 +17,8 @@ const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood',
 
 function getProductBadges(product) {
   const badges = [];
+  // House brand first (Oct 15, 2026) — mirrors ProductCard.jsx so SSR and hydrated cards match.
+  if ((product.brand || '').toLowerCase().includes('bbs reserve')) badges.push({ key: 'house', label: '★ BBS Reserve · Our label', className: 'bg-amber-500 text-slate-900' });
   const name = (product.name || '').toLowerCase();
   const category = (product.category || '').toLowerCase();
   if (product.is_canadian) badges.push({ key: 'canada', label: '🇨🇦 Canadian', className: 'bg-red-600 text-white' });

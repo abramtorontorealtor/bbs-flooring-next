@@ -20,7 +20,7 @@ export default function LaminateFlooringGuideClient() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm text-slate-400">
             <span>✔ 170+ options in stock</span>
-            <span>✔ 10 brands compared</span>
+            <span>✔ 8 brands compared</span>
             <span>✔ From $1.49/sqft</span>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default function LaminateFlooringGuideClient() {
           Quick Answer: Best Laminate Flooring in the GTA
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          BBS Flooring stocks 170+ laminate options from $1.49&#8211;$3.39/sqft &#8212; the most affordable flooring option. 10 brands including NAF (14mm Waterproof PRO $3.39), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
+          BBS Flooring stocks 145+ laminate options from $1.49&#8211;$3.39/sqft &#8212; the most affordable flooring option. 8 brands including NAF (14mm Waterproof PRO $3.39), Tosca (from $1.49/sqft), and Evergreen (AC5 commercial-grade). Professional installation from $2.00/sqft. Free in-home measurement across the GTA: <a href="tel:6474281111" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">(647) 428-1111</a> | <a href="https://bbsflooring.ca" className="font-semibold text-amber-700 underline underline-offset-2 hover:text-amber-900">bbsflooring.ca</a>
         </p>
       </section>
 
@@ -266,7 +266,7 @@ export default function LaminateFlooringGuideClient() {
         <section id="brand-comparison">
           <h2 className="text-3xl font-bold text-slate-900 mb-6">Brand &amp; Price Comparison</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            BBS Flooring carries 200+ laminate products (170+ in stock) from 10 brands. Here&apos;s how they compare:
+            BBS Flooring carries 200+ laminate products (170+ in stock) from 8 brands. Here&apos;s how they compare:
           </p>
 
           <div className="overflow-x-auto mb-8">
@@ -346,13 +346,6 @@ export default function LaminateFlooringGuideClient() {
                   <td className="p-3 text-slate-600">12mm</td>
                   <td className="p-3 text-green-700 font-medium">From $1.49/sqft</td>
                   <td className="p-3 text-slate-600">Lowest price — best for rentals, flips, large areas. See <Link href="/products/tosca-laminate-9904" className="text-amber-700 underline hover:text-amber-800">Tosca 9904</Link> ($1.49)</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-semibold text-slate-800">Impressive</td>
-                  <td className="p-3 text-center">24</td>
-                  <td className="p-3 text-slate-600">12mm</td>
-                  <td className="p-3 text-slate-600 font-medium">$2.55–$2.75/sqft</td>
-                  <td className="p-3 text-slate-600">Value house label — wide in-stock selection, consistent mid-range pricing</td>
                 </tr>
                 <tr className="bg-slate-50">
                   <td className="p-3 font-semibold text-slate-800">Golden Choice</td>
@@ -776,7 +769,7 @@ export default function LaminateFlooringGuideClient() {
               { q: 'Does laminate need underlay?', a: 'Yes, unless pre-attached (NAF 14mm). Underlay absorbs sound, adds comfort, and provides a moisture barrier. Never double-layer underlay — it weakens click-lock joints.' },
               { q: 'How long does installation take?', a: 'Laminate installs in 1 day for a standard 500 sqft room. Floating click-lock is the fastest flooring method — no drying time, walkable immediately. BBS handles removal, prep, install, and baseboards in one visit.' },
               { q: 'Is laminate good for pets?', a: 'Excellent. AC4+ laminate resists pet claw scratches better than real hardwood. It doesn\'t absorb odours like carpet. Choose textured (EIR) surfaces for better traction.' },
-              { q: 'What brands do you carry?', a: 'NAF (42, including 14mm Waterproof PRO), Tosca (21, from $1.49), Northernest (18), Simba (18), Triforest (16), Evergreen (16, waterproof), Falcon (12), Woden (6), Golden Choice (6) — 155+ total options at our Markham showroom.' },
+              { q: 'What brands do you carry?', a: 'NAF (42, including 14mm Waterproof PRO), Tosca (21, from $1.49), Northernest (18), Simba (18), Triforest (16), Evergreen (16, waterproof), Falcon (12), Woden (6), Golden Choice (6) — 145+ total options at our Markham showroom.' },
             ].map((faq, i) => (
               <details key={i} className="group border border-slate-200 rounded-xl">
                 <summary className="p-5 cursor-pointer font-semibold text-slate-800 group-open:border-b group-open:border-slate-200 list-none flex justify-between items-center">
@@ -797,7 +790,7 @@ export default function LaminateFlooringGuideClient() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/laminate-flooring" className="bg-white text-emerald-900 px-6 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition">
-              Browse 145 Options →
+              Browse 148 Options →
             </Link>
             <Link href="/free-measurement" className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
               Free In-Home Measurement
