@@ -62,14 +62,16 @@ async function getChildVariants(parentId) {
 // Collection siblings — the other colours of the same brand + collection +
 // category (Phase 2, memory/COLLECTION-SIBLINGS-PLAN.md). Server-side + cached
 // so the swatch strip is SSR'd with real <a href> links (crawlable internal-link
-// cluster for collection queries). Parents/variants never get siblings — they
-// use VariantSelector — and Vidar/Impressive children are filtered out via the
-// three variant flags. Returns [] (strip renders nothing) when < 2 rows.
+// cluster for collection queries). Oct 15 2026: colour-PARENTS (Vidar/Wickham —
+// one parent per colour, variants = width/grade) now get siblings too: other
+// parents of the same brand+collection. Child variants never do (filtered via
+// is_variant/parent_product_id). Returns [] (strip renders nothing) when < 2 rows.
 const SIBLING_COLUMNS = 'id, slug, name, colour, brand, collection, image_url, image_alt_text, price_per_sqft, sale_price_per_sqft, in_stock';
 const getSiblings = cache(async (product) => {
   try {
     if (!product?.brand || !product?.collection || !product?.category) return [];
-    if (product.is_parent_product || product.is_variant || product.parent_product_id || product.has_variants) return [];
+    if (product.is_variant || product.parent_product_id) return [];
+    const isParent = Boolean(product.is_parent_product || product.has_variants);
     const supabase = getSupabaseServerClient();
     if (!supabase) return [];
     const { data, error } = await supabase
@@ -79,7 +81,7 @@ const getSiblings = cache(async (product) => {
       .eq('collection', product.collection)
       .eq('category', product.category)
       .eq('is_variant', false)
-      .eq('is_parent_product', false)
+      .eq('is_parent_product', isParent)
       .eq('is_archived_variant', false)
       .not('slug', 'is', null)
       .order('name', { ascending: true })

@@ -19,8 +19,7 @@ export default function CollectionColourStrip({ group }) {
   const swatches = colours.slice(0, MAX_SWATCHES);
   const extra = count - swatches.length;
   const heroHref = createPageUrl(`ProductDetail?slug=${hero.slug || hero.sku || hero.id}`);
-  // Variant-parent PDPs (Vidar) have no CollectionSiblings section yet — land on the PDP top.
-  const seeAllHref = hero.has_variants ? heroHref : `${heroHref}#collection-siblings-heading`;
+  const seeAllHref = `${heroHref}#collection-siblings-heading`;
 
   return (
     <div className="-mt-1 rounded-b-xl border border-t-0 border-amber-200 bg-amber-50/70 px-2.5 pt-2.5 pb-2">
@@ -29,7 +28,7 @@ export default function CollectionColourStrip({ group }) {
           href={seeAllHref}
           className="text-xs font-bold text-slate-900 leading-tight hover:text-amber-700"
         >
-          Available in {count} colours
+          <span className="hidden sm:inline">Available in </span>{count} colours
         </Link>
         {discountsVary && maxDiscountPct > 0 && (
           <span className="text-[10px] font-bold text-white bg-red-600 rounded px-1.5 py-0.5 whitespace-nowrap">

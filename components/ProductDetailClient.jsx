@@ -542,7 +542,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
               Oct 15 2026: FIRST thing in the buy box = directly under the photo on mobile,
               top of the buy box on desktop. Swatch links navigate with scroll={false} so
               comparing colours never bounces the page back to the top (Abram). ── */}
-          {!product.is_parent_product && !product.has_variants && initialSiblings?.length >= 2 && (
+          {initialSiblings?.length >= 2 && (
             <CollectionSiblings siblings={initialSiblings} current={product} hidePrice={hidePrice} />
           )}
 
