@@ -50,14 +50,32 @@ export async function POST(request) {
       .map((it) => it.product_id || it.id)
       .filter(Boolean);
     let priceMap = {};
+    const soldOut = [];
     if (itemIds.length) {
       const { data: prods } = await supabase
         .from('products')
-        .select('id, price_per_sqft, sale_price_per_sqft')
+        .select('id, name, price_per_sqft, sale_price_per_sqft, in_stock')
         .in('id', itemIds);
       for (const p of prods || []) {
         priceMap[p.id] = (p.sale_price_per_sqft != null ? p.sale_price_per_sqft : p.price_per_sqft) || 0;
+        if (p.in_stock === false) soldOut.push(p.name || p.id);
       }
+    }
+
+    // ── STOCK GATE (Oct 16 2026): server-side truth, not the ISR-cached PDP ──
+    // A product can flip to out-of-stock after it was added to the cart (the PDP
+    // page is cached up to 1h and the cart row is a plain Supabase insert). Refuse
+    // to mint an order (and therefore a Stripe authorization) for a sold-out line.
+    if (soldOut.length) {
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'OUT_OF_STOCK',
+          out_of_stock: soldOut,
+          error: `${soldOut.length === 1 ? 'This item is' : 'These items are'} now sold out: ${soldOut.join(', ')}. Please remove ${soldOut.length === 1 ? 'it' : 'them'} from your cart or pick an in-stock colour.`,
+        },
+        { status: 409 }
+      );
     }
 
     // Recompute subtotal from trusted prices × client-declared sqft.

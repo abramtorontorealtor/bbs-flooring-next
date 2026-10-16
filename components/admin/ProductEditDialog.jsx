@@ -94,11 +94,23 @@ export default function ProductEditDialog({ product, open, onOpenChange }) {
       for (const key of EDITABLE_FIELDS) {
         if (key in data) payload[key] = data[key];
       }
+      let saved;
       if (product) {
-        return await entities.Product.update(product.id, payload);
+        saved = await entities.Product.update(product.id, payload);
       } else {
-        return await entities.Product.create(payload);
+        saved = await entities.Product.create(payload);
       }
+      // Purge the ISR-cached PDP so stock/price edits go live immediately
+      // (otherwise a product marked out of stock stays sellable for up to 1h).
+      const slug = payload.slug || product?.slug || saved?.slug;
+      if (slug) {
+        fetch('/api/admin/revalidate-product', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug }),
+        }).catch(() => {});
+      }
+      return saved;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });

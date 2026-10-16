@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/api-auth';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 
@@ -19,6 +20,11 @@ export async function POST() {
       .select('id');
 
     if (dbError) throw dbError;
+
+    // Purge every cached PDP + listing so the stock flip is live immediately.
+    revalidatePath('/products/[slug]', 'page');
+    revalidatePath('/products');
+    revalidatePath('/clearance');
 
     return NextResponse.json({
       success: true,

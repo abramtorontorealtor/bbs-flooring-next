@@ -46,23 +46,40 @@ export default function CartClient() {
     return [...new Set(cartItems.filter(i => i.product_id).map(i => i.product_id))];
   }, [cartItems]);
 
-  const { data: slugMap = {} } = useQuery({
-    queryKey: ['cart-slugs', productIds],
+  // Re-reads slug + LIVE stock for every flooring line on each cart visit.
+  // Stock gate (Oct 16 2026): the PDP add button only sees ISR-cached data, so a
+  // product can go out of stock AFTER it was added. The cart is the first place
+  // we see fresh DB truth — flag OOS lines and block checkout until removed.
+  const { data: cartProductMap = {} } = useQuery({
+    queryKey: ['cart-products', productIds],
     queryFn: async () => {
       if (!productIds.length) return {};
       const supabase = getSupabaseBrowserClient();
       if (!supabase) return {};
       const { data } = await supabase
         .from('products')
-        .select('id, slug')
+        .select('id, slug, in_stock, collection, brand')
         .in('id', productIds);
       const map = {};
-      (data || []).forEach(p => { map[p.id] = p.slug; });
+      (data || []).forEach(p => { map[p.id] = p; });
       return map;
     },
     enabled: productIds.length > 0,
-    staleTime: 10 * 60 * 1000,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
+  const slugMap = useMemo(() => {
+    const m = {};
+    Object.values(cartProductMap).forEach(p => { m[p.id] = p.slug; });
+    return m;
+  }, [cartProductMap]);
+  const outOfStockItems = useMemo(() => cartItems.filter((item) => {
+    if (item.item_type && item.item_type !== 'product') return false;
+    const p = item.product_id ? cartProductMap[item.product_id] : null;
+    return !!p && p.in_stock === false;
+  }), [cartItems, cartProductMap]);
+  const outOfStockIds = useMemo(() => new Set(outOfStockItems.map(i => i.id)), [outOfStockItems]);
+  const hasOutOfStock = outOfStockItems.length > 0;
 
   // Separate products, transitions, and accessories
   const productItems = cartItems.filter(item => !item.item_type || item.item_type === 'product');
@@ -255,6 +272,20 @@ export default function CartClient() {
                               {item.product_name}
                             </Link>
                             <p className="text-sm text-slate-500 mt-1 truncate">SKU: {item.sku}</p>
+                            {outOfStockIds.has(item.id) && (
+                              <div className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800">
+                                <div className="font-semibold text-sm">Sold out since you added it</div>
+                                <div className="mt-0.5">Remove this line to check out, or pick an in-stock colour from the same collection.</div>
+                                <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
+                                  <Link href={`/products/${slugMap[item.product_id] || item.product_id}#collection-siblings-heading`} className="font-semibold underline hover:text-red-900">
+                                    See in-stock colours →
+                                  </Link>
+                                  <button type="button" onClick={() => deleteMutation.mutate(item.id)} className="font-semibold underline hover:text-red-900">
+                                    Remove
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                           </div>
                           <button
                             onClick={() => deleteMutation.mutate(item.id)}
@@ -678,11 +709,19 @@ export default function CartClient() {
                 onAdded={() => queryClient.invalidateQueries({ queryKey: ['cart'] })}
               />
 
-              <Link href="/checkout" className="block">
+              {hasOutOfStock && (
+                <div className="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800 flex gap-2">
+                  <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <span>{outOfStockItems.length === 1 ? '1 item is' : `${outOfStockItems.length} items are`} now sold out. Remove {outOfStockItems.length === 1 ? 'it' : 'them'} (or swap for an in-stock colour) to continue to checkout.</span>
+                </div>
+              )}
+              <Link href={hasOutOfStock ? '#' : '/checkout'} className="block" aria-disabled={hasOutOfStock} onClick={(e) => { if (hasOutOfStock) { e.preventDefault(); toast.error('Remove the sold-out item to continue.'); } }}>
                 <Button
                   size="lg"
-                  className="w-full bg-amber-500 hover:bg-amber-600 py-6 text-lg"
+                  className="w-full bg-amber-500 hover:bg-amber-600 py-6 text-lg disabled:opacity-60"
+                  disabled={hasOutOfStock}
                   onClick={() => {
+                    if (hasOutOfStock) return;
                     // GA4 begin_checkout event
                     if (typeof window !== 'undefined' && window.gtag) {
                       window.gtag('event', 'begin_checkout', {

@@ -105,6 +105,10 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
     retryDelay: (attempt) => Math.min(1000 * Math.pow(2, attempt), 5000),
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
+    // ISR serves this page for up to 1h; initialData renders instantly, then one
+    // fresh Supabase read corrects price/stock so a flipped in_stock is never
+    // sold off a cached page (Oct 16 2026 OOS add-to-cart fix).
+    refetchOnMount: 'always',
     ...(initialProduct ? { initialData: [initialProduct], placeholderData: [initialProduct] } : {}),
   });
 
@@ -336,6 +340,10 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
       toast.error('Please select a variant option');
       return;
     }
+    if (product.in_stock === false || (product.has_variants && selectedJsonVariant && !selectedJsonVariant.made_to_order && selectedJsonVariant.in_stock === false)) {
+      toast.error('This option is currently out of stock.');
+      return;
+    }
     // A1: calculation now defaults to 1 box when no sqft entered, so this only
     // blocks the genuinely-uncalculable case (no pricing loaded).
     if (!calculation) {
@@ -421,9 +429,13 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
   const isAdmin = currentUser?.email === 'info@bbsflooring.ca';
   const hasDiscount = !hidePrice && currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft;
   const displayPrice = hasDiscount ? currentPricing.sale_price_per_sqft : currentPricing.price_per_sqft;
-  const isOutOfStock = product?.in_stock === false;
   // Made-to-order width/veneer (Impressive Canadian lines): never add-to-cart — route to the quote box.
   const isMadeToOrder = !!(product?.has_variants && selectedJsonVariant?.made_to_order);
+  // Stock gate (Oct 16 2026): parent flag OR the selected width/grade variant's own
+  // in_stock=false (VariantSelector shows "Special Order" for it — the button must
+  // agree, not sell it). MTO variants are quote-only, handled separately.
+  const isVariantOutOfStock = !!(product?.has_variants && selectedJsonVariant && !isMadeToOrder && selectedJsonVariant.in_stock === false);
+  const isOutOfStock = product?.in_stock === false || isVariantOutOfStock;
   const isFastPickup = product && !isOutOfStock && FAST_PICKUP_BRANDS.some(b => (product.brand || '').toLowerCase().includes(b));
 
   /* ── Spec items (consolidated, no duplication) ── */
@@ -924,7 +936,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                   disabled={isAddingToCart || isOutOfStock || !calculation || (product.has_variants && !selectedJsonVariant)}
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
-                  {isAddingToCart ? 'Adding...' : isOutOfStock ? 'Out of Stock' : (product.has_variants && !selectedJsonVariant) ? 'Select an option' : calculation ? (calculation.hasUserSqft ? `Add to Cart · C$${calculation.lineTotal.toFixed(2)}` : `Add 1 Box · C$${calculation.lineTotal.toFixed(2)}`) : 'Add to Cart'}
+                  {isAddingToCart ? 'Adding...' : isOutOfStock ? (isVariantOutOfStock ? 'Special Order — Contact Us' : 'Out of Stock') : (product.has_variants && !selectedJsonVariant) ? 'Select an option' : calculation ? (calculation.hasUserSqft ? `Add to Cart · C$${calculation.lineTotal.toFixed(2)}` : `Add 1 Box · C$${calculation.lineTotal.toFixed(2)}`) : 'Add to Cart'}
                 </Button>
                 {/* The old "+ Add underlay, quarter round & trim →" scroll link was
                    retired Sep 11 2026 — the InstallKit now sits directly below
@@ -1214,7 +1226,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
         setSqftNeeded={setSqftNeeded}
         calculation={calculation}
         variantLabel={selectedJsonVariant?.label || null}
-        isOutOfStock={product.in_stock === false}
+        isOutOfStock={isOutOfStock}
         isAddingToCart={isAddingToCart}
         onAddToCart={handleAddToCart}
         hidePrice={hidePrice || isMadeToOrder}
