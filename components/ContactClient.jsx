@@ -61,8 +61,8 @@ export default function ContactClient() {
       });
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.error || 'Submission failed');
-      // GA4 — generate_lead event
-      if (typeof window !== 'undefined' && window.gtag) {
+      // GA4 — generate_lead event (only for persisted leads; spam-filtered = no `saved` → no conversion ping)
+      if (data.saved && typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'generate_lead', {
           event_category: 'contact',
           event_label: 'contact_form',
@@ -77,7 +77,7 @@ export default function ContactClient() {
         });
       }
       // Meta Pixel — Lead event
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      if (data.saved && typeof window !== 'undefined' && typeof window.fbq === 'function') {
         window.fbq('track', 'Lead', { content_name: 'Contact Form' });
       }
       // Internal analytics

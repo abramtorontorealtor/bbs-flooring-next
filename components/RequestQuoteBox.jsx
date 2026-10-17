@@ -76,8 +76,8 @@ export default function RequestQuoteBox({ product, selectedVariant = null, price
 
       setSubmitted(true);
 
-      // Analytics
-      if (window.gtag) {
+      // Analytics — only for persisted leads (spam-filtered = no `saved` → no Ads/Meta conversion)
+      if (data.saved && window.gtag) {
         window.gtag('event', 'generate_lead', {
           currency: 'CAD',
           value: 0,
@@ -91,7 +91,7 @@ export default function RequestQuoteBox({ product, selectedVariant = null, price
           currency: 'CAD',
         });
       }
-      if (typeof window.fbq === 'function') {
+      if (data.saved && typeof window.fbq === 'function') {
         window.fbq('track', 'Lead', {
           content_name: product.name,
           content_ids: [product.sku || product.id],

@@ -26,6 +26,7 @@ export default function RemovalEstimator({
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [company, setCompany] = useState(''); // honeypot — must stay empty; bots fill it
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -55,19 +56,21 @@ export default function RemovalEstimator({
           name,
           email,
           phone,
+          company,
           message: `${removalType.toUpperCase()} ESTIMATE — Sqft: ${sqft} | Haul-Away: ${hauling ? `Yes (+$${haulAwayFee})` : 'No'} | Calculated: $${total.toFixed(2)} | Quoted Total: $${displayTotal.toFixed(2)} CAD${total < MINIMUM_CHARGE ? ' (minimum applied)' : ''}`,
           source,
         }),
       });
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.error || 'Submission failed');
-      // GA4
-      if (typeof window !== 'undefined' && window.gtag) {
+      // GA4 — only for persisted leads (spam-filtered submissions return success without `saved`,
+      // and must NOT fire Ads/Meta conversions or they poison Smart Bidding).
+      if (data.saved && typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: source, value: displayTotal });
         window.gtag('event', 'conversion', { send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C', value: 50.0, currency: 'CAD' });
       }
       // Meta Pixel
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      if (data.saved && typeof window !== 'undefined' && typeof window.fbq === 'function') {
         window.fbq('track', 'Lead', { content_name: removalType, value: displayTotal, currency: 'CAD' });
       }
       setSubmitted(true);
@@ -194,6 +197,12 @@ export default function RemovalEstimator({
             <input
               type="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)}
               className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"
+            />
+            {/* Honeypot — hidden from real users, catches bots. Do not remove. */}
+            <input
+              type="text" name="company" value={company} onChange={e => setCompany(e.target.value)}
+              tabIndex={-1} autoComplete="off" aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, width: 0 }}
             />
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
