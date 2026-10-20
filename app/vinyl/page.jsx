@@ -17,8 +17,8 @@ export const revalidate = 3600; // 1-hour ISR (was 5-min; prices change a few ti
 export async function generateMetadata() {
   const stats = await getCategoryPriceStats('vinyl');
   return {
-    title: `Vinyl Plank Flooring Markham | LVP, LVT & SPC from $${stats.lowPrice}/sqft`,
-    description: `Shop luxury vinyl plank (LVP), luxury vinyl tile (LVT) and SPC waterproof flooring in Markham from $${stats.lowPrice}/sqft. 100% waterproof, scratch-resistant. Perfect for basements, kitchens, bathrooms. Free in-home measurements across the GTA. Call (647) 428-1111.`,
+    title: `LVP Flooring Markham | Vinyl Plank, LVT & SPC from $${stats.lowPrice}/sqft`,
+    description: `Shop LVP flooring (luxury vinyl plank), LVT tile and SPC waterproof flooring in Markham from $${stats.lowPrice}/sqft. 100% waterproof, scratch-resistant. Perfect for basements, kitchens, bathrooms. Free in-home measurements across the GTA. Call (647) 428-1111.`,
     alternates: { canonical: '/vinyl' },
   };
 }
@@ -101,10 +101,10 @@ export default async function VinylPage() {
         {/* ── SSR Page Header ── */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">
-            Vinyl Plank Flooring in Markham | LVP, LVT &amp; SPC
+            LVP Flooring in Markham — Vinyl Plank, LVT &amp; SPC
           </h1>
           <p className="text-lg text-slate-600 max-w-3xl">
-            100% waterproof, scratch-resistant luxury vinyl — LVP plank, LVT tile and rigid-core SPC — from <strong>${low}/sqft</strong>. Shop online or visit our Markham showroom on Hwy 7.
+            100% waterproof, scratch-resistant LVP flooring — luxury vinyl plank, LVT tile and rigid-core SPC — from <strong>${low}/sqft</strong>. Shop online or visit our Markham showroom on Hwy 7.
           </p>
         </div>
 

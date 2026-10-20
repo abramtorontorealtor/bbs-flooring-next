@@ -6,9 +6,9 @@ import { brandAggregateOfferSchema, JsonLd } from '@/lib/schemas';
 export const revalidate = 3600; // 1-hour ISR; refresh via /api/revalidate after price reconciles
 
 export const metadata = {
-  title: 'Flooring Clearance — Up to 30% Off, From $1.79/sqft',
+  title: 'Flooring Sale & Clearance — Hardwood, Vinyl & Laminate Up to 30% Off, From $1.79/sqft',
   description:
-    'Flooring clearance in Markham — up to 30% off first-quality engineered hardwood, vinyl & laminate. In-stock, same-day pickup. Premium brands, better prices. Call (647) 428-1111.',
+    'Flooring sale in Markham — hardwood sale, vinyl flooring clearance and laminate deals up to 30% off. First-quality, in stock, same-day pickup. Premium brands, better prices. Call (647) 428-1111.',
   alternates: { canonical: '/clearance' },
 };
 

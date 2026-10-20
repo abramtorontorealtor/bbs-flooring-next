@@ -115,12 +115,23 @@ function buildInternalLinks(post) {
   if (productType && PRODUCT_CATEGORY_PAGE[productType]) {
     links.push({
       href: PRODUCT_CATEGORY_PAGE[productType],
-      label: `Browse All ${PRODUCT_LABEL[productType]} Flooring`,
+      label: productType === 'vinyl'
+        ? 'Shop LVP & Vinyl Plank Flooring'
+        : `Browse All ${PRODUCT_LABEL[productType]} Flooring`,
     });
   }
-  // De-dupe by href, cap at 3
+  // Commercial bridges (Oct 20 2026): informational posts carry ~70k impr/mo but
+  // never pointed at the pages that sell. Exact-match anchors to the striking-
+  // distance pages (/clearance pos ~10 for "flooring sale"/"hardwood sale",
+  // /flooring-cost-toronto-2026 for the "flooring cost" cluster).
+  const text = `${post.title || ''} ${post.slug || ''} ${post.excerpt || ''}`.toLowerCase();
+  if (/(cost|price|pricing|budget|cheap|afford|how much|sale|clearance|deal|discount|value)/.test(text)) {
+    links.push({ href: '/flooring-cost-toronto-2026', label: 'Flooring Cost Guide — Toronto & GTA Prices (2026)' });
+  }
+  links.push({ href: '/clearance', label: 'Flooring Sale & Clearance — Hardwood, Vinyl & Laminate up to 30% Off' });
+  // De-dupe by href, cap at 5
   const seen = new Set();
-  return links.filter((l) => (seen.has(l.href) ? false : (seen.add(l.href), true))).slice(0, 3);
+  return links.filter((l) => (seen.has(l.href) ? false : (seen.add(l.href), true))).slice(0, 5);
 }
 
 // ISR: revalidate blog posts every hour
@@ -293,7 +304,7 @@ export default async function BlogPostPage({ params }) {
         >
           <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
             <h2 className="text-base font-bold text-slate-800 mb-3">
-              Local Flooring Near You
+              Shop Flooring &amp; Local Pages
             </h2>
             <ul className="space-y-2">
               {internalLinks.map((link) => (

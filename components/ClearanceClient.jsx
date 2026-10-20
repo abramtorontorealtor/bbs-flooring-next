@@ -336,11 +336,11 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
           Limited Time Clearance
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
-          Flooring Clearance
+          Flooring Sale &amp; Clearance
         </h1>
         <p className="text-lg text-slate-600 max-w-3xl">
-          Sale pricing, overstock deals, discontinued colours, and limited-quantity lots — up to 30% off.
-          First-quality products — same warranty, better price.
+          Hardwood sale, vinyl flooring clearance and laminate deals — overstock, discontinued colours and
+          limited-quantity lots up to 30% off. First-quality products — same warranty, better price.
         </p>
       </div>
 

@@ -293,7 +293,7 @@ export const canadianStandardFlooringData = {
 
 export const triforestFlooringData = {
   route: 'TriforestFlooring',
-  title: 'Toucan / Triforest Flooring Markham | Vinyl & Laminate In Stock',
+  title: 'Triforest Flooring (Toucan) Markham | SPC Vinyl & Laminate In Stock',
   description: 'Toucan Flooring is Triforest\'s brand — same planks, same warranty. 130 SPC vinyl, waterproof laminate & engineered oak options from $2.29/sqft, in stock at BBS Flooring Markham. (647) 428-1111.',
   h1: 'Triforest Flooring (Toucan) — Vinyl, Laminate & Engineered Oak',
   subtitle: 'Toucan Flooring and Triforest are the same company: Triforest Inc. makes the planks, Toucan is the name on the sample board. BBS Flooring stocks 130 Triforest / Toucan options in Markham — 100% waterproof SPC vinyl from $2.29/sqft, 72–120 hour waterproof laminate from $2.29/sqft, and 3/4" engineered oak from $4.79/sqft.',
