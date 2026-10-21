@@ -63,7 +63,12 @@ export function ClientProviders({ children }) {
       setTimeout(loadCartCount, 1000);
     }
 
-    const handleCartUpdate = () => loadCartCount();
+    // Every add/remove path dispatches cartUpdated; drop the cached cart list
+    // too so /cart and /checkout never show a pre-add snapshot (Oct 21 2026).
+    const handleCartUpdate = () => {
+      loadCartCount();
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    };
     window.addEventListener('cartUpdated', handleCartUpdate);
     return () => window.removeEventListener('cartUpdated', handleCartUpdate);
   }, []);

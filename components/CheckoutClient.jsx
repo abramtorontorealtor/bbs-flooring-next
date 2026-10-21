@@ -228,6 +228,8 @@ export default function CheckoutClient() {
     queryKey: ['cart', sessionId],
     queryFn: () => sessionId ? entities.CartItem.filter({ session_id: sessionId }) : [],
     enabled: !!sessionId,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   // S4: supplies-only cart (every line is accessory/transition, no flooring).

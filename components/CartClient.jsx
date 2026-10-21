@@ -39,6 +39,10 @@ export default function CartClient() {
     queryKey: ['cart', sessionId],
     queryFn: () => sessionId ? entities.CartItem.filter({ session_id: sessionId }) : [],
     enabled: !!sessionId,
+    // Cart is DB truth — never serve the global 5-min cached copy. Oct 21 2026:
+    // "badge says 1, cart is empty" = stale [] cached from an earlier visit.
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 
   // Batch-fetch product slugs for cart item links
