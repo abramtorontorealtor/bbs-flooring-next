@@ -31,8 +31,11 @@ export async function GET(request) {
     // H7: server-truth totals + product-only line facts for the GA4 `purchase`
     // event (never customer fields). Lets the Stripe-return page fire the
     // event without depending on the cart.
+    // Order numbers are sequential/guessable: only expose totals + line facts in the
+    // Stripe-return window (24h) so the public endpoint can't be used to enumerate order values.
+    const ageMs = Date.now() - new Date(created_at || 0).getTime();
     const lines = Array.isArray(items) ? items : [];
-    const analytics = {
+    const analytics = ageMs > 24 * 60 * 60 * 1000 ? null : {
       value: Number(total),
       tax: Number(tax),
       subtotal,
