@@ -94,6 +94,8 @@ export default async function CityProductPage({ params }) {
         offerCount: stats.count,
         availability: 'https://schema.org/InStock',
         url: `https://bbsflooring.ca/${cityProduct}`,
+        itemCondition: 'https://schema.org/NewCondition',
+        seller: { '@id': 'https://bbsflooring.ca/#business' },
       },
     });
   }

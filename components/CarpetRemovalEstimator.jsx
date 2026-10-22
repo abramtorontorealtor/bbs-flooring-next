@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { setEnhancedUserData, splitName } from '@/components/analytics';
 
 export default function CarpetRemovalEstimator() {
   const [sqft, setSqft] = useState(500);
@@ -50,6 +51,7 @@ export default function CarpetRemovalEstimator() {
       // and must NOT fire Ads/Meta conversions or they poison Smart Bidding).
       if (data.saved && typeof window !== 'undefined' && window.gtag) {
         window.gtag('event', 'generate_lead', { event_category: 'removal_estimator', event_label: 'carpet-removal-estimator', value: displayTotal });
+        setEnhancedUserData({ email, phone, ...splitName(name) });
         window.gtag('event', 'conversion', { send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C', value: 50.0, currency: 'CAD' });
       }
       // Meta Pixel

@@ -59,7 +59,7 @@ export default async function LocationPage({ params }) {
             '@context': 'https://schema.org',
             // Flooring "store" query intent: HomeAndConstructionBusiness (a Store subtype) with hours + map.
             '@type': data.isFlagship ? ['LocalBusiness', 'HomeAndConstructionBusiness', 'Store'] : 'LocalBusiness',
-            '@id': 'https://bbsflooring.ca/#localbusiness',
+            '@id': 'https://bbsflooring.ca/#business',
             name: 'BBS Flooring',
             description: data.description,
             telephone: '(647) 428-1111',

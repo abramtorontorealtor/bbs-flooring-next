@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar, MessageCircle } from 'lucide-react';
 import { createPageUrl } from '@/lib/routes';
-import { Analytics } from '@/components/analytics';
+import { Analytics, setEnhancedUserData, splitName } from '@/components/analytics';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 
@@ -69,6 +69,8 @@ export default function ContactClient() {
           value: 0,
           currency: 'CAD',
         });
+        // Enhanced Conversions user_data must be set before the Ads conversion
+        setEnhancedUserData({ email: formData.email, phone: formData.phone, ...splitName(formData.name) });
         // Direct Google Ads conversion tracking
         window.gtag('event', 'conversion', {
           send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',

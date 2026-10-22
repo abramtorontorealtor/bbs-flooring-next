@@ -26,7 +26,54 @@ export function initGA4(measurementId) {
   
   gtag('js', new Date());
   gtag('config', measurementId);
-  gtag('config', GOOGLE_ADS_ID);
+  gtag('config', GOOGLE_ADS_ID, { allow_enhanced_conversions: true });
+}
+
+/** Normalise a North American phone number to E.164 (+1XXXXXXXXXX). Returns '' if unusable. */
+export function toE164(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  if (digits.length === 10) return `+1${digits}`;
+  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`;
+  return '';
+}
+
+/** Split "First Last Name" on the first space. */
+export function splitName(name) {
+  const t = String(name || '').trim();
+  if (!t) return { firstName: '', lastName: '' };
+  const i = t.indexOf(' ');
+  return i === -1
+    ? { firstName: t, lastName: '' }
+    : { firstName: t.slice(0, i), lastName: t.slice(i + 1).trim() };
+}
+
+/**
+ * Google Ads Enhanced Conversions: set user_data (gtag hashes it) before the
+ * Ads `conversion` event. No-op without gtag.
+ */
+export function setEnhancedUserData({ email, phone, firstName, lastName, street, city, region, postalCode } = {}) {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
+  const clean = (v) => (v == null ? '' : String(v).trim());
+  const obj = {};
+  const em = clean(email).toLowerCase();
+  if (em) obj.email = em;
+  const ph = toE164(phone);
+  if (ph) obj.phone_number = ph;
+  if (clean(firstName) && clean(lastName) && clean(postalCode)) {
+    const address = {
+      first_name: clean(firstName),
+      last_name: clean(lastName),
+      street: clean(street),
+      city: clean(city),
+      region: clean(region),
+      postal_code: clean(postalCode),
+      country: 'CA',
+    };
+    Object.keys(address).forEach((k) => { if (!address[k]) delete address[k]; });
+    obj.address = address;
+  }
+  if (Object.keys(obj).length === 0) return;
+  try { window.gtag('set', 'user_data', obj); } catch { /* analytics must never throw */ }
 }
 
 export function trackEvent(action, category, label = '') {
@@ -37,6 +84,28 @@ export function trackEvent(action, category, label = '') {
     event_label: label,
     timestamp: new Date().toISOString()
   });
+}
+
+function firePurchase(transactionId, { value, tax, items = [], paymentType = '' }) {
+  if (typeof window === 'undefined') return;
+  if (window.gtag) {
+    window.gtag('event', 'purchase', {
+      transaction_id: transactionId,
+      value,
+      currency: 'CAD',
+      tax,
+      payment_type: paymentType,
+      items,
+    });
+  }
+  if (typeof window.fbq === 'function') {
+    window.fbq('track', 'Purchase', {
+      value,
+      currency: 'CAD',
+      content_type: 'product',
+      num_items: items.length,
+    });
+  }
 }
 
 export const Analytics = {
@@ -143,13 +212,10 @@ export const Analytics = {
   },
 
   trackPurchase: (transactionId, total, tax, cartItems = [], paymentType = '') => {
-    if (typeof window === 'undefined' || !window.gtag) return;
-    window.gtag('event', 'purchase', {
-      transaction_id: transactionId,
+    firePurchase(transactionId, {
       value: total,
-      currency: 'CAD',
-      tax: tax,
-      payment_type: paymentType,
+      tax,
+      paymentType,
       items: cartItems.map(item => ({
         item_id: item.product_id || item.sku,
         item_name: item.product_name,
@@ -157,15 +223,22 @@ export const Analytics = {
         quantity: item.actual_sqft,
       })),
     });
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'Purchase', {
-        value: total,
-        currency: 'CAD',
-        content_type: 'product',
-        num_items: cartItems.length,
-      });
-    }
   },
+
+  // Fires `purchase` at most once per transactionId per browser (localStorage flag).
+  // `items` must already be GA4-shaped ({item_id,item_name,price,quantity}).
+  trackPurchaseOnce: (transactionId, { value, tax, items = [], paymentType = '' } = {}) => {
+    if (typeof window === 'undefined' || !transactionId) return false;
+    const key = `bbs_purchase_fired:${transactionId}`;
+    try {
+      if (window.localStorage.getItem(key)) return false;
+      window.localStorage.setItem(key, '1');
+    } catch { /* storage blocked: fall through and fire */ }
+    firePurchase(transactionId, { value, tax, items, paymentType });
+    return true;
+  },
+
+  setEnhancedUserData,
 };
 
 export default Analytics;

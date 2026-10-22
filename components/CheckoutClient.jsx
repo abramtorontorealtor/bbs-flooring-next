@@ -15,7 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Package, Truck, Store, CheckCircle, AlertCircle, Phone, Loader, Copy, Check, Clock, ShieldCheck, MessageSquare, Wrench, CreditCard } from 'lucide-react';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { toast } from 'sonner';
-import { Analytics } from '@/components/analytics';
+import { Analytics, setEnhancedUserData, splitName } from '@/components/analytics';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
 import TrustStrip from '@/components/TrustStrip';
@@ -189,6 +189,16 @@ export default function CheckoutClient() {
           if (typeof data.order?.supplies_only === 'boolean') {
             setSuppliesOnlyOrder(data.order.supplies_only);
           }
+          // H7: GA4 purchase from SERVER totals (never the cart); deduped per order.
+          const a = data.order?.analytics;
+          if (a) {
+            Analytics.trackPurchaseOnce(decodedOrderNum, {
+              value: a.value,
+              tax: a.tax,
+              items: a.items || [],
+              paymentType: 'credit_card',
+            });
+          }
         })
         .catch(() => {}); // Non-critical — falls back to formData
       
@@ -200,12 +210,6 @@ export default function CheckoutClient() {
           // mirrors the order lines. Only set true here — never clear a value
           // the lookup already confirmed (it may resolve before or after this).
           if (isSuppliesOnlyCart(items)) setSuppliesOnlyOrder(true);
-          if (items.length > 0) {
-            const subtotal = items.reduce((sum, item) => sum + (item.line_total || 0), 0);
-            const tax = subtotal * 0.13; // analytics estimate only; authoritative tax/total are computed server-side in orders/create (HST incl. delivery)
-            const total = subtotal + tax;
-            Analytics.trackPurchase(orderNum, total, tax, items, 'credit_card');
-          }
           items.forEach(item => entities.CartItem.delete(item.id));
           window.dispatchEvent(new Event('cartUpdated'));
         });
@@ -416,6 +420,17 @@ export default function CheckoutClient() {
         return;
       }
 
+      // Enhanced Conversions: set customer user_data once the order exists (before Stripe redirect / e-transfer success)
+      setEnhancedUserData({
+        email: formData.customer_email,
+        phone: formData.customer_phone,
+        ...splitName(formData.customer_name),
+        street: formData.shipping_address,
+        city: formData.shipping_city,
+        region: 'ON',
+        postalCode: formData.shipping_postal_code,
+      });
+
       // If credit card, redirect to Stripe
       if (formData.payment_method === 'credit_card') {
         if (typeof window !== 'undefined' && window.self !== window.top) {
@@ -454,7 +469,17 @@ export default function CheckoutClient() {
         // Clear abandoned cart dedup flag — order placed, not abandoned
         clearAbandonedTracking();
         
-        Analytics.trackPurchase(createdOrderNumber, totals.total, totals.tax, cartItems, 'etransfer');
+        Analytics.trackPurchaseOnce(createdOrderNumber, {
+          value: totals.total,
+          tax: totals.tax,
+          items: cartItems.map(item => ({
+            item_id: item.product_id || item.sku || item.supply_code || null,
+            item_name: item.product_name || item.name || null,
+            price: item.unit_price ?? item.price_per_sqft ?? null,
+            quantity: item.actual_sqft ?? item.qty ?? item.quantity ?? 1,
+          })),
+          paymentType: 'etransfer',
+        });
         
         for (const item of cartItems) {
           await entities.CartItem.delete(item.id);

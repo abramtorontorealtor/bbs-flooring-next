@@ -9,7 +9,7 @@ import SlotPicker from '@/components/booking/SlotPicker';
 import AlternateTimePanel from '@/components/booking/AlternateTimePanel';
 import { CheckCircle, Clock, ArrowRight, Loader2, MapPin, Phone, Star, CalendarCheck, FileText } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
-import { Analytics } from '@/components/analytics';
+import { Analytics, toE164, splitName } from '@/components/analytics';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
@@ -180,7 +180,11 @@ export default function QuoteBookingClient() {
       // so analytics or the secondary quote save can never show "failed" for a saved booking.
       setSubmitted(true);
       if (outcome.fireConversion && typeof window !== 'undefined') {
-        trackBookingConversion(window, 'quote_booking', { quoteValue: estimate, productName });
+        trackBookingConversion(window, 'quote_booking', { quoteValue: estimate, productName }, {
+          email: String(formData.customer_email || '').trim().toLowerCase() || undefined,
+          phone_number: toE164(formData.customer_phone) || undefined,
+          address: (() => { const n = splitName(formData.customer_name); return { first_name: n.firstName, last_name: n.lastName }; })(),
+        });
       }
 
       // 2. If we have quote data, also persist the quote for the admin quotes panel

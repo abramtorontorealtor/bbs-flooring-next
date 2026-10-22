@@ -20,8 +20,8 @@ export function LocalBusinessJsonLd() {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '43.8591',
-      longitude: '-79.3363'
+      latitude: '43.85905624535496',
+      longitude: '-79.25622102326802'
     },
     areaServed: [
       { '@type': 'City', name: 'Markham' },
@@ -57,7 +57,7 @@ export function LocalBusinessJsonLd() {
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    '@id': 'https://bbsflooring.ca/#organization',
+    '@id': 'https://bbsflooring.ca/#business',
     name: 'BBS Flooring',
     url: 'https://bbsflooring.ca',
     logo: 'https://cdn.bbsflooring.ca/storage/v1/object/public/blog-images/bbs-logo-official-v2.png',
@@ -83,7 +83,7 @@ export function LocalBusinessJsonLd() {
     '@id': 'https://bbsflooring.ca/#website',
     name: 'BBS Flooring',
     url: 'https://bbsflooring.ca',
-    publisher: { '@id': 'https://bbsflooring.ca/#organization' },
+    publisher: { '@id': 'https://bbsflooring.ca/#business' },
     potentialAction: {
       '@type': 'SearchAction',
       target: {

@@ -12,6 +12,7 @@ import { validatePhone, validateEmail } from '@/lib/validations';
 import { GOOGLE_RATING } from '@/lib/service-constants';
 import { interpretBookingSubmit, readJsonSafe } from '@/lib/booking/submit-result';
 import { trackBookingConversion } from '@/lib/booking/conversion';
+import { toE164, splitName } from '@/components/analytics';
 import { BOOKING_COPY, submitFailure, newIdempotencyKey, formatBookingDate, savedSlotFromResponse } from '@/lib/booking/picker-model';
 
 const PROJECT_TYPES = [
@@ -189,7 +190,11 @@ export default function FreeMeasurementClient() {
       setSubmitted(true);
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch { /* ignore */ }
       // Conversion tracking — ONLY for a newly persisted booking (not a duplicate resubmit).
-      if (outcome.fireConversion && typeof window !== 'undefined') trackBookingConversion(window, 'free_measurement');
+      if (outcome.fireConversion && typeof window !== 'undefined') trackBookingConversion(window, 'free_measurement', {}, {
+        email: String(formData.customer_email || '').trim().toLowerCase() || undefined,
+        phone_number: toE164(formData.customer_phone) || undefined,
+        address: (() => { const n = splitName(formData.customer_name); return { first_name: n.firstName, last_name: n.lastName }; })(),
+      });
     } catch {
       setError('We couldn\'t send your request. Please try again or call (647) 428-1111.');
     } finally {

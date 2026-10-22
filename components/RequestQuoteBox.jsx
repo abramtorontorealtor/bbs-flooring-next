@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Shield, Truck, Award, Phone, MessageSquare, CheckCircle2, Loader2, Star, MapPin, Ruler, ChevronDown, ChevronUp, Warehouse, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import { Analytics } from '@/components/analytics';
+import { Analytics, setEnhancedUserData, splitName } from '@/components/analytics';
 import { callUrl, smsUrl, whatsappUrl, PHONE_DISPLAY } from '@/lib/contact';
 import { GOOGLE_MAPS_URL } from '@/lib/service-constants';
 
@@ -84,6 +84,8 @@ export default function RequestQuoteBox({ product, selectedVariant = null, price
           event_label: product.name,
           items: [{ item_id: product.sku || product.id, item_name: product.name }],
         });
+        // Enhanced Conversions user_data must be set before the Ads conversion
+        setEnhancedUserData({ email: form.email, phone: form.phone, ...splitName(form.name) });
         // Direct Google Ads conversion tracking
         window.gtag('event', 'conversion', {
           send_to: 'AW-700910775/PQ1CCNmSn7ocELeZnM4C',

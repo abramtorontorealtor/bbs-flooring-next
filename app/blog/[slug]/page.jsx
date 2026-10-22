@@ -262,7 +262,7 @@ export default async function BlogPostPage({ params }) {
     },
     publisher: {
       '@type': 'Organization',
-      '@id': 'https://bbsflooring.ca/#organization',
+      '@id': 'https://bbsflooring.ca/#business',
       name: 'BBS Flooring',
       logo: {
         '@type': 'ImageObject',

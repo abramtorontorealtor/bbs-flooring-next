@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
             because gtag() stubs queue calls until the script loads. */}
         <script
           dangerouslySetInnerHTML={{ __html:
-            `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');gtag('config','${AW_ID}');`
+            `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');gtag('config','${AW_ID}',{allow_enhanced_conversions:true});`
           }}
         />
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
