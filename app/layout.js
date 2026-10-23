@@ -104,7 +104,7 @@ export default function RootLayout({ children }) {
         {/* After-hours Floor Finder nudge — desktop only, renders only when the showroom is closed (Mon–Sat 10–5 ET), dismissible per session */}
         <AfterHoursConcierge />
 
-        {/* One-off closure notice — floating popup (self-expires end of Sep 4, 2026 ET) */}
+        {/* One-off closure notice — floating popup (self-expires end of Oct 23, 2026 ET) */}
         <ClosurePopup />
 
         {/* Footer is a server component — zero client JS */}
