@@ -492,36 +492,48 @@ export const bbsReserveData = {
 
 export const toscaFlooringData = {
   route: 'ToscaFlooring',
-  title: 'Tosca Floors Markham | Budget Laminate Flooring',
-  description: 'Shop Tosca laminate flooring in Markham — 21 products from $0.99/sqft. The most affordable laminate in our showroom. Call (647) 428-1111.',
-  h1: 'Tosca Laminate Flooring',
-  subtitle: '21 Tosca laminate products starting under $2/sqft — the most budget-friendly flooring in our showroom. Ideal for rentals, flips, and large-area renovations.',
-  parentPage: { label: 'Laminate', route: 'Laminate' },
+  title: 'Tosca Floors Markham | Engineered Oak, SPC Vinyl & Laminate',
+  description: 'Tosca Floors in stock at BBS Flooring Markham: 3/4" engineered European oak from $4.99/sqft, solid Red Oak, waterproof SPC vinyl from $2.49, 12.3mm AC4 laminate from $2.09. Clearance from $1.49.',
+  h1: 'Tosca Floors — Engineered Hardwood, Solid Oak, SPC Vinyl & Laminate',
+  subtitle: 'Tosca is the quiet value brand in our Markham showroom: 100+ floors across four categories. 3/4" engineered European oak with a 35-year finish warranty from $4.99/sqft, 4 1/4" solid Northern Red Oak from $6.79, waterproof SPC click vinyl from $2.49 and 12.3mm AC4 laminate from $2.09 — plus clearance lots from $1.49/sqft while they last.',
+  parentPage: null,
   schemaType: 'product',
   content: [
     {
-      heading: 'Maximum Coverage, Minimum Cost',
-      body: `<p>Tosca is the brand for when you need to cover a lot of square footage without breaking the budget. Their laminate tops out under <strong>$2/sqft</strong> — the lowest price point in our entire showroom.</p>
-<p>This isn't about cutting corners. Tosca makes straightforward laminate flooring that does what it needs to do: cover your subfloor with a clean, wood-look surface that handles foot traffic. No fancy claims, no premium positioning — just affordable flooring that works.</p>`
+      heading: 'Why Tosca Costs Less — and Why That Isn\'t a Catch',
+      body: `<p>Tosca Floors sells through a short list of dealers and spends nothing on brand advertising, so the price on the box is mostly wood. We pass that through: <strong>every Tosca floor here is priced at a flat $1/sqft over what we pay</strong>, no tiered markups, no "sale price" games. That is why a 3/4" engineered European oak plank with a 2mm wear layer and a 35-year finish warranty lands at <strong>$4.99–$7.19/sqft</strong> when comparable name-brand planks sit at $6–$9.</p>
+<p>The flooring itself is conventional and well made: <strong>3/4" thick engineered hardwood</strong> (not the thin 3/8" boards most budget lines use), <strong>SPC vinyl with the underpad already attached</strong>, and <strong>12.3mm AC4 laminate</strong> — the same thickness class as the premium laminate brands on our floor. What you give up is a glossy catalogue, not performance.</p>`
     },
     {
-      heading: 'Where Tosca Makes Sense',
-      body: `<ul>
-<li><strong>Rental properties:</strong> Landlords replacing carpet or damaged flooring at minimal cost.</li>
-<li><strong>House flips:</strong> Clean, new-looking floors across an entire home for a fraction of hardwood prices.</li>
-<li><strong>Large basements:</strong> Covering 500+ sqft without the budget ballooning.</li>
-<li><strong>Kids' bedrooms and playrooms:</strong> If it gets damaged, replacement is painless.</li>
-<li><strong>Staging:</strong> Fresh floors for selling — looks good in photos, easy to replace after.</li>
+      heading: 'Engineered Hardwood: AB vs ABCD Grade (This Is Where the Price Difference Comes From)',
+      body: `<p>All 56 Tosca engineered planks share the same build: <strong>3/4" total thickness, 2mm oak wear layer</strong> (3mm on the <a href="/products/pearlescent-dawn-tosca-aura-collection-7-1-2-engineered-hardwood-flooring">Aura Collection</a>), random lengths up to 75", lightly wire-brushed, water-based low-sheen finish, 4-sided micro bevel, tongue-and-groove nail-down with glue assist, and a <strong>Limited 35-Year Finish Warranty</strong>. The difference between a $4.99 plank and a $7.19 plank is the <em>grade</em> of the oak on top:</p>
+<ul>
+<li><strong>ABCD "Character" grade — $4.99–$5.19/sqft</strong> (Renaissance, Monarch): European White Oak that may show open knots, mineral streaks and character marks. If you like the rustic, lived-in look, this is the best engineered-hardwood price in our showroom. Start with <a href="/products/roma-tosca-renaissance-collection-7-1-2-engineered-hardwood-flooring">Renaissance Roma</a> or the 7 1/2" <a href="/products/prague-square-tosca-monarch-collection-7-1-2-engineered-hardwood-flooring">Monarch Prague Square</a>.</li>
+<li><strong>AB "Select &amp; Better" grade — $5.59–$7.19/sqft</strong> (Prestige 6 1/2", Deluxe 6" and 7 1/2", Bespoke, Glory, Superior, Aura): no open knots, no heavy mineral, a clean and consistent face. The <a href="/products/ivory-tosca-deluxe-collection-6-engineered-hardwood-flooring">Deluxe Collection</a> at $5.79 is the volume seller; Aura adds a thicker 3mm wear layer for $7.19.</li>
 </ul>
-<p>For homeowners doing a forever-home renovation, we'd typically steer you toward a thicker laminate or vinyl. But for the use cases above, Tosca is the right tool for the job.</p>`
+<p>Widths run 6", 6 1/2" and 7 1/2". Because every collection is 3/4" T&amp;G, it nails down over plywood like solid hardwood and can be refinished at least once.</p>`
+    },
+    {
+      heading: 'Solid Northern Red Oak, SPC Vinyl and Laminate',
+      body: `<ul>
+<li><strong>Solid hardwood — 4 1/4" Northern Red Oak, $6.79–$6.99/sqft.</strong> 3/4" flat-sawn, Select &amp; Better grade, random lengths 12"–90", semi-gloss water-based finish, 35-year finish warranty. Four pre-finished colours in stock (Butterscotch, Antwerp, Crown Saddle, Cherry Walnut) — a real solid-oak floor for less than most engineered name brands.</li>
+<li><strong>SPC vinyl — 33 colours, $2.49–$3.59/sqft, all click-lock, all waterproof.</strong> <a href="/products/3305-tosca-3300-series-5-5mm-spc-vinyl-flooring">3300 Series</a> 5.5mm with 1.5mm IXPE pad ($2.49); <a href="/products/18010-tosca-18000-series-7mm-spc-vinyl-flooring">18000 Series</a> 7mm x 7 1/4" ($2.69); <a href="/products/2610-tosca-2600-series-7mm-9-spc-vinyl-flooring">2600 Series</a> 7mm x 9" wide with a cork underpad ($3.09); <a href="/products/5610-tosca-5600-series-7-5mm-5g-spc-vinyl-flooring">5600 Series</a> 7.5mm with 5G drop-lock and cork pad ($2.99–$3.59). Matching T-moulding, reducers and flush stair nosing are available for every series.</li>
+<li><strong>Laminate — 12.3mm AC4, $2.09/sqft.</strong> Embossed wood texture, click installation, 25-year residential warranty. 12.3mm is the thick end of the laminate market — the same class as the premium brands on our floor, at roughly half the price.</li>
+</ul>`
+    },
+    {
+      heading: 'Clearance Lots — While They Last',
+      body: `<p>Tosca periodically clears discontinued colours and we buy the remaining pallets. Right now that means <strong>laminate from $1.49/sqft</strong> (down from $2.09 — <a href="/products/tosca-laminate-9904">Tosca 9904</a> and 14 more colours) and <strong>SPC vinyl from $1.79/sqft</strong> in the 3300 and 5600 series. These are first-quality boxes, not seconds; the only catch is that when the pallet is gone there is no reorder, so measure before you fall in love with one. Everything on sale is on our <a href="/clearance">clearance page</a>.</p>
+<p>Stocked in Markham, with professional installation from $2.00/sqft and free in-home measurement across the GTA. Call <a href="tel:6474281111">(647) 428-1111</a> or stop by the showroom to see the grades side by side.</p>`
     },
   ],
   faqItems: [
-    { question: 'How much does Tosca laminate cost?', answer: 'Tosca laminate at BBS Flooring starts under $1/sqft and tops out under $2/sqft. It is the most affordable flooring option in our Markham showroom. Call (647) 428-1111 for current pricing.' },
-    { question: 'Is Tosca laminate good for rental properties?', answer: 'Yes. Tosca laminate is popular with landlords and property managers because it provides a clean, wood-look finish at the lowest possible price point. Easy to install, easy to replace if damaged, and looks good in listing photos.' },
-    { question: 'Is Tosca laminate waterproof?', answer: 'Tosca laminate is standard (non-waterproof) laminate. It handles normal foot traffic and light spills if cleaned promptly, but is not recommended for bathrooms, kitchens, or basements where standing water is a risk. For wet areas, consider waterproof vinyl instead.' },
-    { question: 'How does Tosca compare to more expensive laminate?', answer: 'Tosca is thinner than 12mm premium laminate and does not have waterproof features. The trade-off is price — under $2/sqft vs. $3-4/sqft for premium brands. For bedrooms, hallways, and low-moisture areas, Tosca performs well. For main living areas or moisture-prone rooms, we recommend stepping up.' },
-    { question: 'Where can I buy Tosca laminate?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham carries 21 Tosca laminate products. Walk-ins welcome Monday–Saturday. We offer free in-home measurements across the GTA.' },
+    { question: 'What does Tosca engineered hardwood cost?', answer: 'Tosca 3/4" engineered European oak runs $4.99–$7.19/sqft at BBS Flooring in Markham. ABCD character grade (Renaissance, Monarch) is $4.99–$5.19; AB Select & Better grade (Prestige, Deluxe, Bespoke, Glory, Superior) is $5.59–$6.19; the Aura Collection with a 3mm wear layer is $7.19. All carry a Limited 35-Year Finish Warranty.' },
+    { question: 'What is the difference between AB and ABCD grade oak?', answer: 'AB (Select & Better) grade has no open knots, heavy mineral streaks or character marks — a clean, consistent face. ABCD (Character) grade is the same European White Oak but may show open knots, mineral and natural marks. The wood, thickness, finish and warranty are identical; grade only changes the look and the price.' },
+    { question: 'Is Tosca laminate 12mm?', answer: 'Yes. Tosca laminate is 12.3mm thick with an AC4 wear rating and a 25-year residential warranty. It installs with a click system and is regularly priced at $2.09/sqft, with clearance colours from $1.49/sqft while stock lasts.' },
+    { question: 'Is Tosca vinyl waterproof?', answer: 'Yes. All Tosca vinyl is SPC (stone-plastic composite) click flooring with an attached underpad — 5.5mm, 7mm and 7.5mm options from $2.49/sqft. It is suitable for basements, kitchens and bathrooms. Tosca laminate is not waterproof; use vinyl in wet areas.' },
+    { question: 'Why is Tosca cheaper than other hardwood brands?', answer: 'Tosca sells through a small dealer network with little marketing overhead, and BBS Flooring prices every Tosca floor at a flat $1/sqft over our cost. The planks themselves are standard 3/4" engineered or solid hardwood with a water-based finish and a 35-year finish warranty.' },
+    { question: 'Where can I buy Tosca Floors?', answer: 'BBS Flooring at 6061 Highway 7, Unit B, Markham stocks 100+ Tosca floors — engineered hardwood, solid Red Oak, SPC vinyl and laminate. Walk-ins welcome Monday–Saturday; free in-home measurement and professional installation from $2.00/sqft across the GTA.' },
   ],
   hideBrandFilter: true,
   productFilter: (p) => has(p.brand, 'tosca'),
