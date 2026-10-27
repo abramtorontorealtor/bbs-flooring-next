@@ -9,9 +9,9 @@ import { toast } from 'sonner';
 import { entities } from '@/lib/base44-compat';
 
 const TRANSITION_PRICES = {
-  t_moulding: 25,
-  reducer: 25,
-  stair_nosing: 30,
+  t_moulding: 35,
+  reducer: 35,
+  stair_nosing: 40,
 };
 
 const TRANSITION_LABELS = {

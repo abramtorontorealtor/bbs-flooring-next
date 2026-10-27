@@ -91,7 +91,7 @@ export async function POST(request) {
     // self-describing (qty + unit_price + trusted line_total) instead of an
     // opaque lump. (Fix Aug 14 2026: accessory/transition lines were saving a
     // flat line_total with no quantity — orders/emails/admin couldn't show
-    // "12 × Reducer @ $25".)
+    // "12 × Reducer @ $35".)
     // Supplies catalog (S2, Sep 12 2026): loaded ONCE per request, DB-backed
     // with an in-memory static fallback (see lib/suppliesCatalog.js). Never
     // let a DB hiccup zero out an order's accessory/supply lines.
