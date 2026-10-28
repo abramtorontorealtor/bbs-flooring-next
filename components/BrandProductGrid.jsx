@@ -2,7 +2,7 @@
 
 import CategoryFilterGrid from '@/components/CategoryFilterGrid';
 import * as brandData from '@/data/brandPages';
-import { vidarFlooringData, wickhamFlooringData, basementFlooringData, waterproofFlooringData, whiteOakFlooringData, flooringClearanceSaleData, flooringShowroomMarkhamData } from '@/data/landingPages';
+import { vidarFlooringData, wickhamFlooringData, basementFlooringData, waterproofFlooringData, whiteOakFlooringData, walnutFlooringData, flooringClearanceSaleData, flooringShowroomMarkhamData } from '@/data/landingPages';
 
 /**
  * BrandProductGrid — client island for brand landing pages.
@@ -33,6 +33,7 @@ const BRAND_DATA_MAP = {
   basement: basementFlooringData,
   waterproof: waterproofFlooringData,
   'white-oak': whiteOakFlooringData,
+  walnut: walnutFlooringData,
   'clearance-sale': flooringClearanceSaleData,
   showroom: flooringShowroomMarkhamData,
 };

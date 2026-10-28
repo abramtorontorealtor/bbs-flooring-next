@@ -22,6 +22,7 @@ const CATEGORIES = {
   'laminate': { dbCategory: 'laminate', label: 'Laminate Flooring', waterproof: false },
   'waterproof-flooring': { dbCategory: 'vinyl', label: 'Waterproof Flooring', waterproof: true },
   'white-oak-flooring': { dbCategory: null, label: 'White Oak Flooring', waterproof: false, species: 'White Oak' },
+  'walnut-flooring': { dbCategory: null, label: 'Walnut Flooring', waterproof: false, species: 'Walnut' },
   'clearance': { dbCategory: null, label: 'Clearance Flooring', waterproof: false, clearance: true },
   'products': { dbCategory: null, label: 'All Flooring Products', waterproof: false },
 };

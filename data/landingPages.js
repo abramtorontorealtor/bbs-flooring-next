@@ -272,42 +272,119 @@ export const stairRefinishingData = {
 // PRIORITY 2 — Medium Impact (QS 3-5, differentiation)
 // ══════════════════════════════════════════════════════════
 
+// Species filters are keyed off the clean `species` column (hardwood rows only).
+// Name fallback covers legacy rows with a NULL species. Wickham/Tosca "Walnut"
+// colour names on maple/red oak must NOT match — hence species-first.
+export const isWhiteOakProduct = (p) => {
+  if (!lc(p.category || '').includes('hardwood')) return false;
+  const sp = lc(p.species || '');
+  if (sp) return sp.includes('white oak');
+  const name = lc(p.name || '');
+  return name.includes('white oak') || name.includes('european oak');
+};
+
+export const isWalnutProduct = (p) =>
+  lc(p.category || '').includes('hardwood') && lc(p.species || '') === 'walnut';
+
 export const whiteOakFlooringData = {
   route: 'WhiteOakFlooring',
-  title: 'White Oak Flooring Markham | Engineered & Solid',
-  description: 'Shop white oak hardwood flooring in Markham. Engineered and solid options. Wide plank, wire-brushed. Free measurements. Call (647) 428-1111.',
-  h1: 'White Oak Hardwood Flooring',
-  subtitle: 'The most popular hardwood species in North America — available in engineered and solid options at BBS Flooring.',
+  // title/description are built live in app/white-oak-flooring/page.jsx from the in-stock price floor.
+  title: 'White Oak Flooring Toronto & GTA | Engineered & Solid | BBS Flooring',
+  description: 'Shop 250+ white oak hardwood floors in stock — engineered and solid, wide plank, wire-brushed, natural to smoked. Toronto & GTA showroom in Markham. Free measurements. Call (647) 428-1111.',
+  h1: 'White Oak Flooring — Engineered & Solid',
+  subtitle: 'The most-searched hardwood in the GTA. 250+ white oak and European white oak floors in stock at our Markham showroom — 6½" to 9½" wide plank, wire-brushed, from natural to smoked — with installation across Toronto and the GTA.',
   parentPage: { label: 'Engineered Hardwood', route: 'EngineeredHardwood' },
   schemaType: 'product',
   content: [
     {
       heading: 'Why White Oak Is the #1 Hardwood Choice',
-      body: `<p>White oak has become the dominant hardwood species in Canadian homes — and for good reason. It's <strong>harder than red oak</strong> (Janka 1360 vs 1290), has a tighter grain that resists moisture, and takes stain beautifully from natural to dark espresso.</p>
-<p>At BBS Flooring, we carry white oak from top brands including <a href="/VidarFlooring">Vidar</a>, Wickham, and Triforest — in widths from 3¼" to 9½", and in both <a href="/EngineeredHardwood">engineered</a> and <a href="/SolidHardwood">solid</a> constructions.</p>`
+      body: `<p>White oak has become the default hardwood in Canadian homes — and for good reason. It's <strong>harder than red oak</strong> (Janka 1360 vs 1290), has a tighter, straighter grain with fewer pink undertones, and takes everything from a clear matte finish to a deep smoked stain without blotching. That neutral, light-to-mid-tone look is what buyers are asking for in 2026, and it's what holds resale value.</p>
+<p>At BBS Flooring we stock more white oak than any other species: engineered white oak from <a href="/northernest-flooring">Northernest</a>, <a href="/naf-flooring">NAF</a>, <a href="/woden-flooring">Woden</a>, <a href="/vidar-flooring">Vidar</a>, <a href="/simba-flooring">Simba</a>, <a href="/canadian-standard-flooring">Canadian Standard</a> and Tosca, plus our own <a href="/bbs-reserve">BBS Reserve</a> label — in 6", 6½", 7½" and 9½" widths, most in a wire-brushed, low-sheen finish. Every floor below is in stock and priced per square foot.</p>`
     },
     {
-      heading: 'White Oak Options at BBS Flooring',
+      heading: 'Pick Your White Oak by Tone',
       body: `<ul>
-<li><strong>European White Oak (Engineered):</strong> Wide plank, click-lock or glue-down. Perfect for open-concept living and radiant heat.</li>
-<li><strong>Solid White Oak:</strong> ¾" thick, nail-down. Traditional elegance, can be sanded and refinished multiple times.</li>
-<li><strong>Wire-Brushed & Smoked:</strong> Textured finishes that add character and hide daily wear.</li>
-<li><strong>Unfinished White Oak:</strong> Custom stain on-site for a perfectly matched colour.</li>
-</ul>`
+<li><strong>Natural / blonde:</strong> Clear-coat or light-white stain. Scandinavian look, hides dust, brightens small rooms. Our best-seller for open-concept main floors.</li>
+<li><strong>Warm honey / light brown:</strong> A touch of amber. The "safe" choice that works with both warm and cool wall colours.</li>
+<li><strong>Grey / greige:</strong> Cool, modern, pairs with white kitchens. Look for "smoke", "stone", "grey" in the colour name.</li>
+<li><strong>Smoked / dark:</strong> Fumed or stained deep brown. Dramatic, shows dust more — pair with a wire-brushed texture to hide wear.</li>
+</ul>
+<p>Use the filters above to narrow by colour, width and brand, or <a href="/floor-finder">answer four questions</a> and we'll shortlist the right white oak for your room.</p>`
+    },
+    {
+      heading: 'Engineered vs Solid White Oak',
+      body: `<ul>
+<li><strong>Engineered white oak</strong> (3/4" with a 1.5–3 mm white oak wear layer): stable over concrete, condos, basements and radiant heat. Click or glue/nail-down. This is 95% of what we sell and install.</li>
+<li><strong>Solid white oak</strong> (3/4" solid board, nail-down over plywood): the traditional choice above grade. Can be sanded and refinished for decades.</li>
+<li><strong>Wire-brushed & hand-scraped:</strong> Textured finishes that hide daily scratches, dents and pet traffic far better than a smooth gloss.</li>
+<li><strong>Grades:</strong> Select &amp; Better (AB) is cleaner and more uniform; Character (ABCD) shows more knots and colour variation at a lower price.</li>
+</ul>
+<p>Not sure? Read our <a href="/blog/white-oak-flooring-guide-buying-tips">white oak buying guide</a> or the <a href="/engineered-hardwood-guide">engineered hardwood guide</a>. Looking for a darker species? See our <a href="/walnut-flooring">walnut flooring</a> collection.</p>`
+    },
+    {
+      heading: 'White Oak Installation Across Toronto & the GTA',
+      body: `<p>Our own crews install white oak in Markham, Richmond Hill, Vaughan, Toronto, Scarborough, North York, Mississauga, Oakville and across the GTA. <a href="/installation">Installation</a> starts at $2.25/sqft for nail-down and we handle removal, subfloor prep, stairs and trim so the whole job is one quote. <a href="/free-measurement">Book a free in-home measurement</a> or call <a href="tel:+16474281111">(647) 428-1111</a> — same-day quotes.</p>`
     },
   ],
   faqItems: [
-    { question: 'Is white oak better than red oak for flooring?', answer: 'White oak is generally preferred for modern homes. It has a tighter, more linear grain, slightly higher hardness (Janka 1360 vs 1290), and better moisture resistance. Red oak has a more pronounced grain pattern and warmer pink undertone — it\'s a matter of aesthetic preference, but white oak is the current market leader.' },
-    { question: 'How much does white oak flooring cost?', answer: 'Solid white oak starts around $6/sqft. Engineered white oak ranges from $4.50–$9/sqft depending on plank width and brand. Visit BBS Flooring or call (647) 428-1111 for current pricing.' },
-    { question: 'Can white oak flooring be installed in a basement?', answer: 'Engineered white oak can be installed in basements (it handles moisture better than solid). For fully below-grade basements with higher moisture risk, we may recommend SPC vinyl instead. Our installer will assess your specific conditions.' },
+    { question: 'Is white oak better than red oak for flooring?', answer: 'For most homes today, yes. White oak is slightly harder (Janka 1360 vs 1290), has a tighter, more linear grain and a neutral tone without red oak\'s pink undertone, and it takes grey, natural and smoked stains cleanly. Red oak still makes sense when you are matching an existing red oak floor.' },
+    { question: 'How much does white oak flooring cost in Toronto?', answer: 'In-stock engineered white oak at BBS Flooring runs from about $3 to $9 per square foot depending on brand, plank width and wear layer; solid white oak starts around $5.50. Installation adds from $2.25/sqft (nail-down). Prices on this page are live and per square foot — call (647) 428-1111 for a full quote with installation.' },
+    { question: 'Engineered or solid white oak — which should I buy?', answer: 'Engineered white oak for condos, basements, concrete subfloors or radiant heat — it is dimensionally stable and can still be refinished once or twice with a 2 mm+ wear layer. Solid white oak only above grade over a plywood subfloor, where it can be refinished many times over its life.' },
+    { question: 'What width of white oak plank is most popular?', answer: '7½" is the most popular width we sell, followed by 6½". Wider planks (9½") look great in large open rooms; 5"–6" suits smaller rooms and hallways. Most of our white oak comes in random lengths up to 7 feet.' },
+    { question: 'Can white oak flooring be installed in a basement?', answer: 'Engineered white oak can be installed in basements over a proper moisture barrier. For below-grade spaces with any moisture history we usually recommend SPC vinyl instead. Our installer will check your subfloor and moisture readings before recommending either.' },
+    { question: 'Can I see white oak samples in person?', answer: 'Yes — our Markham showroom at 6061 Highway 7, Unit B has full-size white oak boards from every brand on this page. Bring a cabinet door or paint chip and we will match tones on the spot. Samples are available to take home.' },
   ],
-  productFilter: (p) => {
-    const text = lc(p.name || '') + ' ' + lc(p.species || '') + ' ' + lc(p.product_description || '');
-    return (text.includes('white oak') || text.includes('european oak')) &&
-      (lc(p.category || '').includes('hardwood'));
-  },
+  productFilter: isWhiteOakProduct,
   productSessionKey: 'white-oak',
   productQueryKey: 'products-white-oak',
+};
+
+export const walnutFlooringData = {
+  route: 'WalnutFlooring',
+  // title/description are built live in app/walnut-flooring/page.jsx from the in-stock price floor.
+  title: 'Walnut Flooring Toronto | Engineered American Walnut | BBS Flooring',
+  description: 'Shop engineered and solid walnut hardwood flooring in stock — American black walnut and exotic walnut, 5" to 7½" planks. Toronto & GTA showroom in Markham. Free measurements. Call (647) 428-1111.',
+  h1: 'Walnut Flooring — Engineered & Solid',
+  subtitle: 'Rich chocolate-brown American black walnut and exotic walnut floors, in stock at our Markham showroom — 5" to 7½" wide plank, wire-brushed and hand-scraped — with installation across Toronto and the GTA.',
+  parentPage: { label: 'Engineered Hardwood', route: 'EngineeredHardwood' },
+  schemaType: 'product',
+  content: [
+    {
+      heading: 'Why Choose Walnut Flooring',
+      body: `<p>Walnut is the species you pick when you want the floor to be the feature. American black walnut has a deep chocolate heartwood with purple-brown undertones, a flowing straight-to-wavy grain and creamy sapwood streaks that give each plank character. No stain needed — the colour is in the wood, so it never looks painted-on and it ages gracefully rather than fading to orange.</p>
+<p>At BBS Flooring we stock walnut from <a href="/canadian-standard-flooring">Canadian Standard</a> (Origins 7½" American walnut), <a href="/vidar-flooring">Vidar</a> (American black walnut), <a href="/simba-flooring">Simba</a>, <a href="/naf-flooring">NAF</a> (exotic walnut, engineered and solid) and our own <a href="/bbs-reserve">BBS Reserve</a> label. Every floor below is in stock and priced per square foot.</p>`
+    },
+    {
+      heading: 'What to Know Before You Buy Walnut',
+      body: `<ul>
+<li><strong>It's softer than oak.</strong> American walnut rates about 1010 on the Janka scale vs 1360 for white oak. It is still a solid hardwood floor, but it will dent more easily under dropped pans or dog claws. A wire-brushed or hand-scraped texture hides this well, and a satin finish is more forgiving than high gloss.</li>
+<li><strong>Engineered is the smart build.</strong> A 3/4" engineered plank with a walnut wear layer gives you the look at a lower price per square foot, with far better stability over concrete, in condos and over radiant heat.</li>
+<li><strong>Colour mellows with light.</strong> Unlike most species, walnut lightens slightly over the first year or two in strong sun. Rotate area rugs occasionally and it evens out.</li>
+<li><strong>Character grade is the look.</strong> Most of our walnut is Character (ABCD) grade — knots, sapwood and colour variation are the point. Select &amp; Better (AB) is available for a cleaner, more uniform floor.</li>
+<li><strong>"Exotic walnut" is a different tree.</strong> NAF's exotic walnut is a South American species with a similar warm-brown tone and a harder surface than American black walnut — a good pick for busier households.</li>
+</ul>`
+    },
+    {
+      heading: 'Walnut Look for Less: Laminate & Vinyl',
+      body: `<p>Want the walnut colour in a kitchen, basement or rental without the hardwood price? We carry walnut-look options in <a href="/laminate">laminate</a> and <a href="/vinyl">waterproof vinyl plank</a> — search "walnut" in those collections. They won't match real walnut's grain depth, but they are scratch- and water-resistant and start under $2/sqft.</p>
+<p>Comparing species? See our <a href="/white-oak-flooring">white oak flooring</a> collection, or read the <a href="/engineered-hardwood-guide">engineered hardwood buying guide</a>.</p>`
+    },
+    {
+      heading: 'Walnut Installation Across Toronto & the GTA',
+      body: `<p>Our own crews install walnut in Markham, Richmond Hill, Vaughan, Toronto, North York, Scarborough, Mississauga, Oakville and across the GTA. <a href="/installation">Installation</a> starts at $2.25/sqft for nail-down; we also handle removal, subfloor prep, <a href="/stairs">matching walnut stairs</a> and trim in one quote. <a href="/free-measurement">Book a free in-home measurement</a> or call <a href="tel:+16474281111">(647) 428-1111</a> — same-day quotes.</p>`
+    },
+  ],
+  faqItems: [
+    { question: 'How much does walnut flooring cost in Toronto?', answer: 'In-stock engineered walnut at BBS Flooring runs from about $5 to $7.50 per square foot; solid exotic walnut is around $7.20. Installation adds from $2.25/sqft (nail-down). Prices on this page are live and per square foot — call (647) 428-1111 for a full quote with installation.' },
+    { question: 'Is walnut a good choice for flooring?', answer: 'Yes, if you want a dark, rich floor with natural colour and are fine with a slightly softer surface. American walnut (Janka ~1010) dents more easily than oak, so choose a wire-brushed or hand-scraped texture and a satin finish, and use felt pads under furniture. For very busy households with large dogs, exotic walnut or a smoked white oak is a harder alternative with a similar tone.' },
+    { question: 'Engineered or solid walnut?', answer: 'Engineered for almost everyone: it costs less per square foot, is stable over concrete, in condos and over radiant heat, and a 1.5 mm+ wear layer can still be screened and recoated. Solid walnut only above grade over a plywood subfloor.' },
+    { question: 'Does walnut flooring fade or change colour?', answer: 'Walnut lightens slightly in direct sunlight over the first year or two — the opposite of cherry or oak, which darken. The change is gentle and evens out across the room; rotating rugs and using UV-filtering window film in south-facing rooms minimises it.' },
+    { question: 'What is the difference between American walnut and exotic walnut?', answer: 'American black walnut (Juglans nigra) is the classic chocolate-brown North American species with creamy sapwood and a softer surface. "Exotic walnut" is a trade name for South American species with a similar warm-brown colour but a noticeably harder, denser surface. We stock both — American walnut from Canadian Standard, Vidar, Simba and BBS Reserve; exotic walnut from NAF.' },
+    { question: 'Can I see walnut samples in person?', answer: 'Yes — our Markham showroom at 6061 Highway 7, Unit B has full-size walnut boards from every brand on this page, and samples are available to take home to check the colour in your own light.' },
+  ],
+  productFilter: isWalnutProduct,
+  productSessionKey: 'walnut',
+  productQueryKey: 'products-walnut',
 };
 
 export const wickhamFlooringData = {

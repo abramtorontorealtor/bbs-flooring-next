@@ -35,6 +35,11 @@ const SPOKE_LINKS = [
     description: 'The #1 hardwood species in Canadian homes — solid and engineered options.',
   },
   {
+    route: 'WalnutFlooring',
+    label: 'Walnut Flooring Collection',
+    description: 'American black walnut and exotic walnut — solid and engineered, rich chocolate tones.',
+  },
+  {
     route: 'WickhamFlooring',
     label: 'Wickham Canadian-Made Hardwood',
     description: 'Premium solid hardwood made in Wickham, Quebec since 1997.',

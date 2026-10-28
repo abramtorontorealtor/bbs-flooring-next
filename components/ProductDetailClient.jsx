@@ -443,7 +443,12 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
     if (!currentPricing) return [];
     const items = [];
     const isVinyl = ['vinyl', 'vinyl_plank', 'laminate'].includes(product?.category);
-    if (currentPricing.species && !isVinyl) items.push({ label: 'Species', value: currentPricing.species });
+    if (currentPricing.species && !isVinyl) {
+      // Species hub link (white oak / walnut) — internal link from every matching PDP to its species collection.
+      const sp = String(currentPricing.species).toLowerCase();
+      const href = sp.includes('white oak') ? '/white-oak-flooring' : sp === 'walnut' ? '/walnut-flooring' : null;
+      items.push({ label: 'Species', value: currentPricing.species, href });
+    }
     if (currentPricing.colour) items.push({ label: 'Colour', value: currentPricing.colour });
     if (currentPricing.dimensions) items.push({ label: 'Dimensions', value: currentPricing.dimensions });
     if (currentPricing.thickness) items.push({ label: 'Thickness', value: currentPricing.thickness });
@@ -800,7 +805,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                 {visibleSpecs.map(spec => (
                   <div key={spec.label} className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-lg">
                     <span className="text-xs text-slate-500 whitespace-nowrap">{spec.label}</span>
-                    <span className="text-xs font-semibold text-slate-800 truncate ml-auto">{spec.value}</span>
+                    {spec.href ? (
+                      <Link href={spec.href} className="text-xs font-semibold text-amber-700 hover:text-amber-900 underline underline-offset-2 decoration-amber-400 truncate ml-auto" title={`See all ${spec.value} flooring`}>{spec.value}</Link>
+                    ) : (
+                      <span className="text-xs font-semibold text-slate-800 truncate ml-auto">{spec.value}</span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -1080,7 +1089,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
             {specItems.map((spec, i) => (
               <div key={spec.label} className={`flex justify-between items-center px-4 py-3 text-sm ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
                 <span className="text-slate-600">{spec.label}</span>
-                <span className="font-medium text-slate-900">{spec.value}</span>
+                {spec.href ? (
+                  <Link href={spec.href} className="font-medium text-amber-700 hover:text-amber-900 underline underline-offset-2 decoration-amber-400">{spec.value} — see all →</Link>
+                ) : (
+                  <span className="font-medium text-slate-900">{spec.value}</span>
+                )}
               </div>
             ))}
             {product.brand && (

@@ -35,6 +35,8 @@ export default function FooterServer() {
               {[
                 { name: 'Solid Hardwood', path: '/solid-hardwood' },
                 { name: 'Engineered Hardwood', path: '/engineered-hardwood' },
+                { name: 'White Oak Flooring', path: '/white-oak-flooring' },
+                { name: 'Walnut Flooring', path: '/walnut-flooring' },
                 { name: 'Laminate', path: '/laminate' },
                 { name: 'Vinyl', path: '/vinyl' },
                 { name: 'Stairs', path: '/stairs' },

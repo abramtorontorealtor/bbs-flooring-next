@@ -25,7 +25,8 @@ export async function generateMetadata() {
 
 const SPOKE_LINKS = [
   { route: 'VidarFlooring', label: 'Vidar Engineered Hardwood', description: 'Shop Vidar Design Flooring — premium European oak engineered hardwood.' },
-  { route: 'WhiteOakFlooring', label: 'White Oak Flooring Collection', description: 'Browse all white oak engineered hardwood — the most popular species in 2025.' },
+  { route: 'WhiteOakFlooring', label: 'White Oak Flooring Collection', description: 'Browse 250+ white oak engineered and solid floors — the most popular species in the GTA.' },
+  { route: 'WalnutFlooring', label: 'Walnut Flooring Collection', description: 'American black walnut and exotic walnut — rich, dark engineered planks from $4.99/sqft.' },
   { route: 'WickhamFlooring', label: 'Wickham Hardwood Flooring', description: 'Canadian-made Wickham engineered and solid hardwood — built for our climate.' },
   { route: 'HardwoodRefinishing', label: 'Hardwood Floor Refinishing', description: 'Restore your existing hardwood floors with professional sand & stain service.' },
   { route: 'FlooringInstallationCost', label: 'Hardwood Installation Cost Guide', description: 'Installation from $2.25/sqft (nail-down) to $4.25/sqft (herringbone) — full breakdown.' },
