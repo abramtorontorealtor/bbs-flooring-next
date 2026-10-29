@@ -21,6 +21,10 @@ function getProductBadges(product) {
   // House brand first (Oct 15, 2026): BBS Reserve is our own label — the card must read as
   // "ours" at a glance so it stands apart from the manufacturer brands without hiding them.
   const isHouseBrand = (product.brand || '').toLowerCase().includes('bbs reserve');
+  // End-of-lot first: exact box count (counted lots only) — pushed before the rest so the slice(0, 2) keeps it.
+  if (product.in_stock !== false && Number.isInteger(product.lot_boxes_left) && product.lot_boxes_left > 0) {
+    badges.push({ key: 'lot', label: `${product.lot_boxes_left} ${product.lot_boxes_left === 1 ? 'box' : 'boxes'} left`, className: 'bg-amber-500 text-slate-900' });
+  }
   if (isHouseBrand) badges.push({ key: 'house', label: '★ BBS Reserve · Our label', className: 'bg-amber-500 text-slate-900' });
   const isCanadian = !!product.is_canadian;
   if (isCanadian) badges.push({ key: 'canada', label: '🇨🇦 Canadian', className: 'bg-red-600 text-white' });

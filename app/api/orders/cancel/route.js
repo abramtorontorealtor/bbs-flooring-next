@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { requireAdmin } from '@/lib/api-auth';
 import { sendOrderCancelled } from '@/lib/email';
+import { releaseLotForOrder } from '@/lib/lot';
 
 export async function POST(request) {
   try {
@@ -82,6 +83,9 @@ export async function POST(request) {
         { status: 500 }
       );
     }
+
+    // End-of-lot: give any reserved boxes back (idempotent, never throws, never alters the response).
+    try { await releaseLotForOrder(supabase, order.id); } catch (e) { console.error('[Cancel] lot release failed (non-fatal):', e?.message); }
 
     // Send cancellation email to customer (skippable for silent DB corrections)
     let emailed = false;

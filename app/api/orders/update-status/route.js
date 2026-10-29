@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderStatusUpdate } from '@/lib/email';
+import { releaseLotForOrder, rereserveLotForOrder } from '@/lib/lot';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 
@@ -81,6 +82,19 @@ export async function POST(request) {
 
     if (updateError) throw updateError;
 
+    // ── End-of-lot stock hold (never fails the request) ──
+    // Cancelled/refunded → give boxes back. Back to paid/confirmed after a release → re-reserve.
+    let lotShortfall = [];
+    try {
+      if (newStatus === 'cancelled' || newStatus === 'refunded') {
+        await releaseLotForOrder(supabase, orderId);
+      } else if ((newStatus === 'paid' || newStatus === 'confirmed') && order.lot_released_at) {
+        lotShortfall = await rereserveLotForOrder(supabase, orderId);
+      }
+    } catch (lotErr) {
+      console.error('[UpdateStatus] lot hold update failed (non-fatal):', lotErr?.message);
+    }
+
     // Send email notification for meaningful transitions
     // "processing" (Preparing) is silent — only update account page, no customer email
     // "shipped" (Ready for Pickup) is now silent — pickup email sent via Send Pickup Confirmation button
@@ -110,7 +124,10 @@ export async function POST(request) {
       }
     }
 
-    return NextResponse.json({ success: true, oldStatus, newStatus, emailSent, emailError });
+    return NextResponse.json({
+      success: true, oldStatus, newStatus, emailSent, emailError,
+      ...(lotShortfall.length ? { lot_shortfall: lotShortfall } : {}),
+    });
   } catch (error) {
     console.error('Update status error:', error);
     return NextResponse.json({ error: error.message || 'Failed to update status' }, { status: 500 });

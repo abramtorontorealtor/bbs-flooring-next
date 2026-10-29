@@ -17,6 +17,10 @@ const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood',
 
 function getProductBadges(product) {
   const badges = [];
+  // End-of-lot first: exact box count (counted lots only) — mirrors ProductCard.jsx; first so slice(0, 2) keeps it.
+  if (product.in_stock !== false && Number.isInteger(product.lot_boxes_left) && product.lot_boxes_left > 0) {
+    badges.push({ key: 'lot', label: `${product.lot_boxes_left} ${product.lot_boxes_left === 1 ? 'box' : 'boxes'} left`, className: 'bg-amber-500 text-slate-900' });
+  }
   // House brand first (Oct 15, 2026) — mirrors ProductCard.jsx so SSR and hydrated cards match.
   if ((product.brand || '').toLowerCase().includes('bbs reserve')) badges.push({ key: 'house', label: '★ BBS Reserve · Our label', className: 'bg-amber-500 text-slate-900' });
   const name = (product.name || '').toLowerCase();

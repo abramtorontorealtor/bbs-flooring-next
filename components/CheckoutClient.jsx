@@ -403,6 +403,12 @@ export default function CheckoutClient() {
       const orderResult = await orderResponse.json();
 
       if (!orderResult.success) {
+        // End-of-lot: server rejected because the lot can't cover the cart — surface its message as-is.
+        if (orderResult.code === 'LOT_EXCEEDED') {
+          toast.error(orderResult.error || 'Not enough boxes left in this lot. Please update your cart.');
+          setIsSubmitting(false);
+          return;
+        }
         throw new Error(orderResult.error || 'Failed to create order');
       }
 

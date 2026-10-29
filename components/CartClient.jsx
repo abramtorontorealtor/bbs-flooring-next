@@ -62,7 +62,7 @@ export default function CartClient() {
       if (!supabase) return {};
       const { data } = await supabase
         .from('products')
-        .select('id, slug, in_stock, collection, brand')
+        .select('id, slug, in_stock, collection, brand, lot_boxes_left')
         .in('id', productIds);
       const map = {};
       (data || []).forEach(p => { map[p.id] = p; });
@@ -111,7 +111,16 @@ export default function CartClient() {
   const updateMutation = useMutation({
     mutationFn: ({ itemId, newSqft, product }) => {
       const sqftPerBox = product.sqft_per_box || 20;
-      const boxesRequired = Math.ceil(newSqft / sqftPerBox);
+      let boxesRequired = Math.ceil(newSqft / sqftPerBox);
+      // End-of-lot: clamp to boxes left (read from the live product row; degrades silently if not loaded)
+      const liveRow = product.product_id ? cartProductMap[product.product_id] : null;
+      const lotLeft = liveRow && liveRow.in_stock !== false && Number.isInteger(liveRow.lot_boxes_left) && liveRow.lot_boxes_left > 0
+        ? liveRow.lot_boxes_left : null;
+      if (lotLeft && boxesRequired > lotLeft) {
+        boxesRequired = lotLeft;
+        newSqft = Math.min(newSqft, lotLeft * sqftPerBox);
+        toast.error(`Only ${lotLeft} ${lotLeft === 1 ? 'box' : 'boxes'} left in this lot`);
+      }
       const actualSqft = boxesRequired * sqftPerBox;
       const effectivePrice = (product.sale_price_per_sqft && product.sale_price_per_sqft < product.price_per_sqft)
         ? product.sale_price_per_sqft

@@ -311,6 +311,16 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
   // One card per brand+collection — the PDP's CollectionSiblings shows the rest.
   const collectionGroups = useMemo(() => groupByCollection(displayedProducts), [displayedProducts]);
 
+  // End-of-lot (exact-quantity) lines — fewest boxes first. They also stay in the main grid below.
+  const lotProducts = useMemo(
+    () =>
+      displayedProducts
+        .filter((p) => p.in_stock !== false && Number.isInteger(p.lot_boxes_left) && p.lot_boxes_left > 0)
+        .sort((a, b) => a.lot_boxes_left - b.lot_boxes_left),
+    [displayedProducts]
+  );
+  const lotCollectionGroups = useMemo(() => groupByCollection(lotProducts), [lotProducts]);
+
   const handleFilterChange = (newFilters) => setFilters(newFilters);
   const handleSortChange = (sortBy) => setFilters((prev) => ({ ...prev, sortBy }));
 
@@ -484,6 +494,21 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
                 </button>
               )}
             </div>
+
+            {/* End of lot — exact quantities */}
+            {lotProducts.length > 0 && (
+              <section id="end-of-lot" className="mb-10">
+                <h2 className="text-2xl font-bold text-slate-900 mb-1">End of lot — exact quantities</h2>
+                <p className="text-sm text-slate-600 mb-4">
+                  The last boxes of each line, counted. When they’re gone, they’re gone — the price reflects it.
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {lotCollectionGroups.map((group, i) => (
+                    <CollectionCard key={group.key} group={group} index={i} listName="clearance_end_of_lot" />
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Product Grid */}
             {displayedProducts.length === 0 ? (

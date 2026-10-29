@@ -178,6 +178,9 @@ export default function StickyAddToCart({
               )}
             </div>
           )}
+          {calculation?.overLot && (
+            <p className="text-xs font-semibold text-amber-800 px-0.5">Max {calculation.lotMax} {calculation.lotMax === 1 ? 'box' : 'boxes'} — end of lot</p>
+          )}
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderCustomerConfirmation, sendOrderAdminNotification, sendAbandonedCartRecovery } from '@/lib/email';
 import { sendTelegramAlert, formatOrderAlert } from '@/lib/telegram';
+import { releaseLotForOrder } from '@/lib/lot';
 
 // Stripe webhook handler — receives events after checkout completion.
 // Critical: stores payment_intent ID so admin can capture pre-authed payments.
@@ -152,6 +153,9 @@ export async function POST(request) {
           .update({ status: 'abandoned', payment_status: 'expired' })
           .match(filter);
 
+        // End-of-lot: return reserved boxes (idempotent; never blocks the webhook)
+        try { await releaseLotForOrder(supabase, order.id); } catch (lotErr) { console.error('[Stripe Webhook] lot release (expired) failed:', lotErr?.message); }
+
         // Send recovery email
         try {
           await sendAbandonedCartRecovery({ order });
@@ -171,6 +175,8 @@ export async function POST(request) {
         .eq('stripe_payment_intent_id', pi.id);
 
       if (error) console.error('[Stripe Webhook] Failed to update failed payment:', error);
+      // End-of-lot: NOT released here — a declined card can be retried inside the same
+      // Checkout session; checkout.session.expired (or cancel) returns the boxes.
       break;
     }
 
@@ -178,12 +184,24 @@ export async function POST(request) {
       const charge = event.data.object;
       const piId = charge.payment_intent;
       if (piId) {
-        const { error } = await supabase
+        const { data: refundedRows, error } = await supabase
           .from('orders')
           .update({ payment_status: 'refunded', status: 'refunded' })
-          .eq('stripe_payment_intent_id', piId);
+          .eq('stripe_payment_intent_id', piId)
+          .select('id');
 
         if (error) console.error('[Stripe Webhook] Failed to update refund:', error);
+        else {
+          // End-of-lot: release only on a FULL refund (partial refunds keep the boxes sold)
+          try {
+            const total = Number(charge.amount_captured ?? charge.amount ?? 0);
+            const refunded = Number(charge.amount_refunded ?? 0);
+            const isFullRefund = charge.refunded === true || (total > 0 && refunded >= total);
+            if (isFullRefund) {
+              for (const r of refundedRows || []) await releaseLotForOrder(supabase, r.id);
+            }
+          } catch (lotErr) { console.error('[Stripe Webhook] lot release (refund) failed:', lotErr?.message); }
+        }
       }
       break;
     }

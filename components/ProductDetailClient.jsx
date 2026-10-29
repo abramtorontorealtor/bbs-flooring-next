@@ -37,6 +37,8 @@ import { track } from '@/lib/track';
 import { getMonthlyPayment, FINANCEIT_LINKS } from '@/lib/financing';
 import { hasRealImage } from '@/lib/imagePlaceholder';
 import { getBrandAlias, brandDisplayLabel, brandSpecValue } from '@/lib/brandAliases';
+import { lotLabel } from '@/lib/lot';
+import { PHONE_DISPLAY, callUrl } from '@/lib/contact';
 
 /* ── FAST_PICKUP_BRANDS — warehouse-stocked brands with quick turnaround ── */
 const FAST_PICKUP_BRANDS = ['wickham', 'appalachian', 'northernest', 'sherwood', 'vidar', 'twelve oaks', 'falcon', 'infiniti'];
@@ -297,19 +299,26 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
   // entered footage yet, default to the honest minimum (1 box) so they can add to
   // cart and adjust box qty in the Cart (which already supports +/-). Entering a
   // real sqft still drives the exact box math as before.
+  // End-of-lot (exact-quantity clearance): NULL/<=0/out-of-stock = not a counted lot, behave as before.
+  const lotLeft = product?.in_stock !== false && Number.isInteger(product?.lot_boxes_left) && product.lot_boxes_left > 0 ? product.lot_boxes_left : null;
+  const lotSqftPerBox = currentPricing?.sqft_per_box || product?.sqft_per_box || 0;
+  const lotMaxSqft = lotLeft ? Math.floor(lotLeft * lotSqftPerBox) : null;
+
   const calculation = useMemo(() => {
     if (!currentPricing) return null;
     const sqftPerBox = currentPricing.sqft_per_box || 20;
     const hasUserSqft = !!sqftNeeded && parseFloat(sqftNeeded) > 0;
     const sqft = hasUserSqft ? parseFloat(sqftNeeded) : sqftPerBox; // 1-box default
-    const boxesRequired = Math.ceil(sqft / sqftPerBox);
+    let boxesRequired = Math.ceil(sqft / sqftPerBox);
+    const overLot = !!lotLeft && boxesRequired > lotLeft;
+    if (overLot) boxesRequired = lotLeft; // clamp: never let the cart exceed the lot
     const actualSqft = boxesRequired * sqftPerBox;
     const pricePerSqft = (currentPricing.sale_price_per_sqft && currentPricing.sale_price_per_sqft < currentPricing.price_per_sqft)
       ? currentPricing.sale_price_per_sqft
       : currentPricing.price_per_sqft;
     const lineTotal = actualSqft * pricePerSqft;
-    return { sqftNeeded: sqft, sqftPerBox, boxesRequired, actualSqft, pricePerSqft, lineTotal, extraSqft: actualSqft - sqft, hasUserSqft };
-  }, [currentPricing, sqftNeeded]);
+    return { sqftNeeded: sqft, sqftPerBox, boxesRequired, actualSqft, pricePerSqft, lineTotal, extraSqft: actualSqft - sqft, hasUserSqft, overLot, ...(overLot ? { lotMax: lotLeft } : {}) };
+  }, [currentPricing, sqftNeeded, lotLeft]);
 
   const breadcrumbItems = useMemo(() => getProductBreadcrumbs(product), [product]);
 
@@ -541,6 +550,7 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
             activeIdx={activeImageIdx}
             onActiveIdxChange={setActiveImageIdx}
             badges={[
+              lotLeft && <Badge key="lot" className="bg-amber-500 text-slate-900 border-0 text-sm font-bold px-3 py-1">{lotLeft} left</Badge>,
               product.is_new_arrival && <Badge key="new" className="bg-emerald-500 text-white border-0">New Arrival</Badge>,
               product.is_canadian && <Badge key="canada" className="bg-red-600 text-white border-0 text-sm font-bold px-3 py-1">🇨🇦 Canadian Made</Badge>,
               !hidePrice && (product.is_on_sale || product.is_clearance) && (() => {
@@ -616,6 +626,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                 <Badge className="bg-slate-700 text-white border-0 text-base px-3 py-1.5">Out of Stock</Badge>
               ) : product.price_per_sqft ? (
                 <div>
+                  {lotLeft && (
+                    <div className="mb-2">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-900 px-3 py-1 text-sm font-semibold">⏳ {lotLabel(lotLeft, lotSqftPerBox)}</span>
+                    </div>
+                  )}
                   {/* Urgency pill for sale/clearance — shows discount, not the word "clearance" (Aug 20 rule) */}
                   {!hidePrice && (product.is_on_sale || product.is_clearance) && (
                     <div className="flex items-center gap-2 mb-2">
@@ -868,12 +883,14 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                         : currentPricing.price_per_sqft;
                       const total = actualSqft * pricePerSqft;
                       const active = String(sqft) === String(sqftNeeded);
+                      const overLotChip = !!lotLeft && sqft > lotMaxSqft;
                       return (
                         <button
                           key={sqft}
                           type="button"
                           onClick={() => setSqftNeeded(String(sqft))}
-                          disabled={product.has_variants && !selectedJsonVariant}
+                          disabled={(product.has_variants && !selectedJsonVariant) || overLotChip}
+                          title={overLotChip ? 'More than this lot' : undefined}
                           className={`px-2 py-1.5 rounded-lg border text-[11px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${active ? 'bg-amber-500 border-amber-500 text-white' : 'bg-white border-slate-300 text-slate-700 hover:border-amber-400 hover:text-amber-800'}`}
                         >
                           {sqft} sqft <span className={active ? 'text-amber-100' : 'text-slate-400'}>· C${total.toFixed(0)}</span>
@@ -887,7 +904,12 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                 {/* Live calculation result */}
                 {calculation && (
                   <div className={`rounded-xl border p-3 space-y-1.5 animate-fade-in-up ${calculation.hasUserSqft ? 'bg-white border-amber-300 shadow-sm' : 'bg-slate-50 border-slate-200'}`}>
-                    {calculation.hasUserSqft ? (
+                    {calculation.overLot ? (
+                      <div className="text-sm text-amber-900 font-medium">
+                        ⚠️ This lot covers up to {lotMaxSqft} sqft ({lotLeft} {lotLeft === 1 ? 'box' : 'boxes'}). Added the maximum. Need more? Call{' '}
+                        <a href={callUrl()} className="underline font-semibold">{PHONE_DISPLAY}</a>
+                      </div>
+                    ) : calculation.hasUserSqft ? (
                       <div className="text-sm text-slate-700 font-medium">
                         ✓ {calculation.boxesRequired} {calculation.boxesRequired === 1 ? 'box' : 'boxes'} ({calculation.actualSqft.toFixed(1)} sqft) covers your {Number(calculation.sqftNeeded).toLocaleString()} sqft
                       </div>
@@ -931,7 +953,11 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                 {(product.is_on_sale || product.is_clearance) && !isOutOfStock && (
                   <div className="flex items-center gap-2 py-2 px-3 bg-red-50 border border-red-200 rounded-lg">
                     <span className="text-base">🏷️</span>
-                    <p className="text-xs font-semibold text-red-800">Sale price — limited stock at this price</p>
+                    <p className="text-xs font-semibold text-red-800">
+                      {lotLeft
+                        ? `End of lot — when these ${lotLeft} boxes are gone, this colour is gone.`
+                        : 'Sale price — limited stock at this price'}
+                    </p>
                   </div>
                 )}
                 {/* Primary CTA: Add to Cart */}

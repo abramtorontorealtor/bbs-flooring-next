@@ -4,6 +4,8 @@ import { sendOrderCustomerConfirmation, sendOrderAdminNotification } from '@/lib
 import { sendTelegramAlert, formatOrderAlert } from '@/lib/telegram';
 import { getSuppliesCatalog, priceSupplyLine } from '@/lib/suppliesCatalog';
 import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
+import { lotViolations, lotViolationMessage, reserveLotLines, lotAlertLine } from '@/lib/lot';
+import { PHONE_DISPLAY } from '@/lib/contact';
 
 async function generateOrderNumber(supabase) {
   // Sequential: BBS-10001, BBS-10002, etc. via Postgres sequence
@@ -51,12 +53,14 @@ export async function POST(request) {
       .filter(Boolean);
     let priceMap = {};
     const soldOut = [];
+    let prods = [];
     if (itemIds.length) {
-      const { data: prods } = await supabase
+      const { data: prodRows } = await supabase
         .from('products')
-        .select('id, name, price_per_sqft, sale_price_per_sqft, in_stock')
+        .select('id, name, price_per_sqft, sale_price_per_sqft, in_stock, sqft_per_box, lot_boxes_left')
         .in('id', itemIds);
-      for (const p of prods || []) {
+      prods = prodRows || [];
+      for (const p of prods) {
         priceMap[p.id] = (p.sale_price_per_sqft != null ? p.sale_price_per_sqft : p.price_per_sqft) || 0;
         if (p.in_stock === false) soldOut.push(p.name || p.id);
       }
@@ -73,6 +77,22 @@ export async function POST(request) {
           code: 'OUT_OF_STOCK',
           out_of_stock: soldOut,
           error: `${soldOut.length === 1 ? 'This item is' : 'These items are'} now sold out: ${soldOut.join(', ')}. Please remove ${soldOut.length === 1 ? 'it' : 'them'} from your cart or pick an in-stock colour.`,
+        },
+        { status: 409 }
+      );
+    }
+
+    // ── END-OF-LOT GATE (Oct 29 2026): exact-quantity clearance. Refuse lines that
+    // exceed the boxes we can still sell. Applies to quote requests too (the gate
+    // only blocks; reservation is skipped for custom-zone quotes below).
+    const lotViol = lotViolations(orderData.items, prods);
+    if (lotViol.length) {
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'LOT_EXCEEDED',
+          lot_exceeded: lotViol,
+          error: lotViolationMessage(lotViol),
         },
         { status: 409 }
       );
@@ -154,6 +174,24 @@ export async function POST(request) {
     // E-transfer/quote orders get emails immediately (no Stripe involvement).
     const isCreditCard = paymentMethod === 'credit_card';
 
+    // ── END-OF-LOT RESERVATION: atomically hold the boxes before the order row exists.
+    // Skipped for custom-zone quote requests (nothing is being bought yet).
+    let lotRes = { items: orderData.items, reserved: [], failed: null };
+    if (!isCustomZone) {
+      lotRes = await reserveLotLines(supabase, orderData.items, prods);
+      if (lotRes.failed) {
+        return NextResponse.json(
+          {
+            success: false,
+            code: 'LOT_EXCEEDED',
+            lot_exceeded: [lotRes.failed],
+            error: `${lotRes.failed.name}: the last boxes were just taken by another order. Please reduce the square footage or call us at ${PHONE_DISPLAY} to check for more.`,
+          },
+          { status: 409 }
+        );
+      }
+    }
+
     const { data: order, error } = await supabase
       .from('orders')
       .insert({
@@ -167,7 +205,8 @@ export async function POST(request) {
         delivery_preference: orderData.delivery_preference,
         shipping_zone: orderData.shipping_zone,
         notes: orderData.notes,
-        items: orderData.items,
+        items: lotRes.items,
+        lot_reserved_at: lotRes.reserved.length ? new Date().toISOString() : null,
         subtotal,
         tax,
         delivery_fee: deliveryFee,
@@ -182,7 +221,14 @@ export async function POST(request) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      // Insert failed after boxes were reserved — give them back before bubbling up.
+      for (const r of lotRes.reserved) {
+        try { await supabase.rpc('lot_release', { p_product_id: r.product_id, p_boxes: r.boxes }); }
+        catch (relErr) { console.error('[Order] lot release after failed insert:', relErr?.message); }
+      }
+      throw error;
+    }
 
     await identifyVisitor(supabase, {
       visitorId,
@@ -219,7 +265,7 @@ export async function POST(request) {
 
     // Telegram alert fires for ALL orders — AWAIT so it isn't dropped on Vercel.
     try {
-      await sendTelegramAlert(formatOrderAlert({ order: emailOrder }));
+      await sendTelegramAlert(formatOrderAlert({ order: emailOrder }) + lotAlertLine(lotRes.reserved));
     } catch (e) {
       console.error('[Order] Telegram alert failed:', e?.message);
     }

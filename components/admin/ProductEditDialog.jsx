@@ -80,7 +80,7 @@ export default function ProductEditDialog({ product, open, onOpenChange }) {
     'is_waterproof', 'warranty', 'features', 'specifications',
     'image_url', 'image_alt_text',
     'is_new_arrival', 'is_on_sale', 'is_clearance', 'is_canadian',
-    'made_in', 'in_stock',
+    'made_in', 'in_stock', 'lot_boxes_left',
     'seo_title', 'seo_description', 'slug',
     'review_count', 'review_rating',
     'product_description', 'product_details',
@@ -428,6 +428,20 @@ export default function ProductEditDialog({ product, open, onOpenChange }) {
                         onCheckedChange={(checked) => handleChange('is_clearance', checked)}
                       />
                       <Label htmlFor="is_clearance">Clearance</Label>
+                    </div>
+                    <div>
+                      <Label htmlFor="lot_boxes_left">End-of-lot boxes left (blank = not a counted lot)</Label>
+                      <Input
+                        id="lot_boxes_left"
+                        type="number"
+                        min="0"
+                        step="1"
+                        value={formData.lot_boxes_left ?? ''}
+                        onChange={(e) => {
+                          const n = parseInt(e.target.value, 10);
+                          handleChange('lot_boxes_left', e.target.value === '' || Number.isNaN(n) ? null : n);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>

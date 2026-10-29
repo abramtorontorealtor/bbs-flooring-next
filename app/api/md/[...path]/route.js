@@ -152,14 +152,17 @@ function productToMd(p) {
     p.is_canadian && 'Made in Canada',
   ].filter(Boolean).join(' | ');
 
-  return `- **${p.name}** — ${price}${specs ? `\n  ${specs}` : ''}\n  ${`https://bbsflooring.ca/products/${p.slug}`}`;
+  // End-of-lot: exact remaining boxes (counted lots only)
+  const lotNote = Number.isInteger(p.lot_boxes_left) && p.lot_boxes_left > 0 ? ` — only ${p.lot_boxes_left} ${p.lot_boxes_left === 1 ? 'box' : 'boxes'} left (end of lot)` : '';
+
+  return `- **${p.name}** — ${price}${lotNote}${specs ? `\n  ${specs}` : ''}\n  ${`https://bbsflooring.ca/products/${p.slug}`}`;
 }
 
 async function fetchProducts(opts = {}) {
   const supabase = getSupabaseServerClient();
   if (!supabase) return [];
 
-  const cols = 'slug,name,brand,category,price_per_sqft,sale_price_per_sqft,is_on_sale,is_clearance,is_waterproof,is_canadian,hide_price,species,dimensions,thickness,finish,grade,wear_layer,ac_rating,colour,in_stock,is_variant';
+  const cols = 'slug,name,brand,category,price_per_sqft,sale_price_per_sqft,is_on_sale,is_clearance,is_waterproof,is_canadian,hide_price,species,dimensions,thickness,finish,grade,wear_layer,ac_rating,colour,in_stock,is_variant,lot_boxes_left';
 
   let query = supabase
     .from('products')
@@ -390,7 +393,8 @@ For the full product catalog and pricing: https://bbsflooring.ca/llms-full.txt
         if (product.is_waterproof) md += `| Waterproof | Yes (100%) |\n`;
         if (product.is_canadian) md += `| Made In | Canada |\n`;
         if (product.sku) md += `| SKU | ${product.sku} |\n`;
-        md += `| In Stock | Yes |\n`;
+        const lot = Number.isInteger(product.lot_boxes_left) && product.lot_boxes_left > 0 ? product.lot_boxes_left : 0;
+        md += `| In Stock | ${lot ? `Yes — only ${lot} ${lot === 1 ? 'box' : 'boxes'} left (end of lot, ≈${Math.floor(lot * (Number(product.sqft_per_box) || 0))} sqft)` : 'Yes'} |\n`;
 
         if (product.description) {
           md += `\n## Description\n\n${product.description}\n`;

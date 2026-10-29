@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/api-auth';
 import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendOrderPaymentConfirmed } from '@/lib/email';
+import { rereserveLotForOrder } from '@/lib/lot';
 
 export async function POST(request) {
   // SECURITY: admin-only. This flips an order to paid/completed + emails the
@@ -46,6 +47,16 @@ export async function POST(request) {
 
     if (updateError) throw updateError;
 
+    // End-of-lot: a late e-Transfer on an order whose boxes were released → re-reserve (never fails the request)
+    let lotShortfall = [];
+    if (order.lot_released_at) {
+      try {
+        lotShortfall = await rereserveLotForOrder(supabase, orderId);
+      } catch (lotErr) {
+        console.error('[ConfirmPayment] lot re-reserve failed (non-fatal):', lotErr?.message);
+      }
+    }
+
     // Send confirmation email to customer — don't let email failure tank the response
     let emailSent = false;
     try {
@@ -55,7 +66,10 @@ export async function POST(request) {
       console.error('[ConfirmPayment] Email send failed (order still confirmed):', emailErr);
     }
 
-    return NextResponse.json({ success: true, emailSent });
+    return NextResponse.json({
+      success: true, emailSent,
+      ...(lotShortfall.length ? { lot_shortfall: lotShortfall } : {}),
+    });
   } catch (error) {
     console.error('Confirm payment error:', error);
     return NextResponse.json(
