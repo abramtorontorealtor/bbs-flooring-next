@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServerClient } from '@/lib/supabase';
+import { fetchAllRows } from '@/lib/products-server';
 
 // Lightweight product endpoint for the quote calculator
 // Returns ONLY the fields needed for product selection + pricing
@@ -12,12 +13,15 @@ export async function GET() {
     return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
   }
 
-  const { data, error } = await supabase
+  // PostgREST caps any single request at 1000 rows; 1,221 priced products (Oct 30 2026) —
+  // page via fetchAllRows like the grid does, or Vidar/Wickham/Woden silently vanish from pickers.
+  const { rows: data, error } = await fetchAllRows((from, to) => supabase
     .from('products')
     .select('id, name, slug, sku, category, subcategory, brand, price_per_sqft, sale_price_per_sqft, image_url, sqft_per_box, in_stock, lot_boxes_left, is_parent_product, has_variants, thickness, specifications')
     .eq('hide_price', false)
     .order('name', { ascending: true })
-    .range(0, 4999); // Supabase default caps at 1000 rows — 1,221 priced products (Oct 30 2026); Vidar/Wickham/Woden were being dropped
+    .order('id', { ascending: true })
+    .range(from, to), { label: 'calculator/products' });
 
   if (error) {
     console.error('[calculator/products] Supabase error:', error);
