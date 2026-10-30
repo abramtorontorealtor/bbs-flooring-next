@@ -52,6 +52,7 @@ export async function POST(request) {
       if (CART_COLUMNS.has(k) && v !== undefined) row[k] = v;
     }
     row.session_id = sessionId; // never trust a per-row session
+    if (!row.item_type) row.item_type = 'product'; // bulk insert null-fills missing keys, bypassing the column default
     return row;
   });
   if (rows.some((r) => !r.product_name || !(Number(r.line_total) >= 0))) {
