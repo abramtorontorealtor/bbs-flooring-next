@@ -15,6 +15,11 @@ const ALLOWED_EVENT_TYPES = new Set([
   'quote_saved',
   'compare',
   'cta_click',
+  // /planner (Oct 30 2026)
+  'planner_view',
+  'planner_room_add',
+  'planner_add_all',
+  'planner_install_cta',
 ]);
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;

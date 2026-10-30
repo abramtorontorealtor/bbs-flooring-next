@@ -38,6 +38,7 @@ const NAV_ITEMS = [
       { name: 'Hardwood Refinishing', path: '/hardwood-refinishing' },
       { name: 'Carpet Removal', path: '/carpet-removal' },
       { name: 'Instant Quote Calculator', path: '/quote-calculator' },
+      { name: 'Project Planner', path: '/planner' },
       { name: 'Find My Floor', path: '/floor-finder' },
     ],
   },

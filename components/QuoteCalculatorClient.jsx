@@ -755,6 +755,7 @@ export default function QuoteCalculatorClient() {
               <Input type="number" placeholder="or enter exact — e.g. 500" className="h-12 text-base"
                 value={formData.square_footage} min="1" max="50000"
                 onChange={(e) => setFormData(f => ({ ...f, square_footage: e.target.value }))} />
+              <p className="text-xs text-slate-500 mt-1.5"><Link href="/planner" className="font-semibold text-amber-700 hover:underline">Several rooms? Use the Project Planner →</Link></p>
               <p className="text-xs text-slate-400 mt-1.5">Not sure? Tap a size above, or multiply room length × width in feet. We&apos;ll measure for free!</p>
             </div>
 

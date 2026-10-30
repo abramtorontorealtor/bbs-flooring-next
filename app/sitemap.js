@@ -118,6 +118,7 @@ export default async function sitemap() {
     { path: '/blog', priority: 0.7, changeFrequency: 'daily' },
     { path: '/financing', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/quote-calculator', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/planner', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/price-match', priority: 0.8, changeFrequency: 'monthly' },
     // Room Visualizer hidden — needs rework (Apr 5, 2026)

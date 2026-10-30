@@ -192,6 +192,9 @@ export default function HomePage() {
             >
               Not sure where to start? Find my floor in 60 seconds <ArrowIcon className="w-4 h-4" />
             </Link>
+            <Link href="/planner" className="block mt-2 text-sm text-slate-300 hover:text-amber-300 font-medium transition-colors">
+              Planning several rooms? Project Planner →
+            </Link>
 
             {/* ═══ HERO CATEGORY QUICK-NAV — surfaces the catalogue in viewport 1 on every breakpoint ═══ */}
             {/* Sep 15 2026: restored on desktop (Abram) — browsers self-segment into a category from viewport 1 instead of hunting. */}

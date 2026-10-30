@@ -868,6 +868,10 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
                   onSqftChange={setSqftNeeded}
                   currentSqft={sqftNeeded}
                 />
+                <Link
+                  href={`/planner?product=${encodeURIComponent(product.slug || slug || '')}${parseFloat(sqftNeeded) > 0 ? `&sqft=${encodeURIComponent(sqftNeeded)}` : ''}`}
+                  className="block text-xs font-semibold text-amber-700 hover:text-amber-800 hover:underline"
+                >Flooring more than one room? Plan the whole project →</Link>
 
                 {/* ── 2. Common sizes — secondary shortcut, fills the hero field ── */}
                 {!hidePrice && !isOutOfStock && currentPricing.price_per_sqft > 0 && (

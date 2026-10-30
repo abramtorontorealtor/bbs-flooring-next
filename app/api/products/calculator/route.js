@@ -4,6 +4,8 @@ import { getSupabaseServerClient } from '@/lib/supabase';
 // Lightweight product endpoint for the quote calculator
 // Returns ONLY the fields needed for product selection + pricing
 // ~50KB vs ~1.8MB for select(*)
+// Oct 30 2026: + box size / stock / lot fields for the /planner page (thickness +
+// specifications let lib/installKit.js underpadMode() tell attached-pad floors apart).
 export async function GET() {
   const supabase = getSupabaseServerClient();
   if (!supabase) {
@@ -12,7 +14,7 @@ export async function GET() {
 
   const { data, error } = await supabase
     .from('products')
-    .select('id, name, slug, category, brand, price_per_sqft, sale_price_per_sqft, image_url')
+    .select('id, name, slug, sku, category, subcategory, brand, price_per_sqft, sale_price_per_sqft, image_url, sqft_per_box, in_stock, lot_boxes_left, is_parent_product, has_variants, thickness, specifications')
     .eq('hide_price', false)
     .order('name', { ascending: true });
 
