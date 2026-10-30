@@ -109,7 +109,7 @@ const data = {
     },
     {
       "q": "Can you match existing hardwood in my Toronto home?",
-      "a": "In most cases, yes. Our installers can match species, width, and stain colour to extend your existing hardwood into additional rooms. For older Toronto homes with discontinued species or unusual widths, we offer full-floor refinishing to create a uniform look, or can source specialty hardwood from our network of 15+ brands. Call (647) 428-1111 for a free assessment."
+      "a": "In most cases, yes. Our installers can match species, width, and stain colour to extend your existing hardwood into additional rooms. For older Toronto homes with discontinued species or unusual widths, we offer full-floor refinishing to create a uniform look, or can source specialty hardwood from our network of a dozen brands. Call (647) 428-1111 for a free assessment."
     },
     {
       "q": "Do you handle condo board paperwork for Toronto installations?",

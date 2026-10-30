@@ -11,6 +11,7 @@ const FAQ_ITEMS = [
   { question: 'Do you price match other flooring stores?', answer: 'Our prices are already contractor-direct — we\'re the source, not a middleman. If you find the exact same product cheaper elsewhere in the GTA, bring the quote and we\'ll talk.' },
   { question: 'What brands do you carry?', answer: 'We stock a dozen brands including Vidar, Wickham, NAF, Triforest, Northernest, Woden, Falcon, Canadian Standard, and more. Over 1,000 products in stock at our Markham warehouse — engineered hardwood, SPC vinyl, laminate, and solid hardwood.' },
   { question: 'Is there a minimum order for contractor pricing?', answer: 'No minimum commitment and no annual fees. Your trade pricing is active from your very first order. Larger projects are quoted per job.' },
+  { question: 'Do trade accounts get net terms or credit?', answer: 'No. Trade accounts get trade pricing, not credit — payment (e-Transfer or card) is due before pickup or delivery. That keeps our pricing where it is and your material ready the moment you arrive.' },
 ];
 
 export const metadata = {

@@ -305,7 +305,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-3">Shop by Category</h2>
-            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">15+ brands, 1,000+ products in stock. Find the perfect floor for every room and budget.</p>
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">a dozen brands, 1,000+ products in stock. Find the perfect floor for every room and budget.</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
             {CATEGORIES.map((cat) => (

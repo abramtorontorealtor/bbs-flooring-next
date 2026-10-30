@@ -29,7 +29,7 @@ export default async function ProductsPage() {
           '@context': 'https://schema.org',
           '@type': 'Product',
           name: 'Flooring — All Products',
-          description: `${stats.count} flooring products from 15+ brands — engineered hardwood, solid hardwood, luxury vinyl plank, and laminate. Available from our Markham showroom with GTA installation.`,
+          description: `${stats.count} flooring products from a dozen brands — engineered hardwood, solid hardwood, luxury vinyl plank, and laminate. Available from our Markham showroom with GTA installation.`,
           category: 'Flooring',
           brand: { '@type': 'Brand', name: 'BBS Flooring' },
           offers: {
@@ -49,7 +49,7 @@ export default async function ProductsPage() {
       <div className="mb-3 sm:mb-5">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800">All Products</h1>
         <p className="text-slate-600 mt-2 max-w-3xl">
-          Browse 1,000+ flooring products from 15+ brands — engineered hardwood, solid hardwood, luxury vinyl plank,
+          Browse 1,000+ flooring products from a dozen brands — engineered hardwood, solid hardwood, luxury vinyl plank,
           and laminate. All available from our Markham showroom at 6061 Highway 7, with professional installation
           across the GTA. Use the filters to narrow by category, brand, species, price, and more.
         </p>
