@@ -16,7 +16,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ChevronDown, Plus, Printer, RotateCcw, Ruler, Search, ShoppingCart, Trash2, Wrench } from 'lucide-react';
-import { entities } from '@/lib/base44-compat';
 import { track } from '@/lib/track';
 import { buildInstallKit, suggestQty, kitLineToCartItem } from '@/lib/installKit';
 
@@ -625,24 +624,21 @@ export default function PlannerClient() {
     try {
       const sessionId = getSessionId();
       const items = [];
-      // Flooring: one CartItem per room (same shape ProductDetailClient writes).
+      // Flooring: one row per room (same shape ProductDetailClient writes).
       ready.forEach(({ room, calc }) => {
         const p = calc.product;
-        items.push(
-          entities.CartItem.create({
-            session_id: sessionId,
-            product_id: p.id,
-            product_name: p.name,
-            sku: p.sku,
-            sqft_needed: round2(calc.neededSqft),
-            sqft_per_box: Number(p.sqft_per_box),
-            boxes_required: calc.boxes,
-            actual_sqft: calc.actualSqft,
-            price_per_sqft: calc.price,
-            line_total: calc.flooringTotal,
-            image_url: p.image_url,
-          }),
-        );
+        items.push({
+          product_id: p.id,
+          product_name: p.name,
+          sku: p.sku,
+          sqft_needed: round2(calc.neededSqft),
+          sqft_per_box: Number(p.sqft_per_box),
+          boxes_required: calc.boxes,
+          actual_sqft: calc.actualSqft,
+          price_per_sqft: calc.price,
+          line_total: calc.flooringTotal,
+          image_url: p.image_url,
+        });
       });
       // Kit lines: merge identical (product + key) across rooms so the cart stays tidy.
       const merged = new Map();
@@ -655,9 +651,24 @@ export default function PlannerClient() {
         });
       });
       merged.forEach(({ line, qty, product }) => {
-        items.push(entities.CartItem.create(kitLineToCartItem(line, qty, { id: product.id, name: product.name, sku: product.sku }, sessionId)));
+        items.push(kitLineToCartItem(line, qty, { id: product.id, name: product.name, sku: product.sku }, sessionId));
       });
-      await Promise.all(items);
+      // ONE atomic server insert (Oct 30 2026): parallel browser-side supabase inserts hung
+      // behind the auth lock for logged-in users on mobile Safari ("Adding…" forever).
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 20000);
+      let res;
+      try {
+        res = await fetch('/api/cart', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId, items }),
+          signal: ctrl.signal,
+        });
+      } finally {
+        clearTimeout(timer);
+      }
+      if (!res.ok) throw new Error(`cart POST ${res.status}`);
       window.dispatchEvent(new Event('cartUpdated'));
       track('planner_add_all', { meta: { rooms: ready.length, sqft: Math.round(totals.sqft), total: totals.total } });
       toast.success(`Added ${ready.length} ${ready.length === 1 ? 'room' : 'rooms'} to your cart`);
