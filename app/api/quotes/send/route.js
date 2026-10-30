@@ -4,6 +4,7 @@ import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendQuoteToCustomer, sendQuoteAdminNotification } from '@/lib/email';
 import { sendTelegramAlert, formatQuoteAlert } from '@/lib/telegram';
 import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
+import { buildLeadContext } from '@/lib/leadContext';
 
 export async function POST(request) {
   try {
@@ -83,10 +84,22 @@ export async function POST(request) {
 
     const emailQuote = savedQuote || quote;
 
+    // Lead-context enrichment for the admin email + Telegram alert (bounded; null on failure).
+    let leadContext = null;
+    try {
+      const sessionId = typeof quote.session_id === 'string' && quote.session_id.length <= 128 ? quote.session_id : null;
+      leadContext = await buildLeadContext(supabase, {
+        email: quote.customer_email || quote.email, phone: quote.customer_phone || quote.phone, name: quote.customer_name || quote.name,
+        address: quote.customer_address || quote.address, session_id: sessionId, visitor_id: visitorId,
+      }, { budgetMs: 1200 });
+    } catch (e) {
+      console.warn('[Quote] lead context skipped:', e?.message);
+    }
+
     // Send emails in parallel (non-blocking)
     const results = await Promise.allSettled([
       sendQuoteToCustomer({ quote: emailQuote, isMember: is_member }),
-      sendQuoteAdminNotification({ quote: emailQuote, isMember: is_member }),
+      sendQuoteAdminNotification({ quote: emailQuote, isMember: is_member, leadContext }),
     ]);
 
     const customerResult = results[0];
@@ -99,7 +112,7 @@ export async function POST(request) {
     // Fire Telegram alert — AWAIT so the serverless function doesn't terminate
     // before the fetch completes (unawaited promises get killed on Vercel).
     try {
-      await sendTelegramAlert(formatQuoteAlert({ ...emailQuote, is_member: is_member || false }));
+      await sendTelegramAlert(formatQuoteAlert({ ...emailQuote, is_member: is_member || false }, leadContext));
     } catch (e) {
       console.error('[Quote] Telegram alert failed:', e?.message);
     }

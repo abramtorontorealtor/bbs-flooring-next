@@ -520,16 +520,6 @@ export default function PlannerClient() {
     });
   }, [hydrated, products, searchParams]);
 
-  // Auto-save.
-  useEffect(() => {
-    if (!hydrated) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ v: 1, ts: Date.now(), rooms }));
-    } catch {
-      /* quota / private mode — ignore */
-    }
-  }, [rooms, hydrated]);
-
   const calcs = useMemo(() => {
     const cache = new Map();
     return rooms.map((r) => calcRoom(r, r.productId ? productById.get(r.productId) : null, cache));
@@ -556,6 +546,25 @@ export default function PlannerClient() {
     const hst = round2(subtotal * HST);
     return { roomCount: rooms.length, stairsCount, treads, sqft, boxes, flooring, kit, subtotal, hst, total: round2(subtotal + hst), readyRooms };
   }, [calcs, rooms]);
+
+  // Auto-save. `summary` is a human-readable room list the booking form forwards into the lead
+  // notes ("Living 18×14 · TF1119 · 15 bx") so Abram's alert shows the whole project.
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      const summary = rooms.map((r, i) => {
+        if (r.kind === 'stairs') return `${r.name || 'Stairs'}: ${parseInt(r.treads, 10) || 0} treads`;
+        const c = calcs[i];
+        const p = r.productId ? productById.get(r.productId) : null;
+        const dims = r.mode === 'dims' && r.length && r.width ? `${r.length}×${r.width}` : null;
+        const sqft = c?.sqft ? `${Math.round(c.sqft)} sqft` : null;
+        return [r.name || 'Room', [dims, sqft].filter(Boolean).join(' '), p?.name, c?.boxes ? `${c.boxes} bx` : null].filter(Boolean).join(' · ');
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ v: 1, ts: Date.now(), rooms, summary, total: totals.total || 0 }));
+    } catch {
+      /* quota / private mode — ignore */
+    }
+  }, [rooms, hydrated, calcs, productById, totals.total]);
 
   // /quote-booking?product=…&sqft=…&estimate=…
   const installHref = useMemo(() => {

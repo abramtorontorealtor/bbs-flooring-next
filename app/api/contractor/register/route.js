@@ -3,6 +3,7 @@ import { getSupabaseAdminClient } from '@/lib/supabase';
 import { sendContactAdminNotification, sendContractorCustomerConfirmation } from '@/lib/email';
 import { sendTelegramAlert, formatContractorAlert } from '@/lib/telegram';
 import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
+import { buildLeadContext } from '@/lib/leadContext';
 
 export async function POST(request) {
   try {
@@ -50,6 +51,15 @@ export async function POST(request) {
       source: 'contractor',
     });
 
+    // Lead-context enrichment (bounded; null on failure → alerts send as before).
+    let leadContext = null;
+    try {
+      const sessionId = typeof body.session_id === 'string' && body.session_id.length <= 128 ? body.session_id : null;
+      leadContext = await buildLeadContext(supabase, { email, phone, name: contact_name, session_id: sessionId, visitor_id: visitorId }, { budgetMs: 1200 });
+    } catch (e) {
+      console.warn('[Contractor] lead context skipped:', e?.message);
+    }
+
     // Send emails — AWAIT so the serverless function doesn't terminate before Brevo responds.
     try {
       const emailResults = await Promise.allSettled([
@@ -59,6 +69,7 @@ export async function POST(request) {
           phone,
           message: `Trade: ${trade_type}\nVolume: ${monthly_volume}\n${message || ''}`,
           source: 'contractor_registration',
+          leadContext,
         }),
         sendContractorCustomerConfirmation({ name: contact_name, email, company_name }),
       ]);
@@ -73,7 +84,7 @@ export async function POST(request) {
 
     // Fire Telegram alert — AWAIT so the serverless function doesn't terminate first.
     try {
-      await sendTelegramAlert(formatContractorAlert({ contact_name, email, phone, company_name, trade_type, monthly_volume, message }));
+      await sendTelegramAlert(formatContractorAlert({ contact_name, email, phone, company_name, trade_type, monthly_volume, message }, leadContext));
     } catch (e) {
       console.error('[Contractor] Telegram alert failed:', e?.message);
     }

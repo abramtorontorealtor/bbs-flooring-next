@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { getLeadMeta } from '@/lib/leadMeta';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -153,6 +154,7 @@ export default function FreeMeasurementClient() {
         headers: { 'Content-Type': 'application/json', 'Idempotency-Key': idemKey },
         body: JSON.stringify({
           booking: {
+            session_id: getLeadMeta().session_id || undefined,
             customer_name: formData.customer_name,
             customer_email: formData.customer_email,
             customer_phone: formData.customer_phone,
@@ -166,6 +168,7 @@ export default function FreeMeasurementClient() {
               serviceInterest && `Service: ${serviceInterest}`,
               flooringInterests.length && `Interested in: ${flooringInterests.join(', ')}`,
               productsInterested && `Products interested in: ${productsInterested}`,
+              getLeadMeta().planner_summary,
             ].filter(Boolean).join(' | '),
           },
         }),

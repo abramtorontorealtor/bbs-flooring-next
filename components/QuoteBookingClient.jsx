@@ -10,6 +10,7 @@ import AlternateTimePanel from '@/components/booking/AlternateTimePanel';
 import { CheckCircle, Clock, ArrowRight, Loader2, MapPin, Phone, Star, CalendarCheck, FileText } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { Analytics, toE164, splitName } from '@/components/analytics';
+import { getLeadMeta } from '@/lib/leadMeta';
 import GoogleReviewsBanner from '@/components/GoogleReviewsBanner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
@@ -130,8 +131,10 @@ export default function QuoteBookingClient() {
 
     try {
       // 1. Create booking record → shows in admin calendar, sends customer + admin emails
+      const leadMeta = getLeadMeta();
       const bookingPayload = {
         booking: {
+          session_id: leadMeta.session_id || undefined,
           customer_name: formData.customer_name,
           customer_email: formData.customer_email,
           customer_phone: formData.customer_phone,
@@ -150,6 +153,7 @@ export default function QuoteBookingClient() {
             estimate && `Estimate: C$${parseFloat(estimate).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
             serviceInterest && `Service: ${serviceInterest}`,
             flooringInterests.length && `Interested in: ${flooringInterests.join(', ')}`,
+            leadMeta.planner_summary,
             formData.notes,
           ].filter(Boolean).join(' · '),
         },
@@ -196,6 +200,7 @@ export default function QuoteBookingClient() {
             body: JSON.stringify({
               quote: {
                 ...quoteData,
+                session_id: leadMeta.session_id || undefined,
                 customer_name: formData.customer_name,
                 customer_email: formData.customer_email,
                 customer_phone: formData.customer_phone,

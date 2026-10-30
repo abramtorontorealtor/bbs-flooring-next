@@ -11,6 +11,7 @@ import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 import { detectSpamLead } from '@/lib/spam-filter';
 import { getVisitorIdFromRequest, identifyVisitor } from '@/lib/identify';
 import { handleContact } from '@/lib/contact/contact-handler';
+import { buildLeadContext } from '@/lib/leadContext';
 
 /** Contact form submissions (incl. B4 measurement_alternate_time). Logic: lib/contact/contact-handler.js */
 export async function POST(request) {
@@ -18,7 +19,7 @@ export async function POST(request) {
     getSupabase: getSupabaseAdminClient,
     checkRateLimit, getClientIP, detectSpamLead, getVisitorIdFromRequest, identifyVisitor,
     email: { sendContactAdminNotification, sendContactCustomerConfirmation, sendRemovalEstimateCustomerConfirmation, sendRemovalEstimateAdminNotification },
-    sendTelegramAlert, formatContactAlert, logger: console,
+    sendTelegramAlert, formatContactAlert, buildLeadContext, logger: console,
   });
   return NextResponse.json(r.body, { status: r.status, ...(r.headers && { headers: r.headers }) });
 }
