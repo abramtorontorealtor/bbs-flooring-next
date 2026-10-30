@@ -181,6 +181,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/contractor-flooring" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
+                  Contractor &amp; Trade Pricing
+                </Link>
+              </li>
+              <li>
                 <Link href="/free-measurement" className="text-slate-400 hover:text-amber-500 transition-colors text-sm">
                   Free Measurement
                 </Link>

@@ -10,6 +10,7 @@ import { CheckCircle2, Building2, Phone, Loader2 } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { toast } from 'sonner';
 import { Analytics } from '@/components/analytics';
+import { getLeadMeta } from '@/lib/leadMeta';
 
 const TRADE_TYPES = [
   'General Contractor',
@@ -60,7 +61,7 @@ export default function ContractorRegistrationForm() {
       const res = await fetch('/api/contractor/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, session_id: getLeadMeta().session_id }),
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.error || 'Submission failed');
@@ -93,7 +94,7 @@ export default function ContractorRegistrationForm() {
           <CheckCircle2 className="w-14 h-14 text-emerald-600 mx-auto mb-4" />
           <h2 className="text-3xl font-bold text-slate-800 mb-3">Application Received!</h2>
           <p className="text-slate-600 text-lg mb-2">
-            Our team will review your contractor application and contact you within 24 business hours.
+            Thanks — you&apos;re in. We approve trade accounts within one business day and will call you at {form.phone}. Already have a BBS account with this email? It&apos;s now flagged as a trade account.
           </p>
           <p className="text-sm text-slate-500">
             Need immediate assistance? Call us at{' '}
@@ -112,7 +113,7 @@ export default function ContractorRegistrationForm() {
           <h2 className="text-3xl font-bold text-slate-800">Open a Contractor Account</h2>
         </div>
         <p className="text-slate-600 mb-8 text-lg">
-          Volume pricing, priority scheduling, and a dedicated account rep. Fill out the form and we&apos;ll set you up within one business day.
+          Trade pricing quoted per job. Fill out the form and we&apos;ll approve your trade account within one business day.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">

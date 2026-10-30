@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { createPageUrl } from '@/lib/routes';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getStaticBreadcrumbs } from '@/lib/breadcrumbs';
+import { GOOGLE_REVIEWS, GOOGLE_REVIEW_STATS } from '@/data/googleReviews';
 import { GOOGLE_RATING, GOOGLE_REVIEWS_URL, CDN_GALLERY, PHONE_HREF, PHONE_DISPLAY, SERVICE_AREAS } from '@/lib/service-constants';
 import { PhoneIcon, CheckIcon, StarIcon } from '@/components/service';
 import { MobileStickyBtn } from '@/components/service';
@@ -26,13 +27,13 @@ const HERO_IMAGE = `${CDN_GALLERY}/commercial-project-4.webp`;
 const BENEFITS = [
   {
     emoji: '💰',
-    title: 'Member Trade Pricing',
-    desc: 'Exclusive contractor rates on our full 1,000+ product catalog. Your margin stays healthy on every project.',
+    title: 'Trade Pricing on Every Quote',
+    desc: 'Trade pricing on every quote — priced per job, not list price. Hardwood, vinyl, laminate, stairs and supplies.',
   },
   {
     emoji: '📦',
-    title: 'Bulk Order Discounts',
-    desc: 'Multi-unit projects, condo flips, rental portfolios — volume pricing that scales with your business.',
+    title: 'Multi-Unit & Volume Jobs',
+    desc: 'Multi-unit projects, condo flips, rental portfolios — send us the scope and we quote the whole job.',
   },
   {
     emoji: '⚡',
@@ -41,8 +42,8 @@ const BENEFITS = [
   },
   {
     emoji: '📅',
-    title: 'Priority Scheduling',
-    desc: 'Dedicated project coordination. Your install dates don\'t slip because you\'re first in line.',
+    title: 'Project Coordination',
+    desc: 'Direct line to the owner for scheduling, staging and delivery on your jobs.',
   },
   {
     emoji: '🚚',
@@ -58,10 +59,10 @@ const BENEFITS = [
 
 /* ── How It Works Steps ── */
 const STEPS = [
-  { num: '01', title: 'Register', desc: 'Fill out the form below or call us. We\'ll set up your trade account within one business day.' },
-  { num: '02', title: 'Get Pricing', desc: 'Unlock exclusive member rates on 1,000+ products — hardwood, vinyl, laminate, and stair materials.' },
+  { num: '01', title: 'Register', desc: 'Register online — approved within one business day; your account is flagged as a trade account so every quote you send us is priced as trade.' },
+  { num: '02', title: 'Get Pricing', desc: 'Trade pricing quoted on every job — hardwood, vinyl, laminate, stairs and supplies.' },
   { num: '03', title: 'Order & Schedule', desc: 'Place orders online, by phone, or in-person. We\'ll coordinate pickup or delivery to your timeline.' },
-  { num: '04', title: 'Grow Together', desc: 'Dedicated rep, priority scheduling, and volume discounts that increase as your business scales.' },
+  { num: '04', title: 'Grow Together', desc: 'Repeat jobs get faster — we know your specs, your sites and your timelines.' },
 ];
 
 /* ── Product Categories for Contractors ── */
@@ -94,9 +95,9 @@ const PRODUCT_CATEGORIES = [
 
 /* ── Why BBS Over Big Box ── */
 const BIG_BOX_COMPARISON = [
-  { bbs: 'Dedicated account rep who knows your projects', bigBox: 'Minimum-wage floor staff, different person every visit' },
-  { bbs: '1,000+ products in stock — same-day pickup', bigBox: '2-4 week backorders on most specialty items' },
-  { bbs: 'Trade pricing with no annual fees or minimums', bigBox: 'Same price as every homeowner' },
+  { bbs: 'Direct line to the owner who knows your projects', bigBox: 'Different floor staff every visit' },
+  { bbs: '1,000+ products in stock — same-day pickup', bigBox: 'Backorders on many specialty items' },
+  { bbs: 'Trade pricing quoted per job — no annual fees or minimums', bigBox: 'Same price as every homeowner' },
   { bbs: 'Professional installation crew available', bigBox: 'Subcontracted installers you\'ve never met' },
   { bbs: 'Moisture testing, subfloor assessment, product guidance', bigBox: 'Self-serve — you figure it out' },
   { bbs: 'GTA-wide delivery to your job site', bigBox: 'Customer pickup or slow freight delivery' },
@@ -114,15 +115,20 @@ const GALLERY_IMAGES = [
 
 /* ── FAQ ── */
 const FAQ_ITEMS = [
-  { question: 'Does BBS Flooring offer contractor pricing?', answer: 'Yes. Our Member Trade Program gives contractors exclusive pricing on our full catalog — hardwood, vinyl, laminate, and stair materials. No annual fees or minimum commitments. Call (647) 428-1111 or visit our showroom to register.' },
+  { question: 'Does BBS Flooring offer contractor pricing?', answer: 'Yes. Register for a trade account (free, approved within one business day) and every quote is priced as trade — hardwood, vinyl, laminate, stairs and supplies. No annual fees, no minimums.' },
   { question: 'Can contractors buy material only without installation?', answer: 'Absolutely. Many of our contractor clients purchase material only for their own crews to install. We also offer our WSIB-insured installation team if you need additional labour for a project.' },
-  { question: 'Do you offer bulk discounts for large projects?', answer: 'Yes. Multi-unit developments, condo projects, and large residential renovations qualify for additional volume discounts on top of member pricing. Contact us with your project details for a custom quote.' },
+  { question: 'Do you offer bulk discounts for large projects?', answer: 'Yes. Multi-unit developments, condo projects, and large residential renovations are quoted as a whole job, with pricing set per project. Contact us with your project details for a custom quote.' },
   { question: 'How quickly can I pick up material?', answer: 'In-stock products are available for same-day pickup at our Markham warehouse during business hours. For large orders, we stage material and have it ready — just call ahead. GTA-wide delivery is also available.' },
   { question: 'What areas do you serve?', answer: 'We supply contractors across the entire GTA: Markham, Toronto, Scarborough, North York, Richmond Hill, Vaughan, Stouffville, Pickering, Ajax, Whitby, Oshawa, and all of Durham Region. Delivery available to any job site.' },
-  { question: 'Do you price match other flooring stores?', answer: 'Our prices are already contractor-direct — we\'re the source, not a middleman. If you find the exact same product cheaper elsewhere in the GTA, bring the quote and we\'ll talk. Most contractors find we\'re already the lowest once they compare apples to apples.' },
-  { question: 'What brands do you carry?', answer: 'We stock 15+ brands including Vidar, Wickham, NAF, Triforest, Northernest, Woden, Falcon, Canadian Standard, and more. Over 1,000 products in stock at our Markham warehouse — engineered hardwood, SPC vinyl, laminate, and solid hardwood.' },
-  { question: 'Is there a minimum order for contractor pricing?', answer: 'No minimum commitment and no annual fees. Your trade pricing is active from your very first order. Volume discounts kick in on larger projects — the more you buy, the better the rates.' },
+  { question: 'Do you price match other flooring stores?', answer: 'Our prices are already contractor-direct — we\'re the source, not a middleman. If you find the exact same product cheaper elsewhere in the GTA, bring the quote and we\'ll talk. ' },
+  { question: 'What brands do you carry?', answer: 'We stock a dozen brands including Vidar, Wickham, NAF, Triforest, Northernest, Woden, Falcon, Canadian Standard, and more. Over 1,000 products in stock at our Markham warehouse — engineered hardwood, SPC vinyl, laminate, and solid hardwood.' },
+  { question: 'Is there a minimum order for contractor pricing?', answer: 'No minimum commitment and no annual fees. Your trade pricing is active from your very first order. Larger projects are quoted per job.' },
 ];
+
+/* ── Real Google reviews best suited to project / trade buyers ── */
+const TRADE_REVIEW_IDS = ['adam-2025', 'nh-2025', 'alex-2025'];
+const TRADE_REVIEWS = TRADE_REVIEW_IDS.map((id) => GOOGLE_REVIEWS.find((r) => r.id === id)).filter(Boolean);
+const truncateReview = (t, n = 220) => (t.length > n ? `${t.slice(0, n).replace(/\s+\S*$/, '')}…` : t);
 
 /* ── Spoke Links ── */
 const SPOKE_LINKS = [
@@ -177,7 +183,7 @@ export default function ContractorFlooringClient() {
             Flooring for Contractors &amp; Trade Professionals
           </h1>
           <p className="mt-4 text-lg md:text-xl text-slate-200 max-w-2xl leading-relaxed">
-            Member trade pricing, priority scheduling, and a dedicated account rep — built for GTA contractors who demand quality, reliability, and margins that work.
+            Trade pricing quoted per job, in-stock material for same-day pickup, and a direct line to the owner — built for GTA contractors who demand quality, reliability, and margins that work.
           </p>
 
           {/* Pricing pills */}
@@ -228,6 +234,13 @@ export default function ContractorFlooringClient() {
                 <p className="text-slate-600 text-sm leading-relaxed">{b.desc}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-10 bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
+            <p className="text-slate-800 text-lg font-semibold">
+              Pricing a multi-room or multi-unit job?{' '}
+              Plan it room by room → <Link href="/planner" className="text-amber-600 hover:text-amber-700 underline font-bold">Project Planner</Link>
+            </p>
+            <p className="text-slate-600 text-sm mt-1">Boxes, underlay and trim for every room — add it all to cart in one tap.</p>
           </div>
         </div>
       </section>
@@ -287,7 +300,7 @@ export default function ContractorFlooringClient() {
             Products Our Contractors Trust
           </h2>
           <p className="text-slate-600 text-center max-w-2xl mx-auto mb-10 text-lg">
-            15+ brands, 1,000+ products in stock. Need something specific? We source specialty products and custom orders for trade accounts.
+            a dozen brands, 1,000+ products in stock. Need something specific? We source specialty products and custom orders for trade accounts.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {PRODUCT_CATEGORIES.map((cat, i) => (
@@ -327,7 +340,7 @@ export default function ContractorFlooringClient() {
             Why Contractors Choose BBS Over Big Box
           </h2>
           <p className="text-slate-600 text-center max-w-xl mx-auto mb-10 text-lg">
-            We know what it&apos;s like to be on a tight timeline. Here&apos;s why 100+ GTA contractors trust us.
+            We know what it&apos;s like to be on a tight timeline. Here&apos;s why GTA contractors trust us.
           </p>
 
           {/* Desktop: Table */}
@@ -384,23 +397,20 @@ export default function ContractorFlooringClient() {
             <span className="text-slate-600">Google Reviews</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800 mb-10">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800 mb-2">
             Trusted by Homeowners &amp; Contractors Across the GTA
           </h2>
+          <p className="text-slate-600 mb-10">{`${GOOGLE_REVIEW_STATS.averageRating}★ · ${GOOGLE_REVIEW_STATS.totalReviews} Google reviews`}</p>
 
           <div className="grid sm:grid-cols-3 gap-5">
-            {[
-              { name: 'Mike R.', text: 'Great experience working with BBS on a multi-unit renovation. Pricing was fair, material was ready on time, and the quality is excellent. Will use again.', rating: 5 },
-              { name: 'Sarah L.', text: 'Abram and the team went above and beyond. We needed flooring for a tight-deadline condo flip and they had everything in stock. Highly recommend.', rating: 5 },
-              { name: 'David K.', text: 'Been using BBS for my renovation projects for over a year now. Consistent quality, competitive pricing, and they actually answer the phone. Rare in this industry.', rating: 5 },
-            ].map((review, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-slate-200 p-6 text-left">
+            {TRADE_REVIEWS.map((review) => (
+              <div key={review.id} className="bg-white rounded-2xl border border-slate-200 p-6 text-left">
                 <div className="flex gap-0.5 mb-3">
                   {[...Array(review.rating)].map((_, j) => (
                     <StarIcon key={j} className="w-4 h-4 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-slate-600 text-sm leading-relaxed mb-4">&quot;{review.text}&quot;</p>
+                <p className="text-slate-600 text-sm leading-relaxed mb-4">&quot;{truncateReview(review.text)}&quot;</p>
                 <p className="font-bold text-slate-800 text-sm">{review.name}</p>
               </div>
             ))}
@@ -497,7 +507,7 @@ export default function ContractorFlooringClient() {
             Ready to Partner With BBS?
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-            No annual fees, no minimum orders, no hassle. Just great flooring at contractor-direct prices with a team that gets it done.
+            No annual fees, no minimum orders, no hassle. Just trade pricing quoted per job, and a team that gets it done.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a

@@ -29,7 +29,7 @@ export default function CartClient() {
   });
   const [couponError, setCouponError] = useState('');
   const { user } = useAuth();
-  const isVerified = user?.is_verified === true;
+  const isTrade = user?.role === 'trade';
 
   useEffect(() => {
     setSessionId(localStorage.getItem('bbs_session_id'));
@@ -167,7 +167,7 @@ export default function CartClient() {
     },
   });
 
-  const pricingLabel = isVerified ? 'Trade Price' : 'Retail Price';
+  const pricingLabel = isTrade ? 'Trade account' : 'Retail Price';
 
   // Coupon apply handler
   const handleApplyCoupon = () => {
@@ -598,11 +598,14 @@ export default function CartClient() {
 
               {!noFlooring && <Separator />}
 
-              {isVerified && (
+              {isTrade && (
                 <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-800 flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                  <span><strong>Trade pricing applied</strong> — you&apos;re seeing wholesale rates.</span>
+                  <span><strong>Trade account</strong> — trade pricing is confirmed on your quote. Call or text <a href="tel:+16474281111" className="underline">(647) 428-1111</a> before paying for job pricing.</span>
                 </div>
+              )}
+              {!isTrade && (
+                <p className="text-xs text-slate-500">Contractor or builder? <Link href="/contractor-flooring" className="text-amber-700 underline">Apply for a trade account</Link> — approved within one business day.</p>
               )}
 
               {/* Coupon Code */}

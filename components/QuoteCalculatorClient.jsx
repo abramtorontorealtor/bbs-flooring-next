@@ -443,7 +443,7 @@ export default function QuoteCalculatorClient() {
 
     const displayTotal = Math.max(total, MINIMUM_QUOTE);
     const minimumApplied = total < MINIMUM_QUOTE;
-    const newQuote = { flooringCost, installationCost, removalCost, baseboardCost, shoeMouldingCost, deliveryCost, linearFeet, subtotal, tax, total, displayTotal, minimumApplied, pricePerSqft, isMember: !!currentUser };
+    const newQuote = { flooringCost, installationCost, removalCost, baseboardCost, shoeMouldingCost, deliveryCost, linearFeet, subtotal, tax, total, displayTotal, minimumApplied, pricePerSqft, isMember: currentUser?.role === 'trade' }; // isMember = approved trade account (users.role 'trade'), NOT merely logged in
     setQuote(newQuote);
 
     clearTimeout(calcTrackTimeoutRef.current);

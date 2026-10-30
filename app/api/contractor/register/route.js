@@ -43,6 +43,21 @@ export async function POST(request) {
 
     if (error) throw error;
 
+    // Auto-flag an existing site account as trade. Guarded to role 'member' so admin/trade are never touched.
+    let tradeFlagged = false;
+    try {
+      const { data: flagged, error: flagErr } = await supabase
+        .from('users')
+        .update({ role: 'trade', company_name: company_name || null })
+        .eq('email', String(email).trim().toLowerCase())
+        .eq('role', 'member')
+        .select('id');
+      if (flagErr) throw flagErr;
+      tradeFlagged = Array.isArray(flagged) && flagged.length > 0;
+    } catch (e) {
+      console.error('[Contractor] trade flag failed:', e?.message);
+    }
+
     await identifyVisitor(supabase, {
       visitorId,
       email,
@@ -89,7 +104,7 @@ export async function POST(request) {
       console.error('[Contractor] Telegram alert failed:', e?.message);
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, trade_flagged: tradeFlagged });
   } catch (error) {
     console.error('Contractor registration error:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

@@ -82,6 +82,7 @@ export default function FooterServer() {
                 { name: 'Financing Available', path: '/financing' },
                 { name: 'Quote Calculator', path: '/quote-calculator' },
                 { name: 'Project Planner', path: '/planner' },
+                { name: 'Contractor & Trade Pricing', path: '/contractor-flooring' },
                 { name: 'Free Measurement', path: '/free-measurement' },
                 { name: 'Project Gallery', path: '/gallery' },
                 { name: 'About Us', path: '/about' },
