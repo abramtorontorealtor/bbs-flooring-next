@@ -280,14 +280,14 @@ function RoomCard({ room, calc, index, canRemove, products, productsLoading, pro
                   <button type="button" onClick={() => onChange({ mode: 'direct' })} className="text-xs font-semibold text-amber-700 hover:underline">I know my sq ft →</button>
                 </div>
                 <div className="mt-1.5 flex items-end gap-3">
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <label className="mb-1 block text-xs text-slate-500" htmlFor={`len-${room.id}`}>Length (ft)</label>
                     <input id={`len-${room.id}`} type="number" inputMode="decimal" min="1" step="0.5" placeholder="e.g. 20" value={room.length}
                       onChange={(e) => onChange({ length: e.target.value })}
                       className="h-12 w-full rounded-xl border-2 border-amber-300 bg-white px-3 text-base font-semibold focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-400" />
                   </div>
                   <span className="pb-3 text-lg font-bold text-slate-400">×</span>
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <label className="mb-1 block text-xs text-slate-500" htmlFor={`wid-${room.id}`}>Width (ft)</label>
                     <input id={`wid-${room.id}`} type="number" inputMode="decimal" min="1" step="0.5" placeholder="e.g. 15" value={room.width}
                       onChange={(e) => onChange({ width: e.target.value })}
