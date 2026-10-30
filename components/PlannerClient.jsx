@@ -233,7 +233,7 @@ function RoomCard({ room, calc, index, canRemove, products, productsLoading, pro
   const isStairs = room.kind === 'stairs';
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5" aria-label={`Room ${index + 1}`}>
+    <section className="min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5" aria-label={`Room ${index + 1}`}>
       <div className="flex items-center gap-2">
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-xs font-bold text-amber-800">{index + 1}</span>
         <input
@@ -317,7 +317,7 @@ function RoomCard({ room, calc, index, canRemove, products, productsLoading, pro
             <div className="flex gap-2" role="group" aria-label="Waste allowance">
               {WASTE_OPTIONS.map((opt) => (
                 <button key={opt.value} type="button" onClick={() => onChange({ waste: opt.value })} aria-pressed={room.waste === opt.value} title={opt.desc}
-                  className={`flex-1 rounded-lg border py-2 text-xs font-semibold transition-all ${room.waste === opt.value ? 'border-amber-300 bg-amber-50 text-amber-800' : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'}`}>
+                  className={`min-w-0 flex-1 rounded-lg border px-1 py-2 text-xs font-semibold transition-all ${room.waste === opt.value ? 'border-amber-300 bg-amber-50 text-amber-800' : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'}`}>
                   {opt.label}
                   <span className="block text-[10px] font-normal opacity-80">{opt.desc}</span>
                 </button>
@@ -677,8 +677,8 @@ export default function PlannerClient() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-32 lg:pb-12">
-      <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
-        <div className="space-y-4">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="min-w-0 space-y-4">
           {rooms.map((room, i) => (
             <RoomCard
               key={room.id}
