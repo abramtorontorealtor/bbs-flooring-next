@@ -20,7 +20,7 @@ import useBusinessHours from '@/components/useBusinessHours';
 // floating CTA would fight the page's own primary action (cart/checkout/booking)
 // and on PDPs (they have StickyAddToCart / their own buy box).
 
-const HIDDEN_PATHS = ['/cart', '/checkout', '/view-booking', '/quote-booking', '/quote-calculator'];
+const HIDDEN_PATHS = ['/cart', '/checkout', '/view-booking', '/quote-booking', '/quote-calculator', '/planner'];
 const WHATSAPP_URL = 'https://wa.me/message/CQQRGZKI3U2VH1';
 
 // Deep-link Instant Quote to the matching intent branch based on the current page,
