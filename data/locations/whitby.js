@@ -1,8 +1,8 @@
 // /flooring-in/whitby — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Whitby",
-  "title": "Flooring Installation Whitby — Hardwood, Vinyl & Stairs | BBS Flooring",
-  "description": "Flooring installation in Whitby & Brooklin: hardwood from $3.69/sqft, vinyl plank from $1.89/sqft. ~40 min from Markham. Free estimates: (647) 428-1111.",
+  "title": "Flooring Whitby — Hardwood & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Hardwood, vinyl & laminate flooring in Whitby & Brooklin from $1.49/sqft — buy supply-only or installed by our own crews (floating from $2.00/sqft). Free in-home estimate: (647) 428-1111.",
   "content": "BBS Flooring provides flooring installation across Whitby, from Brooklin's new-build subdivisions in the north to the older streets of downtown Whitby and Port Whitby, about 40 minutes east of our Markham showroom via Highway 407/412 or Highway 401. Hardwood flooring is the search Whitby homeowners run most often, and it's also where our crews spend the most time — matching engineered hardwood to builder-grade laminate in newer Brooklin homes, refinishing original hardwood along Port Whitby's older streets, and installing waterproof vinyl plank in basements from Williamsburg to Taunton North. We carry engineered hardwood, solid hardwood, laminate, and vinyl plank, plus stair refinishing to match new floors. Call (647) 428-1111 for a free in-home estimate, or visit the Markham showroom first to see samples.",
   "landmarks": [
     "Brooklin",

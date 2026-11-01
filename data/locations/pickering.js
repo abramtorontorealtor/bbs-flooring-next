@@ -1,8 +1,8 @@
 // /flooring-in/pickering — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Pickering",
-  "title": "Flooring Installation Pickering — Hardwood, Vinyl & Stairs | BBS Flooring",
-  "description": "Flooring installation in Pickering: hardwood, vinyl, and laminate from $1.49/sqft, plus new-build upgrades in Seaton. Free in-home estimate — (647) 428-1111.",
+  "title": "Flooring Pickering — Hardwood & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Hardwood, vinyl & laminate flooring in Pickering from $1.49/sqft — supply-only or installed by our own crews (floating from $2.00/sqft). Seaton new-builds welcome. Free estimate: (647) 428-1111.",
   "content": "BBS Flooring provides flooring installation in Pickering, from Seaton's new-build subdivisions to the established streets around Bay Ridges and Frenchman's Bay. Pickering sits about 30 minutes east of our Markham showroom via Highway 401 or the 407/412, and our crews cover the whole city. Homeowners search for hardwood flooring Pickering families trust because we handle the entire job — removal, subfloor prep, and trim — not just supplying the material. Solid and engineered hardwood, waterproof vinyl plank, and laminate are all in stock. New-build owners in Seaton typically start here to replace stock laminate and carpet with something that matches the rest of the main floor, staircase included, while owners in Pickering's older neighbourhoods are usually replacing worn carpet or tired hardwood.",
   "landmarks": [
     "Pickering Town Centre",

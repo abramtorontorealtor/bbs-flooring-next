@@ -1,8 +1,8 @@
 // /flooring-in/newmarket — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Newmarket",
-  "title": "Flooring Installation Newmarket — Hardwood & Vinyl | BBS Flooring",
-  "description": "Flooring installation in Newmarket — engineered hardwood from $3.69/sqft, vinyl plank from $1.89/sqft. 25-30 min south of Newmarket. Free estimates. (647) 428-1111.",
+  "title": "Flooring Newmarket — Hardwood & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Hardwood, vinyl & laminate flooring in Newmarket from $1.49/sqft — buy supply-only or installed by our own crews (floating from $2.00/sqft). 25-30 min from Markham. Free estimate: (647) 428-1111.",
   "content": "BBS Flooring handles flooring installation across Newmarket, from heritage homes near Main Street to newer subdivisions like Stonehaven and Woodland Hill. We stock hardwood flooring, engineered hardwood, laminate, and vinyl plank, with engineered hardwood and SPC vinyl as the go-to picks for homes running in-floor radiant heat. Our Markham showroom is about 25-30 minutes south of Newmarket via Highway 404 or Woodbine Avenue, and we offer free in-home estimates if the trip doesn't fit your schedule. Whether it's a full main-floor install, a basement retrofit, or converting a carpeted staircase to hardwood, our own crews handle it start to finish.",
   "landmarks": [
     "Upper Canada Mall",

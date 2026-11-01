@@ -1,8 +1,8 @@
 // /flooring-in/scarborough — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Scarborough",
-  "title": "Flooring Installation Scarborough | Hardwood, Vinyl & Stairs | BBS Flooring",
-  "description": "Flooring installation in Scarborough — laminate from $1.49/sqft, hardwood from $3.69/sqft. 15-20 min from Markham. Free in-home estimates. (647) 428-1111.",
+  "title": "Flooring Scarborough — Hardwood & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Hardwood, vinyl & laminate flooring in Scarborough from $1.49/sqft — buy supply-only or installed by our own crews (floating from $2.00/sqft). 15-20 min from Markham. Free estimate: (647) 428-1111.",
   "content": "BBS Flooring provides flooring installation across Scarborough, from Agincourt and Wexford to Malvern, Birch Cliff, and Scarborough Village. Our Markham showroom sits about 15-20 minutes north of most Scarborough neighbourhoods via Markham Road, McCowan Road, or Highway 401, and our installation crews cover the whole city. A lot of Scarborough's flooring work involves the area's 1960s-80s bungalows, back-splits, and two-storey homes — stair refinishing, carpet-to-hardwood conversions, and replacing original hardwood or parquet with engineered hardwood or waterproof vinyl plank. We also carry laminate flooring and clearance vinyl for homeowners working with a tighter budget. Whether you're after hardwood flooring for a Scarborough main floor or a full flooring store visit to compare samples, we handle the measuring, subfloor prep, and installation from start to finish.",
   "landmarks": [
     "Scarborough Town Centre",

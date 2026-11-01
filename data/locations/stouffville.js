@@ -1,8 +1,8 @@
 // /flooring-in/stouffville — city hub content. Edit here; aggregated by data/locationData.js.
 const data = {
   "city": "Stouffville",
-  "title": "Flooring Stouffville — Hardwood, Vinyl & Stairs | BBS Flooring",
-  "description": "Flooring installation in Stouffville from $1.49/sqft laminate to $5.10/sqft hardwood. 12–15 min from our Markham showroom. Free estimates. (647) 428-1111.",
+  "title": "Flooring Stouffville — Hardwood & Vinyl From $1.49/sqft + Installation | BBS Flooring",
+  "description": "Hardwood, vinyl & laminate flooring in Stouffville from $1.49/sqft — supply-only or installed by our own crews (floating from $2.00/sqft). 12-15 min from Markham. Free estimate: (647) 428-1111.",
   "content": "BBS Flooring installs hardwood, vinyl, and laminate flooring throughout Stouffville, about 12 to 15 minutes north of our Markham showroom via Highway 48 to Highway 7. Whitchurch-Stouffville's mix of century homes along Main Street, newer subdivisions in Heritage Hills and Bloom, and larger properties around Ballantrae and Musselman's Lake each call for a different approach, and we help homeowners choose the right product for their subfloor and lifestyle. We're also one of the flooring stores Stouffville homeowners call for stairs — carpet-to-hardwood conversions and refinishing on the builder-grade stairs that come standard in most new-build homes. Whether you're refinishing original hardwood in an older Stouffville house or upgrading a new build's stock finishes, we handle the floor and the staircase together, then deliver or install on your schedule.",
   "landmarks": [
     "Main Street Stouffville",
