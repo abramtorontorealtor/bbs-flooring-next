@@ -15,10 +15,10 @@ const has = (str, sub) => lc(str).includes(lc(sub));
 
 export const nafFlooringData = {
   route: 'NafFlooring',
-  title: 'NAF Flooring Review & Prices Markham | Canadian-Made, 30-Yr Warranty',
-  description: 'Is NAF flooring good? Canadian-made, 30-year residential warranty, AC5 laminate, 100% waterproof AquaPlus vinyl. 170+ products from $2.39/sqft at BBS Flooring Markham. Call (647) 428-1111.',
+  title: 'NAF Flooring Review & Prices Markham | Canadian Brand, 30-Yr Warranty',
+  description: 'Is NAF flooring good? Canadian company, 30-year residential warranty, AC5 laminate, 100% waterproof AquaPlus vinyl. 170+ products from $2.39/sqft at BBS Flooring Markham. Call (647) 428-1111.',
   h1: 'NAF Flooring — Vinyl, Hardwood & Laminate',
-  subtitle: 'Canadian-made, backed by a 30-year residential warranty — 170+ NAF products in stock at our Markham showroom. Waterproof AquaPlus vinyl, engineered oak, and AC5-rated laminate. One trusted brand covers every room in your home.',
+  subtitle: 'A Canadian company, backed by a 30-year residential warranty — 170+ NAF products in stock at our Markham showroom. Waterproof AquaPlus vinyl, engineered oak, and AC5-rated laminate. One trusted brand covers every room in your home.',
   parentPage: null,
   schemaType: 'product',
   content: [
@@ -26,7 +26,7 @@ export const nafFlooringData = {
       heading: 'Is NAF Flooring Good? Why It\'s Worth It',
       body: `<p>NAF is one of the strongest all-round brands we carry — here's what sets it apart:</p>
 <ul>
-<li><strong>Canadian-made</strong> — built and quality-controlled for Canadian climates, not imported and hoping for the best.</li>
+<li><strong>Canadian company</strong> — a Canadian-owned brand that specs and quality-controls its floors for Canadian climates.</li>
 <li><strong>30-year residential warranty</strong> (5-year light commercial) — serious backing across the lineup.</li>
 <li><strong>100% waterproof AquaPlus vinyl</strong> — SPC cores rated for basements, kitchens, and bathrooms with zero moisture worry.</li>
 <li><strong>AC5 commercial-grade laminate</strong> — the toughest wear rating available, including the 14mm Waterproof PRO with attached underpad.</li>
@@ -57,7 +57,7 @@ export const nafFlooringData = {
     },
   ],
   faqItems: [
-    { question: 'Is NAF Flooring a good brand?', answer: 'Yes — NAF is one of the better all-round brands available. It\'s Canadian-made, carries a 30-year residential warranty, and spans vinyl, engineered hardwood, and laminate all built for Canadian climate conditions. Its AquaPlus vinyl is 100% waterproof and its laminate is AC5-rated (the toughest wear class). BBS Flooring carries 170+ NAF products and installs them regularly across the GTA.' },
+    { question: 'Is NAF Flooring a good brand?', answer: 'Yes — NAF is one of the better all-round brands available. It\'s a Canadian company, carries a 30-year residential warranty, and spans vinyl, engineered hardwood, and laminate all built for Canadian climate conditions. Its AquaPlus vinyl is 100% waterproof and its laminate is AC5-rated (the toughest wear class). BBS Flooring carries 170+ NAF products and installs them regularly across the GTA.' },
     { question: 'How much does NAF vinyl flooring cost?', answer: 'NAF vinyl plank at BBS Flooring ranges from $2.99 to $4.29 per square foot depending on thickness and underpad type. The 7mm options with cork underpad are the most popular for homes. Call (647) 428-1111 for current pricing on specific products.' },
     { question: 'Is NAF vinyl flooring waterproof?', answer: 'Yes. All NAF vinyl plank flooring is 100% waterproof with an SPC (Stone Polymer Composite) core. It can be installed in basements, kitchens, bathrooms, and laundry rooms without moisture concerns.' },
     { question: 'Where can I buy NAF Flooring in Markham?', answer: 'BBS Flooring at 6061 Highway 7, Unit B carries 170+ NAF products in stock — vinyl, engineered hardwood, and laminate including the new 14mm PRO line. Walk-ins welcome Monday–Saturday. We also offer free in-home measurements across the GTA.' },
