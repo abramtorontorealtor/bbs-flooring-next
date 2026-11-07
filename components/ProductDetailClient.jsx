@@ -462,7 +462,8 @@ export default function ProductDetailClient({ slug, initialProduct = null, initi
     if (currentPricing.dimensions) items.push({ label: 'Dimensions', value: currentPricing.dimensions });
     if (currentPricing.thickness) items.push({ label: 'Thickness', value: currentPricing.thickness });
     if (currentPricing.finish) items.push({ label: 'Finish', value: currentPricing.finish });
-    if (currentPricing.grade) items.push({ label: 'Grade', value: currentPricing.grade });
+    // Grade is a hardwood spec; vinyl rows carry wear-layer/AC values in this column — never render it on vinyl (Abram, Nov 7 2026).
+    if (currentPricing.grade && !isVinyl) items.push({ label: 'Grade', value: currentPricing.grade });
     // Only advertise wear layer/veneer of 2mm+ on engineered hardwood. Sub-2mm veneers are suppressed
     // (DB value retained internally). Vinyl/laminate wear layers are a different spec and always shown.
     const wearLayerMm = parseFloat(currentPricing.wear_layer);

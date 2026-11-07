@@ -144,7 +144,7 @@ function productToMd(p) {
     p.dimensions && `Dimensions: ${p.dimensions}`,
     p.thickness && `Thickness: ${p.thickness}`,
     p.finish && `Finish: ${p.finish}`,
-    p.grade && `Grade: ${p.grade}`,
+    p.grade && !["vinyl","vinyl_plank","laminate"].includes(p.category) && `Grade: ${p.grade}`,
     p.wear_layer && `Wear Layer: ${p.wear_layer}`,
     p.ac_rating && `AC Rating: ${p.ac_rating}`,
     p.colour && `Colour: ${p.colour}`,
@@ -386,7 +386,7 @@ For the full product catalog and pricing: https://bbsflooring.ca/llms-full.txt
         if (product.dimensions) md += `| Dimensions | ${product.dimensions} |\n`;
         if (product.thickness) md += `| Thickness | ${product.thickness} |\n`;
         if (product.finish) md += `| Finish | ${product.finish} |\n`;
-        if (product.grade) md += `| Grade | ${product.grade} |\n`;
+        if (product.grade && !["vinyl","vinyl_plank","laminate"].includes(product.category)) md += `| Grade | ${product.grade} |\n`;
         if (product.colour) md += `| Colour | ${product.colour} |\n`;
         if (product.wear_layer) md += `| Wear Layer | ${product.wear_layer} |\n`;
         if (product.ac_rating) md += `| AC Rating | ${product.ac_rating} |\n`;
