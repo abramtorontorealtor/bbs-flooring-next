@@ -11,7 +11,6 @@ export const maxDuration = 60;
 //
 //   • Instant quotes (`quotes`)         → day 1, day 3, day 7 after the quote (3 touches max)
 //   • Abandoned checkout (contact_leads) → ~1h, ~48h (2 touches max)
-//   • Contact / PDP / estimator leads    → one nudge at ~24h
 //
 // Stage tracking: every automated send is a `lead_follow_ups` row with sent_by='auto', so the CRM
 // shows the history and the count IS the stage (no schema change). contact_leads additionally keep
@@ -42,8 +41,6 @@ const QUOTE_STAGES = [
 ];
 const ABANDON_FIRST_DELAY_MS = 1 * HOUR;
 const ABANDON_SECOND_DELAY_MS = 48 * HOUR;
-const CONTACT_NUDGE_DELAY_MS = 24 * HOUR;
-const CONTACT_SOURCES = ['pdp_quote_request', 'contact_form', 'carpet-removal-estimator', 'quote-calculator-carpet-removal', 'sample_request_showroom'];
 
 function hourInToronto(d = new Date()) {
   const h = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', hour: 'numeric', hour12: false }).format(d);
@@ -191,7 +188,7 @@ export async function GET(request) {
   const results = {
     ok: true, dry_run: dryRun, hour_et: hour,
     quote_day1: 0, quote_day3: 0, quote_day7: 0,
-    abandoned_first: 0, abandoned_second: 0, contact_nudge: 0,
+    abandoned_first: 0, abandoned_second: 0,
     suppressed: 0, skipped: [], would_send: [], errors: [],
   };
 
@@ -322,43 +319,8 @@ export async function GET(request) {
       }
     }
 
-    // ── 3. Contact / PDP / estimator leads: one nudge at ~24h ──
-    {
-      const cutoff = new Date(now - CONTACT_NUDGE_DELAY_MS).toISOString();
-      const since = new Date(now - MAX_START_AGE_MS).toISOString();
-      const { data: leads } = await supabase
-        .from('contact_leads')
-        .select('*')
-        .in('source', CONTACT_SOURCES)
-        .eq('status', 'new')
-        .gte('created_at', since)
-        .lte('created_at', cutoff)
-        .not('customer_email', 'is', null)
-        .order('created_at', { ascending: true })
-        .limit(BATCH);
-
-      for (const lead of (leads || [])) {
-        if (stageOf(lead) !== 0) continue;
-        const email = normalizeEmail(lead.customer_email);
-        try {
-          const hist = await followupHistory(supabase, lead.id);
-          if (hist.manual || hist.autoCount > 0) { if (!dryRun) await setStage(supabase, lead, 1); continue; }
-          const reason = await suppressReason({ email, phone: lead.customer_phone, createdAt: lead.created_at, leadId: lead.id, suppressions });
-          if (reason) { results.suppressed++; results.skipped.push({ id: lead.id, reason }); continue; }
-
-          const template = lead.source === 'pdp_quote_request' ? 'quote_followup' : 'general_checkin';
-          const product = lead.metadata?.product_name || lead.metadata?.product || null;
-          await deliver({
-            leadId: lead.id, leadSource: 'contact', template, email,
-            send: () => sendFollowUpEmail({ to: email, template, vars: { name: firstName(lead.customer_name, email), product, unsubscribe_url: unsubscribeUrl(email) } }),
-          });
-          if (!dryRun) await setStage(supabase, lead, 1);
-          results.contact_nudge++;
-        } catch (err) {
-          results.errors.push({ id: lead.id, step: 'contact_nudge', error: err.message });
-        }
-      }
-    }
+    // (Contact-form / PDP inquiries are deliberately NOT auto-nudged: they asked a specific question and
+    //  need a real answer from Abram / the ops bot, not a "checking in" email. See handoff Nov 13 2026.)
 
     return NextResponse.json({ ...results, timestamp: new Date().toISOString() });
   } catch (error) {
