@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 /**
  * One-off temporary closure popup (floating modal — does NOT affect page layout).
  *
- * Notice: showroom closed Thu November 12, 2026.
+ * Notice: showroom closed Thu Nov 19 – Sat Nov 21, 2026 (inventory count & showroom refresh). Phones off; text/WhatsApp/email/online quotes open.
  *
- * Self-expiring: only renders through end of day November 12, 2026 America/Toronto.
+ * Self-expiring: only renders through end of day November 21, 2026 America/Toronto.
  * After that it renders nothing, so a forgotten popup cannot linger.
  * Dismissible per-visitor via sessionStorage (won't nag on every page view).
  *
@@ -15,9 +15,9 @@ import { useEffect, useState } from 'react';
  * reserves space in the document flow and cannot push/break the header layout.
  */
 
-// Show through 2026-11-13 05:00 UTC == 2026-11-13 00:00 ET (end of Nov 12 ET, EST).
-const EXPIRES_AT = Date.parse('2026-11-13T05:00:00Z');
-const DISMISS_KEY = 'bbs-closure-2026-11-12-dismissed';
+// Show through 2026-11-22 05:00 UTC == 2026-11-22 00:00 ET (end of Nov 21 ET, EST).
+const EXPIRES_AT = Date.parse('2026-11-22T05:00:00Z');
+const DISMISS_KEY = 'bbs-closure-2026-11-19-21-dismissed';
 
 export default function ClosurePopup() {
   const [show, setShow] = useState(false);
@@ -73,14 +73,22 @@ export default function ClosurePopup() {
         </div>
 
         <h2 id="closure-title" className="text-lg font-bold text-slate-900">
-          Showroom Closed Today
+          Showroom Closed Nov 19–21
         </h2>
-        <p className="mt-1 text-sm font-medium text-amber-700">Thursday, November&nbsp;12</p>
+        <p className="mt-1 text-sm font-medium text-amber-700">Thursday, Nov&nbsp;19 – Saturday, Nov&nbsp;21</p>
 
         <p className="mt-3 text-sm leading-relaxed text-slate-600">
-          Our showroom is closed today. Online orders &amp; quote requests are
-          still open — call or request a quote and we&apos;ll get right back to
-          you. Back in the showroom tomorrow. Thanks for your patience!
+          Our showroom is closed Thu Nov&nbsp;19 – Sat Nov&nbsp;21 for our
+          annual inventory count &amp; showroom refresh. Back Monday Nov&nbsp;23
+          with new samples on the floor.
+        </p>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          Phones are off those days — text or WhatsApp{' '}
+          <a href="sms:6474281111" className="font-semibold text-slate-900 underline">647-428-1111</a>,
+          email{' '}
+          <a href="mailto:info@bbsflooring.ca" className="font-semibold text-slate-900 underline">info@bbsflooring.ca</a>,
+          or request a quote online. Online orders &amp; quote requests stay open
+          and we reply the same day.
         </p>
 
         <button
