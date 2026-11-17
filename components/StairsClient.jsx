@@ -24,7 +24,7 @@ const STAIRS_SPOKE_LINKS = [
   { route: 'Gallery', label: 'Project Gallery', description: 'Browse completed staircase and flooring projects across the GTA' },
 ];
 
-export default function StairsClient() {
+export default function StairsClient({ answerBlock = null }) {
   useEffect(() => {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'view_item_list', { item_list_name: 'Stairs' });
@@ -63,6 +63,9 @@ export default function StairsClient() {
           </p>
         </div>
       </div>
+
+      {/* Server-rendered GEO answer block (passed from page.jsx) */}
+      {answerBlock}
 
       {/* Service Hero */}
       <div className="bg-white border-b border-slate-200">
@@ -124,7 +127,7 @@ export default function StairsClient() {
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-slate-800 mb-4">Staircase Renovation Pricing</h2>
           <p className="text-lg text-slate-600 mb-8">
-            Transparent starting prices — all-inclusive of labour and materials. Every staircase is different, so build your exact configuration in the calculator above and we'll email you an itemized quote.
+            Transparent starting prices — all-inclusive of labour and materials. Every staircase is different, so build your exact configuration in the calculator above and we&apos;ll email you an itemized quote.
           </p>
 
           <div className="grid sm:grid-cols-3 gap-6 mb-8">

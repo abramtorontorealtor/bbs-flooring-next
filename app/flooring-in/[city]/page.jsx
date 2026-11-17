@@ -8,6 +8,7 @@ import LocationProductGrid from '@/components/LocationProductGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getLocationBreadcrumbs } from '@/lib/breadcrumbs';
 import ProductCardStatic from '@/components/ProductCardStatic';
+import AnswerBlock from '@/components/AnswerBlock';
 
 export const revalidate = 3600; // 1-hour ISR
 
@@ -40,6 +41,17 @@ export default async function LocationPage({ params }) {
     .slice(0, 8);
 
   const citySlug = city;
+
+  // GEO/AEO answer block — built from location data only. Distance sentence is reused verbatim from
+  // data.content (never composed here); omitted when the city data has none.
+  const driveSentence = !data.isFlagship && typeof data.content === 'string'
+    ? (data.content.split(/(?<=[.!?])\s+(?=[A-Z])/).find(
+        (s) => /^Our (Markham )?showroom/i.test(s) && /\d+(-| to |–)?\d*[- ]minute/i.test(s) && !/BBS Flooring|brands|1,000/i.test(s) && s.length <= 200
+      ) || '')
+    : '';
+  const answerText = data.isFlagship
+    ? `BBS Flooring is a family-owned flooring store and installer in ${data.city}, Ontario (since 2012), with its showroom at 6061 Highway 7, Unit B. It offers free in-home measurement, installs with its own crews, and is open Monday to Saturday, 10am–5pm. Call (647) 428-1111.`
+    : `BBS Flooring, a family-owned flooring store and installer (since 2012), serves ${data.city} from its Markham showroom at 6061 Highway 7, Unit B. It offers free in-home measurement in ${data.city}, installs with its own crews, and is open Monday to Saturday, 10am–5pm. ${driveSentence ? driveSentence + ' ' : ''}Call (647) 428-1111.`;
 
   return (
     <>
@@ -129,6 +141,16 @@ export default async function LocationPage({ params }) {
           </div>
         </div>
 
+        {/* ── GEO/AEO answer block (server-rendered, driven by location data) ── */}
+        <div className="rounded-2xl overflow-hidden mb-16">
+          <AnswerBlock
+            compact
+            id="where-to-buy-flooring"
+            question={`Where can I buy flooring in ${data.city} and get it installed?`}
+            answer={answerText}
+          />
+        </div>
+
         {/* ── SSR Why Choose Us Section ── */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-16">
           <h2 className="text-3xl font-bold text-slate-800 mb-6 text-center">
@@ -188,7 +210,7 @@ export default async function LocationPage({ params }) {
         {data.neighbourhoods && data.neighbourhoods.length > 0 && (
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-slate-800 mb-2">Flooring for Every {data.city} Neighbourhood</h2>
-            <p className="text-slate-600 mb-8">{data.city} has diverse neighbourhoods with unique homes that call for different flooring solutions. Here's what we recommend based on our experience installing in your area.</p>
+            <p className="text-slate-600 mb-8">{data.city} has diverse neighbourhoods with unique homes that call for different flooring solutions. Here&apos;s what we recommend based on our experience installing in your area.</p>
             <div className="grid md:grid-cols-2 gap-6">
               {data.neighbourhoods.map((nb, i) => (
                 <div key={i} className="bg-white rounded-xl border border-slate-200 p-6 hover:border-amber-300 transition-colors">

@@ -25,6 +25,10 @@ export const INSTALLATION_FAQS = [
     question: 'What areas do you serve for flooring installation?',
     answer: 'BBS Flooring provides professional installation across Markham, Toronto, Scarborough, Pickering, Ajax, Whitby, Oshawa, Richmond Hill, Vaughan, Stouffville, and the entire Durham Region and Greater Toronto Area. Our showroom is located at 6061 Highway 7, Unit B, Markham, ON.'
   },
+  {
+    question: 'How much does flooring installation cost in Markham and the GTA?',
+    answer: 'At BBS Flooring, installation labour starts at $2.00/sqft for vinyl and laminate and $2.25/sqft for hardwood, with herringbone from $4.25/sqft. Material, delivery and old-floor removal are quoted as separate line items. BBS Flooring is a family-owned Markham flooring store (since 2012) that installs with its own crews and measures your home free of charge anywhere in the GTA.'
+  },
 ];
 
 export const STAIRS_FAQS = [
@@ -47,6 +51,10 @@ export const STAIRS_FAQS = [
   {
     question: 'What areas do you serve for staircase renovation?',
     answer: 'We provide staircase renovation, refinishing, and installation services across Markham, Toronto, Scarborough, Pickering, Ajax, Whitby, Oshawa, Richmond Hill, Vaughan, Stouffville, and the full Greater Toronto Area. Visit our showroom at 6061 Highway 7, Unit B, Markham for samples and a free consultation.'
+  },
+  {
+    question: 'How much does stair refinishing or recapping cost in the GTA?',
+    answer: 'At BBS Flooring, stair refinishing starts at $125/step and new hardwood treads (recapping or carpet-to-hardwood) start at $185/step. Specialty steps such as pie, triangle or bullnose are $225/step. BBS Flooring is a family-owned Markham flooring store and installer (since 2012); final stair pricing is confirmed after a free in-home measurement.'
   },
 ];
 

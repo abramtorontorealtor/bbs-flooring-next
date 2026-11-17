@@ -86,7 +86,7 @@ const GALLERY_ITEMS = [
   flooringImages[9], stairsImages[4],
 ];
 
-export default function InstallationClient() {
+export default function InstallationClient({ answerBlock = null }) {
   const [activeTab, setActiveTab] = useState('install');
 
   useEffect(() => {
@@ -122,6 +122,9 @@ export default function InstallationClient() {
         ]}
         primaryCTA={{ text: 'Book Free Measurement', route: 'FreeMeasurement' }}
       />
+
+      {/* Server-rendered GEO answer block (passed from page.jsx) */}
+      {answerBlock}
 
       {/* ─── Service Menu ─── */}
       <section className="pt-10 pb-12 md:pt-14 md:pb-16 bg-white">
