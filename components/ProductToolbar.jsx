@@ -26,9 +26,20 @@ export default function ProductToolbar({
   collectionCount = 0,
   viewMode = 'grid',
   onViewModeChange,
+  onSearchSubmit,
 }) {
   const handleSearchChange = (e) => {
     onFilterChange({ ...filters, search: e.target.value });
+  };
+
+  // Enter on an empty flooring result set -> let the parent try accessories.
+  const handleSearchKeyDown = (e) => {
+    if (e.key !== 'Enter' || !onSearchSubmit) return;
+    const q = (filters.search || '').trim();
+    if (resultCount === 0 && q) {
+      e.preventDefault();
+      onSearchSubmit(q);
+    }
   };
 
   const clearSearch = () => {
@@ -43,9 +54,10 @@ export default function ProductToolbar({
         <div className="relative flex-1 min-w-0">
           <Input
             type="text"
-            placeholder="Search products…"
+            placeholder="Search flooring…"
             value={filters.search}
             onChange={handleSearchChange}
+            onKeyDown={handleSearchKeyDown}
             className="pl-8 pr-8 h-9 text-sm rounded-lg border-slate-200 focus:border-amber-400 focus:ring-amber-400/20"
           />
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />

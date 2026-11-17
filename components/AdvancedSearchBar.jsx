@@ -13,6 +13,7 @@ import { createPageUrl } from '@/lib/routes';
 import { useRouter } from 'next/navigation';
 import { track } from '@/lib/track';
 import { getBrandAlias } from '@/lib/brandAliases';
+import { buildFuzzyRegex, scoreSupply, normalizeSupplyRow } from '@/lib/supplySearch';
 
 const Product = entities.Product;
 
@@ -33,96 +34,7 @@ const SYNONYMS = {
   'hdf': 'laminate', 'grey': 'gray', 'gray': 'gray',
 };
 
-const TYPO_OVERRIDES = {
-  'laminate': /lam[ia]nate/i,
-  'limanate': /lam[ia]nate/i,
-  'vinyl': /v[iy]n[iy]l/i,
-  'vynil': /v[iy]n[iy]l/i,
-  'hardwood': /hard\s*wood/i,
-  'hardwod': /hard\s*wood/i,
-  'engineerd': /engineer/i,
-  'engieered': /engineer/i,
-  'engineered': /engineer/i,
-  'hickery': /hickory/i,
-  'hickory': /hickory/i,
-  'wallnut': /walnut/i,
-  'walnut': /walnut/i,
-};
-
-// Accessory vocabulary: shoppers say "glue", the catalogue says "adhesive".
-// Only applied when scoring supplies so flooring scoring is unchanged.
-const ACCESSORY_TERM_RX = {
-  'underlay': /underlay|underpad|underlayment|acoustic/i,
-  'underlayment': /underlay|underpad|underlayment/i,
-  'underpad': /underlay|underpad|underlayment/i,
-  'pad': /underlay|underpad|underlayment|pad/i,
-  'glue': /glue|adhesive/i,
-  'adhesive': /glue|adhesive/i,
-  'vent': /vent|register/i,
-  'vents': /vent|register/i,
-  'register': /vent|register/i,
-  'registers': /vent|register/i,
-  'trim': /trim|moulding|molding|quarter|shoe/i,
-  'molding': /moulding|molding/i,
-  'moulding': /moulding|molding/i,
-  'quarter': /quarter|shoe/i,
-  'baseboard': /baseboard/i,
-  'baseboards': /baseboard/i,
-  'transition': /transition|t-mould|t-mold|reducer|threshold|stair\s*nos/i,
-  'transitions': /transition|t-mould|t-mold|reducer|threshold/i,
-  'reducer': /reducer|transition/i,
-  'threshold': /threshold|transition/i,
-  'nosing': /nosing|stair/i,
-  'leveler': /level|self-lev|patch/i,
-  'leveller': /level|self-lev|patch/i,
-  'levelling': /level|self-lev/i,
-  'leveling': /level|self-lev/i,
-  'primer': /primer/i,
-  'vapor': /vapou?r|moisture|barrier/i,
-  'vapour': /vapou?r|moisture|barrier/i,
-  'moisture': /moisture|vapou?r|barrier/i,
-  'barrier': /barrier|moisture|vapou?r/i,
-  'spacer': /spacer/i,
-  'spacers': /spacer/i,
-  'tool': /tool|tapping|pull\s*bar|trowel|knee|kit/i,
-  'tools': /tool|tapping|pull\s*bar|trowel|knee|kit/i,
-  'cleaner': /clean/i,
-  'cleaning': /clean/i,
-  'nail': /nail|cleat|staple|fastener/i,
-  'nails': /nail|cleat|staple|fastener/i,
-  'cleats': /cleat|nail|fastener/i,
-  'staples': /staple|fastener/i,
-  'screws': /screw|fastener/i,
-  'accessory': /./,
-  'accessories': /./,
-  'supplies': /./,
-};
-
-const SUPPLY_CATEGORY_LABELS = {
-  underlay: 'Underlay',
-  stair: 'Stair Treads & Posts',
-  fasteners: 'Fasteners',
-  repair: 'Repair & Touch-Up',
-  cleaner: 'Floor Care',
-  protection: 'Surface Protection',
-  moisture_barrier: 'Moisture Barrier',
-  adhesive: 'Adhesive',
-  primer: 'Primer',
-  subfloor_prep: 'Subfloor Prep',
-  trim: 'Shoe Moulding & Quarter Round',
-  baseboard: 'Baseboard',
-  floor_vent: 'Floor Vent',
-  tools: 'Installer Tool',
-  transition: 'Transition',
-};
-
 const UNIT_LABEL = { gal: 'gal', pail: 'pail', bag: 'bag', roll: 'roll', tube: 'tube', each: 'ea', kit: 'kit', piece: 'pc' };
-
-function buildFuzzyRegex(term) {
-  if (TYPO_OVERRIDES[term.toLowerCase()]) return TYPO_OVERRIDES[term.toLowerCase()];
-  const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(escaped, 'i');
-}
 
 function scoreProduct(product, terms) {
   let totalScore = 0;
@@ -147,58 +59,13 @@ function scoreProduct(product, terms) {
   return termsMatched === terms.length ? totalScore * 10 : totalScore * (termsMatched / terms.length);
 }
 
-function scoreSupply(supply, terms) {
-  let totalScore = 0;
-  let termsMatched = 0;
-  for (const term of terms) {
-    const rx = ACCESSORY_TERM_RX[term] || buildFuzzyRegex(term);
-    let s = 0;
-    if (rx.test(supply._name)) s += 100;
-    if (rx.test(supply._brand)) s += 70;
-    if (rx.test(supply._category)) s += 60;
-    if (rx.test(supply._members)) s += 45;
-    // Blurb / floor-type hits only BOOST a real match — on their own they
-    // would drag an underlay into an "oak" search because its copy says oak.
-    if (s > 0) {
-      if (rx.test(supply._blurb)) s += 20;
-      if (rx.test(supply._floorTypes)) s += 10;
-      termsMatched++; totalScore += s;
-    }
-  }
-  if (termsMatched === 0) return 0;
-  return termsMatched === terms.length ? totalScore * 10 : totalScore * (termsMatched / terms.length);
-}
-
 async function fetchSupplyIndex() {
   try {
     const res = await fetch('/api/supplies/search');
     if (!res.ok) return [];
     const rows = await res.json();
     if (!Array.isArray(rows)) return [];
-    return rows.filter(function(s) { return s.slug && s.name; }).map(function(s) {
-      var catLabel = SUPPLY_CATEGORY_LABELS[s.category] || (s.category || '').replace(/_/g, ' ');
-      return {
-        id: 'supply:' + s.slug,
-        slug: s.slug,
-        name: s.name,
-        brand: s.brand || '',
-        image_url: s.image || null,
-        category: s.category || '',
-        categoryLabel: catLabel,
-        priceLow: s.priceLow,
-        priceHigh: s.priceHigh,
-        unit: s.unit || '',
-        isMulti: !!s.isMulti,
-        optionCount: s.optionCount || 1,
-        kind: 'supply',
-        _name: (s.name || '').toLowerCase(),
-        _brand: (s.brand || '').toLowerCase(),
-        _category: ((s.category || '') + ' ' + catLabel).toLowerCase(),
-        _members: (s.members || '').toLowerCase(),
-        _blurb: (s.blurb || '').toLowerCase(),
-        _floorTypes: (s.floorTypes || []).join(' ').toLowerCase(),
-      };
-    });
+    return rows.filter(function(s) { return s.slug && s.name; }).map(normalizeSupplyRow);
   } catch (err) {
     console.error('[Search] Supply index failed:', err);
     return [];

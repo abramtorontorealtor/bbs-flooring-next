@@ -13,6 +13,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { X, ChevronDown, RotateCcw } from 'lucide-react';
 import ProductToolbar from '@/components/ProductToolbar';
+import SupplySearchFallback from '@/components/SupplySearchFallback';
+import { topSupplySlug } from '@/lib/supplySearch';
 import GridPriceMatchBar from '@/components/GridPriceMatchBar';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
@@ -108,6 +110,11 @@ function CheckboxFilterList({ options, selected, onChange, maxVisible = 6 }) {
 export default function ProductsClient({ initialProducts, children, serverGrid }) {
   const [clientReady, setClientReady] = useState(false);
   const router = useRouter();
+  // Toolbar Enter with no flooring hits -> jump to the top accessory match.
+  const handleSearchSubmit = useCallback(async (q) => {
+    const slug = await topSupplySlug(q);
+    if (slug) router.push('/flooring-accessories/' + encodeURIComponent(slug));
+  }, [router]);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { user: currentUser } = useAuth();
@@ -686,6 +693,7 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
             collectionCount={collectionGroups.length}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
+            onSearchSubmit={handleSearchSubmit}
           />
 
           {/* Active filter pills */}
@@ -734,6 +742,7 @@ export default function ProductsClient({ initialProducts, children, serverGrid }
               <div className="text-5xl mb-3">🔍</div>
               <h3 className="text-lg font-semibold text-slate-800 mb-1">No products match your filters</h3>
               <p className="text-sm text-slate-500 mb-4">Try removing some filters or search for something else</p>
+              <SupplySearchFallback query={filters.search} />
               {(filters.search || urlSearchParam) && (
                 <p className="text-sm text-slate-600 mb-4">
                   Looking for underlay, trim, adhesive or installer tools?{' '}

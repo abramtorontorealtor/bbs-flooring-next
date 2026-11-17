@@ -6,6 +6,8 @@ import { entities } from '@/lib/base44-compat';
 import CollectionCard from '@/components/CollectionCard';
 import { groupByCollection } from '@/lib/collection-groups';
 import ProductToolbar from '@/components/ProductToolbar';
+import SupplySearchFallback from '@/components/SupplySearchFallback';
+import { topSupplySlug } from '@/lib/supplySearch';
 import GridPriceMatchBar from '@/components/GridPriceMatchBar';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -122,6 +124,11 @@ function CheckboxFilterList({ options, selected, onChange, maxVisible = 6 }) {
 export default function CategoryFilterGrid({ category, categoryFilter, sessionKey, queryKey, hideBrand = false, initialProducts, serverGrid }) {
   const [clientReady, setClientReady] = useState(false);
   const router = useRouter();
+  // Toolbar Enter with no flooring hits -> jump to the top accessory match.
+  const handleSearchSubmit = useCallback(async (q) => {
+    const slug = await topSupplySlug(q);
+    if (slug) router.push('/flooring-accessories/' + encodeURIComponent(slug));
+  }, [router]);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { user: currentUser } = useAuth();
@@ -671,6 +678,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
           collectionCount={collectionGroups.length}
           viewMode={viewMode}
           onViewModeChange={setViewMode}
+          onSearchSubmit={handleSearchSubmit}
         />
 
         {/* Active filter pills */}
@@ -720,6 +728,7 @@ export default function CategoryFilterGrid({ category, categoryFilter, sessionKe
             <div className="text-5xl mb-3">🔍</div>
             <h3 className="text-lg font-semibold text-slate-800 mb-1">No products match your filters</h3>
             <p className="text-sm text-slate-500 mb-4">Try removing some filters or search for something else</p>
+            <SupplySearchFallback query={filters.search} />
             <Button variant="outline" onClick={clearAllFilters} className="gap-1.5">
               <RotateCcw className="w-3.5 h-3.5" />
               Reset Filters

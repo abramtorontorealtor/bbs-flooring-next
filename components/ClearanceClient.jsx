@@ -1,12 +1,15 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { createPageUrl } from '@/lib/routes';
 import { entities } from '@/lib/base44-compat';
 import CollectionCard from '@/components/CollectionCard';
 import { groupByCollection, getProductPrice } from '@/lib/collection-groups';
 import ProductToolbar from '@/components/ProductToolbar';
+import SupplySearchFallback from '@/components/SupplySearchFallback';
+import { topSupplySlug } from '@/lib/supplySearch';
 import StaticFAQ from '@/components/StaticFAQ';
 import SpokeLinks from '@/components/SpokeLinks';
 import FinancingBanner from '@/components/FinancingBanner';
@@ -187,6 +190,12 @@ function FilterSidebarContent({ filters, onChange, brands, maxPriceInStock }) {
 }
 
 export default function ClearanceClient({ initialProducts = [] } = {}) {
+  const router = useRouter();
+  // Toolbar Enter with no flooring hits -> jump to the top accessory match.
+  const handleSearchSubmit = useCallback(async (q) => {
+    const slug = await topSupplySlug(q);
+    if (slug) router.push('/flooring-accessories/' + encodeURIComponent(slug));
+  }, [router]);
   const [allProducts, setAllProducts] = useState(initialProducts);
   const [isLoading, setIsLoading] = useState(initialProducts.length === 0);
   const [filters, setFilters] = useState({
@@ -476,6 +485,8 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
                   maxPriceInStock={maxPriceInStock}
                 />
               )}
+              resultCount={displayedProducts.length}
+              onSearchSubmit={handleSearchSubmit}
             />
 
             {/* Results count */}
@@ -520,6 +531,7 @@ export default function ClearanceClient({ initialProducts = [] } = {}) {
                 <p className="text-slate-500 mb-4">
                   Try adjusting your filters or check back next week — inventory changes often.
                 </p>
+                <SupplySearchFallback query={filters.search} />
                 <button
                   onClick={() =>
                     setFilters({
