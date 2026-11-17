@@ -19,7 +19,7 @@ export default function StairsPage() {
             compact
             id="stair-cost-answer"
             question="How much does stair refinishing or recapping cost in the GTA?"
-            answer="At BBS Flooring, stair refinishing starts at $125/step and new hardwood treads (recapping or carpet-to-hardwood) start at $185/step. Specialty steps such as pie, triangle or bullnose are $225/step. BBS Flooring is a family-owned Markham flooring store and installer (since 2012); final stair pricing is confirmed after a free in-home measurement."
+            answer="At BBS Flooring, stair refinishing starts at $125/step and new hardwood treads (recapping or carpet-to-hardwood) start at $185/step. Specialty and pie steps start at $225/step. BBS Flooring is a family-owned Markham flooring store and installer (since 2012); final stair pricing is confirmed after a free in-home measurement."
           />
         }
       />
