@@ -661,7 +661,7 @@ export default function CartClient() {
                 {suppliesOnly ? (
                   <div className="flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-sm text-emerald-900">
                     <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-emerald-600" />
-                    <span>Free showroom pickup in Markham, ready next business day. Delivery $140 garage / $200 inside.</span>
+                    <span>Free showroom pickup in Markham &mdash; we confirm your pickup date within 1 business day. Delivery $140 garage / $200 inside.</span>
                   </div>
                 ) : (
                 <div className="flex justify-between">

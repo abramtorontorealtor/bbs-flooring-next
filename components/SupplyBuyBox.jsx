@@ -16,16 +16,11 @@ import { entities } from '@/lib/base44-compat';
 import { Analytics } from '@/components/analytics';
 import { suggestQty, sizingHint } from '@/lib/installKit';
 import { SUPPLIES_FULFILMENT_STRIP } from '@/lib/fulfilment';
-import { stockInfo } from '@/lib/supplyFamilies';
 
-// S5: the fulfilment line must not promise "ready next business day" on an
-// order-in SKU. showroom/gta keep the shared strip; slower tiers get the
-// tier's own window, same free-pickup / $140 delivery terms.
-function fulfilmentLine(item) {
-  const tier = item.stockTier || 'showroom';
-  if (tier === 'showroom' || tier === 'gta') return SUPPLIES_FULFILMENT_STRIP;
-  const info = stockInfo(tier);
-  return `Free pickup in Markham once it arrives (${info.short.toLowerCase()}) \u00b7 GTA delivery $140`;
+// Nov 18 2026: one strip for every tier — no lead-time promise, only the
+// confirmation promise (Abram: can't see Prosol stock/location).
+function fulfilmentLine() {
+  return SUPPLIES_FULFILMENT_STRIP;
 }
 
 function getSessionId() {
