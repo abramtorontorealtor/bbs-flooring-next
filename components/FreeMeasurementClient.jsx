@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SlotPicker from '@/components/booking/SlotPicker';
 import AlternateTimePanel from '@/components/booking/AlternateTimePanel';
+import ProductTypeahead from '@/components/booking/ProductTypeahead';
 import { CheckCircle, Phone, Star, ArrowRight, Loader2, MapPin } from 'lucide-react';
 import { validatePhone, validateEmail } from '@/lib/validations';
 import { GOOGLE_RATING } from '@/lib/service-constants';
@@ -163,6 +164,7 @@ export default function FreeMeasurementClient() {
             preferred_date: formData.preferred_date,
             preferred_time: formData.preferred_time,
             flooring_type: projectType,
+            product_name: productsInterested.trim() || undefined,
             notes: [
               projectType && `Project Type: ${projectType}`,
               serviceInterest && `Service: ${serviceInterest}`,
@@ -359,15 +361,17 @@ export default function FreeMeasurementClient() {
               <p className="text-[11px] text-slate-400 mt-1">Helps us bring the right samples to your measurement.</p>
             </div>
             <div>
-              <Label className="font-semibold">Products You&apos;re Interested In</Label>
-              <input
-                type="text"
-                className="w-full mt-1 px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
-                placeholder="e.g. Vidar Macaroon, hardwood for living room"
-                value={productsInterested}
-                onChange={(e) => setProductsInterested(e.target.value)}
-              />
-              <p className="text-[11px] text-slate-400 mt-1">Our installer will bring samples of these products to your measurement.</p>
+              <Label htmlFor="products-interested" className="font-semibold">Which product caught your eye? <span className="font-normal text-slate-400">(we&apos;ll bring the sample)</span></Label>
+              <div className="mt-1">
+                <ProductTypeahead
+                  id="products-interested"
+                  value={productsInterested}
+                  onChange={setProductsInterested}
+                  placeholder="Start typing a product name, e.g. Fiji, Vidar, Timberwolf"
+                  inputClassName="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                />
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1">Pick from our catalogue or describe it in your own words. Our installer brings the samples to your measurement.</p>
             </div>
             <div>
               <SlotPicker
