@@ -275,14 +275,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ GEO/AEO ANSWER BLOCK — self-contained, quotable entity answer (server-rendered) ═══ */}
-      <AnswerBlock
-        compact
-        id="flooring-store-markham"
-        question="Which flooring store in Markham sells hardwood, laminate and vinyl with installation?"
-        answer="BBS Flooring is a family-owned flooring store and installer in Markham, Ontario (since 2012), with a showroom at 6061 Highway 7, Unit B. It stocks hardwood, engineered hardwood, laminate and vinyl, offers free in-home measurement across the GTA, and installs with its own crews. Rated 4.8★ on Google; open Monday to Saturday, 10am–5pm; call (647) 428-1111."
-      />
-
       {/* ═══ BBS RESERVE — HOUSE BRAND STRIP (Oct 15, 2026: was a "Clearance" strip; Reserve is our own label, not a closeout) ═══ */}
       <div className="bg-amber-500 text-slate-900">
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
@@ -527,6 +519,15 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ═══ GEO/AEO ANSWER BLOCK — quotable entity answer for AI engines. Nov 24 2026: moved from under the hero
+          (Abram: boilerplate above products on mobile) to sit with the FAQ; crawlers read the whole page, humans don't. ═══ */}
+      <AnswerBlock
+        compact
+        id="flooring-store-markham"
+        question="Which flooring store in Markham sells hardwood, laminate and vinyl with installation?"
+        answer="BBS Flooring — family-owned since 2012, showroom at 6061 Highway 7, Unit B, Markham. Hardwood, laminate and vinyl in stock, free in-home measurement across the GTA, installed by our own crews. 4.8★ on Google · Mon–Sat 10am–5pm · (647) 428-1111."
+      />
 
       {/* ═══ FAQ — Client (accordion) ═══ */}
       <Suspense fallback={<div className="min-h-[100px]" />}>
